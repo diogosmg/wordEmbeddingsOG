@@ -1,0 +1,729 @@
+prhanp programa multidisciplinar tecnologia petroleo gas natural biocombustiveis controle avancado tecnicas perfuracao pressao controlada tais carvalho calado orientador oscar alberto zanabria sotoayor 
+ controle avancado tecnicas perfuracao pressao controlada tais carvalho calado trabalho conclusao curso submetido corpo docente departamento engenharia eletrica del programa recursos humanos anp universidade federal sergipe parte requisitos necessarios obtencao grau engenheira eletricista habilitacao eletronica especializacao tecnologia petroleo gas natural biocombustiveis 
+ examinado oscar alberto zanabria sotomyaor 
+ engenharia elerica del ccet ufs orientador jose jailton marques 
+ engenharia quimica deq ccet ufs eduardo oliveira freire 
+ engenharia eletrica del ccet ufs agradecimentos pais heliana murilo amores maiores exemplos devo ser pessoa profissional 
+ irmaos bruna leandro todo apoio derem desde inicio jornada final 
+ namorado renan estar sempre comigo ajudar horas achei conseguir deixar desistir melhor coisa aconteceu dentro ufs 
+ amigos turma agregados horas estudo tornaram divertidas momentos classe 
+ orientador oscar sotomayor apoio dedicacao longo desses quase anos sob tutoria 
+ anp principalmente prh incentivo financeiro longo participacao nesse projeto 
+ resumo enquanto demanda petroleo aumentado reservas petroleo cada vez dificeis serem acessadas perfuradas 
+ assim conseguir perfuralas gradiente pressao poco deve ser mantido restricoes pressao formacao 
+ pressao poco pode ser controlada restringindo fluxo fluido perfuracao poco atraves valvula entrada poco manipulando escoamento vindo regiao anular poco atraves valvula choke 
+ neste trabalho dois algoritmos controle preditivo baseado modelos mpc linear lmpc outro linear nmpc controle pressao manipulando valvula choke bomba entrada lama apresentados alternativa melhorar eficiencia tecnica perfuracao pressao controlada mpd 
+ objetivo desse trabalho visa efetuar comparacao dois algoritmos mpc efetiva aplicacao utilizacao controle pressao durante processo perfuracao pocos petroleo 
+ palavraschave mpc mpd perfuracao poco controle pressao 
+ iv abstract oil demand increased remaining reserves oil increasingly difficult accessed drilled 
+ get drilled pressure gradient well must maintained restrictions formation pressure 
+ pressure well controlled restricting flow drilling fluid valve entrance well manipulating flow annulus manipulating choke valve 
+ work two model predictive control mpc algorithms linear nonlinear bottom hole pressure control oil well drilling system manipulating choke valve mud pump presented alternative way improve operational effectiveness managed pressure drilling mpd technology 
+ work aim comparison two mpc algorithms application utilization pressure control oil well drilling process 
+ keywords mpc mpd oil well drilling pressure control 
+ viii lista figuras 
+ perfuracao pocos petroleo 
+ controle pressao poco 
+ tecnicas perfuracao controle pressao 
+ perfuracao sobre balanceada obd 
+ perfuracao subbalanceada ubd 
+ revisao estado arte 
+ simulacao matlab simulink® analise malha aberta 
+ lmpc convencional controlador qdmc 
+ controle lmpc processo perfuracao 
+ controle nmpc processo perfuracao 
+ vii lista tabelas tabela parametros simulacao modelo stamnes 
+ tabela funcoes transferencia modelo linear 
+ tabela parametros sintonia controlador lmpc 
+ tabela parametros sintonia controlador nmpc 
+ viii lista figuras figura perfuracao rotacional caminho fluido perfuracao 
+ figura sistema circulacao lama 
+ figura perfil gradiente pressao poco 
+ figura vazamento oleo plataforma deepwater horizon golfo mexico 
+ figura camada presal 
+ figura localizacao poco tupi 
+ figura esquema estrategia mpd 
+ figura exemplo sonda perfuracao 
+ figura balanco massa modelo nygaard 
+ figura balanco pressoes modelo nygaard 
+ figura divisao sistema proposto modelo stamnes 
+ figura implementacao modelo stamnes ambiente matlab simulink® 
+ figura sequencia variacoes abertura valvula choke 
+ figura comportamento pressao fundo variacoes abertura valvula choke 
+ figura resposta estados variacoes abertura valvula choke 
+ figura variacoes vazao bomba lama 
+ figura comportamento pressao fundo variacoes fluxo bomba lama 
+ figura resposta estados variacoes fluxo lama 
+ figura sequencia variacoes vazao influxo 
+ figura comportamento pressao fundo variacoes vazao influxo 
+ figura resposta estados variacoes vazao influxo 
+ figura sequencia variacoes vazao bomba pressao reversa 
+ figura resposta pressao fundo variacoes vazao bomba pressao reversa 
+ figura respostas estados variacoes vazao bomba pressao reversa 
+ ix figura esquema implementacao algoritmos mpc 
+ figura estrutura sistema controle mpc 
+ figura controle mpc coluna perfuracao 
+ figura resposta pressao fundo lmpc variacoes setpoint 
+ figura comportamento variaveis manipuladas lmpc variacoes setpoint 
+ figura resposta pressao fundo lmpc variacao vazao influxo reservatorio 
+ figura comportamento variaveis manipuladas lmpc variacao vazao influxo reservatorio 
+ figura resposta pressao fundo lmpc variacao vazao bomba pressao reversa 
+ figura comportamento variaveis manipuladas lmpc variacao vazao bomba pressao reversa 
+ figura resposta pressao fundo lmpc perda controle valvula choke 
+ figura comportamento variaveis manipuladas lmpc perda controle valvula choke 
+ figura resposta pressao fundo nmpc variacoes setpoint 
+ figura comportamento variaveis manipuladas nmpc variacoes setpoint 
+ figura resposta pressao fundo nmpc variacao vazao influxo reservatorio 
+ figura comportamento variaveis manipuladas nmpc variacao vazao influxo reservatorio 
+ figura resposta pressao fundo nmpc variacao vazao bomba pressao reversa 
+ figura comportamento variaveis manipuladas nmpc variacao vazao bomba pressao reversa 
+ figura resposta pressao fundo nmpc perda controle valvula choke 
+ figura comportamento variaveis manipuladas nmpc perda controle valvula choke 
+ perfuracao pocos petroleo satisfazer aumento demanda petroleo gas escala mundial necessidade encontrar novas reservas extrailas 
+ reservas restantes dificeis extrair acessiveis exploradas 
+ desafios relacionados pocos perfuracao margens pressao estreitas exigem controle pressao preciso 
+ assim demanda novas tecnologias perfuracao fornecam controle pressao adequado hydro 
+ perfuracao poco consiste perfurar crosta terrestre objetivando extracao recursos naturais tais agua gas natural petroleo 
+ primeiros pocos perfurados intuito obter agua diretamente aquiferos reserva agua subterranea suprir necessidade determinada localizacao 
+ porem desenvolvimento industria urgencia obtencao novas fontes energia tecnicas perfuracao entao conhecidas aprimoradas permitindo exploracao petroleo subterraneo grande escala tornando industria petrolifera principais expoentes economicos sociedade atual 
+ existem basicamente dois metodos perfuracao rosenblatt   perfuracao percussiva perfuracao rotacional 
+ perfuracao percussiva antiga tecnicas perfuracao pocos 
+ consiste golpear rocha utilizando broca fim fragmentala atraves esmagamento 
+ metodo lento alcance limitado sendo pouco utilizado atualmente 
+ perfuracao rotacional consiste realizar esmerilhamento rocha atraves movimento rotacao broca 
+ fluido bombeado atraves coluna perfuracao retorna anular espaco compreendido coluna perfuracao parede poco conforme figura levando consigo cascalho gerado processo 
+ metodo pode ser considerado atual padrao industria 
+ figura perfuracao rotacional caminho fluido perfuracao eliminacao cascalhos produzidos longo perfuracao fica cargo sistema circulacao fluido perfuracao neste caso lama lodo perfuracao representado figura 
+ sonda encontrase reservatorio lama perfuracao alimenta bomba lama responsavel injetala coluna perfuracao 
+ cabeca injecao separa elementos rotativos estacionarios somente permite rotacao elementos encontrados parte inferior coluna perfuracao broca etc 
+ elemento responsavel transmitir movimento rotacional coluna perfuracao kelly 
+ apos passagem lama coluna perfuracao eventual retorno anular cascalhos provenientes processo lama volta reservatorio passando linha retorno posteriormente peneira vibratoria intuito separar solidos grosseiros lama perfuracao 
+ figura sistema circulacao lama lama perfuracao varias funcoes 
+ arrastar fragmentos rocha superficie 
+ limpar esfriar broca 
+ atuar lubrificante onde atrito 
+ exercer contrapressao forma evitar entrada fluidos poco 
+ evitar fragmentos rocha sedimentem fundo paradas perfuracoes 
+ obturar orificios camadas porosas atravessadas perfuracao seguintes caracteristicas 
+ ser inerte relacao detritos 
+ proteger contra corrosao 
+ ser formada materiais baratos disponiveis 
+ lama pode ser constituido base agua base oleo 
+ agua leva vantagem ser disponivel refrigerar melhor desvantagem encharcar tudo onde passa desestabilizando rocha 
+ lamas base oleo principal desvantagem serem poluentes 
+ dar propriedades pseudoplasticas lama argila exemplo bentonita adicionada agua 
+ dar densidade lama aumentar contrapressao mineral denso exemplo barita pode ser adicionada 
+ outras substancias podem ser adicionadas adequar camadas vao sendo atravessadas 
+ existem mercado diversas tecnicas perfuracao pocos petroleo porem duas merecem destaque perfuracao pressao controlada mpd managed pressure drilling perfuracao subbalanceada ubd underbalanced drilling 
+ ambas tecnicas consistem executar acoes controle intuito manter pressao determinado nivel 
+ ubd visa manter valor pressao introduzida poco abaixo valor pressao fluido longo toda formacao rochosa 
+ mpd utilizada controlar precisamente perfil pressao anular poco mantendoa dentro determinado gradiente definido pressao fraturamento limite superior pressao poros limite inferior 
+ enfoque desses dois metodos distinto 
+ ubd foca preservacao reservatorio aquisicao dados metodo visa manter pressao subbalanceada 
+ mpd visa processo perfuracao tendo objetivo eliminacao problemas perda circulacao entupimento cano 
+ outra distincao desses dois metodos relacao equipamento utilizado 
+ ubd necessario equipamento local lidar hidrocarbonetos ali produzidos tornando metodo caro comparado mpd 
+ alem disso algumas agencias reguladoras permitem utilizacao ubd operacoes offshore 
+ termos seguranca metodo mpd pode ser considerado seguro pois qualquer incidente fluxo durante operacao pode ser seguramente contido atraves sistema controle 
+ mpd poderosa tecnologia emergente controlar precisamente pressao poco dentro margem estreita pressao 
+ conta certo numero variaveis onde cada possui tecnica diferente controlar pressao atraves criacao sistema fechado pressurizacao lama 
+ enquanto mpd oferece capacidade controlar pressao cria complexidade operacional sistema 
+ ocorre porque mpd requer diversas ferramentas bombas valvulas choke valvulas geral etc 
+ devem ser coordenadas simultaneamente tarefa onde operadores humanos podem ser particularmente eficientes 
+ solucao problema uso ferramentas automacao 
+ ferramentas podem confiavelmente integrar atividades relativas mpd usando hierarquia multinivel permitindo operadores concentrarem decisoes altonivel enquanto deixam execucao atividades nivel baixo automacao breyholtz al 
+ tecnologia mpd aposta emprego automatizacao processo tornando sistema seguro melhorando desempenho permitindo operador controle situacao todo dando possibilidade definir acoes objetivos daquela determinada atividade 
+ controle pressao poco 
+ gradiente pressao entender tecnicas perfuracao pressao controlada preciso antes explicar valores tipos pressao utilizados compor janela gradiente pressao serve parametro manter niveis controle 
+ medida poco perfurado fluido perfuracao circulado dentro obter pressao fundo poco especifica 
+ densidade fluido determinada gradientes pressao formacao porosidade estabilidade poco martin 
+ todas formacoes penetradas broca perfuracao porosas algum grau 
+ espacos porosos podem conter fluidos petroleo gas agua salgada mistura 
+ pressao porosidade exercida fluidos contidos espacos porosos skalle 
+ pressao fraturamento onde poco ira comecar apresentar avarias fraturar sendo assim ponto crucial determinacao estabilidade poco 
+ figura mostra comportamento perfil gradiente pressao determinado poco relacionado profundidade 
+ objetivo perfurar poco manter pressao lama dentro dessa janela delimitada pressao porosidade pressao fraturamento 
+ fundamental janela mantida 
+ pressao fluido menor pressao porosidade ocorre chamados kicks 
+ denominacao kick deriva fenomeno observado poco acontece lama lancado 
+ figura perfil gradiente pressao poco necessaria extrema cautela ocorrem kicks pois caso controlados maneira adequada podem levar situacoes blowout pondo risco seguranca trabalhadores depender caso podem inutilizar reservatorio 
+ alem causar prejuizos financeiros pessoais acidentes podem vir gerar grave problema ambiental caso acidente ocorrido plataforma deepwater horizon localizada golfo mexico culminou morte funcionarios prejuizo bilionario empresa detentora plataforma bp british petroleum 
+ figura mostra extensao acidente plataforma bp 
+ vazamento estimado milhoes galoes oleo desde dia acidente abril fechamento provisorio poco junho tragedia deixou profundas marcas ecossistema economia local vez prejudicou biodiversidade bem atividade pesqueira turismo regiao 
+ figura vazamento oleo plataforma deepwater horizon golfo mexico 
+ tecnicas perfuracao controle pressao reservas atuais petroleo esgotando necessaria perfuracao pocos profundos complexos 
+ alguns profissionais industria diriam atuais reservas offshore economicamente imperfuraveis usando tecnicas convencionais perfuracao coker tecnicas conhecidas perfuracao sobre balanceada obd overbalanced drilling 
+ assim novas tecnicas perfuracao implementadas quais tomam base pressao poco podendo ser colocada pressao menor pressao igual gradiente pressao poco 
+ tecnica primeiro caso conhecida perfuracao subbalanceada ubd segundo caso perfuracao pressao controlada mpd shayegi 
+ cada dessas tecnicas especial possui vantagens desvantagens devem ser analisadas caso caso verificando perfil poco perfurado bem riscos valores intrinsecos cada operacao 
+ conhecimento area ser explorada bem tecnicas possam ser utilizadas tornase fundamental sucesso processo perfuracao produtividade poco questao 
+ perfuracao sobre balanceada obd pratica manter pressao poco exceda pressao poros chamada perfuracao sobre balanceada obd 
+ metodo adotado perfuracao maioria pocos desde inicio seculo elliot al 
+ metodo possui alguns reveses tais   danos excessivos formacao podendo levar poco eventual colapso possuir gradiente pressao relativamente pequeno torna operacao delicada minuciosa fim evitar erros possam provocar problemas poco operam fazendo assim processo perfuracao mediante tal tecnica menos seguro comparado demais metodos  custo elevado vez prevenir perdas fluido perfuracao durante tal processo necessaria utilizacao diversos tubos revestimento pocos manter densidade fluido necessaria contencao pressao formacao  possuir baixa taxa penetracao rop rate penetration velocidade broca perfura formacao 
+ rop baixa significa maior lentidao processo perfuracao fazendo tempo poco passe inativo maior demais casos 
+ ser tecnica perfuracao antiga possivel observar aplicabilidade obd pode suprir necessidades mercado atual busca maior produtividade menor tempo custos menores cujos riscos pequenos 
+ resposta tendencia industria petrolifera duas tecnicas seguir desenvolvidas objetivando suplantar brechas proporcionadas obd 
+ perfuracao subbalanceada ubd pressao hidrostatica fluido perfuracao intencionalmente projetada ser menor pressao formacao ser perfurada operacao considerada perfuracao subbalanceada ubd 
+ pressao hidrostatica fluido perfuracao pode ser naturalmente menor pressao formacao pode ser induzida 
+ estado induzido pode ser criado partir injecao gas natural nitrogenio ar fase liquida fluido aeub 
+ existem algumas tecnicas modificar pressao hidrostatica fluido perfuracao durante ubd sendo conhecidos seguintes perfuracao underbalanced  dry air empoeiramento conhecida consiste utilizacao compressores ar combinados booster intensificadores aumentam pressao ar vindo compressor altera volume 
+ alem disso pequena quantidade fluido injetada unico objetivo diminuir corrosao  mist pequena quantidade agente espumante adicionada fluxo ar dando origem neblina remove cascalhos resultantes perfuracao superficie  foam semelhante mist divergindo somente quanto quantidade agente espumante adicionada pouco elevada quanto consistencia nesse caso formamse bolhas auxiliam eliminacao cascalhos  stable foam semelhante mist foam objetivo porem agora grande quantidade agente espumante adicionada fluxo ar consistencia agora semelhante espuma barbear  gasified muds ar outro gas nitrogenio injetado lama perfuracao 
+ principais vantagens desse metodo reducao danos formacao reducao perda circulacao aumento rop 
+ quanto desvantagens perfuracao ubd cara comparada outros metodos necessaria estrutura maior quantidade equipamentos maior tornar processo realizavel 
+ perfuracao pressao controlada mpd item tratado maiores detalhes capitulo 
+ objetivos trabalho objetivo principal deste trabalho  estudo implementacao avaliacao mediante simulacoes computacionais sistema controle avancado baseado controle preditivo mpc model predictive control manipulacao simultanea bomba lama perfuracao valvula choke recirculacao lama visando manter pressao anular fundo bhp bottomhole pressure nivel operacao desejado 
+ objetivos secundarios deste trabalho  propiciar melhor entendimento problema perfuracao avaliar determinada solucao visando presal  aumentar eficiencia desempenho seguranca operacoes perfuracao pocos petroleo  contribuir desenvolvimento novas tecnologias perfuracao 
+ motivacao camada presal figura compreende conjunto rochas encontra abaixo camada sal 
+ formacao ocorreu periodos anteriores quebra gondwana supercontinente formado americas sul africa milhoes anos atras 
+ apos separacao supercontinente devido movimentos placas tectonicas regiao pantanosa formou fundo fenda originaria dessa separacao 
+ materia organica misturou particulas calcario argila areia dando origem camada rochosa 
+ continuidade atividades tectonicas agua salgada passou invadir regiao pantanosa porem evaporar deixava camada sal 
+ continuidade desses depositos sal deu entao origem conhecida camada sal composta principalmente halita anidrita formada camada presal 
+ rochas compoem reservatorios camada presal formadas carbonatos microbiais microbiolitos colonia cianobacterias mortas calcificadas 
+ complexidade vai alem baixa porosidade possibilidade permeabilidade 
+ ser formacao ocorrencia cujos precedentes raros pouco sabe sobre estrutura comportamento relacao recuperacao oleo fraga 
+ figura camada presal reservatorios camada presal podem ser encontrados longo costa brasileira area compreendida regiao nordeste sul costa oeste africana bem golfo mexico 
+ presal recebeu nome ser regiao cujo deposito materiais rochosos ocorreu forma anterior formacao camada sal dessa forma profundidade pode chegar superar 
+ metros relacao superficie maritima 
+ descoberta camada presal gerou especulacao sobre capacidade producao petroleo 
+ brasil diversos testes realizados sendo teste poco agora nomeado tupi cuja profundidade ultrapassou 
+ metros superficie maritima atestou positivamente indicios producao petrolifera dessa camada 
+ apos sete pocos perfurados todos reafirmam existencia petroleo nessa regiao entenda camada presal 
+ perfuracao poco tupi somente inicio descobertas cerca presal 
+ faixa compreendida litorais espirito santo santa catarina testes realizados detectaram presenca grande volume oleos leves alta qualidade podendo vir produzir elevada quantidade barris dia expectativas superacao termos producao pocos camada sal hoje explorados regiao entenda camada presal 
+ figura localizacao poco tupi confirmacao existencia petroleo nessa regiao ocorrem problematicas relacao exploracao 
+ desconhecimento comportamento rochas dessa camada elevadas profundidades consequentemente pressao temperatura distancia relacao litoral exemplos desafios deverao ser vencidos assim comecar efetivamente exploracao presal coppe 
+ principal custo presal perfuracao pocos exige equipamentos complexos tais sondas alto mar busca novas solucoes diversos problemas perfuracao visando aumentar eficiencia reduzir tempo custo operacao 
+ exemplo poco tupi distancia pocos costa brasileira pode superar km todo aparato logistico apoio altomar deve ser preparado transportar funcionarios equipamentos materias etc 
+ alem disso todo sistema ancoragem operacao poco deve ser idealizado suprir necessidade dessas plataformas coppe 
+ relacao profundidade superar 
+ metros exige maior cautela relacao perfuracao desses pocos extracao oleos la encontrados 
+ atingir camada presal necessario ultrapassar km lamina dagua km sedimentos km camada sal sendo ultima possui comportamento dificil previsao age massa plastica impermeavel volta fechar poucos instantes apos aberto poco 
+ alem disso presenca sal provoca distorcoes ondas sismicas emitidas regiao intuito averiguar estrutura geologica analise dificultando obtencao dados sobre camadas adjacentes 
+ tecnologia perfuracao revestimento pocos avancada hoje utilizadas faz necessaria assim evitar colapso paredes poco amenizar efeitos plasticidade sal coppe 
+ pressao temperatura caracteristicas intimamente ligadas profundidade quanto profundo poco maior pressao oleo gas saira maior diferenca temperatura producao submetida 
+ dutos escoala deverao ser projetados aguentar pressoes atm cerca vezes maior pressao nivel mar gradiente temperatura pode variar 
+ choque termico pode vir causar entupimento dutos risers possivel coagulacao oleo demandando assim necessidade insercao produto quimico capaz evitar ocorra coppe 
+ hostilidade ambiente onde inseridas rochas presal outro ponto ser vencido 
+ presenca abundante gases corrosivos dioxido carbono co acido sulfidrico hs nessa regiao exigem utilizacao materiais capazes suportar efeitos longo tempo dada dificuldade manutencao pecas ai localizadas 
+ presenca grande quantidade co reservatorios prejudica escoamento 
+ quantidade aumentada desse gas pode formar padroes escoamento aumentam perda carga exigindo consequentemente aumento pressao fluido continue escoar normalmente tubulacao 
+ aumento perdas produtividade reduz aumento custo producao coppe 
+ exploracao camada presal vai exigir antes tudo investimento setor pesquisa tecnologia devido inedicidade dessas operacoes adversidades encontradas local conhecimento tanto quanto escasso comparada exploracao demais camadas 
+ inicio atividades ligadas regiao algo imediato superacao desses desafios possivel fortemente ligados esforco coletivo multitarefa envolvendo diversos setores sociedade academica desenvolvedora tecnologia coppe 
+ revisao estado arte baseada dificuldade perfurar novos pocos sendo ventura podem encontrar ambientes hostis vista necessidade prover maior seguranca envolvidos nesse processo perfuracao pocos usando tecnica mpd vem sendo alvo inumeros estudos publicacoes area alguns quais resumidamente apresentados seguir  martim observou passo demanda novos pocos aumenta principalmente localizados aguas profundas necessario tecnica eficiente reduza custos processo especial relacionados valor excessivo lama perfuracao mitigue alguns problemas tais entupimento dutos perdas circulacao etc 
+ introducao mpd possibilita solucao desses problemas tornando economicamente viavel perfurar pocos onde anteriormente possiveis 
+  nygaard al 
+ apresentaram esquema controle proporcional integrativo pi controle preditivo linear nmpc estabilizar bhp bottomhole pressure pressao fundo durante processo perfuracao pocos petroleo 
+ parametros controlador pi estimados atraves metodo zieglernichols malha fechada 
+ resultados simulacoes numericas evidenciaram esquema controle manual apresentou desempenho inferior esquemas controle pi nmpc 
+ entanto esquema controle pi necessario reestimar parametros controlador condicoes operacao afastavam condicoes originais projeto 
+  stamnes manifesta controle pressao durante processo perfuracao extrema importancia prevenir influxo reservatorio poderia levar blowout consequentemente tragedia ambiental economica resultar perda vidas humanas 
+ alem disso controlar pressao perfuracao pode evitar danos parede reservatorio eventuais colapsos sonda 
+ desenvolveu observador adaptativo pode ser utilizado controladores ventura viessem ser desenvolvidos tal finalidade 
+  compensar falta medicoes continuas bhp durante operacoes perfuracao breyholtz apresenta observador adaptativo capaz inferir bhp coeficiente friccao poco 
+ observador entao usado desenvolvimento nmpc manter pressao dentro limites pre estabelecidos 
+ desempenho observador nmpc testados simulacoes usando pacote comercial resultados promissores 
+  zhou al 
+ apresentam esquema controle baseado observador naolinear estabilizar seguir assintoticamente perfil bhp manipulando valvula choke bomba pressao reversa 
+ modelo dinamico simples captura fenomeno dominante processo perfuracao usado implementacao observador controlador 
+ observador desenvolvido usando tecnicas lyapunov estimar estado naomedido 
+ simulacoes apresentadas ilustram efetividade esquema controle proposto 
+  stamnes al 
+ desenvolvem observador ordem reduzida estimar coeficiente friccao densidade bhp poco durante perfuracao 
+ projeto baseia uso modelo naolinear ordem sistema mpd abordagem via lyapunov 
+ aplicacao observador dados provenientes poco petroleo mar norte mostra pressao estimada converge pressao verdadeira sob condicoes razoaveis operacao 
+  li al 
+ propoem esquema controladorestimador integrado controlar bhp sistema perfuracao 
+ estimador adaptativo rapido aplicado estimar estados naomedidos quais usados controlador adaptativo adapta perturbacoes parametros variantes tempo sistema 
+ simulacoes numericas mostram controlador desempenho garantido verificando resultados teoricos 
+  breyholtz al 
+ avaliam aplicacao nmpc baseado modelo ordem reduzida coordenacao abertura valvula choke vazoes bomba principal lama bomba pressao reversa controle bhp 
+ desempenho nmpc comparado desempenho controlador pi sendo desenvolvimento ambos sistemas controle combinado observador pressao fundo 
+ controladores avaliados simulacoes numericas usando modelo alta fidelidade dados processo perfuracao offshore mar norte 
+ resultados simulacoes mostram nmpc melhora controle bhp simplifica forma significativa procedimentos equipe perfuracao 
+  breyholtz al 
+ introduzem conceito controle multicamadas operacoes mpd 
+ controle hierarquico composto tres diferentes camadas nivel inferior malhas independentes controle regulatorio nivel intermediario controle supervisorio baseado mpc coordena diferentes controladores malha otimizandoos finalmente nivel superior otimizacao tenta encontrar metas operacionais enquanto maximiza aspectos economicos operacao 
+ resultados simulacoes mostraram controle proposto capaz manter bhp valor desejado pequenos desvios durante periodos transitorios 
+  breyholtz al 
+ usam mpc controlar bhp posicao gancho sustentacao coluna perfuracao evitar ocorrencia deslizes coluna manipulando bomba lama bomba submarina velocidade broca sistema perfuracao gradiente dual variante mpd 
+ simulacoes realizadas modelo alta fidelidade atestaram habilidade controlador manter variaveis processo dentro restricoes operacionais comprovando mpc escolha natural tipos sistemas 
+  carvalho neto propos mpc baseado multiplos modelos lineares controlar bhp manipulacao valvula choke 
+ mpc multimodelos desenvolvido dois estagios 
+ estagio offline modelos lineares identificados determinados pontos operacao usados construir banco controladores mpc restricoes 
+ estagio online resolvese problema otimizacao restricoes combinando controladores obtidos primeiro estagio 
+ simulacoes realizadas mostraram efetividade maior desempenho mpc proposto comparado desempenho mpc convencional baseado unico modelo 
+  zhou al 
+ desenvolveram sistema controle chaveado regulacao bhp manipulando valvula choke bomba pressao reversa 
+ modelo matematico simples descreve fenomenos dominantes sistema perfuracao forma base projeto observador controlador 
+ propriedades estabilidade assintotica estabelecidas atenuacao kick garantida conjunto modelos pocos incluindo comuns 
+ simulacoes efetuadas simulador alta fidelidade mostraram efetividade esquema controle proposto 
+  helgestad desenvolve modelo simplificado estado estacionario processo perfuracao usado otimizar processo 
+ objetivo otimizacao minimizacao custo total perfuracao incluindo operacoes ativas naoativas tempo realizar conexoes tubos viagens perfuracao etc processo 
+ razao separacao modos operacao processo diferenca objetivos controle 
+ variaveis controladas identificadas ponto vista controle autootimizante atingir perda minima processo sujeito perturbacoes esperadas 
+ finalmente modelo dinamico simplificado usado simular desempenho estrutura controle baseada controladores pi implementada controlar bhp manipulacao bomba pressao reversa valvula choke 
+ estrutura controle capaz cumprir objetivos estabelecidos mantendo bhp dentro janela pressao bar 
+  bellumat al 
+ fazem estudo controlabilidade processo perfuracao visando obter melhor emparelhamento entrada saida desenvolvimento controladores pi multimalha 
+ saidas consideradas bhp rop tendo entradas manipuladas abertura valvula choke vazao bomba lama rotacao coluna peso sobre broca 
+ estudo conclui bhp controlada forma eficiente atraves manipulacao abertura valvula choke empregando vazao bomba lama 
+ alem disso rotacao coluna peso sobre broca apresentam mesma eficiencia controle rop 
+  kaasa al 
+ propuseram modelo simplificado baseado dinamica fluidos captura caracteristicas hidraulicas dominantes sistema mpd 
+ aplicando algoritmos estimacao parametros online modelo calibrado automaticamente usando medicoes variaveis existentes alcancar nivel precisao adequado comparavel modelo rigoroso 
+ resultados demonstrados usando dados reais sistema mpd operacao mar norte 
+ escopo trabalho corpo presente trabalho conclusao curso estruturado seguinte forma  capitulo introducao 
+ capitulo apresenta breve explanacao sobre processo perfuracao pocos petroleo principais tecnicas aplicadas bem objetivos trabalho motivacao desenvolvimento revisao bibliografica trabalhos correlatos publicados literatura 
+  capitulo perfuracao pressao controlada mpd 
+ neste capitulo abordase maiores detalhes tecnica perfuracao pressao controlada tecnica vem sendo atualmente amplamente adotada processos perfuracao pocos petroleo 
+  capitulo modelagem processo perfuracao 
+ capitulo apresenta dois modelos ordem reduzida amplamente divulgados literatura tratam descrever processo perfuracao 
+ discutese escolha modelo ser utilizado neste trabalho representar processo assim analise resposta dinamica perturbacoes condicoes operacao nominal 
+  capitulo teoria controle preditivo mpc 
+ capitulo trata teoria basica controladores mpc convencionais linear lmpc naolinear nmpc usados desenvolvimento sistema controle avancado proposto neste trabalho 
+  capitulo controle preditivo processo perfuracao 
+ neste capitulo mostrados resultados aplicacoes controladores lmpc nmpc 
+ desempenhos destes controladores discutidos comparados submetidos diversas condicoes operacao 
+  capitulo conclusoes recomendacoes 
+ aqui apresentadas conclusoes gerais trabalho assim algumas propostas dar continuidade projeto 
+ capitulo perfuracao pressao controlada mpd 
+ breve historico conceitos diversas tecnicas compoem mpd exatamente novos 
+ ideias iniciais surgiram seculo xv esbocos leonardo vinci efetivadas recentemente 
+ mpd resultado observacao evolucao processo perfuracao partindo metodos tradicionais perfuracao obd alcancando outro patamar tentativa otimizar ubd tercan 
+ dispositivos rcd mostrados primeira vez catalogo shaffer tool company 
+ ferramentas permitiram dar inicio perfuracao fluidos compressiveis tais gas ar nevoa espuma processo ficou conhecido performance drilling pd 
+ tecnica viabilizou melhora indices penetracao maior durabilidade brocas permitiu reducao custos industria perfuracao tercan 
+ algumas ideias mpd formalmente apresentadas anais abnormal pressure symposium realizados universidade estado louisiana anos 
+ simposios visavam discutir avaliar tecnicas parar prever pressoes fundo poco gradiente fraturamento partir dados disponiveis 
+ primeira real tentativa realizar perfuracao controlada 
+ empresa petroleo perfurou kick kick forma evitar perdas retorno aumentar taxa perfuracao tentativa ocorreu poco offshore golfo mexico tercan 
+ passar tempo uso rcds aprimorado possibilidade manipular forma precisa perfil pressao hidraulica anular 
+ assim finalmente reconhecida tecnica mpd 
+ desde tecnica vem sendo amplamente aplicada ocasionou aumento popularidade tanto industria academia tercan 
+ definicao segundo iadc international association drilling contactors mpd processo perfuracao adaptativo usado controlar maneira precisa perfil pressao anular todo poco 
+ objetivos verificar limites pressao fundo ambiente manipular perfil pressao hidraulica acordo limites 
+ pode incluir controle pressao retorno usando sistema circulacao lama fechado pressurizado bomba fundo qualquer outro equipamento mecanico 
+ mpd geralmente evitara fluxo dentro poco rehm al 
+ mpd pode ser adaptativa condicoes propostas poco 
+ metodo utiliza fluido perfuracao monofasico intuito minimizar perdas causadas atrito durante escoamento rehm al 
+ alem disso tecnica mpd apresenta reducao significativa tempo produtivo npt caracteristica bastante apreciada industria petrolifera pois dessa forma pode vir minimizar gastos elevar ganhos 
+ tecnicas mpd principais tecnicas mpd rehm al 
+  pressao fundo constante cbhp constant bottomhole pressure onde acoes controle tomadas corrigir reduzir efeito perda causada atrito durante circulacao lama forma manter pressao dentro limites impostos pressao porosidade pressao fraturamento 
+  perfuracao camada lama pressurizada pmcd pressurized mudcap drilling tecnica perfuracao retornos perfuracao riser superficie coluna fluido anular mantida cheia fluido perfuracao juntamente cascalhos produzidos processo sobre formacao coluna fluido anular requer pressao superficie observavel equilibrar pressao fundo 
+ tecnica segura total retorno perdas geradas perfuracao 
+ alem disso tecnica viavel areas onde outras maneiras perfuracao preveem perdas aplicaveis caras 
+ pode usar agua fluido durante perfuracao 
+  gradiente dual dg dual gradiente termo utilizado variadas tentativas controlar pressao anular topo atraves manuseio densidade circulacao equivalente ecd equivalente circulating density operacoes perfuracao aguas profundas 
+ tocante nivel planejamento otimizacao decisoes tomadas visando obter valores variaveis trajetoria perfuracao peso broca rpm haste perfuracao modo perfuracao 
+ nivel controle variaveis pressao taxa escoamento densidade viscosidade lama continuamente usados fazer ajustes manipular variaveis taxa escoamento bomba valvulas choke velocidade haste perfuracao outras baseadas otimizacao tempo real 
+ objetivo dessas acoes maximizar rop juntamente objetivos adicionais tais minimizar desgaste broca perfuracao diminuir necessidade utilizacao quimicos aditivos etc 
+ mesma forma otimizacao tempo real assegura numero explicito restricoes satisfeito sendo critica dessas restricoes limites pressao breyholtz al 
+ figura representa sistema mpd 
+ sistema utiliza dispositivo controle rotacao rcd rotating control device selar anular valvula choke bomba pressao reversa 
+ aplicacao desse hardware permite operador controlar precisamente perfil pressao poco 
+ porem inserir instrumentacao adicional juntamente hardware sistema tornase complexo dificulta operador manter processo controlado 
+ implementacao sistema controle utilizando valvula choke vem sendo discutida diversos artigos zhou zhou zhou nygaard al 
+ kaasa al stamnes al breyholtz al breyholtz al helgestad erdem li al 
+ aplicacao auxilia operador tornando viavel tarefa 
+ aplicacao desse sistema testada sucesso algumas perfuracoes offshore representa avanco controle pressao durante perfuracao pocos 
+ figura esquema estrategia mpd integrar toda variedade informacoes obtidas sistema requer definicao niveis abstracao cada dado obtido 
+ tanto necessaria definicao nivel hierarquico cada tarefa assim ter melhor visao processo todo ver informacao ira ser processado intuito melhorar desempenho controle 
+ quanto complexo sistema ser controlado niveis hierarquicos possui breyholtz al 
+ capitulo modelagem processo perfuracao 
+ introducao figura ilustra exemplo sonda maritima perfuracao poco petroleo 
+ coluna perfuracao presa top drive motor responsavel rotacao coluna situa parte superior mastro derrick 
+ coluna permitida movimentacao vertical vez top drive encontrase preso ganho permitindo coluna movimente tanto cima quanto baixo conforme necessario penetrar formacao rochosa 
+ aproximadamente metros nova secao encanamento coluna conectada topo coluna anterior perfuracao retomada 
+ procedimento conhecido conexao tubo 
+ taxa regular perfuracao conexao tubo feita cada duas horas stamnes 
+ figura exemplo sonda perfuracao durante processo perfuracao componente conhecido lama perfuracao injetado coluna perfuracao 
+ funcao lama unicamente transportar detritos resultantes perfuracao 
+ responsavel controle pressao durante perfuracao poco 
+ tecnicas convencionais anular selado torna processo menos complexo barato 
+ porem sistema selado contando valvula estrangulamento valvula choke bomba pressao reversa permite melhor controle pressao 
+ principal motivo controle pressao prevenir kick influxo incontrolavel reservatorio pior casos pode causar blowout superficie geral causa grandes perdas financeiras danos meio ambiente possiveis perdas vidas humanas 
+ controle pressao importante prevenir colapso poco fraturamento reduzir dano superficie paredes poco 
+ danos parede poco causados lama penetra entope partes porosas reservatorio diminui producao estagios posteriores stamnes 
+ literatura existem diversos modelos matematicos tratam reproduzir dinamica processo perfuracao alguns rigorosos outros simplificados 
+ dentre destes ultimos dois modelos sobressaem modelo nygaard al 
+ modelo stamnes quais apresentados seguir 
+ modelo nygaard trabalho nygaard al 
+ propostos dois modelos modelo ordem reduzida outro modelo contem maior detalhamento fenomenos podem ocorrer poco durante processo perfuracao 
+ modelo ordem reduzida desenvolvido partir observacao comportamento fluido bifasico liquido gas perfuracao diz respeito pressao fundo 
+ figura apresenta esquema balanco massa processo perfuracao dividido dois sistemas coluna perfuracao anular 
+ seguindo divisao balanco massa coluna perfuracao denotado subindice dado figura balanco massa modelo nygaard sendo indice substituido faz referencia parte gasosa sistema parte liquida parametros equacao ficam seguinte forma   fluxo massa bomba fluxo massa broca perfuracao  massa coluna perfuracao 
+ balanco massa anular denotado subindice dado onde   fluxo massa reservatorio fluxo massa saida valvula choke  massa anular 
+ alem disso importante inserir sistema influencia pressao friccao introduzida velocidade liquido 
+ gas injetado poco volume gas altera mesma forma muda pressao hidrostatica devido variacao densidade mistura 
+ portanto pressoes atuam sobre sistema representadas divididas conforme figura 
+ balanco avaliado dois pontos distintos onde obtidas aceleracoes massa final broca topo anular 
+ figura balanco pressoes modelo nygaard variacao taxa fluxo massa mistura gasliquido coluna perfuracao dependente pressoes compressao propria coluna anular pressao hidrostatica coluna anular perdas causadas friccao coluna perfuracao anular 
+ assim equacao sendo area seccional coluna perfuracao 
+ adotando area seccional anular variacao fluxo massa mistura gasliquido valvula choke dada outro fator influencia pressao fundo profundidade poco 
+ medida profundidade vai tornando cada vez maior ocorre acrescimo taxa perfuracao 
+ sendo assim profundidade representada considerada estado sistema dinamico proposto nygaard al 
+ forma organizando equacoes balanco massa definindo entradas saida sistema modelo ordem reduzida pode ser descrito seguinte forma sendo vetor contendo sete estados entrada modelo saida onde representa pressao anular fundo bhp variavel devera ser controlada vetor contendo variavel manipulada corresponde parametro abertura valvula choke 
+ poco petroleo modelado usando coluna perfuracao anular dois compartimentos assumido gas uniformemente disperso liquido 
+ assim densidade mistura gasliquido cada parte poco dada seguinte relacao sendo massa gas massa liquido volume total compartimento analisado 
+ porosidade liquido mistura usada calcular taxa massa gas liquido dada velocidade reduzida perdas devido pressao friccao reduzidas gas expande causa fuga liquido poco leva gas ficar contido parte dentro 
+ taxa massa gas deve ser modificada misturas baixa velocidade nesse caso dada calculos fluxo massa parte gasosa liquida broca valvula choke obtidos partir fluxo massa mistura utilizando equacao 
+ assim fluxos massa ficam seguinte maneira pressao fundo dada sendo fator compressao liquido densidade gas constante gas massa molecular gas temperatura media pressao atmosferica gravidade profundidade poco fator friccao ocorre liquido parede poco velocidade mistura termos compoe equacao representadas equacoes valores obtidos equacao coeficiente descarga restricao relacao taxa fluxo massa final tubulacao area restricao caso valvula choke representa abertura 
+ modelo stamnes modelo originalmente proposto kaasa posteriormente desenvolvido stamnes 
+ nele considerado fluido perfuracao monofasico poco dividido dois compartimentos distintos maneira semelhante proposta nygaard al 
+ figura mostra divisao sistema duas regioes coluna perfuracao anular sendo conectadas broca perfuracao 
+ figura divisao sistema proposto modelo stamnes neste sistema bomba lama bombeia lama perfuracao dentro coluna perfuracao 
+ condicoes normais lama flui bomba coluna perfuracao broca anular sai valvula choke 
+ valvula choke lama reciclada retorna reservatorio 
+ proposito circulacao lama perfuracao limpar cascalhos ajudar manter perfil pressao correto poco 
+ maior componente peso hidrostatico lama seguido pressao choke ultimo pressao devido friccao brill mukhrtjee 
+ equacao mostra equacao estado estacionario pressao broca perfuracao principais componentes 
+ sendo densidade lama perfuracao gravidade profundidade pressao valvula choke fator friccao volume fluido anular podese perceber modificando qualquer desses parametros possivel modificar pressao broca perfuracao 
+ porem variar densidade leva tempo consideravel obter resposta pois alteracao atingir todo lama causar algum efeito demanda tempo 
+ formas rapidas conseguir variacao pressao broca alterando pressao valvula choke modificando volume fluido anular 
+ produzir alteracao pressao choke basta modificar abertura modificar volume fluido anular alterar fluxo bomba lama 
+ caso choke completamente fechada possivel modificar pressao controlando bomba pressao reversa 
+ aplicando principio balanco massa sistema mostrado figura pode ser descrito seguinte conjunto equacoes onde pressao bomba lama fluxo atraves broca perfuracao fluxo atraves bomba lama fluxo bomba pressao reversa fluxo valvula choke influxo reservatorio perturbacao pode ocorrer sistema 
+ demais fatores     volume coluna perfuracao volume anular modulo elasticidade coluna perfuracao modulo elasticidade anular  massa coluna perfuracao  massa anular    fator friccao coluna perfuracao fator friccao anular densidade anular 
+ valores obtidos meio equacoes ∫ ∫ sendo densidade media anular comprimento anular area seccional anular densidade media coluna comprimento total coluna perfuracao area seccional coluna perfuracao 
+ fluxo valvula choke dependente abertura pressao 
+ fluxo dado √ onde constante fluxo valvula pressao saida valvula sendo abertura valvula normalizada 
+ fluxos bomba lama bomba pressao reversa dados seguintes relacoes ambos fluxos dependentes velocidade rotacional bomba bomba lama bomba pressao reversa numero pistao cada bomba volume golpe pistao 
+ assumindo relacoes    substituindo equacoes equacoes modelo pode ser descrito sendo entrada controle dada constantes √ 
+ saida modelo nesse caso corresponde pressao broca perfuracao equivalente pressao fundo bhp pode ser representada 
+ escolha modelo avaliacao modelos apresentados observado modelo nygaard apresenta problema posto pratica conceito mpd 
+ valido fluido perfuracao bifasico aplicabilidade melhor adequa enunciado ubd onde gas injetado liquido mudar densidade fluido geral fazer pressao fundo inferior pressao estrutura 
+ modelo stamnes considera fluido perfuracao monofasico adotado presente trabalho principal ferramenta suporte simulacao processo perfuracao aplicacao tecnicas mpd 
+ simulacao matlab simulink® analise malha aberta usando equacoes valores parametros listados tabela possivel desenvolver simulador ambiente matlab simulink® cujo layout apresentado figura 
+ simulador entradas fluxo bomba lama percentual abertura valvula choke saida pressao broca equivale pressao anular fundo bhp 
+ alem disso possivel observar estados pressao bomba entrada fluxo broca pressao valvula choke 
+ tabela parametros simulacao modelo stamnes parametro valor unidade figura implementacao modelo stamnes ambiente matlab simulink® analisar resposta dinamica processo primeiro mantida constante variavel correspondente vazao lama valor variavel correspondente percentual abertura valvula choke sendo totalmente fechada totalmente aberta tendo ponto partida simulacao abertura valor variado conforme mostrado figura 
+ figura sequencia variacoes abertura valvula choke resposta saida bhp variacoes abertura valvula choke mostrada figura onde visualiza claramente fechamento valvula choke resultou aumento pressao fundo poco abertura resultou diminuicao dessa pressao 
+ alem disso embora variacoes entrada simetricas resposta assimetrica ressaltando grande naolinearidade processo 
+ figura comportamento pressao fundo variacoes abertura valvula choke figura mostra comportamento estados pressao bomba lama fluxo broca pressao valvula choke 
+ nela possivel observar comportamento pressoes forma analoga comportamento pressao fundo 
+ abertura valvula choke alterada pressao nela pressao bomba lama acompanham inversamente alteracao apresentando aumento pressao caso fechada alivio pressao aberta 
+ fluxo broca tende responder forma direta abertura valvula voltando estabilizar ponto operacao nominal 
+ figura resposta estados variacoes abertura valvula choke noutro caso abertura valvula choke mantida constante fluxo bomba lama modificado 
+ variavel entrada inicializada valor tempo sofre alteracoes conforme mostrado figura 
+ figura variacoes vazao bomba lama figura mostra perfil resposta pressao fundo 
+ nela possivel visualizar pressao varia maneira diretamente proporcional variacao fluxo bomba lama 
+ fluxo lama aumenta aumenta pressao hidrostatica portanto bhp aumenta fluxo lama diminui pressao acompanha 
+ figura comportamento pressao fundo variacoes fluxo bomba lama figura mostra comportamento estados pressao bomba entrada fluxo broca pressao valvula choke respectivamente 
+ neste caso tres estados comportam maneira semelhante bhp sendo diretamente proporcionais variacao fluxo bomba lama 
+ aumento diminuicao fluxo lama sistema aumenta diminui pressao hidrostatica aumenta diminui pressoes vazao broca 
+ figura resposta estados variacoes fluxo lama outras respostas analisadas influencia perturbacoes 
+ enquanto vazao bomba lama abertura valvula choke mantidos constantes estados estacionarios respectivamente simulados variacoes influxo reservatorio variacoes vazao bomba pressao reversa 
+ simulacoes anteriores variaveis permaneceriam valor estacionario mostrados tabela 
+ primeira perturbacao simulada consistiu variacoes influxo reservatorio 
+ nesse caso valor estacionario modificado valor inicial conforme mostra figura 
+ figura sequencia variacoes vazao influxo comportamento pressao fundo apresentado figura 
+ possivel observar modificacao valor gera variacao diretamente proporcional pressao fundo 
+ tendencia repete estados mostrados figura excecao comportamento vazao broca perfuracao 
+ vazao broca perfuracao intimamente ligada valor sofre alteracao inversamente proporcional modificacao influxo 
+ figura comportamento pressao fundo variacoes vazao influxo figura resposta estados variacoes vazao influxo segunda perturbacao analisada influencia mudancas vazao bomba pressao reversa 
+ neste caso valor estacionario modificado valor inicial conforme mostrado figura 
+ perfil comportamento pressao fundo apresentado figura 
+ possivel observar modificacao valor gera variacao diretamente proporcional pressao fundo 
+ estados representados figura comportam maneira semelhante excecao vazao broca perfuracao 
+ acontece gracas influencia pressao valvula choke sobre fluxo broca 
+ nesse caso ocorre aumento pressao choke diminuicao valor viceversa 
+ figura sequencia variacoes vazao bomba pressao reversa figura resposta pressao fundo variacoes vazao bomba pressao reversa figura respostas estados variacoes vazao bomba pressao reversa capitulo teoria controle preditivo mpc 
+ introducao termo controle preditivo mpc controle preditivo baseado modelo mbpc refere classe algoritmos controle avancado controla resposta futura planta atraves uso modelo explicito processo 
+ cada instante amostragem mpc soluciona online problema lq linear quadratico horizonte finito usando estado atual planta estado inicial 
+ resultado otimizacao gera sequencia controle otimo aplicada acordo filosofia controle horizonte movel moving horizon control receding horizon control rhc fornecendo controlador caracteristicas realimentacao desejadas sotomayor 
+ mpc estrategia controle especifica nome dado conjunto metodos controle desenvolvidos considerando algumas ideias comuns baseadas conceito predicao 
+ modelo predicao provavelmente elemento importante dentro controlador dado deve ser capaz representar adequadamente dinamica processo permitir calculo predicoes saida ser intuitivo tempo permitir analise teorica sistema plucenio al 
+ mpc surgiu necessidade pratica lidar problemas multivariaveis pois controladores convencionais malha simples incapazes satisfazer requerimentos crescentes desempenho industrias 
+ ideias mpc inicio partir garcia al 
+ porem real interesse neste campo comecou crescer partir publicacao primeiros trabalhos sobre mphc model predictive heuristic control dmc dynamic matrix control particularmente qdmc quadratic dynamic matrix control ficaram populares industria petroquimica estacoes forca 
+ desde epoca surgido novas variantes mpc 
+ entrar detalhes alguns algoritmos mpc mac model algorithm control imc internal model control gpc generalized predictive control mocca multivariable optimal constrained control algorithm hiecon hierarchical constraint control pfc predictive funtional control opc optimum predictive control pct predictive control technology recente rmpct robust model predictive control technology 
+ apesar enorme quantidade abreviacoes introduzidas existem muitas diferencas algoritmos 
+ tipicamente algoritmos diferem modelo processo usado tais modelos parametros markov resposta impulso resposta degrau funcao transferencia modelos polinomiais modelos espaco estados perturbacoes constantes retardos ruido branco etc adaptacao sotomayor 
+ desde teoria controle mpc evoluido substancialmente 
+ questoes teoricas praticas tratadas varios livros maciejowski morari al 
+ excelente ponto partida artigo qin badgwell apresenta breve historia comparacoes algoritmos mpc reportando aplicacoes industriais 
+ morari lee discutem passado presente futuro mpc enquanto rawlings mostra visao geral desta tecnologia 
+ lofberg tratam otimizacao estabilidade robustez mpc 
+ recente trabalho nicolaou trata ultimos desenvolvimentos mpc discute implicacoes futuro teoria pratica deste controle sotomayor 
+ aparecimento algoritmos mpc naolineares nmpc henson qin badgwell geracao corrente algoritmos mpc comercialmente disponiveis baseados modelos lineares lmpc simplesmente mpc 
+ ainda atualmente literatura pesquisa mpc quase sempre formulado espaco estados morari lee 
+ simplificado unificado generalizado teoria incluindo facil extensao sistemas multivariaveis facil analise propriedades malha fechada calculo online sotomayor 
+ principais vantagens lmpc vinculadas facilidades obtencao modelos lineares comparados lineares menores dificuldades resolver problemas otimizacao associados 
+ porem processos dinamica linear faixa operacao variavel entao necessariamente devera ser tomado conta modelo linear projeto controle forma permita manter desempenho desejado sistema malha fechada plucenio al 
+ figura ilustra implementacao basica todos algoritmos controle mpc 
+ figura esquema implementacao algoritmos mpc instante tempo atual usualmente definido instante comportamento processo longo horizonte tempo considerado 
+ intervalo tempo conhecido horizonte predicao 
+ utilizando modelo processo respostas deste processo mudancas variaveis manipuladas previstas 
+ acoes variaveis manipuladas selecionadas tal forma resposta prevista apresenta determinadas caracteristicas desejaveis 
+ acoes controle podem variar apenas dentro horizonte conhecido horizonte controle 
+ forma geral minimizase criterio desempenho desejado sujeito dinamica modelo possiveis restricoes variaveis entrada saida 
+ apenas primeira acao controle calculada fato implementada processo real 
+ variaveis controladas planta entao medidas 
+ proximo instante amostragem problema otimizacao resolvido nova condicao inicial obtida mediante informacao tirada medidas planta desta maneira introduz retroalimentacao feedback controlador horizonte movido adiante intervalo amostragem qin badgwell 
+ estrutura inerente todos algoritmos mpc ilustrada figura onde controlador chamado otimizador 
+ kkk figura estrutura sistema controle mpc 
+ lmpc convencional controlador qdmc primeiros controladores aplicados industria inicio anos utilizavam estrategia mpc restricoes conhecido dmc usavam modelo convolucao linear resposta degrau geracao sequencia controle otimizacao analitica 
+ porem aparecimento restricoes presentes processos necessitavam inclusao desenvolvimento controlador necessaria evolucao algoritmo controle 
+ otimizacao neste caso passou ser numerica solucao problema convexo dmc meio programacao quadratica qp deu origem qdmc proposto garcia morshedi 
+ qdmc usa mesmas equacoes predicao dmc sintese desenvolvimento dmc pode ser encontrada apendice deste trabalho 
+ euae onde vetor erros valores previstos valor desejado 
+ vetor erros valor desejado valores previstos nenhuma acao controle futura sistema malha aberta 
+ considerando seguinte funcao objetivo sendo matriz fatores supressao atenua variacoes acoes controle matriz diagonal ponderacao onde valores diagonal principal proporcionais importancia variavel controlada substituindo equacao equacao ultimo termo segundo membro depende variavel interesse funcao objetivo controlador pode ser escrita onde urruwewetttturrueuawweuatttt  weweuwaweurrwawauttttttttuucuhuttumin problema definido equacao podemos incluir restricoes variaveis manipuladas controladas 
+ incrementos manipuladas condicoes podem ser resumidas 
+ valores manipuladas rrwawahtttwawecttt maxmaxuuumaxuumax 
+ uuuiimmnmnmmaxminuuukkkmkkknnnnnnmkkkuuuuuuiiiiiiuuuummmmmm portanto equivale equivale dai condicoes podem ser resumidas resumindo problema otimizacao qdmc resolve funcao objetivo definida equacao restricoes representadas equacoes 
+ facil observar funcao objetivo quadratica restricoes todas lineares 
+ tipo problema classico dentro area otimizacao conhecido problema programacao quadratica pq 
+ resultado otimizacao primeira acao controle vetor usado planta 
+ nmpc convencional embora processos industriais geral naolineares maior parte aplicacoes mpc baseadas uso modelos lineares 
+ existem duas principais razoes lado identificacao modelo linear baseado dados processo relativamente facil outro lado modelos lineares produzem bons resultados planta opera vizinhanca ponto operacao 
+ industrias processos onde lmpc amplamente difundido objetivo manter processo proximo estado estacionario inves mudar frequentemente ponto operacao outro modelo linear preciso suficiente 
+ alem disso uso modelo linear conjunto funcao objetivo quadratica leva problema qp converge cuja solucao implementada diversos produtos comerciais disponiveis 
+ existencia algoritmos garantem solucao convergente periodo curto periodo amostragem crucial processos grande numero variaveis camacho al 
+ kuunumaxuumaxkuuunminuuminuuunkminmaxuuuuunnkkuu entretanto resposta dinamica resultante controlador linear inaceitavel aplicada processo naolinear varios graus severidade 
+ embora muitas situacoes processo possa estar operando vizinhanca estado estacionario representacao linear adequada existem diversas situacoes onde ocorre 
+ lado processos onde linearidade tao severa proximidade estado estacionario tao crucial estabilidade malha fechada modelo linear suficiente 
+ outro lado alguns processos experimentam transicoes continuas partidas desligamentos etc 
+ passam bom tempo longe regiao operacao estado estacionario processos nunca operacao estado estacionario caso fornos onde toda operacao levada modo transiente 
+ processos lei controle linear eficiente sendo controladores lineares essenciais melhorar performance estabilizar operacao camacho al 
+ ponto vista conceitual nmpc apresenta dificuldades 
+ considerando mesma funcao objetivo caso linear modelo naolinear calculo predicoes objetivo consiste novamente encontrar controle minimize funcao objetivo algoritmo horizonte movel 
+ ponto vista pratico varias dificuldades encontradas neste problema comparado caso linear determinacao modelo processo deve ser obtido identificacao obtencao sinal controle requer geral solucao problema otimizacao naoconvexo analise estabilidade robustez solucao 
+ motivos nmpc campo aberto pesquisas tanto area determinacao modelos procedimentos algoritmos otimizacao calculo controle plucenio al 
+ existe grande quantidade tecnicas mpc direta indiretamente tratam sistemas naolineares findeisen allgower 
+ possivel classificacao destas tecnicas divide grupos utilizam diretamente modelo naolinear generico algoritmo otimizacao naolinear proposito geral utilizam modelos naolineares particulares series volterra modelos hammerstein metodos otimizacao especificos modelo escolhido utilizam varios modelos lineares representar processo algoritmos otimizacao lineares 
+ evidentemente vantagens desvantagens outra alternativa diretamente relacionadas compromisso desempenhocusto computacional plucenio al 
+ definido modelo linear utilizado controlador hora montar algoritmo controle 
+ presente trabalho adotouse tecnica grupo onde utilizado modelo naolinear geral processo algoritmo otimizacao proposito geral 
+ versao simplificada deste algoritmo nmpc desenvolvida qin badgwell apresentada seguir 
+ levando consideracao planta ser controlada pode ser descrita modelo espaco estados naolinear discreto tempo definido seguintes equacoes onde vetor entradas processo variaveis manipuladas vetor saidas processo variaveis controladas vetor variaveis estado vetor variaveis perturbacoes medidas vetor perturbacoes medidas ruido vetor ruido 
+ resolver problema controle necessario resolver computacionalmente sequencia entradas levarao processo estado atual estado desejado 
+ perturbacoes feedfoward removidas incorporando efeitos modelo 
+ perturbacoes feedback tipicamente manuseadas assumindo perturbacao degrau colocado saida permanecera constante todo tempo futuro 
+ alcancar termo compara saida prevista atual atual medida saida dado sendo termo utilizado predicoes subsequentes forma algoritmo controle aqui descrito minimiza seguinte funcao ‖ ∑ ‖ ∑ ‖ ‖ sujeita seguintes restricoes sendo horizonte predicao horizonte controle comportamento futuras saidas controlado penalizando desvios estado estacionario desejado verifica valor atual valor desejado calcula erro representado termo corresponde variacoes entrada representa entrada determinado instante sendo nesse caso varia acordo horizonte controle 
+ matrizes matrizes peso definem ganhos atribuidos cada variavel controlada manipulada possivel atribuir importancia cada saida entrada dessa forma ajustar controlador parar funcionar maneira proxima desejada 
+ ponto vista pratico principal vantagem desse metodo reside uso modelo linear permite geral obter predicoes proximas saidas reais planta 
+ desvantagens devem citarse questoes iterativas metodos otimizacao incerteza tempo levam entregar resposta convergencia solucoes minimos locais etc 
+ fazem utilizacao controle tempo real ainda pouco difundida plucenio al 
+ capitulo controle preditivo processo perfuracao 
+ introducao neste capitulo apresentados resultados simulacoes aplicacao sistema controle avancado processo perfuracao cujo layout ambiente matlab simulink® mostrado figura 
+ dois sistemas controle avancado implementados baseado lmpc outro nmpc apresentados capitulo anterior 
+ objetivo analisar comportamento ambos sistemas bem tecer comparacoes acerca desempenhos submetidos diversas variacoes condicoes operacao 
+ seguindo estrategia proposta breyholtz al 
+ aqui bhp controlada manipulacao vazao bomba lama abertura valvula choke 
+ vazao influxo reservatorio vazao bomba pressao reversa consideradas perturbacoes 
+ figura controle mpc coluna perfuracao 
+ controle lmpc processo perfuracao implementacao lmpc usa modelo linear processo forma matriz funcoes transferencia mostrado tabela predicao parametros sintonia listados tabela 
+ funcoes transferencia obtidas aplicacao teste resposta degrau sistema malha aberta 
+ parametros sintonia controlador definidos apos extensivas simulacoes usando algumas regras heuristicas literatura procedimento tentativa erro 
+ tabela funcoes transferencia modelo linear tabela parametros sintonia controlador lmpc parametro descricao tempo amostragem horizonte modelo numero saidas numero entradas horizonte predicao otimizacao horizonte controle valor limite minimo entradas limite maximo entradas incremento maximo entradas fator ponderacao saida fator supressao entradas resposta processo mudancas ponto operacao mostrada figura 
+ primeira mudanca setpoint apos oscilacao moderada sistema demora estabilizar aproximadamente 
+ segunda terceira mudanca setpoint sistema estabiliza respectivamente pequeno sobressinal segunda mudanca 
+ figura mostra coordenacao variaveis manipuladas atingir ponto operacao desejado 
+ figura resposta pressao fundo lmpc variacoes setpoint figura comportamento variaveis manipuladas lmpc variacoes setpoint influencia variacao influxo reservatorio apresentada figura 
+ neste caso valor alterado tempo 
+ pode ser observado aumento bhp volta ponto operacao exibindo offset respeito setpoint 
+ falta controle pode ser explicada saturacao duas variaveis manipuladas conforme mostrado figura 
+ figura resposta pressao fundo lmpc variacao vazao influxo reservatorio figura comportamento variaveis manipuladas lmpc variacao vazao influxo reservatorio efeito variacao vazao bomba pressao reversa mostrado figura 
+ perturbacao acontece tempo vazao muda provocando pico positivo consideravel valor pressao estabiliza ponto operacao nominal aproximadamente 
+ variacoes variaveis manipuladas compensar perturbacao mostradas figura exigindo aumento abertura valvula choke diminuicao quase total vazao lama perfuracao 
+ figura resposta pressao fundo lmpc variacao vazao bomba pressao reversa figura comportamento variaveis manipuladas lmpc variacao vazao bomba pressao reversa finalmente verificase resposta processo perda efetividade controle provocada travamento valvula choke abertura ocorrendo tempo 
+ aumento repentino sustentado abertura valvula choke produz decaimento pressao mostrado figura 
+ controlador consegue acomodar falha aproximadamente aumentando vazao lama conforme visto figura 
+ figura resposta pressao fundo lmpc perda controle valvula choke figura comportamento variaveis manipuladas lmpc perda controle valvula choke 
+ controle nmpc processo perfuracao implementacao nmpc usa modelo naolinear descreve processo predicao saida parametros sintonia listados tabela 
+ maneira semelhante caso linear parametros sintonia controlador definidos apos extensivas simulacoes usando algumas regras heuristicas literatura procedimento tentativa erro 
+ efeitos comparacao desempenho nmpc lmpc praticadas mesmas variacoes condicoes operacao caso linear apresentadas secao 
+ tabela parametros sintonia controlador nmpc parametro descricao tempo amostragem numeros saidas numero entradas horizonte predicao otimizacao horizonte controle valor limite minimo entradas limite maximo entradas fator ponderacao saida fator supressao entradas resposta processo sequencia mudancas setpoint mostrada figura 
+ primeira mudanca setpoint sistema atinge oscilacoes novo ponto operacao ai permanece 
+ segunda mudanca setpoint acompanhamento quase imediato estabilizando terceira mudanca sistema alcanca novo ponto operacao aproximadamente 
+ comportamento variaveis manipuladas mostrado figura 
+ oscilacao brusca principalmente segunda variacao setpoint geral respostas variaveis manipuladas rapidas permitiu processo alcance rapidamente novos pontos operacao oscilacoes 
+ figura resposta pressao fundo nmpc variacoes setpoint figura comportamento variaveis manipuladas nmpc variacoes setpoint figura apresenta perfil resposta bhp variacao influxo reservatorio 
+ diferente caso linear perturbacao provoca diminuicao acentuada pressao fundo recupera rapidamente voltando setpoint aproximadamente 
+ figura mostra comportamento variaveis manipuladas contornar efeitos desta perturbacao 
+ figura resposta pressao fundo nmpc variacao vazao influxo reservatorio figura comportamento variaveis manipuladas nmpc variacao vazao influxo reservatorio acao regulatoria sistema variacao vazao bomba pressao reversa mostrada figura 
+ pode ser visualizado controle compensa perfeitamente perturbacao mostrando nenhuma alteracao bhp 
+ conseguir objetivo controlador aumenta abertura valvula choke mantendo constante vazao lama conforme ilustrado figura 
+ figura resposta pressao fundo nmpc variacao vazao bomba pressao reversa figura comportamento variaveis manipuladas nmpc variacao vazao bomba pressao reversa ultimo caso avaliacao consideramos valvula choke presa abertura 
+ figura podese observar falha provoca queda repentina pressao porem magnitude menor comparada caso linear acomodada aproximadamente 
+ controlar compensa perda efetividade controle valvula choke aumento rapido vazao lama perfuracao mostrada figura 
+ figura resposta pressao fundo nmpc perda controle valvula choke figura comportamento variaveis manipuladas nmpc perda controle valvula choke 
+ discussao resultados realizadas simulacoes equivalentes ambos controladores primeira diz respeito variacao setpoint 
+ nesse caso possivel observar rapidez controlador lmpc responde comparado nmpc 
+ exemplo disso primeira entrada degrau positivo sistema lmpc demora apenas segundos efetivamente controlar processo nmpc demora cerca segundos 
+ mediante ocorrencia aumento vazao influxo reservatorio nmpc sofre alteracao brusca saida porem rapidamente compensada levando pressao fundo novamente valor desejado 
+ nesse caso variacao saida pouco branda controlador apos ocorrencia dessa perturbacao consegue levar saida valor desejado 
+ alterada vazao bomba pressao reversa novamente nmpc possui melhor resposta pois insercao dessa perturbacao saida afetada gracas rapida acao variaveis manipuladas 
+ saida lmpc sofreu modificacao resultou demora sistema controlar pressao fundo novamente 
+ simular problema valvula choke nesse caso travamento determinado valor tempo resposta ambos controladores bem proximos ficando diferenca variacao ocorreu saida controlador 
+ nmpc variacao ligeiramente menor lmpc 
+ serem realizadas devidas comparacoes desempenho sistemas controle avancado possivel notar superioridade nmpc comparado lmpc 
+ simulacoes realizadas controlador nmpc obteve comportamento suave saida momentos presenca variacoes perturbacoes variaveis manipuladas nesse caso bomba entrada lama valvula choke apresentaram oscilacoes pudessem prejudicar desempenho sistema longo utilizacao 
+ fato algoritmo nmpc responder forma rapida resulta inclusive diferenca repostas inserida sistema ocorrencia influxo sob forma variavel 
+ acordo modelo figuras valor influxo aumenta pressao fundo deveria aumentar 
+ evento pode ser observado figuras representam variacao controlador linear lmpc 
+ porem controlador linear nmpc figuras mostram ocorre 
+ fenomeno deve fato controlador possui duas entradas saida grau liberdade positivo podem nesse sistema ocorrer variacoes quanto comportamento entradas 
+ nesse caso controlador responde maneira rapida gera disturbios comportamentos variaveis entrada consequentemente retorna resposta mostrada figura 
+ capitulo conclusoes recomendacoes 
+ conclusoes extrema importancia durante processo perfuracao ter controle sobre pressao fundo poco ser perfurado tanto evitar acidentes possam vir causar perdas vidas humanas ambientais financeiras quanto minimizar desperdicio lama perfuracao encarece processo todo diminuir tempo sonda passa operante 
+ trabalho objetivo estudar algumas tecnicas controle avancado aplicadas perfuracao pocos petroleo 
+ desenvolvimento implementacao modelo coluna perfuracao dois modelos estudados porem vista necessidade fluido monofasico imposta mpd modelo nygaard descartado utilizado base implementacoes modelo stamnes 
+ simulacoes realizadas malha aberta condizem esperado sistema real 
+ tocante tecnicas controle dois controladores implementados 
+ primeiro baseado modelo linearizado coluna perfuracao resultando algoritmo controle lmpc 
+ segundo controlador nmpc obtido partir modelo linear processo 
+ efeitos comparacao realizadas mesmas simulacoes ambos controladores 
+ longo trabalho possivel visualizar superioridade algoritmo nmpc algoritmo resultou respostas rapidas controle suave poucas penalizacoes componentes manipulados sistema caso processo perfuracao algo bastante util visto demora controlar pressao pode resultar acidentes possam levar perdas financeiras ecologicas humanas 
+ utilizacao algoritmos lmpc difundida mercado significa algoritmos nmpc sofrem demeritos aplicacao escassa devido dificuldade intrinseca processo linear 
+ porem visto nesse trabalho possivel implementar controlador nmpc maneira relativamente simples cujos resultados satisfatorios nesse caso superiores obtidos utilizacao algoritmos lmpc 
+ trabalho futuros vertente controladores nmpc vem ganhando espaco diante publicacoes academicas cientificas 
+ algoritmos controle naolinear ferramentas poderosas manutencao controle processos industriais variados graus complexidade 
+ continuidade estudo desse tipo controle valida principalmente aplicada setores cuja exploracao tende crescer caso industria petroleo especificamente processo perfuracao pocos 
+ trabalho futuros recomendase usar modelos rigorosos processos perfuracao visto contidos nesse trabalho modelos ordem reduzida parametros concentrados 
+ outra sugestao avaliacao controladores sujeita variacoes parametros processo densidade lama perfuracao levem consideracao outras variaveis manipuladas bomba pressao reversa outras variaveis controladas rop 
+ alem disso controladores avancados lmpc nmpc aqui testados podem ser implementados sendo parte estrutura controle hierarquica conforme proposto breyholtz 
+ estruturas controle hierarquico comumente adotadas controlar plantas completas relacionadas industria petroleo setores industria geral cujos processos dotadas certa complexidade 
+ referencias bibliograficas alberta energy utilities board 
+ id underbalanced drilling 
+ controle pressao anular fundo taxa penetracao durante perfuracao pocos petroleo 
+ anais ix congresso brasileiro engenharia quimica iniciacao cientifica cobeqic maringa brasil 
+ nonlinear model predictive pressure control drilling operations 
+ norwegian university science technology 
+ evaluating control designs coordinating pump rates choke valve managed pressure drilling operations 
+ proceeding ieee multiconference systems control msc petersburgo russia 
+ managed pressure drilling multilevel control approach 
+ proceeding spe intelligent energy conference exhibition utrecht holanda 
+ automatic control managed pressure drilling 
+ proceeding american control conference acc baltimore usa 
+ nonlinear model preditive control introductory review 
+ international workshop assessment future directions nonlinear model predictive control nmpc freudenstadtlauterbad germany 
+ controle preditivo multimodelos pressao anular fundo perfuracao pocos petroleo 
+ trabalho conclusao curso universidade federal sergipe 
+ managed pressure drilling applications index 
+ proceeding offshore technology conference houston usa 
+ formada camada presal 
+ disponivel http mundoestranho 
+ br materia comofoiformadaacamadadopresal acessado 
+ corrida mar desafios tecnologicos ambientais presal 
+ ufrj rio janeiro brasil 
+ disponivel http deepwaterhorizon 
+ managed pressure drilling erases lines 
+ entenda camada presal 
+ disponivel http www 
+ br folha dinheiro cultu 
+ shtml acessado fraga 
+ audiencia publica senado federal brasilia brasil 
+ introduction nonlinear model predictive control 
+ proceedings st benelux meeting systems control veldhoven holanda 
+ quadratic programming solution dynamic matrix control qdmc 
+ chemical engineering communications 
+ drilling process plantwide control approach 
+ master thesis norwegian university science technology noruega 
+ nonlinear model predictive control current status future directions 
+ computers chemical engineering 
+ technology outlook efficient well construction 
+ technical report hydro 
+ simple dynamic model drilling control 
+ technical report statoil hydro resarch centre porsgrunn 
+ intelligent estimation downhole pressure using simple hydraulic model 
+ proceedings iadc spe managed pressure drilling underbalanced operations conference exhibition denver usa 
+ integrated estimator adaptive controller well drilling systems 
+ proceedings american control conference acc st 
+ linear model predictive control stability robustness 
+ thesis linkoping university suecia 
+ managed pressure drilling techniques tools 
+ mater thesis a&m university 
+ constrained model predictive control stability optimality 
+ model predictive control past present future 
+ computers chemical engineering 
+ model predictive control 
+ nonlinear model predictive control scheme stabilizing annulus pressure oil well drilling 
+ journal process control 
+ disponivel http www 
+ controle preditivo linear industria petroleo gas 
+ anais iv congresso brasileiro p&d petroleo gas pdpetro campinas brasil 
+ overview nonlinear model predictive control applications 
+ nonlinear model predictive control allgower 
+ progressin systems control theory series 
+ switzerland birkhauser boston 
+ overview industrial model predictive control technology 
+ control engineering practice 
+ tutorial overview model predictive control 
+ ieee control systems magazine 
+ managed pressure drilling 
+ gulf publishing company houston eua 
+ aplicacao dinamica sistemas estudo comportamento taxas diarias aluguel sondas perfuracao offshore 
+ trabalho conclusao curso ufrj rio janeiro brasil 
+ adaptive observer bottomhole pressure drilling 
+ norwegian university science technology 
+ adaptive observer design bottomhole pressure managed pressure drilling system 
+ proceedings th ieee conference decision control cdc cancun mexico 
+ underbalanced drilling managed pressure drilling two methods optimising drilling 
+ exploration production oil gas review 
+ pressure control oil well drilling 
+ modelagem identificacao controle sistemas tratamento lodo ativado remocao nitrogenio 
+ thesis escola politecnica universidade paulo brasil 
+ managed pressure drilling techniques equipment applications 
+ mater thesis middle east technical university 
+ adaptive output feedback control dynamic drilling system 
+ proceedings th ieee conference decision control cdc cancun mexico 
+ observerbased control managed pressure drilling system 
+ proceedings th chinese control decision conference ccdc yantai china 
+ pressure regulation kick attenuation managed pressure drilling system 
+ proceedings th ieee conference decision control th chinese control conference cdc ccc shanghai china 
+ swicthed control pressure regulation kick attenuation managed pressure drilling system 
+ ieee transactions control system technology 
+ adaptive observer kick detection switched control bottomhole pressure regulation kick attenuation managed pressure drilling 
+ proceedings american control conference acc baltimore eua 
+ apendice controlador dmc restricoes processo respostas degrau pulsos unitarios representadas figura 
+ valores correspondentes resposta degrau unitario instantes amostragem onde periodo amostragem instante partir resposta estabiliza 
+ analogamente valores correspondentes resposta pulso unitario mesmos instantes amostragem 
+ nesse caso valor pode ser considerado desprezivel 
+ podese demonstrar forma equivalente figura respostas sistema ordem degrau pulso unitarios 
+ base nessas informacoes podemos escrever instante seguinte modelo convolucao discreta dominio tempo predicao variavel cutlher 
+ dynamic matrix control dmc computer control algorithm 
+ join automatic control conference san francisco ca 
+ niai nihi  aahaahah hhhahhaha equacao acima pode ser escrita instante subtraindo equacao definindo substituindo equacao fornece estimativa saida sistema instante futuro partir variacoes entradas sistema instante 
+ instante atual estimativa futura funcao dados atuais passados 
+ obter estimativa precisa equacao deve ser corrigida exemplo erro valor calculado instante onde valor real medido valor calculado instante previsao corrigida instante consideremos agora valor desejado vamos designalo 
+ geral pode estar relacionado setpoint dessa variavel atraves filtro primeira ordem 
+ introducao desse filtro visa tornar acoes controle suaves 
+ caso vamos desconsiderar filtro adotar niikikuhyˆniikikuhyˆniikikikkuuhyyˆˆkkkuuuniikikkuhyyˆˆkyˆkkkcyyyykˆˆkykyˆckykyˆdky onde valor setpoint 
+ caso ideal dai substituindo equacoes ficamos onde desvio erro instante 
+ combinando equacoes obtemos instante atual equacao apenas conhecemos contem acao controle instante 
+ demais acoes controle aconteceram passado portanto conhecidas 
+ entao resolvendo equacao instante obtemos podemos calcular equacao define controlador preditivo simples possivel 
+ chamado controlador deadbeat onde valor desejado atingido apenas periodo amostragem apos aplicacao acao controle 
+ algoritmo controle seguintes inconvenientes aplicavel processos tempo morto pois neste caso aplicavel pequeno frequente pois acao controle grande influenciado ruidos espurios 
+ spkdyykspkydckkyykkspkkkeyyyyˆˆkniikieuhkuniikikkuhehukkkuuu melhorar robustez incorporar processos tempo morto necessario considerar numero maior instantes futuros alem instante 
+ desta forma acao controle amenizada pois processo tempo atingir objetivo atingir setpoint 
+ portanto intervencao controlador sobre processo podera ser suave 
+ equacao valida qualquer instante futuro 
+ nesse caso ficamos onde sendo denominado horizonte otimizacao predicao controlador podendo ser usado parametro sintonia controlador 
+ vamos admitir agora erro predicao feita equacao qualquer valor 
+ vamos admitir erro observado instante 
+ equivale impor substituindo equacao obtemos portanto usando equacao abrindo somatoria vamos definir niijkijkjkuhyyˆˆjkcjkjkcjkyyyyˆˆkckyyniijkicjkcjkuhyyniikickckuhyynknkkkkckuhuhuhuhyyniikiuhs dai fica observe valor conhecido pois depende acoes controle passadas 
+ analogamente aplicando equacao abrindo somatoria definindo obtemos valor conhecido pois depende acoes controle passadas 
+ substituindo equacao equacao segue analogamente obtemos onde kkcksuhyyniikickckuhyynknkkkckckuhuhuhuhyyniikiuhskkckcksuhuhyyyyhhuhusskckkkyyhhhuhhuhussskckkkkniikiuhs podemos assim definir equacoes podem ser escritas seguinte maneira assim inducao podemos generalizar qualquer obter considerando todos instantes predicao onde vetor valores previstos matriz dinamica vetor acoes controle instante calculado nniinkinuhsinnispijjihakkckpuayykkkckpuauayykkkkckpuauauayyjjkkjkjkcjkpuauauayynpknpkkknpknpkkknpnpnpnpcnpkcnpkckckpypypypyuuuuaaaaaaaaaayyyypyuaykccyu vetor predicoes decorrentes acoes controle passadas suponhamos trajetoria desejada dada escrevendo todos instantes futuros subtraindo equacao obtemos onde notacao vetorial equacao fica onde vetor erros valores previstos valor desejado 
+ vetor erros valor desejado valores previstos nenhuma acao controle futura sistema malha aberta 
+ podemos desejar valor calculado igual trajetoria desejada portanto spkdjkyyspkspkspkspkdnpkdnpkdkdkyyyyyyyynpknpkkknpknpkkknpnpnpnpcnpkdnpkcnpkdnpkckdkckdkpepepepeuuuuaaaaaaaaaayyyyyyyykspkkyye euaenpjyycjkdjk 
+  porem dimensoes matrizes vetores equacao podem tornar complicada manipulacao computacional mesmas 
+ matriz pode ser singular inversa caso sistema tempo morto 
+ contornar problemas consideramos apenas primeiros elementos vetor  assumindo demais valores desse vetor nulos 
+ deste modo equacao escrita seguinte forma forma vetorial seguindo procedimento controlador estara calculando saida instantes futuros instante atual instante 
+ calcular acoes controle futuras mpc minimiza erro trajetorias prevista desejada minimiza seguinte indice desempenho queremos entao encontrar acoes controle minimizem portanto  eaueuaenpkmkmkkkmkkkmnpmnpnpnpmmmmcnpkdnpkcmkdmkcmkdmkckdkckdkpepepepepeuuuaaaaaaaaaaaaaaayyyyyyyyyyxnpxmmxnpxnpeuae mku euaeuaeejtteauaaujjtt min eaaautt explicitando dimensoes vetores matrizes envolvidos equacao acima equacao determina futuras acoes controle vetor porem apenas acao instante implementada 
+ instante seguinte repetimos todo processo fazendo instante assumir posicao calculando tudo novamente 
+ procedimento apenas precisamos multiplicar primeira linha matriz vetor 
+ parametros sintonia mpc introduzidos agora horizonte convolucao estabilizacao processo horizonte predicao otimizacao horizonte controle implementacao indice desempenho definido equacao conduz acao controle violenta 
+ atenuar comportamento acrescentado peso variacao acao controle conforme seguinte equacao onde matriz fatores supressao pondera atenua variacoes acoes controle normalmente matriz diagonal todos valores constantes iguais 
+ quanto maior valor suave acao controle resultante 
+ matriz outro parametro sintonia controlador 
+ dai indice desempenho definido resulta alem disso existem variaveis controladas importantes outras 
+ existem variaveis devem seguir setpoint maior fidelidade enquanto outras podem oscilar torno valor desejado 
+ nesse caso necessario ponderar diferentemente xnpnpxmtmxnpnpxmtxmeaaau uttaaa influencia variaveis controladas funcao objetivo 
+ implementar tal efeito basta pre multiplicar equacao matriz diagonal ponderacao cujos valores diagonal principal proporcionais importancia variavel controlada neste caso queremos minimizar quadrados erros ponderados portanto obtemos expressao analoga equacao expressao usual controlador dmc restricoes variaveis manipuladas 

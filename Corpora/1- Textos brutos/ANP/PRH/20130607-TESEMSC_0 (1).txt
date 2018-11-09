@@ -1,0 +1,7817 @@
+CONTROLE DE VIBRAÇÕES 
+MECÂNICAS TIPO “STICK-SLIP” 
+EM COLUNAS DE PERFURAÇÃO 
+
+Aluno: Michael Angel Santos Arcieri 
+
+Orientador: Oscar A. Z. Sotomayor 
+
+Junho, 2013 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+    
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+FICHA CATALOGRÁFICA ELABORADA PELA BIBLIOTECA CENTRAL 
+
+                           UNIVERSIDADE FEDERAL DE SERGIPE 
+
+              
+ 
+
+A674c 
+
+ 
+Arcieri, Michael Angel Santos 
+    Controle de vibrações mecânicas tipo “stick slip” em colunas de 
+perfuração / Michael Angel Santos Arcieri ; orientador Oscar A. Z. 
+Sotomayor. – São Cristóvão, 2013. 
+    105 f. : il. 
+ 
+   Dissertação  (Mestrado  em  Engenharia  Elétrica)  –  Universidade 
+Federal de Sergipe, 2013. 
+ 
+
+   O       
+
+1.  Coluna de perfuração. 2. Fenômeno stick-slip. 3. Controle 
+proporcional-integral.  4.  Controle  por  modo  deslizante.  5. 
+Controle  por  linearização  entrada-saída.  I.  Sotomayor,  Oscar  A. 
+Z., orient. II. Título. 
+
+                                                                              
+                                                     CDU: 620.178.3 
+ 
+
+   
+
+ 
+
+ 
+
+                              
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                   Dedico  este  trabalho  a  minha 
+
+mãe,  pelo  exemplo  de  vida  que  é,  ao  meu 
+
+pai, pelo seu incentivo, aos meus irmãos, a 
+
+minha  namorada  Luana,  e  especialmente 
+
+ao meu avô Gerino. 
+
+ 
+
+iv 
+
+AGRADECIMENTOS 
+
+Agradeço esse trabalho inicialmente a Deus, por ter me dado a vida. 
+
+Ao  meu  avô  Gerino  por  cada  ensinamento,  agradeço  a  Deus  por  cada  momento  que 
+estive com o senhor, que Deus o tenha! SAUDADES! 
+
+Aos  meus  pais,  Josefa  e  Angelo,  e  meus  irmãos,  Jofrancis,  Denis,  Jean  e  Ryan  pelo 
+companheirismo e amizade que sempre me proporcionaram. 
+
+A minha namorada, Luana, pelo amor, amizade, companheirismo, força e compreensão 
+que me ofereceu durante o mestrado. 
+
+Aos amigos do mestrado, Rodrigo, Iury, Manoel, Cássio, David e Carlos Eduardo que 
+me ajudaram durante toda essa jornada. 
+
+Ao meu orientador e professor Oscar Sotomayor que me incentivou a entrar na área de 
+controle, através de seus bons ensinamentos e conselhos. 
+
+ 
+
+ 
+
+ 
+
+v 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+“As  conquistas  não  são  fáceis  de  serem 
+
+atingidas,  muitos  obstáculos  haverá  pela 
+
+frente,  mas  o  verdadeiro  conquistador 
+
+tem  o  espírito  lutador,  planejador,  e 
+
+sonhador.  Estará  sempre  seguindo  em 
+
+frente e rompendo todos os obstáculos.” 
+
+André Luiz Palma 
+
+ 
+
+vi 
+
+Resumo  da  Dissertação  apresentada  ao  PROEE/UFS  como  parte  dos  requisitos 
+necessários para a obtenção do grau de Mestre (Me.) 
+
+CONTROLE DE VIBRAÇÕES MECÂNICAS TIPO “STICK-SLIP” EM COLUNAS 
+
+DE PERFURAÇÃO 
+
+Michael Angel Santos Arcieri 
+
+Março/2013 
+
+Orientador: Prof. Dr. Oscar A. Z. Sotomayor 
+
+Programa: Engenharia Elétrica 
+
+Vibrações  mecânicas  são  inevitáveis  nas  operações  de  perfuração.  Vibrações 
+torcionais stick-slip são vibrações que ocorrem em colunas de perfuração, as quais são 
+produzidas pelas variações periódicas de torque e caracterizadas por grandes oscilações 
+da velocidade da broca. Estas vibrações são prejudiciais, mais pela característica cíclica 
+do  fenômeno  que  pela  amplitude  da  mesma,  podendo  originar  fadiga  da  tubulação, 
+falhas  nos  componentes  da  coluna  de  perfuração,  deformações  nas  paredes  do  poço, 
+desgaste excessivo da broca, baixa taxa de penetração e, inclusive, colapso do processo 
+de  perfuração.  A  frequência  destas  oscilações  indesejadas  pode  ser  reduzida  pela 
+aplicação  de  técnicas  de  controle  automático.  O  objetivo  deste  trabalho  é  avaliar, 
+mediante simulações numéricas, a aplicação de técnicas de controle convencional, como 
+o  controle  proporcional-integral  (PI),  e  não  linear,  como  o  controle  por  modos 
+deslizantes  (SMC)  e  o  controle  por  linearização  entrada-saída  (IOLC)  para  eliminar  a 
+presença  de  oscilações  stick-slip  em  colunas  de  perfuração.  Os  controladores  são 
+desenvolvidos principalmente para manter constante a velocidade do sistema de rotação, 
+mediante  a  manipulação  do  torque  do  motor,  para  assim  controlar  inferencialmente  a 
+velocidade da broca, fornecendo desta maneira condições ótimas de operação, além de 
+preservar  a  estabilidade  do  sistema.  Resultados  das  simulações,  usando  modelos 
+torcionais de uma coluna de perfuração de dois graus de liberdade (2-DOF) e de quatro 
+graus  de  liberdade  (4-DOF),  mostram  o  desempenho  dos  sistemas  de  controle 
+propostos, os quais são analisados e comparados qualitativamente. 
+
+Palavra-chaves: Coluna de perfuração, fenômeno stick-slip, controle PI, controle por 
+modos deslizantes, controle por linearização entrada-saída. 
+
+ 
+
+ 
+
+vii 
+
+Abstract  of  Dissertation  presented  to  PROEE/UFS  as  a  partial  fulfillment  of  the 
+requirements for the degree of Master. 
+
+CONTROL OF STICK-SLIP VIBRATIONS IN OIL WELL DRILLSTRINGS 
+
+Michael Angel Santos Arcieri 
+
+March/2013 
+
+Advisor: Prof. Dr. Oscar A. Z. Sotomayor 
+
+Department: Electrical Engineering 
+
+Mechanical  vibrations  are  inevitable  in  drilling  operations.  Torsional  stick-slip 
+vibrations are vibrations that occur in drilling columns, which are produced by periodic 
+variations of torque and characterized by large fluctuations in the speed of the drill bit. 
+These  vibrations  are  dangerous,  primarily  by  the  cyclical  characteristic  of  the 
+phenomenon  that  by  the  amplitude  of  the  same,  which  can  cause  fatigue  of  the  pipe, 
+failures  in  the  components  of  the  drill  string,  deformations  in  the  walls  of  the  well, 
+excessive wear of the drill, low rate of penetration, and collapse of the drilling process. 
+The  frequency  of  these  unwanted  oscillations  can  be  reduced  by  the  application  of 
+automatic  control  techniques.  The  objective  of  this  study  is  to  evaluate  through 
+numerical  simulations,  the  application  of  conventional  control  techniques,  such  as 
+proportional-integral control (PI), and nonlinear, as the sliding mode control (SMC) and 
+the  input-output  linearization  control  (IOLC),  to  eliminate  the  presence  of  stick-slip 
+oscillation  in  drilling  columns.  The  controllers  are  designed  primarily  to  maintain  a 
+constant speed of rotation system, by manipulating engine torque, thereby inferentially 
+control  the  speed  of  the  drill,  thus  providing  optimum  operation  conditions,  beyond 
+preserving system stability. Results of simulations using drill string torsional models of 
+two  degrees  of  freedom  (2-DOF)  and  four  degrees  of  freedom  (4-DOF)  show  the 
+performance  of  the  proposed  control  systems,  which  are  analyzed  and  qualitatively 
+compared. 
+
+Keywords: drill string, stick-slip phenomenon, PI control, sliding mode control, control 
+by input-output linearization. 
+
+ 
+
+ 
+
+ 
+
+viii 
+
+SUMÁRIO 
+
+Lista de Figuras .......................................................................................................................... xi 
+
+Lista de Tabelas ........................................................................................................................ xiv 
+
+Lista de Abreviaturas ................................................................................................................ xv 
+
+Capítulo 1. Introdução ................................................................................................................. 1 
+
+1.1.  O Processo de Perfuração .............................................................................................. 1 
+
+1.2.  O Fenômeno "Stick-Slip" .............................................................................................. 3 
+
+1.3.  Objetivos do Trabalho ................................................................................................... 5 
+
+1.4.  Revisão Bibliográfica .................................................................................................... 6 
+
+1.5. 
+
+Estrutura do Trabalho .................................................................................................... 8 
+
+Capítulo 2. Modelo Torcional de uma Coluna de Perfuração ............................................... 10 
+
+2.1.  Modelo Matemático de n-DOF ................................................................................... 10 
+
+2.2. 
+
+Simulação de um Sistema de 2-DOF .......................................................................... 16 
+
+2.3. 
+
+Simulação de um Sistema de 3-DOF .......................................................................... 20 
+
+2.4. 
+
+Simulação de um Sistema de 4-DOF .......................................................................... 25 
+
+Capítulo 3. Controle PI das Vibrações “Stick-Slip” ................................................................ 31 
+
+3.1. 
+
+Introdução ................................................................................................................... 31 
+
+3.2.  Desenvolvimento dos Controladores PI e PI-P ........................................................... 32 
+
+3.3. 
+
+Simulação dos Controladores PI e PI-P no Sistema de 2-DOF ................................... 36 
+
+3.4. 
+
+Simulação dos Controladores PI e PI-P no Sistema 4-DOF ....................................... 41 
+
+Capítulo 4. Controle por Modos Deslizantes ........................................................................... 48 
+
+4.1. 
+
+Introdução ................................................................................................................... 48 
+
+4.2.  Aspectos Gerais do SMC ............................................................................................ 48 
+
+4.3. 
+
+Síntese do Controlador SMC ...................................................................................... 49 
+
+4.4. 
+
+Projeto do Controlador SMC para a Coluna de Perfuração ........................................ 54 
+
+4.5. 
+
+Simulação do Controlador SMC no Sistema de 2-DOF ............................................. 55 
+
+4.6. 
+
+Simulação do Controlador SMC no Sistema de 4-DOF ............................................. 58 
+
+Capítulo 5. Controle por Linearização Exata por Realimentação ........................................ 61 
+
+5.1. 
+
+Introdução ................................................................................................................... 61 
+
+5.2.  Conceitos Básicos Fundamentais ................................................................................ 62 
+
+5.2.1. 
+
+Campo vetorial .................................................................................................... 62 
+
+5.2.2. 
+
+Campo covetorial ................................................................................................ 62 
+
+5.2.3. 
+
+Produto interno .................................................................................................... 62 
+
+ 
+
+ix 
+
+5.2.4. 
+
+Gradiente ............................................................................................................. 62 
+
+5.2.5. 
+
+Jacobiano ............................................................................................................. 63 
+
+5.2.6. 
+
+Derivada de Lie ................................................................................................... 63 
+
+5.2.7. 
+
+Parêntese de Lie .................................................................................................. 63 
+
+5.2.8. 
+
+Difeomorfismo .................................................................................................... 64 
+
+5.2.9. 
+
+Teorema de Frobenius ......................................................................................... 65 
+
+5.3. 
+
+Linearização Entrada-Estado ...................................................................................... 65 
+
+5.4.  Controle por Linearização Entrada-Saída (IOLC) ...................................................... 70 
+
+Impossibilidade Teórica do Projeto de um Controlador ISLC para a Coluna de 
+
+5.5. 
+Perfuração ............................................................................................................................... 73 
+
+5.6. 
+
+Projeto de um Controlador IOLC para a Coluna de Perfuração .................................. 78 
+
+5.7. 
+
+Simulação do Controlador IOLC nos Sistemas 2-DOF e 4-DOF ............................... 79 
+
+5.8. 
+
+Simulação do Controlador IOLC no Sistema de 4-DOF ............................................. 81 
+
+Capítulo 6. Conclusões e Recomendações de Trabalhos Futuros .......................................... 85 
+
+Referências Bibliográficas ......................................................................................................... 87 
+
+ 
+
+ 
+
+ 
+
+ 
+
+x 
+
+Lista de Figuras 
+
+Figura 1.1 – Sonda de perfuração offshore ....................................................................... 2 
+
+Figura 1.2 – Vibrações que podem ocorrer em uma coluna de perfuração (Alamo, 2002)4 
+
+Figura  1.3  –  Velocidades  angulares  da  mesa  rotatória  e  da  broca  em  um  sistema  de 
+
+perfuração real (Serrarens et al., 2008) ............................................................................. 5 
+
+Figura 2.1 – Modelo torcional de uma coluna de perfuração vertical convencional com n 
+
+graus de liberdade. A nomenclatura das variáveis e parâmetros do modelo é listada na 
+
+Tabela 2.1. ....................................................................................................................... 11 
+
+Figura 2.2 – Estrutura do modelo de 2-DOF de uma coluna de perfuração ................... 17 
+
+Figura 2.3 – Velocidade angular da broca (x4) e da mesa rotatória (x2) do sistema de 2-
+
+DOF ................................................................................................................................ 19 
+
+Figura  2.4  –  Esquerda:  deslocamento  angular  da  mesa  rotatória  (x1)  e  da  broca  (x3). 
+
+Direita: diferença de deslocamento angular entre a mesa rotatória e a broca no sistema 
+
+de 2-DOF ........................................................................................................................ 19 
+
+Figura 2.5 – Ciclo do fenômeno stick-slip do sistema de 2-DOF ................................... 20 
+
+Figura 2.6 – Estrutura do modelo de 3-DOF de uma coluna de perfuração ................... 21 
+
+Figura  2.7  –  Velocidade  angular  da  broca  (x6),  do  tubo  de  perfuração  (x4)  e  da  mesa 
+
+rotatória (x2) do sistema de 3-DOF ................................................................................. 23 
+
+Figura  2.8  –  Esquerda:  deslocamento  angular  da  mesa  rotatória  (x1),  dos  tubos  de 
+
+perfuração (x3) e da broca (x5). Direita: diferença de deslocamento angular entre a mesa 
+
+rotatória e a broca no sistema de 3-DOF ........................................................................ 24 
+
+Figura 2.9 – Ciclo do fenômeno stick-slip do sistema de 3-DOF ................................... 24 
+
+Figura 2.10 – Estrutura do modelo de 4-DOF de uma coluna de perfuração ................. 25 
+
+Figura 2.11 – Brocas de rolamentos cônicos .................................................................. 27 
+
+Figura 2.12 – Velocidade angular da broca (x8), do tubo de perfuração (x6), do BHA (x4) 
+
+e da mesa rotatória (x2) do sistema de 4-DOF ................................................................ 29 
+
+Figura  2.13  –  Esquerda:  deslocamento  angular  da  mesa  rotatória  (x1),  dos  tubos  de 
+
+perfuração (x3), do BHA (x5) e da broca (x7). Direita: diferença de deslocamento angular 
+
+entre a mesa rotatória e a broca no sistema de 4-DOF ................................................... 29 
+
+Figura 2.14 – Ciclo do fenômeno stick-slip do sistema de 4-DOF ................................. 30 
+
+Figura 3.1 – Representação dos pólos para um sistema superamortecido ...................... 35 
+
+ 
+
+xi 
+
+Figura  3.2  –  Implementação  do  controlador  PI  no  sistema  de  2-DOF  no 
+
+Simulink/MatlabTM ......................................................................................................... 37 
+
+Figura  3.3  –  Resposta  do  sistema  de  2-DOF  com  o  controlador  PI:  (I)  variáveis 
+
+controladas, (II) variável manipulada ............................................................................. 38 
+
+Figura 3.4  - Resposta a variações no setpoint do sistema de 2-DOF com  o controlador 
+
+PI: (I) variáveis controladas, (II) variável manipulada ................................................... 38 
+
+Figura  3.5  -  Resposta  às  perturbações  no  sistema  de  2-DOF  com  o  controlador  PI:  (I) 
+
+variáveis controladas, (II) variável manipulada .............................................................. 39 
+
+Figura  3.6  -  Resposta  do  sistema  de  2-DOF  com  o  controlador  PI-P:  (I)  variáveis 
+
+controladas (II) variável manipulada .............................................................................. 40 
+
+Figura 3.7 - Resposta a variações no setpoint no sistema 2-DOF com o controlador PI-P: 
+
+(I) variáveis controladas, (II) variável manipulada ......................................................... 40 
+
+Figura 3.8 - Resposta às perturbações no sistema de 2-DOF com o controlador PI-P: (I) 
+
+variáveis controladas, (II) variável manipulada .............................................................. 41 
+
+Figura  3.9  –  Implementação  do  controlador  PI  no  sistema  de  4-DOF  no 
+
+Simulink/MatlabTM. ........................................................................................................ 42 
+
+Figura  3.10  -  Resposta  do  sistema  de  4-DOF  com  o  Controlador  PI:  (I)  variáveis 
+
+controladas, (II) variável manipulada ............................................................................. 43 
+
+Figura 3.11 - Resposta a variações no setpoint do sistema 4-DOF com o controlador PI: 
+
+(I) variáveis controladas, (II) variável manipulada ......................................................... 44 
+
+Figura 3.12 - Resposta às perturbações no sistema de 4-DOF com o controlador PI: (I) 
+
+variáveis controladas, (II) variável manipulada .............................................................. 45 
+
+Figura  3.13  -  Resposta  do  sistema  de  4-DOF  com  o  controlador  PI-P:  (I)  variável 
+
+controladas, (II) variável manipulada ............................................................................. 45 
+
+Figura 3.14 - Resposta a variações no setpoint no sistema de 4-DOF com o controlador 
+
+PI-P: (I) variáveis controladas, (II) variável manipulada ............................................... 46 
+
+Figura 3.15 - Resposta às perturbações no sistema de 4-DOF com o controlador PI-P: (I) 
+
+variáveis controladas, (II) variáveis manipuladas ........................................................... 46 
+
+Figura 4.1 – Interpretação gráfica das Equações (4.6) e (4.8) (Slotine & Li, 1991) ...... 51 
+
+Figura  4.2  -  Resposta  do  sistema  de  2-DOF  com  o  controlador  SMC:  (I)  variáveis 
+
+controladas, (II) variável manipulada ............................................................................. 57 
+
+Figura 4.3 - Resposta a variações no setpoint no sistema de 2-DOF com o Controlador 
+
+SMC: (I) variáveis controladas, (II) variável manipulada .............................................. 57 
+
+ 
+
+xii 
+
+Figura 4.4 - Resposta às perturbações no sistema de 2-DOF com o controlador SMC: (I) 
+
+variáveis controladas, (II) variável manipulada .............................................................. 58 
+
+Figura  4.5  -  Resposta  do  sistema  4-DOF  com  o  controlador  SMC:  (I)  variáveis 
+
+controladas, (II) variável manipulada ............................................................................. 59 
+
+Figura 4.6  - Resposta a variações no setpoint no sistema de 4-DOF com  o controlador 
+
+SMC: (I) variáveis controladas, (II) variável manipulada .............................................. 59 
+
+Figura 4.7 - Resposta às perturbações no sistema de 4-DOF com o controlador SMC: (I) 
+
+variáveis controladas, (II) variável manipulada .............................................................. 60 
+
+Figura  5.1  -  Resposta  do  Sistema  2-DOF  com  o  Controlador  IOLC  com  𝜀 = 8:  (I) 
+
+variáveis controladas, (II) variável manipulada .............................................................. 80 
+
+Figura 5.2  - Resposta a variações no setpoint no sistema de 2-DOF com  o controlador 
+
+IOLC: (I) variáveis controladas, (II) variável manipulada ............................................. 80 
+
+Figura 5.3  -  Resposta às perturbações no sistema de 2-DOF com  o controlador  IOLC: 
+
+(I) variáveis controladas, (II) variável manipulada ......................................................... 81 
+
+Figura  5.4  -  Resposta  do  sistema  de  4-DOF  com  o  controlador  IOLC:  (I)  variáveis 
+
+controladas, (II) variável manipulada ............................................................................. 82 
+
+Figura 5.5  - Resposta a variações no setpoint no sistema de 4-DOF com  o controlador 
+
+IOLC: (I) variáveis controladas, (II) variável manipulada ............................................. 83 
+
+Figura 5.6  -  Resposta às perturbações no sistema de 4-DOF com  o controlador  IOLC: 
+
+(I) variáveis controladas, (II) variável manipulada ......................................................... 83 
+
+ 
+
+ 
+
+ 
+
+ 
+
+xiii 
+
+Lista de Tabelas 
+
+Tabela 2.1– Variáveis e parâmetros do modelo da coluna de perfuração ...................... 12 
+
+Tabela 2.2- Valores dos parâmetros do modelo de 2-DOF ............................................ 18 
+
+Tabela 2.3– Valores dos parâmetros do modelo de 3-DOF ............................................ 22 
+
+Tabela 2.4 – Valores dos parâmetros do modelo de 4-DOF ........................................... 28 
+
+Tabela 4.1– Valores dos parâmetros de sintonia do SMC desenvolvidos para o sistema 
+
+2-DOF ............................................................................................................................. 56 
+
+ 
+
+ 
+
+ 
+
+ 
+
+xiv 
+
+Lista de Abreviaturas 
+
+2-DOF  
+
+Sistema com 2 Graus de Liberdade 
+
+3-DOF  
+
+Sistema com 3 Graus de Liberdade 
+
+4-DOF  
+
+Sistema com 4 Graus de Liberdade 
+
+𝑛-DOF  
+
+Sistema com 𝑛 Graus de Liberdade 
+
+BHA 
+
+ 
+
+Composição de Fundo da Coluna 
+
+IOLC   
+
+Controle por Linearização Entrada-Saída 
+
+ISLC 
+
+MPC 
+
+ 
+
+ 
+
+Controle por Linearização Entrada-Estado 
+
+Controle Preditivo Linear 
+
+NMPC  
+
+Controle Preditivo Não-linear 
+
+PD 
+
+PI 
+
+PID 
+
+PI-P 
+
+ROP 
+
+SMC 
+
+𝑊𝑜𝑏   
+
+VSC 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Proporcional-Derivativo 
+
+Proporcional-Integrativo 
+
+Proporcional-Integrativo-Derivativo 
+
+Proporcional-Integrativo-Proporcional 
+
+Taxa de Penetração 
+
+Controle por Modos Deslizantes 
+
+Peso sobre a Broca 
+
+Controle com Estrutura Variável 
+
+VSCS   
+
+Sistema de Controle com Estrutura Variável 
+
+ 
+
+ 
+
+xv 
+
+ 
+
+Capítulo 1 
+
+Introdução 
+
+1.1.  O Processo de Perfuração 
+
+O trabalho de uma sonda de perfuração consiste em perfurar a crosta terrestre 
+objetivando a extração de recursos naturais tais como água, gás natural ou petróleo. Os 
+primeiros poços foram perfurados com o intuito de obter água diretamente de aquíferos, 
+reservas  de  águas  subterrâneas,  para  suprir  a  necessidade  de  uma  determinada  região. 
+Porém com o desenvolvimento da indústria e a urgência de obtenção de novas fontes de 
+energia, as técnicas de perfuração até então conhecidas foram aprimoradas permitindo a 
+exploração  do  petróleo  subterrâneo  em  grande  escala,  tornando  a  indústria  petrolífera 
+um dos principais expoentes econômicos da sociedade atual. 
+Existem, basicamente, dois métodos de perfuração: 
+  Método percussivo: a perfuração é feita golpeando a rocha com uma broca, 
+causando  a  sua  fragmentação  por  esmagamento.  Os  cascalhos  gerados  no 
+interior do poço após vários golpes são retirados posteriormente através de 
+uma  ferramenta  chamada  caçamba.  Este  método  foi  o  primeiro  a  ser 
+utilizado na indústria do petróleo. 
+
+  Método rotativo: a perfuração é realizada através do movimento de rotação 
+de  uma  broca,  comprimindo  a  rocha,  causando  o  seu  esmerilhamento.  A 
+retirada dos cascalhos gerados é realizada por um fluido de perfuração que, 
+injetado nos tubos de perfuração, retorna pelo anular, espaço existente entre 
+da coluna de perfuração e as paredes do poço. Este método é considerado o 
+padrão da indústria do petróleo, sendo utilizado nas perfurações atuais. 
+
+A  perfuração  de  poços  de  petróleo  é  realizada  por  uma  sonda  de  perfuração, 
+como  ilustrado  na  Figura  1.1.  A  sonda  da  figura  é  uma  plataforma  fixa  tipo  jaqueta 
+usada nas operações de perfuração offshore. A coluna de perfuração, com a broca de aço 
+na sua extremidade, é ligada ao topdrive, um motor elétrico é responsável pela rotação 
+da  coluna  e  que  se  encontra  localizado  na  parte  superior  do  mastro  ou  torre  de 
+perfuração. O efeito combinado do peso sobre a broca e da sua rotação sobre a formação 
+causa a fragmentação da rocha. O topdrive é preso a um gancho no mastro, o que torna 
+possível  a  movimentação  vertical  (para  cima  e  para  baixo)  da  coluna  pelo  sistema  de 
+
+ 
+
+1 
+
+ 
+
+elevação.  Durante  a  perfuração,  à  medida  em  que  a  broca  vai  penetrando  a  formação 
+rochosa e a posição do topdrive alcança o fundo do mastro, uma nova seção de tubo de 
+perfuração é adicionada à coluna e a posição do gancho é movida para o topo da nova 
+conexão, 
+tubulação  é  de 
+aproximadamente  27  m,  de  modo  que  para  uma  taxa  de  penetração  típica  de  15m/h 
+exigirá uma nova conexão a cada duas horas aproximadamente. 
+
+retomando  o  processo.  O  comprimento  de  cada 
+
+Além  das  sondas  equipadas  com  top  drive  existem  as  sondas  convencionais, 
+nas quais o sistema de rotação é dado pela mesa rotativa. Localizada na plataforma da 
+sonda, a mesa rotativa é um equipamento que transmite rotação à coluna de perfuração 
+através de um tubo de parede externo poligonal, o kelly, que fica enroscado no topo da 
+coluna de perfuração. A mesa rotativa, em algumas operações, tem o papel de suportar o 
+peso  da  coluna  de  perfuração.  Há  ainda  a  possibilidade  de  perfurar  com  um  motor  de 
+fundo, em que o torque necessário é dado pela passagem do fluido de perfuração no seu 
+interior (Thomas, 2001). 
+
+Figura 1.1 – Sonda de perfuração offshore 
+
+ 
+
+Embora não claramente ilustrado na Figura 1.1, a sonda de perfuração contém 
+um  sistema  de  circulação  de  fluido  ou  lama  de  perfuração.  Uma  bomba  é  responsável 
+por injetar o fluído de perfuração por dentro da coluna, o qual passa através da broca e 
+retorna pela região anular, espaço compreendido entre a coluna de perfuração e a parece 
+do  poço,  trazendo  consigo  os  cascalhos  gerados  no  processo.  Depois  de  fluir  por  uma 
+linha de retorno, a lama passa por uma peneira vibratória, para separar os sólidos mais 
+grosseiros, e volta ao reservatório para ser novamente utilizada. 
+
+Além  de  transportar  os  cascalhos  gerados  para  a  superfície,  o  fluido  de 
+perfuração  tem  as  seguintes  funções:  limpar  e  esfriar  a  broca,  atuar  como  lubrificante 
+
+ 
+
+2 
+
+ 
+
+onde  houver  atrito,  fornecer  pressão  hidrostática  para  evitar  a  entrada  de  fluidos  no 
+poço, impedir que os fragmentos de rocha se sedimentem no fundo  durante as paradas 
+das  perfurações,  obturar  os  orifícios  das  camadas  porosas  atravessadas  na  perfuração, 
+proteger contra a corrosão etc. 
+
+Atualmente,  com  a  descoberta  das  novas  reservas  petrolíferas  no  litoral 
+brasileiro,  na  chamada  camada  do  pré-sal,  surgiram  problemas  relacionados  com  a 
+extração  devido  à  sua  localização.  Sua  profundidade  pode  chegar  a  mais  de  7  mil 
+metros,  tornando  o  processo  de  perfuração,  para  o  aproveitamento  das  reservas  de 
+petróleo  e  gás  nelas  contidas,  um  grande  desafio  tecnológico.  A  hostilidade  do 
+ambiente,  o  comportamento  das  rochas  dessa  camada,  as  elevadas  profundidades,  a 
+variação  de  pressão  e  de  temperatura,  e  a  distância  do  litoral,  são  exemplos  de 
+problemas  que  devem  ser  vencidos  e  que  exigem  equipamentos  complexos,  tais  como 
+sondas de perfuração em águas profundas, e a busca por novas soluções para os diversos 
+problemas da perfuração, visando aumentar a eficiência e reduzir o tempo e o custo da 
+operação. 
+
+1.2.  O Fenômeno "Stick-Slip" 
+
+Sendo a coluna de perfuração um sistema mecânico, vibrações são inevitáveis 
+nas  operações  de  perfuração,  as  quais  podem  ser  classificadas  como:  axiais  ou 
+longitudinais, torcionais e laterais. Essas vibrações são responsáveis por quase 80% dos 
+problemas  prematuros  em  colunas  de  perfuração,  representando  uma  perda  de 
+aproximadamente  5%  do  custo  total  da  exploração  de  um  poço  (Spanos  et  al.,  2003). 
+Elas  englobam  diversas  consequências  danosas  para  as  operações,  que  vão  desde  uma 
+diminuição da taxa de penetração até uma ruptura da coluna de perfuração, evento este 
+indesejado,  pois  pode  provocar  diversos  danos  ao  poço  e  aos  equipamentos  de 
+perfuração.  Além  disso,  essas  vibrações  afetam  um  dos  principais  fatores  que 
+influenciam o custo da operação, o tempo de perfuração. 
+
+Associado  a  cada  tipo  de  vibração  tem-se  uma  série  de  fenômenos,  conforme 
+
+mostrado na Figura 1.2. 
+
+  whirl (remoinho): vibração lateral que ocorre quando o centro da gravidade 
+da  coluna  não  coincide  com  o  seu  eixo  geométrico  de  rotação,  causando 
+choque  entre  a  coluna  e  as  paredes  do  poço  (Navarro-López  &  Suárez, 
+2005). 
+
+  stick-slip (adere-desliza): vibração torcional caracterizado por uma variação 
+da velocidade da broca de zero a dez vezes a velocidade de giro da coluna. 
+Normalmente,  este  fenômeno  vem  associado  a  importantes  variações  de 
+torque (Tucker & Wang, 1999). 
+
+  bit  bouncing  (rebote):  vibração  axial  na  qual  a  broca  dá  saltos  de  forma 
+periódica,  perdendo  contato  com  o  fundo  do  poço,  podendo,  inclusive, 
+chegar a se despender (Divényi, 2009). 
+
+ 
+
+3 
+
+ 
+
+ 
+
+ 
+
+Figura 1.2 – Vibrações que podem ocorrer em uma coluna de perfuração (Alamo, 2002) 
+
+A  presença  das  vibrações  em  colunas  de  perfuração  dá-se  em  instantes  de 
+operação  distintos  e  em  faixas  de  frequências  diferentes,  o  que  permite  estudá-las 
+individualmente.  O  presente  trabalho  concentra-se  nas  vibrações  torcionais  e  no 
+fenômeno stick-slip que elas produzem. 
+
+O fenômeno stick-slip pode aparecer quando duas superfícies em contato estão 
+deslizando  uma  em  relação  à  outra.  No  caso  da  coluna  de  perfuração,  as  oscilações 
+stick-slip  são  produzidas  pelas  variações  periódicas  de  torque  e  caracterizadas  por 
+grandes alterações da velocidade na broca. Essas alterações ocorrem pelo fato da coluna 
+de  perfuração  apresentar  elasticidade.  O  atrito  não-linear  do  poço  faz  com  que  a 
+velocidade  da  broca  chegue  a  parar  por  um  período  de  tempo,  fase  esta  denominada 
+stick.  Quando  isso  ocorre,  a  rotação  na  mesa  continua  e  a  coluna  funciona  como  uma 
+mola armazenando energia torcional. A partir do momento que o atrito é superado pela 
+energia acumulada na coluna, a broca tem a sua velocidade diferente de zero, podendo 
+chegar a dez vezes a velocidade angular da mesa rotativa, fase esta conhecida como slip. 
+Nesse caso, o sistema pode ficar alternando entre as fases stick e slip a uma frequência 
+específica. A Figura 1.3 delineia o comportamento típico das velocidades angulares da 
+mesa rotatória e da broca durante um processo de perfuração. 
+
+As  vibrações  stick-slip  são  prejudiciais,  mais  pela  característica  cíclica  do 
+fenômeno do  que pela amplitude das mesmas. Experimentos  em  campo assinalam que 
+ditas oscilações aparecem em 50% do tempo de perfuração, podendo originar fadiga da 
+tubulação,  falhas  nos  componentes  da  coluna  de  perfuração,  desvio  da  trajetória  do 
+poço,  alargamento  do  poço,  deformações  nas  paredes  do  poço,  desgaste  excessivo  da 
+broca  e  baixa  taxa  de  penetração.  Estas  instabilidades  na  velocidade  de  giro  da  broca 
+podem,  em  alguns  casos,  romper  a  coluna  de  perfuração  constituindo  um  grave 
+problema,  não  apenas  por  conta  da  perda  material  da  coluna,  mas  principalmente  por 
+conta da perda de tempo da operação, podendo também ocasionar a necessidade de se 
+
+ 
+
+4 
+
+ 
+
+efetuar um desvio no poço acima do ponto de ruptura da coluna ou, até mesmo, a perda 
+do poço (Divényi, 2009). 
+
+Figura 1.3 – Velocidades angulares da mesa rotatória e da broca em um sistema de 
+
+perfuração real (Serrarens et al., 2008) 
+
+ 
+
+Face à complexidade das colunas de perfuração de poços de petróleo, a prática 
+da  perfuração  faz  uso  das  metodologias  de  controle  automático  a  fim  de  suprimir  os 
+fenômenos  oscilatórios  indesejados.  Segundo  Navarro-López  (2010),  o  controlador  é 
+interpretado como um método de seleção de parâmetros de segurança offline. Antes de 
+começar a operação, o modelo de simulação e o controlador podem ajudar o operador a 
+projetar  o  perfil  de  perfuração  do  poço  com  valores  de  referências  para  o  torque  no 
+sistema rotatório (𝑇𝑚 ), o peso sobre a broca (𝑊𝑜𝑏 ) e as velocidades de rotação desejadas 
+(Ω). Para uma combinação (𝑊𝑜𝑏 , Ω), o torque 𝑇𝑚  pode ser calculado tal que o fenômeno 
+oscilatório na broca possa ser evitado. 
+
+ 
+
+1.3.  Objetivos do Trabalho 
+
+O objetivo principal do presente trabalho é auxiliar os operadores de colunas de 
+perfuração de poços de petróleo avaliando, mediante simulações numéricas, a aplicação 
+de  técnicas  de  controle  não-linear,  tais  como  o  controle  por  modos  deslizantes  e  o 
+controle baseado em  linearização por realimentação,  para  obter velocidades constantes 
+do  mecanismo  rotatório  da  mesa  e  da  broca,  com  o  intuito  de  reduzir  a  presença  de 
+oscilações  mecânicas  tipo  stick-slip  e  manter  condições  de  operação  ótimas,  apesar  de 
+incertezas e mudanças nas condições de operação, além de preservar a estabilidade e a 
+recuperação do sistema. 
+
+ 
+
+5 
+
+ 
+
+Objetivos secundários deste trabalho são: 
+
+  Propiciar um melhor entendimento das vibrações mecânicas em colunas de 
+
+perfuração; 
+
+  Aumentar  a  eficiência  e  desempenho  da  perfuração  com  a  introdução  de 
+
+novas soluções para problemas provocados por vibrações tipo stick-slip; 
+
+  Contribuir  com  o  desenvolvimento  de  novas  técnicas  de  controle  e 
+
+automação de poços; 
+
+  Fortalecer a área de conhecimento de engenharia de perfuração; 
+
+  Estabelecer  as  bases  para  a  consolidação  de  um  grupo  de  pesquisa  em 
+
+automação na indústria de petróleo e gás no DEL/UFS. 
+
+1.4.  Revisão Bibliográfica 
+
+Na literatura técnico-científica foram propostos diversos métodos e técnicas de 
+controle  para  eliminar  ou  reduzir  a  presença  do  fenômeno  stick-slip  em  sistemas  de 
+perfuração. O resumo de alguns desses trabalhos são apresentados a seguir. 
+
+Serrarens et al. (1998) mostraram que a supressão de oscilações auto-excitadas 
+stick-slip  e  a  resposta  transitória  da  velocidade  da  broca  podem  ser  amplamente 
+melhoradas pelo uso de um controlador 𝐻∞, quando comparado a sistemas de controle 
+tipo  PD  (proporcional-derivativo),  comumente  aplicados  na  perfuração  de  poços  de 
+petróleo.  O  controlador  era  linear  e  invariante  no  tempo.  Embora  a  fricção  na  broca 
+fosse altamente não-linear, a escolha por um controlador linear pareceu eficaz. Pelo uso 
+de  funções  de  ponderação  dinâmica  para  os  sinais  de  entrada  e  saída  foi  possível 
+modelar  funções  de  transferência  em  malha  fechada  de  tal  forma  que  os  requisitos  de 
+desempenho  no  domínio  do  tempo  e  no  domínio  da  frequência  fossem  alcançados. 
+Resultados  experimentais  realizados  em  um  sistema  de  bancada  forneceram  uma 
+perspectiva promissora para aplicações em sistemas reais. 
+
+Abdulgalil  &  Siguerdidjane 
+
+(2005)  apresentou  um  controlador  PID 
+(proporcional-integral-derivativo)  robusto  para  lidar  com  vibrações  stick-slip  em 
+sistemas  de  perfuração.  O  projeto  do  controlador  é  baseado  em  uma  função  de 
+superfície  deslizante  que  trabalha  em  conjunto  com  um  controlador  por  linearização 
+entrada-estado, fornecendo um controlador para sistemas não-lineares com incertezas. A 
+técnica  de  modos  deslizantes  era  aplicada  escolhendo  o  erro  de  velocidade  angular  da 
+broca  como  superfície  deslizante.  A  estabilização  e  desempenho  do  controlador  foram 
+avaliados e comparados com um controlador clássico por realimentação.  
+
+Canudas-de-Wit et al. (2005) analisaram o fato de que para conseguir uma boa 
+taxa de penetração (rate of penetration - ROP) em sistemas de perfuração de poços de 
+
+ 
+
+6 
+
+ 
+
+petróleo  era  necessário  manter  um  peso  sobre  a  broca  (weight  on  bit  -  𝑊𝑜𝑏 )  grande. 
+Mas,  com  o  aumento  do  𝑊𝑜𝑏 ,  aumentou  a  possibilidade  das  oscilações  stick-slip 
+ocorrerem.  A  partir  desse  estudo,  os  autores  apresentaram  o  mecanismo  D-OSKIL,  o 
+qual visava usar a força do 𝑊𝑜𝑏  como uma variável manipulada adicional para suprimir 
+o  fenômeno.  Uma  análise  baseada  em  função  descritiva  deu  uma  boa  intuição  sobre  a 
+resposta oscilatória do sistema e o projeto do controlador. Uma propriedade importante 
+do D-OSKIL era que permitia recuperar as condições de operação nominal enquanto as 
+oscilações eram suprimidas. Simulações da aplicação do mecanismo proposto  com um 
+controlador  tipo  PI  (proporcional-integrativo)  mostraram  que  as  oscilações  stick-slip 
+podiam  ser  eliminadas  sem  exigir  um  re-projeto  do  controle  de  velocidade  da  mesa 
+rotatória.  Outro  fato  interessante  do  D-OSKIL,  era  que  a  lei  de  controle  resultante  era 
+global  e  assintoticamente  estável.  Uma  análise  formal  de  estabilidade  do  método  foi 
+fornecida por Corchero et al. (2006). 
+
+Navarro-López  &  Cortés  (2007b)  propuseram  um  controle  por  modos 
+deslizantes  (sliding  mode  control  -  SMC)  que  ultrapassava  o  movimento  de 
+deslizamento existente quando a velocidade angular da broca era zero, conduzindo essa 
+velocidade  a  um  valor  desejado,  evitando  problemas  de  aderência  na  broca  durante  o 
+processo de perfuração. A coluna de perfuração é representada por um modelo de torção 
+descontínuo  de  quatro  graus  de  liberdade.  A  idéia  fundamental  do  controlador  era 
+introduzir  no  sistema  uma  superfície  de  deslizamento  em  que  a  dinâmica  desejada  era 
+realizada, ou seja, conduzir a velocidade dos componentes da coluna de perfuração ao 
+valor  de  operação  pré-determinado.  O  objetivo  de  controle  era  alcançado  apesar  das 
+variações da força do 𝑊𝑜𝑏  e na presença de oscilações stick-slip. 
+
+Navarro-López (2008) apresentou duas metodologias de controle com o intuito 
+de suprimir as oscilações stick-slip em colunas de perfuração. Por um lado, tinha-se um 
+controlador por realimentação convencional, i.e o controlador PI, e por outro lado, um 
+controlador do tipo descontínuo, o controlador SMC. Os parâmetros dos controladores 
+eram  escolhidos  para  que  as  transições  não-desejadas  do  sistema  desaparecessem.  O 
+objetivo  de  ambos  os  controladores  era  eliminar  o  fenômeno  stick-slip,  conduzindo  a 
+velocidade para o valor desejado, e reduzindo a influência das variações dos principais 
+parâmetros.  As  simulações  mostraram  resultados  semelhantes  para  ambos  os 
+controladores, concluindo que para altas velocidades e baixo valor da força peso 𝑊𝑜𝑏  o 
+sistema convergia para o equilíbrio desejado. 
+
+Hernandez-Suarez  et  al.  (2009)  propuseram  o  uso  da  lei  de  controle  SMC 
+combinada  com  um  esquema  de  controle  em  cascata  para  a  supressão  das  oscilações 
+stick-slip  durante  o  processo  de  perfuração  de  petróleo.  A  ideia  subjacente  na 
+abordagem de controle era forçar a dinâmica de erro para uma superfície deslizante que 
+compensasse  parâmetros  incertos  e  termos  desconhecidos.  A  lei  de  controle  de  modo 
+deslizante  era  reforçada  com  um  observador  para  estimação  de  incertezas.  Simulações 
+
+ 
+
+7 
+
+ 
+
+numéricas mostravam que as oscilações stick-slip podiam ser suprimidas e estabilizadas 
+a uma referência desejada na presença de incertezas nos parâmetros do modelo. 
+
+Johannessen  &  Myrvold  (2010)  desenvolveram  um  sistema  de  controle 
+preditivo  não-linear  (nonlinear  model  predictive  control  -  NMPC)  para  prevenção  de 
+oscilações  stick-slip  em  colunas  de  perfuração  de  poços  de  petróleo.  A  natureza  não-
+linear  da  força  de  fricção  atuando  sobre  a  broca  motivou  o  uso  do  NMPC.  Nesse 
+trabalho,  um  modelo  dinâmico  não-linear  de  86  estados  de  uma  coluna  de  perfuração 
+(43  estados  descreviam  a  aceleração  de  43  elementos  diferentes,  e  os  restantes  43 
+estados descreviam as diferenças de velocidades entre os elementos conectadas uns aos 
+outros)  foi  reduzido,  baseado  na  técnica  de  truncamento  balanceado  de  gramianos 
+empíricos,  e  usado  na  implementação  do  NMPC,  como  também  para  representar  o 
+processo. Resultados de simulações, comparando o NMPC, um MPC linear e o sistema 
+comercial SoftSpeed da National Oilwell Varco, que é basicamente um controlador PI, 
+mostraram que todos os controladores eram capazes de lidar com o problema stick-slip 
+quando  ajustados  adequadamente.  No  entanto,  para  o  caso  de  mudança  do  ponto  de 
+operação,  o  NMPC  apresentou  melhor  desempenho,  fazendo  com  que  a  saída 
+estabilizasse no novo setpoint mais rapidamente e dando uma resposta menos agressiva, 
+sendo possível manter um ótimo ROP. 
+
+Zhang  et  al.  (2010)  apresentaram  um  modelo  torcional  de  uma  coluna  de 
+perfuração  vertical  convencional  e  usaram  um  controlador  SMC  para  eliminar  o 
+fenômeno stick-slip. No sistema de controle proposto a velocidade angular da broca foi 
+direcionada  a  um  valor  de  referência  desejado,  apesar  da  presença  do  atrito  causado 
+entre  o  contato  da  broca  com  a  formação  rochosa.  O  desenvolvimento  do  controlador 
+consistia  de  dois  passos:  primeiro,  um  controlador  por  linearização  entrada-estado  foi 
+derivado e, segundo, um controlador PID baseado no SMC foi projetado.  
+
+Shi  et  al.  (2011)  apresentaram  um  SMC  derivativo  e  integrativo  a  fim  de 
+eliminar as oscilações stick-slip de um sistema de perfuração rotacional. O controlador 
+era  baseado  em  modelos  de  torção  de  colunas  de  perfuração  e  o  projeto  do  controle 
+consistiu  de  três  etapas:  a  primeira  era  composta  pela  linearização  entrada-estado  do 
+sistema de perfuração; a segunda definia o projeto do SMC integral, e a última projetava 
+o  SMC  integral  e  derivativo.  Para  a  verificação  da  estabilidade  e  robustez  do  sistema 
+foram utilizados os princípios de Lyapunov. Resultados de simulações mostraram que o 
+SMC  integral  não  apresentou  boa  robustez  em  comparação  com  o  SMC  integral  e 
+derivativo, tendo este último uma resposta dinâmica mais rápida, aumentando a ROP e 
+suprimindo as oscilações stick-slip da coluna de perfuração. 
+
+1.5.  Estrutura do Trabalho 
+
+A presente dissertação está dividida nos seguintes capítulos:  
+
+ 
+
+8 
+
+ 
+
+ 
+
+Capítulo 1 – Introdução. Esse capítulo apresenta uma breve descrição sobre o 
+processo  de  perfuração  de  poços  de  petróleo  e  das  vibrações  mecânicas  que 
+podem  ocorrem  em  colunas  de  perfuração,  dando  ênfase  às  vibrações 
+torcionais tipo stick-slip. Também são apresentados os objetivos do trabalho e 
+uma  revisão  bibliográfica  sobre  técnicas  de  controle  para  minimizar  as 
+oscilações stick-slip disponíveis na literatura. 
+
+Capitulo  2  –  Modelo  Torcional  de  uma  Coluna  de  Perfuração.  Neste 
+capítulo  é  apresentado  o  modelo  torcional  de  uma  coluna  de  perfuração  de  n 
+graus  de  liberdade.  A  partir  dessa  modelagem,  são  mostradas  simulações  de 
+colunas  de  perfuração  com  2,  3  e  4  graus  de  liberdade,  fazendo-se  uso  do 
+pacote  computacional  Simulink/MATLAB®.  Grande  interesse  das  respostas 
+dessas simulações é o surgimento do fenômeno stick-slip. 
+
+Capítulo 3 – Controle PI das Vibrações “Stick-Slip”. Este capítulo mostra o 
+desenvolvimento e aplicação de um controlador tipo PI nos modelos torcionais 
+de  2  e  4  graus  de  liberdade  da  coluna  de  perfuração.  Diversos  casos  são 
+apresentados,  tais  como  a  capacidade  de  eliminação  do  fenômeno  stick-slip, 
+mudanças no ponto de operação e perturbações no sistema. 
+
+Capítulo  4  –  Controle  por  Modo  Deslizante.  Este  capítulo  trata  da 
+abordagem  da  teoria  do  controle  por  modo  deslizante  (SMC)  e  sua  aplicação 
+para  estabilização  e  controle  da  coluna  de  perfuração.  São  apresentados 
+resultados  de  simulações  baseados  nos  sistemas  torcionais  de  2  e  4  graus  de 
+liberdade. 
+
+Capítulo  5  –  Controle  por  Linearização  Exata  por  Realimentação.  Nesse 
+capítulo  é  apresentada  a  teoria  básica  para  o  desenvolvimento  de  um 
+controlador  por  linearização  entrada-estado  (ISLC)  e  um  controlador  por 
+realimentação 
+teórica  da 
+implementação de um controlador ISLC para o processo em estudo é provada. 
+Um controlador IOLC é implementado nos sistemas torcionais de 2 e 4 graus 
+de liberdade, e os resultados são analisados e discutidos. 
+
+impossibilidade 
+
+entrada-saída 
+
+(IOLC).  A 
+
+Capítulo  6  –  Conclusão  e  Recomendações  para  Trabalhos  Futuros.  Neste 
+capítulo  são  expostas  as  conclusões  sobre  os  resultados  obtidos  no  presente 
+trabalho, além de algumas propostas de trabalhos futuros. 
+
+ 
+
+9 
+
+ 
+
+Capítulo 2 
+
+Modelo Torcional de uma Coluna de 
+Perfuração 
+
+2.1.  Modelo Matemático de n-DOF 
+
+Modelo  matemático  é  um  conjunto  de  equações  cuja  solução  é  uma 
+aproximação  da  resposta  de  um  processo  real,  e,  como  tal,  apresenta  inúmeras 
+limitações.  No  entanto,  alguns  modelos  são  melhores  que  outros  em  descrever  certos 
+sistemas  físicos  e  de  engenharia.  Para  propósitos  de  análise  e  controle,  simplificações 
+são  necessárias  a  fim  de  facilitar  a  manipulação  das  equações.  Nesse  contexto,  os 
+modelos  de  parâmetros  concentrados,  e.g.,  modelos  em  equações  diferenciais 
+ordinárias,  conduzem  a  uma  análise  e  simulação  do  sistema  mais  simples  em 
+comparação  com  os  modelos  de  parâmetros  distribuídos,  e.g.,  modelos  em  derivadas 
+parciais. 
+
+A ideia de usar modelos dinâmicos para representar as condições de operação 
+da coluna de perfuração tem sido um grande desafio. Diversos modelos  de parâmetros 
+concentrados  foram  propostos  na  literatura  para  descrever  a  resposta  torcional  da 
+coluna, o composição de fundo da coluna (bottom hole assembly - BHA1) e o fenômeno 
+stick-slip. Estes modelos consideram que a broca tem o comportamento de um pêndulo 
+torcional, que pode ser descrita como um pêndulo de torção simples impulsionado por 
+um sistema de rotação (motor elétrico); que os tubos de perfuração se comportam como 
+uma  mola  de  torção,  que  pode  ser  representada  por  uma  mola  linear  de  constante  k  e 
+amortecimento torcional c, e que o contato entre a broca e a formação pode ser descrito 
+por um modelo de atrito não- linear. 
+
+A maioria dos modelos torcionais de parâmetros concentrados é de dois graus 
+de liberdade (2-DOF), i.e., esses modelos descrevem a dinâmica do sistema de rotação 
+(tipicamente  considerado  como  mesa  rotatória)  e  o  BHA  (tipicamente  considerado 
+
+                                                           
+1  BHA:  Trecho  da  coluna  de  perfuração  imediatamente  acima  da  broca.  Este  trecho  consiste 
+principalmente  de  tubos  com  parede  de  grande  espessura,  resistentes  a  esforços  de  compressão 
+conhecidos  como  comandos  de  perfuração  (drill  collars).  O  BHA  inclui  ainda  outros  acessórios  como 
+estabilizadores, conectores de redução e outros. 
+
+ 
+
+10 
+
+ 
+
+como a broca) (Navarro-López, 2010). Embora os modelos de 2-DOF tenham revelado 
+importantes características da coluna de perfuração e das condições de fundo de poço, 
+eles não refletem dois importantes fatores: o comprimento da coluna aumenta conforme 
+a  operação  de  perfuração  progride  e  as  oscilações  ao  longo  dos  tubos  de  perfuração 
+conectados  e  os  comandos  de  perfuração  ou  drill  collars  (logo  acima  da  broca). 
+Navarro-López  &  Cortés  (2007a)  propuseram  um  modelo  descontínuo  de  parâmetros 
+concentrados de n-DOF de uma coluna de perfuração vertical convencional que leva em 
+conta  os  fatores  anteriormente  mencionados.  A  descontinuidade  é  introduzida  pela 
+interação  broca-formação,  a  qual  é  modelada  por  uma  relação  de  fricção  a  seco 
+combinada com uma lei de decaimento exponencial. O modelo de n-DOF de Navarro-
+López & Cortés (2007a) é mostrado na Figura 2.1. 
+
+Figura 2.1 – Modelo torcional de uma coluna de perfuração vertical convencional com n 
+
+graus de liberdade. A nomenclatura das variáveis e parâmetros do modelo é listada na 
+
+Tabela 2.1. 
+
+ 
+
+Na  Figura  2.1,  quatro  partes  da  coluna  de  perfuração  são  claramente 
+distinguidos:  o  sistema  de  rotação  (basicamente  a  mesa  rotatória,  incluindo  o  motor 
+elétrico e a caixa de transmissão do eixo real), os tubos de perfuração (cuja quantidade p 
+varia de acordo com a profundidade do poço sendo perfurado), o BHA (incluindo o drill 
+collars) e a broca. Na modelagem apresentada por Navarro-López & Cortés (2007a) são 
+assumidas as seguintes considerações:  
+
+i. 
+ii. 
+
+o poço e a coluna de perfuração são ambos verticais e em linha reta; 
+não há movimento lateral da broca;  
+
+ 
+
+11 
+
+ 
+
+iii. 
+
+iv. 
+
+v. 
+vi. 
+
+vii. 
+
+o atrito nas conexões dos tubos de perfuração e entre os tubos e o poço 
+são omitidas; 
+a  lama  de  perfuração  é  simplificada  por  um  elemento  de  atrito  do  tipo 
+viscoso na broca; 
+o movimento orbital do fluido de perfuração é laminar; 
+a  dinâmica  do  motor  não  é  levada  em  conta,  o  torque  de  impulso  é 
+suposto constante e positivo; 
+os tubos de perfuração tem a mesma inércia. 
+
+Assim,  com  as  considerações  acima  citadas  e  definindo  𝜑𝑖  e  𝜑  𝑖  𝑖  ∈
+ 𝑟, 𝑗, 𝑙, 𝑏  , ∀ 𝑗 = 1, … , 𝑝,  como  sendo  o  deslocamento  angular  e  a  velocidade  angular 
+dos  elementos  da  coluna  de  perfuração,  em  que  os  sub-índices  𝑟, 𝑗, 𝑙  e  𝑏  indicam  as 
+diferentes  partes  da  coluna,  isto  é,  sistema  de  rotação,  tubos  de  perfuração,  BHA  e 
+broca,  respectivamente,  o  modelo  mecânico  rotacional  da  Figura  2.1  pode  ser  descrito 
+pelo  seguinte  conjunto  de  equações  diferenciais  ordinárias  (Navarro-López  &  Cortés, 
+2007a; Navarro-López, 2010): 
+
+ 𝑇𝑚 − 𝑇𝑟 − 𝑐𝑡𝜑  𝑟 + 𝑐𝑡𝜑  1 −   𝑘𝑡𝜑𝑟 + 𝑘𝑡𝜑1  
+
+ 𝑐𝑡 𝜑  𝑟 + 𝜑  2 − 2𝜑  1  + 𝑘𝑡𝑙  𝜑𝑟 + 𝜑2 − 2𝜑1   
+
+⋮ 
+
+ 𝑐𝑡 𝜑  𝑗 −1 + 𝜑  𝑗 +1 − 2𝜑  𝑗   + 𝑘𝑡𝑙  𝜑𝑗 −1 + 𝜑𝑗 +1 − 2𝜑𝑗    
+
+⋮ 
+
+(2.1a) 
+
+(2.1b) 
+
+ 
+
+(2.1c) 
+
+ 
+
+ 𝑐𝑡 𝜑  𝑝−1 − 𝜑  𝑝   + 𝑘𝑡𝑙  𝜑𝑝−1 − 𝜑𝑝   − 𝑐𝑡𝑙  𝜑  𝑝 − 𝜑  𝑙  − 𝑘𝑡𝑙  𝜑𝑝 − 𝜑𝑙   
+
+(2.1d) 
+
+𝜑  𝑟 =
+
+𝜑  1 =
+
+𝜑  𝑗 =
+
+𝜑  𝑝 =
+
+𝜑  𝑙 =
+
+1
+𝐽𝑟
+
+1
+𝐽
+
+1
+𝐽
+
+1
+
+𝐽
+
+1
+𝐽𝑙
+
+ 𝑐𝑡𝑙  𝜑  𝑝 − 𝜑  𝑙  + 𝑘𝑡𝑙  𝜑𝑝 − 𝜑𝑙  − 𝑐𝑡𝑏  𝜑  𝑙 − 𝜑  𝑏   − 𝑘𝑡𝑏  𝜑𝑙 − 𝜑𝑏    
+
+𝜑  𝑏 =
+
+1
+𝐽𝑏
+
+ 𝑐𝑡𝑏  𝜑  𝑙 − 𝜑  𝑏   + 𝑘𝑡𝑏  𝜑𝑙 − 𝜑𝑏   − 𝑇𝑏   
+
+(2.1e) 
+
+(2.1f) 
+
+Na Equação (2.1a), o torque de impulso 𝑇𝑚  é proveniente de um motor elétrico 
+localizado  na  superfície.  Dado  que  é  assumido  que  torques  arbitrários  podem  ser 
+aplicados  sem  levar  em  consideração  a  dinâmica  do  atuador  que  gera  o  torque,  então 
+𝑇𝑚 = 𝑢, com 𝑢 > 0, sendo 𝑢 uma das entradas de controle do sistema. A outra entrada 
+de controle é o 𝑊𝑜𝑏 . O torque de amortecimento viscoso 𝑇𝑟  corresponde à lubrificação 
+dos elementos mecânicos do sistema de rotação, descrito como 𝑇𝑟 = 𝑐𝑟 𝜑  𝑟 . 
+
+ 
+
+12 
+
+ 
+
+ 
+
+Tabela 2.1– Variáveis e parâmetros do modelo da coluna de perfuração 
+
+Símbolo 
+
+Nomenclatura 
+
+𝑻𝒎 
+
+𝑻𝒃 
+
+𝑻𝒓 
+
+𝑻𝒇𝒃 
+
+𝑻𝒔𝒃 
+
+𝑱𝒓 
+
+𝑱 
+
+𝑱𝒍 
+
+𝑱𝒃 
+
+𝝋𝒓,𝝋  𝒓  
+
+𝝋𝒃,𝝋  𝒃 
+
+𝒄𝒓 
+
+𝒄𝒕 
+
+𝒄𝒕𝒍 
+
+𝒄𝒃 
+
+𝒄𝒕𝒃 
+
+𝒌𝒕 
+
+𝒌𝒕𝒍 
+
+𝒌𝒃 
+
+Torque do motor 
+
+Torque sobre a broca 
+
+Torque na mesa rotativa 
+
+Modelo de atrito entre a broca e a rocha 
+
+Torque necessário para superar o coeficiente de atrito estático 
+
+Inércia do sistema de rotação 
+
+Inércia dos tubos de perfuração 
+
+Inércia do BHA 
+
+Inércia da broca 
+
+Deslocamento e velocidade angular do sistema de rotação 
+
+Deslocamento e velocidade angular da broca 
+
+Coeficiente de amortecimento viscoso 
+
+Coeficiente de amortecimento torcional entre a mesa e os tubos 
+
+Coeficiente de amortecimento torcional entre os tubos e o BHA 
+
+Coeficiente de amortecimento torcional entre o BHA e a broca 
+
+Coeficiente de amortecimento torcional da broca 
+
+Coeficiente de rigidez torcional entre a mesa e os tubos 
+
+Coeficiente de rigidez torcional entre os tubos e o BHA 
+
+Coeficiente de rigidez torcional entre o BHA e a broca 
+
+13 
+
+ 
+
+𝒌𝒕𝒃 
+
+𝝁𝒃 
+
+𝝁𝒄𝒃 
+
+𝝁𝒔𝒃 
+
+𝑹𝒃 
+
+𝑾𝒐𝒃 
+
+𝒗𝒇 
+
+𝜸𝒃 
+
+Coeficiente de rigidez torcional da broca 
+
+Coeficiente de atrito na broca 
+
+Coeficiente de atrito Coulomb associado com 𝐽𝑏  
+
+Coeficiente de atrito estático associado com 𝐽𝑏  
+
+Raio da broca 
+
+Peso sobre a broca 
+
+Velocidade induzida a fim de ter unidades apropriadas 
+
+Constante que define a taxa de redução de velocidade (0 < 𝛾𝑏 < 1) 
+
+Definindo: 
+
+𝐱 = [𝜑𝑟  𝜑  𝑟   …  𝜑𝑗  𝜑  𝑗    … 𝜑𝑙  𝜑  𝑙  𝜑𝑏  𝜑  𝑏 ]𝑇                                     
+
+=  𝑥1 𝑥2 … 𝑥2 𝑗 +1 −1 𝑥2(𝑗 +1) … 𝑥2𝑛 −3 𝑥2𝑛−2 𝑥2𝑛−1 𝑥2𝑛  
+
+𝑇
+
+ 
+
+(2.2) 
+
+como o vetor de estados do sistema, com  𝑗 = 1, … , 𝑝, e 𝑛 sendo um número inteiro que 
+representa  o  grau  de  liberdade  do  modelo,  a  Equação  (2.1)  pode  ser  escrita  como  um 
+modelo em espaço de estados da forma: 
+
+𝐱  𝑡  = 𝐴𝐱 𝑡  + 𝐵𝑢 + 𝑇𝑓𝐱 𝑡  
+
+(2.3) 
+
+em que A, B e 𝑇𝑓 são matrizes, cujas dimensões dependem do grau de liberdade. Para 
+um sistema com 𝑛-DOF, a matriz A, de ordem 2𝑛 × 2𝑛, e as matrizes B e 𝑇𝑓, de ordem 
+1 × 2𝑛, têm a seguinte estrutura: 
+
+ 
+
+14 
+
+ 
+
+𝐴 =
+
+0
+𝑘𝑡
+𝐽𝑟
+0
+𝑘𝑡
+𝐽
+0
+
+0
+
+0
+⋮
+
+0
+
+ 
+−
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+0
+
+0
+
+0
+
+0
+
+−
+
+1
+
+(𝑐𝑡 + 𝑐𝑟)
+
+𝐽𝑟
+0
+𝑐𝑡
+𝐽
+0
+
+0
+
+0
+⋮
+
+…
+
+0
+
+0
+
+0
+
+0
+
+−
+
+0
+𝑘𝑡
+𝐽𝑟
+0
+2𝑘𝑡
+𝐽
+0
+𝑘𝑡
+𝐽
+0
+⋮
+𝑘𝑡
+𝐽
+0
+
+0
+
+0
+
+0
+
+−
+
+0
+𝑐𝑡
+𝐽𝑟
+1
+2𝑐𝑡
+𝐽
+0
+𝑐𝑡
+𝐽
+0
+⋮
+𝑐𝑡
+𝐽
+…
+
+…
+
+…
+
+…
+
+0
+
+0
+
+0
+𝑘𝑡
+𝐽
+0
+2𝑘𝑡
+𝐽
+0
+⋮
+
+−
+
+0
+
+0
+
+0
+𝑐𝑡
+𝐽
+1
+2𝑐𝑡
+𝐽
+0
+⋮
+
+−
+
+−
+
+(𝑘𝑡 + 𝑘𝑡𝑙 )
+
+𝐽
+…
+𝑘𝑡𝑙
+𝐽𝑙
+…
+
+…
+
+−
+
+(𝑐𝑡 + 𝑐𝑡𝑙 )
+
+𝐽
+…
+𝑐𝑡𝑙
+𝐽𝑙
+…
+
+…
+
+⋯
+
+⋯
+
+⋯
+
+0
+
+0
+𝑘𝑡
+𝐽
+0
+⋮
+𝑘𝑡𝑙
+𝐽
+…
+
+⋯
+
+⋯
+
+⋯
+
+…
+
+…
+𝑐𝑡
+𝐽
+1
+⋮
+𝑐𝑡𝑙
+𝐽
+1
+
+−
+
+(𝑘𝑡𝑙 + 𝑘𝑡𝑏 )
+
+𝐽𝑙
+0
+𝑘𝑡𝑏
+𝐽𝑏
+
+−
+
+(𝑐𝑡𝑙 + 𝑐𝑡𝑏 )
+
+𝐽𝑙
+0
+𝑐𝑡𝑏
+𝐽𝑏
+
+0
+
+0
+
+0
+
+0
+
+0
+
+…
+
+…
+⋮
+
+0
+
+0
+𝑘𝑡𝑏
+𝐽𝑙
+0
+𝑘𝑡𝑏
+𝐽𝑏
+
+−
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+⋮
+
+0
+
+0
+𝑐𝑡𝑏
+𝐽𝑙
+1
+
+−
+
+(𝑐𝑡𝑏 + 𝑐𝑏 )
+
+𝐽𝑏
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+𝐵 =
+
+0
+ 
+1 𝐽𝑟 
+ 
+0
+ 
+⋮
+ 
+0  
+
+ 
+ 
+ 
+ 
+ 
+
+  
+
+𝑇𝑓 =  
+
+0
+0
+⋮
+0
+
+ 
+ 
+ 
+ 
+− 𝑇𝑓𝑏 (𝐱) 𝐽𝑏   
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+O  torque  na  broca  𝑇𝑏 ,  que  associa  o  torque  de  atrito  seco  mais  o  torque  de 
+
+amortecimento viscoso da broca, é descrito por (Navarro-López & Cortés, 2007a): 
+
+𝑇𝑏  𝐱  = 𝑇𝑎𝑏 + 𝑇𝑓𝑏 (𝐱) 
+
+sendo que  𝑇𝑎𝑏 = 𝑐𝑏 𝑥2𝑛  é o torque de amortecimento  viscoso associado com  o contato 
+da  broca  e  a  formação.  Este  torque  aproxima  a  influência  da  lama  de  perfuração  na 
+resposta da broca. 𝑇𝑓𝑏 (𝐱) representa o modelo de atrito  entre a broca e  a formação.  O 
+contato broca-formação é proposto como uma variação do atrito Stribeck conjuntamente 
+com  o  modelo  de  atrito  seco  (Armstrong-Hélouvry  et  al.,  1994).  O  modelo  de  atrito 
+seco,  quando  𝑥2𝑛 = 𝜑  𝑏  = 0,  é  aproximado  por  uma  combinação  do  modelo  switch 
+proposto  por  Leine  et  al.  (1998)  e  uma  variação  do  modelo  de  Karnopp  (1985),  que 
+introduz uma banda de  velocidade zero.  Assim, tem-se que (Navarro-López & Cortés, 
+2007b): 
+
+(2.4) 
+
+(2.5) 
+
+(2.6) 
+
+(2.7) 
+
+𝑇𝑓𝑏  𝐱  =  
+
+𝑇𝑒𝑏  𝐱 ,           𝑠e  𝑥2𝑛   < 𝐷𝑣,  𝑇𝑒𝑏   ≤ 𝑇𝑠𝑏   (fase stick)                                                    
+  
+𝑇𝑠𝑏 𝑠𝑔𝑛 𝑇𝑒𝑏  𝐱  ,       se  𝑥2𝑛   < 𝐷𝑣,  𝑇𝑒𝑏   > 𝑇𝑠𝑏  (transição da fase stick para slip) 
+ 𝑥2𝑛   𝑠𝑔𝑛 𝑥2𝑛  ,   se  𝑥2𝑛   ≥ 𝐷𝑣 (fase slip) 
+𝑊𝑜𝑏 𝑅𝑏  µ𝑐𝑏 +  µ𝑠𝑏 − µ𝑐𝑏  𝑒𝑥𝑝−(𝛾𝑏 𝑣𝑓 )
+
+ 
+
+(2.8) 
+
+ 
+
+15 
+
+ 
+
+em que 𝐷𝑣 > 0 é a largura da banda no modelo de atrito broca-formação 𝑇𝑓𝑏 (𝐱). 𝑇𝑒𝑏  é o 
+torque de reação, isto é,  o torque que deve  o torque de atrito  estático  𝑇𝑠𝑏  superar para 
+que a broca se mova. 𝑇𝑠𝑏  é definido como: 
+
+sendo 𝑅𝑏 > 0 o raio da broca. O torque de reação 𝑇𝑒𝑏  é dado por: 
+
+ 𝑇𝑠𝑏 = 𝜇𝑠𝑏 𝑊𝑜𝑏 𝑅𝑏  
+
+𝑇𝑒𝑏   𝐱  =  
+
+𝑐𝑡  𝜑  𝑟  − 𝜑  𝑏   + 𝑘𝑡  𝜑𝑟  − 𝜑𝑏   − 𝑇𝑎𝑏,            𝑠𝑒 𝑛 = 2 
+𝑐𝑡𝑏  𝜑  𝑙  − 𝜑  𝑏   + 𝑘𝑡𝑏  𝜑𝑙  − 𝜑𝑏   − 𝑇𝑎𝑏 ,         𝑠𝑒 𝑛 > 2
+
+  
+
+(2.9) 
+
+(2.10) 
+
+A resposta de decaimento exponencial do torque sobre a broca 𝑇𝑏  coincide com 
+valores experimentais de torque na broca (Navarro-López & Cortés, 2007b). Note que o 
+modelo  da  Equação  (2.3)  é  um  sistema  não-linear  descontínuo  2n-dimensional.  A 
+descontinuidade  é  introduzida  pelo  atrito  broca-formação,  mais  especificamente  pela 
+função sgn na Equação (2.8), considerada como: 
+
+𝑠𝑔𝑛 𝑎  =  
+
+𝑎
+ 𝑎 
+0 −1,1 ,      𝑠𝑒  𝑎 = 0
+
+,                  𝑠𝑒 𝑎 ≠ 0
+  
+
+(2.11) 
+
+Do ponto de vista matemático, a função sgn é a descontinuidade do sistema e a 
+
+causa de fenômenos dinâmicos complexos como as oscilações stick-slip. 
+
+A  seguir  são  apresentadas  simulações  de  casos  particulares  do  modelo  de  n-
+DOF  que  capturam  o  principal  fenômeno  stick-slip  e  as  oscilações  nos  tubos  de 
+perfuração. 
+
+2.2.  Simulação de um Sistema de 2-DOF 
+
+O  modelo  torcional  de  2-DOF  de  uma  coluna  de  perfuração  vertical 
+convencional  é  composto  de  duas  inércias  amortecidas  acopladas  mecanicamente 
+através  de  um  eixo  elástico  com  coeficientes  de  rigidez  e  amortecimento 𝑘𝑡  e  𝑐𝑡, 
+respectivamente. A Figura 2.2 representa a estrutura do modelo do sistema. 
+
+Definindo o vetor de estados: 
+
+                                    
+
+𝐱 = [𝜑𝑟  𝜑  𝑟  𝜑𝑏  𝜑  𝑏 ]𝑇 =  𝑥1 𝑥2  𝑥3 𝑥4 𝑇 
+
+(2.12) 
+
+usando a Equação (2.1), e considerando 𝑘𝑡𝑏 = 𝑘𝑡 e 𝑐𝑡𝑏 = 𝑐𝑡, o modelo para um sistema 
+de 2-DOF pode ser escrito como: 
+
+ 
+
+16 
+
+ 
+
+ 
+  
+
+ 
+  
+ 
+
+𝑥 2 =  
+
+𝑥 1 =   𝑥2
+1
+𝐽𝑟
+𝑥 3 =   𝑥4
+1
+𝐽𝑏
+
+  − 𝑘𝑡 𝑥1 −  𝑐𝑡 + 𝑐𝑟  𝑥2 +  𝑘𝑡 𝑥3 +  𝑐𝑡 𝑥4 + 𝑇𝑚  
+
+  
+
+(2.13) 
+
+𝑥 4 =  
+
+  𝑘𝑡 𝑥1 +  𝑐𝑡 𝑥2 −  𝑘𝑡 𝑥3 −  𝑐𝑡 + 𝑐𝑏  𝑥4 − 𝑇𝑓𝑏 (𝐱) 
+
+em que 𝑇𝑓𝑏  𝐱  é definido pela Equação (2.8). 
+
+Figura 2.2 – Estrutura do modelo de 2-DOF de uma coluna de perfuração 
+
+ 
+
+Re-arranjando  a  Equação  (2.13),  na  forma  da  Equação  (2.3),  obtêm-se  as 
+
+seguintes matrizes do modelo em espaço de estado: 
+
+−
+
+𝐴 =
+
+−
+
+0
+𝑘𝑡
+𝐽𝑟
+0
+𝑘𝑡
+𝐽𝑏
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+1
+
+(𝑐𝑡 + 𝑐𝑟 )
+
+𝐽𝑟
+0
+𝑐𝑡
+𝐽𝑏
+
+0
+𝑘𝑡
+𝐽𝑟
+0
+𝑘𝑡
+𝐽𝑏
+
+−
+
+0
+𝑐𝑡
+𝐽𝑟
+1
+
+−
+
+(𝑐𝑡 + 𝑐𝑏 )
+
+𝐽𝑟
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+𝐵 =  
+
+0
+1 𝐽𝑟 
+0
+0
+
+   
+
+𝑇𝑓 =  
+
+0
+0
+0
+
+  
+
+− 𝑇𝑓𝑏 (𝑥) 𝐽𝑏 
+
+(2.14) 
+
+(2.15) 
+
+(2.16) 
+
+O  modelo  (2.13)  é  implementado  usando  a  plataforma  computacional 
+simulação 
+
+Simulink/MATLAB®.  Os  valores  dos  parâmetros  utilizados  na 
+
+ 
+
+17 
+
+ 
+
+correspondem  ao  projeto  de  uma  coluna  de  perfuração  real  conforme  Navarro-López 
+(2008), os quais são mostrados na Tabela 2.2. 
+
+A  Figura  2.3  representa  o  comportamento  da  velocidade  angular  da  broca 
+(𝑥4 = 𝜑  𝑏 ) e da mesa rotatória (𝑥2 = 𝜑  𝑟 ). É possível notar que em certos momentos a 
+velocidade  da  broca  é  nula,  ou  seja,  a  broca  pára  de  girar  em  relação  à  formação, 
+causando  o  fenômeno  denominado  stick.  Durante  essa  fase,  o  torque  aplicado  sobre  a 
+coluna passa a  deformar a coluna por torção.  Quando o torque sobre a broca supera o 
+atrito  estático  entre  a  broca  e  a  formação,  a  broca  volta  a  se  movimentar  causando  o 
+fenômeno  slip,  no  qual  a  energia  armazenada  durante  a  fase  stick  causa  picos  na 
+velocidade angular da broca. A fase slip acontece até que o atrito broca-formação passa 
+a superar o torque sobre a broca, repetindo-se todo o ciclo. 
+
+Tabela 2.2- Valores dos parâmetros do modelo de 2-DOF 
+
+Variável 
+
+Valor 
+
+ 
+
+Variável 
+
+Valor 
+
+𝑱𝒓 
+
+𝑱𝒃 
+
+𝑹𝒃 
+
+𝒌𝒕 
+
+𝜸𝒃 
+
+𝒗𝒇 
+
+2122 𝑘𝑔 𝑚2 
+
+471,9698 𝑘𝑔 𝑚2 
+
+0,155575 𝑚 
+
+698,063 𝑁 𝑚/𝑟𝑎𝑑 
+
+0,9 
+
+1 
+
+𝑾𝒐𝒃 
+
+53018 𝑁 
+
+𝒄𝒕 
+
+𝒄𝒓 
+
+𝒄𝒃 
+
+µ𝒄𝒃 
+
+µ𝒔𝒃 
+
+𝑫𝒗 
+
+𝑻𝒎 
+
+139,6126 𝑁 𝑚 𝑠/𝑟𝑎𝑑 
+
+425 𝑁 𝑚 𝑠/𝑟𝑎𝑑 
+
+50 𝑁 𝑚 𝑠/𝑟𝑎𝑑 
+
+0,5 
+
+0,8 
+
+10−6 
+
+6 𝑘𝑁 𝑚 
+
+Os deslocamentos angulares da mesa rotatória (𝑥1 = 𝜑𝑟 ) e da broca (𝑥3 = 𝜑𝑏 ) 
+são mostrados na Figura 2.4 (lado esquerdo). Como pode ser visualizado na fase stick, 
+enquanto  o  deslocamento  angular  da  mesa  rotatória  praticamente  continua  constante, 
+não  há  progressão  do  deslocamento  da  broca  dado  que  a  sua  velocidade  é  nula  nessa 
+fase e, portanto,  não há perfuração da formação. A diferença de deslocamento angular 
+entre a mesa rotatória e a broca é mostrada na Figura 2.4 (lado direito). Note-se que essa 
+diferença  de  deslocamento  é  sempre  positiva,  o  que  significa  que  o  deslocamento  da 
+mesa rotatória está sempre à frente do deslocamento da broca. As paradas da broca na 
+fase stick contribuem a uma redução do seu deslocamento em relação à mesa rotatória. 
+
+ 
+
+18 
+
+ 
+
+Na  Figura  2.5  ilustra-se  a  trajetória  do  sistema  no  espaço   𝑥1 − 𝑥3, 𝑥2, 𝑥4 , 
+denotando  o  ciclo  do  fenômeno  stick-slip,  em  que  P1  e  P2  são  os  pontos  que  indicam 
+quando  o  sistema  entra  e  sai  da  fase  stick,  respectivamente,  i.e.,  o  intervalo  em  que  a 
+velocidade angular da broca é nula. O perfil da trajetória tem a forma de ciclos limites, 
+mostrando a natureza oscilatória e periódica do movimento do sistema. 
+
+Figura 2.3 – Velocidade angular da broca (x4) e da mesa rotatória (x2) do sistema de 2-
+
+DOF 
+
+ 
+
+Figura 2.4 – Esquerda: deslocamento angular da mesa rotatória (x1) e da broca (x3). 
+
+Direita: diferença de deslocamento angular entre a mesa rotatória e a broca no sistema 
+
+ 
+
+ 
+
+de 2-DOF 
+
+19 
+
+ 
+
+Figura 2.5 – Ciclo do fenômeno stick-slip do sistema de 2-DOF 
+
+ 
+
+2.3.  Simulação de um Sistema de 3-DOF 
+
+Para o caso do sistema de perfuração com 3 graus de liberdade, é considerado 
+que  o  sistema  é  composto  de  três  inércias  (𝐽𝑟 , 𝐽𝑝  e 𝐽𝑏 )  amortecidas  e  acopladas 
+mecanicamente através de dois eixos elásticos com coeficientes de rigidez 𝑘𝑡 e 𝑘𝑡𝑏  e de 
+amortecimento 𝑐𝑡 e 𝑐𝑡𝑏 , respectivamente. A distribuição destes elementos no sistema é 
+mostrada na estrutura mecânica da Figura 2.6. 
+
+Definindo o vetor de estados: 
+
+𝐱 = [𝜑𝑟  𝜑  𝑟  𝜑𝑙  𝜑  𝑙  𝜑𝑏  𝜑  𝑏 ]𝑇 =  𝑥1 𝑥2  𝑥3  𝑥4  𝑥5 𝑥6 𝑇 
+
+(2.17) 
+
+e usando a Equação (2.1), o modelo para um sistema de 3-DOF pode ser representado 
+por: 
+
+ 
+
+20 
+
+ 
+
+Figura 2.6 – Estrutura do modelo de 3-DOF de uma coluna de perfuração 
+
+ 
+
+Usando  a  Equação  (2.1),  a  modelagem  para  o  sistema  3-DOF  pode  ser 
+
+representada por: 
+
+𝑥 2 =  
+
+𝑥 1 =   𝑥2
+1
+𝐽𝑟
+𝑥 3 =   𝑥4
+1
+𝐽𝑝
+𝑥 5 =   𝑥6
+1
+𝐽𝑏
+
+𝑥 4 =  
+
+𝑥 6 =  
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+  − 𝑘𝑡 𝑥1 −  𝑐𝑡 + 𝑐𝑟 𝑥2 +  𝑘𝑡 𝑥3 +  𝑐𝑡  𝑥4 + 𝑇𝑚  
+
+  
+  𝑘𝑡 𝑥1 +  𝑐𝑡  𝑥2 −  𝑘𝑡 + 𝑘𝑡𝑏  𝑥3 −  𝑐𝑡 + 𝑐𝑡𝑏  𝑥4 +  𝑘𝑡𝑏  𝑥5 +  𝑐𝑡𝑏  𝑥6 
+
+(2.18) 
+
+  𝑘𝑡𝑏  𝑥3 +  𝑐𝑡𝑏  𝑥4 −  𝑘𝑡𝑏  𝑥5 −  𝑐𝑡𝑏 + 𝑐𝑏  𝑥6 − 𝑇𝑓𝑏 𝐱  
+
+sendo que 𝑇𝑓𝑏  𝐱   é descrito pela Equação (2.8). Colocando a Equação (2.18) na forma 
+matricial da Equação (2.3), tem-se que as matrizes do modelo em espaço de estado são: 
+
+0
+
+0
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(𝑐𝑡𝑏 + 𝑐𝑏 )
+ 
+ 
+
+0
+𝑐𝑡𝑏
+𝐽𝑝
+1
+
+𝐽𝑏
+
+(2.19) 
+
+𝐴 =
+
+−
+
+−
+
+0
+𝑘𝑡
+𝐽𝑟
+0
+𝑘𝑡
+𝐽𝑝
+0
+
+0
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+1
+
+(𝑐𝑡 + 𝑐𝑟 )
+
+𝐽𝑟
+0
+𝑐𝑡
+𝐽𝑝
+0
+
+0
+
+0
+𝑘𝑡
+𝐽𝑟
+0
+
+0
+𝑐𝑡
+𝐽𝑟
+1
+
+−
+
+(𝑘𝑡 + 𝑘𝑡𝑏 )
+
+𝐽𝑝
+0
+𝑘𝑡𝑏
+𝐽𝑏
+
+−
+
+(𝑐𝑡 + 𝑐𝑡𝑏 )
+
+𝐽𝑝
+0
+𝑐𝑡𝑏
+𝐽𝑏
+
+0
+
+0
+
+0
+𝑘𝑡𝑏
+𝐽𝑝
+0
+𝑘𝑡𝑏
+𝐽𝑏
+
+−
+
+−
+
+ 
+
+21 
+
+ 
+
+𝐵 =
+
+0
+ 
+1 𝐽𝑟 
+ 
+0
+ 
+0
+ 
+ 
+0
+0  
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+  
+
+𝑇𝑓 =
+
+0
+0
+0
+0
+0
+
+ 
+ 
+ 
+ 
+ 
+ 
+− 𝑇𝑓𝑏 (𝑥) 𝐽𝑏   
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+(2.20) 
+
+(2.21) 
+
+O  modelo  (2.18)  é  implementado  usando  o  pacote  Simulink/MATLAB®.  Os 
+valores  dos  parâmetros  de  simulação  correspondem  ao  projeto  de  uma  coluna  de 
+perfuração  real,  reportados  por  Navarro-López  (2009),  os  quais  são  apresentados  na 
+Tabela 2.3. 
+
+Tabela 2.3– Valores dos parâmetros do modelo de 3-DOF 
+
+Variável 
+
+Valor 
+
+ 
+
+Variável 
+
+Valor 
+
+𝑱𝒓 
+
+𝑱𝒃 
+
+𝑱𝒑 
+
+𝑹𝒃 
+
+𝒌𝒕𝒃 
+
+𝒌𝒕 
+
+𝜸𝒃 
+
+𝒗𝒇 
+
+2122 𝑘𝑔 𝑚2 
+
+471,9698 𝑘𝑔 𝑚2 
+
+750 𝑘𝑔 𝑚2 
+
+0,155575 𝑚 
+
+907,482089 𝑁 𝑚/𝑟𝑎𝑑 
+
+698,063 𝑁 𝑚/𝑟𝑎𝑑 
+
+0,9 
+
+1 
+
+𝑾𝒐𝒃 
+
+74386 𝑁 
+
+𝒄𝒕 
+
+𝒄𝒓 
+
+𝒄𝒕𝒃 
+
+𝒄𝒃 
+
+µ𝒄𝒃 
+
+µ𝒔𝒃 
+
+𝑫𝒗 
+
+𝑻𝒎 
+
+ 
+
+139,6126 𝑁 𝑚 𝑠/𝑟𝑎𝑑 
+
+425 𝑁 𝑚 𝑠/𝑟𝑎𝑑 
+
+181,49641 𝑁 𝑚 𝑠/𝑟𝑎𝑑 
+
+50 𝑁 𝑚 𝑠/𝑟𝑎𝑑 
+
+0,5 
+
+0,8 
+
+10−6 
+
+8138 𝑁 𝑚 
+
+ 
+
+As velocidades angulares dos componentes do sistema são mostradas na Figura 
+2.7.  Nesta  figura,  é  notória  a  presença  do  fenômeno  stick-slip  na  coluna  pela  forma 
+
+ 
+
+22 
+
+ 
+
+oscilatória da velocidade angular da broca (𝑥6 = 𝜑  𝑏 ), sendo esta zero em determinados 
+instantes (fase stick) e apresentando picos de velocidade elevada em outros (fase  slip). 
+Também  é  possível  verificar  na  Figura  2.7,  que  a  velocidade  angular  dos  tubos  de 
+perfuração  (𝑥4 = 𝜑  𝑙 )  é  diferente  da  velocidade  angular  da  mesa  rotatória  (𝑥2 = 𝜑  𝑟 ), 
+revelando  perdas  de  energia  entre  a  mesa  e  os  tubos.  Lembrando  que  os  tubos  de 
+perfuração  são responsáveis  repassar a  energia  gerada pela mesa para a  broca,  energia 
+esta armazenada na fase stick e gasta na fase slip. 
+
+Figura 2.7 – Velocidade angular da broca (x6), do tubo de perfuração (x4) e da mesa 
+
+rotatória (x2) do sistema de 3-DOF 
+
+ 
+
+Na  Figura  2.8,  no  lado  esquerdo  é  mostrado  o  deslocamento  angular  dos 
+elementos  do  sistema  durante  a  perfuração.  Observe  que  na  fase  stick,  enquanto  o 
+deslocamento  da  angular  da  mesa  (𝑥1 = 𝜑𝑟 )  praticamente  continua  constante,  não  há 
+deslocamento  da  broca  (𝑥5 = 𝜑𝑏 ),  porém  existe  uma  redução  do  deslocamento  dos 
+tubos  de  perfuração  (𝑥3 = 𝜑𝑙 ).  Já,  no  lado  direito  da  Figura  2.8,  visualiza-se  a 
+diferença  de  deslocamento  angular  entre  a  mesa  rotatória  e  a  broca  que,  embora 
+oscilatória, é sempre positiva. Esta diferença começa  aumentar na  fase  stick e diminui 
+durante a fase slip. 
+
+A  Figura  2.9  apresenta  a  trajetória  do  sistema  no  espaço   𝑥1 − 𝑥5, 𝑥2, 𝑥6 , 
+ressaltando o ciclo do fenômeno stick-slip. Os pontos P1 e P2 indicam os locais onde o 
+sistema entra e saí da fase stick, respectivamente. 
+
+ 
+
+23 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 2.8 – Esquerda: deslocamento angular da mesa rotatória (x1), dos tubos de 
+
+perfuração (x3) e da broca (x5). Direita: diferença de deslocamento angular entre a mesa 
+
+rotatória e a broca no sistema de 3-DOF 
+
+ 
+
+Figura 2.9 – Ciclo do fenômeno stick-slip do sistema de 3-DOF 
+
+ 
+
+24 
+
+ 
+
+2.4.  Simulação de um Sistema de 4-DOF 
+
+O  modelo  torcional  de  4-DOF  de  uma  coluna  de  perfuração  vertical 
+convencional  considera  quatro  inércias  (𝐽𝑟 , 𝐽𝑙, 𝐽𝑝  e 𝐽𝑏 ),  que  representam  o  sistema  de 
+rotação,  tubos  de  perfuração,  BHA  e  broca,  amortecidas  e  acopladas  mecanicamente 
+através  de  três  eixos  elásticos  com  coeficientes  de  rigidez  𝑘𝑡,  𝑘𝑡𝑙   e  𝑘𝑡𝑏   e  de 
+amortecimento  𝑐𝑡,  𝑐𝑡𝑙   e  𝑐𝑡𝑏 ,  respectivamente.  A  estrutura  mecânica  da  Figura  2.10 
+mostra a localização destes elementos no modelo. 
+
+Figura 2.10 – Estrutura do modelo de 4-DOF de uma coluna de perfuração 
+
+ 
+
+Definindo o vetor de estados: 
+
+𝐱 = [𝜑𝑟  𝜑  𝑟  𝜑𝑝  𝜑  𝑝  𝜑𝑙  𝜑  𝑙  𝜑𝑏  𝜑  𝑏 ]𝑇 =  𝑥1 𝑥2  𝑥3  𝑥4  𝑥5 𝑥6  𝑥7 𝑥8 𝑇 
+
+(2.22) 
+
+e  usando  a  Equação  (2.1),  o  modelo  o  sistema  de  4-DOF  é  descrito  pelo  seguinte 
+conjunto de equações no espaço de estados: 
+
+ 
+
+25 
+
+  − 𝑘𝑡 𝑥1 −  𝑐𝑡 + 𝑐𝑟 𝑥2 +  𝑘𝑡 𝑥3 +  𝑐𝑡 𝑥4 + 𝑇𝑚  
+
+  𝑘𝑡 𝑥1 +  𝑐𝑡 𝑥2 −  𝑘𝑡 + 𝑘𝑡𝑙 𝑥3 −  𝑐𝑡 + 𝑐𝑡𝑙 𝑥4 +  𝑘𝑡𝑙 𝑥5 +  𝑐𝑡𝑙 𝑥6 
+
+  
+
+(2.23) 
+
+𝑥  6 =  
+
+  𝑘𝑡𝑙 𝑥3 +  𝑐𝑡𝑙 𝑥4 −  𝑘𝑡𝑙 + 𝑘𝑡𝑏 𝑥5 −  𝑐𝑡𝑙 + 𝑐𝑡𝑏 𝑥6 +  𝑘𝑡𝑏 𝑥7 +  𝑐𝑡𝑏 𝑥8 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+𝑥  4 =  
+
+𝑥  2 =  
+
+𝑥  1 =   𝑥2
+1
+𝐽𝑟
+𝑥  3 =   𝑥4
+1
+𝐽𝑝
+𝑥  5 =   𝑥6
+1
+𝐽𝑙
+𝑥  7 =   𝑥8
+1
+𝐽𝑏
+
+𝑥  8 =  
+
+  𝑘𝑡𝑏 𝑥5 +  𝑐𝑡𝑏 𝑥6 −  𝑘𝑡𝑏 𝑥7 −  𝑐𝑡𝑏 + 𝑐𝑏 𝑥8 − 𝑇𝑓𝑏 
+
+sendo que 𝑇𝑓𝑏  𝐱   é definido pela Equação (2.8). A Equação (2.23) pode ser expressa na 
+forma matricial da Equação (2.3). Assim, as matrizes do modelo em espaço de estados 
+são: 
+
+𝐴 =
+
+−
+
+−
+
+0
+𝑘𝑡
+𝐽𝑟
+0
+𝑘𝑡
+𝐽𝑝
+0
+
+0
+
+0
+
+0
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+1
+
+(𝑐𝑡 + 𝑐𝑟 )
+
+𝐽𝑟
+0
+𝑐𝑡
+𝐽𝑝
+0
+
+0
+
+0
+
+0
+
+−
+
+0
+𝑘𝑡
+𝐽𝑟
+1
+
+(𝑘𝑡 + 𝑘𝑡𝑙 )
+
+𝐽𝑝
+0
+𝑘𝑡𝑙
+𝐽𝑙
+0
+
+0
+
+−
+
+0
+𝑐𝑡
+𝐽𝑟
+0
+
+(𝑐𝑡 + 𝑐𝑡𝑙 )
+
+𝐽𝑝
+0
+𝑐𝑡𝑙
+𝐽𝑙
+0
+
+0
+
+0
+
+0
+
+0
+𝑘𝑡𝑙
+𝐽𝑝
+0
+
+0
+
+0
+
+0
+𝑐𝑡𝑙
+𝐽𝑝
+1
+
+−
+
+(𝑘𝑡𝑙 + 𝑘𝑡𝑏 )
+
+𝐽𝑙
+0
+𝑘𝑡𝑏
+𝐽𝑏
+
+−
+
+(𝑐𝑡𝑙 + 𝑐𝑡𝑏 )
+
+𝐽𝑙
+0
+𝑐𝑡𝑏
+𝐽𝑏
+
+0
+
+0
+
+0
+
+0
+
+0
+𝑘𝑡𝑏
+𝐽𝑙
+0
+𝑘𝑡𝑏
+𝐽𝑏
+
+−
+
+0
+
+0
+
+0
+
+0
+
+0
+𝑐𝑡𝑏
+𝐽𝑙
+1
+
+−
+
+(𝑐𝑡𝑏 + 𝑐𝑏)
+
+𝐽𝑏
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+𝐵 =
+
+0
+ 
+1 𝐽𝑟 
+ 
+0
+ 
+0
+ 
+0
+ 
+0
+ 
+0
+0  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+  
+
+𝑇𝑓 =
+
+0
+0
+0
+0
+0
+0
+0
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+− 𝑇𝑓𝑏 (𝑥) 𝐽𝑏   
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+(2.24) 
+
+(2.25) 
+
+(2.26) 
+
+O  modelo 
+
+implementado  usando  o  pacote  computacional 
+Simulink/MATLAB®. Os valores dos parâmetros usados na simulação correspondem a 
+
+(2.23)  é 
+
+ 
+
+26 
+
+ 
+
+uma  coluna  de  perfuração  real2,  composta  de  130  tubos  de  perfuração  (cada  tubo  tem 
+12,7  cm  de  diâmetro  externo,  11,2  cm  de  diâmetro  interno  e  9  m  de  comprimento)  e 
+uma  broca  de  rolamentos  cônicos  (de  32,11  cm  de  diâmetro  externo,  16,5  cm  de 
+diâmetro interno e 1,5 m de comprimento). Exemplos de brocas de rolamentos cônicos 
+são mostrados na Figura 2.11. 
+
+Figura 2.11 – Brocas de rolamentos cônicos 
+
+ 
+
+Os parâmetros da coluna são obtidos de Navarro-López e Cortés (2007b) e são 
+
+listados na Tabela 2.4. 
+
+A Figura 2.12 delineia o comportamento da velocidade angular dos elementos 
+da  coluna,  podendo  ser  facilmente  observado  o  fenômeno  stick-slip,  pela  resposta 
+oscilatória e de velocidade zero da broca (𝑥8 = 𝜑  𝑏 ) em determinados instantes. Devido 
+à  estrutura  do  modelo,  é  possível  diferenciar  as  velocidades  da  broca  e  do  BHA 
+(𝑥6 = 𝜑  𝑙 ). A velocidade do BHA tem um perfil similar à velocidade da broca na fase 
+slip. As frequências de oscilação da velocidade dos tubos de perfuração (𝑥4 = 𝜑  𝑝 ) e da 
+mesa  rotatória  (𝑥2 = 𝜑  𝑟 )  apresentam  defasagem  em  relação  à  velocidade  dos  outros 
+componentes da coluna, sendo a amplitude da velocidade da mesa maior na fase  stick, 
+quando é necessário um torque suficiente, para superar o atrito broca-formação. 
+
+A Figura 2.13 (lado esquerdo) apresenta o deslocamento angular dos elementos 
+da  coluna.  Na  fase  stick,  é  possível  visualizar  que  enquanto  a  broca  pára  de  se 
+movimentar  (𝑥7 = 𝜑𝑏 ),  há  uma  certa  redução  no  deslocamento  angular  do  BHA 
+(𝑥5 = 𝜑𝑙 )  e  dos  tubos  de  perfuração  (𝑥3 = 𝜑𝑝 ).  Já  o  deslocamento  angular  da  mesa 
+rotatória  (𝑥1 = 𝜑𝑟 )   aumenta,  em  razão  do  aumento  da  velocidade  angular  da  mesa 
+nessa  fase.  Na  fase  slip,  o  deslocamento  angular  da  broca  é  superior  ao  deslocamento 
+angular  dos  outros  componentes  da  coluna.  Na  Figura  2.13  (lado  direito)  mostra-se  a 
+
+                                                           
+2 Parâmetros de um sistema em escala reduzida podem ser obtidos em Navarro-López & Cortés (2007a). 
+
+ 
+
+27 
+
+ 
+
+diferença de deslocamento angular entre a mesa rotatória e a broca, a qual aumenta na 
+fase stick e diminui na fase slip. 
+
+A  Figura  2.14  mostra  a  trajetória  do  sistema  de  4-DOF  no  espaço   𝑥1 −
+𝑥7, 𝑥2, 𝑥8 ,  denotado  o  ciclo  do  fenômeno  stick-slip,  sendo  P1  e  P2  são  os  pontos  que 
+indicam onde o sistema entra e saí da fase stick, respectivamente. 
+
+Tabela 2.4 – Valores dos parâmetros do modelo de 4-DOF 
+
+Variável 
+
+Valor 
+
+ Variável 
+
+Valor 
+
+𝑱𝒓 
+
+𝑱𝒃 
+
+𝑱𝒑 
+
+𝑱𝒍 
+
+𝑹𝒃 
+
+𝒌𝒕𝒃 
+
+𝒌𝒕 
+
+𝒌𝒕𝒍 
+
+𝒗𝒇 
+
+930 𝑘𝑔 𝑚2 
+
+471,9698 𝑘𝑔 𝑚2 
+
+2782,25 𝑘𝑔 𝑚2 
+
+750 𝑘𝑔 𝑚2 
+
+0,155575 𝑚 
+
+907,48 𝑁 𝑚/𝑟𝑎𝑑 
+
+698,063 𝑁 𝑚/𝑟𝑎𝑑 
+
+1080 𝑁 𝑚/𝑟𝑎𝑑 
+
+1 
+
+𝑾𝒐𝒃 
+
+97347 𝑁 
+
+𝒄𝒕 
+
+𝒄𝒓 
+
+𝒄𝒕𝒃 
+
+𝒄𝒕𝒍 
+
+𝒄𝒃 
+
+µ𝒄𝒃 
+
+µ𝒔𝒃 
+
+𝑫𝒗 
+
+𝜸𝒃 
+
+𝑻𝒎 
+
+139,6126 𝑁 𝑚 𝑠/𝑟𝑎𝑑 
+
+425 𝑁 𝑚 𝑠/𝑟𝑎𝑑 
+
+181,49 𝑁 𝑚 𝑠/𝑟𝑎𝑑 
+
+190 𝑁 𝑚 𝑠/𝑟𝑎𝑑 
+
+50 𝑁 𝑚 𝑠/𝑟𝑎𝑑 
+
+0,5 
+
+0,8 
+
+10−6 
+
+0,9 
+
+10 𝑘𝑁 𝑚 
+
+ 
+
+28 
+
+ 
+
+ 
+
+Figura 2.12 – Velocidade angular da broca (x8), do tubo de perfuração (x6), do BHA (x4) 
+
+e da mesa rotatória (x2) do sistema de 4-DOF 
+
+ 
+
+Figura 2.13 – Esquerda: deslocamento angular da mesa rotatória (x1), dos tubos de 
+
+perfuração (x3), do BHA (x5) e da broca (x7). Direita: diferença de deslocamento angular 
+
+entre a mesa rotatória e a broca no sistema de 4-DOF 
+
+ 
+
+ 
+
+29 
+
+ 
+
+Figura 2.14 – Ciclo do fenômeno stick-slip do sistema de 4-DOF 
+
+ 
+
+As  simulações  dos  sistemas  de  2-DOF,  3-DOF  e  4-DOF  mostraram  que  o 
+modelo  torcional  apresentado  neste  capítulo  reflete  as  oscilações  características  do 
+fenômeno stick-slip em  colunas de perfuração, semelhante à  resposta  real  mostrada na 
+Figura  1.3.  Portanto,  o  modelo  apresentado  é  adequado  para  o  desenvolvimento  do 
+presente trabalho. 
+
+ 
+
+ 
+
+30 
+
+ 
+
+Capítulo 3 
+
+Controle PI das Vibrações “Stick-
+Slip” 
+
+3.1.  Introdução 
+
+O  surgimento  de  vibrações  é  inevitável  durante  o  processo  de  perfuração.  Os 
+sintomas  causados  por  essas  excessivas  vibrações  podem  ser  verificados  na  superfície 
+através  das  oscilações  dos  valores  de  rotação  da  coluna  de  perfuração  e  do  torque  da 
+mesma.  As  vibrações  são  consideradas  causas  de  dificuldades  de  avanço,  pois  quando 
+elas  ocorrem  causam  baixa  ou  nula  taxa  de  perfuração,  além  de  provocar  danos  aos 
+equipamentos, que por sua vez, requerem manobras para trocá-los, resultando em tempo 
+de perfuração não-produtivo (Chipindu, 2010). 
+
+Medições no fundo do poço mostram que a aplicação de uma rotação constante 
+na  superfície  não  necessariamente  se  traduz  em  uma  rotação  constante  na  broca.  De 
+fato, a velocidade de rotação no fundo do poço tipicamente apresenta grandes oscilações 
+de amplitude durante grande parte do tempo de perfuração. Essa velocidade de rotação 
+não  uniforme  deve-se  à  excitação  dos  modos  de  vibrações  torcionais  (Divényi,  2009). 
+Devido  a  esses  excessivos  problemas  causados  pelas  oscilações  stick-slip  durante  o 
+processo de perfuração, foram realizados estudos de aplicações de leis de controle com 
+o  objetivo  de  eliminar  ou  diminuir  a  frequência  dessas  oscilações.  Entre  os  diferentes 
+tipos de controladores que foram aplicados nesses sistemas, o uso do controlador PID é 
+um dos mais referenciados na literatura. 
+
+Baseado  no  trabalho  de  Canudas-de-Wit  et  al.  (2008),  o  presente  capítulo 
+mostra  o  desenvolvimento  e  aplicação  do  controlador  PI  e  PI-P  (proporcional, 
+integrativo-proporcional)  no  sistema  torcional  apresentado  no  capítulo  anterior.  O 
+objetivo  principal  do  controle  é  conduzir  a  velocidade  do  sistema  de  rotação  à 
+velocidade  desejada  e,  inferencialmente  ou  indiretamente,  conduzir  a  velocidade  da 
+broca à velocidade do sistema de rotação, visando, assim, suprimir as oscilações  stick-
+slip em colunas de perfuração. 
+
+ 
+
+31 
+
+ 
+
+3.2.  Desenvolvimento dos Controladores PI e PI-
+
+P 
+
+Os  controladores  PI  e  PI-P  são  desenvolvidos  tomando  como  base  o  sistema 
+torcional  de  2-DOF.  Ambos  os  controladores  possuem  como  variável  manipulada  o 
+torque  do  motor   𝑇𝑚    e  como  variável  controlada  a  velocidade  do  sistema  de  rotação 
+(𝑥2 = 𝜑  𝑟 ).  Já  o  controlador  PI-P  adiciona  uma  correção  proporcional  ao  erro  entre  a 
+velocidade  da  broca  (𝑥4 = 𝜑  𝑏 )  e  a  velocidade  do  sistema  de  rotação.  Além  dessas 
+variáveis,  há  para  ambos  os  controladores  a  perturbação  do  sistema,  representada  pela 
+variação  da  força  peso  sobre  a  broca   𝑊𝑜𝑏  .  Inicialmente,  será  apresentado  o 
+desenvolvimento do controlador PI, considerando a seguinte lei de controle: 
+
+𝑢 = 𝑘1𝑥5 + 𝑘2𝑥 5 
+
+em que 𝑘1 e 𝑘2 representam os parâmetros de sintonia do controlador e 𝑥5 representa a 
+integral do erro entre a variável controlada e o setpoint, ou seja: 
+
+𝑥5 =   𝜔𝑑 − 𝑥2 𝑑𝑡 
+
+𝑥 5 = 𝜔𝑑 − 𝑥2 
+
+(3.1) 
+
+(3.2) 
+
+(3.3) 
+
+sendo que 𝜔𝑑  refere-se ao setpoint da velocidade angular do sistema de rotação, o qual 
+para um caso típico de operação de perfuração tem valor entre 12 e 14 rad/s (Navarro-
+López,  2009).  Neste  trabalho  o  valor  do  setpoint  escolhido  foi  de  12  rad/s,  estando 
+dentro da faixa de operação para perfuração de poços de petróleo. 
+
+Considerando a Equação (3.2), o novo vetor em espaço de estado para o sistema 
+
+ 
+em malha fechada é: 
+
+𝑥𝑓 =    𝑥1𝑓 𝑥2𝑓  𝑥3𝑓  𝑥4𝑓 𝑥5𝑓  =   𝜑𝑟  𝜑  𝑟  𝜑𝑏  𝜑  𝑏 𝑥5  
+
+(3.4) 
+
+Assim, substituindo a lei de controle da Equação (3.1) nas equações em espaço 
+de  estado  do  sistema  de  2-DOF,  Equação  (2.13),  e  adicionando  o  novo  estado  𝑥5,  o 
+sistema em malha fechada é descrito por: 
+
+𝑥 2𝑓 =  
+
+1
+𝐽𝑟
+
+  − 𝑘𝑡 𝑥1𝑓 −  𝑐𝑡 + 𝑐𝑟  𝑥2𝑓 +  𝑘𝑡 𝑥3𝑓 +  𝑐𝑡 𝑥4𝑓 + 𝑘1𝑥5𝑓 + 𝑘2𝑥 5𝑓 
+
+  
+
+(3.5) 
+
+𝑥 1𝑓 =   𝑥2𝑓
+
+𝑥 3𝑓 =   𝑥4𝑓
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+𝑥 4𝑓 =  
+
+1
+𝐽𝑏
+
+  𝑘𝑡 𝑥1𝑓 +  𝑐𝑡 𝑥2𝑓 −  𝑘𝑡 𝑥3𝑓 −  𝑐𝑡 + 𝑐𝑏  𝑥4𝑓 − 𝑇𝑓𝑏  
+
+𝑥 5𝑓 = 𝜔𝑑 − 𝑥2𝑓
+
+ 
+
+32 
+
+ 
+
+A determinação dos parâmetros de sintonia do controlador (𝑘1 e 𝑘2) é baseada 
+no  método  de  ajuste  proposto  por  Canudas-de-Wit  et  al.  (2008).  Para  isto  é  definida 
+uma nova variável 𝑧 e uma constante 𝜀 representadas por: 
+
+𝑧 = 𝑘𝑡 (𝜑𝑟 − 𝜑𝑏 ) 
+
+𝜀2 =
+
+1
+𝑘𝑡
+
+ 
+
+A partir das Equações (3.1), (3.4) e (3.5), tem-se que: 
+
+𝐽𝑟 𝜑  𝑟 + 𝑐𝑡 𝜑  𝑟 − 𝜑  𝑏   + 𝑘𝑡 𝜑𝑟 − 𝜑𝑏   + 𝑐𝑟 𝜑  𝑟 = 𝑢 
+
+𝐽𝑏 𝜑  𝑏 − 𝑐𝑡 𝜑  𝑟 − 𝜑  𝑏   − 𝑘𝑡 𝜑𝑟 − 𝜑𝑏   + 𝑐𝑏 𝜑  𝑏 =   −𝑇𝑓𝑏  
+
+Substituindo as Equações (3.6) e (3.7) nas Equações (3.8) e (3.9), obtêm-se: 
+
+𝐽𝑟 𝜑  𝑟 + 𝑐𝑡𝜀2𝑧  + 𝑧 + 𝑐𝑟 𝜑  𝑟 = 𝑢 
+
+𝐽𝑏 𝜑  𝑏 − 𝑐𝑡𝜀2𝑧  − 𝑧 + 𝑐𝑏 𝜑  𝑏 =   −𝑇𝑓𝑏  
+
+(3.6) 
+
+(3.7) 
+
+(3.8) 
+
+(3.9) 
+
+(3.10) 
+
+(3.11) 
+
+A Equação (3.12) é gerada a partir da subtração das Equações (3.10) e (3.11), 
+
+i.e.: 
+
+𝜀2𝑧  =   −
+
+𝑧
+𝐽𝑒𝑞
+
+− 𝜀2  
+
+𝑐𝑡
+𝐽𝑒𝑞
+
++
+
+𝑐𝑏
+𝐽𝑏
+
+  𝑧  +  
+
+𝑐𝑏
+𝐽𝑏
+
+−
+
+𝑐𝑟
+𝐽𝑟
+
+  𝜑  𝑟 +
+
+𝑢
+𝐽𝑟
+
++
+
+𝑇𝑓𝑏
+𝐽𝑏
+
+ 
+
+𝐽𝑒𝑞 =  
+
+𝐽𝑏  𝐽𝑟
+𝐽𝑏 + 𝐽𝑟
+
+ 
+
+(3.12) 
+
+(3.13) 
+
+Salvo  que  o  coeficiente  de  rigidez  torcional  entre  a  mesa  e  os  tubos  (𝑘𝑡)  seja 
+
+muito maior que 1 (𝑘𝑡 ≫ 1), então, de (3.7), pode-se assumir que 𝜀 = 0. Portanto: 
+
+𝐽𝑟 𝜑  𝑟 + 𝑧 + 𝑐𝑟 𝜑  𝑟 = 𝑢 
+
+0 =   −
+
+𝑧
+𝐽𝑒𝑞
+
++  
+
+𝑐𝑏
+𝐽𝑏
+
+−
+
+𝑐𝑟
+𝐽𝑟
+
+  𝜑  𝑟 +
+
+𝑢
+𝐽𝑟
+
++
+
+𝑇𝑓𝑏
+𝐽𝑏
+
+ 
+
+Isolando a variável 𝑧 da Equação (3.15), obtém-se: 
+
+𝑧 =   𝐽𝑒𝑞   
+
+𝑐𝑏
+𝐽𝑏
+
+−
+
+𝑐𝑟
+𝐽𝑟
+
+  𝜑  𝑟 +
+
+𝑢
+𝐽𝑟
+
++
+
+𝑇𝑓𝑏
+𝐽𝑏
+
+  
+
+(3.14) 
+
+(3.15) 
+
+(3.16) 
+
+Substituindo a Equação (3.16) e a lei de controle da Equação (3.1) na Equação 
+
+(3.14), resulta-se em: 
+
+𝜑  𝑟 +  
+
+𝑐𝑏 + 𝑐𝑟
+𝐽𝑏 + 𝐽𝑟
+
+  𝜑  𝑟 =  
+
+1
+
+𝐽𝑏 + 𝐽𝑟
+
+  𝑘1𝑥5𝑓 + 𝑘2𝑥 5𝑓   −  
+
+1
+
+𝐽𝑏 + 𝐽𝑟
+
+  𝑇𝑓𝑏  
+
+(3.17) 
+
+ 
+
+33 
+
+ 
+
+como: 
+
+Supondo que 𝑐𝑏 + 𝑐𝑟 ≪ 𝐽𝑏 + 𝐽𝑟 , e definindo as novas variáveis 𝜑 𝑟 , 𝜑   𝑟  e 𝜑   𝑟  
+
+𝜑 𝑟 = 𝑥5𝑓 =
+
+ 𝜔𝑑 − 𝜑  𝑟  
+
+𝑠
+
+ 
+
+𝜑   𝑟 = 𝑥 5𝑓 = 𝜔𝑑 − 𝜑  𝑟  
+
+𝜑   𝑟 = −𝜑  𝑟  
+
+(3.18) 
+
+(3.19) 
+
+(3.20) 
+
+Temos que substituindo na Equação (3.17), resulta em: 
+
+𝜑   𝑟 +  
+
+𝑘1
+
+𝐽𝑏 + 𝐽𝑟
+
+  𝜑   𝑟 +  
+
+𝑘2
+
+𝐽𝑏 + 𝐽𝑟
+
+  𝜑 𝑟 =  
+
+𝑇𝑓𝑏
+
+𝐽𝑏 + 𝐽𝑟
+
+  
+
+(3.21) 
+
+É possível notar que a Equação (3.21) pode ser representada pela forma padrão 
+
+de um sistema de 2ª ordem, cuja função de transferência é: 
+
+𝐺 𝑠  =
+
+2
+𝑘𝜔𝑛
+
+2 
+𝑠2 + 2ζ𝜔𝑛 𝑠 + 𝜔𝑛
+
+𝜔𝑛 =
+
+1
+𝜏
+
+ 
+
+(3.22) 
+
+(3.23) 
+
+onde: 
+
+  ζ  representa  o  fator  de  amortecimento.  Sua  função  é  obter  uma  medida  da 
+quantidade  de  amortecimento  do  sistema,  ou  seja,  o  grau  de  oscilação  na 
+resposta do processo após uma perturbação. 
+
+  τ  equivale  ao  tempo  característico  de  período  natural  de  oscilação  do 
+sistema,  isto  é,  determina  a  velocidade  (ou  equivalentemente,  o  tempo  de 
+resposta) do sistema. 
+
+  𝑘 representa o ganho do sistema. 
+
+  𝜔𝑛  é a frequência natural de amortecimento 
+
+Analisando  a  Equação  (3.21)  como  uma  equação  de  2ª  ordem,  e  impondo  o 
+fator de amortecimento ζ e a frequência natural 𝜔𝑛 , encontram-se as equações referentes 
+aos ganhos do controlador 𝑘1 e 𝑘2. 
+
+𝑘1 =  𝐽𝑏 + 𝐽𝑟    2 ζ 𝜔𝑛 −
+
+𝑐𝑏 + 𝑐𝑟
+𝐽𝑏 + 𝐽𝑟
+
+  
+
+𝑘2 =  𝐽𝑏 + 𝐽𝑟  𝜔𝑛
+
+2 
+
+(3.24) 
+
+(3.25) 
+
+Para o projeto  do  controlador PI foi escolhido um  ζ > 1, ou seja, um  sistema 
+superamortecido referente a um sistema com dois pólos (raízes) reais puros e distintos, 
+representados na Figura 3.1 e definidos por: 
+
+ 
+
+34 
+
+ 
+
+𝑝1 = −  ζ −  ζ2 − 1  𝜔𝑛  
+
+𝑝2 = −  ζ +  ζ2 − 1  𝜔𝑛  
+
+(3.26) 
+
+(3.27) 
+
+Figura 3.1 – Representação dos pólos para um sistema superamortecido 
+
+ 
+
+A  principal  característica  do  sistema  superamortecido  se  concentra  na 
+capacidade do sistema absorver toda a energia vibratória inicial antes que ocorra o ciclo 
+vibratório, ou seja, inibe a vibração. 
+
+O  controlador  alternativo  PI-P  é  uma  combinação  do  controlador  PI  com  o 
+controlador  P,  sendo  o  PI  responsável  em  induzir  à  velocidade  de  rotação  (𝑥2)   a 
+velocidade  desejada  (𝑤𝑑 ),  e  o  controlador  P  tem  o  papel  de  induzir  à  velocidade  da 
+broca (𝑥4) a velocidade do sistema de rotação. Canudas-de-Wit et al. (2008) basearam-
+se  em  Christoforou  &  Yigit  (2003),  e  propuseram  uma  lei  de  controle  expressa  da 
+seguinte forma: 
+
+𝑢 = 𝑘1𝑥5𝑓 + 𝑘2𝑥 5𝑓 + 𝑘3(𝑥2𝑓 − 𝑥4𝑓) 
+
+(3.28) 
+
+Note  que  essa  nova  lei  de  controle  resulta  da  lei  descrita  anteriormente, 
+acrescida  de  um  ganho  proporcional  a  partir  de  um  novo  erro  (𝑒 = 𝑥2 − 𝑥4).  Para  o 
+ajuste deste controlador, todo o procedimento para encontrar os valores das constantes 
+𝑘1  e  𝑘2  é  o  mesmo  proposto  para  o  desenvolvimento  do  controlador  PI.  Já  para  o 
+cálculo do parâmetro 𝑘3 considera-se novamente a Equação (3.12) e substitui-se a nova 
+lei de controle 𝑢 da Equação (3.28), obtendo-se a seguinte expressão: 
+
+𝑧
+𝐽𝑒𝑞
+
+− 𝜀2  
+
+𝑐𝑏
+𝐽𝑏
+𝑘1𝑥5𝑓 + 𝑘2𝑥 5𝑓 + 𝑘3(𝑥2𝑓 − 𝑥4𝑓) 
+
+𝑐𝑡
+𝐽𝑒𝑞
+
++
+
+  𝑧  +  
+
+𝑐𝑏
+𝐽𝑏
+
+𝜀2𝑧  =   −
+
++
+
+𝐽𝑟
+
+  𝜑  𝑟  
+
+−
+
++
+
+𝑐𝑟
+𝐽𝑟
+𝑇𝑓𝑏
+𝐽𝑏
+
+ 
+
+(3.29) 
+
+A lei de controle 𝑢 pode ser representada como:  
+
+ 
+
+35 
+
+ 
+
+𝑢 =   𝑢𝑠 + 𝜀 𝑢𝑓  
+
+(3.30) 
+
+onde 𝑢𝑠 = 𝑘1 𝜔𝑑 − 𝜑  𝑟   +
+
+𝑘2
+𝑠
+
+ 𝜔𝑑 − 𝜑  𝑟  , e 𝜀𝑢𝑓 = 𝑘3(𝑥2 − 𝑥4).  
+
+Reescrevendo a Equação (3.29) tem-se: 
+
+𝜀2𝑧  =   −
+
+𝑧
+𝐽𝑒𝑞
+
+− 𝜀2  
+
+𝑐𝑡
+𝐽𝑒𝑞
+
++
+
+𝑐𝑏
+𝐽𝑏
+
+  𝑧  +  
+
+𝑐𝑏
+𝐽𝑏
+
+−
+
+𝑐𝑟
+𝐽𝑟
+
+  𝜑  𝑟 +
+
+𝑢𝑠
+𝐽𝑟
+
++
+
+𝜀
+𝐽𝑟
+
+𝑢𝑓 +
+
+𝑇𝑓𝑏
+𝐽𝑏
+
+ 
+
+Considerando 𝜀 ≠ 0 a Equação (3.31) pode ser reescrita como: 
+
+𝜀2𝑧  =   −
+
+𝑧
+𝐽𝑒𝑞
+
+− 𝜀2  
+
+𝑐𝑡
+𝐽𝑒𝑞
+
++
+
+𝑐𝑏
+𝐽𝑏
+
+  𝑧  +
+
+𝜀
+𝐽𝑟
+
+𝑣𝑓 +
+
+𝑇𝑓𝑏
+𝐽𝑏
+
++ 𝜌 𝜑  𝑟
+
+∗, 𝜑𝑟
+
+∗  
+
+sendo que 𝜌 𝜑  𝑟
+
+∗, 𝜑𝑟
+
+∗  é definido como: 
+
+𝜌 𝜑  𝑟
+
+∗, 𝜑𝑟
+
+∗  =  
+
+𝑐𝑏
+𝐽𝑏
+
+−
+
+𝑐𝑟
+𝐽𝑟
+
+  𝜑  𝑟
+
+∗ +
+
+∗, 𝜑𝑟
+∗)
+𝑣𝑠(𝜑  𝑟
+𝐽𝑟
+
+=
+
+𝑧∗
+𝐽𝑒𝑞
+
+−
+
+𝑇𝑓𝑏
+𝐽𝑏
+
+ 
+
+Considerando uma nova variável 𝜉 = 𝑧 − 𝑧∗, e 𝑢𝑓 = −𝑘3𝜉  a Equação (3.32) 
+
+é reescrita da seguinte forma: 
+
+Ou 
+
+𝜉  +  
+
+𝑐𝑡
+𝐽𝑒𝑞
+
++
+
+𝑐𝑏
+𝐽𝑏
+
+  𝜉  +
+
+1
+
+𝜀2𝐽𝑒𝑞
+
+𝜉 =
+
+1
+𝐽𝑟 𝜀
+
+𝑢𝑓  
+
+𝜉  +  
+
+𝑐𝑡
+𝐽𝑒𝑞
+
++
+
+𝑐𝑏
+𝐽𝑏
+
++
+
+𝑘3
+𝐽𝑟 𝜀
+
+  𝜉  +
+
+1
+
+𝜀2𝐽𝑒𝑞
+
+𝜉 = 0 
+
+(3.31) 
+
+(3.32) 
+
+(3.33) 
+
+(3.34) 
+
+(3.35) 
+
+Do  mesmo  modo  que  no  caso  da  Equação  (3.21),  a  Equação  (3.35)  pode  ser 
+representada pela forma padrão de um sistema de 2ª ordem. Assim, impondo um fator 
+de amortecimento 𝜁𝑡𝑜𝑟  e a frequência natural 𝜔𝑛 , o ganho 𝑘3 pode ser calculado a partir 
+da seguinte relação: 
+
+𝑘3 =
+
+𝐽𝑟
+ 𝑘𝑡
+
+ 2𝜁𝑡𝑜𝑟 𝜔𝑛 −
+
+𝑐𝑡
+𝐽𝑒𝑞
+
+−
+
+𝑐𝑏
+𝐽𝑏
+
+  
+
+(3.36) 
+
+3.3.  Simulação  dos  Controladores  PI  e  PI-P  no 
+
+Sistema de 2-DOF 
+
+Neste tópico serão mostrados alguns resultados de simulações da aplicação dos 
+controladores  PI  e  PI-P  no  modelo  torcional  da  coluna  de  perfuração  apresentado  no 
+capítulo anterior. 
+
+ 
+
+36 
+
+ 
+
+O ajuste dos controladores é baseado no método de alocação de pólos, usando a 
+análise  apresentada  na  seção  anterior.  Portanto,  assumindo  os  valores  dos  fatores  de 
+amortecimento  ζ = 1,55  e  𝜁𝑡𝑜𝑟 = 5,76,  e  da  frequência  natural  𝜔𝑛 = 0,062  rad/s,  e 
+usando  as  Equações  (3.24),  (3.25)  e  (3.36),  obtêm-se  os  ganhos  𝑘1 = 25,  𝑘2 = 10  e 
+𝑘3 = 20, respectivamente. 
+
+Inicialmente,  é  aplicado  o  controlador  PI  no  sistema  de  2-DOF,  cuja 
+
+implementação na plataforma Simulink/MATLAB™ é mostrado na Figura 3.2. 
+
+Figura 3.2 – Implementação do controlador PI no sistema de 2-DOF no 
+
+Simulink/MatlabTM 
+
+ 
+
+Primeiramente  assume-se que o sistema  está em  malha aberta, i.e.  a operação 
+apresenta o fenômeno  stick-slip. Após 50 segundos,  ativa-se o  controlador PI  com um 
+setpoint para  a velocidade angular do sistema de rotação  𝜔𝑑 = 12 rad/s.  A Figura 3.3 
+apresenta  o  comportamento  da  variável  controlada  principal  e  da  variável  controlada 
+inferida, velocidades do sistema de rotação (𝑥2) e da broca (𝑥4), respectivamente. Nota-
+se que após a aplicação do controlador, o sistema obteve velocidades constantes e iguais 
+ao setpoint tanto para a broca quanto para a mesa rotativa, inibindo as oscilações stick-
+slip.  A  figura  também  mostra  o  perfil  da  variação  da  variável  manipulada,  torque  no 
+motor (𝑇𝑚 ). 
+
+A  Figura  3.4  ilustra  o  comportamento  do  sistema,  estando  ele  sob  controle,  a 
+variações no setpoint nos instantes 500s, 900s e 1300s, respectivamente. Percebe-se que 
+o sistema acompanha o valor desejado sem sofrer oscilações, consequência da resposta 
+característica  de  um  sistema  de  2ª  ordem  superamortecido,  fator  almejado  durante  o 
+desenvolvimento do projeto. 
+
+ 
+
+37 
+
+ 
+
+Figura 3.3 – Resposta do sistema de 2-DOF com o controlador PI: (I) variáveis 
+
+controladas, (II) variável manipulada 
+
+ 
+
+ 
+
+Figura 3.4 - Resposta a variações no setpoint do sistema de 2-DOF com o controlador 
+
+PI: (I) variáveis controladas, (II) variável manipulada 
+
+Na  Figura  3.5  é  apresentado  o  desempenho  regulador  do  sistema  controlado 
+sob  os  efeitos  de  perturbações.  Para  isto,  assume-se  que  no  instante  𝑡 = 500𝑠 há  um 
+aumento no peso da broca (𝑊𝑜𝑏 ) de 53018 N para 63621,6 N, provocando uma redução 
+
+ 
+
+38 
+
+ 
+
+nas velocidades de rotação do sistema. Para compensar esta perturbação, o controlador 
+aumenta o torque do motor, fazendo que as velocidades tendam  a retornar ao valor de 
+referência.  Situação  similar  ocorre  em  𝑡 = 900𝑠,  onde  𝑊𝑜𝑏   sofre  uma  redução  de 
+63621,6  N  para  42414,4  N,  fato  que  aumenta  as  velocidades  de  rotação,  sendo  o 
+controlador  obrigado  a  reduzir  o  valor  de  𝑇𝑚 .  Finalmente,  em  𝑡 = 1300  há  um  novo 
+aumento do 𝑊𝑜𝑏  de 42414,4 N para 53018 N e, por conseguinte, um aumento no valor 
+do torque 𝑇𝑚 . 
+
+Figura 3.5 - Resposta às perturbações no sistema de 2-DOF com o controlador PI: (I) 
+
+variáveis controladas, (II) variável manipulada 
+
+ 
+
+Observa-se que para todos os casos que foram simulados, apesar da variável a 
+ser controlada seja a velocidade do sistema de rotação, o controlador consegue controlar 
+de forma indireta ou inferencial a velocidade angular da broca, absorvendo as oscilações 
+e levando-a ao valor do setpoint. 
+
+Do  mesmo  modo,  foram  realizadas  simulações  utilizando  o  controlador  PI-P. 
+Como  poderá  ser  deduzido  das  respostas  a  seguir,  o  ganho  proporcional  extra 
+adicionado  ao  controlador  PI  não  influencia  significativamente  o  desempenho  do 
+sistema. 
+
+As Figuras 3.6, 3.7 e 3.8 apresentam os valores das velocidades do sistema de 
+rotação  e  da  broca  para  o  sistema  2-DOF  utilizando  o  controlador  PI-P,  sendo  que  na 
+primeira figura o controlador só é acionado após 50 segundos de operação. A segunda 
+figura  mostra  a  resposta  do  sistema  controlado  a  variações  no  setpoint,  e  a  terceira 
+figura apresenta a resposta do sistema controlado a alterações no peso na broca 𝑊𝑜𝑏  nos 
+instantes  500s,  900s  e  1300s,  respectivamente.  Em  todas  as  figuras,  as  respostas  do 
+sistema  com  o  controlador  PI-P  são  semelhantes  às  obtidas  com  o  controlador  PI, 
+
+ 
+
+39 
+
+ 
+
+mostrando  assim  o  bom  desempenho  do  controlador  PI  na  eliminação  de  oscilações 
+stick-slip e controle de sistemas de perfuração de poços de petróleo. 
+
+Figura 3.6 - Resposta do sistema de 2-DOF com o controlador PI-P: (I) variáveis 
+
+controladas (II) variável manipulada 
+
+ 
+
+ 
+
+Figura 3.7 - Resposta a variações no setpoint no sistema 2-DOF com o controlador PI-P: 
+
+(I) variáveis controladas, (II) variável manipulada 
+
+ 
+
+40 
+
+ 
+
+Figura 3.8 - Resposta às perturbações no sistema de 2-DOF com o controlador PI-P: (I) 
+
+variáveis controladas, (II) variável manipulada 
+
+ 
+
+3.4. Simulação  dos  Controladores  PI  e  PI-P  no 
+
+Sistema 4-DOF 
+
+Nesse  item  serão  apresentados  os  resultados  das  simulações  referentes  à 
+aplicação  dos  controladores  PI  e  PI-P  no  sistema  4-DOF,  sendo  que  os  parâmetros  de 
+ajuste  dos  controladores  são  os  mesmos  usados  no  caso  do  controle  do  sistema  de  2-
+DOF. Isto foi realizado com o objetivo de introduzir incertezas no desenvolvimento dos 
+controladores. 
+
+Para o sistema de 4-DOF, considera-se a seguinte lei de controle:  
+
+𝑢 = 𝑘1𝑥9 + 𝑘2𝑥 9 
+
+𝑥9 =   𝜔𝑑 − 𝑥2 𝑑𝑡 
+
+(3.37) 
+
+(3.38) 
+
+Assim, para o sistema em malha fechada formula-se um novo vetor em espaço 
+
+estado, 𝑥𝑓 , da seguinte forma: 
+
+𝑥𝑓 =    𝑥1𝑓  𝑥2𝑓  𝑥3𝑓 𝑥4𝑓 𝑥5𝑓  𝑥6𝑓   𝑥7𝑓 𝑥8𝑓 𝑥9𝑓  =   𝜑𝑟  𝜑  𝑟  𝜑𝑝  𝜑  𝑝  𝜑𝑙 𝜑  𝑙 𝜑𝑏  𝜑  𝑏 𝑥9  
+
+(3.39) 
+
+As  equações  em  espaço  estado  do  sistema  de  4-DOF  em  malha  fechada  são 
+obtidas da mesma forma que para o caso do sistema de 2-DOF, ou seja, adicionando o 
+
+ 
+
+41 
+
+ 
+
+novo  estado  𝑥9  e  a  lei  de  controle  da  Equação  (3.37)  no  sistema  da  Equação  (2.23), 
+obtendo: 
+
+  − 𝑘𝑡 𝑥1𝑓 −  𝑐𝑡 + 𝑐𝑟 𝑥2𝑓 +  𝑘𝑡 𝑥3𝑓 +  𝑐𝑡 𝑥4𝑓 + 𝑘1𝑥9𝑓 + 𝑘2𝑥  9𝑓 
+
+𝑥  1𝑓 =   𝑥2
+1
+
+𝑥  2𝑓 =  
+
+𝐽𝑟
+
+1
+
+𝑥  3𝑓 =   𝑥4  
+
+𝑥  4𝑓 =  
+
+𝐽𝑝
+𝑥  5𝑓 =   𝑥6𝑓
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+1
+
+𝑥  6𝑓 =  
+
+𝐽𝑙
+𝑥  7𝑓 =   𝑥8
+1
+
+𝑥  8𝑓 =  
+
+𝐽𝑏
+
+𝑥  9𝑓 = 𝜔𝑑 − 𝑥2𝑓
+
+  𝑘𝑡 𝑥1𝑓 +  𝑐𝑡 𝑥2𝑓 −  𝑘𝑡 + 𝑘𝑡𝑙 𝑥3𝑓 −  𝑐𝑡 + 𝑐𝑡𝑙 𝑥4𝑓 +  𝑘𝑡𝑙 𝑥5𝑓 +  𝑐𝑡𝑙 𝑥6𝑓 
+
+  
+
+(3.40) 
+
+  𝑘𝑡𝑙 𝑥3𝑓 +  𝑐𝑡𝑙 𝑥4𝑓 −  𝑘𝑡𝑙 + 𝑘𝑡𝑏 𝑥5𝑓 −  𝑐𝑡𝑙 + 𝑐𝑡𝑏 𝑥6𝑓 +  𝑘𝑡𝑏 𝑥7𝑓 +  𝑐𝑡𝑏 𝑥8𝑓 
+
+  𝑘𝑡𝑏 𝑥5𝑓 +  𝑐𝑡𝑏 𝑥6𝑓 −  𝑘𝑡𝑏 𝑥7𝑓 −  𝑐𝑡𝑏 + 𝑐𝑏 𝑥8𝑓 − 𝑇𝑓𝑏  
+
+A Figura 3.9 ilustra graficamente a aplicação do controlador PI no sistema  de 
+
+4-DOF no Simulink/MATLAB™. 
+
+Figura 3.9 – Implementação do controlador PI no sistema de 4-DOF no 
+
+ 
+
+Simulink/MatlabTM. 
+
+42 
+
+ 
+
+ 
+
+A  Figura  3.10  mostra  a  estabilização  do  sistema  depois  do  controlador  ficar 
+ativo.  Em  comparação  com  a  resposta  do  sistema  de  2-DOF  (Figura  3.3),  no  presente 
+caso,  embora  as  oscilações  stick-slip  sejam  maiores  em  amplitude  e  o  tempo  de 
+estabilização seja maior, a sobrepassagem é bem menor. As variáveis controladas, direta 
+e  indireta,  i.e  a  velocidade  do  sistema  de  rotação  (𝑥2)  e  a  velocidade  da  broca  (𝑥8), 
+respectivamente,  são  praticamente  as  mesmas  e  ambas  apresentam  uma  leve  vibração 
+depois  de  ativado  o  controle,  a  qual  desaparece  na  estabilização,  alcançando  juntas  o 
+setpoint 𝜔𝑑 = 12 rad/s. O perfil da variável  manipulada  (𝑇𝑚 ) é mais conservativo que 
+no caso do controle do sistema de 2-DOF. 
+
+A Figura 3.11 mostra a resposta do controle do sistema de 4-DOF a variações 
+no  setpoint,  ocorrendo  estas  variações  nos 
+instantes  500s,  900s  e  1300s, 
+respectivamente. Em comparação com as respostas do sistema de 2-DOF da Figura 3.4, 
+no  presente  caso  as  respostas  das  velocidades  do  sistema  de  rotação  e  da  broca  são 
+idênticas e ambas apresentam características de um sistema de subamortecido, com leve 
+sobrepassagem  e  oscilação  tênue  a  cada  mudança  de  setpoint.  A  variável  manipulada 
+acompanha  o  perfil  de  resposta  das  variáveis  controladas.  Quando  uma  velocidade 
+angular maior é requerida, o controlador fornece um torque maior e vice-versa. 
+
+Figura 3.10 - Resposta do sistema de 4-DOF com o Controlador PI: (I) variáveis 
+
+controladas, (II) variável manipulada 
+
+ 
+
+Na Figura 3.12 se ilustra a resposta reguladora do controle PI do sistema de 4-
+DOF  sujeito  a  perturbações  aplicadas  no  peso  da  broca  (𝑊𝑜𝑏 ).  Estas  perturbações 
+equivalem  a  variações  de  +20%  do  valor  inicial  do  peso,  um  decréscimo  de  -40%  e 
+retorno  ao  valor  inicial,  ocorrendo  nos  instantes  500s,  900s  e  1300s,  respectivamente. 
+Como pode ser visualizado, o controle consegue compensar as perturbações, tratando de 
+
+ 
+
+43 
+
+ 
+
+manter  a  variável  controlada  principal  (𝑥2)  e  controlada  indireta  (𝑥8)  no  setpoint. 
+Porém, comparando com o controle do sistema de 2-DOF da Figura 3.5, neste caso os 
+picos  nas  velocidades  angulares  são  maiores,  apresentando  leves  sobrepassagens  no 
+retorno ao ponto de operação. Conforme mostrado nas simulações anteriores, a variável 
+manipulada apresenta uma curva de resposta característica de um sistema de 2ª ordem, 
+diferente da Figura 3.5, cuja curva é característica de um sistema de 1ª ordem. 
+
+Figura 3.11 - Resposta a variações no setpoint do sistema 4-DOF com o controlador PI: 
+
+(I) variáveis controladas, (II) variável manipulada 
+
+ 
+
+A  aplicação  do  controlador  PI-P  no  sistema  de  4-DOF  apresentou  um 
+desempenho  levemente  superior  que  o  do  controlador  PI.  No  caso  da  estabilização  da 
+resposta, Figura 3.13, não existe as pequenas vibrações nas variáveis controladas depois 
+da ativação do controle, embora o valor máximo da variável manipulada seja superior. 
+No  caso  de  variações  no  setpoint,  Figura  3.14,  a  resposta  é  ligeiramente  menos 
+oscilatória  depois  de  cada  mudança  do  ponto  de  operação;  sendo  que  no  caso  das 
+perturbações  no  peso  da  broca,  Figura  3.15,  os  picos  das  velocidades  do  sistema  de 
+rotação e da broca são menores depois de cada variação no 𝑊𝑜𝑏 . 
+
+ 
+
+44 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 3.12 - Resposta às perturbações no sistema de 4-DOF com o controlador PI: (I) 
+
+variáveis controladas, (II) variável manipulada 
+
+Figura 3.13 - Resposta do sistema de 4-DOF com o controlador PI-P: (I) variável 
+
+controladas, (II) variável manipulada 
+
+45 
+
+ 
+
+Figura 3.14 - Resposta a variações no setpoint no sistema de 4-DOF com o controlador 
+
+PI-P: (I) variáveis controladas, (II) variável manipulada 
+
+ 
+
+ 
+
+Figura 3.15 - Resposta às perturbações no sistema de 4-DOF com o controlador PI-P: (I) 
+
+variáveis controladas, (II) variáveis manipuladas 
+
+A  partir  dos  resultados  das  simulações  que  foram  apresentadas  é  possível 
+
+chegar às seguintes conclusões: 
+
+ 
+
+46 
+
+ 
+
+ 
+
+  Os  controladores  PI  e  PI-P  se  mostraram  eficiente  na  eliminação  das 
+oscilações  stick-slip, seguimento  do  setpoint  e rejeição de perturbações  em 
+colunas de perfuração, 
+
+  Os controladores PI e PI-P foram desenvolvidos baseados num sistema de 2ª 
+ordem,  e  apresentaram  o  mesmo  desempenho  quando  aplicados  na  coluna 
+de perfuração de 2-DOF. 
+
+  Os controladores PI e PI-P desenvolvidos para o sistema de 2-DOF podem 
+ser  aplicados  a  sistemas  de  ordem  superior,  como  no  de  4-DOF,  com 
+desempenho ligeiramente superior do controlador PI-P. 
+
+ 
+
+47 
+
+ 
+
+Capítulo 4 
+
+Controle por Modos Deslizantes 
+
+4.1.  Introdução 
+
+Este  capítulo  apresenta  a  abordagem  do  controle  por  modos  deslizantes 
+(Sliding  Mode  Control  –  SMC)  de  primeira  ordem  e  sua  aplicação  em  sistemas  de 
+perfuração de poços de petróleo.  
+
+O SMC é conhecido  por ser um  método de controle robusto adequado para o 
+controle  de  sistemas  incertos.  Sua  alta  robustez  é  mantida  contra  vários  tipos  de 
+incertezas,  tais  como  perturbações  externas  e  erros  de  medição.  O  SMC  pode  ser 
+realizado pelo controle com estrutura variável (VSC). Como o nome sugere, o VSC são 
+classes  de  sistemas  na  qual  a  lei  de  controle  é  deliberadamente  mudada  durante  o 
+processo  de  controle,  conforme  algumas  regras  definidas,  as  quais  vão  depender  do 
+estado do sistema (Edwards & Spurgeon, 1998). 
+
+A  inclusão  do  estudo  do  SMC  no  presente  trabalho  deve-se  ao  fato  das 
+inúmeras  referências  reportadas  na  literatura  voltadas  ao  controle  do  fenômeno  stick-
+slip.  A  seguir  serão  apresentados  os  conceitos  básicos  do  SMC  e,  posteriormente,  o 
+desenvolvimento de um SMC e sua aplicação no controle da velocidade do sistema de 
+rotação de uma coluna de perfuração. 
+
+4.2.  Aspectos Gerais do SMC 
+
+O  termo  VSCS  fez  sua  primeira  aparição  no  final  da  década  de  50.  Desde 
+aquela  época,  novas  direções  de  pesquisas  foram  apontadas  devido  ao  surgimento  de 
+novas classes de problemas de controle,  aos  novos métodos matemáticos,  aos avanços 
+recentes  em  circuitos  de  comutação  e  aos  princípios  de  novas  leis  de  controle  (Utkin, 
+1993). 
+
+Uma  das  principais  características  do  VSCS  é  a  capacidade  de  se  obter 
+trajetórias  que  descrevem  um  novo  tipo  de  movimento,  denominado  modo  deslizante. 
+Essencialmente,  o  VSCS  utiliza  uma  lei  de  controle  de  comutação  de  alta  velocidade 
+para  conduzir  a  trajetória  do  estado  da  planta  não  linear  a  uma  superfície  escolhida  e 
+
+ 
+
+48 
+
+ 
+
+especificada  no  espaço  de  estado,  denominada  de  superfície  de  deslizamento  ou  de 
+comutação  (DeCarlo  et  al.,  1998).  Essa  superfície  especifica  um  comportamento 
+desejado para a dinâmica do sistema em malha fechada. 
+
+Em geral, a dinâmica transiente do SMC consiste em dois modos: um modo de 
+longo alcance (ou modo nonsliding), seguido por um modo deslizante. Assim, o projeto 
+do  SMC  envolve,  em  primeiro  lugar,  um  projeto  de  uma  apropriada  função  de 
+chaveamento  𝑠(𝑥)  para  uma  dinâmica  desejada  do  modo  de  deslizamento  (Gao  & 
+Hung,  1993)  e,  em  segundo  lugar,  o  projeto  do  controlador  tal  que  satisfaça  as 
+condições de existência e alcançabilidade (Damazo, 2008). 
+
+O  SMC  oferece  vantagens  significativas,  tais  como  bom  comportamento 
+transitório,  capacidade  de  rejeição  às  perturbações  não-modeladas  e  insensibilidade  a 
+não-linearidades  da  planta  ou  variações  dos  parâmetros.  Entretanto,  há  algumas 
+dificuldades no SMC, como (Oliveira, 2006): 
+
+  Ocorrência  indesejável  do  fenômeno  de  trepidação  (chattering)  induzido 
+por  não-idealidades,  como  pequenos  atrasos  ou  dinâmicas  não-modeladas 
+(modo deslizante real); 
+
+  Necessidade  geral  de  se  ter  acesso  ao  vetor  de  estado  completo  para 
+
+implementar a superfície de chaveamento; 
+
+  Conhecimento da direção de controle.  
+
+O  chattering  é  um  fenômeno  indesejável  de  oscilações  com  frequência  e 
+amplitude  finita,  as  quais  ocorrem  durante  aplicações  práticas  de  controle  por  modo 
+deslizante.  Este  fenômeno  pode  excitar  as  dinâmicas  não  modeladas,  as  quais  podem 
+levar o sistema à instabilidade. 
+
+4.3.  Síntese do Controlador SMC 
+
+Considere uma classe de sistema não linear representado por: 
+
+ 
+
+𝑥  = 𝑓 𝑥, 𝑡  + 𝑔 𝑥, 𝑡 𝑢 𝑡  + 𝜉(𝑡)
+𝑦 = 𝑕(𝑥, 𝑡)
+
+  
+
+onde  𝑥 ∈ 𝑅𝑛   é  o  vetor  de  estados,  𝑦 ∈ 𝑅𝑚   é  o  vetor  de  saída,  𝑢 ∈ 𝑅𝑚   é  o  vetor  de 
+entrada,  𝑓(𝑥, 𝑡), 𝑔(𝑥, 𝑡)  e  𝑕(𝑥, 𝑡)  são  funções  conhecidas,  limitadas  e  continuamente 
+diferenciáveis  em  relação  a  todos  os  argumentos,  e  𝜉(𝑡)  representa  uma  perturbação 
+desconhecida (Fergütz, 2001). 
+
+Uma  superfície  de  deslizamento  𝑠  é  definida  no  espaço  de  estados  𝑅𝑛  
+
+igualando a zero a variável 𝑠(𝑥, 𝑡), descrita por (Ming, 1997): 
+
+𝑠 𝑥, 𝑡  =  
+
+𝑛−1
+
++ 𝛿 
+
+𝑥 (𝑡) 
+
+𝑑
+𝑑𝑡
+
+49 
+
+ 
+
+(4.1) 
+
+(4.2) 
+
+ 
+
+Sendo que 𝑥  𝑡  = 𝑥 𝑡  − 𝑥𝑑 (𝑡) representa o erro de rastreamento  da variável 
+𝑥,  onde  𝑥𝑑 (𝑡)  é  o  estado  desejável,  e  δ  é  uma  constante  estritamente  positiva, 
+considerada como a largura de banda do sistema. A modo de exemplos, superfícies de 
+deslizamento  para  𝑛 = 2   e 
+ 𝑛 = 3  são  dadas  pelas  Equações  (4.3)  e  (4.4), 
+respectivamente: 
+
+𝑠 = 𝑥   +  𝛿𝑥  
+
+𝑠 = 𝑥   +  2𝛿𝑥   + 𝛿2𝑥  
+
+Para que o problema de seguimento seja alcançado usando o controle finito 𝑢, 
+
+o estado inicial desejado 𝑥𝑑 (0) deve ser tal que: 
+
+𝑥𝑑  0  = 𝑥(0) 
+
+Dada as condições iniciais, Equação (4.5), o problema de seguimento do vetor 
+𝑥𝑑  de dimensão 𝑛 pode em efeito ser substituído por um problema de estabilização de 1ª 
+ordem  em  𝑠.  De  fato,  já  que  a  expressão  de  𝑠  na  Equação  (4.2)  contém  𝑥 (𝑛 −1),  só  é 
+necessário diferenciar 𝑠 uma vez para que a entrada 𝑢 possa aparecer de forma explícita 
+(Slotine & Li, 1991). 
+
+Um resultado similar deve ser obtido se for usado o controle integral, da forma 
+
+(Slotine & Li, 1991): 
+
+𝑠 =  
+
+𝑑
+𝑑𝑡
+
+𝑛−1
+
+𝑡
+
++ 𝛿 
+
+   𝑥 
+
+𝑑𝜏  
+
+0
+
+Após  simplificar  a  expressão  𝑠  como  uma  equação  de  primeira  ordem,  o 
+problema de manter 𝑠 em zero pode ser alcançado pela escolha da lei de controle 𝑢 da 
+Equação (4.1). 
+
+Para garantir a existência de um modo deslizante ideal, ou seja, garantir que a 
+superfície de deslizamento seja alcançada em um tempo finito, é necessário considerar a 
+condição de alcançabilidade, descrita por (Nunes, 2004): 
+
+𝑠 𝑠 ≤ −𝜂|𝑠| 
+
+onde 𝜂 é uma constante pequena e estritamente positiva. Reescrevendo a Equação (4.7) 
+tem-se que: 
+
+1
+2
+
+𝑑
+𝑑𝑡
+
+𝑠2 ≤ −𝜂|𝑠| 
+
+Integrando a Equação (4.8), de 0 a 𝑡𝑠, resulta em: 
+
+ 𝑠 𝑡𝑠   − |𝑠(0)| ≤ −𝜂𝑡𝑠 
+
+50 
+
+ 
+
+(4.3) 
+
+(4.4) 
+
+(4.5) 
+
+(4.6) 
+
+(4.7) 
+
+(4.8) 
+
+(4.9) 
+
+ 
+
+sendo 𝑡𝑠 o tempo de alcance da superfície de deslizamento, ou seja,  𝑠 = 0, a  Equação 
+(4.9) pode ser reescrita da seguinte forma: 
+
+ 
+
+Isso implica que: 
+
+0 − |𝑠(0)| ≤ −𝜂𝑡𝑠 
+
+𝑡𝑠 ≤
+
+𝑠(0)
+ 
+
+𝜂
+
+(4.10) 
+
+(4.11) 
+
+A  Figura  4.1  ilustra  o  comportamento  de  um  sistema  de  2ª  ordem  (𝑛 = 2), 
+onde  se  pode  notar  que  a  condição  de  alcançabilidade  mostrou-se  satisfatória.  A 
+superfície de deslizamento é uma linha no retrato de fase de declive δ e que contem o 
+ponto 𝑥𝑑 = [𝑥𝑑   𝑥 𝑑 ]𝑇. O movimento da trajetória do sistema pode ser dividido em duas 
+fases. Na fase de aproximação, a trajetória começa de algum ponto inicial no plano de 
+
+fase, e é conduzida até a superfície em um tempo finito menor do que  
+
+𝑠 0 
+
+𝜂
+
+ . Na segunda 
+
+fase,  o  sistema  entra  em  modo  deslizante,  ou  seja,  desliza  ao  longo  da  superfície  na 
+direção  de  𝑥𝑑 ,  com  uma  constante  de  tempo  igual  a  1/𝛿,  ocorrendo  uma  redução  na 
+ordem  da  dinâmica  do  sistema,  que  passa  a  ser  dada  pela  equação  da  superfície  de 
+deslizamento.  Observa-se  que,  uma  vez  na  superfície,  a  trajetória  permanece  na 
+superfície (Slotine & Li, 1991). 
+
+Figura 4.1 – Interpretação gráfica das Equações (4.6) e (4.8) (Slotine & Li, 1991) 
+
+ 
+
+Em resumo, a idéia é usar uma equação que represente de forma satisfatória a 
+superfície de deslizamento 𝑠, de acordo com a Equação (4.2), e, em seguida, selecionar 
+uma lei de controle 𝑢 em (4.1), tal que as trajetórias do sistema continuem apontado em 
+direção  a superfície de deslizamento, apesar da presença das perturbações e incertezas 
+do modelo. 
+
+Supondo  que  𝑠 = 𝑤 𝑥, 𝜉, 𝑡 ,  podemos  escrever  𝑠  = 𝑤 𝑥, 𝑢, 𝑡   da  seguinte 
+
+forma (Fergütz, 2001): 
+
+ 
+
+51 
+
+ 
+
+onde 
+
+𝑠  =
+
+   =  
+
+𝜕𝑤
+𝜕𝜉
+𝜕𝑤
+𝜕𝜉
+
+𝜉  +
+
+𝜉  +
+
+𝜕𝑤
+𝜕𝑡
+𝜕𝑤
+𝜕𝑡
+
++
+
++
+
+𝜕𝑤
+𝜕𝑥
+𝜕𝑤
+𝜕𝑥
+
+𝑥 
+
+ 
+[𝑓 𝑥, 𝑡  + 𝑔 𝑥, 𝑡 𝑢 𝑡  + 𝜉(𝑡)]
+
+   = 𝑎 𝑥, 𝑡  + 𝜂 𝜉  + 𝑏 𝑥, 𝑡 𝑢(𝑡)
+
+𝑎 𝑥, 𝑡  =
+
+𝜂 𝜉  =
+
+𝜕𝑤
+𝜕𝜉
+
++
+
+𝜕𝑤
+𝜕𝑡
+𝜉  +
+
+𝜕𝑤
+𝜕𝑥
+𝜕𝑤
+𝜕𝑥
+
+𝑓 𝑥, 𝑡 
+
+𝜉
+
+ 
+
+𝑏 𝑥, 𝑡  =
+
+𝜕𝑤
+𝜕𝑥
+
+𝑔(𝑥, 𝑡)
+
+(4.12) 
+
+(4.13) 
+
+A simplificação e o desacoplamento da equação (4.12) com relação ao controle 
+
+podem ser feitos com a seguinte lei de controle (Fergütz, 2001): 
+
+𝑢 = − 𝑏(𝑥, 𝑡) −1𝑎 𝑥, 𝑡  + [𝑏(𝑥, 𝑡)]−1𝑢𝑛  
+
+(4.14) 
+
+sendo 𝑏(𝑥, 𝑡) uma matriz não-singular, e 𝑢𝑛  a lei de controle descontínua. Substituindo 
+a Equação (4.14) na Equação (4.1), obtem-se:  
+
+𝑠  𝑥, 𝑢, 𝜉, 𝑡  = 𝑢𝑛 + 𝜂(𝜉) 
+
+(4.15) 
+
+Para  o  projeto  e  estudo  de  um  sistema  de  controle,  um  dos  pontos  mais 
+importantes  é  a  sua  estabilidade.  De  forma  geral  deve-se  garantir  que  o  sistema  seja 
+estável. Um sistema instável além de ser difícil de controlar é potencialmente perigoso, 
+se  a  energia  a  ele  associada  for  elevada  (Silva,  2003).  Portanto,  o  controle  𝑢𝑛   é 
+projetado  de  acordo  com  as  condições  de  estabilidade  de  Lyapunov.  Para  isso, 
+considera-se a seguinte função de Lyapunov (Fergütz, 2001): 
+
+𝑉 𝑠  =
+
+1
+2
+
+𝑠2 
+
+(4.16) 
+
+Para  garantir a  estabilidade, a função  escalar  𝑉(𝑠), tem que ser  contínua com 
+
+sua primeira derivada contínua, de forma que: 
+
+  𝑉 0  = 0 e 𝑉 𝑥  > 0, ∀ 𝑥 ≠ 0; 
+  𝑉 𝑥  → ∞, quando   𝑥   → ∞; 
+  𝑉   𝑥  < 0, ∀ 𝑥 ≠ 0. 
+
+Logo  o  ponto  de  equilíbrio  na  origem  é  dito  globalmente  e  assintoticamente 
+
+estável.  
+
+ 
+
+A derivada da Equação (4.16) fica: 
+
+52 
+
+ 
+
+𝑉  =
+
+𝑑𝑉
+𝑑𝑡
+
+= 𝑠𝑠  
+
+Substituindo a Equação (4.17) na Equação (4.15), tem-se que: 
+
+𝑉  (𝑠) = 𝑠(𝑢𝑛 + 𝜂)  
+
+(4.17) 
+
+(4.18) 
+
+A negatividade da expressão 𝑉  (𝑠) é garantida considerando as seguintes leis de 
+
+controle descontínuas (Fergütz, 2001): 
+
+a)  Lei de alcançabilidade de taxa constante 
+
+𝑢𝑛 = −𝑘 𝑠𝑖𝑔𝑛(𝑠) , 𝑘 > 0 
+
+(4.19) 
+
+onde 𝑘 é o índice de taxa constante. 
+
+Substituindo a Equação (4.19) na Equação (4.18), chega-se a: 
+
+𝑉  (𝑠) = 𝑠(−𝑘 𝑠𝑖𝑔𝑛(𝑠)   + 𝜂) 
+
+(4.20) 
+
+Para  manter  a  estabilidade  de  𝑠   para  a  origem  de  𝑠,  é  necessário  garantir  a 
+negatividade da expressão 𝑉   𝑠 , portanto, é possível obter um valor de 𝑘 que satisfaça a 
+condição 𝑘 > |𝜂|, resultando na seguinte lei de controle: 
+
+𝑢 =  𝑏 𝑥, 𝑡  −1(−𝑎 𝑥, 𝑡  − 𝑘 ∙ 𝑠𝑖𝑔𝑛(𝑠)) 
+
+b)  Lei de alcançabilidade do número de índice 
+
+𝑢𝑛 = −𝑘 ∙ 𝑠𝑖𝑔𝑛(𝑠) − 𝜆 𝑠,       𝑘 > 0, 𝜆 > 0 
+
+onde 𝜆 é o índice expoente.  
+
+Substituindo a Equação (4.22) na Equação (4.18), resulta: 
+
+𝑉  (𝑠) = 𝑠(−𝑘 ∙ 𝑠𝑖𝑔𝑛(𝑠)   − 𝜆 𝑠 + 𝜂) 
+
+Para garantir a estabilidade sabe-se que: 
+
+ 
+
+𝑉  (𝑠) = 𝑠(−𝑘 ∙ 𝑠𝑖𝑔𝑛(𝑠)   − 𝜆 𝑠 + 𝜂) < 0
+𝑉   𝑠  ≤ − 𝑠  𝑘 −  𝜂   − 𝜆 𝑠2 < 0            
+
+  
+
+(4.21) 
+
+(4.22) 
+
+(4.23) 
+
+(4.24) 
+
+É  garantida  as  condições  de  existência  e  acessibilidade  do  modo  deslizante 
+
+apenas se 𝑘 −  𝜂  > 0, ou seja, 𝑘 > |𝜂|, resultando na seguinte lei de controle: 
+
+𝑢 =  𝑏 𝑥, 𝑡  −1(−𝑎 𝑥, 𝑡  − 𝑘 ∙ 𝑠𝑖𝑔𝑛(𝑠)) − 𝜆 𝑠 ) 
+
+(4.25) 
+
+c)  Lei de alcançabilidade exponencial 
+
+𝑢𝑛 = −𝑘|𝑠|𝛼  𝑠𝑖𝑔𝑛 𝑠  − 𝜆 𝑠,         0 ≤ 𝛼 < 1, 𝑘 > 0, 𝜆 > 0 
+
+(4.26) 
+
+ 
+
+53 
+
+ 
+
+Assim: 
+
+Logo: 
+
+Substituindo a Equação (4.26) na Equação (4.18), resulta: 
+
+𝑉  (𝑠) = 𝑠(−𝑘 |𝑠|𝛼 𝑠𝑖𝑔𝑛(𝑠)   − 𝜆 𝑠 + 𝜂) 
+
+(4.27) 
+
+A  estabilidade  de  𝑠   é  mantida  garantindo  a  negatividade  da  expressão  𝑉   𝑠 . 
+
+ 
+
+𝑉  (𝑠) = 𝑠(−𝑘 |𝑠|𝛼  𝑠𝑖𝑔𝑛(𝑠)   − 𝜆 𝑠 + 𝜂) < 0
+  
+𝑉   𝑠  ≤ − 𝑠  𝑘|𝑠|𝛼 −  𝜂   − 𝜆 𝑠2 < 0            
+
+𝑘|𝑠|𝛼 −  𝜂  > 0 
+
+𝑘 >
+
+ 𝜂 
+|𝑠|𝛼  
+
+Portanto, a seguinte lei de controle é obtida: 
+
+𝑢 =  𝑏 𝑥, 𝑡  −1(−𝑎 𝑥, 𝑡  − 𝑘|𝑠|𝛼  𝑠𝑖𝑔𝑛 𝑠  − 𝜆 𝑠 ) 
+
+(4.28) 
+
+(4.29) 
+
+(4.30) 
+
+(4.31) 
+
+Zhang  et  al.  (2010)  mostraram  a  lei  de  alcançabilidade  exponencial  fornece 
+uma resposta mais suave em relação à lei de alcançabilidade de taxa constate e à lei de 
+alcançabilidade do número de índice. Com base nisso, a seção a seguir concentra-se no 
+desenvolvimento  e  aplicação  do  controlador  SMC,  com  lei  de  alcançabilidade 
+exponencial, nos sistemas de perfuração em estudo. 
+
+4.4. Projeto  do  Controlador  SMC  para  a  Coluna 
+
+de Perfuração 
+
+Levando  em  consideração  a  coluna  de  perfuração  de  2-DOF,  a  superfície  de 
+
+deslizamento do controlador SMC, obtida da Equação (4.6), é: 
+
+𝑡
+
+𝑡
+
+𝑠 =  𝑥   + 𝛿    𝑥 
+
+𝑑𝜏  =  𝑥2 − 𝜔𝑑  + 𝛿    (𝑥2 − 𝜔𝑑 )
+
+𝑑𝜏  
+
+(4.32) 
+
+0
+
+0
+
+Note  que  a  Equação  (4.32)  tem  a  característica  de  uma  lei  de  controle  PI.  A 
+simplificação  e  o  desacoplamento  da  Equação  (4.12),  com  relação  ao  sistema  2-DOF, 
+podem ser realizados com a seguinte lei de controle: 
+
+𝑢 = − 𝑏(𝑥, 𝑡) −1𝑎 𝑥, 𝑡  + [𝑏(𝑥, 𝑡)]−1𝑢𝑛  
+
+(4.33) 
+
+onde: 
+
+ 
+
+54 
+
+ 
+
+ 𝑏 𝑥, 𝑡  −1 = 𝐽𝑟  
+
+𝑎 𝑥, 𝑡  = 𝛿 𝑥2 − 𝜔𝑑   + (−𝑘𝑡𝑥1 −  𝑐𝑡 + 𝑐𝑟  𝑥2 + 𝑘𝑡𝑥3 + 𝑐𝑡𝑥4)/𝐽𝑟  
+
+(4.34) 
+
+(4.35) 
+
+sendo  𝑢𝑛   a  a  lei  de  alcançabilidade  exponencial,  denotada  pela  Equação  (4.27). 
+Portanto, a lei de controle do SMC é dada pela seguinte relação: 
+
+𝑢 =  𝑏 𝑥, 𝑡  −1(−𝑎 𝑥, 𝑡  − 𝑘|𝑠|𝛼  𝑠𝑖𝑔𝑛 𝑠  − 𝜆 𝑠 ) 
+
+𝑢 = 𝑐𝑡(𝑥2 − 𝑥4) + 𝑘𝑡 𝑥1 − 𝑥3  + 𝑐𝑟 𝑥2 − 𝐽𝑟 (𝛿 𝑥2 − 𝜔𝑑  + 𝑘 𝑠 𝛼  𝑠𝑖𝑔𝑛 𝑠  + 𝜆 𝑠) 
+
+(4.36) 
+
+(4.37) 
+
+Com o intuito de melhorar as propriedades de robustez do sistema controlado, 
+é  implementada  a  seguinte  modificação  na  lei  de  controle  SMC  (Navarro-López  & 
+Cortés, 2007b): 
+
+𝑢 = 𝛥1𝑐𝑡(𝑥2 − 𝑥4) + 𝛥2𝑘𝑡 𝑥1 − 𝑥3  + 𝛥3𝑐𝑟 𝑥2 
+
+−𝐽𝑟 (𝛿 𝑥2 − 𝜔𝑑  + 𝑘 𝑠 𝛼  𝑠𝑖𝑔𝑛 𝑠  + 𝜆 𝑠) 
+
+(4.38) 
+
+com os fatores de ponderação 0 < 𝛥𝑖 ≤ 1, 𝑖 = 1, 2, 3. 
+
+A aplicação do controle SMC, da Equação (4.37), pré-supõe que os estados do 
+
+sistema (𝑥1, 𝑥2, 𝑥3, 𝑥4) estão disponíveis para realimentação. 
+
+4.5. Simulação  do  Controlador  SMC  no  Sistema 
+
+de 2-DOF 
+
+O controlador SMC da Equação (4.38) é aplicado  na coluna de perfuração de 
+2-DOF.  Na  avaliação  de  desempenho  da  estratégia  de  controle  proposta  são 
+considerados os seguintes casos: 
+
+  Estabilização do sistema após ativação do controlador no instante 𝑡 = 50𝑠. 
+  Reposta  do  sistema  controlado  a  variações  no  setpoint  nos  instantes 
+
+𝑡 = 500, 900 e 1300𝑠 
+
+  Resposta  do  sistema  perturbações  no  peso  da  broca  (𝑊𝑜𝑏 ),  ocorrendo  nos 
+
+instantes 𝑡 = 500, 900 e 1300𝑠. 
+
+As simulações são realizadas com o  auxílio do pacote Simulink/MATLAB™. 
+Os  parâmetros  de  sintonia  do  controlador  são  listados  na  Tabela  4.1,  os  quais  foram 
+selecionados por tentativa e erro, visando ter o melhor desempenho possível. 
+
+ 
+
+ 
+
+55 
+
+ 
+
+Tabela 4.1–Parâmetros de sintonia do controlador SMC 
+
+Parâmetro 
+
+Valor 
+
+𝜟𝟏 
+
+𝜟𝟐 
+
+𝜟𝟑 
+
+𝜹 
+
+𝒌 
+
+𝝀 
+
+0,9 
+
+0,5 
+
+0,7 
+
+0,053 
+
+0,01 
+
+0,095 
+
+A  Figura  4.2  mostra  a  estabilização  do  sistema  após  a  ativação  do  controle. 
+Como pode ser observada, a velocidade do sistema de rotação (𝑥2) alcança o ponto de 
+operação  desejado  (𝑤𝑑 =12  rad/s),  sendo  acompanhada  pela  velocidade  da  broca  (𝑥4). 
+Em  comparação  com  a  resposta  do  controle  PI,  da  Figura  3.3,  a  resposta  do  controle 
+SMC não apresenta sobrepassagem, sendo a estabilização muito mais rápida. A variação 
+do  torque  do  motor  (𝑇𝑚 )  fornecida  pelo  controlador  SMC  é  relativamente  bem 
+comportada, sem o pico acentuado depois da ativação do controle apresentando pelo PI. 
+
+A  Figura  4.3  apresenta  o  comportamento  das  variáveis  controladas  direta  e 
+indireta (velocidades do sistema de rotação e da broca, respectivamente) a mudanças no 
+setpoint.  Comparando  estas  respostas  com  as  obtidas  pelo  sistema  sob  controle  PI,  da 
+Figura 3.4, o SMC gera um controle mais suave, porém mais lento. O perfil da variável 
+manipulada  mostra  que  o  controlador  SMC  “assegura”  o  fornecimento  do  torque 
+necessário, depois de uma atuação repentina, após cada mudança de setpoint. 
+
+Na  Figura  4.4  se  apresenta  a  resposta  do  sistema  sob  controle  SMC  sujeito  a 
+variações  no  peso  da  broca  (𝑊𝑜𝑏 ).  Conforme  pode  ser  visualizado,  a  velocidade  da 
+broca  acompanha  bem  a  velocidade  do  sistema  de  rotação,  a  qual  trata  de  voltar  ao 
+setpoint  depois  da  introdução  da  perturbação.  Em  comparação  com  o  desempenho  do 
+sistema  sob  controle  PI,  da  Figura  3.5,  embora  as  variáveis  controladas  experimentem 
+picos menores, o retorno ao setpoint é mais lento, com pequenas oscilações no topo dos 
+picos.  Como  no  caso  anterior,  é  observado  que  a  variável  manipulada  reage 
+abruptamente  após  a  perturbação,  porém  logo  ela  é  “assegurada”,  o  que  motiva  a 
+compensação lenta da perturbação. 
+
+ 
+
+56 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 4.2 - Resposta do sistema de 2-DOF com o controlador SMC: (I) variáveis 
+
+controladas, (II) variável manipulada 
+
+Figura 4.3 - Resposta a variações no setpoint no sistema de 2-DOF com o Controlador 
+
+SMC: (I) variáveis controladas, (II) variável manipulada 
+
+57 
+
+ 
+
+Figura 4.4 - Resposta às perturbações no sistema de 2-DOF com o controlador SMC: (I) 
+
+variáveis controladas, (II) variável manipulada 
+
+ 
+
+4.6. Simulação  do  Controlador  SMC  no  Sistema 
+
+de 4-DOF 
+
+O controlador SMC da Equação (4.37), desenvolvido baseado no sistema de 2-
+DOF,  com  parâmetros  de  sintonia  da  Tabela  4.1,  porém  com  as  variáveis 
+correspondentes ao sistema de 4-DOF, é aplicado no controle da coluna de perfuração 
+de  4-DOF.  Como  no  caso  do  controle  PI,  o  objetivo  aqui  é  introduzir  incertezas  no 
+desenvolvimento do controlador. 
+
+A Figura 4.5 apresenta a estabilização do sistema de 4-DOF depois da ativação 
+do controle SMC. Em comparação à resposta do sistema de 2-DOF, da  Figura 4.2, no 
+presente  caso  as  velocidades  da  coluna  demoram  em  alcançar  o  ponto  de  operação 
+desejado,  sendo  que  a  variável  manipulada  apresenta  grandes  oscilações  no  início  da 
+ativação do controle.  
+
+A Figura 4.6 mostra a resposta do sistema controlado a variações no  setpoint. 
+Como  pode  ser  visualizada,  a  resposta  do  sistema  é  mais  rápida  em  alcançar  o  novo 
+setpoint, se comparada à resposta do controle SMC do sistema de 2-DOF, da Figura 4.3. 
+Já,  a  Figura  4.7  mostra  o  desempenho  do  SMC  na  regulação  do  sistema  de  4-DOF 
+sujeito a perturbações no peso da broca. As variáveis controladas conseguem retornar ao 
+ponto  de  operação.  Mas,  em  comparação  com  a  resposta  do  sistema  de  2-DOF,  da 
+Figura 4.4, os picos nas velocidades do sistema de 4-DOF são maiores, com oscilações 
+nos cumes dos picos mais acentuadas. 
+
+ 
+
+58 
+
+ 
+
+ 
+
+Figura 4.5 - Resposta do sistema 4-DOF com o controlador SMC: (I) variáveis 
+
+controladas, (II) variável manipulada 
+
+ 
+
+ 
+
+Figura 4.6 - Resposta a variações no setpoint no sistema de 4-DOF com o controlador 
+
+SMC: (I) variáveis controladas, (II) variável manipulada 
+
+59 
+
+ 
+
+Figura 4.7 - Resposta às perturbações no sistema de 4-DOF com o controlador SMC: (I) 
+
+variáveis controladas, (II) variável manipulada 
+
+ 
+
+Os resultados das simulações do SMC apresentados no presente capítulo levam 
+
+às seguintes conclusões: 
+
+  O  controlador  SMC  consegue  eliminar  as  oscilações  stick-slip,  fazer  o 
+seguimento  do  setpoint  e  rejeitar  perturbações  presentes  na  operação  de 
+colunas de perfuração. 
+
+  O  controlador  SMC  desenvolvido  para  o  sistema  de  perfuração  de  2-DOF 
+pode  ser  aplicado  a  sistemas  de  ordem  superior.  No  sistema  de  4-DOF,  a 
+aplicação  do  controle  apresentou  melhoras,  em  relação  ao  sistema  de  2-
+DOF, no caso de variações no setpoint. 
+
+  O  controlador  SMC  fornece  uma  ação  repentina,  após  uma  mudança  no 
+setpoint  ou  perturbação  no  sistema,  a  qual  logo  é  “assegurada”.  Esta  ação 
+repentina  provoca  oscilações  na  variável  manipulada,  sendo  mais  notória 
+quando aplicada no sistema de 4-DOF. 
+
+ 
+
+ 
+
+60 
+
+ 
+
+Capítulo 5 
+
+Controle por Linearização Exata por 
+Realimentação 
+
+5.1. Introdução 
+
+Grande  parte  dos  sistemas  físicos  pode  ser  descrita  por  equações  diferenciais 
+não lineares. O controle destes sistemas pode ser afetado pela fidelidade na reprodução 
+dos efeitos não lineares pelas equações que descrevem a dinâmica. Quando estes efeitos 
+não  lineares  tornam-se  significativos  na  dinâmica  do  sistema,  os  métodos  de  controle 
+linear  mostram-se  limitados  para  se  alcançar  um  desempenho  desejado.  É  neste 
+contexto  que se inserem  os métodos de controle não  linear, fazendo ênfase no método 
+de linearização por realimentação (Henson & Seborg, 1997). 
+
+A idéia central do método de linearização por realimentação  consiste em  usar 
+técnicas  de  manipulação  matemática  que  permitam  transformar  algebricamente  um 
+sistema não linear em um sistema totalmente ou parcialmente linear, numa região finita, 
+de  modo  que  técnicas  de  controle  linear,  como  as  clássicas,  possam  ser  aplicadas  no 
+projeto do controlador (Slotine & Li, 1991). Técnicas de linearização por realimentação 
+podem  ser  vistas  como  uma  forma  de  transformar  modelos  originais  do  sistema  em 
+modelos de forma mais simples equivalentes.  
+
+O presente capítulo trata sobre o estudo e aplicação de métodos de linearização 
+exata por realimentação no controle de colunas de perfuração. Duas técnicas de controle 
+por  linearização  por  realimentação  são  discutidas  do  ponto  de  vista  teórico:  o 
+controlador  por  linearização  entrada-estado  (ISLC)  e  o  controlador  por  linearização 
+entrada-saída  (IOLC).  A  partir  dessa  análise,  um  desses  controladores  será 
+implementado  no  controle  do  sistema  torcional  da  coluna  de  perfuração,  sendo  seu 
+desempenho avaliado quando submetido a diversas condições de operação. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+61 
+
+ 
+
+5.2. Conceitos Básicos Fundamentais 
+
+Para melhor entendimento da abordagem de linearização exata por 
+
+realimentação é necessário introduzir brevemente os seguintes conceitos básicos 
+fundamentais: 
+
+5.2.1.  Campo vetorial 
+
+Se 𝐷 é uma região em ℜ𝑛 , então um campo vetorial em 𝐷 é uma função 𝐹  que 
+atribui a cada (𝑥1,  𝑥2, … , 𝑥𝑛 ) em 𝐷, um vetor 𝐹 (𝑥1,  𝑥2, … , 𝑥𝑛 ) de dimensão 𝑛. Quando 
+𝑛 = 1 o campo vetorial tem um nome de campo escalar e será 𝑕: 𝐷 → ℜ. 
+
+5.2.2.  Campo covetorial 
+
+Designa-se  por  campo  covetorial  ao  transposto  de  um  campo  vetorial. 
+
+Representa-se por um vetor linha. 
+
+5.2.3.  Produto interno 
+
+Define-se produto interno de um campo vetorial 𝑓(𝑥) por um campo 
+
+covetorial 𝑤(𝑥), representado por < 𝑤, 𝑓 >, ao escalar: 
+
+𝑛
+
+< 𝑤, 𝑓 >= 𝑤 𝑥 𝑓 𝑥  =   𝑤𝑖 𝑥 𝑓𝑖(𝑥)
+ 
+
+𝑖=1
+
+(5.1) 
+
+O produto de 𝑤 𝑥  por 𝑓 𝑥  deve ser entendido como o produto matricial de 
+
+uma matriz 1 × 𝑛 (covetor 𝑤) por uma matriz coluna n× 1 (vetor 𝑓). 
+
+5.2.4.  Gradiente 
+
+A gradiente de uma função escalar 𝑕(𝑥), cujos elementos se obtêm derivando 
+𝑕(𝑥) em relação a cada uma das componentes de 𝑥. Pode representar-se por 𝑔𝑟𝑎𝑑 𝑕(𝑥), 
+ou por ∇𝑕(𝑥), como: 
+
+∇𝑕 x  = 𝑔𝑟𝑎𝑑 𝑕 x  =
+
+𝜕𝑕(𝑥)
+
+𝜕𝑥
+
+=  
+
+𝜕𝑕
+𝜕𝑥1
+
+,
+
+𝜕𝑕
+𝜕𝑥2
+
+, … ,
+
+𝜕𝑕
+𝜕𝑥𝑛
+
+  
+
+(5.2) 
+
+ 
+
+62 
+
+ 
+
+5.2.5.  Jacobiano 
+
+Jacobiano é uma forma  multidimensional  de derivada. Seja, por exemplo, um 
+
+campo vetorial 𝑓(𝑥). Então se define jacobiano de um campo vetorial como: 
+
+∇𝑓 x  =  
+
+𝜕𝑓𝑖(𝑥)
+
+𝜕𝑥𝑗
+
+  =
+
+ 
+ 
+ 
+ 
+ 
+
+5.2.6.  Derivada de Lie 
+
+𝜕𝑓1(𝑥𝑛 )
+
+𝜕𝑥𝑛
+⋮
+
+𝜕𝑓1(𝑥1)
+
+𝜕𝑥1
+
+⋯
+
+⋮        ⋱       
+
+𝜕𝑓𝑛 (𝑥1)
+
+𝜕𝑥1
+
+⋯
+
+𝜕𝑓𝑛 (𝑥𝑛 )
+
+𝜕𝑥𝑛
+
+𝑖, 𝑗 = 1, 2, … , 𝑛 
+
+(5.3) 
+
+ 
+ 
+ 
+ 
+ 
+
+𝑛×𝑛
+
+A  derivada  de  Lie  é  uma  das  ferramentas  mais  importantes  da  geometria 
+diferencial, e é bastante utilizada na linearização de sistemas não lineares. A derivada de 
+Lie  entre  um  campo  escalar  e  um  campo  vetorial  pode  ser  representada  da  seguinte 
+forma: 
+
+𝐿𝑓𝑕 =
+
+𝜕𝑕 𝑥 
+
+𝜕𝑥
+
+𝑓 x  = ∇𝑕 𝑥  ∙ 𝑓 𝑥  =< ∇𝑕 𝑥 , 𝑓 𝑥  > 
+
+(5.4) 
+
+onde  𝑕: ℜ𝑛 → ℜ,  representa  o  campo  escalar  e,  𝑓: ℜ𝑛 → ℜ𝑛 ,  representa  o  campo 
+vetorial.  Assim,  a  derivada  de  Lie  𝐿𝑓𝑕,  é  simplesmente  a  derivada  direcional  de  𝑕  ao 
+longo da direção do vetor 𝑓. 
+
+Uma vez que a derivada de Lie de uma função escalar é também uma função 
+escalar, é possível calcular as derivadas de Lie de ordem 2, 3, etc. A sua definição faz-se 
+por recorrência. Portanto tem-se que: 
+
+(5.5) 
+
+0𝑕 𝑥  = 𝑕(𝑥)
+𝐿𝑓
+𝜕𝑕 𝑥 
+
+1 𝑕 𝑥  =
+𝐿𝑓
+
+𝜕𝑥
+
+𝑓 x 
+
+2𝑕 𝑥  = 𝐿𝑓(𝐿𝑓𝑕 𝑥 ) =
+𝐿𝑓
+⋮
+
+𝜕 𝐿𝑓𝑕 𝑥  
+
+𝜕𝑥
+
+𝑓 x 
+
+ 
+
+𝑘𝑕 𝑥  = 𝐿𝑓(𝐿𝑓
+𝐿𝑓
+
+𝑘−1𝑕 𝑥 ) =
+
+𝜕 𝐿𝑓
+
+𝑘−1𝑕 𝑥  
+
+𝜕𝑥
+
+𝑓 x 
+
+5.2.7.  Parêntese de Lie 
+
+Sejam 𝑓 e 𝑔 campos vetoriais em ℜ𝑛 . O parêntese de Lie de 𝑓 e 𝑔 é um campo 
+
+vetorial de dimensão 𝑛, definido por: 
+
+ 
+
+63 
+
+ 
+
+ 𝑓, 𝑔  = 𝑎𝑑𝑓𝑔 = ∇𝑔 ∙ 𝑓 − ∇𝑓 ∙ 𝑔 =
+
+𝜕𝑔 𝑥 
+
+𝜕𝑥
+
+𝑓 𝑥  −
+
+𝜕𝑓 𝑥 
+
+𝜕𝑥
+
+𝑔(𝑥) 
+
+(5.6) 
+
+O parênteses de Lie de ordem 𝑖 é definido da seguinte forma: 
+
+0𝑔 = 𝑔
+1𝑔 =  𝑓, 𝑔 
+
+ 
+
+𝑎𝑑𝑓
+𝑎𝑑𝑓
+⋮
+𝑎𝑑𝑓
+
+𝑖 𝑔 =  𝑓, 𝑎𝑑𝑓
+
+𝑖−1𝑔 
+
+(5.7) 
+
+O parêntese de Lie satisfaz as seguintes propriedades: 
+
+(𝑖) Anti-simetria:  𝑓, 𝑔  = −[𝑔, 𝑓] 
+
+(𝑖𝑖) Bilinearidade:   𝛼1𝑓1 + 𝛼2𝑓2 , 𝑔  = 𝛼1 𝑓1, 𝑔  + 𝛼2[𝑓2, 𝑔] 
+
+sendo 𝑓, 𝑓1, 𝑓2, 𝑔 campos vetoriais suaves e 𝛼1, 𝛼2 escalares constantes. 
+
+(𝑖𝑖𝑖) Identidade de Jacobi: 𝐿[𝑓,𝑔]𝑕 = 𝐿𝑓𝐿𝑔𝑕 − 𝐿𝑔𝐿𝑓𝑕 
+
+5.2.8.  Difeomorfismo 
+
+A aplicação 𝜙: 𝛺 → ℜ𝑛 , na qual 𝛺 é um conjunto aberto de ℜ𝑛 , é denominada 
+um difeomorfismo se 𝜙−1(𝑥) existe e se 𝜙(𝑥) e 𝜙−1(𝑥) são diferenciáveis e contínuas 
+em 𝛺. Se, adicionalmente, 𝛺 = ℜ𝑛 , então 𝜙(𝑥) é um difeomorfismo global (Slotine & 
+Li, 1991). 
+
+Uma das aplicações dos difeomorfismos consiste em transformar o modelo de 
+estado  de  um  sistema  não  linear  num  outro  modelo  de  estado,  linear  ou  não  linear, 
+através de uma mudança de variável de estado. Considere o sistema da Equação  (5.8). 
+Efetuando  a  mudança  da  variável  de  estado  𝑧 = 𝜑(𝑥),  e  derivando  ambos  os  lados, 
+obtém-se: 
+
+ 
+
+𝑥  = 𝑓 𝑥  +  𝑔(𝑥) ∙ 𝑢
+𝑦 = 𝑕(𝑥)
+
+  
+
+𝑧  =
+
+𝜕𝜑
+𝜕𝑥
+
+𝑥  =
+
+𝜕𝜑
+𝜕𝑥
+
+𝑓 𝑥  +
+
+𝜕𝜑
+𝜕𝑥
+
+𝑔 𝑥 𝑢 
+
+Como 𝜙 é um difeomorfismo, tem-se 𝑥 = 𝜑−1 𝑧 . Logo: 
+
+𝑧  = 𝑓∗ 𝑧  +   𝑔∗(𝑧) ∙ 𝑢
+ 
+𝑦 = 𝑕∗(𝑧)
+
+  
+
+64 
+
+ 
+
+ 
+
+ 
+
+(5.8) 
+
+(5.9) 
+
+(5.10) 
+
+ 
+
+ 
+
+ 
+
+5.2.9.  Teorema de Frobenius 
+
+Seja {𝑓1, 𝑓2, … , 𝑓𝑚 } um conjunto de 𝑚 campos vetoriais, definidos em ℜ𝑛 , com 
+
+𝑚 < 𝑛. Este conjunto é completamente integrável se e só se for involutivo. 
+
+Um  campo  de  campos  vetoriais  se  diz  involutivo  se  e  somente  se  existirem 
+funções  escalares  𝛼𝑖 𝑗  𝑘: ℜ𝑛 → ℜ  tais  que  os  parênteses  de  Lie  da  Equação  (5.11),  de 
+dois campos vetoriais, possam ser expressos por uma combinação linear dos campos de 
+vetores originais, i.e.: 
+
+𝑚
+
+ 𝑓𝑖, 𝑓𝑗   =   𝛼𝑖𝑗𝑘  𝑥 𝑓𝑘(𝑥)
+ 
+
+𝑘=0
+
+(5.11) 
+
+5.3.  Linearização Entrada-Estado 
+
+Considere  um  sistema  não-linear  SISO  descrito  pela  seguinte  equação  de 
+
+estado: 
+
+𝑥  = 𝑓 𝑥  + 𝑔 𝑥 𝑢 
+
+(5.12) 
+
+onde 𝑓 e 𝑔 são campos vetoriais em ℜ𝑛 . A esse sistema dá-se o nome sistema linear na 
+entrada, linear no controle ou linear na variável  de controle  (Silva, 2003). Além  dessa 
+estrutura, o sistema pode aparecer de forma genérica, como: 
+
+𝑥  = 𝑓 𝑥  + 𝑔 𝑥  𝑤[𝑢 + 𝜙 𝑥 ] 
+
+(5.13) 
+
+sendo  𝑤  uma  função  escalar  invertível  e  𝜙  uma  função  arbitrária.  A  Equação  (5.13) 
+pode ser convertida a forma da Equação (5.12), fazendo: 
+
+𝑣 = 𝑤[𝑢 + 𝜙 𝑥 ] 
+
+Isolando a variável 𝑢, através da inversa de 𝑤, tem-se: 
+
+𝑢 = 𝑤−1𝑣 − 𝜙(𝑥) 
+
+(5.14) 
+
+(5.15) 
+
+Definição (linearização entrada-estado). Um sistema não linear na forma da Equação 
+(5.12)  é  dito  ser  linearizável  entrada-estado  se  existir  uma  região  𝛺  em  ℜ𝑛 ,  um 
+difeomorfismo 𝜙: 𝛺 → ℜ𝑛 , e uma lei de controle por realimentação, da forma: 
+
+onde: 
+
+ 
+
+𝑢 = 𝛼 𝑥  + 𝛽 𝑥 𝑣 
+
+65 
+
+(5.16) 
+
+ 
+
+ 
+
+𝛼 𝑥  = −
+
+𝑛  𝑧1
+𝐿𝑓
+𝑛 −1 𝑧1
+𝐿𝑔 𝐿𝑓
+
+ 
+
+𝛽 𝑥  =
+
+1
+𝑛−1 𝑧1
+𝐿𝑔 𝐿𝑓
+
+ 
+
+(5.17) 
+
+(5.18) 
+
+tal que as novas variáveis de estado 𝑧 = 𝜙(𝑥) e a nova entrada 𝑣 satisfazem a relação 
+linear invariante no tempo (Slotine & Li, 1991): 
+
+sendo: 
+
+𝑧  = 𝐴𝑧 + 𝑏𝑣 
+
+𝐴 =  
+
+ 
+ 
+ 
+ 
+ 
+
+0 1 0 ⋯ 0
+ 
+0 0 1 ⋯ 0
+ 
+⋮
+⋮
+ 
+ 
+0 0 0 ⋯ 1
+0 0 0 ⋯ 0 
+
+⋱
+
+⋮
+
+⋮
+
+(5.19) 
+
+(5.20) 
+
+, 𝑏 =  
+
+0
+ 
+0
+ 
+⋮
+ 
+0
+ 
+1 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+A  nova  variável  de  estado  𝑧  é  designada  por  estado  linearizado,  e  a  lei  de 
+controle 𝑢 (Eq. 5.16) é chamada lei de controle linearizante. A “nova entrada” 𝑣 pode 
+ser representada da seguinte forma (Henson & Seborg, 1997): 
+
+𝑣 =   −𝛼𝑛 𝐿𝑓
+
+𝑛−1𝑧1 − ⋯ + 𝛼1 𝑦𝑠𝑝 − 𝑧1  + 𝛼0   [𝑦𝑠𝑝 − 𝑧1]𝑑𝜏
+
+ 
+
+(5.21) 
+
+0
+
+𝑡
+
+Resultando numa lei de controle: 
+
+𝑢 =
+
+−𝐿𝑓
+
+𝑛  𝑧1 − 𝛼𝑛 𝐿𝑓
+
+𝑛 −1𝑧1 − ⋯ + 𝛼1 𝑦𝑠𝑝 − 𝑧1  + 𝛼0   [𝑦𝑠𝑝 − 𝑧1]𝑑𝜏
+
+𝑡
+0
+
+𝐿𝑔 𝐿𝑓
+
+𝑛 −1 𝑧1
+
+ 
+
+(5.22) 
+
+onde  os  𝛼𝑛   são  os  parâmetros  de  sintonia  do  controlador,  sendo  𝛼0  o  parâmetro 
+associado  com  o  termo  integral.  A  lei  de  controle  integral  (5.22)  produz  a  seguinte 
+equação característica: 
+
+𝑠𝑛+1 + 𝛼𝑛 𝑠𝑛 + ⋯ + 𝛼1𝑠 + 𝛼0 = 0 
+
+(5.23) 
+
+Os  parâmetros  𝛼𝑛   são  escolhidos  tal  que  ao  pôr  as  raízes  da  equação 
+característica, Equação (5.23), no semi-plano esquerdo aberto, a trajetória do erro decai 
+exponencialmente a zero.  
+
+A lei de controle integral resultante gera a seguinte função de transferência em 
+
+malha fechada, para mudanças no setpoint (Henson & Seborg, 1997): 
+
+𝑦(𝑠)
+𝑦𝑠𝑝 (𝑠)
+
+=
+
+𝛼0
+
+𝑠𝑛+1 + 𝛼𝑛 𝑠𝑛 + ⋯ + 𝛼1𝑠 + 𝛼0
+
+ 
+
+(5.24) 
+
+ 
+
+66 
+
+ 
+
+O  controlador  da  Equação  (5.22)  envolve  𝑛 + 1  parâmetros  de  sintonia. 
+Segundo  Kravaris  &  Wright  (1989),  uma  função  de  transferência  em  malha  fechada 
+com  um  único  parâmetro  de  sintonia  𝜀,  da  forma  (Henson  &  Seborg,  1990,  1991, 
+1992b): 
+
+𝑦(𝑠)
+𝑦𝑠𝑝 (𝑠)
+
+=
+
+1
+
+(𝜀𝑠 + 1)𝑛+1 
+
+(5.25) 
+
+pode ser obtida, pela escolha dos 𝛼𝑛  da seguinte maneira (Henson & Seborg, 1990): 
+
+𝛼𝑘 =
+
+ 𝑟 + 1  𝑟 − 1  𝑟 − 2  … (𝑟 − 𝑘 + 2)
+
+𝑘!
+
+𝜀𝑘−𝑟−1,
+
+1 ≤ 𝑘 ≤ 𝑛 
+
+(5.26) 
+
+sendo  𝛼0 = 𝜀−(𝑟+1).  Valores  pequenos  de  𝜀  fornecem  uma  vigorosa  ação  de  controle, 
+enquanto valores grandes podem causar respostas muito lentas. 
+
+Nota-se  que  a  forma  das  matrizes  𝐴  e  𝑏  faz  com  que  o  sistema  da  Equação 
+(5.20) tenha a forma de  um integrador múltiplo. Este fato não introduz qualquer perda 
+de  generalidade,  uma  vez  que  todo  o  sistema  linear  pode  ser  escrito  na  forma 
+companheira,  que  por  sua  vez,  por  meio  da  mudança  de  variável  (𝑧 = 𝜙(𝑥))  pode  ser 
+transformado num integrador múltiplo.  
+
+Lema.  Um sistema não  linear, da  forma da Equação (5.12), com  𝑓 e  𝑔 sendo campos 
+vetoriais suaves, é linearizável entrada-estado se, e somente se, existir uma região 𝛺 tal 
+que satisfaça as seguintes condições (Chen et al., 2004): 
+
+  O campo de vetor {𝑔, 𝑎𝑑𝑓𝑔, … , 𝑎𝑑𝑓
+
+𝑛−1𝑔} seja linearmente independente em 
+
+𝛺. 
+
+  O conjunto {𝑔, 𝑎𝑑𝑓𝑔, … , 𝑎𝑑𝑓
+
+𝑛−2𝑔} é involutivo na região 𝛺. 
+
+A primeira condição implica em dizer se o sistema é controlável. Para sistemas 
+𝑛−1𝑔}  torna-se  {𝑏, 𝐴𝑏, … , 𝐴𝑛−1𝑏}  e, 
+lineares,  o  campo  de  vetores  {𝑔, 𝑎𝑑𝑓𝑔, … , 𝑎𝑑𝑓
+portanto, a independência destes valores equivale a 𝑛, sendo 𝑛 a característica da matriz 
+de controlabilidade [𝑏, 𝐴𝑏, … 𝐴𝑛−1𝑏]. Em síntese, para o sistema ser controlável a matriz 
+de controlabilidade deve ser não-singular. 
+
+A  segunda  condição  é  a  condição  de  involutividade,  sendo  essa  a  menos 
+intuitiva. Ela é trivialmente satisfeita para sistemas lineares (que têm campos de vetores 
+constantes),  mas  não  é  genericamente  satisfeita  em  caso  de  sistemas  não  lineares 
+(Slotine & Li, 1991). 
+
+Prova  do  Lema  (Slotine  &  Li,  1991).  Assumindo  que  exista  uma  transformação  de 
+estado  𝑧 = 𝑧(𝑥)  e  uma  transformação  da  entrada  𝑢 = 𝛼 𝑥  + 𝛽 𝑥 𝑣,  tal  que  𝑧  e  𝑣 
+satisfaçam a Equação (5.19). Expandindo a primeira linha da Equação (5.19), obtém-se: 
+
+ 
+
+67 
+
+ 
+
+𝑧 1 =
+
+𝜕𝑧1
+𝜕𝑥
+
+ 𝑓 + 𝑔 ∙ 𝑢  = 𝑧2 
+
+(5.27) 
+
+Fazendo o procedimento similar com as outras componentes de 𝑧, leva-se a um 
+
+conjunto de equações diferenciais parciais, representadas da seguinte forma:   
+
+𝜕𝑧1
+ 
+𝜕𝑥
+  
+𝜕𝑧2
+𝜕𝑥
+ 
+⋮
+  
+𝜕𝑧𝑛
+ 
+𝜕𝑥
+
+𝑓 +
+
+𝑓 +
+
+𝑓 +
+
+𝜕𝑧1
+𝜕𝑥
+𝜕𝑧2
+𝜕𝑥
+
+𝜕𝑧𝑛
+𝜕𝑥
+
+𝑔 𝑢 = 𝑧2
+
+𝑔 𝑢 = 𝑧3
+
+  
+
+𝑔 𝑢 = 𝑣
+
+(5.28) 
+
+Uma vez que 𝑧1, … , 𝑧𝑛  são independentes de 𝑢, enquanto 𝑣 não é, conclui-se a 
+
+partir da Equação 5.28 que: 
+
+𝐿𝑔𝑧1 = 𝐿𝑔𝑧2 = ⋯ = 𝐿𝑔𝑧𝑛−1 = 0
+  
+ 
+𝐿𝑔𝑧𝑛 ≠ 0
+
+𝐿𝑓𝑧𝑖 = 𝑧𝑖+1,
+
+𝑖 = 1, 2, … , 𝑛 − 1 
+
+(5.29) 
+
+(5.30) 
+
+As  equações  𝑧  citadas  acima  podem  ser  comprimidas  a  um  conjunto  de 
+
+equações de restrição em 𝑧1, ou seja: 
+
+∇𝑧1 𝑎𝑑𝑓
+ 
+∇𝑧1𝑎𝑑𝑓
+
+𝑘𝑔 = 0,
+𝑛−1𝑔 ≠ 0
+
+𝑘 = 0, 1, 2, … , 𝑛 − 2
+  
+
+(5.31) 
+
+A primeira propriedade do teorema pode ser inferida a partir da equação 5.31, 
+𝑛−1𝑔}  deve  ser  linearmente  independente.  De 
+pois  o  campo  de  vetor  {𝑔, 𝑎𝑑𝑓𝑔, … , 𝑎𝑑𝑓
+fato, pois se existisse algum número 𝑖 (𝑖 ≤ 𝑛 − 1), existiria escalares 𝛼1 𝑥 , … , 𝛼𝑖−1(𝑥) 
+tal que: 
+
+𝑖−1
+
+𝑎𝑑𝑓
+
+𝑖 𝑔 =   𝛼𝑘𝑎𝑑𝑓
+
+𝑘𝑔
+
+ 
+
+ou seja, 
+
+𝑘=0
+
+𝑛−2
+
+𝑎𝑑𝑓
+
+𝑛−1𝑔 =   𝛼𝑘𝑎𝑑𝑓
+
+𝑘𝑔
+
+(5.32) 
+
+(5.33) 
+
+ 
+
+Isso,  juntamente  com  a  primeira  parte  da  Equação  (5.31),  i.e.  ∇𝑧1 𝑎𝑑𝑓
+
+𝑘𝑔 = 0,
+
+𝑘 = 0, 1, 2, … , 𝑛 − 2, implicaria que: 
+
+𝑘=𝑛−𝑖−1
+
+ 
+
+68 
+
+ 
+
+𝑛−2
+
+∇𝑧1 𝑎𝑑𝑓
+
+𝑛−1𝑔 =   𝛼𝑘 ∇𝑧1 𝑎𝑑𝑓
+
+𝑘 𝑔 = 0
+
+ 
+
+(5.34) 
+
+o que contradiz a segunda parte da Equação (5.31), i.e. ∇𝑧1𝑎𝑑𝑓
+
+𝑛−1𝑔 ≠ 0. 
+
+𝑘=𝑛−𝑖−1
+
+A segunda propriedade do Lema, pode ser inferida a partir da Equação (5.31). 
+Essa  propriedade  resulta  na  existência  de  uma  função  escalar  𝑧1  para  satisfazer  as 
+equações  diferenciais  parciais  na  primeira  parte  da  Equação  (5.31).  Essa  propriedade 
+também  pode  ser  determinada  a  partir  do  Teorema  de  Frobenius.  Uma  vez  que  a 
+condição  de  involutividade  é  satisfeita,  então  a  partir  do  Teorema  de  Frobenius  existe 
+uma função escalar não-zero 𝑧1(𝑥) que satisfaz a Equação (5.31). 
+
+Com base na teoria exposta, Silva (2003) apresenta o seguinte algoritmo para o 
+
+método de linearização entrada-estado: 
+
+1)  Construir os campos vetoriais {𝑔, 𝑎𝑑𝑓𝑔, … , 𝑎𝑑𝑓
+2)  Verificar  se  as  condições  de  controlabilidade  e  involutividade  são 
+
+𝑛−1𝑔}; 
+
+satisfeitas.  
+𝑛−1𝑔} 
+Para  o  sistema  ser  controlável  os  campos  vetoriais  {𝑔, 𝑎𝑑𝑓𝑔, … , 𝑎𝑑𝑓
+têm  que  ser  linearmente  independentes,  e  para  satisfazer  a  condição  de 
+𝑛−2𝑔}  tem  que  ser 
+involutividade  o  conjunto  de  vetores  {𝑔, 𝑎𝑑𝑓𝑔, … , 𝑎𝑑𝑓
+involutivo.  Caso  não  sejam  satisfeitas  as  condições  o  sistema  não  será 
+linearizável entrada-estado. Caso contrário, passar para o seguinte passo.  
+3)  Calcular a primeira componente do novo vetor de estado, 𝑧1, a partir de: 
+
+ 
+
+∇𝑧1𝑎𝑑𝑓
+∇𝑧1𝑎𝑑𝑓
+
+𝑖 𝑔 = 0, 𝑖 = 0, 1, … , 𝑛 − 2
+  
+𝑛−1𝑔 = 0
+
+4)  Calcular o novo estado 
+
+𝑧 𝑥  =  𝑧1 𝐿𝑓𝑧1  … 𝐿𝑓
+
+𝑛 −1𝑧1 
+
+𝑇
+
+ 
+
+5)  Calcular a “nova entrada” 𝑣 
+
+𝑣 =   −𝛼𝑛 𝐿𝑓
+
+𝑛−1𝑧1 − ⋯ + 𝛼1 𝑦𝑠𝑝 − 𝑧1  + 𝛼0   [𝑦𝑠𝑝 − 𝑧1]𝑑𝜏
+
+ 
+
+0
+
+𝑡
+
+6)  Calcular a lei de controle 
+
+𝑢 = 𝛼 𝑥  + 𝛽(𝑥) 
+
+Com 𝛼(𝑥) e 𝛽(𝑥) dados por 
+
+𝛼 𝑥  = −
+
+𝑛  𝑧1
+𝐿𝑓
+𝑛 −1 𝑧1
+𝐿𝑔 𝐿𝑓
+
+ 
+
+𝛽 𝑥  =
+
+1
+𝑛−1 𝑧1
+𝐿𝑔 𝐿𝑓
+
+ 
+
+69 
+
+ 
+
+(5.35) 
+
+(5.36) 
+
+(5.37) 
+
+(5.38) 
+
+(5.39) 
+
+(5.40) 
+
+ 
+
+ 
+
+5.4.  Controle  por  Linearização  Entrada-Saída 
+
+(IOLC) 
+
+Para o desenvolvimento da técnica de controle por linearização entrada-saída, é 
+necessário ter conhecimento sobre o grau relativo do sistema. O grau relativo ou ordem 
+relativa  é  uma  propriedade  importante  dos  sistemas  não-lineares.  Para  um  sistema 
+linear, representado por uma função de transferência, o grau relativo é a diferença entre 
+as ordens dos polinômios do denominador e do numerador. Em síntese, para um sistema 
+não-linear,  o  grau  relativo  (𝑟)  representa  o  número  de  vezes  que  a  saída  𝑦  pode  ser 
+diferenciada com respeito ao tempo, tal que a entrada 𝑢 apareça de forma explícita. 
+
+Considere o seguinte sistema companheira: 
+
+ 
+
+𝑥  = 𝑓 𝑥  +  𝑔(𝑥) ∙ 𝑢
+𝑦 = 𝑕(𝑥)
+
+  
+
+Derivando a saída e usando a definição de derivada de Lie, tem-se: 
+
+𝑦  =
+
+𝜕𝑕(𝑥)
+
+𝜕𝑥
+
+𝑥  =
+
+𝜕𝑕 𝑥 
+
+𝜕𝑥
+
+(𝑓 + 𝑔 ∙ 𝑢) 
+
+𝑦  =
+
+𝜕𝑕(𝑥)
+
+𝜕𝑥
+
+𝑓 +
+
+𝜕𝑕(𝑥)
+
+𝜕𝑥
+
+𝑔 ∙ 𝑢 
+
+𝑦  = 𝐿𝑓𝑕 𝑥  + 𝐿𝑔𝑕(𝑥) ∙ 𝑢 
+
+(5.41) 
+
+(5.42) 
+
+(5.43) 
+
+(5.44) 
+
+O sistema da Equação (5.41) terá grau relativo 𝑟 no ponto 𝑥0, ao redor do qual 
+
+a linearização local é feita, se: 
+
+ 
+
+𝐿𝑔𝐿𝑓
+𝐿𝑔𝐿𝑓
+
+𝑖 𝑕 𝑥  = 0, 0 ≤ 𝑖 ≤ 𝑟 − 2
+  
+𝑟−1𝑕(𝑥) ≠ 0
+
+(5.45) 
+
+O  grau  relativo  do  sistema  deverá  ser  menor  ou  igual  à  ordem  do  próprio 
+
+sistema, ou seja: 
+
+𝑟 ≤ 𝑛 
+
+(5.46) 
+
+Em  efeito  𝑟  não  pode  ser  superior  a  𝑛,  porque  se  fosse  possível  derivar  um 
+número de vezes superior a 𝑛, o sistema não seria de ordem 𝑛, mas de ordem superior a 
+𝑛. Portanto, se após derivar a saída do sistema 𝑛 vezes e, mesmo assim, não houver uma 
+relação explícita entre a entrada e a saída o sistema não será controlável (Silva, 2003). 
+
+ 
+
+70 
+
+ 
+
+Na teoria de controle não linear, o problema de linearização local entrada-saída 
+consiste  em  encontrar  uma  lei  de  controle  por  realimentação  de  estados  não-linear 
+estática, da forma:  
+
+𝑢 = 𝑎 𝑥  + 𝑏 𝑥 𝑣 
+
+(5.47) 
+
+onde 𝑎(𝑥) e 𝑏(𝑥) representam funções algébricas das variáveis de estado e 𝑣 a entrada 
+de referência externa denominada de “nova entrada”. Substituindo a Equação (5.47) na 
+Equação (5.41), o sistema em malha fechada é dada por: 
+
+ 
+
+𝑥  =  𝑓 𝑥  + 𝑎 𝑥 𝑔 𝑥   + [𝑏 𝑥 𝑔(𝑥)]𝑣
+𝑦 = 𝑕(𝑥)
+
+  
+
+(5.48) 
+
+Resultando em um sistema exatamente linear. Isto implica que o mapeamento 
+entre  a  “nova  entrada”  𝑣  e  a  saída  𝑦  é  linear  para  todos  os  valores  dos  estados  𝑥  na 
+vizinhança do ponto de análise 𝑥0. O problema é local no sentido que a solução pode só 
+existir na vizinhança 𝑥0 (Isidori, 1995). Se o sistema da Equação (5.41) possui um grau 
+relativo bem definido, então as primeiras derivadas de 𝑦 podem ser representadas como: 
+
+𝑦𝑖 = 𝐿𝑓
+
+𝑖 𝑕 𝑥 ;   𝑖 = 0, 1, … , 𝑟 − 1 
+
+𝑦𝑟 = 𝐿𝑓
+
+𝑟 𝑕 𝑥  + 𝐿𝑔𝐿𝑓
+
+𝑟−1𝑕 𝑥  
+
+ 
+
+Agora, se o sistema em malha fechada satisfaz a propriedade: 
+
+𝑦𝑟  𝑡  = 𝑣(𝑡) 
+
+(5.49) 
+
+(5.50) 
+
+(5.51) 
+
+a  lei  de  controle  IOLC  pode  ser  formulada  como  segue  (Henson  &  Seborg,  1991; 
+Henson, 1992): 
+
+𝑢 𝑡  =
+
+−𝐿𝑓
+𝐿𝑔𝐿𝑓
+
+𝑟 𝑕(𝑥)
+𝑟−1𝑕(𝑥)
+
++
+
+1
+
+𝐿𝑔𝐿𝑓
+
+𝑟−1𝑕 𝑥 
+
+𝑣(𝑡) 
+
+(5.52) 
+
+Devido à estrutura especial da Equação (5.51), onde a “nova entrada” governa 
+diretamente o sinal de saída, o projeto do controlador para vários objetivos é um tanto 
+simples.  Como  exemplo,  considere  o  problema  da  trajetória  assintótica,  que  é  projetar 
+uma lei de controle tal que a saída  𝑦(𝑡) siga  assintoticamente uma trajetória desejada, 
+𝑦𝑠𝑝 (𝑡). Obviamente, isto pode ser obtido fazendo com que o erro, 𝑒 𝑡  = 𝑦 𝑡  − 𝑦𝑠𝑝 (𝑡), 
+satisfaça a seguinte equação diferencial (Isidori, 1995; Henson & Seborg, 1991): 
+
+𝑒𝑟  𝑡  + 𝛼𝑟 𝑒 𝑟−1  𝑡  + ⋯ + 𝛼2𝑒  𝑡  + 𝛼1𝑒 𝑡  = 0 
+
+(5.53) 
+
+onde 𝛼1, … , 𝛼𝑟  são tais que: 
+
+ 
+
+71 
+
+ 
+
+𝑠𝑟 + 𝛼𝑟 𝑠𝑟−1 + ⋯ + 𝛼2𝑠 + 𝛼1 
+
+(5.54) 
+
+seja  um  polinômio  de  Hurwitz  (Lin,1994;  Henson  &  Seborg,  1997),  visto  que  as  𝑟 
+primeiras derivadas são disponíveis, então: 
+
+𝑒 𝑡  = 𝑦 𝑡  − 𝑦𝑠𝑝 (𝑡)
+𝑒  𝑡  = 𝑦   𝑡  − 𝑦 𝑠𝑝 (𝑡)
+⋮
+𝑒𝑟  𝑡  = 𝑦𝑟  𝑡  − 𝑦𝑠𝑝
+
+𝑟  𝑡  = 𝑣 𝑡  − 𝑦𝑠𝑝
+
+ 
+
+𝑟 (𝑡)
+
+(5.55) 
+
+Inserindo  as  Equações  (5.55)  na  Equação  (5.53)  e  rearranjando,  a  “nova 
+
+entrada” pode ser escolhida como (Lin, 1994): 
+
+𝑟
+
+𝑣 𝑡  = 𝑦𝑠𝑝
+
+𝑟 +   𝛼𝑖[𝑦𝑠𝑝
+
+𝑖−1 − 𝐿𝑓
+
+𝑖−1𝑕(𝑥)]
+ 
+
+𝑖=1
+
+(5.56) 
+
+onde 𝛼𝑖 são os parâmetros de sintonia do controlador. Estes parâmetros são escolhidos 
+de modo  que as raízes da sua equação característica, Equação (5.54) tenham  sua parte 
+real  estritamente  negativa,  ou  seja,  estiverem  no  semi-plano  esquerdo  aberto,  fazendo 
+que a trajetória do erro decaia exponencialmente a zero.  
+
+Na  teoria,  as  raízes  podem  ser  designadas  arbitrariamente.  Não  obstante, 
+devido  a  erros  de  modelagem  e  restrições  na  entrada  manipulada,  os  𝛼𝑖  podem  ser 
+escolhidos para prover um compromisso entre desempenho e robustez. Se os parâmetros 
+do  controlador  são  selecionados  apropriadamente  e  o  modelo  é  perfeito,  a  lei  de 
+controle  nas  Equações  (5.52)  e  (5.56)  asseguram  uma  estabilidade  entrada-saída 
+(Henson & Seborg, 1991). 
+
+A  “nova  entrada”,  proposta  por  Henson  &  Seborg  (1991),  contém  um  termo 
+integral  que penaliza o erro, com o objetivo  de  manter a saída no  setpoint, apesar dos 
+distúrbios  não  medidos  e  imperfeições  no  modelo  do  processo.  Esta  “nova  entrada”  é 
+feita  para  processos  com  grau  relativo  𝑟  e  tem  a  seguinte  forma  (Henson  &  Seborg, 
+1990, 1991, 1992b): 
+
+𝑟
+
+𝑡
+
+𝑣 = −   𝛼𝑖[𝐿𝑓
+
+𝑖−1𝑕(𝑥)]
+
++ 𝛼0    𝑦𝑠𝑝 − 𝑦 𝑑𝑡
+
+ 
+
+𝑖=1
+
+0
+
+(5.57) 
+
+Assim,  um  controlador  linearizado  entrada-saída  modificado  pode  ser  obtido 
+usando as Equações (5.52) e (5.57). A lei de controle integral resultante gera a seguinte 
+função de transferência em malha fechada (Henson & Seborg, 1990): 
+
+𝑦(𝑠)
+𝑦𝑠𝑝 (𝑠)
+
+=
+
+𝛼0
+
+𝑠𝑟+1 + 𝛼𝑟 𝑠𝑟 + ⋯ + 𝛼1𝑠 + 𝛼0
+
+ 
+
+(5.58) 
+
+ 
+
+72 
+
+ 
+
+O controlador IOLC envolve (𝑟 + 1) parâmetros de sintonia. De forma similar 
+ao caso do controlador  ISLC, uma função de transferência em  malha fechada com  um 
+único parâmetro de sintonia 𝜀, da forma: 
+
+𝑦(𝑠)
+𝑦𝑠𝑝 (𝑠)
+
+=
+
+1
+
+(𝜀𝑠 + 1)𝑟+1 
+
+(5.59) 
+
+pode ser obtida, através da escolha dos 𝛼𝑖 do seguinte modo: 
+
+𝛼𝑖 =
+
+ 𝑟 + 1  𝑟 − 1  𝑟 − 2  … (𝑟 − 𝑖 − 2)
+
+𝑖!
+
+𝜀𝑖−𝑟−1 ; 1 ≤ 𝑖 ≤ 𝑟 
+
+(5.60) 
+
+onde 𝛼0 = 𝜀−(𝑟+1). 
+
+Nota-se  que  na  linearização  entrada-saída  de  um  sistema  com  grau  relativo 
+𝑟 = 𝑛 também é conduzido a um integrador múltiplo de ordem 𝑛. Isto significa que se 
+um sistema for linearizável entrada-estado e a sua saída for a 1ª componente do vetor de 
+estado,  𝑦 = 𝑧1,  então  o  sistema  é  linearizável  entrada-saída,  com  grau  relativo  𝑟 = 𝑛 
+(Silva, 2003). 
+
+5.5. Impossibilidade  Teórica  do  Projeto  de  um 
+ISLC  para  a  Coluna  de 
+
+Controlador 
+Perfuração 
+
+Considere  o  sistema  torcional  de  2-DOF,  descrito  no  capítulo  2,  e  que 
+
+novamente é mostrado aqui pela seguinte equação: 
+
+𝑥 1 =   𝑥2                                                                                                
+
+𝑥 2 =  
+
+  − 𝑘𝑡 𝑥1 −  𝑐𝑡 + 𝑐𝑟  𝑥2 +  𝑘𝑡 𝑥3 +  𝑐𝑡 𝑥4 + 𝑇𝑚      
+  
+
+𝑥 3 =   𝑥4                                                                                                
+
+𝑥 4 =  
+
+1
+𝐽𝑏
+
+  𝑘𝑡 𝑥1 +  𝑐𝑡 𝑥2 −  𝑘𝑡 𝑥3 −  𝑐𝑡 + 𝑐𝑏  𝑥4 − 𝑇𝑓𝑏 (𝐱) 
+
+1
+𝐽𝑟
+
+ 
+  
+
+ 
+  
+ 
+
+(5.61) 
+
+Reescrevendo  a  Equação  (5.61),  na  forma  companheira  da  Equação  (5.12), 
+
+tem-se: 
+
+𝑥2
+
+1
+𝐽𝑟
+
+  –  𝑘𝑡 𝑥1 −  𝑐𝑡 + 𝑐𝑟  𝑥2 +  𝑘𝑡 𝑥3 +  𝑐𝑡 𝑥4 
+
+𝑥4
+
+  𝑘𝑡 𝑥1 +  𝑐𝑡 𝑥2 −  𝑘𝑡 𝑥3 −  𝑐𝑡 + 𝑐𝑏  𝑥4 − 𝑇𝑓𝑏  𝐱  
+
+ 
+ 
+ 
+ 
+ 
+ 
+
++
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+𝑥  =
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+1
+𝐽𝑏
+
+onde 𝑢 = 𝑇𝑚 , com os campos vetoriais: 
+
+ 
+
+73 
+
+1/𝐽𝑟
+
+0
+
+ 
+ 
+ 
+ 
+ 
+0  
+
+0
+
+(5.62) 
+
+𝑢 
+
+ 
+
+𝑓 𝑥  =
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+𝑓1
+
+𝑓3
+
+𝑓2
+
+ 
+ 
+ 
+ 
+ 
+𝑓4 
+
+𝑥2
+
+1
+𝐽𝑟
+
+  − 𝑘𝑡 𝑥1 −  𝑐𝑡 + 𝑐𝑟  𝑥2 +  𝑘𝑡 𝑥3 +  𝑐𝑡 𝑥4 
+
+𝑥4
+
+  𝑘𝑡 𝑥1 +  𝑐𝑡 𝑥2 −  𝑘𝑡 𝑥3 −  𝑐𝑡 + 𝑐𝑏  𝑥4 − 𝑇𝑓𝑏 (𝐱) 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+=
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+1
+𝐽𝑏
+
+𝑔 𝑥  =    
+
+0
+1/𝐽𝑟
+0
+0
+
+  
+
+(5.63) 
+
+(5.64) 
+
+Como pode ser visto a ordem deste sistema é 𝑛 = 4. O algoritmo do método de 
+linearização  entrada-estado  (Silva,  2003),  descrito  na  seção  5.3,  propõe  definir 
+3𝑔}.  O  vetor  𝑔  é 
+primeiramente  o  campo  de  vetores  𝐶𝑉 = {𝑔, 𝑎𝑑𝑓𝑔, 𝑎𝑑𝑓
+representado  na  Equação  (5.64),  e  os  demais  componentes,  na  sequência,  podem  ser 
+representados como:  
+
+2𝑔, 𝑎𝑑𝑓
+
+𝑎𝑑𝑓𝑔 =
+
+𝜕𝑔 𝑥 
+
+𝜕𝑥
+
+𝑓 𝑥  −
+
+𝜕𝑓 𝑥 
+
+𝜕𝑥
+
+𝑔 𝑥  
+
+𝜕𝑓 𝑥 
+
+𝜕𝑥
+
+=
+
+0
+−𝑘𝑡
+𝐽𝑟
+0
+𝑘𝑡
+𝐽𝑏
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+1
+
+−𝐴
+
+0
+𝑐𝑡
+𝐽𝑏
+
+0
+𝑘𝑡
+𝐽𝑟
+0
+−𝑘𝑡
+𝐽𝑏
+
+0
+𝑐𝑡
+𝐽𝑟
+1
+
+−𝐵 − 𝐶
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+𝜕𝑔 𝑥 
+
+𝜕𝑥
+
+=  
+
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+
+  
+
+𝒂𝒅𝒇𝒈 =  
+
+−1 𝐽𝑟 
+𝐴 𝐽𝑟 
+
+0
+
+  
+
+−𝑐𝑡 𝐽𝑟 
+
+𝑎𝑑𝑓
+
+2𝑔 =
+
+𝜕𝑎𝑑𝑓 𝑔 𝑥 
+
+𝜕𝑥
+
+𝑓 𝑥  −
+
+𝜕𝑓 𝑥 
+
+𝜕𝑥
+
+𝑎𝑑𝑓𝑔 𝑥  
+
+𝜕𝑎𝑑𝑓𝑔 𝑥 
+
+𝜕𝑥
+
+=  
+
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+
+  
+
+ 
+
+74 
+
+(5.65) 
+
+(5.66) 
+
+(5.67) 
+
+(5.68) 
+
+(5.69) 
+
+(5.70) 
+
+ 
+
+sendo: 
+
+𝒂𝒅𝒇
+
+𝟐𝒈 =
+
+−𝐴
+𝐽𝑟
+
+𝐴2𝐽𝑏 𝐽𝑟 − 𝑘𝑡𝐽𝑏 + 𝑐𝑡
+
+2
+
+2 
+
+ 𝐽𝑏 𝐽𝑟
+𝑐𝑡
+𝐽𝑏 𝐽𝑟
+
+ 𝑘𝑡 − 𝑐𝑡𝐴 − [𝑐𝑡(𝐵 + 𝐶)] 
+
+𝐽𝑏 𝐽𝑟
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+𝑎𝑑𝑓
+
+3𝑔 =
+
+𝜕𝑎𝑑𝑓
+
+2𝑔 𝑥 
+𝜕𝑥
+
+𝑓 𝑥  −
+
+𝜕𝑓 𝑥 
+
+𝜕𝑥
+
+𝑎𝑑𝑓
+
+2𝑔 𝑥  
+
+0 0 0
+0 0 0
+0 0 0
+
+0 0 0
+
+ 
+ 
+ 
+ 
+ 
+
+𝐽𝑏 𝐽𝑟 𝐴2 + 𝑐𝑡
+𝐽𝑏 𝐽𝑟
+𝐹
+𝐽𝑏 𝐽𝑟
+
+0
+0
+0
+
+𝑐𝑡(𝐷 + 𝐸)
+
+𝐽𝑏 𝐽𝑟
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+2 − 𝐽𝑏 𝑘𝑡
+2
+
+2
+
+2𝑔 𝑥 
+𝜕𝑎𝑑𝑓
+𝜕𝑥
+
+=  
+
+𝒂𝒅𝒇
+
+𝟑𝒈 =  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+−(𝐴𝑐𝑡 − 𝑘𝑡 + 𝑐𝑡(𝐵 + 𝐶))
+
+𝐽𝑏 𝐽𝑟
+𝐺
+2𝐽𝑟
+
+𝐽𝑏
+
+2
+
+𝐴 =
+
+ 𝑐𝑟 + 𝑐𝑡 
+ 
+
+𝐽𝑟
+
+𝐵 =
+
+ 𝑐𝑏 + 𝑐𝑡 
+
+𝐽𝑏
+
+ 
+
+𝐶 =
+
+ 𝛾𝑏𝑠𝑔𝑛(𝑥4) 𝑅𝑏 𝑊𝑜𝑏 (µ𝑐𝑏 − µ𝑠𝑏 )  
+ 
+
+𝐽𝑏 𝑣𝑓 𝑒𝑥𝑝−(𝛾𝑏 𝑣𝑓) 
+
+ 𝑥4 
+
+ 𝛾𝑏
+
+𝐷 =
+
+2𝑠𝑔𝑛(𝑥4)2 𝑅𝑏𝑊𝑜𝑏 (µ𝑐𝑏 − µ𝑠𝑏 )  
+ 
+
+𝐽𝑏 𝑣𝑓
+
+2𝑒𝑥𝑝−(𝛾𝑏 𝑣𝑓) 
+
+ 𝑥4 
+
+𝐸 =
+
+ −2𝛾𝑏 𝛿(𝑥4) 𝑅𝑏 𝑊𝑜𝑏 (µ𝑐𝑏 − µ𝑠𝑏 )  
+ 
+
+𝐽𝑏 𝑣𝑓 𝑒𝑥𝑝−(𝛾𝑏 𝑣𝑓) 
+
+ 𝑥4 
+
+𝐹 =  𝐴𝑘𝑡𝐽𝑏 + 𝑐𝑡𝑘𝑡 − 𝐴 𝐽𝑏 𝐽𝑟 𝐴2 + 𝑐𝑡
+
+2 − 𝐽𝑏 𝐾𝑡  − 𝑐𝑡(𝐴𝑐𝑡 − 𝑘𝑡 + 𝑐𝑡(𝐵 + 𝐶)) 
+
+ 
+
+75 
+
+(5.71) 
+
+(5.72) 
+
+(5.73) 
+
+(5.74) 
+
+(5.75) 
+
+(5.76) 
+
+(5.77) 
+
+(5.78) 
+
+(5.79) 
+
+(5.80) 
+
+ 
+
+𝐺 =   − 𝐵 + 𝐶  𝐴𝑐𝑡 − 𝑘𝑡 + 𝑐𝑡 𝐵 + 𝐶   + 𝐴𝑘𝑡 + 𝑐𝑡𝑓4(𝐷 + 𝐸) (𝐽𝑏 𝐽𝑟 )  +
+
+(5.81) 
+
+ 𝑐𝑡𝑘𝑡𝐽𝑟   −  𝑐𝑡 𝐽𝑏𝐽𝑟 𝐴2 + 𝑐𝑡
+
+2 − 𝐽𝑏 𝑘𝑡    
+
+O  segundo  passo  do  algoritmo  consiste  em  verificar  as  condições  de 
+controlabilidade e involutividade. De acordo com o Lema da seção 5.3, o sistema é dito 
+3𝑔}  são 
+controlável  quando  os  campos  de  vetoriais  𝐶𝑉 = {𝑔, 𝑎𝑑𝑓𝑔, 𝑎𝑑𝑓
+linearmente independentes, onde 𝐶𝑉  é definido como: 
+
+2𝑔, 𝑎𝑑𝑓
+
+𝐶𝑉 =
+
+1
+𝐽𝑟
+
+0
+
+  0 −
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+0 −
+
+1
+𝐽𝑟
+𝐴
+𝐽𝑟
+
+0
+
+−𝐴
+𝐽𝑟
+
+𝐴2𝐽𝑏 𝐽𝑟 − 𝑘𝑡𝐽𝑏 + 𝑐𝑡
+
+2
+
+2 
+
+ 𝐽𝑏 𝐽𝑟
+𝑐𝑡
+𝐽𝑏 𝐽𝑟
+
+𝑐𝑡
+𝐽𝑟
+
+ 𝑘𝑡 − 𝑐𝑡𝐴 − [𝑐𝑡(𝐵 + 𝐶)] 
+
+𝐽𝑏 𝐽𝑟
+
+𝐽𝑏 𝐽𝑟 𝐴2 + 𝑐𝑡
+𝐽𝑏 𝐽𝑟
+𝐹
+𝐽𝑏 𝐽𝑟
+
+2 − 𝐽𝑏 𝑘𝑡
+2
+
+2
+
+−(𝐴𝑐𝑡 − 𝑘𝑡 + 𝑐𝑡(𝐵 + 𝐶))
+
+𝐽𝑏 𝐽𝑟
+𝐺
+2𝐽𝑟
+
+𝐽𝑏
+
+2
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+(5.82) 
+
+Observa-se que a matriz 𝐶𝑉 é uma matriz quadrada 𝑛x𝑛. Os campos vetoriais 
+𝐶𝑉  são  linearmente  independente  se  o  posto  (𝑝)  da  matriz 𝐶𝑉  for  igual  ao  número  de 
+linhas ou colunas dessa  matriz. Uma forma de identificar o posto da matriz é obtendo 
+sua forma escalonada3 através da eliminação de Gauss. 
+
+A matriz escalonada da matriz 𝐶𝑉 é: 
+
+𝑈 =  
+
+1 0 0 0
+0 1 0 0
+0 0 1 0
+0 0 0 1
+
+  
+
+(5.83) 
+
+Como a matriz 𝑈 não apresenta nenhuma linha nula, então a matriz 𝐶𝑉 é dita 
+de  posto  cheio  (𝑝 = 4).  Isto  significa  que  os  campos  vetoriais  são  linearmente 
+independentes e, portanto, o sistema é controlável. 
+
+Por  outro  lado,  o  conjunto  de  vetores  {𝑔, 𝑎𝑑𝑓𝑔, … , 𝑎𝑑𝑓
+
+𝑛−2𝑔}  é  involutivo  se 
+após  aplicar  o  parênteses  de  Lie  entre  eles,  o  resultado  possa  ser  expresso  por  uma 
+combinação linear dos vetores originais. Por exemplo, considere o parêntese de Lie dos 
+vetores 𝑣1 e 𝑣2, então: 
+
+ 𝑣1, 𝑣2  =
+
+𝜕𝑣2
+𝜕𝑥
+
+𝑣1 𝑥  −
+
+𝜕𝑣1 𝑥 
+
+𝜕𝑥
+
+𝑣2 𝑥  = 𝑐1𝑣1(𝑥) + 𝑐2𝑣2(𝑥) 
+
+(5.84) 
+
+                                                           
+3 No Matlab™, o comando “rref” fornece a matriz escalonada de uma matriz. Já, pelo comando “rank” é 
+possível obter diretamente o posto de uma matriz. 
+
+ 
+
+76 
+
+ 
+
+No  presente  caso,  sejam  𝐿1  e  𝐿2  os  parênteses  de  Lie  dos  vetores  𝑔, 𝑎𝑑𝑓𝑔  e 
+2𝑔, respectivamente. Assim: 
+
+𝑎𝑑𝑓𝑔, 𝑎𝑑𝑓
+
+𝐿1 =  𝑔, 𝑎𝑑𝑓𝑔  =
+
+𝜕𝑎𝑑𝑓𝑔 𝑥 
+
+𝜕𝑥
+
+𝑔 𝑥  −
+
+𝜕𝑔 𝑥 
+
+𝜕𝑥
+
+0
+0
+𝑎𝑑𝑓𝑔 𝑥  =  
+0
+0
+
+  
+
+(5.85) 
+
+ 
+
+𝐿2 =  𝑎𝑑𝑓𝑔, 𝑎𝑑𝑓
+
+2𝑔  =
+
+𝜕𝑎𝑑𝑓
+
+2𝑔 𝑥 
+𝜕𝑥
+
+𝑎𝑑𝑓𝑔 𝑥  −
+
+𝜕𝑎𝑑𝑓 𝑔 𝑥 
+
+𝜕𝑥
+
+ 
+
+onde: 
+
+𝑎𝑑𝑓
+
+2𝑔 𝑥  =  
+
+0
+0
+0
+𝐻
+
+  
+
+(5.86) 
+
+𝐻 =  
+
+𝑅𝑏 𝑊𝑜𝑏 𝛾𝑏 𝑐𝑡
+
+2 µ𝑐𝑏 − µ𝑠𝑏  (2𝑣𝑓𝛿 𝑥4  − 𝛾𝑏 𝑠𝑔𝑛(𝑥4)2)
+
+𝐽𝑏
+
+3𝐽𝑟
+
+2𝑣𝑓
+
+2𝑒𝑥𝑝(𝛾𝑏 𝑣𝑓) 
+
+ 𝑥4 
+
+ 
+
+(5.87) 
+
+Os  vetores  𝐿1  e  𝐿2  precisam  ser  formados  por  uma  combinação  linear  de 
+2𝑔,  respectivamente.  Uma  forma  de  descobrir  isso  é  formar  uma 
+𝑔, 𝑎𝑑𝑓𝑔  e  𝑎𝑑𝑓𝑔, 𝑎𝑑𝑓
+matriz com os vetores envolvidos e encontrar seu posto. Considere as matrizes 𝑀1 e 𝑀2, 
+sendo  𝑀1   composta  pelos  vetores  𝑔, 𝑎𝑑𝑓𝑔, 𝐿1,  e  𝑀2  composta  pelos  vetores 
+𝑎𝑑𝑓𝑔,  𝑎𝑑𝑓
+
+2𝑔, 𝐿2: 
+
+𝑀2 =
+
+ −
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+−
+
+(5.88) 
+
+(5.89) 
+
+0
+
+0
+
+0
+
+𝐻
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+𝑀1 =  
+
+0
+1/𝐽𝑟
+0
+0
+
+−1 𝐽𝑟 
+𝐴 𝐽𝑟 
+
+0
+
+−𝑐𝑡 𝐽𝑟 
+
+0
+0
+0
+0
+
+  
+
+1
+𝐽𝑟
+𝐴
+𝐽𝑟
+
+0
+
+−𝐴
+𝐽𝑟
+
+𝐴2𝐽𝑏 𝐽𝑟 − 𝑘𝑡𝐽𝑏 + 𝑐𝑡
+
+2
+
+2 
+
+ 𝐽𝑏 𝐽𝑟
+𝑐𝑡
+𝐽𝑏 𝐽𝑟
+
+𝑐𝑡
+𝐽𝑟
+
+ 𝑘𝑡 − 𝑐𝑡𝐴 − [𝑐𝑡(𝐵 + 𝐶)] 
+
+𝐽𝑏 𝐽𝑟
+
+Sabendo que os campos 𝑔, 𝑎𝑑𝑓𝑔,  𝑎𝑑𝑓
+
+2𝑔 são linearmente independentes e que o 
+posto  das  matrizes  𝑀1  e  𝑀2  são  2  e  3,  respectivamente,  pode-se  dizer  que  𝐿1  é  uma 
+2𝑔. 
+combinação linear de 𝑔, 𝑎𝑑𝑓𝑔, e que 𝐿2 não é uma combinação linear de 𝑎𝑑𝑓𝑔,  𝑎𝑑𝑓
+Em conclusão, o sistema não é involutivo e, portanto, não pode ser linearizável entrada-
+estado. 
+
+ 
+
+77 
+
+ 
+
+5.6. Projeto  de  um  Controlador  IOLC  para  a 
+
+Coluna de Perfuração 
+
+Considerando  o  sistema  2-DOF,  na  forma  companheira  da  Equação  (5.41), 
+
+tem-se que: 
+
+𝑓 𝑥  =
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+𝑓1
+
+𝑓3
+
+𝑓2
+
+ 
+ 
+ 
+ 
+ 
+𝑓4 
+
+𝑥2
+
+1
+𝐽𝑟
+
+  − 𝑘𝑡 𝑥1 −  𝑐𝑡 + 𝑐𝑟  𝑥2 +  𝑘𝑡 𝑥3 +  𝑐𝑡 𝑥4 
+
+𝑥4
+
+  𝑘𝑡 𝑥1 +  𝑐𝑡 𝑥2 −  𝑘𝑡 𝑥3 −  𝑐𝑡 + 𝑐𝑏  𝑥4 − 𝑇𝑓𝑏 (𝐱) 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+=
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+1
+𝐽𝑏
+
+𝑔 𝑥  =    
+
+0
+1/𝐽𝑟
+0
+0
+
+  
+
+𝑦 = 𝑕 𝑥  = 𝑥2 
+
+(5.90) 
+
+(5.91) 
+
+(5.92) 
+
+com 𝑢 = 𝑇𝑚 . Derivando a saída com respeito ao tempo e levando em conta o conceito 
+de derivada de Lie, resulta em: 
+
+𝑦  =
+
+𝜕𝑕(𝑥)
+
+𝜕𝑥
+
+𝑥  =
+
+𝜕𝑕 𝑥 
+
+𝜕𝑥
+
+ 𝑓 + 𝑔 ∙ 𝑢  = 𝐿𝑓𝑕 𝑥  + 𝐿𝑔𝑕(𝑥) ∙ 𝑢 
+
+onde: 
+
+𝐿𝑓𝑕 𝑥  =
+
+1
+𝐽𝑟
+
+  − 𝑘𝑡 𝑥1 −  𝑐𝑡 + 𝑐𝑟  𝑥2 +  𝑘𝑡 𝑥3 +  𝑐𝑡 𝑥4  
+
+𝐿𝑔𝑕 𝑥  =  1/𝐽𝑟  
+
+Portanto: 
+
+𝑦  =
+
+1
+𝐽𝑟
+
+  − 𝑘𝑡 𝑥1 −  𝑐𝑡 + 𝑐𝑟  𝑥2 +  𝑘𝑡 𝑥3 +  𝑐𝑡 𝑥4  +
+
+1
+𝐽𝑟
+
+𝑢 
+
+(5.93) 
+
+(5.94) 
+
+(5.95) 
+
+(5.96) 
+
+Da  Equação  (5.96),  como  a  entrada  𝑢  aparece  de  forma  explícita  logo  na 
+
+primeira derivada da saída 𝑦, então o sistema tem grau relativo 𝑟 = 1. 
+
+Da Equação (5.52), a lei de controle do IOLC pode ser definida como: 
+
+−  
+
+1
+𝐽𝑟
+
+ 𝑢 𝑡  =
+
+  − 𝑘𝑡 𝑥1 −  𝑐𝑡 + 𝑐𝑟  𝑥2 +  𝑘𝑡 𝑥3 +  𝑐𝑡 𝑥4  
+
+1/𝐽𝑟
+
++
+
+1
+1/𝐽𝑟
+
+𝑣(𝑡) 
+
+(5.97) 
+
+com a “nova entrada” 𝑣(𝑡) sendo da forma: 
+
+ 
+
+78 
+
+ 
+
+𝑡
+
+𝑣 = − 𝛼1𝑦 + 𝛼0    𝑦𝑠𝑝 − 𝑦 𝑑𝑡
+
+ 
+
+0
+
+(5.98) 
+
+onde 𝑦𝑠𝑝  a velocidade angular desejada do sistema de rotação, i.e 𝜔𝑑 = 12 rad/s. 
+
+Os parâmetros de sintonia do controlador são determinados a partir da Equação 
+(5.60),  resultando  em  𝛼0 = 𝜀−2  e  𝛼1 = 2𝜀−1.  Usando  a  Equação  (5.59),  obtêm-se  a 
+seguinte função de transferência em malha fechada: 
+
+𝑦(𝑠)
+𝑦𝑠𝑝 (𝑠)
+
+=
+
+1
+
+(𝜀𝑠 + 1)2 
+
+(5.99) 
+
+com  o  parâmetro  𝜀 = 8,  o  qual  foi  selecionado  para  prover  um  compromisso  entre 
+desempenho e robustez. 
+
+Finalmente, a lei de controle IOLC resultante é da forma: 
+
+−  
+
+1
+𝐽𝑟
+
+𝑢 𝑡  =
+
+  − 𝑘𝑡 𝑥1 −  𝑐𝑡 + 𝑐𝑟  𝑥2 +  𝑘𝑡 𝑥3 +  𝑐𝑡 𝑥4  
+
+1/𝐽𝑟
+
++  
+
+− 2𝜀−1𝑥2 + 𝜀−2    𝜔𝑑 − 𝑥2 𝑑𝑡
+
+𝑡
+0
+1/𝐽𝑟
+
+  
+
+       
+
+(5.100) 
+
+A aplicação do  controle  IOLC, da Equação  (5.100), pré-supõe que os  estados 
+
+do sistema (𝑥1, 𝑥2, 𝑥3, 𝑥4) estão disponíveis para realimentação. 
+
+5.7. Simulação  do  Controlador 
+
+IOLC  nos 
+
+Sistemas 2-DOF e 4-DOF 
+
+O  controlador  IOLC  desenvolvido  na  seção  anterior  é  aplicado  na  coluna  de 
+perfuração de 2-DOF. Para avaliação de desempenho da estratégia de controle proposta 
+são considerados os casos de estabilização do sistema, seguimento do setpoint e rejeição 
+a  perturbações,  conforme  detalhados  nos  capítulos  anteriores.  As  simulações  são 
+realizadas na plataforma Simulink/MATLAB™. 
+
+A Figura 5.1  mostra a resposta da estabilização do sistema depois  da ativação 
+do controle. Como pode ser observada, a velocidade da broca (𝑥4) segue  a  velocidade 
+do sistema de rotação (𝑥2), e ambas apresentam um pico considerável antes de retornar 
+ao setpoint e nele permanecer. O perfil da variável manipulada (𝑇𝑚 ) mostra um pico de 
+grande magnitude e bem pronunciado, antes de alcançar o ponto de estabilização. 
+
+ 
+
+79 
+
+ 
+
+Figura 5.1 - Resposta do Sistema 2-DOF com o Controlador IOLC com 𝜺 = 𝟖: (I) 
+
+variáveis controladas, (II) variável manipulada  
+
+A  Figura  5.2  apresenta  a  resposta  do  sistema  a  mudanças  no  setpoint.  Como 
+pode ser visualizada, a velocidade da broca segue a velocidade do sistema de rotação, e 
+ambas acompanham muito bem as alterações do ponto de operação, de forma rápida e 
+sem sobrepassagens. As variações no torque do motor são suaves e bem comportadas. 
+
+Figura 5.2 - Resposta a variações no setpoint no sistema de 2-DOF com o controlador 
+
+IOLC: (I) variáveis controladas, (II) variável manipulada 
+
+ 
+
+80 
+
+ 
+
+ 
+
+ 
+
+Figura 5.3 - Resposta às perturbações no sistema de 2-DOF com o controlador IOLC: 
+
+(I) variáveis controladas, (II) variável manipulada 
+
+ 
+
+Na Figura 5.3 mostra-se a resposta da coluna de perfuração a perturbações no 
+peso  na  broca,  cujos  efeitos  são  rapidamente  bem  compensados  pelo  sistema  de 
+controle.  Embora  não  seja  percebido  na  figura,  a  variável  principal  de  controle,  i.e.  a 
+velocidade  do  sistema  de  rotação,  permanece  inalterável  aos  efeitos  das  perturbações. 
+Já,  a  variável  indireta  de  controle,  i.e.  a  velocidade  da  broca,  sofre  alterações  muito 
+pequenas depois da ocorrência da perturbação, sendo reconduzida rapidamente ao ponto 
+de  operação.  A  figura  também  apresenta  o  perfil  rígido  da  variável  manipulada 
+produzida pelo controlador. 
+
+5.8. Simulação  do Controlador IOLC  no  Sistema 
+
+de 4-DOF 
+
+Nesta  seção,  o  controlador  IOLC  é  aplicado  no  sistema  de  4-DOF.  Os 
+parâmetros  de  sintonia  deste  controlador  são  os  mesmos  usados  para  o  sistema  de  2-
+DOF, porém com os valores das variáveis correspondentes ao sistema de 4-DOF. Como 
+nos  casos  do  controle  PI  e  controle  SMC,  o  objetivo  aqui  é  introduzir  incertezas  no 
+desenvolvimento do controlador. 
+
+A  Figura  5.4  mostra  a  aplicação  do,  para  estabilização  do  sistema  de  4-DOF. 
+Como  pode ser visualizado nessa figura,  a velocidade do sistema de rotação apresenta 
+um  pico de magnitude  considerável  depois  da ativação do  controle, para  logo  retornar 
+ao  ponto  de  operação  desejado.  Já,  em  comparação  com  o  sistema  de  2-DOF,  a 
+velocidade  da  broca  torna-se  altamente  oscilatória,  estabilizando  posteriormente.  A 
+
+ 
+
+81 
+
+ 
+
+variável  manipulada  segue  o  mesmo  perfil  oscilatório  da  variável  secundária  de 
+controle. 
+
+ 
+A Figura 5.5 ilustra o desempenho do controle do sistema de 4-DOF sujeito a 
+variações no setpoint. As respostas para este caso são praticamente similares ao controle 
+do  sistema  de  2-DOF.  No  entanto  a  variável  manipulada  apresenta  leves  oscilações, 
+sendo estas mais acentuadas na mudança negativa da variação do setpoint. As pequenas 
+oscilações na variável  controlada secundária, que aparecem  antes da primeira variação 
+positiva  do  setpoint,  provêm  do  caso  da  estabilização  do  sistema,  mostrada  na  Figura 
+5.4. 
+
+Finalmente,  a  Figura  5.6  mostra  do  controle  do  sistema  de  4-DOF  à 
+perturbações no peso da broca. Em comparação com o controle do sistema de 2-DOF, a 
+variável  secundária  de  controle  apresenta  fortes  oscilações  depois  da  introdução  das 
+perturbações,  as  quais  são  logo  corrigidas  pelo  sistema  de  controle.  Por  outro  lado,  a 
+variável principal de controle não é afetada pelas perturbações. A variável manipulada 
+segue o mesmo perfil oscilatório da variável secundária de controle. 
+
+Figura 5.4 - Resposta do sistema de 4-DOF com o controlador IOLC: (I) variáveis 
+
+controladas, (II) variável manipulada 
+
+ 
+
+ 
+
+82 
+
+ 
+
+Figura 5.5 - Resposta a variações no setpoint no sistema de 4-DOF com o controlador 
+
+IOLC: (I) variáveis controladas, (II) variável manipulada 
+
+ 
+
+ 
+
+Figura 5.6 - Resposta às perturbações no sistema de 4-DOF com o controlador IOLC: 
+
+(I) variáveis controladas, (II) variável manipulada 
+
+Os  resultados  das  simulações  apresentados  no  presente  capítulo  conduzem  as 
+
+seguintes conclusões:  
+
+ 
+
+83 
+
+ 
+
+ 
+
+ 
+
+  Em  geral,  o  controlador  IOLC  consegue  eliminar  as  oscilações  stick-slip, 
+fazer o seguimento do setpoint e rejeitar perturbações presentes na operação 
+de colunas de perfuração. 
+
+  O  controlador  IOLC  desenvolvido  para  o  sistema  de  perfuração  de  2-DOF 
+não apresenta o mesmo  desempenho quando aplicado a sistemas de ordem 
+superior.  No  sistema  de  4-DOF,  a  aplicação  do  controle  apresentou 
+respostas  semelhantes  em  relação  ao  sistema  de  2-DOF,  no  caso  de 
+variações no setpoint. 
+
+  No  controle  IOLC  do  sistema  de  2-DOF,  para  o  caso  de  rejeição  de 
+perturbações,  a  variável  secundária  de  controle  não  acompanha  bem  a 
+variável  principal  de  controle.  Esta  resposta  é  mais  notória  no  controle  do 
+sistema  de  4-DOF,  nos  casos  de  estabilização  do  sistema  e  rejeição  de 
+perturbações. 
+
+ 
+
+84 
+
+ 
+
+Capítulo 6 
+
+Conclusões  e  Recomendações  de 
+Trabalhos Futuros 
+
+O  objetivo  do  presente  trabalho  foi  estudar  as  oscilações  stick-slip,  presentes 
+em colunas de perfuração e projetar sistemas de controle visando estabilizar e controlar 
+a operação do sistema. 
+
+Os  modelos  torcionais  de  2-DOF,  3-DOF  e  4-DOF  de  colunas  de  perfuração 
+que foram apresentados conseguem reproduzir o fenômeno oscilatório de forma similar 
+a  um  sistema  real,  sendo,  portanto,  adequados  para  o  desenvolvimento  do  trabalho. 
+Quanto  maior  o  grau  de  liberdade  do  modelo,  maior  o  desacoplamento  entre  as 
+diferentes  partes  da  coluna,  permitindo  uma  diferenciação  entre  os  deslocamentos  e 
+velocidades de cada uma dessas partes. 
+
+Três  sistemas  de  controle  foram  projetados:  PI  (e  uma  variante  PI-P),  SMC  e 
+IOLC.  O  objetivo  era  controlar  principalmente  a  velocidade  do  sistema  de  rotação, 
+mediante  a  manipulação  do  torque  do  motor,  para  assim  controlar  inferencialmente  a 
+velocidade  da  broca,  que  é  parte  da  coluna  que  manifesta  a  presença  das  oscilações 
+stick-slip. Inicialmente os controladores foram desenvolvidos baseados no sistema de 2-
+DOF, e ajustados para controlar este sistema. Posteriormente, os controladores com os 
+mesmos  parâmetros  de  sintonia,  porém  considerando  os  valores  das  variáveis  do 
+sistema  de  4-DOF,  foram  aplicados  no  sistema  de  4-DOF.  Isto  foi  realizado  para 
+introduzir erros no desenvolvimento dos controladores quando aplicados a sistemas de 
+ordem superior. É necessário enfatizar que a aplicação dos controladores SMC e IOLC 
+pré-pressupôs  que  os  estados  do  sistema  a  ser  controlado  estavam  disponíveis  para 
+realimentação. 
+
+A  comparação  de  desempenho  dos  controladores,  quando  aplicados  aos 
+sistemas de 2-DOF e 4-DOF, foi qualitativa e não quantitativa. No caso de estabilização 
+do  sistema,  depois  da  ativação  do  controle,  o  SMC  e  o  PI  apresentaram  melhor 
+desempenho  quando  aplicados  aos  sistemas  de  2-DOF  e  4-DOF,  respectivamente.  No 
+caso  de  variações  do  setpoint,  o  IOLC  mostrou  melhor  desempenho  quando  aplicado 
+tanto no sistema de 2-DOF como no de 4-DOF. Já, no caso de rejeição de perturbações, 
+o IOLC e o PI apresentaram melhor controle quando aplicados nos sistemas de 2-DOF e 
+4-DOF,  respectivamente.  Fazendo  um  balanço  geral,  o  IOLC  apresentou  melhor 
+
+ 
+
+85 
+
+ 
+
+desempenho  quando  aplicado  no  sistema  de  2-DOF,  sendo  o  PI  o  controlador  com 
+melhor  desempenho  quando  aplicado  no  sistema  de  4-DOF,  o  que  deixa  claro  a 
+dependência da qualidade do modelo do controlador IOLC. 
+
+Como  forma  de  complementar  o  presente  trabalho,  e  dar  continuidade  ao 
+
+mesmo, são sugeridos os seguintes trabalhos futuros: 
+
+  Estudo  e implementação de outros modelos de colunas de perfuração, tais 
+como modelos de elementos finitos; modelos que levem em consideração a 
+modelagem  de  outras  partes  da  coluna,  como  drill  collars;  e  modelos  que 
+reproduzam a interação entre diferentes tipos de vibrações, como torcionais 
+e axiais. 
+
+  Análise  de  estabilidade  da  coluna  de  perfuração  e  mapeamento  das 
+
+condições que conduzem ao estado oscilatório do sistema. 
+
+  Desenvolvimento  de  observadores  de  estados  para  os  controladores  por 
+
+realimentação de estados SMC e IOLC. 
+
+  Estudo  e  implementação  de  outras  técnicas  de  controle  para  vibrações  em 
+colunas de perfuração, tais como o controle preditivo e o controle robusto.  
+
+ 
+
+ 
+
+86 
+
+ 
+
+Referências Bibliográficas 
+
+[1]  ABDUGALIL,  F.,  SIGUERDIDJANE,  H.  PID  based  on  sliding  mode  control  for 
+rotary  drilling  system.  In:  Proceedings  of  the  International  Conference  on 
+Computer  as  a  Tool  2005  (EUROCON  2005),  Belgrade,  Serbia  &  Montenegro, 
+2005. 
+
+[2]  ARMSTRONG-HÉLOUVRY,  B.,  DUPONT,  P.,  CANUDAS-DE-WIT,  C.  “A 
+survey  of  models  tools,  and  compensation  methods  for  the  control  of  machines 
+with friction”. Automatica, 30(7): 1083-1183, 1994. 
+
+[3]  ALAMO,  F.J.C.  Dinâmica  de  um  rotor  vertical  em  um  balanço  com  impacto. 
+Dissertação de Mestrado, Pontifícia Universidade Católica do Rio de Janeiro, Rio 
+de Janeiro-RJ, Brasil, 2002. 
+
+[4]  CANUDAS-DE-WIT,  C.,  RUBIO,  R.F.,  CORCHERO,  M.A.  D-OSKIL:  “A  new 
+mechanism  for  controlling  stick-slip  oscillations  in  oil  well  drillstrings”.  IEEE 
+Transactions on Control Systems Technology, 16(6): 1177-1191, 2008. 
+
+[5]  CANUDAS-DE-WIT,  C.,  RUBIO  R.F.,  CORCHERO  M.A.,  NAVARRO-LÓPEZ, 
+E. D-OSKIL: A new mechanism for suppressing stick-slip in oil well drillstrings. 
+In: Proceedings of the 44th IEEE Conference on Decision and Control and 2005 
+European Control Conference (CDC-ECC’05), Sevilla, Spain, 2005. 
+
+[6]  CHEN,  CHIH-KENG;  LIN,  CHIH-JER;  Yao,  LIANG-CHUN  “Input-State 
+linearization of a rotary inverted pendulum”. Asian Journal of Control, 6(1): 130-
+135, 2004. 
+
+[7] CHIPINDU, N.S.C. Pós-análise em problemas de perfuração de poços marítimos de 
+desenvolvimento.  Dissertação  de  Mestrado,  Universidade  Estadual  de  Campinas, 
+Campinas-SP, Brasil, 2010. 
+
+[8]  CHRISTOFOROU,  A.P.,  YIGIT,  A.S.  “Fully  coupled  vibrations  of  actively 
+controlled  drillstrings”.  Journal  of  Sound  and  Vibration,  267(5):  1029-1045, 
+2003. 
+
+[9]  CORCHERO,  M.A.,  CANUDAS-DE-WIT,  C.,  Rubio,  R.F.  Stability  of  the  D-
+OSKIL  oscillation  suppression  mechanism  for  oil  well  drillstrings.  In: 
+Proceedings of the 45th IEEE Conference on Decision and Control (CDC’06), San 
+Diego-CA, USA, 2006. 
+
+ 
+
+87 
+
+ 
+
+[10] DAMAZO G.A. Controle com modos deslizantes aplicado em sistemas com atraso 
+e acesso somente à saída. Dissertação de Mestrado, Universidade Federal Paulista 
+“Júlio de Mesquita Filho”, Ilha Solteira-SP, Brasil, 2008. 
+
+[11]  DeCARLO  R.A.,  ZAK  S.H.,  MATTHEWS  G.P.  “Variable  structure  control  of 
+nonlinear  multivariable  systems:  A  Tutorial”.  Proceedings  of  the  IEEE,  76(3): 
+212-232, 1998. 
+
+[12] DIVÉNYI, S. Dinâmica de sistemas não-suaves aplicada à perfuração de poços de 
+petróleo.  Dissertação  de  Mestrado,  Universidade  Federal  do  Rio  de  Janeiro,  Rio 
+de Janeiro-RJ, Brasil, 2009. 
+
+[13] EDWARDS C., SPURGEON S.K. Sliding mode control: theory and applications. 
+
+Taylor & Francis, Londres, 1998. 
+
+[14] FERGÜTZ M. Controle em modos deslizantes do servomotor C.A. Dissertação de 
+
+Mestrado, Universidade do Estado de Santa Catarina, Joinville-SC, Brasil, 2001. 
+
+[15]  GAO  W.,  HUNG  J.C.  “Variable  structure  control  of  nonlinear  systems:  a  new 
+
+approach”. IEEE Transactions on Industrial Electronics,  40(1): 45-55, 1993. 
+
+[16]  HALSEY,  G.W.,  KYLLINGSTAD,  A.,  KYLLING,  A.  Torque  feedback  used  to 
+cure  slip-stick  motion.  In:  Proceedings  of  the  1988  SPE  Annual  Technical 
+Conference and Exhibition, Houston-TX, USA, 1988. 
+
+[17] HENSON M. E. Feedeback linearization strategies for nonlinear process control. 
+
+PhD Thesis, University of California, Santa Barbara, 1992. 
+
+[18] HENSON M. E., SEBORG D. E.  “Input-output linearization of general  nonlinear 
+
+process control”. AIChE Journal, v.36, n.11, p.1753-57, 1990. 
+
+[19]  HENSON  M.  E.,  SEBORG  D.  E.  “Critique  of  exact  linearization  strategies  for 
+
+process control”. Journal Process Control, v.1, p.122-39, 1991. 
+
+[20]  HENSON  M.  E.,  SEBORG  D.  E.  “Nonlinear  control  strategies  for  continuous 
+
+fermenters”. Chemical Engineering Science, v.47, n.4, p.821-35, 1992b. 
+
+[21] HENSON M. E., SEBORG D. E. Nonlinear Process Control. Prentice Hall, New 
+
+Jersey, 1997. 
+
+[22]  HERNANDEZ-SUAREZ,  R.,  PUEBLA,  H.,  AGUILAR-LOPEZ,  R., 
+HERNANDEZ-MARTINEZ,  E.  “An  integral  high-order  sliding  mode  control 
+approach  for  stick-slip  suppression  in  oil  drillstrings”.  Petroleum  Science  and 
+Technology, 27(8): 788-800, 2009. 
+
+[23] ISIDORI, A. “Nonlinear control systems”. 3ª Ed., Springer-Verlag, Berlim, 1995. 
+
+[24] JOHANNESEN, M.K., MYRVOLD, T. Stick-slip prevention of drill strings using 
+nonlinear model reduction and nonlinear model predictive control. Master Thesis, 
+Norwegian University of Science and Technology, Trondheim, Norway, 2010. 
+
+ 
+
+88 
+
+ 
+
+[25] KARNOPP, D. “Computer simulation of stick-slip friction in mechanical dynamic 
+systems”.  ASME  Journal  of  Dynamics  Systems,  Measurement  and  Control, 
+107(1): 100-103, 1985. 
+
+[26]  KRAVARIS,  C.,  WRIGHT,  R.  A.  “Deadtime  compensation  for  nonlinear 
+
+processes”. AIChE Journal, 35, 1535 – 1542, 1989. 
+
+[27] KYLLINGSTAD, Å.E., NESSJOEN, P.J. A new stick-slip prevention system. In: 
+Proceedings  of  the  2009  SPE/IADC  Drilling  Conference  and  Exhibition, 
+Amsterdam, The Netherlands, 2009. 
+
+[28]  LEINE,  R.I.,  VAN  CAMPEN,  D.H.,  DE  KRAKER,  A.,  VAN  DEN  STEEN,  L. 
+“Stick-slip vibrations induced by alternate friction models”. Nonlinear Dynamics, 
+16(1): 41-54, 1998. 
+
+[29]  LIN,  CH.-F.  Advanced  control  systems  design.  New  York,  Prentice-Hall, 
+
+Englewood Cliffs, 1994. 
+
+[30] MING Q. Sliding mode control design for ABS system. Thesis of Master, Faculty of 
+the  Virginia  Polytechnic  Institute  and  State  University,  Blacksburg,  Virginia, 
+Estados Unidos, 1997. 
+
+[31]  NAVARRO-LÓPEZ,  E.M.  Discontinuities-induced  phenomena  in  an  industrial 
+application: analysis and control solutions. In: Proceeding of the 7th International 
+Conference on Mathematical Problems in  Engineering,  Aerospace and Sciences, 
+(ICNPAA 2008), Genoa, Italy, 2008. 
+
+[32]  NAVARRRO-LÓPEZ,  E.M.  “An  alternative  characterization  of  bit-sticking 
+phenomena  in  a  multi-degree-of-freedom  controlled  drillstring”.  Nonlinear 
+Analysis: Real World Applications, 10(5): 3162-3174, 2009. 
+
+[33] NAVARRO-LÓPEZ, E.M. “Bit-sticking phenomena in a multi-degree-of-freedom 
+controlled drillstring”. Exploration and Production: Oil and Gas Review, 8(2):70-
+75, 2010. 
+
+[34]  NAVARRO-LÓPEZ,  E.M.,  CORTÉS,  D.  “Avoiding  harmful  oscillations  in  a 
+drillstring  through  dynamical  analysis”.  Journal  of  Sound  and  Vibration,  307(1-
+2): 152-171, 2007a. 
+
+[35]  NAVARRO-LÓPEZ,  E.M.,  CORTÉS,  D.  Sliding-mode  control  of  a  multi-DOF 
+oilwell  drillstring  with  stick-slip  oscillations.  In:  Proceedings  of  the  2007 
+American Control Conference (ACC’07), New York-NY, USA, 2007b. 
+
+[36] NAVARRO-LÓPEZ, E.M., SUÁREZ, R. “Vibraciones mecánicas en una sarta de 
+perforación:  problemas  de  control”.  Revista  Iberoamericana  de  Automática  e 
+Informática Industrial, 2(1): 43-54, 2005. 
+
+ 
+
+89 
+
+ 
+
+[37]  NUNES,  E.V.L.  Controle  por  modos  deslizantes  de  ordem  superior  com 
+estabilidade  global.  Dissertação  de  Mestrado,  Universidade  Federal  do  Rio  de 
+Janeiro, Rio de Janeiro-RJ, Brasil, 2004. 
+
+[38] OLIVEIRA T.R. Controle por modos deslizantes de sistemas incertos com direção 
+de controle desconhecida. Dissertação de Mestrado, Universidade Federal do Rio 
+de Janeiro, Rio de Janeiro-RJ, Brasil, 2006. 
+
+[39] SERRARENS, A.F.A., VAN DE MOLENGRAFT, M.J.G., KOK, J.J., VAN DEN 
+STEEN,  L.  “𝐻∞ control for suppressing stick-slip in oil well drillstrings”. IEEE 
+Control Systems Magazine, 18(2): 19-30, 1998. 
+
+[40]  SHI,  F.,  LI,  L.,  ZHANG,  Q.,  RASOL,  N.  Derivative  and  integral  sliding  mode 
+control  for  rotary  drilling  system.  In:  Proceedings  of  the  Third  International 
+Conference on Measuring Technology and Mechatronics Automation (ICMTMA 
+2011), Xi’an, China, 2011. 
+
+[41]  SILVA  G.V.M.  Controlo  não  linear.  Lecture  notes.  Escola  Superior  Tecnologia, 
+
+Lisboa, 2003. 
+
+[42]  SLOTINE  J.-J.E.,  LI  W.  Applied  nonlinear  control.  Editora  Prentice-Hall  do 
+
+Brasil, Ltda., Rio de Janeiro, 1991. 
+
+[43]  SPANOS,  P.D.,  CHEVALLIER,  A.M.,  POLITIS,  N.P.,  PAYNE,  M.L.  “Oil  and 
+gas well drilling: a vibration perspective”. Shock and Vibration Digest, 35(2): 85-
+103, 2003. 
+
+[44]  THOMAS,  J.E.  Fundamentos  de  engenharia  de  petróleo.  Interciência:  Rio  de 
+
+Janeiro-RJ, Brasil, 2001. 
+
+[45]  TUCKER,  W.R.,  WANG,  C.  “An  integrated  model  for  drill-string  dynamics”. 
+
+Journal of Sound and Vibration, 224(1): 123-165, 1999. 
+
+[46] UTKIN V.I. “Sliding mode control design principles and applications to electric 
+
+drives”. IEEE Transactions on Industrial Electronics, 40(1): 23-36, 1993. 
+
+[47] ZHANG, Q.-Z., HE, Y.-Y., LI, L., Nurzat. Sliding mode control of rotary drilling 
+system  with  stick  slip  oscillation.  In:  Proceeding  of  the  2nd  International 
+Workshop on Intelligent Systems and Applications, Wuhan, P.R. of China, 2010. 
+
+ 
+
+ 
+
+90 
+
+

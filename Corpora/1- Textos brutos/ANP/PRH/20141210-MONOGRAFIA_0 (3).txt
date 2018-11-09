@@ -1,0 +1,2235 @@
+ 
+
+Universidade Estadual de Campinas 
+Faculdade de Engenharia Química 
+
+Coordenação de Graduação 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+Trabalho de Conclusão de Curso 
+
+ 
+ 
+
+“Simulação bidimensional de 
+
+escoamento de um fluido 
+incompressível ao redor de 
+
+uma seção circular, utilizando 
+
+CFD.” 
+
+ 
+
+ 
+
+RA: 061852 
+
+ 
+ 
+ 
+
+Aluno: Julia Satie Saito  
+ 
+ 
+Supervisor: Roger Josef Zemp 
+ 
+ 
+ 
+ 
+
+Campinas – SP 
+
+dezembro de 2014 
+
+ 
+
+ 
+
+  
+
+SUMÁRIO 
+
+1. RESUMO ........................................................................................................................................ 1 
+
+2. INTRODUÇÃO .............................................................................................................................. 2 
+
+3. REVISÃO DA LITERATURA ..................................................................................................... 5 
+
+4. OBJETIVO DO TRABALHO ...................................................................................................... 7 
+
+5. METODOLOGIA .......................................................................................................................... 8 
+
+5. METODOLOGIA .......................................................................................................................... 8 
+
+6. RESULTADOS............................................................................................................................. 10 
+
+6.1 Definição da malha................................................................................................................. 10 
+
+6.2 Simulação de escoamento ao redor de uma seção circular estacionária ........................... 14 
+
+6.3 Simulação de escoamento ao redor de uma seção circular com movimento forçado ...... 19 
+
+7. CONCLUSÕES ............................................................................................................................ 25 
+
+8. REFERÊNCIAS ........................................................................................................................... 26 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+NOTA: 
+Este trabalho foi desenvolvido como parte da pesquisa de iniciação científica no Programa de Formação de 
+Recursos Humanos da Agência Nacional do Petróleo da UNICAMP, PRH-15/ANP, sob orientação do Prof. 
+Dr. Celso Kazuyuki Morooka, do Departamento de Engenharia de Petróleo da UNICAMP 
+
+ 
+
+ 
+
+1. RESUMO 
+
+Dutos  submarinos  são  utilizados  nas  operações  marítimas  de  perfuração  de  poços  e  de 
+
+produção  de  petróleo  e  gás  natural.  Estes  dutos  podem  estar  apoiados  no  leito  marinho 
+
+transportando o petróleo de um poço produtor até uma unidade de produção flutuante na superfície 
+
+do mar. São denominados de dutos submarinos ou linhas de escoamento enquanto apoiados no leito 
+
+marinho,  e  quando  se  encontrar  suspenso,  interligando  o  fundo  do  mar  à  unidade  produtora  na 
+
+superfície, são denominados de risers. 
+
+Estes  dutos  estão  sujeitos  à  correnteza  marítima,  ondas  e  ao  movimento  induzido  pela 
+
+unidade flutuante à qual estão conectados. Sua interação com a água do mar gera duas componentes 
+
+de  força  no  duto:  a  força  de  arrasto  (FD)  e  a  transversal  (FL),  respectivamente,  nas  direções  de 
+
+incidência  e  perpendicular  da  água  em  relação  ao  duto.  A  força  transversal  faz  o  duto  oscilar  na 
+
+direção  perpendicular  à  velocidade  de  incidência  do  fluido,  fenômeno  conhecido  como  Vibração 
+
+Induzida por Vórtices (VIV), em sincronização com o desprendimento de vórtices. Esta vibração é 
+
+importante para  o projeto de dutos, pois  pode  acelerar o processo  de fadiga do duto,  ocasionando 
+
+falhas. 
+
+Neste  trabalho,  aplica-se  a  dinâmica  de  fluidos  computacional  (Computacional  Fluid 
+
+Dynamic  –  CFD)  para  solução  do  escoamento  bidimensional  ao  redor  de  uma  seção  de  um  duto 
+
+submarino.  Consideram-se  duas  situações:  a  primeira  com  seção  transversal  estacionária,  e  a 
+
+segunda, com a seção com um movimento forçado induzido na direção transversal ao escoamento 
+
+incidente.  Coeficientes  hidrodinâmicos  de  arrasto  (CD)  e  de  força  transversal  (CL),  assim  como  o 
+
+número de Strouhal (St) para o escoamento são calculados, e comparações e análise dos resultados 
+
+com  a  literatura  são  realizados.  Observa-se  dos  resultados  de  que  um  incremento  grande  é 
+
+observado no CL quando a freqüência de movimento forçado da seção é maior do que a freqüência 
+
+de  desprendimento  de  vórtice  para  o  cilindro  estacionário.  A  partir  dos  resultados  obtidos,  é 
+
+possível  aplicá-los  na  indústria  do  petróleo,  no  projeto  de  equipamentos  que  ficam  submersos, 
+
+podendo otimizá-lo  e aumentar sua vida útil,  além  de ser possível  tornar estes equipamentos  mais 
+
+seguros e com menos chance de falhas.  
+
+ 
+
+ 
+
+- 1 - 
+
+2. INTRODUÇÃO  
+
+O  setor  petrolífero  no  Brasil  encontra-se  em  ascensão,  devido  à  descoberta  de  petróleo 
+
+comercial  na  camada  do  pré-sal,  nas  bacias  de  Santos  (SP)  e  de  Campos  (RJ).  Desse  modo,  as 
+
+pesquisas relacionadas à perfuração de poços, à exploração, extração e transporte do petróleo e gás 
+
+natural,  em  águas  profundas  e  ultra-profundas,  são  cada  vez  mais  relevantes.  A  descoberta  de 
+
+petróleo  no  pré-sal  surge  como  um  desafio  devido  à  grande  profundidade  que  os  poços  se 
+
+encontram,  chegando  a  até  2.000  metros  de  lamina  d’água  e  ainda  mais  5.000  metros  de  rochas, 
+
+superando a profundidade dos poços até então perfurados no Brasil. 
+
+ 
+
+ 
+Enchova 
+
+124 m 
+1997 
+
+ 
+ 
+
+ 
+
+Piraúna  Marimbá 
+
+293 m 
+1983 
+
+492 m 
+1998 
+
+Marlim 
+
+781 m 
+1992 
+
+Marlim 
+1027 m 
+
+1994 
+
+Roncador 
+
+1853 m 
+
+1999 
+
+Roncador  B. de Santos  Pré-sal 
+1886 m 
+
+Até 7000 m 
+
+2140 m 
+
+2003 
+
+2006 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5000 m de 
+
+rocha 
+
+ 
+
+ 
+
+Figura 1: Profundidade de poços brasileiros ao longo dos anos. 
+
+ 
+
+ 
+
+Em  diversas  áreas  de  produção  de  petróleo,  como  a  perfuração  de  poços,  a  extração  e  o 
+
+transporte do petróleo contido no fundo do mar, são utilizados dutos submersos cilíndricos de aço, 
+
+como mostra a Figura 2. 
+
+ 
+
+ 
+
+ 
+
+- 2 - 
+
+vento 
+
+onda 
+
+ 
+
+100 m 
+
+bóia de 
+subsuperfície 
+
+ 
+
+Superfície do mar 
+
+ 
+
+correnteza 
+
+Unidade flutuante 
+de produção 
+
+jumper flexível 
+
+riser vertical 
+
+árvore de natal 
+molhada 
+
+manifold 
+
+Fundo do mar 
+
+ 
+
+ 
+
+poço de petróleo  
+
+ 
+
+duto submarino 
+
+ 
+
+Figura 2: Esquema de produção de petróleo. 
+
+ 
+
+Estes dutos, quando fazem a interligação entre o fundo do mar com a unidade de produção 
+
+flutuante,  são  chamados  de  risers.  Os  poços  do  pré-sal  podem  alcançar  até  2000  metros  de 
+
+profundidade  e,  com  isso,  o  tamanho  dos  risers  utilizados  para  a  extração  de  petróleo  é  muito 
+
+grande,  o  que  resulta  num  peso-próprio  muito  elevado,  podendo  causar  danos  na  unidade  de 
+
+produção. Para minimizar a força que o  riser exerce sobre a plataforma ou navio, pode-se utilizar 
+
+bóias  de  subsuperfície,  estruturas  cilíndricas  localizadas  a  aproximadamente  100  metros  da 
+
+superfície, e que suporta grande parte da força peso do riser, interligando-o à unidade de produção 
+
+através de outra estrutura cilíndrica, chamada de  jumper flexível. Dutos submarinos, colocados ao 
+
+longo do leito marinho, muitas vezes com a extensão de dezenas a centenas de quilômetros, fazem 
+
+também  o  transporte  do  óleo  ou  gás  (chamados  de  oleodutos  ou  gasodutos),  do  alto  mar  a  um 
+
+terminal na costa litorânea. 
+
+ 
+
+Todas estas estruturas submersas, com seção circular uniforme, estão expostas à correnteza e 
+
+ondas  do  mar,  além  do  movimento  da  unidade  de  produção  flutuante.  Estes  parâmetros  fazem  o 
+
+duto interagir com a água do mar, originando diferenças de pressão que, conforme Sumer e Fredsøe 
+
+(1997), resultam em alterações periódicas na parede do duto, gerando o desprendimento  alternado 
+
+de  vórtices  e  resultando  na  variação  periódica  das  componentes  de  força  no  cilindro,  isto  é,  das 
+
+forças de arrasto (FD) e transversal (FL) paralela e perpendicular à direção do escoamento incidente. 
+
+A força transversal  faz o duto sofrer vibrações, fenômeno conhecido como Vibração Induzida por 
+
+Vórtices (VIV) e de extrema importância para o projeto das tubulações submarinas visto que pode 
+
+ 
+
+- 3 - 
+
+provocar  sua  fadiga  precoce,  resultando  em  graves  acidentes  com  conseqüências  econômicas, 
+
+ambientais e humanas. 
+
+ 
+
+As forças de arrasto e transversal são adimensionalizadas em função da densidade do fluido, 
+
+do diâmetro e comprimento do duto e do quadrado da velocidade de incidência do fluido, resultando 
+
+nos coeficientes de arrasto (CD) e de força transversal (CL), respectivamente. 
+
+De  acordo  com  Wendt  (2009),  os  aspectos  físicos  de  qualquer  escoamento  fluido  são 
+
+governados por três princípios fundamentais: a conservação da  massa; a Segunda Lei de Newton; e 
+
+a conservação da energia. Estes princípios podem ser expressos em expressões matemáticas que em 
+
+suas  formas  gerais  são  geralmente  expressas  em  equações  diferenciais  parciais.  A  Dinâmica  de 
+
+Fluidos  Computacional  (Computational  Fluid  Dynamics  –  CFD)  é  uma  ferramenta  que  substitui 
+
+estas equações por números e utiliza-os avançando no tempo e no espaço para obter uma descrição 
+
+numérica final do escoamento fluido de interesse. 
+
+Através do CFD é possível simular o escoamento de fluidos através da aplicação de métodos 
+
+numéricos  computacionais  nas  equações  fundamentais  da  mecânica  de  fluidos.  Esta  técnica  é 
+
+utilizada  em  alguns  aspectos  do  projeto  de  dutos  submarinos  e  risers,  como  por  exemplo,  na 
+
+previsão de esforços hidrodinâmicos devido à correnteza e ondas do mar, sendo, portanto, utilizada 
+
+em  complemento  aos  métodos  numéricos  baseados  em  modelos  semi-empíricos  da  mecânica  de 
+
+fluidos que se fundamentam com resultados extraídos de experimentos em laboratórios. 
+
+O  desenvolvimento  da  modelagem  numérica  é  apresentado  com  uma  análise  de  malha 
+
+computacional e, a partir dele, as simulações do escoamento externo ao redor de um cilindro liso de 
+
+seção  circular  são  realizadas  de  maneira  que  a  análise  seja  feita  num  plano  bidimensional 
+
+considerando,  portanto,  uma  seção  transversal  circular.  Duas  situações  são  estudadas,  sendo  a 
+
+primeira considerando que a seção está estacionária, ou seja, não se move em nenhuma direção, e a 
+
+segunda  com  a  seção  sob  ação  de  um  movimento  forçado  na  direção  transversal  ao  escoamento 
+
+incidente. Os coeficientes hidrodinâmicos CD e CL são calculados de acordo com as forças obtidas 
+
+pela solução do programa. 
+
+ 
+
+ 
+
+- 4 - 
+
+3. REVISÃO DA LITERATURA 
+
+Quando  há  escoamento  de  fluidos  de  baixa  viscosidade  (altos  números  de  Reynolds),  ao 
+
+redor  de  um  corpo,  a  viscosidade  tem  efeito  sensível  sobre  uma  pequena  camada  adjacente  à 
+
+superfície  de  um  corpo,  onde  a  velocidade  varia  rapidamente  desde  um  valor  nulo,  próximo  à 
+
+parede do corpo, até um valor característico do escoamento, chamada de camada limite. Fora desta 
+
+camada, as forças viscosas são pequena e podem ser consideradas desprezíveis. Para determinadas 
+
+velocidades  do  escoamento,  a  camada  limite  se  desprende  do  corpo  e  forma-se  uma  esteira  de 
+
+vórtices. Um maior detalhamento desta situação é descrito em Lopes (2006). 
+
+ 
+
+A partir da superfície do corpo, a velocidade da camada limite cresce desde zero até 99% da 
+
+velocidade  de  escoamento  do  fluido.  Nesta  camada,  há  predominância  dos  efeitos  da  viscosidade, 
+
+enquanto  que  fora  dela  estes  efeitos  são  praticamente  nulos.  Quanto  maior  a  velocidade  do 
+
+escoamento,  menor  serão  o  comprimento,  a  espessura  da  camada  limite  laminar  e  da  sub-camada 
+
+laminar. A pressão na camada limite é determinada pelo escoamento, de modo que em uma seção 
+
+da camada limite normal à superfície do corpo, a pressão pode ser considerada constante e igual a 
+
+do escoamento circundante. 
+
+Quando o escoamento se dá sobre a superfície de um cilindro posicionado transversalmente 
+
+ao escoamento, como na Figura 3, o campo de pressões deixa de ser constante. As partículas fluidas 
+
+aumentam de velocidade entre A e B (diminuição da pressão) e diminuem entre B e C (aumento da 
+
+pressão). 
+
+ 
+
+B 
+
+A 
+
+C 
+
+Figura 3: Escoamento ao redor de um cilindro. 
+
+ 
+
+Ao longo da camada limite, há perda de energia cinética por atrito, devido à viscosidade do 
+
+fluido  e,  conseqüentemente,  a  energia  resultante  pode  ser  insuficiente  para  suportar  o  aumento  de 
+
+pressão necessário para chegar até C. Devido a isto, surge um movimento contrário à passagem do 
+
+fluido,  que  causa  o  descolamento  da  camada  limite  no  ponto  de  separação,  gerando  um  par  de 
+
+vórtices  estacionários,  até  aproximadamente  Re=40.  A  partir  deste  valor,  o  desprendimento  de 
+
+vórtices ocorre de forma periódica e alternada, com uma freqüência conhecida como freqüência de 
+
+Strouhal  ou  de  shedding.  A  Figura  4  mostra  como  o  comportamento  do  escoamento  varia  com  a 
+
+faixa de Reynolds que o cilindro está localizado. 
+
+ 
+
+ 
+
+- 5 - 
+
+Figura 4: Formação de vórtices de acordo com a faixa de Reynolds. Retirado de 
+
+Pantazoupoulos (1994). 
+
+ 
+
+ 
+
+- 6 - 
+
+4. OBJETIVO DO TRABALHO 
+
+O objetivo deste trabalho é estudar os fundamentos envolvidos no comportamento estático e 
+
+dinâmico de uma estrutura submersa no mar, de geometria circular na sua seção transversal, como 
+
+risers  e  boias  de  subsuperfície.  O  comportamento  dinâmico  é  analisado  considerando  um 
+
+movimento  senoidal  forçado  da  estrutura,  na  direção  transversal  à  incidência  da  correnteza. 
+
+Simulações numéricas foram feitas através da fluidodinâmica computacional (CFD), e os resultados 
+
+foram avaliados e comparados com a literatura. 
+
+Para  garantir  os  objetivos  aqui  descritos,  primeiramente  é  necessário  conhecer  os 
+
+fundamentos  básicos  de  mecânica  dos  fluidos,  pois  é  a  partir  das  equações  descritas  por  Navier-
+
+Stokes que se baseará a resolução descrita pelo software utilizado (ANSYS-CFX®). Além disso, o 
+
+conhecimento de mecânica de fluidos também é necessário para analisar alguns parâmetros básicos 
+
+e  importantes  do  escoamento,  que  neste  caso  utiliza  um  fluido  incompressível  no  escoamento 
+
+externo. 
+
+O  conhecimento  básico  de  programação  também  é  necessário  para  que  seja  possível 
+
+introduzir algumas equações nos dados de entrada do software computacional, como a equação do 
+
+movimento forçado, por exemplo. Conhecimentos de programação também são importantes para a 
+
+transformada  rápida  de  Fourier,  calculada  através  do  software  MATLAB®  e  utilizada  para 
+
+determinar a frequência de uma força oscilatória. 
+
+Os  resultados  aqui  analisados  e  descritos  são  importantes  não  apenas  para  a  indústria  de 
+
+petróleo,  na  exploração  e  produção  de  poços  submarinos,  mas  também  podem  ser  avaliados  em  
+
+trocadores  de  calor,  importantes  equipamentos  utilizados  em  indústrias  químicas,  uma  vez  que  os 
+
+tubos encontrados no interior destes equipamentos também estão sujeitos a um escoamento externo 
+
+e, portanto, também podem sofrer vibração devido a este escoamento. 
+
+ 
+
+ 
+
+- 7 - 
+
+5. METODOLOGIA 
+
+ 
+
+O software utilizado para fazer as simulações foi o ANSYS®. Para criação da geometria de 
+
+domínio  fluido  e  geração  de  malha,  utilizou-se  o  ANSYS  Workbench.  Já  a  simulação  de 
+
+escoamento é feita pelo ANSYS-CFX®, que se divide em três sessões: CFX-Pre, para definição dos 
+
+parâmetros de análise (condições de contorno e do fluido); CFX-Solver, para solução do sistema de 
+
+equações; e, finalmente, CFX-Post, para pós-processamento e visualização dos resultados. 
+
+ 
+
+A análise é considerada bidimensional. Para isso, a geometria foi desenhada de modo que a 
+
+espessura  ortogonal  seja  tão  pequena  para  que  haja  apenas  um  elemento  de  malha  nesta  direção. 
+
+Para  a  geração  da  geometria,  é  feito  um  corte  transversal,  tomando  um  pequeno  corte  de  fluido, 
+
+como mostrado na Figura 5. A partir da geometria gerada, a malha computacional é feita dividindo 
+
+a  geometria  em  pequenos  elementos,  chamados  de  volumes  de  controle,  para  que  a  solução  do 
+
+problema seja resolvida com base no método dos volumes finitos.  Para isso, os elementos de malha 
+
+devem ser cuidadosamente escolhidos para que a solução do programa seja feito adequadamente, se 
+
+aproximando  do  caso  real.  As  equações  de  Navier-Stokes  são  resolvidas  para  cada  volume  de 
+
+controle, descrevendo os processos de transferência de massa, de calor e de momento. 
+
+z 
+
+Duto Submarino 
+
+ 
+
+Transversal 
+y 
+
+Correnteza 
+
+Arrasto 
+
+x 
+
+MALHA COMPUTACIONAL 
+
+ 
+
+Figura 5: Malha computacional utilizada nas simulações. 
+
+ 
+
+ 
+
+- 8 - 
+
+Primeiramente,  um  estudo  sobre  a  adequação  da  malha  ao  escoamento  foi  feito,  testando 
+
+diferentes  malhas  para  que  não  sobrecarregasse  as  simulações  em  relação  ao  tempo  e  espaço 
+
+computacional, porém representando bem o escoamento. 
+
+ 
+
+Definida  a malha a ser utilizada, foi feita uma bateria de simulações  considerando  a seção 
+
+circular  estacionária,  para  diferentes  números  de  Reynolds  (Re),  variando-se  a  velocidade  de 
+
+incidência do fluido. A partir dos resultados gerados de forças de arrasto (FD) e transversal (FL), é 
+
+possível obter do histórico de tempo destas forças os coeficientes hidrodinâmicos de arrasto (CD) e 
+
+de força transversal (CL), além do número de Strouhal. 
+
+ 
+
+Após as simulações com a seção circular estacionária, um movimento senoidal foi imposto 
+
+na  direção  transversal  da  seção,  variando-se  inicialmente  a  freqüência  do  movimento  e 
+
+posteriormente a amplitude do movimento, para analisar as mudanças que ocorrem. Após a bateria 
+
+de simulações com duas diferentes amplitudes e uma faixa de freqüências, o número de Reynolds é 
+
+alterado, mantendo uma mesma amplitude e variando-se a freqüência de movimento, de modo que 
+
+seja  possível  observar  a  variação  do  coeficiente  de  força  transversal  (CL)  com  a  freqüência  e  a 
+
+amplitude do movimento e também a velocidade de incidência do fluido. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+- 9 - 
+
+6. RESULTADOS 
+
+ 
+
+ 
+
+6.1 Definição da malha 
+
+A seção foi definida com um diâmetro de D=0,114m, e a distância à montante, à direita e à 
+
+esquerda da seção no plano bidimensional foi definida como dez vezes o tamanho do diâmetro da 
+
+mesma,  ou  seja,  1,14m,  de  modo  que  não  haja  nenhuma  influência  na  camada  limite  e, 
+
+conseqüentemente,  no  desprendimento  de  vórtices.  A  distância  à  jusante  é  definida  como  vinte  e 
+
+três  vezes  o  diâmetro  da  seção,  2,622m,  para  que  não  haja  influência  da  esteira  de  vórtices  na 
+
+formação de novos. A geometria está ilustrada na Figura 6. 
+
+ 
+
+Secção circular do 
+cilindro 
+
+10D 
+
+Domínio fluido 
+
+23D 
+
+10D 
+
+10D 
+
+0,00 
+
+0,50 
+
+1,00 [m] 
+
+ 
+
+Figura 6: Geometria do domínio utilizada nas simulações. 
+
+ 
+
+O  software  utilizado  resolve  apenas  problemas  em  três  dimensões.  Portanto,  para  que  este 
+
+problema  seja  considerado  como  bidimensional,  foi  desenhada  uma  malha  de  espessura  L  muito 
+
+pequena,  L=D/20=0,006m,  de  modo  que  haja  apenas  um  elemento  de  volume  finito  na  direção 
+
+perpendicular ao escoamento. 
+
+Para  finalmente  definir  a  malha,  ou  seja,  o  tamanho  dos  elementos  de  volume  finitos,  o 
+
+procedimento  é  feito  no  CFX-Mesh.  Para  sua  definição,  é  necessário  que  haja  independência  de 
+
+malha,  ou  seja,  o  resultado  deve  permanecer  praticamente  inalterado,  conforme  o  refinamento. 
+
+Partindo de uma malha  grosseira,  com  elementos grandes, e  refinando-a  cada vez mais, caso haja 
+
+variação no resultado, a malha é considerada inadequada e é necessário refiná-la ainda mais até que 
+
+a  independência  seja  atingida.  Por  outro  lado,  não  deve  imediatamente  adotar  uma  malha  muito 
+
+refinada, pois isto exigirá um maior esforço computacional, sendo necessário além de maior tempo 
+
+para realizar as simulações, também maior espaço em disco. 
+
+ 
+
+- 10 - 
+
+A  região  bem  próxima  à  seção,  que  representa  a  parede  do  duto  cilíndrico,  é  de  extrema 
+
+importância,  pois  é  onde  ocorrem  formação  e  desprendimento  da  camada  limite,  e  devido  a  isto, 
+
+deve ser mais refinada que as demais regiões. Para este caso em particular, foi adotada a condição 
+
+de y+, definida pelo programa como uma distância adimensional a partir da parede, em função da 
+
+distância entre a parede e o nó mais próximo a ela (y), do diâmetro da seção circular (D) e o número 
+
+de Reynolds (Re), e calculada a partir da equação 1, conforme descrito por ANSYS (2006). 
+
+ 
+
+ 
+
+ 
+
+(1) 
+
+onde Re é função da velocidade do (u), da massa específica (ρ) e da viscosidade dinâmica (μ) do 
+
+fluido, conforme mostra a equação 2. 
+
+ 
+
+ 
+
+ 
+
+(2) 
+
+Para realizar as simulações turbulentas, o modelo de turbulência utilizado foi o Shear Stress 
+
+Transport (SST) o qual, segundo ANSYS (2006), deve adotar o valor de y+ como sendo menor ou 
+
+igual a 2, Portanto, para utilizar apenas uma malha e realizar diversas simulações numa ampla faixa 
+de  número  de  Reynolds,  foi  considerado  um  número  máximo  de  Reynolds  de  Remáx=1x106,  e  a 
+
+partir dos valores de Remáx e y+, a distância entre a parede e o primeiro nó foi calculada como sendo 
+∆y=5,47x10-6m. Assim para todos os valores de número de Reynolds simulados abaixo de Remáx, a 
+
+distância entre a parede e o primeiro nó (∆y) estará de acordo com a condição y+≤ 2. 
+
+A  partir  da  condição  de  y+,  a  convergência  dos  resultados  foi  testada  considerando,  em 
+
+todas as simulações, as mesmas propriedades físicas, condições de contorno e de solver, para que os 
+
+resultados possam ser comparados. O fluido considerado em todas as simulações foi água, a 25°C, e 
+
+tem  suas  propriedades  definidas  na  biblioteca  do  software,  ρ=997  kg/m3  e    μ=0,0008899  Pa.s.  As 
+
+condições de contorno adotadas são: 
+
+•  Parede  (Wall):  condição  adotada  em  torno da seção circular de diâmetro  D=0,114m.  Trata  a 
+
+fronteira  como  uma parede lisa em  que não há deslizamento, ou seja, a velocidade é igual  à 
+
+velocidade da parede que, como se encontra estacionária, é nula.  
+
+•  Entrada (Opening): condição adotada na face arredondada com raio igual a 10D e localizada à 
+
+montante  da  seção  circular.  Nesta  face,  o  programa  assume  que  o  fluido  pode  estar  tanto 
+
+entrando  quanto  saindo  do  domínio,  e  foram  prescritos  os  componentes  de  velocidade 
+
+cartesiana: u=1,5659m/s, v=0m/s e w=0m/s. A intensidade de turbulência é média. 
+
+ 
+
+- 11 - 
+
+14/1380ReDyyDuRe•  Saídas (Opening):  condição  adotada  nas  faces  lateral  e  posterior  (jusante  da  seção  circular). 
+
+Nestas  faces  novamente  o  fluido  pode  estar  tanto  entrando  quanto  saindo  do  domínio  e  foi 
+
+adotada a pressão estática de 0 Pa para o fluido. 
+
+•  Simetria (Simmetry):  condição  adotada  na  face  inferior  e  superior  do  domínio  fluido.  Nestas 
+
+faces  a  velocidade  normal  à  face  (componente  w)  é  nula  e  as  velocidades  no  plano  do 
+
+escoamento (componentes u e v) são iguais aos valores resultantes ao longo da simulação. 
+
+O  passo  de  tempo  (timestep)  é  o  intervalo  de  tempo  em  que  o  programa  resolverá  as 
+
+equações de mecânica de fluidos para cada volume de controle e foi adotado como 0,005s. Também 
+
+adotou-se o máximo de 10 iterações para cada passo de tempo. 
+
+É  necessário  definir  um  conjunto  de  valores  iniciais,  como  a  velocidade  do  fluido  e  a 
+
+pressão relativa, para iniciar o processo iterativo. Assim, os componentes cartesianos de velocidade 
+
+são u=1,5659 m/s, v=0 m/s e w=0 m/s e a pressão relativa P=0 Pa. 
+
+Para  comparar  os  resultados  obtidos  em  cada  uma  das  malhas,  foi  analisado  tanto  o 
+
+comportamento  qualitativo  do  escoamento,  em  um  mesmo  instante  de  tempo,  e  também  foi  feita 
+
+uma análise quantitativa, calculando os coeficientes de arrasto (CD) e de força transversal (CL) e o 
+
+número de Strouhal (St), a partir das forças de arrasto (FD) e transversal (FL), segundo as equações 
+
+3, 4 e 5. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(3) 
+
+(4) 
+
+O  coeficiente  de  arrasto  (CD)  é  calculado  com  o  valor  da  média  da  força  de  arrasto,  FD, 
+
+enquanto  que  o  coeficiente  de  força  transversal  (CL)  é  calculado  a  partir  da  amplitude  de  pico  da 
+
+força transversal, FL, ambas as forças consideradas em estado estacionário. 
+
+O número de Strouhal (St) é calculado a partir da freqüência de desprendimento de vórtices 
+
+(fs), que foi considerada como sendo a mesma freqüência da força transversal (FL). 
+
+ 
+
+ 
+
+ 
+
+(5) 
+
+O primeiro teste parte de uma malha bem simples, resultando num escoamento simétrico e 
+
+sem a ocorrência de desprendimento de vórtices. No segundo teste, a malha foi refinada ao redor de 
+
+ 
+
+- 12 - 
+
+221DLuFCDD221DLuFCLLuDfStsseção circular e, do mesmo modo, não apresentou desprendimento de vórtices. A partir do terceiro 
+
+teste,  com  uma  malha  mais  refinada  ao  redor  de  seção  circular  e  na  esteira  de  vórtices,  o 
+
+desprendimento  de  vórtices  foi  observado.  Diminuindo  ainda  mais  o  tamanho  dos  elementos  nas 
+
+mesmas regiões, o quarto teste apresentou mudanças no comportamento do escoamento e também 
+
+houve  uma  alteração  notável  entre  este  teste  e  os  anteriores,  se  comparados  os  coeficientes 
+
+hidrodinâmicos calculados entre eles. Para o quinto teste, utilizou-se elementos ainda menores nas 
+
+regiões  de  interesse,  porém  não  houve  mudança  significativa  no  comportamento  do  escoamento  e 
+
+dos coeficientes hidrodinâmicos, em relação ao quarto teste. Os coeficientes calculados para todos 
+
+os testes, com suas respectivas descrições, encontram-se na Tabela 1. 
+
+ 
+
+Tabela 1: Valores calculados dos coeficientes hidrodinâmicos nos testes feitos para a 
+
+construção da malha. 
+
+ 
+
+Teste  Nº de nós  Nº de elementos 
+
+01 
+
+02 
+
+03 
+
+04 
+
+05 
+
+6470 
+
+9218 
+
+27044 
+
+84000 
+
+105478 
+
+5880 
+
+8142 
+
+24932 
+
+55154 
+
+76588 
+
+CD 
+0,53 
+
+0,35 
+
+0,35 
+
+0,70 
+
+0,69 
+
+CL 
+0,01 
+
+St 
+
+- 
+
+0,08 
+
+0,281 
+
+0,33 
+
+0,276 
+
+0,41 
+
+0,239 
+
+0,42 
+
+0,243 
+
+ 
+
+Para  reduzir  o  esforço  computacional,  a  malha  utilizada  no  Teste  04  da  Tabela  1  foi 
+
+escolhida, devido à menor quantidade de elementos a partir do momento em que a convergência dos 
+
+resultados foi alcançada. A vista superior da malha está mostrada na Figura 7. 
+
+O  tempo  de  execução  dos  cálculos  através  do  software  durou  cerca  de  dois  dias  para  as 
+
+simulações  considerando  a  seção  estacionária.  Para  a  seção  com  movimento  forçado,  o  tempo  de 
+
+execução dos cálculos é ainda maior, alcançando até sete dias para obter os resultados. Este tempo 
+
+de  execução  é  médio,  para  um  AMD  Athlon™  64  X2  Dual-Core  Processador  5000+,  2.61GHz, 
+
+3.43GB de RAM. 
+
+ 
+
+ 
+
+- 13 - 
+
+Figura 7: Malha de elementos aplicados para o domínio fluido nas simulações realizadas. 
+
+ 
+
+ 
+ 
+
+ 
+
+6.2 Simulação de escoamento ao redor de uma seção circular estacionária 
+
+Simulações de escoamento externo ao redor de uma seção circular considerada estacionária, 
+
+ou seja, sem movimento, são muito estudadas e, neste trabalho, foram feitas para diferentes valores 
+
+de  número  de  Reynolds.  Para  isto,  manteve-se  a  mesma  malha  de  elementos,  conforme  descrita 
+
+anteriormente e, como o fluido considerado é o mesmo para todas as simulações, as alterações nos 
+
+números de Reynolds foram obtidas através da variação da velocidade de incidência do fluido (u). 
+
+A faixa estudada de número de Reynolds variou de 2000 a 800000, que corresponde ao Re de uma 
+
+velocidade entre u=0,02m/s até u=6,26m/s. 
+
+ 
+
+Segundo  ANSYS  (2006),  o  escoamento  deve  ser  considerado  laminar  para  valores  de 
+
+Reynolds  menores  que  20000,  decorrente  de  uma  velocidade  de  correnteza  de  u=0,16m/s.  Neste 
+
+caso,  a  escolha  de  um  modelo  de  turbulência  laminar  na  configuração  do  programa  consiste  na 
+
+desconsideração do modelo de turbulência na simulação. Nos casos de número de Reynolds maiores 
+
+que 20000, o modelo de turbulência adotado foi o SST, conforme já mencionado anteriormente. De 
+
+acordo  com  Stravopoulos  et  al  (2005),  o  modelo  SST  é  um  híbrido  dos  modelos  k-ε  e  k-ω  de 
+
+turbulência,  o  qual  reduz  a  deficiência  de  ambos  os  modelos  pois  caracteriza  um  limitador  para  a 
+
+equação  de  viscosidade  turbulenta,  levando  em  conta  o  transporte  das  tensões  cisalhantes 
+
+turbulentas,  que  são  deficientes  em  outros  modelos  de  turbulência.  Desse  modo,  o  modelo  SST 
+
+ 
+
+- 14 - 
+
+utiliza basicamente o modelo  k-ω nas regiões próximas à parede e o modelo  k-ε nas  regiões mais 
+
+afastadas da mesma. Ainda, segundo ANSYS (2006), este modelo é recomendado para simulações 
+
+que exijam  alta precisão na camada limite, como  no caso estudado. Aprofundando mais o estudo, 
+
+observou-se que para valores muito alto de Reynolds, na ordem de 400000 (u≥3,13m/s), o modelo 
+
+de turbulência SST deve ser combinado com um modelo de transição chamado de γ-θ. Este modelo 
+
+de transição é baseado em duas equações de transporte. Uma delas, é de intermitência, e a outra do 
+
+critério  de início  da transição  em  termos  do número de Reynolds da espessura do momento,  Reδ*, 
+
+definido pela equação 6. 
+
+ 
+
+ 
+
+ 
+
+(6) 
+
+onde a espessura do momento,  δ*, é o deslocamento que a superfície precisaria receber para que o 
+
+fluxo  de  momento  linear  resultante  fosse  o  mesmo,  na  hipótese  da  velocidade  do  fluido  ser  nula, 
+
+calculada pela equação 7. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(7) 
+
+Conforme uma simulação é feita, o programa calcula diversas variáveis para cada volume de 
+
+controle  e  em  cada  passo  de  tempo.  A  Figura  8  mostra  o  histórico  de  tempo  obtido  através  do 
+
+cálculo  do  programa  das  forças  de  arrasto  (FD)  e  transversal  (FL),  respectivamente.  Estas  forças 
+
+foram  obtidas  de  uma  simulação  com  escoamento  incidente  de  u=1,5m/s,  que  resulta  em 
+
+Re=191580 e o tempo total de simulação foi de 15 segundos. 
+
+ 
+
+Através da figura, pode-se observar que as duas forças em questão são oscilatórias no tempo 
+
+e a amplitude da força oscilatória transversal é cerca de 20 vezes maior que a amplitude da força de 
+
+arrasto. Entretanto, em relação ao módulo, a força de arrasto é maior que a força transversal. 
+
+ 
+
+ 
+
+- 15 - 
+
+uRe**dyuue0*1 
+
+ 
+
+Figura 8: Histórico de tempo das forças de arrasto (FD) e transversal (FL), com Re=191580. 
+
+ 
+
+Para obter a frequência das forças de arrasto e transversal, foi feita a transformada rápida de 
+
+Fourier (Fast Fourier Transform, FFT), através do software MATLAB®, como mostrado na Figura 
+
+9. 
+
+FFT da Força de Arrasto (N.s) 
+
+ 
+
+0.01 
+
+0 
+
+0 
+
+2 
+
+Frequência (Hz) 
+FFT da Força Transversal (N.s) 
+
+4 
+
+6 
+
+8 
+
+10 
+
+0.2 
+
+0 
+
+0 
+
+2 
+
+4 
+
+8 
+Frequência (Hz) 
+
+6 
+
+10 
+
+ 
+
+Figura 9: Transformada de Fourier das forças de arrastro e transversal, para Re=191580. 
+
+ 
+
+ 
+
+A  partir  da  figura,  pode-se  observar  que  os  resultados  foram  obtidos  de  acordo  com  as 
+
+afirmações de Bishop e Hassan (1964), ou seja, a frequência da força de arrasto é duas vezes maior 
+
+ 
+
+- 16 - 
+
+que  a  frequência  da  força  transversal.  A  freqüência  da  força  transversal  está  relacionada  com  a 
+
+freqüência de desprendimento de vórtices. 
+
+Os  resultados  obtidos  para  diferentes  números  de  Reynolds  nas  simulações  de  escoamento 
+
+externo ao redor de uma seção circular estacionária estão mostrados na Tabela 2. 
+
+Tabela 2: Resultados obtidos na simulação numérica para seção circular estacionária. 
+
+u (m/s)  Re 
+
+FD (N)  CD  FL (N)  CL 
+
+fs (Hz)  St  Turbulência 
+
+6,26  800000  4,70 
+
+0,37  2,06  0,16  15,61  0,28  SST c/ γ-θ 
+
+3,91  500000  3,10 
+
+0,62  0,98  0,20  9,78 
+
+0,28  SST c/ γ-θ 
+
+3,13  400000  1,80 
+
+0,57  0,64  0,20  7,81 
+
+0,28  SST c/ γ-θ 
+
+2,00  255440  0,88 
+
+0,68  0,52  0,40  4,29 
+
+0,24 
+
+1,57  200000  0,56 
+
+0,70  0,33  0,41  3,31 
+
+0,24 
+
+1,50  191580  0,52 
+
+0,71  0,30  0,41  3,17 
+
+0,24 
+
+1,00  127720  0,25 
+
+0,77  0,17  0,54  2,08 
+
+0,24 
+
+63860 
+
+0,08 
+
+1,01  0,09  1,06  1,02 
+
+0,23 
+
+20000 
+
+0,01 
+
+1,37  0,01  1,53  0,31 
+
+0,22 
+
+SST 
+
+SST 
+
+SST 
+
+SST 
+
+SST 
+
+SST 
+
+8000 
+
+2000 
+
+0,00 
+
+1,88  0,00  1,77  0,13 
+
+0,24  Laminar 
+
+0,00 
+
+1,71  0,00  1,80  0,04 
+
+0,25  Laminar 
+
+0,50 
+
+0,16 
+
+0,06 
+
+0,02 
+
+ 
+
+ 
+
+ 
+
+ 
+
+De acordo com Shapiro (1961), a força de arrasto provocada pelo escoamento de fluido ao 
+
+redor  de  corpos  com  diferentes  formas  geométricas  é  proporcional  ao  quadrado  da  velocidade, 
+
+conforme observado nos resultados mostrados na Tabela 2. 
+
+ 
+
+O coeficiente de arrasto (CD) foi calculado para cada um dos casos simulados e o resultado 
+
+foi comparado com a literatura, conforme mostra a Figura 10. 
+
+ 
+
+Coeficiente de Arrasto(CD) 
+102 
+
+    Resultados da Simulação 
+
+ 
+
+101 
+
+100 
+
+10-1 
+
+10-1  100  101  102  103 
+
+104  105  106 
+
+Número de Reynolds (Re) 
+
+ 
+
+Figura 10: Coeficiente de arrasto (CD) obtido das simulações em comparação com a literatura 
+
+ 
+
+(Fox et al, 2006). 
+
+ 
+
+- 17 - 
+
+ 
+
+Através da figura é possível observar que o coeficiente de arrasto diminui com o aumento do 
+
+número  de  Reynolds.  Na  região  compreendida  de  número  de  Reynolds  entre  105  e  106,  essa 
+
+diminuição  é  mais  acentuada  devido  à  crise  do  arrasto.  Em  analogia  com  o  estudo  de  Aguiar  e 
+
+Rubine  (2005),  que  é  feito  para  uma  esfera,  pode-se  interpretar  que  para  valores  de  Reynolds 
+
+maiores  de  20  há  separação  da  camada  limite,  gerando  uma  esteira  de  vórtices.  Esta  separação 
+
+diminui significativamente a pressão à jusante do cilindro e a diferença das pressões à montante e à 
+
+jusante  passam  a  dominar  o  arrasto.  A  crise  do  arrasto  ocorre  quando  a  camada  limite  torna-se 
+
+turbulenta,  pois  a  turbulência  faz  com  que  a  camada  resista  melhor  à  tendência  de  separação  e  o 
+
+ponto  de  descolamento  da  camada  limite  move-se  para  a  parte  mais  posterior  do  cilindro, 
+
+diminuindo a área da esteira. Isto reduz a área do cilindro submetida a baixas pressões e causa uma 
+
+diminuição da resistência do fluido, ou seja, da força de arrasto. Este decaimento brusco de CD não 
+
+é  evidente  nas  simulações  como  observado  nos  resultados  experimentais  da  literatura,  em  geral. 
+
+Entretanto,  a  diminuição  deste  coeficiente  nos  valores  do  número  de  Re  próximos  a  esta  região  é 
+
+bastante notável. 
+
+ 
+
+O  coeficiente  de  força  transversal  (CL)  também  foi  calculado  para  cada  um  dos  casos 
+
+simulados e o resultado foi comparado com a literatura, conforme mostra a Figura 11Figura 10. 
+
+ 
+
+ 
+
+ 
+
+1,4 
+
+1 ,2 
+
+1,0 
+
+0,8 
+
+0,6 
+
+0,4 
+
+0,2 
+
+ 
+)
+L
+C
+
+(
+ 
+l
+a
+s
+r
+e
+v
+s
+n
+a
+r
+T
+ 
+e
+t
+n
+e
+i
+c
+i
+f
+e
+o
+C
+
+0 
+
+10 2 
+
+1,80  1,77  1,53 
+
+amplitude   rms 
+amplitude média 
+amplitude de pico 
+simulação atual 
+
+áreas sombreadas 
+
+em rms 
+
+10 3 
+
+10 4 
+
+10 5 
+
+10 6 
+
+10 7 
+
+Número de Reynolds (Re) 
+
+ 
+
+Figura 11: Coeficiente de força transversal (CL) obtido das simulações em comparação com a 
+
+literatura (Pantazoupoulos, 1994). 
+
+Pode-se  perceber  que  os  valores  de  pico  do  coeficiente  de  força  transversal,  calculados 
+
+através  dos  dados  obtidos  da  simulação,  se  ajustam  aos  valores  de  pico  da  literatura,  que 
+
+consideram  um  cilindro  estacionário  e  com  baixa  intensidade  de  turbulência  de  escoamento  e 
+
+rugosidade de superfície. O coeficiente transversal, assim como o de arrasto, também diminui com 
+
+ 
+
+- 18 - 
+
+o  aumento  do  número  de  Reynolds.  Também  apresenta  uma  queda  mais  acentuada  em  valores 
+
+próximos a Re=105. 
+
+ 
+
+O  valor  do  número  de  Strouhal  (St)  foi  calculado  de  acordo  com  a  freqüência  da  força 
+
+transversal (FL), e está comparado com valores obtidos da literatura na Figura 12. 
+
+Resultados da simulação 
+
+Delany & Sorensen 
+
+Ribner & Etkin 
+
+Relf & Simmons 
+
+Roshko 
+
+0,5 
+
+0,4 
+
+0,3 
+
+0,2 
+
+0,1 
+
+ 
+)
+t
+
+S
+(
+ 
+  
+l
+a
+h
+u
+o
+r
+t
+ 
+S
+ 
+e
+d
+ 
+o
+r
+e
+m
+ú
+N
+
+ 
+
+0 
+4 
+10 
+
+5 
+10 
+
+6 
+10 
+
+Número de Reynolds (Re) 
+
+7 
+10 
+
+ 
+
+Figura 12: Número de Strohal (St) obtido das simulações em comparação com a literatura 
+
+(Roshko, 1961). 
+
+ 
+
+ 
+
+É possível perceber que os dados obtidos para St nas simulações se encontram próximos dos 
+
+dados experimentais obtidos da literatura na faixa de Re entre 104 e 106. Conforme os resultados da 
+
+literatura, o número de Strouhal para valores de Re próximos de 106, apresenta um leve acréscimo, 
+
+concordando com os resultados obtidos. 
+
+ 
+
+ 
+
+6.3 Simulação de escoamento ao redor de uma seção circular com movimento forçado 
+
+A  consideração  de  seção  circular  estacionária  é  utilizada  para  fins  de  simplificação  e 
+
+validação  dos  resultados  com  a  literatura.  Uma  vez  feita  a  validação,  a  realização  de  simulações 
+
+considerando uma seção circular e com movimento aproxima o caso com os aspectos reais.  
+
+ 
+
+De  acordo  com  Iwan  e  Blevins  (1974)  apud  Pantazoupoulus  (1994),  não  tem  nenhuma 
+
+distinção nos fundamentos de mecânica de fluidos entre um cilindro com movimento forçado e um 
+
+cilindro  movimentado  elasticamente  (considerando  o  cilindro  preso  por  molas),  se  assumir  que  a 
+
+força entre o cilindro e o fluido depende apenas da média ponderada da velocidade e da aceleração 
+
+do fluido relativa ao cilindro. Segundo Stansby (1976) apud Pantazoupoulus (1994), para investigar 
+
+a relação entre a freqüência de desprendimento de vórtices, a freqüência de oscilação do cilindro e a 
+
+amplitude  de  oscilação,  é  melhor  movimentar  o  cilindro  mecanicamente.  Neste  trabalho  o 
+
+movimento é forçado, apenas na direção transversal, segundo a equação 8: 
+
+ 
+
+- 19 - 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(8) 
+
+Na equação 8, A é a amplitude e fe é a freqüência de oscilação do movimento. A Figura 13 
+
+mostra o esquema do movimento forçado da seção transversal circular. 
+
+ 
+
+ 
+
+ 
+
+velocidade do 
+escoamento, u 
+
+mov 
+
+A 
+
+D 
+
+y 
+
+x 
+
+ 
+
+Figura 13: Esquema para o movimento forçado da seção circular na direção 
+
+transversal. 
+
+A malha utilizada é a mesma utilizada nas simulações considerando a seção estacionária. As 
+
+simulações  com  a  seção  móvel  foram  feitas  através  da  deformação  da  malha,  primeiramente 
+
+considerando  o  número  de  Reynolds  fixo  em  Re=191580,  mantendo  a  velocidade  de  escoamento 
+
+em  u=1,5m/s,  e  a  amplitude  do  movimento  também  fixa  em  A=0,1D=0,0114m,  realizando 
+
+simulações numa determinada faixa de freqüências de movimento. 
+
+ 
+
+Após  esta  bateria  de  simulações,  a  amplitude  foi  alterada  para  A=0,15D=0,0171m,  e  as 
+
+simulações foram realizadas considerando o mesmo Re=191580 e a mesma faixa de freqüências. 
+
+ 
+
+Finalmente,  o  número  de  Reynolds  foi  alterado  para  Re=63860,  alterando  a  velocidade  do 
+
+escoamento  para  u=0,5m/s,  e  as  simulações  foram  realizadas  para  apenas  uma  amplitude  de 
+
+movimento A=0,1D e a mesma faixa de freqüências simuladas anteriormente. 
+
+ 
+
+Dessa maneira, é possível observar como o número de Reynolds, a amplitude e a freqüência 
+
+do  movimento  influenciam  no  coeficiente  de  força  transversal  CL  e,  conseqüentemente,  na  força 
+
+transversal FL, responsável pela Vibração Induzida por Vórtices. 
+
+ 
+
+Para uma seção estacionária, com  Re=191580, a  freqüência de desprendimento de vórtices 
+
+(fs) é de 3,17Hz, como  já observado pela  Figura  9. Com  a amplitude do movimento constante em 
+
+A=0,1D=0,0114m, a freqüência de oscilação foi variada em diversos valores desde abaixo de fs até 
+
+acima deste valor. As Figura 14 e Figura 15 mostram o resultado obtido do histórico de tempo das 
+
+forças de arrasto  e transversal  de duas simulações com  o mesmo número de  Reynolds e a mesma 
+
+amplitude  de  movimento  (A=0,0114m),  distinguindo-se  nas  freqüências  de  oscilação,  que 
+
+encontram-se, respectivamente, abaixo e acima da freqüência de desprendimento de vórtices de uma 
+
+seção estacionária (fs). 
+
+ 
+
+ 
+
+ 
+
+- 20 - 
+
+)2(sentfAmove  
+
+Movimento (m) 
+0,02   
+0   
+0   
+-0,02   
+
+1   
+  
+
+2   
+Força de Arrasto (N) 
+1   
+0,5   
+0   
+
+Força Transversal (N) 
+
+  
+
+0   
+
+1   
+
+2   
+
+4   
+
+5   
+
+6   
+
+7   
+
+3   
+
+Tempo 
+(s) 
+
+  
+4 
+
+Tempo (s) 
+
+3 
+
+5   
+
+6 
+
+7 
+
+1,5   
+
+0   
+-1,5   
+
+1   
+
+2   
+
+4   
+3   
+Tempo (s) 
+
+  
+
+5   
+
+6   
+
+7   
+ 
+
+Figura 14: Histórico de tempo das forças de arrasto e transversal, para uma velocidade de 
+
+correnteza de u=1,5m/s e movimento forçado de A=0,0114m e fe=2Hz. 
+
+ 
+ 
+
+ 
+
+ 
+
+Figura 15: Histórico de tempo das forças de arrasto e transversal, para uma velocidade de 
+
+correnteza de u=1,5m/s e movimento forçado de A=0,0114m e fe=6Hz. 
+
+ 
+
+Através dos resultados obtidos, pode-se observar que a média da força de arrasto está muito 
+
+próxima nos dois casos mostrados nas Figura 14 e Figura 15, e também nos outros casos simulados, 
+
+para diferentes freqüências de oscilação. Por  outro  lado,  a  amplitude  máxima  da  força  transversal, 
+
+através da qual é calculado o coeficiente CL, apresentou grandes variações. A força transversal, em 
+
+geral, apresentou-se composta de uma superposição de duas componentes senoidais com diferentes 
+
+amplitudes e freqüências. 
+
+ 
+
+Para aprofundar o estudo na força transversal, foi realizada a transformada de Fourier (Fast 
+
+Fourier Transform, FFT) destas forças para os dois casos mostrados nas Figura 14 e Figura 15. Os 
+
+resultados da FFT estão mostrados na Figura 16. 
+
+ 
+
+- 21 - 
+
+00,5101234567Tempo (s)Força de Arrasto (N)-1,501,501234567Tempo (s)Força Transversal (N)-0,0200,0201234567Tempo (s)Movimento (m)00,5101234567Tempo (s)Força de Arrasto (N)-1,501,501234567Tempo (s)Força Transversal (N)-0,0200,0201234567Tempo (s)Movimento (m) 
+
+ 
+
+ 
+
+0.6 
+
+0.4 
+
+0.2 
+
+ 
+)
+s
+.
+N
+
+(
+ 
+L
+F
+ 
+e
+d
+T
+F
+F
+
+ 
+
+0 
+
+0 
+
+2 
+Frequência (Hz) 
+
+4 
+
+6 
+
+ (a) 
+
+ 
+
+ 
+
+   
+
+ 
+
+  
+
+ 
+
+ 
+)
+s
+.
+N
+
+(
+ 
+L
+F
+ 
+e
+d
+T
+F
+F
+
+ 
+
+0.6 
+
+0.4 
+
+0.2 
+
+0 
+
+0 
+
+2 
+Frequência (Hz) 
+
+4 
+
+6 
+
+ 
+
+ 
+
+ 
+
+(b) 
+
+Figura 16: FFT da força transversal (FL), para uma velocidade de correnteza de u=1,5m/s e 
+
+movimento forçado de A=0,0114m e (a) fe=2Hz e (b) fe=6Hz. 
+
+No resultado obtido, pode-se constatar que a força transversal apresenta duas freqüências, a 
+
+qual  uma  corresponde  à  freqüência  do  movimento  forçado  (fe)  e  a  outra  à  freqüência  de 
+
+desprendimento  de  vórtices  para  uma  condição  de  seção  estacionária  (fs=3,17Hz).  Quando  estas 
+
+duas  freqüências  têm  valores  próximos  entre  si,  a  força  transversal  apresenta  apenas  uma 
+
+freqüência. 
+
+ 
+
+Ainda  através  da  Figura  16:  FFT  da  força  transversal  (FL),  para  uma  velocidade  de 
+
+correnteza  de  u=1,5m/s  e  movimento  forçado  de  A=0,0114m  e  (a)  fe=2Hz  e  (b)  fe=6Hz.  pode-se 
+
+observar que quando fe é menor que fs, a menor amplitude de pico está localizada na freqüência do 
+
+movimento forçado, fe. Por outro lado, quando fe é maior que fs, a menor amplitude de pico passa a 
+
+ser correspondente a freqüência de desprendimento de vórtices para uma condição estacionaria, fs. 
+
+ 
+
+A Figura  17 mostra  a variação dos  coeficientes de força transversal, calculados a partir da 
+
+amplitude de pico da força transversal (FL), retirada de seu histórico de tempo, desconsiderando-se 
+
+a  parte  transiente  inicial.  Os  coeficientes  CL  variam  em  função  da  razão  entre  as  freqüências  de 
+
+movimento forçado e de desprendimento de vórtices na condição de seção estacionária. A variação 
+
+dos  coeficientes  CL  em  função  desta  razão  estão  apresentados  para  duas  diferentes  amplitudes  de 
+
+movimento forçado, mantido um Re fixo. 
+
+ 
+
+ 
+
+- 22 - 
+
+     A/D=0.10 
+     A/D=0.15 
+
+CL 
+
+3,0 
+
+2,0 
+
+1,0 
+
+0 
+
+0,5 
+
+1,0 
+
+1,5 
+
+2,0 
+
+fe/fs 
+
+ 
+
+Figura 17: Coeficiente de força transversal (CL) em função da razão fe/fs,  para duas diferentes 
+
+amplitudes de movimentos e Re=191580. 
+
+ 
+ 
+
+Para uma seção na  condição estacionária, o coeficiente de força transversal  é igual  a 0,41, 
+
+conforme  mostra  a  Tabela  2:  Resultados  obtidos  na  simulação  numérica  para  seção  circular 
+
+estacionária. Valores próximo a este são obtidos para as simulações cuja freqüência de movimento 
+
+forçado é baixa e o valor de CL é aumentado conforme a razão fe/fs aumenta. Portanto, para razões 
+
+fe/fs  abaixo  de  1,  o  valor  de  CL  é  baixo.  Quando  a  razão  fe/fs  aproxima  da  unidade,  há  um  súbito 
+
+aumento de CL, que continua a crescer cada vez mais para razões fe/fs maiores que 1. 
+
+ 
+
+O  aumento  repentino  do  coeficiente  de  força  transversal  nas  regiões  de  fe/fs  próximas  a 
+
+unidade também é observado no trabalho de Carberry et al (2005). Como o número de Reynolds e a 
+
+razão A/D analisados no presente estudo são diferentes daqueles analisados no trabalho de Carberry 
+
+et  al  (2005), os resultados qualitativos não podem  ser comparados, mas  a tendência qualitativa de 
+
+variação  do  coeficiente  de  força  transversal  em  relação  a  razão  fe/fs  é  semelhante  em  ambos  os 
+
+casos. 
+
+ 
+
+Através  da  Figura  11,  observa-se  que  para  números  de  Reynolds  menores,  o  valor  de  CL 
+
+tende  a  aumentar,  para  escoamentos  considerando  a  seção  na  condição  estacionária.  Para  a  seção 
+
+circular sob movimento forçado, os valores de CL também foram analisados em relação a freqüência 
+
+de movimento forçado. Mantendo  constante  a  amplitude  do  movimento  forçado  em  A=0,1D,  o 
+
+coeficiente de força transversal também segue a mesma tendência de variação com a freqüência de 
+
+movimento forçado, se analisado diferentes números de Reynolds, como mostra a Figura 18.  
+
+ 
+
+ 
+
+- 23 - 
+
+ Re=63860 
+Re=191580 
+
+CL 
+
+3,0 
+
+2,0 
+
+1,0 
+
+0 
+
+0,5 
+
+1,0 
+
+1,5 
+
+2,0 
+
+ 
+
+fe/fs 
+
+Figura 18: Coeficiente de força transversal (CL) em função da razão fe/fs,  para dois diferentes 
+
+números de Reynolds e A/D=0,1. 
+
+ 
+
+Através  dos  dados  coletados,  pode-se  observar  que  o  coeficiente  de  força  transversal  (CL) 
+
+ 
+
+ 
+
+varia de maneira similar com a razão de frequencias fe/fs. desse modo, mantendo-se fixo um número 
+
+de  Reynolds  e  uma  amplitude  de  movimento  forçado,  o  CL  sempre  apresentou  um  valor 
+
+praticamente  constante  e  próximo  ao  valor  de  CL  obtido  nas  simulações  considerando  a  seção 
+
+estacionária  para  razões  fe/fs  baixas.  Quando  fe/fs,  ao  valor  de  CL  dá  um  salto,  independente  do 
+
+número de Reynolds ou amplitude de movimento forçado, e a partir daí  continua a crescer com  o 
+
+aumento da razão fe/fs. 
+
+ 
+
+Mantendo  a  amplitude  e  frequência  de  movimento  forçado  fixa,  o  CL  aumentou  com  a 
+
+diminuição  do  número  de  Reynolds,  assim  como  aconteceu  nas  simulações  em  que  foram 
+
+consideradas a seção estacionária.  
+
+ 
+
+ 
+
+- 24 - 
+
+7. CONCLUSÕES 
+
+Simulações  numéricas  de  escoamento  externo  ao  redor  de  uma  seção  circular  foram 
+realizadas para uma faixa do número de Reynolds entre 103 até 106. Considerando a seção circular 
+
+na condição estacionária, em geral, os coeficientes hidrodinâmicos obtidos pela simulação numérica 
+
+apresentaram-se coerentes com os dados disponíveis na literatura. 
+
+Quando  colocado  um  movimento  forçado  na  direção  transversal  da  seção,  ainda  exposto  a 
+
+um escoamento de correnteza uniforme incidente, com um número de Reynolds relativamente alto e 
+
+com  baixa  amplitude  de  movimento  de  oscilação  da  seção,  a  força  transversal  ao  escoamento 
+
+incidente oscila com duas frequências. Uma delas corresponde à freqüência do movimento forçado 
+
+(fe), e a outra à freqüência de desprendimento de vórtices para uma seção estacionária (fs). Quando o 
+
+movimento  apresenta  a  mesma  freqüência  de  desprendimento  dos  vórtices  (“lock-in”),  a  força 
+
+transversal passa a oscilar com apenas uma freqüência e com amplitude bem elevada. 
+
+Analisando o coeficiente de força transversal CL em função da razão fe/fs, pode-se observar 
+
+um  aumento  diretamente  proporcional.  Para  baixas  razões  fe/fs,  este  aumento  é  praticamente 
+
+despercebido,  porém,  quando  a  razão  atinge  a  unidade,  o  coeficiente  CL  apresenta  um  aumento 
+
+brusco  em  seu  valor,  seguindo  tendência  apresentada  também  na  literatura.  Finalmente,  para  a 
+
+região de razão  fe/fs maiores do que a unidade, o coeficiente  CL tende também a aumentar,  numa 
+
+taxa relativamente alta, com o aumento desta razão. 
+
+Comparando  duas  amplitudes  de  movimento  forçado,  mantendo-se  o  mesmo  número  de 
+
+Reynolds e a mesma frequencia de movimento forçado, pode-se observar que o coeficiente de força 
+
+transversal calculado foi maior para o caso de amplitude de movimento forçado maior. 
+
+Além  disso,  comparando-se  os  números  de  Reynolds,  mantendo-se  a  mesma  amplitude  e 
+
+frequência  de  movimento  forçado,  observou-se  que  o  coeficiente  de  força  transversal  aumentou 
+
+com  a  diminuição  do  número  de  Reynolds,  assim  como  acontece  quando  a  seção  é  considerada 
+
+estacionária. 
+
+ 
+
+- 25 - 
+
+8. REFERÊNCIAS 
+
+[1]  AGUIAR,  C.E.,  RUBINE,  G.,  “A  Aerodinâmica  da  bola  de  futebol”.  Revista  Brasileira  de 
+
+Ensino de Física. Vol. 26, n.4, p 297-308, 2004. 
+
+[2]  ANSYS CFX – Release 11.0, 2006. 
+
+[3]  BISHOP, R. E. D., HASSAN, A. Y., “The lift and drag forces on a circular cylinder oscillating 
+
+in a flowing fluid”, Phil. Trans. Royal Society, London, A 277, 51-75, 1964. 
+
+[4]  CARBERRY,  J.,  SHERIDAN,  J.,  and  ROCKWELL,  D.  (2005)  Controlled  Oscillations  of  a 
+
+Cylinder: Forces and Wake Modes. Journal of Fluid Mechanics, vol. 538, United Kingdom, pp. 
+
+31-69. 
+
+[5]  FOX, R. W., MC DONALD, A. T., PRITCHARD, P. J. (2006), Mecânica dos Fluidos, 6ª ed., 
+
+Livros Técnicos e Científicos. 
+
+[6]  LOPES, R. K. D., “Análise de Estruturas Sujeitas a Vibrações  Induzidas  por Vórtices”. Tese 
+
+de Mestrado, 2006. 
+
+[7]  PANTAZOUPOULOS,  M.S.,  “Vortex-Induced  Vibration  Parameters:  Critical  Review.” 
+
+OMAE 1994. 
+
+[8]  ROSHKO,  A.,  “Experiments  on  the  flow  past  a  circular  cylinder  at  very  high  Reynolds 
+
+number”. J. Fluid Mech. 10(3) 345-356, 1961. 
+
+[9]  SHAPIRO,  A.H.,  “Shape  and  flow:  the  fluid  dynamics  of  drag”.  Soubleday  and  Co.,  Inc., 
+
+Garden City, N.Y., 1961. 
+
+[10] STRAVOPOULUS,  M.,  CHARESWORTH,D.,  DIXON,  M.,  “The  Application  of  CFD  for 
+
+Vortex Induced Vibration Analysis of Marine Risers In Projects Marine 2005”, 2005. 
+
+[11] SUMER,  B.  M.,  FREDSOE,  J.  “Hydrodynamics  around  Cylindrical  Structures”,  World 
+
+Scientific, Singapore, 1997. 
+
+[12] WENDT,  J.  F.  (Ed.),  “Computational  Fluid  Dynamics:  An  Introduction”,  332p,  Springer-
+
+Verlag, 3rd Ed., Berlin, 2009. 
+
+ 
+
+ 
+
+- 26 - 
+
+

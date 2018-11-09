@@ -1,0 +1,804 @@
+laborat orio nacional computa cient ıfica programa osgradua modelagem computacional modelagem computacional acoplamento hidrogeomecˆanico reservat orios aoconvencionais diego tavares volpatto petr opolis rj brasil junho modelagem computacional acoplamento hidrogeomec ˆanico reservat orios aoconvencionais diego tavares volpatto disserta submetida corpo docente laborat orio nacional computa cient ifica parte requi sitos necess arios obten grau mestre ciˆencias modelagem computacional aprovada prof 
+ arcio arab murad 
+ sc presidente prof 
+ arcio rentes borges 
+ jos luis drummond alves 
+ fernando pereira duda 
+ petr opolis rj brasil junho volpatto diego tavares vm modelagem computacional acoplamento hidrogeomecˆanico reser vat orios aoconvencionais diego tavares volpatto petr opolis rj 
+ laborat orio nacional computa cient ıfica 
+ cm orientadores arcio arab murad eduardo ucio mendes garcia 
+ disserta mestrado laborat orio nacional computa cient ı fica 
+ etodo elementos finitos 
+ geomecˆanica reservat orios 
+ murad arcio arab 
+ eduardo ucio mendes garcia 
+ wont find look another way wont find try another day 
+ another day autoria banda dream theater 
+ iv dedicat oria dedico leitor esperan ca ap leitura deste texto adicionado dx conhecimento possa conseguinte ser algum proveito 
+ agradecimentos gostaria inicialmente agradecer deus natureza circunstˆancias convergˆencia toda existˆencia estado onde pude concluir presente trabalho 
+ agrade co imensamente orientadores professores arcio edu ardo bidu todos ensinamentos fornecidos 
+ algo valor incomen sur avel levarei comigo longo toda carreira 
+ agrede co tamb paciˆencia palavras apoio 
+ pude concluir trabalho conside avel parcela gra cas excelente papel desempenhado orientadores 
+ profissionais excelˆencia fonte inspira mim 
+ expresso profundos agradecimentos membros banca professor jos alves tanto corre oes conselhos dados pessoalmente passei lamce coppe 
+ professor fernando duda valoroso apoio pres tado corre oes 
+ professor arcio borges aux ılio melhoria texto 
+ agrade co todos contribui oes sujest oes presente trabalho 
+ gostaria expressar profundos agradecimentos colegas grupo pesquisa patr ıcia pereira todo aux ılio prestado paciˆencia principal mente presente trabalho encontrava est agio embrion ario 
+ jes us alexei ajuda prestatividade auxiliando bastante entendimento implementa geomecˆanica 
+ aline rocha uvidas sanadas ajuda texto al paciˆencia inex oravel 
+ josu barroso conversas trocas experiˆencia claro paciˆencia tamb aparentemente qualidade onipresente grupo 
+ agrade co colegas sala ana cl audia valentim ac vi jaqueline angelo amizade conselhos paciˆencia conversas sala sei falo demais suporte precisei 
+ aline novamente ter tamb aguentado colega sala 
+ gostaria agradecer tamb alguns professores quais nutro pro fundo respeito fontes inspira mim professor abimael loula palavras conhecimentos valiosos passados 
+ professor jos karam jeito particular inspirador ministrar aulas 
+ durante alguns momentos deparei situa oes complicadas pensei desistir mestrado trˆes vezes 
+ obtive ca apoio fam ılia san gu ınea tamb alma amigos andr luis chovas luiz oliveira manaus phelippe melo gordinho raphael russi fernanda cunha biribis igor jales 
+ apesar distˆancia mantiveram presentes juntamente fam ılia 
+ agrade co amigos gradua thiago carneiro mt carol vieram juntamente comigo tentar ganhar vida rio janeiro perseguir ıtulo mestre doutor 
+ obrigado estarem comigo tanto tempo apoiado momentos dif ıceis terras fluminenses assim otimos momentos felizes fundamentais poder ter condi oes trabalhar adequadamente 
+ agradecido pessoas pude conhecer vivˆencia lncc algo importante mim principalmente amigos dividi aparta mento enquanto morava petr opolis caio padoan lucas anjos oscar neiva 
+ agrade co tamb natasha paiva ana nascimento amizade jo gatinas 
+ amigo arlon gr egori conversas toda divers estar presen ca 
+ suelen rocha thiago machado juliano deividy julianel felipe figueredo heber rocha marcos teixeira galera nordeste 
+ daiana barreiro amizade companhia estudo longo primeiro ano 
+ vitor sales leandro tavares trocas ideias conselhos enquanto representante discente lncc 
+ demais colegas comp oem vii corpo discente obrigado convivˆencia 
+ agrade co todos professores disciplinas quais passei conso lidarem conhecimentos fundamentais tanto elabora deste trabalho trabalhos futuros 
+ funcion ario lncc secret aria pessoal limpeza help desk deixo sinceros agradecimentos 
+ fim agrade co agˆencia nacional petr oleo natural biocom bust ıveis anp fomento fornecido possibilitando realiza deste trabalho 
+ viii resumo disserta apresentada lncc mcti parte requisitos necess arios obten grau mestre ciˆencias 
+ modelagem computacional acoplamento hidrogeomec ˆanico reservat orios aoconvencionais diego tavares volpatto junho orientador arcio arab murad 
+ sc coorientador eduardo ucio mendes garcia 
+ presente trabalho objetiva constru novo modelo acopla mento hidromecˆanico reservat orios 
+ aspecto inovador modelo proposto reside natureza sequencial acoplamento caracterizado decom posi operador acoplado levando surgimento termos fonte subsistemas hidrodinˆamica geomecˆanico 
+ comparado formula completamente acoplada onde dois sistemas resolvidos simultaneamente formula proposta permite ado diferentes passos tempo extens natural descrever rochas adjacentes reservat orio produtivo sofre carˆencia estabilidade zonas imperme aveis forma geol ogica 
+ formu la proposta baseada algoritmo fixed stress split apresenta propriedade ser incondicionalmente est avel processo iterativo adotado resolu dois subsistemas 
+ formula sequencial discretizada etodo galerkin aliada algoritmo ponto fixo tratar aolinearidades presentes equa estado acoplamento dois subsistemas 
+ simula oes ericas realizadas ilustrar efeitos geomecˆanicos sobre produ reservat orios convencionais folhelho 
+ compara oes formula oes umavia duasvias comumente discutidas geomecˆanica ix reservat orios apresentadas 
+ abstract dissertation presented lncc mcti partial fulfillment requirements degree master sciences 
+ computational modeling hydrogeomechanical coupling unconventional gas reservoirs diego tavares volpatto june advisor arcio arab murad 
+ sc coadvisor eduardo ucio mendes garcia 
+ present work aims constructing new sequential hydromechanical model gas reservoirs 
+ new aspect proposed model lies derivation new source terms subsystems hydrodynamics geomechanics 
+ compared fullycoupled formulation two systems solved simultaneously proposed formulation allows explore difference timescales two phenomena 
+ addition sequential formulation naturally extended treat impermeable adjacent rocks overcomes problem lack stability impermeable regions geological formation 
+ formulation proposed based fixed stress split algorithm unconditionally stable iterative procedure coupling two subsystems 
+ continuum problem discretized galerkin method coupled fixed point algorithms handle nonlinearities present equation state gas coupling two subsystems 
+ numerical simulations performed illustrate influence geomechanical effects upon gas production 
+ comparisons well known one twoway formulations also presented 
+ xi sum ario introdu revis poroelasticidade linear 
+ equa oes governantes 
+ formula totalmente acoplada 
+ formula iterativamente acoplada 
+ acoplamento iterativo deforma oes fixadas 
+ acoplamento iterativo tens oes fixadas 
+ geomecˆanica reservat orios 
+ formula totalmente acoplada 
+ formula iterativamente acoplada 
+ formula variacional aproxima elementos finitos 
+ conclus oes referˆencias bibliogr aficas apˆendice equa estado 
+ equa oes estado ubicas gen ericas 
+ equa pengrobinson modificada 
+ xiii lista figuras figura 
+ resumo tipos reservat orios baseado brasil 
+ produ natural aoconvencional tipo bilh oes metros ubicos retirado iea 
+ oferta interna energia retirado epe 
+ bacias sedimentares brasileiras lucchesi 
+ microestrutura meio poroso saturada unica fase fluida 
+ esquemas completamente acoplado iterativamente acoplado kim 
+ dependˆencia fator compressibilidade press calculado diferentes equa oes estado 
+ exemplo erico idealizado forma geol ogica 
+ condutividade hidr aulica fun press valores pa rametrizados porosidade sg 
+ · − · κ · − 
+ figura ilustrativa po cos horizontais perfurados profundidades diferentes mesma forma geol ogica 
+ faixas verticais escolhidas ilustrar perfis campos hidro mecˆanicos resultados extremo esquerdo centro extremo direito 
+ faixas horizontais escolhidas ilustrar perfis campos hidro mecˆanicos resultados fundo meio topo 
+ perfil press tira caso 
+ fluxo assico tira caso 
+ comparativo produ caso bs 
+ perfil press tira profundidade po co 
+ perfil press tira profundidade po co 
+ perfis deslocamento uy longo faixa vertical parametriza tempo 
+ perfil componentes σyy campos tens longo faixa vertical parametrizados tempo 
+ perfil componentes σxx campos tens longo faixa 
+ dom ınio ocupado folhelho 
+ vertical parametrizados tempo 
+ evolu temporal campo tens edia total normal cid σt 
+ evolu termo fonte −sgpα ∂ cid σt ∂t dom ınio ocu 
+ termo fonte −sgα 
+ · − · ∂ cid σt ∂t caso fluido pado folhelho 
+ ligeiramente compress ıvel 
+ comparativo produ caso ms 
+ ilustra propriedades moleculares captadas λ λ valores elevadas intensidades adaptado hosseinifar jamshidi 
+ xv lista tabelas tabela 
+ valores parˆametros equa oes estado smith al 
+ parˆametros inerentes dois campos utilizados simula oes 
+ parˆametros utilizados implementa computacional 
+ valores parˆametros equa oes estado adaptado smith al 
+ atribui valores constantes equa estado proposta hosseinifar jamshidi 
+ xvi cap ıtulo introdu panorama energ etico mundial petr oleo natural respons aveis consider avel parcela matriz energ etica possuindo valores expressivos tanto demanda quanto recursos dispon ıveis bp company 
+ estudos repor tados agˆencia internacional energia iea tˆem mostrado proje oes indicam aumento demanda global fontes pr oximas ecadas 
+ suprir iminente necessidade energ etica novas formas extra tˆem sido empregadas ind ustria al ecnicas convencionais arenitos 
+ neste contexto contr ario reservat orios convencionais encontrase ar mazenado rocha geradora exibe baix ıssima permeabilidade ordem nanodarcys 
+ tornar produ economicamente vi avel fazse necess ario emprego ecnicas estimula recupera avan cada hefley wang speight 
+ apresentamos breve resumo sobre fontes petr oleo dispon ıveis explora 
+ cen ario atual reservat orios aoconvencionais tˆem tornado fontes alternativas importantes suprimento necessidades energ eticas sociedade 
+ recentemente produ aoconvencional crescido substancialmente sendo considerada altamente promissora fonte alternativa hidrocarbonetos 
+ cen ario atual estimado pr oximos anos acordo iea est ilustrado figura 
+ brasil matriz energ etica assemelha cen ario global 
+ resumo tipos reservat orios baseado brasil 
+ produ natural aoconvencional tipo bilh oes metros ubicos retirado iea 
+ respons avel terceira maior parcela oferta energia interna pa ıs figura 
+ tange recursos convencionais alves estima reserva folhelhos forma irati bacia paran 
+ trilh oes metros ubicos equivalente vezes valor reservas brasileiras atuais 
+ autor ainda salienta devemos considerar reservas ainda estimadas bacias solim oes amazonas parna ıba parecis francisco potiguar recˆoncavo dentre outras localiza ilustrada figura 
+ oferta interna energia retirado epe 
+ ressaltar todas vi aveis economicamente tendo vista necessidade log ıstica emprego ecnicas estimula tais fraturamento hidr aulico 
+ neste contexto forma oes consideradas atrativas economicamente recˆoncavo tucano sul sergipealagoas potiguar embora reservas necessitem serem precisamente avaliadas 
+ bacias sedimentares brasileiras lucchesi 
+ desde ecada arios autores propuseram diversos modelos ericos objetivando simula hidrodinˆamica reservat orios petr oleo 
+ trabalhos grande destaque elaborados peaceman aziz settari consolidaram modelos cl assicos blackoil chamados composicionais sendo base muitos simuladores comerciais atualmente 
+ modelos computacionais cl assicos descrevem hidrodinˆamica transporte multif asico reservat orios convencionais abordados apresentando ampla classe etodos ericos comumente reportados literatura 
+ modelos computacionais amplamente utilizados simula reserva orios incorporam efeitos geomecˆanicos unicamente atrav es conceito pressibilidade rocha 
+ tal representa assume estacionaridade tens total captura natureza transiente tens total oriunda processo extra murad al 
+ porosidade responde unicamente altera oes poropress portanto efeitos dilatˆancia rocha induzidos tens oes cisalhamento desprezados 
+ visando obten modelos hidrogeomecˆanicos sofisticados formula oes completamente acopladas amplamente utilizadas solos biot tˆem sido estendidas simula reservat orios 
+ tais mula oes exibem desvantagem serem computacionalmente custosas al apresentarem problemas estabilidade regi oes baixa permeabilidade kim murad loula settari mourits imposi unico passo tempo restri severa inclus forma oes adjacentes produto ras imperme aveis 
+ superar dificuldades trabalhos pioneiros relacionados constru formula oes sequenciais propostos settari mourits settari walters 
+ formula oes totalmente acopladas resolvem diversos problemas ısicos unico sistema enquanto formula oes sequenciais resolvem subsistemas comunicam si meio termos fonte oriundos reformula oes equa oes originais 
+ ultimas possuem vantagens tange custos computacionais devido decomposi fenˆo menos subsistemas iterativamente acoplados al serem aceis aplicar simuladores cl assicos subsistemas ısicos separadamente fornecendo tamb vantagem utiliza escalas tempo distintas subsistemas murad al 
+ partir settari mourits arios esquemas sequenciais propostos descrever incorporar efeitos geomecˆanicos sobre escoamento 
+ utilizando teoria linear proposta biot posteriormente desenvolvida coussy meios porosos saturados fluidos comportamento constitutivo linearizado erie modelos reportados literatura con siderando acoplamento hidrogeomecˆanico utilizando algoritmos sequenciais iterativos kim al 
+ kim mikeli al 
+ mikeli wheeler murad al 
+ neste cen ario diferentes metodologias sequenciais ite rativas desenvolvidas baseandose congelamento diferentes termos balan co massa 
+ dentre destacamos drained undrained splits bem fixed strain fixed stress splits kim mikeli al 
+ cada estrat gia sequencial baseiase diferentes formas algoritmo ponto fixo utilizado resolu acoplamento 
+ diferentes formas acoplamento encontramse bem discutidas literatura caso linear matriz el astica fluidos ligeira mente compress ıveis 
+ dentre algoritmos sequenciais iterativos abordagem tens oes fixadas fixed stress split apresenta comportamento incondicional mente est avel kim al 
+ kim raz iremos abordala presente trabalho caso aolinear fluidos compress ıveis 
+ estrat egia incorpora termo adicional advindo compressibilidade rocha subsis tema hidrodinˆamico aliado termo fonte oriundo evolu temporal tens oes normais totais edias matriz porosa 
+ efeito considerado acoplamento denominado duasvias 
+ caso contr ario recebe terminologia acoplamento umavia benra al 
+ cen ario reservat orios convencionais trabalhos reportando efeitos geomecˆanicos sobre produtividade via esquemas iterativos fixed stress split ainda inexistentes 
+ objetivo deste trabalho preencher lacuna 
+ propomos aqui nova formula aolinear utilizando equa oes estado gases reais descrever hidrodinˆamica conjun geomecˆanica baseada elasticidade linear rocha dando origem subsistemas fracamente acoplados equa oes diferenciais parciais 
+ problema resultante discretizado etodo elementos finitos dom ınio espacial etodo euler impl ıcito evolu temporal 
+ ilustrar potencial modelo proposto realizadas simula oes ericas problemas extra baseado campos reais situados estados unidos barnett marcellus shale 
+ neste cen ario comparados resultados ericos obtidos formula oes umavia duasvias caso matriz ıgida 
+ discutimos subsequentemente situa oes onde efeito geomecˆanico deve ser incorporado cˆomputo produ bem exemplos onde formula umavia exibe fontes ericas massa levando deterioriza qualidade curvas produ 
+ estrutura disserta come caremos enunciando teoria poroelasticidade linear vigente cap ı tulo 
+ ent desenvolveremos nova formula geomecˆanica reservat orios cap ıtulo 
+ posse modelos cap ıtulo enunciamos formula variacional aproxima elementos finitos modelo edito cap ı tulo 
+ cap ıtulo realizamos estudo casos simula oes computacionais avaliamos efeitos geomecˆanica comportamento compress ıvel comportamento reservat orio 
+ fim apresentamos conclus oes 
+ cap ıtulo revis poroelasticidade linear compreendermos melhor dificuldades inerentes geomecˆanica servat orios suma importˆancia revisamos detalhadamente constru teoria poroelasticidade linear proposta biot elucidada poste riormente coussy cheng 
+ posse destes conceitos refrasealos contexto formula oes inovadoras propostas elucidamos clara mente dificuldades estender modelo caso aolinear 
+ problema abordado consiste movimento fluido levemente press ıvel meio poroso el astico linear sob hip otese pequenas deforma oes ausˆencia efeitos ermicos gravitacionais 
+ consideramos hip otese escoa mento monof asico onde fluido preenche espa cos intersticiais matriz porosa figura 
+ microestrutura meio poroso saturada unica fase fluida 
+ modelagem problema efetuada escala darcy laborat rio onde fases olida fluida coexistem sendo caracterizadas propriedades edias pontuais associadas elemento representativo volume erv 
+ nesta escala contr ario caso matriz ıgida onde defini porosidade unica extens deste conceito meios deform aveis trivial surge atre lada referencial euleriano lagrangeano adotado 
+ acordo coussy denotando vp volume poros pororidades lagrangeana euleriana definidas respectivamente φ vp vt vp vt 
+ onde vt vt denotam respectivamente volumes totais erv configura oes referˆencia atual 
+ distin dois conceitos fundamental representa equa oes conserva 
+ literatura corrente escoamentos meios porosos temse adotado porosidade euleriana enquanto area geomecˆanica reservat orios lagrangeana consiste vari avel natural obten dados experimentais zoback 
+ sendo dvp φdvt ndvt denotando det dvt dvt jacobiano gradiente deforma podemos relacionar porosidades forma coussy φ jn 
+ sob hip otese pequenas deforma oes contexto teoria linearizada ∇ · 
+ onde denota campo deslocamentos matriz porosa 
+ caso meios incompress ıveis implica φ 
+ massa espec ıfica real fluido satura poros dada ρf mf vp 
+ onde mf quantidade massa fluida contida poros erv 
+ massa espec ıfica aparente leva considera volume total elula porosa 
+ ent ρap mf vt vp vt × mf vp φρf 
+ grandeza desempenha papel fundamental poromecˆanica coussy conte udo massa fluido unidade volume lagrangeano fluido forma mf φρf ≡ ρap 
+ equa oes governantes ausˆencia troca massa fases olida fluida fun conte udo massa lei conserva massa dada coussy ∂mf ∂t onde cid ρf vf ∇ · cid cid vf − cid vf 
+ representa velocidade percola fluido vf relativa movimento olido 
+ alternativamente representa euleriana balan co massa dada nρf −∇ · cid nρf vf cid −∇ · cid cid − ∇ · nρf ρf vf ∂ ∂t ausˆencia efeitos gravitacionais velocidade percola fluido descrita lei darcy bear bachmat forma −kf∇p vf 
+ onde kf denota condutividade hidr aulica meio 
+ fecharmos modelo hidrodinˆamico necessitamos postular lei constitutiva conte udo massa mf 
+ contexto teoria linearizada pequenas perturba oes rela estado inicial coussy mf ρ cid cid cid cid α∇ · drained ρ cid undrained − cid cid cid 
+ onde ρ designam massa espec ıfica conte udo massa press estado inicial referˆencia 
+ lei constitutiva acima incorpora forma precisa comportamento meio poroel astico saturado 
+ primeiro termo descreve resposta drenada sistema quantifica varia conte udo fluido induzida puramente deforma volum etrica matriz perme avel ∇ · permite sa ıda en trada fluido amostra 
+ segundo termo representa resposta conte udo massa aodrenada sistema selada escape fluido 
+ nesta configura varia mf puramente induzida compressibilidades fluido gr comp oem matriz porosa 
+ parˆametros α fundamentais teoria poroelasticidade sendo representados forma biot willis α − ks φ kf α − φ ks 
+ onde ks kf representam respectivamente odulos volum etricos matriz porosa gr olidos fluido 
+ parˆametro α α ∈ ≤ α ≤ denominado coeficiente biotwillis representa raz diferen ca mf−m deforma volum etrica 
+ gr incompress ıveis ks α → implica quantidade fluido extra ıdo amostra exatamente igual varia volume desta 
+ gr compress ıveis α implicando conte udo fluido extra ıdo menor varia volume 
+ parˆametro incorpora efeitos duas compressibilidades locais processo aodrenado 
+ primeiro termo representa compressibilidade fluido kf ∞ enquanto segundo gr olidos ks ∞ 
+ gr fluido localmente incompress ıveis → ∞ kf → ∞ ks → ∞ conduz 
+ maneira aloga coussy postula rela constitutiva line arizada porosidade lagrangeana baseado teoria desenvolvida biot φ φ α∇ · − φ porosidade lagrangeana inicial α − φ ks 
+ importante ressaltar parˆametro incorpora parcela coe ficiente 
+ levando conta somente compressibilidade gr olidos 
+ rela tempo obtemos ∂mf ∂t ρ α∇ · ρ ∂p ∂t ∂u ∂t 
+ inserindo resultado acima 
+ ∇ · cid ρf vf cid α∇ · ρ ρ ∂p ∂t linearizando termo fluido tomando ρf ≈ ρ vem ∂p ∂t α∇ · ∇ · vf 
+ equa acima representa balan co massa mistura olidofluido formula completamente acoplada teoria poroelasticidade linear 
+ completarmos modelo hidrogeomecˆanico necessitamos enunciar balan co momento linear 
+ tanto ser utilizado base conceito tens oes efetivas introduzido terzaghi estendido posteriormente biot 
+ tensor tens oes total σt meio poroso decomposto forma biot σt σ − αpi 
+ tensor identidade σ tensor tens oes efetivas governa deforma matriz porosa dado lei hooke σ σ cε 
+ onde σ tens residual configura referˆencia odulo elasticidade representado caso isotr opico forma cijkl μ δikδjl δilδjk λδijδkl onde μ λ denota par constantes lam deforma linearizada dada ε ∇su trε ∇ · onde ∇s denota parte sim etrica operador gradiente 
+ ausˆencia efeitos gravitacionais equil ıbrio mistura olidofluido governado ∇ · σt substituindo 
+ obtemos ∇ · σ α∇p 
+ formula totalmente acoplada posse equa oes governam hidrodinˆamica geomecˆanica meio poroso podemos escrever formula totalmente acoplada caso onde meio homogˆeneo isotr opico 
+ ωb ∈ rd dom ınio ocupado meio poroso sa turado fluido ligeiramente compress ıvel 
+ dado conjunto constantes kf λ μ α ∈ achar campos vf φ ∈ ωb ∈ tf inal satisfazendo σ  α∇ · ∇ · vf ∂p ∂t −kf∇p vf ∇ · σt σt σ − αpi σ σ λ ∇ · με cid ∇u ∇u cid − ε φ φ α∇ · ωb 
+ condi oes iniciais pres ∇ · ωb condi oes contorno  · sobre γh vf sobre γh pw sobre γg σt · sobre γg sendo ∂ω γ γh ∪ γh γg ∪ γg ∩ γh γh ∅ ∩ γg γg ∅ onde γh γh parti oes fronteira dirichlet neumann γh assu mido imperme avel respectivamente 
+ analogamente γg γg parti oes fronteira dirichlet neumann problema geomecˆanico respectivamente denota carregamento aplicado sobre reservat orio 
+ alternativamente podemos enunciar formula termos vari aveis potenciais press deslocamento dando origem bem conhecida formula problema totalmente acoplado dado conjunto constantes kf λ μ α ∈ achar par ∈ ωb ∈ tf inal satisfazendo  μ∆u λ μ ∇ ∇ · − α∇p α∇ · kf ∆p ∂p ∂t ωb 
+ sujeito condi oes contorno iniciais 
+ efeitos compara formula sequencial apresentada guir podemos ilustrar procedimento resolu totalmente acoplada conside rando operador af forma obten evolu solu pode ser descrita forma kim  af c−−→ un pn un pn   ∂p ∂t α∇ · ∇ · vf onde af ∇ · σt 
+ nt ındice associado cada passo tempo discretiza temporal 
+ desta forma solu oes press deslocamento obtidas partir resolu unico sistema cada passo tempo 
+ formula iterativamente acoplada tal mencionado anteriormente modelos totalmente acoplados pos suem elevado custo computacional devido resolu problema envolvendo matriz muitos casos aolinear cujas entradas incorporam simultanea mente todas vari aveis envolvidas 
+ dependendo natureza dessa matriz eto ericos espec ıficos podem ser explorados resolu cada subsistema 
+ exemplo hidrodinˆamica exibe aolinearidades ser necess ario ado etodo sistemas aolineares geomecˆanica linear condu zindo alto custo computacional 
+ formula oes sequenciais acopladas forma expl ıcita iterativa possuem vantagem nesse ponto vez cada sistema resolvido separamente sendo poss ıvel resolu subsistema hidrodinˆamico aolinear adi custos computacionais obten solu erica elasticidade linear 
+ contexto acoplamentos iterativos dificuldade contornada decomposi operador sistema dois operadores asso ciados hidrodinˆamica geomecˆanica kim al 
+ outro aspecto importante formula totalmente acoplada ado certas combina oes espa cos aproximantes press deslocamento pode levar instabilidades ericas gerandos nodos esp urios campo press murad loula 
+ al disto montagem unico sistema acoplado imp oe unica escala tempo fenˆomenos ocorrem escalas distin tas 
+ tal desvantagem pode ser contornada via ado formula oes parcialmente acopladas 
+ problemas reservat orios incorporam geomecˆanica ro chas adjacentes formula totalmente acoplada pode tornar ineficaz devido impermeabilidade rochas adjacentes deteriora qualidade aproxima hidrodinˆamica 
+ acordo settari walters principal ideia tr mula oes sequenciais reformula acoplamento hidrodinˆamica ge omecˆanica forma permitir utiliza simuladores tradicionais cada destes subsistemas resolvendoos separadamente cada passo tempo 
+ acur acia comparada sistema totalmente acoplado mantida subsistemas suficientemente iterados convengˆencia tolerˆancia prescrita 
+ acoplamento iterativo proposto settari walters consiste obten sequencial solu oes subsistemas hidrodinˆamico geomecˆa nico forma iterativa passo tempo satisfeito crit erio convergˆencia 
+ ilustra diferen cas esquemas totalmente acoplado ite rativamente acoplado 
+ esquema iterativamente acoplado certo passo tempo primeiramente resolvemos problema hidrodinˆamico subsequen temente geomecˆanico comunica regida meio termos fontes 
+ ap convergˆencia procedimento adotado tempos seguintes 
+ esquemas completamente acoplado iterativamente acoplado kim 
+ tal mencionado anteriormente diferentes estrat egias acoplamento tˆem sido propostas literatura quais principais expostas kim al 
+ kim kolesov al 
+ mikeli wheeler settari walters 
+ neste trabalho discutiremos duas formas amplamente conhecidas saber fixedstrain split fixedstress split kim al 
+ acoplamento iterativo deforma oes fixadas forma sequencial acoplamento discutida literatura consiste fixar processo iterativo taxa varia temporal deforma oes volum tricas presente hidrodinˆamica 
+ esquema conhecido fixedstrain split kim al 
+ apresentar formula resultante recordamos equa hidrodi nˆamica 
+ onde ∂p ∂t α∇ · ∇ · vf α∇ · α ∂ ∂t ∇ · cid cid cid cid εv α ∂ εv ∂t εv tr ε representa deforma volum etrica matriz porosa 
+ logo ∂p ∂t α ∂ εv ∂t ∇ · vf 
+ utilizada abordagem fixedstrain split termo derivada poral deforma oes volum etricas 
+ fixado itera oes subsistema hidrodinˆamico utilizando valores explicitamente calculados previamente 
+ desta forma termo possui valor conhecido itera oes hidrodinˆamica sendo tratado fonte massa lei conserva 
+ logo ∂pi ∂t ∇ · vf −α ∂ εi ∂t 
+ denota ındice associado processo iterativo 
+ subsistema geomecˆanico vez computado campo press gradiente decomposi 
+ tratado termo fonte problema elasticidade linear 
+ portanto ∇ · σi α∇pi 
+ logo podemos decompor problema acoplado dois subsistemas hidrodinˆamica outro geomecˆanica 
+ fomula iterativamente acoplada fixedstrain split ωb ∈ rd dom ınio ocupado meio poroso sa turado fluido ligeiramente compress ıvel 
+ dado conjunto constantes kf λ μ α ∈ cada 
+ inal ∈ achar campos σ φ ∈ ωb ∈ tf inal satisfazendo vf  hidrodinˆamica ∂ εi ∂t ∂pi −α ∇ · vf −kg∇pi ∂t vf tr ε cid ui cid εi  geomecˆanica ∇ · σi α∇pi σi σ λ∇ · uii με cid ui cid cid pi − cid φi φ α∇ · ui 
+ mesmas condi oes contorno iniciais aplicadas formula totalmente acoplada mantidas 
+ inicializa atribuimos εi εi levando fonte nula 
+ neste contexto geomecˆanica fornece termo taxa deforma edia hidrodinˆamica enquanto subsistema fornece gradiente press desempenha papel fonte externa decomposi tens oes efeti vas 
+ termo incorpora taxa deforma subsistema hidrodinˆamico advindo itera anterior subsistema geomecˆanico 
+ algoritmo descreve procedimento iterativo subsistemas dado passo tempo 
+ algoritmo algoritmo sequencial taxa deforma oes fixadas 
+ ıcio ← enquanto crit erio convergˆencia satisfeito fa ca ent ← εi εi resolva sistema linear pi hidrodinˆamica dado pi resolva ui σi geomecˆanica calcule εi εi ← φi procedimento resolu pode ser descrito partir decomposi operador abordado kim al 
+ aplicado caso mostrado seguir 
+  ap sn−−→ ui pi  u∗ pi  au sn−−→ ui pi  onde ap sn hidrodinˆamica δ εv au sn geomecˆanica prescrito 
+ δ εv significa εv calculado explicitamente 
+ importante ressaltar algoritmo deteriora rapidamente caso incom press ıvel onde levando termo acumula nulo equa press 
+ consequˆencia tal algoritmo sequencial condicionamente est avel kim 
+ qualidade resultado depende fortemente fator pon dera utilizado evolu temporal problema bem magnitude coeficientes envolvidos kim al 
+ acoplamento iterativo tens oes fixadas formula iterativamente acoplada tens oes fixadas consiste man ter constante taxa tens edia total subsistema hidrodinˆamico kim al 
+ contr ario algoritmos baseados fixedstrain split deriva acoplamento requer manipula sistema equa oes 
+ fim retornamos equa balan co massa ∂p ∂t α∇ · ∇ · vf conjun princ ıpio tens oes efetivas σt σ − αpi σ σ λ ∇ · με 
+ total tomando tra co 
+ definimos edia autovalores tens cid σt cid σ tr σ tr σt cid σ − αp cid cid cid cid λ μ cid cid ∇ · cid σ 
+ onde odulo volum etrico matriz porosa 
+ derivando rela tempo vem ∂ cid σt ∂t ∇ · α ∂p ∂t substituindo 
+ obtemos cid cid ∂p ∂t α ∇ · vf − α 
+ ∂ cid σt ∂t contr ario abordagem anterior presente contexto explicita claramente conceito compressibilidade total zimmerman surge coefici ente termo derivada press rela tempo 
+ note termo acumula deteriora caso incompress ıvel vez pressibilidade matriz α preservada 
+ podemos interpretrar coeficiente derivada temporal press compressibilidade total βt dada βt α 
+ compressibilidade total incorpora duas parcelas advinda compres sibilidade matriz relacionada odulo volum etrico segundo termo associado odulo biot incorpora compressibilidades gr fluido 
+ posse compressibilidade total podemos analisar precisamente casos incompress ıveis particulares 
+ gr olidos incompress ıveis neste caso ks → ∞ α → ∴ → portanto βt φ kf 
+ onde apenas termos relacionados compressibilidade fluido φ kf parcela advinda matriz contribuem βt 
+ fluido gr incompress ıveis neste cen ario kf → ∞ consequentemente φ kf → 
+ dessa forma βt 
+ onde βt incorpora somente compressibilidade matriz 
+ matriz fluido incompress ıveis nesta situa → ∞ levando βt 
+ reflete elevada rigidez esqueleto poroso ausˆencia compres sibilidade 
+ assim podemos enunciar formula iterativamente acoplada baseado fixedstress split 
+ fomula iterativamente acoplada fixedstress split ωb ∈ rd dom ınio ocupado meio poroso sa turado fluido ligeiramente compress ıvel 
+ dado conjunto constantes kf λ μ α ∈ cada 
+ inal ∈ achar campos σ φ ∈ ωb ∈ tf inal satisfazendo vf   cid α cid ∂pi hidrodinˆamica ∇ · vf ∂t ∂ cid σi ∂t − α −kf∇pi vf cid σi k∇ · ui − αpi geomecˆanica ∇ · σi α∇pi σi σ λ∇ · uii με cid ui cid cid pi − φi φ α∇ · ui 
+ cid sendo ındice associado itera oes cada subsistema 
+ mesmas condi oes contorno iniciais aplicadas formula completamente acoplada utilizadas assim abordagem fixedstrain split cada subsistema resolvido 
+ primeiro passo tempo hidrodinˆamica resolvida formula umavia onde fonte 
+ anula tornando cid σi cid σi ∂t α∇p cid paradamente acoplamento realizado partir termos fontes cid α ∂ cid σt  ap ui ss hidrodinˆamica δ cid σt calculados explicitamente partir outro subsistema 
+ abordagem pode ser representada quebra operador kim al 
+ seguinte forma  u∗  au ss−−→ ss−−→ onde ui pi  
+ ap pi pi au ss geomecˆanica prescrito 
+ δ cid σt significando taxas tens oes volum etricas totais mantidas constantes itera oes subsistema hidrodinˆamico calculadas explicitamente 
+ dado passo tempo realizadas itera oes primeiro resolvido subsistema hidrodinˆamico subsequentemente geomecˆanico 
+ ite ra oes internas determinado passo tempo ocorrem satisfeito crit erio convergˆencia estabelecido 
+ algoritmo enunciado seguir descreve procedimento iterativo 
+ algoritmo algoritmo sequencial taxa tens oes edias fixadas 
+ ıcio ← enquanto crit erio convergˆencia satisfeito fa ca aproxima cao umavia primeira ent itera cao hidrodinamica cid σi cid σi calcule via esquemas osprocessamento cid σi resolva sistema linear pi hidrodinˆamica dado pi resolva ui σi geomecˆanica ← φi diferentemente abordagem fixedstrain split fixedstress split incon dicionalmente est avel kim al 
+ mikeli wheeler sido preferencialmente empregado 
+ raz adotaremos presente traba lho abordagem 
+ seguir propomos generaliza desta formula caso fluido altamente compress ıvel equa oes estado elevado teor aolinearidades ocorre caso reservat orios 
+ cap ıtulo geomecˆanica reservat orios cap ıtulo anterior apresentamos teoria acoplamento hidrogeomecˆanico linearizada contexto pequenas perturba oes descrever fluidos ligeira mente compress ıveis 
+ caso ıquidos tal lineariza deteriora substanci almente qualidade modelo 
+ gases onde efeitos compressibilidade bem pronunciados tal hip otese aproxima adequadamente conhe cidas equa oes estado car ater altamente aolinear kondepudi prigogine smith al 
+ contexto formula oes totalmente acopladas teorias geomecˆanica meios porosos el asticos saturados fluidos altamente compress ıveis en contram bem estabelecidas fan al 
+ outro lado desenvolvimentos contexto formula oes iterativamente acopladas ainda inexistentes 
+ principal objetivo aqui preencher acuo 
+ constru modelo nesta desenvolvemos equa oes governantes descrevem movi mento meio poroso el astico parcialmente saturado agua estagnada 
+ presen ca desta agua motivada aplica oes shale gas onde poros encontramse parcialmente preenchidos agua advinda fratu ramento hidr aulico 
+ consideramos fases aquosa gasosa imisc ıceis assim efeitos capilares desprez ıveis 
+ analogamente cap ıtulo anterior incorporando agora poss ıvel presen ca agua balan co massa fase fluida dado chen φsgρg ∇ · ρgvg ∂ ∂t 
+ onde ρ massa espec ıfica vd velocidade darciana satura φ po rosidade lagrangeana matriz olida 
+ subescrito denota propriedade correspondente associada fase 
+ fluidos compress ıveis desprezando contribui oes gravitacionais lei darcy representada termos fluxo assico jg ρgvg −ρgk φ ∇p 
+ φ condutividade hidr aulica fluxo volum etrico atrav es permeabilidade relativa depende tamb satura 
+ simplificar nota omitiremos dependˆencia considerando valor fixo sg 
+ balan co massa combinado lei darcy pode ser reescrito forma φsgρg − ∇ · ∂ ∂t ρg ∇p φ μg cid cid 
+ analogamente cap ıtulo anterior conte udo massa estendido incorporar satura agua meio denotado mg φsgρg 
+ devido alta compressibilidade lineariza conte udo massa representa adequadamente comportamento 
+ obtermos modelo acurado equa press necessitamos postular equa oes estado adequadas danesh kondepudi prigogine smith al 
+ equa oes estado tˆem sido objeto estudo campo termodinˆamica vez fornecem rela oes experimentais quantificam dependˆencia press volume temperatura composi oes pvtx danesh smith al 
+ forma geral representamos dependˆencia propriedades termodinˆamicas fluido bulk forma pv znrt 
+ onde press fluido fator compressibilidade umero moles constante gases temperatura absoluta 
+ fator compressibilidade medida quantifica desvio portamento rela idealidade 
+ regime onde comporta ideal desconsidera existˆencia efeitos intermoleculares part ıculas sendo press advinda apenas energia cin etica destas smith al 
+ fator compressibilidade incorpora efeitos correla part ıculas associadas cas repuls atra 
+ caso comportamento pr oximo idealidade → pv → nrt descreve precis faixa valores press baixos forma intera oes moleculares praticamente inexistentes energia interna fluido depende exclusivamente temperatura 
+ faixas valores press reservat orios petr oleo elevadas forma invalidar hip otese 
+ pode ser escrita forma ρ zrt 
+ ρ nm onde massa molar 
+ tornase poss ıvel relacionar massa espec ıfica press temperatura desde dependˆencia fator compressibilidade press conhecida 
+ desde van der waals arias equa oes estado postuladas aprimo radas valderrama fazendo uso diversas abordagens tais expans oes tipo virial equa oes ubicas equa oes baseadas modelos mole culares 
+ neste trabalho adotamos equa oes ubicas estado relativa facilidade estimar propriedades termodinˆamicas al possuir boa acur acia gases puros peng robinson redlich kwong soave 
+ acordo smith al 
+ equa estado ubica pode ser representada forma geral rt − − b ςb 
+ onde  ς constantes denota volume molar espec ıfico constante denominada covolume parˆametro quantifica atra oes inter moleculares hosseinifar jamshidi valderrama 
+ dependˆencia temperatura est fortemente relacionada forma equa es tado 
+ pode ser interpretada decompondo press componentes repulsivo outro atrativo prep patt onde prep rt − patt − b ςb 
+ sendo prep patt componentes associadas repuls oriunda impenetrabili dade mol eculas ıgidas esferas duras atra devido cas van der waals respectivamente 
+ exposto procedimento geral determina parˆametros equa estado ubica 
+ parˆametros dados ψe αe tr rt pc 
+ ωe rtc pc 
+ onde ψe ωe constantes valores independentes substˆancia determina particularmente cada equa estado partir valores  ς 
+ fun αe tr express constru ıda empiricamente cada equa estado 
+ constantes tc pc denominadas temperatura press cr ıti cas respectivamente enquanto constante tr denota temperatura adimensional definida tr tc 
+ substˆancias puras casos particulares conhecidos 
+ co mumente reportados literatura equa oes danesh smith al 
+ valderrama van der waals vdw van der waals redlich kwong rk redlich kwong soaveredlichkwong srk soave pengrobinson pr peng robinson 
+ apresenta valores parˆametros cada equa es tado 
+ importante salientar existˆencia parˆametro adicional equa oes soaveredlichkwong pengrobinson alculo termos atra deno minado fator acˆentrico denotado ω peng robinson pitzer soave 
+ estado αe tr ς  vdw rk srk pr αsrk tr ω αp tr ω √ − cid − √ αsrk tr ω αp tr ω 
+ ω cid cid 
+ − cid cid cid − ωe ψe 
+ cid cid tabela 
+ valores parˆametros equa oes estado smith al 
+ equa estado utilizada neste trabalho baseada modelo peng robinson modificado onde fun αe proposta hosseinifar jamshidi 
+ optamos modelo devido precis gases puros hi drocarbonetos faixa temperatura press elevadas 
+ detalhes discuss encontramse apˆendice 
+ ent rt − − amp tbr ω − 
+ αmp tr tbr ω rt pc 
+ rtc pc obter fator compressibilidade caso isot ermico substitu ı mos 
+ fixando tres temperatura reservat orio obter representa fator compressibilidade rt 
+ ıtulo ilustra figura 
+ ilustra fun diferentes equa oes estado 
+ regi press oes baixas todos modelos tendem assin toticamente ideal tal regime caracterizado ausˆencia intera intermoleculares 
+ medida press aumenta intera oes atrativas dominantes tipo van der waals tornam pronunciadas 
+ eleva ainda maior press distˆancia mol eculas diminui intera oes esferas duras tornamse predominantemente repulsivas levando aumento press 
+ posse dependˆencia substituindo 
+ equa hidrodinˆamica pode ser reescrita forma cid cid φ cid ∇p 
+ cid ∂ ∂t φsg − ∇ · μg campo porosidade lagrangeano computado odulo geomecˆanico modelo acima origem equa parab olica aolinear campo figura 
+ dependˆencia fator compressibilidade press calculado diferentes equa oes estado 
+ mesma forma casos anteriores equa oes governam mo vimento olido dadas  ∇ · σt σt σ − αpi σ σ λ ∇ · με − φ φ α∇ · 
+ formula totalmente acoplada podemos agora enunciar formula totalmente acoplada acopla mento hidromecˆanico 
+ atingir objetivo inv es incorporar produto φsgρg conte udo massa mg postular equa linearizada 
+ procede mos aqui decomposi termo acumula 
+ regra derivada produto ent φsg ∂ ∂t cid cid sg ∂φ ∂t − ∇ · cid φ μg cid ∇p 
+ zz metanovdwrksrkprmpr aplicando equa linearizada porosidade 
+ obtemos cid cid φsg ∂ ∂t cid cid ∂p ∂t cid cid cid cid contribui geomecˆanica cid φ cid sg α∇ · −∇ · ∇p μg 
+ formula totalmente acoplada ωb ∈ rd dom ınio ocupado meio poroso poroel tico saturado metano agua estagnada 
+ dado conjunto constantes λ μ sg μg α ∈ assim fun oes φ achar campos σ φ ∈ ωb ∈ tf inal satisfazendo cid vg cid cid cid α∇ · ∇ · vg analogamente cap ıtulo anterior podemos formular problema acoplado termos vari aveis potenciais deslocamento press 
+ ent caso homogˆeneo achar par satisfazendo ∇p φsg ∂p ∂t cid cid ∇ · σ α∇p ∂ sg ∂t −k φ vg μg σ σ λ ∇ · με φ φ α∇ · −   μ∆u λ μ ∇ ∇ · − α∇p cid sujeito condi oes iniciais pres cid φsg ∂ ∂t sg cid ∂p ∂t ∇ · α∇ · ωb 
+ cid − ∇ · cid cid ∇p μg ωb 
+ ∀x ∈ ωb condi oes contorno  · vg pw σt · tt sobre γh sobre γh sobre γg sobre γg seguir apresentamos aspecto inovador tese consiste constru nova formula iterativamente acoplada reservat orios 
+ devido propriedade ser incondicionalmente est avel kim al 
+ kim mikeli al 
+ restringiremos formula iterativa baseada fixed stress split 
+ formula iterativamente acoplada tal mostrado anteriormente subse 
+ abordagem baseada algoritmo fixedstress split fixa taxa tens oes normais edias subsistema hidrodinˆamico constru deste modelo hidrodinˆamico alternativo revisitamos balan co massa forma expandida cid cid cid φsg ∂ ∂t sg α∇ · ∂p ∂t cid − ∇ · cid φ μg cid ∇p 
+ seguindo metodologia discutida kim al 
+ procedemos eliminando taxa deforma volum etrica ∇· balan co massa usando princ ıpio tens oes efetivas 
+ taxa deforma volum etrica dada ∂ cid σt ∂t α ∂p ∂t ∇ · 
+ refraseamos balan co massa forma cid cid φsg ∂ ∂t sg βr ∂p ∂t − ∇ · ∇p −sg α 
+ cid cid φ μg ∂ cid σt ∂t onde compressibilidade total rocha dada βr cid cid cid cid α cid cid cid cid 
+ parcela oriunda compressibilidade gr associado compressibilidade matriz porosa 
+ parcela compressibilidade fluido teoria linear cap ıtulo anterior incorporada conjunto rocha compressibilidade total 
+ exibe agora contribui hidrodinˆamica meio fator compressibilidade aolinear 
+ efeitos geomecˆanicos incor porados hidrodinˆamica interm edio dois termos 
+ oriundo compres sibilidade rocha outro surge fonte advinda intera oes hidrogeomecˆanicas benra al 
+ tal mencionado anteriormente termo anula caso cid σt estacion ario sendo cen ario conhecido formula umavia ocorre precisamente somente caso unidimensi onal exemplo problema compacta coluna proposto terzaghi 
+ tens total quantifica desvio rela caso unidimensional 
+ abordagem baseada fixedstress split termo fonte atrasado computado odulo geomecˆanico 
+ considerando apenas gr incompress ıveis → ks → ∞ α → forma apenas compressibilidade matriz olida contribui βr 
+ ent modelo reduzido cid cid φsg ∂ ∂t sg ∂p ∂t − ∇ · cid φ μg cid ∇p ∂ cid σt ∂t −sg 
+ cen ario particular matriz olida incompress ıvel α → → implica βr → recuperado equa press ıpica meio ıgido onde ∂ cid σt ∂t ∂φ ∂t 
+ logo chen cid cid φsg ∂ ∂t cid cid φ − ∇ · ∇p μg 
+ fomula iterativamente acoplada baseada fixed stress split ωb ∈ rd dom ınio ocupado meio poroso el astico saturado metano agua estagnada 
+ dado conjunto constantes λ μ sg μg α βr ∈ assim fun oes φ 
+ inal ∈ ındice associado itera oes internas subsistemas achar σ φ ∈ ωb ∈ tf inal campos vg satisfazendo  cid pi cid φisg ∂ ∂t pi sg pi pi ∇pi pi −k φi μg vg hidrodinˆamica ∇ · ∂pi βr ∂t cid pi pi cid vg ∂ cid σi ∂t −sg pi pi α  geomecˆanica ∇ · σi α∇pi σi σ λ cid ∇ · ui cid με cid ui cid cid σi cid pi − cid k∇ · ui − αpi φi φ α∇ · ui 
+ subsistemas hidrodinˆamica geomecˆanica surgem acoplados partir termos fonte previamente calculados 
+ hidrodinˆamica surge agora acoplada meio termo taxa tens oes volum etricas total coeficiente linear dependente press −sgpα ∂ cid σt ∂t todas vari aveis atrasadas rela itera atual deste subsistema 
+ primeira itera cada passo tempo resolvemos formula umavia onde fonte anula 
+ subsequentemente ap cˆomputo campo press subsistema geomecˆanico acoplado hidrodinˆamico meio termo ca corpo associado gradiente press α∇p 
+ seguir enunciamos algoritmo descreve procedimento iterativo obten solu dado passo tempo 
+ algoritmo algoritmo sequencial taxa tens oes edias fixadas fluidos altamente compress ıveis determinado passo tempo 
+ ıcio ← enquanto crit erio convergˆencia satisfeito fa ca aproxima cao umavia primeira ent itera cao hidrodinamica cid σi ← cid σi calcule osprocessamento cid σi resolva sistema aolinear pi hidrodinˆamica dado pi resolva ui σi modelo elasticidade linear ← φi aspectos importantes neste trabalho linearidade butida termo fonte 
+ inclui novo coeficiente vez torna acoplamento maior intensidade fontes linearidade 
+ cap ıtulo formula variacional aproxima elementos finitos presente cap ıtulo apresentamos formula variacional aproxima elementos finitos problema forma fixedstress split 
+ discretiza espacial adotamos etodo galerkin enquanto evolu temporal realizada via etodo euler impl ıcito 
+ fim aolinearidades presen tes hidrodinˆamica acoplamento dois subsistemas ser resolvidas meio itera oes ponto fixo picard devido simplicidade necessitar alculo jacobiana associada problema 
+ forma fraca relembrando nota anterior ωb ∈ rd denota dom ınio ocupado reservat orio 
+ introduzimos ent espa cos usuais sobolev ωb fun oes quadrado integr aveis ωb gerados fun oes derivadas sentido fraco quadrado integr avel 
+ denotamos produto interno norma ωb forma cid dx cid cid ωb posse desta nota podemos formular formas fracas cada subsis tema 
+ subsistema hidrodinˆamico recapitulando subsistema hidrodinˆamico consiste dada evolu tens total edia porosidade lagrangeana tempo conjunto parˆametros reais μg sg α βr assim fun oes φ achar campo press satisfazendo cid cid φ ∂ ∂t sg βr ∂p ∂t − ∇ · cid φ μg cid ∇p ∂ cid σt ∂t − α condi oes iniciais contorno  · sobre γh sobre γh pw ∀x ∈ ωb ωb 
+ onde normal unit aria orientada ωb bordo γh pw press prescrita interface fratura fluxo assico press inicial reservat orio 
+ conjunto solu oes admiss ıveis definido cid ∈ ωb uγh cid pw subespa co fun oes testes hidrodinˆamica dado cid ∈ ωb vγh cid 
+ problema forma fraca consiste dada evolu tens total edia porosidade lagrangeana tempo conjunto parˆametros μg sg α βr ∈ assim fun oes φ cada ∈ tf inal achar ∈ tal cid cid vφsg ∂ ∂t ωb cid cid vsg cid cid βr ∂p ∂t − condi inicial ωb cid dωb φ μg ∂ cid σt ∂t dωb ∇p · ∇v dωb ∀v ∈ 
+ ωb vsg α ∀q ∈ ωb 
+ subsistema geomecˆanico forma semelhante introduzimos forma fraca subsistema geomecˆa nico dado ∇p conjunto parˆametros α λ μ ∈ achar campo deslocamentos satisfazendo∇ · σ α∇p sujeito condi oes contorno σt · tt sobre γg sobre γg σ σ λ∇ · ui με 
+ onde tt denota tra prescrita 
+ condi oes dirichlet geomecˆanica denotamos subespa co fun oes vetoriais forma cid ∈ cid ωb cid wγg cid 
+ dada cid cid cid αp∇ · dωb ∀w ∈ 
+ σ ∇w dωb · tt dγ ωb γ ωb onde denota produto interno tensores segunda ordem 
+ forma fraca subsistema geomecˆanico consiste dado ∈ parˆametros λ μ α ∈ cada ∈ tf inal achar ∈ tal cid cid με · ε λ ∇ · ∇ · dωb w·tt dγ ωb γ ωb αp∇·w dωb ∀w ∈ 
+ discretiza temporal considere agora aproxima euler impl ıcito problema parab olico 
+ nt parti eixo temporal ∆t tn − tn passo tempo assumido constante derivadas temporais campo press aproximadas forma cid cid ∂ ∂t cid pn pn − pn pn cid 
+ ≈ ∆t forma similar derivada temporal fonte devido tens edia total ∂ cid σt ∂t ≈ cid σn − cid σn ∆t 
+ valores tens normal previamente conhecidos resolu aproximada forma onde cid σn cid σn odulo geomecˆanico 
+ podemos formular problema discreto tempo dados campos cid σn cid σn φn pn conjunto parˆametros sg μg α βr ∈ assim fun oes φ φ cada tn n∆t 
+ nt achar pn ∈ tal vsg pn pn cid cid cid ∆t ωb cid ωb sgβrv pn ωb pn ∇pn · ∇v dωb cid pndωb φnsgv pn pn dωb φn pn ωb sgβrv μg pn pn pndωb − pn cid ωb φnsgv cid cid σn − cid σn ωb α pn pn cid dωb dωb ∀v ∈ formula geomecˆanica discreta tempo dada dado campo pn ∈ parˆametros λ μ α ∈ cada tn n∆t 
+ nt achar un ∈ tal cid cid με cid un cid · ε λ cid ∇ · un ∇ · cid cid dωb ωb · tt dγ cid cid γ ωb αpn∇ · dωb ∀w ∈ 
+ etodo picard hidrodinˆamica tratar aolinearidades presentes equa press bem advindas acoplamento geomecˆanica adotamos algoritmo lineariza picard 
+ nk ındice associado esquema iterativo lineariza dados campos cid σn φn pn pn juntamente conjunto parˆametros sg μg α βr ∈ assim cid σn fun oes φ cada tn n∆t 
+ achar pn ∈ tal cid cid ∆t ωb cid ωb φn ksgv pn pn dωb φn pn ωb sgβrv μg pn pn pndωb − pn sgβrv pn ωb pn ∇pn · ∇v dωb vsg pn pn ωb cid cid pn kdωb ωb cid cid cid σn cid σn α φn ksgv − cid σn cid pn pn dωb dωb ∀v ∈ 
+ onde adotamos pn pn φn φn cid σn equivalente utilizar formula umavia chute inicial itera oes picard 
+ importante salientar lineariza oes adicionais requeridas presen ca termo fontes comparado formula umavia consequentemente trazendo maior complexidade resolu erica problema 
+ maneira aloga problema geomecˆanico dado campo pn parˆametros λ μ α ∈ cada tn n∆t 
+ achar un ∈ tal cid cid με cid un cid · ε λ cid ∇ · un ∇ · cid cid dωb ωb cid cid γ · tt dγ αpn k∇ · dωb ωb ∀w ∈ 
+ mostra odulo geomecˆanico ser resolvido caso gases ıquidos 
+ tratar duas aolinearidades advindas equa press acoplamento geomecˆanico adotamos inicialmente itera picard hidro dinˆamica seguida resolvemos geomecˆanica informa oes advindas solu pr evia hidrodinˆamica itera picard 
+ ap resolu subsistema geomecˆanico osprocessamento porosidade lagrangeana retornamos nova itera picard hidrodinˆamica solu oes obtidas anterior geomecˆanica 
+ repetese procedimento sa tisfeito crit erio convergˆencia itera oes picard 
+ ap convergˆencia itera oes subsistemas evolu ımos passo tempo seguinte ilustrado figura abaixo 
+ discretiza espacial finalmente consideramos parti dom ınio ωb fam ılia lhas th indexadas parˆametro denotando diˆametro aximo cada ∈ th 
+ seguindo nota cl assica elementos finitos denotamos mentos ωe pk ωe grau menor igual cada coordenada 
+ tomando ≥ definimos espa cos elementos finitos conjunto polinˆomios definidos ωe gerados polinˆomios lagrangeanos cont ınuos cid φh ∈ ωe φhωe ∈ pk ωe ∈ ∀ωe cid ∈ th cid ∈ th 
+ definimos conjunto fun oes vetoriais cid ψh ∈ cid ωe cid ψωe dk ∈ pk ωe ∈ ∀ωe assim uh vh subespa cos dimens oes finitas dados uh ∩ vh ∩ 
+ analogamente denotamos ⊂ subespa co dimens oes finitas campo deslocamento ∩ dk 
+ etodo galerkin valores cid σn cid σn th dados pn pn subsistema hidro dinˆamico conjunto parˆametros sg μg α βr λ μ ∈ assim th φn fun oes φ cada tn n∆t 
+ achar pn ∈ uh un ∈ φn ∈ tal vhsgφn pn pn pn pn pn pn pn α pn vhβrsg vhβrsg vhsg ωb ωb ωb cid − ωb cid cid cid   hidrodinˆamica cid cid cid dωb ∆t ωb dωb pn cid ωb φn μg vhsgφn pn pn pn pn dωb ∇pn · ∇vh dωb pn hdωb cid cid σn th cid − cid σn th dωb ∀vh ∈ vh cid cid cid ωb ωb φn με geomecˆanica un cid · ε wh λ cid ∇ · wh dωb φ α∇ · un cid ∇ · un cid pn ∀wh ∈ wh αpn 
+ cid cid ∇ · wh dωb cid γ wh · tt dγ cid 
+ − algoritmo resume sequˆencia procedimentos adotados solu problema 
+ sistema equa oes inovador nunca tendo sido reportado literatura 
+ consiste primeiros passos aplica algoritmos fixedstress split problemas aolineares associados gases 
+ natureza promissora representar geomecˆanica reservat orios fluido altamente compress ıveis 
+ algoritmo algoritmo sequencial taxa tens oes edias fixadas fluidos altamente compress ıveis forma fraca discreta 
+ ıcio cid σn pn ← ← ← nmax fa ca la co itera coes tempo ← indice itera coes picard enquanto crit erio convergˆencia satisfeito fa ca ent tempo hidrodinamica cid σn ← cid σn primeira itera cao resolva sistema aolinear pn hidrodinˆamica atualize pn ← pn dado pn resolva un σn modelo elasticidade linear atualize un ← un σn ← σn φn ← φn ← pn ← pn efetue cˆomputo via osprocessamento cid σn cid σn ← cid σn ← cid σn cap ıtulo resultados ericos neste cap ıtulo apresentamos resultados ericos obtidos modelo hidrogeomecˆanico proposto fluidos altamente compress ıveis 
+ reservat orio idealizado consiste dois blocos geol ogicos retangulares parados fratura hidr aulica ortogonal po co horizontal onde condi oes dirichlet press prescritas 
+ devido simetria problema dom ı nio computacional ωb consiste fratura hidr aulica tratada interface metade bloco geol ogico tal mostra figura 
+ dom ınio retangular ωb particionado malha regular elementos bilineares retan gulares adotados simula oes problemas hidrodinˆamico geomecˆanico 
+ modelo resolvido numericamente partir implementa pr opria realizada linguagem programa fortran 
+ cˆomputo fun φ parametrizado satura agua sw presente subsistema hidrodinˆamico adotamos rela constitutiva cons tru ıda ecnica homogeneiza autocoerente reportada auriault al 
+ sob hip otese isotropia matriz porosa poros geometria esf erica 
+ efeitos tortuosidade incorporados atrav es fun porosidade neste contexto presen ca fase aquosa estagnada efetuamos decomposi cid cid φ − φ le al 
+ φ κr κ 
+ onde κr permeabilidade relativa κ permeabilidade associada poros figura 
+ exemplo erico idealizado forma geol ogica 
+ levar considera fase olida 
+ cˆomputo permeabilidade relativa adotamos modelo brooks corey forma κr cid − cid − 
+ onde satura efetiva definida sw − swr − swr − sgr swr sgr denotando satura oes residuais agua respectivamente 
+ posse rela oes acima apresentamos gr aficos condutividade hidr au lica kg φ ρk φ fun press figura 
+ ap reconstru erica coeficientes efetivos φ pode mos agora proceder obten simula oes ericas exemplo figura 
+ visando avaliar influˆencia efeitos geomecˆanicos sobre produ reservat orio aoconvencional coletamos dados publicados literatura ba seados campos reais 
+ primeiro campo analisado experimento bs baseado barnett shale caracterizado exibir rigidez pronunciada compacta figura 
+ condutividade hidr aulica fun press valores parame trizados porosidade sg 
+ · − · κ · − 
+ menos acentuada durante prospec 
+ segundo experimento ms baseado marcellus shale consiste forma geol ogica menor rigidez maior capacidade sofrer deforma oes acentuadas yu sepehrnoori 
+ alguns parˆametros comuns ambos casos est listados tabela 
+ parˆametro ks odulo bulk gr olidos μ coeficiente poisson sg satura ppo co pfratura lx largura metade bloco ly altura fratura ex umero elementos ey umero elementos tf inal tempo simula valor gpa 
+ mpa meses tabela 
+ parˆametros inerentes dois campos utilizados simula oes 
+ intuito avaliar influˆencia efeitos geomecˆanicos sobre pro du interface matriz fratura hidr aulica realizamos si mula oes dois valores profundidade po co reservat orio portanto pa econdutividade hidraulica eporosidade 
+ adotamos valores carga distintos advindos camadas geol ogicas superiores 
+ carga dada peso camadas forma tt − ρrgh onde ρr kg denota massa espec ıfica rocha camadas superiores profundidade reservat orio sujeito carga 
+ apresentamos parˆametros utilizados cada forma geol ogica 
+ figura ilustrativa po cos horizontais perfurados profundidades diferentes mesma forma geol ogica 
+ tal mencionado anteriormente simula oes seguir fazemos uso hip otese escala tempo onde escoamento fratura bem apido tal forma press longo iguala press po co 
+ demais contornos imperme aveis 
+ campo porosidade inicial gerado forma suave valores faixa apresentada tabela 
+ subsistema geomecˆanico assumimos ausˆencia deslocamento vertical bordo inferior γ figura 
+ assim deslocamento horizontal nulo γ bordo γ est sujeito carga advinda peso forma oes geol ogicas superiores 
+ condi oes α parˆametro biotwillis φ porosidade inicial odulo bulk odulo young permeabilidade inicial profundidade temperatura tt −pn vetor tra press inicial α parˆametro biotwillis φ porosidade inicial odulo bulk odulo young permeabilidade inicial profundidade temperatura tt −pn vetor tra press inicial bs raso 
+ ≤ φ ≤ 
+ mpa ms raso 
+ ≤ φ ≤ 
+ gpa gpa · − 
+ mpa bs profundo 
+ ≤ φ ≤ 
+ mpa ms profundo 
+ ≤ φ ≤ 
+ gpa gpa · − 
+ parˆametros utilizados implementa computacional 
+ contorno adotadas simula dadas seguir  · vg ppo co uy τxy ux τxy σt · tt sobre γi sobre γ sobre γ sobre γ sobre γ 
+ onde τxy denota tens cisalhamento 
+ sa ıdas gr aficas campos poromecˆanicos apresentadas restritas terminados subdom ınios 
+ perfis unidimensionais vari aveis hidrodinˆamicas apresentados faixas mostradas abaixo figuras 
+ faixas verticais escolhidas ilustrar perfis campos hidro mecˆanicos resultados extremo esquerdo centro extremo direito 
+ faixas horizontais escolhidas ilustrar perfis campos hidro mecˆanicos resultados fundo meio topo 
+ experimento bs iniciamos apresentando resultados ericos forma geol ogica bs apresenta maior rigidez tabela 
+ levando conta carac ter ıstica esperado resultados comparativos simula oes aco plamento hidrogeomecˆanico hidrodinˆamica desacoplada matriz olida ıgida semelhantes 
+ aferir tal proximidade apresentamos figuras 
+ evolu perfil horizontal press fluxo assico tempo compu tados via formula oes duasvias ıgida 
+ podemos observar sensibilidade rela efeitos geomecˆanicos ınima 
+ influˆencia sobre produ mostrada figura 
+ diferen ca produ deve unicamente varia profundidade altera press inicial equilibrar nova carga oriunda peso camadas superiores 
+ menos deste detalhe notamos produ caso bs sofre influˆencia desprez ıvel efeitos geomecˆanicos apresenta disparidades resultados duas vias 
+ devido portamento analisaremos detalhes evolu vari aveis hidrodinˆamicas geomecˆanicas 
+ perfil press tira caso 
+ fluxo assico tira caso 
+ pa mesrigidoduasvias mesesrigidoduasvias mesesrigidoduasviasx 
+ jx kg ms mesrigidoduasvias mesesrigidoduasvias mesesrigidoduasvias figura 
+ comparativo produ caso bs 
+ experimento ms neste caso propriedades mecˆanicas encontramse faixa valores atre lados forma oes geol ogicas reservat orios convencionais baixa rigidez yu sepehrnoori 
+ quantificar influˆencia efeitos geomecˆanicos sobre produ apresentamos inicialmente figuras 
+ ilustrando evolu perfis horizontais press 
+ meses produc kg rigidoumaviaduasviasrigido raso umavia raso duasvias raso figura 
+ perfil press tira profundidade po co 
+ perfil press tira profundidade po co 
+ podemos observar figuras 
+ pa mesrigidoduasvias mesesrigidoduasvias mesesrigidoduasviasx 
+ pa mesrigidoduasvias mesesrigidoduasvias mesesrigidoduasvias corporam efeitos geomecˆanicos encontramse pouco atrasados rela caso ıgido 
+ tal fato decorre decr escimo permeabilidade porosidade tende retardar dissipa poropress 
+ al disso poss ıvel tar caso maior profundidade exibe atraso dissipa poropress levemente maior rela caso raso vez carga advinda peso forma oes geol ogicas superiores bem press inicial maiores produzindo maior compacta rocha 
+ ilustramos evolu perfil deslocamento vertical profundidade reservat orio 
+ esperado perfis possuem comportamento pr oximo linear desvio induzido gradiente poropress atua fonte problema el astico 
+ podemos observar diferen ca dois perfis consecutivos ligeiramente maior caso 
+ apresentamos componente vertical σyy campo ten longo faixa vertical parametrizado tempo 
+ apresentamos analogamente componente horizontal σxx 
+ perfis deslocamento uy longo faixa vertical parametrizados tempo 
+ perfil componentes σyy campos tens longo faixa vertical parametrizados tempo 
+ mesh mh mesesh mh mesesh mh 
+ σyy pa mesh mh mesesh mh mesesh mh figura 
+ perfil componentes σxx campos tens longo faixa vertical parametrizados tempo 
+ podemos observar tens oes efetivas σxx σyy possuem comportamento quase uniforme pequenas perturba oes vizinhan ca carregamento 
+ durante evolu temporal caracterizada dissipa poropress ocorre transferˆencia carga tens oes efetivas tendem aumentar situa estacion aria onde equilibram completamente carregamento aplicado sobre folhelho 
+ estar sujeito tra elevada caso exibe magnitude acentuada tens oes efetivas 
+ compreendermos melhor disparidade solu oes formula oes duasvias apresentamos perfis termo fonte subsistema hidro dinˆamico 
+ caso maior profundidade 
+ apresenta campos bidimensionais tens total edia normal cid σt 
+ podemos observar cid σt obedece processo dissipativo propaga fratura onde condi dirichlet menor magnitude press imposta interior dom ınio 
+ velocidade desta propaga diretamente relacionada termo fonte exibida figura 
+ σxx pa mesh mh mesesh mh mesesh mh mˆes 
+ evolu temporal campo tens edia total normal cid σt dom ınio ocupado folhelho 
+ evolu termo fonte −sgpα ∂ cid σt ∂t dom ınio ocu pado folhelho 
+ processo dissipativo derivada temporal segue evolu semelhante anterior propagando fratura interior situa estacion aria onde fonte anula devido diminui derivada temporal 
+ comportamento evolu temporal termo fonte apresentado figura 
+ composto duas parcelas evolutivas influenciam comporta mento dinˆamico termo fonte −sg α ∂ cid σt ∂t cid cid cid cid 
+ cid cid cid cid podemos observar durante processo evolutivo presen ca coeficiente envolvendo press tende acelerar redu magnitude termo fonte vez press tende dissipar longo tempo 
+ ıtulo ilustra podemos comparar comportamento dissipativo termo fonte rela caso ligeiramente compress ıvel onde assumido fluido possui compressibilidade aproximadamente constante equa 
+ neste caso termo fonte forma termo fonte ligeiramente compress ıvel −sg α ∂ cid σt ∂t cid cid cid cid 
+ βf cid cid cid cid onde compressibilidade aproximada caso ideal βf ≈ p∗ p∗ tomado press edia reservat orio p∗ ppo co 
+ resultados comparativos est exibidos figura 
+ podemos notar velocidade dissipa evolui lentamente caso fluidos ligeiramente compress ıveis incorpora termo sumidouro massa atuante tempo maior rela caso compress ıvel onde dissipa evolui rapidamente devido termo press 
+ fim avaliamos influˆencia efeitos geomecˆanicos sobre produ 
+ exibimos gr afico evolu curva produ pa rametrizada profundidade cada tipo acoplamento hidrogeomecˆanico duasvias 
+ podemos notar influˆencia geomecˆanica rocha sobre produ 
+ devido decr escimo permeabilidade porosidade processo compacta retardado onde efeitos geomecˆanicos pronunci ados portanto produ diminu ıda 
+ podemos observar clara disparidade mˆes 
+ termo fonte −sgα 
+ · − · ∂ cid σt ∂t caso fluido meses 
+ ligeiramente compress ıvel 
+ resultados obtidos formula oes duas vias 
+ ultimo corpora efeitos fonte advinda taxas tens oes edias normais enquanto anterior incorpora apenas compressibilidade rocha formula 
+ po demos observar fato importante relacionado formula umavia tende prover fonte massa sistema devido omiss termo fonte negativo sumidouro 
+ tal fonte erica tende aumentar quantidade reservat orio conduzindo erroneamente produ maior comparada formula conservativa duasvias 
+ comparativo produ caso ms 
+ resultados ericos obtidos neste trabalho ilustram potencial nova formula proposta capturar acoplamento hidromecˆanico escoamento gases meios porosos 
+ meses produc kg rigidoumaviaduasviasrigido raso umavia raso duasvias raso cap ıtulo conclus oes presente trabalho propusemos modelo inovador acoplamento hidro mecˆanico reservat orios desenvolvido contexto formula oes sequenci ais 
+ modelo formulado atrav es dois subsistemas hidrodinˆamico tro geomecˆanico caracter ısticas distintas acoplados termos fonte 
+ odulo hidrodinˆamico composto equa diferencial parab olica aolinear enquanto geomecˆanico consiste elasticidade linear 
+ propusemos novo algoritmo sequencial iterativo utilizando abordagem fixed stress split kim al 
+ edita aplica reservat orios gases altamente press ıveis 
+ tal metodologia fornece alternativa potencialmente menos custosa computacionalmente comparada modelos totalmente acoplados comumente adotados al facilidade adapta simuladores comerciais desenvolvi separadamente cada subsistema 
+ principal resultado consiste constru novo termo fonte equa press governa hidro dinˆamica incorpora novos coeficientes dependentes press multi plicam termo fonte envolvendo derivada temporal tens total edia 
+ novo modelo linearizado considerando algoritmo ponto fixo discretizado espacialmente etodo galerkin 
+ simula oes ericas ilustraram per formance modelo problema extra prim aria usando parˆametros entrada inspirados campos barnett marcellus 
+ visando avaliar efeitos geomecˆanica cen ario sens ıvel marcellus shale realizamos comparativo produ caso ıgido rela casos umavia duasvias efeitos geomecˆanica pronunciados 
+ principal resultado erico obtido neste trabalho consiste fato formula duasvias levar fontes massa aolinearidades adicionais gerando dissipa campo press 
+ importante ressaltar devido caso umavia desconsiderar termo fonte massa gerada erroneamente nesta formula 
+ pr oximo passo consiste estender metodologia incorporar escoa mento geomecˆanica fraturas levando modelos acoplados sofisticados desafios fascinantes 
+ alise erica estabilidade decomposi operadores diferenciais tamb passo futuro importante ser realizado juntamente desenvolvimento etodo erico localmente conser vativo obten oes resultados maior acur acia 
+ inclus fortes heterogeneidades influˆencia teor mat eria orgˆanica modelo podem tamb aumentar qualidade resultados portanto passo recomendado 
+ referˆencias bibliogr aficas ronaldo 
+ reservas produ petr oleo reservat orios convencionais 
+ homogenization coupled phe nomena heterogenous media 
+ url https books 
+ petroleum reservoir simulation 
+ ap plied science publishers 
+ url https books 
+ br books idgjtaaaamaaj 
+ introduction modeling transport phe nomena porous media 
+ theory applications transport porous media 
+ url https books 
+ br books idmoaoeiaacc 
+ friedrichkarl benra hansjosef dohmen ji pei sebastian schuster bo wan 
+ comparison oneway twoway coupling methods numerical analy sis fluidstructure interactions 
+ elastic coefficients theory consolidation 
+ journal applied mechanics dezembro 
+ general theory threedimensional consolida tion 
+ journal applied physics 
+ url http dx 
+ bp statistical review world energy june 
+ url http www 
+ content dam bp pdf energyeconomics statistical review bpstatisticalreviewofworldenergy full report 
+ online acessado mar a§o 
+ hydraulic properties porous media 
+ colo rado state university hydrology papers 
+ colorado state university 
+ url https books 
+ br books idfhogaacaaj 
+ reservoir simulation mathematical techniques oil recovery 
+ cbmsnsf regional conference series applied mathema tics 
+ society industrial applied mathematics siam market street floor philadelphia pa 
+ url https books 
+ br books ideuazfaagbdec 
+ computational methods multiphase flows porous media 
+ computational science engineering 
+ ciety industrial applied mathematics siam market street floor philadelphia pa 
+ url https books 
+ br books idckvzcabdkwyc 
+ springer international publishing 
+ john wiley sons 
+ pvt phase behaviour petroleum reservoir fluids 
+ velopments petroleum science 
+ url https books 
+ br books idxqlpyqgzpouc 
+ balan co energ etico nacional 
+ xin fan gensheng li subhash 
+ shah shouceng tian mao sheng lidong geng 
+ analysis fully coupled gas flow deformation pro cess fractured shale gas reservoirs 
+ journal natural gas science engineering part 
+ url http www 
+ science article pii 
+ url http www 
+ br gasnatural tipos 
+ online acessado mar co 
+ economics unconventional shale gas deve lopment case studies impacts 
+ natural resource management policy 
+ springer international publishing 
+ url https books 
+ br books idiaqvbqaaqbaj 
+ pouya hosseinifar saeid jamshidi 
+ evolved cubic equation state new attractive term 
+ fluid phase equilibria 
+ url http dx 
+ golden rules golden age gas world energy outlook 
+ url http www 
+ online acessado mar co 
+ stability convergence quential methods coupled flow geomechanics fixedstress fixedstrain splits 
+ computer methods applied mechanics engineering 
+ url http www 
+ science article pii 
+ sequential methods coupled geomechanics mul tiphase flow 
+ tese doutorado stanford university usa 
+ splitting schemes poroelasticity thermoelasticity problems 
+ computers mathema tics applications 
+ url http www 
+ science article pii 
+ efficient algorithms large scale scientific computations 
+ modern thermodynamics heat engines dissipative structures 
+ url https books 
+ br books idkxcvaqaaiaaj 
+ tien dung le marcio 
+ pereira claude boutin 
+ bridging macroscopic behavior shale gas reservoirs confined fluids nopores 
+ url http dx 
+ celso fernando lucchesi 
+ estudos avan cados 
+ andro mikeli bin wang mary 
+ numerical convergence study iterative coupling coupled flow geomechanics 
+ url http dx 
+ andro mikeli mary 
+ convergence iterative coupling coupled flow geomechanics 
+ url http dx 
+ murad marcio borges jesus 
+ obreg maicon correa 
+ new locally conservative numerical method two phase flow heterogeneous poroelastic media 
+ url http www 
+ science article pii sx 
+ improved accuracy finite element analysis biots consolidation problem 
+ computer methods applied mechanics engineering 
+ url http www 
+ science article pii 
+ fundamentals numerical reservoir simulation 
+ cap ıtulo aginas elsevier scientific pub 
+ canada elsevier northholland amsterdam new york 
+ dingyu peng donald 
+ new twoconstant equation state 
+ dustrial engineering chemistry fundamentals 
+ mcgrawhill series advanced chemis try 
+ mcgrawhill ryerson limited 
+ url https books 
+ br books idtzraqaaiaaj 
+ fugacities gaseous solutions 
+ url http dx 
+ coupled reservoir geomechanical simu lation system 
+ url http dx 
+ advances coupled geomechanical reservoir modeling applications reservoir compaction 
+ url http dx 
+ introduction chemical engineering thermodynamics 
+ irwin mcgrawhill ries marketing 
+ url https books 
+ br books ideikvaqaaiaaj 
+ equilibrium constants modified redlichkwong equation state 
+ chemical engineering science 
+ url http dx 
+ shale gas production processes 
+ url https books 
+ mx books iddqngmz vhc 
+ theoretical soil mechanics 
+ wiley sons inc 
+ url https books 
+ br books idogaaaamaaj 
+ state cubic equations state 
+ indus trial engineering chemistry research 
+ url http dx 
+ van der waals 
+ continu ıteit van den gasen vloeistoftoes tand 
+ tese doutorado leiden university 
+ wei yu kamy sepehrnoori 
+ simulation gas desorp tion geomechanics effects unconventional gas reser voirs 
+ url http www 
+ science article pii 
+ developments petroleum science 
+ url https books 
+ br books idtbqyeyyukc 
+ cambridge university press 
+ url https books 
+ br books idxxoamjiic 
+ apˆendice equa estado neste apˆendice discutimos brevemente aspectos oricos asicos equa estado adotada descrever comportamento 
+ equa oes estado ubicas gen ericas equa estado ubica pode ser representada forma geral rt − − b ςb 
+ onde  ς constantes denota volume molar espec ıfico constante denominada covolume parˆametro quantifica atra oes inter moleculares hosseinifar jamshidi valderrama 
+ parˆametros ψe αe tr rt pc ωe rtc pc 
+ onde ψe ωe constantes independentes substˆancia determinados particu larmente cada equa estado partir valores  ς 
+ fun αe tr express constru ıda empiricamente cada equa estado 
+ cons tantes tc pc temperatura press cr ıticas respectivamente 
+ constante tr denota temperatura adimensional sendo expressa tr tc 
+ comumente reportados literatura est listados seguir van der waals vdw van der waals redlichkwong rk redlich kwong soaveredlichkwong srk soave pengrobinson pr peng robinson 
+ apresenta valores atribu ıdos parˆametros cada equa estado 
+ estado αe tr ς  vdw rk srk pr αsrk tr ω αp tr ω √ − cid − √ αsrk tr ω αp tr ω 
+ ω cid cid 
+ − cid cid cid − ωe ψe 
+ cid cid tabela 
+ valores parˆametros equa oes estado adaptado smith al 
+ importante salientar existˆencia parˆametro adicional equa oes soaveredlichkwong pengrobinson alculo termos atra deno minado fator acˆentrico denotado ω peng robinson pitzer soave 
+ equa pengrobinson modificada buscando modelar forma acurada comportamento metano sob condi oes temperatura press elevadas reservat orios encon tram adotaremos modelo aperfei coado equa pengrobinson proposto hosseinifar jamshidi aqui identificado subscrito mpr leva conta intera oes moleculares substˆancias figura 
+ meio dois parˆametros mostrados seguir λ cid tb cid cid tbm ω λ 
+ tb temperatura ponto bolha normal press atmosf erica 
+ parˆametro λ medida intensidade pontes hidrogˆenio λ cas dispers 
+ ilustra propriedades moleculares captadas λ λ valores elevadas intensidades adaptado hosseinifar jamshidi 
+ parˆametros utilizados cri erio ado valores cons tantes equa oes αmp tr tbr ω cβ cγ β tr tbr − − br 
+ bωbωbωb γ tr ω 
+ condi oes cr ıticas enquadram reservat orios cons tantes equa oes 
+ assumem valores tabela 
+ atribui valores constantes equa estado proposta hosseinifar jamshidi 

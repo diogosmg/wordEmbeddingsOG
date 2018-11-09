@@ -1,0 +1,4517 @@
+O PROBLEMA DO EFEITO DE BORDA NA DETERMINAÇÃO DA 
+
+PROFUNDIDADE DE FONTES DE CAMPOS POTENCIAIS CONTINUADOS 
+
+ESCALADOS E DE SUAS DERIVADAS VERTICAIS 
+
+ 
+
+DE 
+
+ 
+
+HUGO LEONARDO DE ANDRADE ROCHA 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+DISSERTAÇÃO DE MESTRADO 
+
+UNIVERSIDADE FEDERAL FLUMINENSE 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Requisito para a obtenção do título de Mestre em Geologia e Geofísica Marinha 
+
+ 
+
+ 
+
+ 
+
+Julho de 2012 
+
+ 
+
+ 
+
+BANCA EXAMINADORA: 
+
+ 
+
+______________________________________________________ 
+
+Professor Doutor Marco Polo Pereira Buonora (Orientador) 
+
+(Professor  do  Laboratório  de  Geologia  Marinha  do  Instituto  de  Geociências  da 
+Universidade Federal Fluminense) 
+
+(Gerente de Métodos Não sísmicos da Petrobras) 
+
+ 
+
+______________________________________________________ 
+
+Professor Doutor Adalberto da Silva 
+
+(Professor  do  Laboratório  de  Geologia  Marinha  do  Instituto  de  Geociências  da 
+Universidade Federal Fluminense) 
+
+ 
+
+______________________________________________________ 
+
+Professor Doutor Alexandre Motta Borges 
+
+(Professor  do  Laboratório  de  Geologia  Marinha  do  Instituto  de  Geociências  da 
+Universidade Federal Fluminense) 
+
+ 
+
+_______________________________________________________ 
+
+Professora Doutora Cecília Fernandez (Suplente) 
+
+(Professora  do  Departamento  de  Análise  do  Instituto  de  Matemática  da  Universidade 
+Federal Fluminense) 
+
+ 
+
+________________________________________________________ 
+
+Telma Aisengart Santos 
+
+(Gerente Técnica da empresa Geosoft Latinoamerica) 
+
+ 
+
+Data de apresentação da dissertação: 13 de Julho de 2012 
+
+Dissertação elaborada por: Hugo Leonardo de Andrade Rocha 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+1. INTRODUÇÃO 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2. DECONVOLUÇÃO DE EULER  
+
+ 
+
+3. A METODOLOGIA DEXP 
+
+3.1 INTRODUÇÃO   
+
+3.2 CAMPOS ESCALADOS  
+
+3.3 DERIVADAS VERTICAIS 
+
+ÍNDICE 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+4. MODELAGEM ANALÍTICA 
+
+4.1 INTRODUÇÃO   
+
+4.2 CAMPOS ESCALADOS ANALÍTICOS 
+
+4.3 DERIVADAS VERTICAIS ANALÍTICAS 
+
+5. OS EFEITOS DE BORDA 
+
+5.1 INTRODUÇÃO   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5.2 PREPARAÇÃO DE MAPAS NA FFT   
+
+ 
+
+5.2.1 EXPANSÃO DE MAPAS 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+1 
+
+4 
+
+5 
+
+5 
+
+6 
+
+7 
+
+10 
+
+10 
+
+12 
+
+17 
+
+22 
+
+22 
+
+25 
+
+26 
+
+26 
+
+29 
+
+29 
+
+5.3 EXTRAPOLAÇÃO: A ENTROPIA MÁXIMA DE PREDIÇÃO 
+
+6. MODELAGEM NUMÉRICA 
+
+6.1 INTRODUÇÃO   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+6.2 CAMPOS ESCALADOS NUMÉRICOS E O EFEITO DE BORDA  30 
+
+6.3 DERIVADAS VERTICAIS NUMÉRICAS  
+
+E O EFEITO DE BORDA  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+45 
+
+ 
+
+7. CONSIDERAÇÕES FINAIS E CONCLUSÕES  
+
+ 
+
+8. REFERÊNCIAS BIBLIOGRÁFICAS 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+APÊNDICE I: FORMULAÇÃO MATEMÁTICA BÁSICA 
+
+DA ENTROPIA MÁXIMA DE PREDIÇÃO 
+
+ 
+
+APÊNDICE II: CONTINUAÇÃO PARA CIMA 
+
+ 
+
+APÊNDICE III: DERIVADAS DIRECIONAIS 
+
+ 
+
+ 
+
+ 
+
+ 
+
+APÊNDICE IV: TEOREMA DA CONVOLUÇÃO  
+
+ 
+
+APÊNDICE V: TEOREMA DE PARSEVAL 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+52 
+
+55 
+
+56 
+
+62 
+
+65 
+
+69 
+
+71 
+
+ 
+
+RESUMO 
+
+ 
+Este  trabalho  tem  por  objetivo  estudar  um  método  alternativo  para  a 
+determinação da posição e dos parâmetros físicos e geométricos de fontes causadoras de 
+anomalias  de  campos  potenciais,  tendo  sido  concebido  por  Maurizio  Fedi  (2007), 
+visando  contornar  as  deficiências  da  Deconvolução  de  Euler,  dentre  as  quais  a  mais 
+marcante  é  o  número  elevado  de  soluções  para  a  caracterização  das  anomalias  de 
+campos potenciais. A metodologia recebeu o nome de DEXP, que é a sigla em inglês 
+para "Depth from Extreme Points". 
+
+O método proposto é corroborado tanto pelo cálculo analítico quanto numérico 
+ 
+dos  campos  escalados  e  de  suas  respectivas  derivadas  parciais  verticais  de  ordem  n-
+ésima.  O  campo  potencial  de  gravidade  é  transformado  através  do  produto  da  função 
+potencial original por diferentes níveis de medição (altitudes) elevados a um expoente 
+de  escalamento,  o  qual  está  relacionado  matematicamente  ao  índice  estrutural  da 
+Deconvolução de Euler e cujo valor varia de acordo com a geometria da fonte e a ordem 
+de derivação do campo potencial.  
+
+ 
+No  caso  analítico,  calcula-se  a  função  do  campo  potencial  de  gravidade  para 
+diversas altitudes, de maneira a simular um levantamento geofísico em diferentes níveis 
+de observação, tal qual uma continuação para cima analítica. Tal procedimento é feito 
+simplesmente  modificando  os  valores  das  altitudes  na  equação  que  descreve  o  campo 
+potencial  escalado  e  as  suas  derivadas  verticais.  Modelos  sintéticos  de  esferas 
+homogêneas  situadas  a  diversas  profundidades  são  testados  a  fim  de  se  confirmar  a 
+eficácia  do  método.  A  posição  correspondente  ao  valor  máximo  do  campo  escalado 
+determina a posição do centro de massa da fonte.  
+
+ 
+No caso das derivadas verticais, foram calculadas as derivadas analíticas de 1ª, 
+2ª, 3ª e 4ª ordens. Foram testadas esferas homogêneas separadas a distâncias de 8 km 
+entre si, situadas a mesma profundidade. Os valores máximos e mínimos das derivadas 
+analíticas verticais do campo potencial determinam a profundidade do centro de massa 
+das  esferas.  A  derivada  vertical  analítica  revelou-se  útil  no  ao  distinguir  as  esferas, 
+evitando  o  efeito  de  interferência  mútua.  Quanto  maior  a  ordem  da  derivada  vertical 
+analítica do campo escalado, mais precisa é a estimativa das profundidades e mais clara 
+se torna a distinção entre as duas esferas, apesar de esta operação amplificar ruídos de 
+alta frequência, porventura existentes nos dados. Quanto mais próximas entre si estão as 
+esferas, maior é  a ordem da derivada necessária para se calcular com boa precisão  as 
+profundidades das esferas e vice-versa. Quanto maior a diferença de profundidade entre 
+as esferas, menos preciso se torna o cálculo das profundidades e vice-versa.  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+No  caso  numérico,  é  utilizada  também  a  modelagem  da  esfera  homogênea.  A 
+ 
+continuação para cima no domínio da transformada de Fourier é aplicada para diferentes 
+níveis.  Então,  o  campo  escalado  é  calculado  para  cada  nível  de  continuação.  As 
+derivadas  verticais  do  campo  escalado  também  são  calculadas  no  domínio  da 
+transformada de Fourier. O termo 'derivada vertical numérica' indica que a derivada é 
+calculada  utilizando  a  transformada  de  Fourier.  A  principal  limitação  da  derivada 
+vertical  no  domínio  da  transformada  de  Fourier  se  deve  ao  fato  de  que  a  derivada 
+vertical numérica representa um filtro passa alta, ou seja, que realça os ruídos de altas 
+frequências. Por causa disso, não se calculam derivadas verticais numéricas de ordem 
+superior a dois. 
+
+ 
+Ainda com relação às derivadas numéricas, temos presentes as demais limitações 
+referentes  às  derivadas  analíticas,  ou  seja,  o  cálculo  das  profundidades  das  esferas  é 
+dificultado  quando  as  duas  esferas  estão  muito  próximas  entre  si,  ou  então  estão 
+situadas a profundidades muito distantes entre si. Novamente, quanto maior a ordem de 
+derivação,  melhor  é  a  precisão.  Entretanto,  as  limitações  são  maiores,  pois  não  é 
+recomendável  usar  derivadas  de  ordem  maior  que  dois,  enquanto  quem  no  caso 
+analítico, usamos, neste trabalho, derivadas verticais de 1ª, 2ª, 3ª e 4ª ordens. 
+
+ 
+Os  mapas  e  perfis  dos  campos  escalados,  bem  como  os  de  suas  derivadas 
+verticais, são expandidos a diferentes taxas (0%, 10%  e 100%),  a fim de se tornar os 
+mapas  e  perfis  periódicos,  para  adequá-los  ao  algoritmo  de  processamento  da  FFT. 
+Após o processo de expansão, os dados gerados pela expansão são extrapolados com os 
+dados  originais  da  função  do  campo  de  gravidade,  usando  os  métodos  do  inverso  do 
+quadrado  da  distância  e  da  entropia  máxima  de  predição.  Uma  comparação  entre  os 
+métodos  de  extrapolação  é  feita.  A  entropia  máxima,  apesar  de  mais  lenta,  produz 
+resultados mais precisos na determinação da amplitude das anomalias e da sua extensão 
+lateral. Verifica-se que, quanto mais profundos estão situados os corpos, mais difícil se 
+torna a determinação correta da anomalia no processo de extrapolação, pois o sinal do 
+espectro  é  caracteristicamente  mais  fraco  para  profundidades  maiores.  O  mesmo 
+problema ocorre quando se realiza uma operação de continuação para cima em um nível 
+muito distante do nível correspondente à profundidade da fonte. 
+
+ 
+As  etapas  de  expansão  e  extrapolação  são  extremamente  importantes,  pois 
+quando  são  ignoradas,  temos  que  os  efeitos  de  borda  relativos  ao  truncamento  das 
+janelas  dos  filtros  no  domínio  da  transformada  de  Fourier  podem  fazer  com  que  as 
+anomalias sejam caracterizadas de maneira equivocada, tanto na sua amplitude quanto 
+na  sua  extensão  lateral,  o  que  pode  levar  a  cálculos  errados  das  profundidades  dos 
+corpos  causadores  de  anomalias.  O  efeito  de  borda  é  mais  acentuado  quando  lidamos 
+com  anomalias  de  comprimentos  de  onda  maiores,  ou  seja,  relacionadas  a  corpos 
+situados a profundidades maiores, que são anomalias tipicamente de amplitude menor, 
+mas  com  maior  extensão  lateral.  Além  disso,  o  efeito  de  borda  pode  se  tornar  mais 
+crítico também quando fontes causadoras de anomalias estão muito próximas das bordas 
+dos  mapas  ou  quando  estão  muito  próximas  entre  si.  Em  outras  palavras,  o  efeito  de 
+
+ 
+
+ 
+
+borda é mais acentuado quando as anomalias de interesse não são simétricas em relação 
+às bordas da área do levantamento.  
+
+ 
+Este trabalho analisa mais aprofundadamente os aspectos relativos aos efeitos de 
+borda  na  filtragem  no  domínio  da  transformada  de  Fourier,  oferecendo  uma 
+contribuição  para  a  melhoria  no  processamento  de  dados  geofísicos  de  campos 
+potenciais  e  também  na  metodologia  proposta  por  Fedi  (2007),  na  qual  os  efeitos  de 
+borda foram pouco avaliados. É explicado ainda como o efeito de borda pode afetar a 
+determinação correta das profundidades de fontes causadoras de anomalias de campos 
+potenciais. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ABSTRACT 
+
+ 
+The  goal  of  this  work  is  to  study  an  alternative  method  to  determining  the 
+position and physical and geometric parameters of causative sources of potential fields 
+anomalies, which was developed by Maurizio Fedi (2007), in order to circumvent the 
+limitations  of  Euler  Deconvolution,  whose  the  most  highlighted  deficiency  is  a  great 
+number  of  possible  solutions  for  the  characterization  of  the  anomalies.    The 
+methodology was named of DEXP (Depth from Extreme Points). 
+
+ 
+The  proposed  method  is  corroborated  both  by  the  analytical  and  numerical 
+calculation  of  the  scaled  fields  and  its  vertical  derivatives  of  nth  orders.  The  gravity 
+potential field is transformed through the multiplication between the original potential 
+function  by  different  measurement  levels  (heights)  with  a  scaling  exponent,  which  is 
+mathematically  related  to  structural  index  (SI)  of  the  Euler  Deconvolution,  whose 
+values vary according with the geometry of the source and the order of the derivation of 
+the potential field. 
+
+ 
+In the analytical case, we calculate the function of the gravity potential field for 
+different  heights,  in  order  to  simulate  a  geophysical  survey  at  different  levels  of 
+observation, like an analytical upward continuation. This procedure is done simply by 
+changing the heights values in the equations which describes the scaled potential field 
+and  its  vertical  derivatives.  Syntactical  models  of  homogeneous  spheres  situated  at 
+different depths are tested in order to ensure the efficiency of the method. The position 
+which corresponds to the maximum value of the scaled field determines the position of 
+the center of the source. 
+
+ 
+In the case of the vertical derivatives, we calculated the analytical derivatives of 
+first, second, third and fourth orders. Homogeneous spheres separated by a distance of 8 
+km, both located at the same depth, were tested. The minimum and maximum values of 
+the analytical vertical derivatives of the potential field were able to determine the depth 
+of  the  center  of  mass  of  the  spheres.  The  analytical  vertical  derivative  was  useful  to 
+distinguish  the  spheres,  avoiding  the  effect  of  mutual  interference.  As  greater  is  the 
+order  of  the  analytical  vertical  derivative  of  the  scaled  field,  more  accurate  is  the 
+estimative of the depths and clearer is the separation between the two spheres, although 
+this type of operation could amplify the level of high frequency noises, which could be 
+inserted  in  the  data.  As  closer  the  spheres  are,  greater  is  the  order  of  the  derivative 
+required  to  calculate  with  good  accuracy  the  depths  of  the  spheres.  As  greater  the 
+difference between the spheres, lower is the accuracy the calculation of the depths of the 
+spheres.  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+In  the  numerical  calculation  case,  it  is  used  the modeling  of  the  homogeneous 
+ 
+sphere.    The  upward  continuation  into  the  Fourier  transform  domain  is  applied  for 
+different  levels  of  measurement.  Then,  the  scaled  field  is  calculated  for  each  level  of 
+continuation. The vertical derivatives of the scaled field are calculated into the Fourier 
+transform  domain  too.  The  expression  "numerical  vertical  derivative"  flags  that  the 
+derivative is calculated into the Fourier transform domain. The strongest limitation of 
+the vertical derivative into the Fourier transform domain is related to the fact that the 
+vertical derivative represents a high pass filter, that is, this kind of operation highlights 
+on the high frequency noises. Because of it, it is not a common sense the calculation the 
+numerical vertical derivatives with order greater than 2. 
+
+ 
+ Even  with  respect  to  the  numerical  derivatives,  we  have  the  other  inherent 
+limitations related to the analytical derivatives, that is, the calculation of the depths of 
+the  spheres  is  harder  when  the  two  spheres  are  not  close  together.  Once  again,  the 
+greater is the order of derivation, the accuracy is better.  However, the limitations are 
+greater, because it is recommendable the using of derivatives with orders greater than 2, 
+while in the analytical case, we use, in this work, vertical derivatives of first, second, 
+third and fourth orders.  
+
+ 
+The maps and profiles of the scaled fields, as well as of its vertical derivatives, 
+are expanded in order to make the maps and profiles periodical and fit them to the FFT 
+processing algorithm, After the expansion process, the data generated by the expansion 
+are extrapolated with the original data of the function of the original gravity field, using 
+the methods of the "inverse square of distance” and the maximum entropy of prediction.  
+A  comparison  between  the  two  methods  is  done.  The  maximum  entropy  method, 
+although  slower  in  processing,  produces  most  accurate  results  for  determining  the 
+amplitude of the anomalies and its lateral extensions. We verify that, the deeper are the 
+bodies;  the  hardest  is  the  correct  determination  of  the  anomaly  in  the  process  of 
+extrapolation,  because  the  spectra  signal  is  naturally  weaker  for  greater  depths.  The 
+same trouble occurs when we do the upward continuation at a level which is too much 
+far of the level which is related to the depth of the source. 
+
+ 
+The  steps  of  expansion  and  extrapolation  are  extremely  important,  and  if  they 
+are ignored, the edge effects related to the truncation of the windows of the filters into 
+the  Fourier  transform  domain  can  result  to  anomalies  which  are  characterized  in  a 
+wrong  sense,  both  in  amplitude  and  lateral  contents,  leading  us  to  misleading 
+calculations  for  the  depths  of  the  causative  bodies  of  anomalies.  The  edge  effects  is 
+more evident when we are leading with greater wavelength anomalies, that is, related to 
+bodies  located  to  greater  depths,  which  are  related  to  the  bodies  that  are  located  at 
+greater  depths,  that  represent  anomalies  typically  with  smaller  amplitudes.  Moreover, 
+the  edge  effect  can  be  more  critical  when  the  causative  sources  of  anomalies  are  too 
+much closer to the edges of the maps or when they are too much close together. In other 
+words, the edge effect is more evident when the anomalies of interest are not symmetric 
+to the edges of the survey area.       
+
+ 
+
+ 
+
+This works analyzes in a deeper way the aspects related to the edge effects in the 
+ 
+filtering into the Fourier transform domain, offering a contribution to an improvement 
+in processing of geophysical potential field data and also in the methodology proposed 
+by Fedi (2007), which the edge effects were under evaluated. It is explained also how 
+the edge effect can affect the correctly determination of the depths of causative sources 
+of 
+anomalies. 
+
+potential 
+
+fields 
+
+ 
+
+ 
+
+1. INTRODUÇÃO 
+
+ 
+Diversos  métodos  têm  sido  utilizados  para  determinar  a  profundidade  e  os 
+parâmetros  físicos  (densidade  e  susceptibilidade  magnética)  de  fontes  causadoras  de 
+anomalias de campos potenciais (campos de gravidade e de magnetismo), bem como o 
+índice  estrutural  (Fedi,  2007).  Dentre  tais  metodologias,  destacam-se  a  Deconvolução 
+de Euler (Valéria Barbosa e João Batista, 2005), a Deconvoulção de Werner (Blakely, 
+1995) e a Amplitude do Sinal Analítico (Blakely, 1995). O conceito de índice estrutural 
+foi  desenvolvido  nos  moldes  da  teoria  da  Deconvolução  de  Euler  e  reflete  a  razão  de 
+decaimento  da  anomalia  do  campo  potencial  em  função  da  distância  de  medição  em 
+relação  à  posição  da  anomalia  (Fedi,  2007).  O  índice  estrutural  é  um  parâmetro 
+importante  porque  nos  traz  informações  relevantes  a  respeito  da  geometria  da  fonte 
+causadora  da  anomalia,  sendo  uma  ferramenta  de  auxílio  na  elaboração  de  modelos 
+iniciais  para  uma  metodologia  direta  de  interpretação  de  dados  (Fedi,  2007).  Assim, 
+cada tipo de fonte teria um índice estrutural associado a sua característica geométrica, 
+seja cilíndrica, esférica ou similar a algum contato ou dique geológico.   Entretanto,  a 
+formulação original da Deconvolução de Euler apresentou duas grandes desvantagens: a 
+presença  de  uma  enorme  quantidade  de  possíveis  soluções  e  o  critério  empírico  e 
+ineficiente para estimar o tipo de fonte geológica. (Barbosa, V. e Silva, J. B. 2005). 
+
+ 
+Dadas as limitações dos diversos métodos de determinação da posição de corpos 
+causadores  de  anomalias  de  campos  potenciais,  Fedi  (2007)  desenvolveu  uma 
+metodologia  alternativa  que  visa  contornar  os  problemas  característicos  da 
+Deconvolução de Euler, que ele denominou, em inglês, de DEXP, "Depth from Extreme 
+Points",  a  qual  é  capaz de  determinar  a  posição  e  o  parâmetro  físico  característico  da 
+fonte a partir da transformação do campo potencial, através da multiplicação da função 
+potencial  por  níveis  de  continuação  do  campo  potencial  elevados  a  um  expoente  de 
+escalamento, o qual possui uma relação matemática com a Deconvolução de Euler. As 
+profundidades das fontes são determinadas a partir da posição dos pontos extremos do 
+campo  escalado,  que  são  os  pontos  que  correspondem  às  singularidades  isoladas  das 
+funções potenciais escaladas. Isso corresponde a encontrar o ponto simétrico à posição 
+da profundidade em relação ao plano horizontal no sistema de coordenadas cartesianas, 
+ou seja, calcular o valor do campo escalado para uma altitude equivalente em módulo à 
+profundidade na qual a fonte se encontra, considerando as profundidades negativas para 
+baixo. O parâmetro físico característico é calculado a partir dos valores estimados dos 
+campos escalados (Fedi, 2007).  
+
+ 
+Segundo  Fedi  (2007),  o  método  é  rápido  e  estável  devido  ao  comportamento 
+regular dos campos potenciais em função da altitude de medição. Como a geometria da 
+fonte  é  uma  informação  a  priori,  variando  de  acordo  com  o  modelo  adotado,  cada 
+geometria possui um expoente de escalamento diferente.  Outro aspecto da metodologia 
+proposta  por  Fedi  é  o  fato  de  funcionar  bem  para  as  derivadas  parciais  de  ordem  n-
+ésima do campo potencial, uma vez que a função potencial é analítica e harmônica na 
+região de medição, possibilitando que se obtenham analiticamente as derivadas parciais 
+verticais  e  horizontais  de  qualquer  ordem  da  função  potencial.  Para  cada  ordem  de 
+
+ 
+
+1 
+
+derivação,  um  expoente  de  escalamento  diferente  é  utilizado.  É  possível  ainda 
+estabelecer  uma  relação  matemática  entre  o  expoente  de  escalamento  e  a  ordem  de 
+derivação utilizada na obtenção do campo escalado. O uso das derivadas parciais ajuda 
+a  reduzir  os  efeitos  de  interferência  mútua  entre  fontes  que  estejam  muito  próximas 
+entre  si,  permitindo  a  obtenção  de  uma  distribuição  de  densidades  (ou  de 
+susceptibilidades  magnética)  de  acordo  com  a  profundidade,  evitando  erros  na 
+determinação das propriedades físicas, uma vez que os contrastes de tais propriedades  
+são obtidos com maior precisão (Fedi, 2007). 
+
+ 
+Contudo,  na  prática,  lidamos  com  dados  amostrados  -  e  não  contínuos  -  no 
+domínio da distância (ou do tempo), sendo imperativo que se utilize a transformada de 
+Fourier  discreta.  No  entanto,  a  transformada  de  Fourier  discreta  possui  um  tempo  de 
+processamento  muito  elevado,  fato  que  foi  contornado  com  a  disseminação  do 
+algoritmo da transformada rápida de Fourier, ou FFT, na sigla em inglês. Apesar disso, 
+a teoria da FFT é baseada na teoria da transformada de Fourier discreta que, por sua vez, 
+se baseia na teoria da transformada de Fourier contínua. Nesse cenário, para podermos 
+calcular  o  campo  escalado  em  diversas  altitudes,  faz-se  necessária  a  aplicação  de 
+filtragens  no  domínio  do  número  de  onda  (ou  da  frequência),  a  partir  da  operação  de 
+continuação para cima. Para o cálculo das derivadas do campo escalado, usa-se, também 
+no domínio da transformada de Fourier, o filtro da derivada na direção vertical. Porém, 
+usualmente não se calcula derivadas parciais verticais no domínio da transformada para 
+ordens  superiores  a  2,  devido  ao  fato  de  que  este  filtro  é  passa  alta,  ou  seja,  introduz 
+ruídos de alta frequência nos dados quando não é aplicado com controle adequado dos 
+seus parâmetros. Ainda assim, é possível obter os benefícios da derivação analítica, no 
+caso  de  estudos  teóricos,  onde  a  presença  de  ruídos  pode  ser  controlada,  usando  a 
+derivada numérica no domínio da transformada.  
+
+ 
+Entretanto, quando se trabalha no domínio da transformada de Fourier discreta, 
+frequentemente ocorrem problemas de truncamento dos dados amostrados, por causa do 
+
+truncamento  da  janela  retangular  -  cuja  transformada  é  a  função (cid:1)(cid:2)(cid:3)	(cid:5) (cid:5)⁄ ,  que  possui 
+
+lóbulos laterais, os quais se tornam maiores e mais numerosos quando o truncamento é 
+insuficiente para uma dada taxa de amostragem dos dados.  Quando o truncamento da 
+janela é inadequado à taxa de amostragem dos dados, as amplitudes das anomalias do 
+espectro no domínio da transformada frequentemente aparecem distorcidas, bem como 
+componentes  do  espectro  correspondentes  a  números  de  onda  muito  grandes,  que  são 
+correspondentes a fontes situadas a profundidades maiores, dificultando o processo de 
+separação  de  fontes  que  estejam  muito  próximas  entre  si.  Geralmente,  os  efeitos  são 
+visíveis  como  oscilações  nas  extremidades  dos  espectros  das  anomalias  em  perfis  de 
+duas dimensões ou ainda como elevações espúrias nas bordas dos mapas dos espectros 
+das  anomalias  em  três  dimensões.  Tal  efeito  de  borda  está  relacionado  ao  número 
+empregado  de  coeficientes  do  filtro  que  efetua  a  transformação  do  campo  potencial 
+original quando do processo de convolução do filtro com o campo potencial original, no 
+domínio do tempo, ou da multiplicação do filtro com o campo potencial no domínio da 
+transformada  de  Fourier.  Ou  seja,  a  atenuação  do  efeito  de  borda  é  proporcional  ao 
+
+ 
+
+2 
+
+número  de  coeficientes  utilizados  pelos  filtros  que  efetuam  as  transformações  nos 
+campos potenciais.  
+
+ 
+Portanto, o controle do efeito de borda é fundamental para que se obtenha uma 
+caracterização fidedigna da anomalia em perfil (amplitude e largura ou extensão lateral), 
+a fim de que se possa estimar adequadamente a profundidade e os parâmetros físicos e 
+geométricos  da  fonte  causadora  da  anomalia,  uma  vez  que  a  amplitude  é  diretamente 
+relacionada  à  profundidade  do  corpo  e  a  largura  é  relacionada  às  características 
+geométricas e das propriedades físicas da fonte. Entretanto, infelizmente, quase nunca o 
+efeito de borda recebe uma abordagem adequada quando da etapa de processamento de 
+dados,  o  que  pode  induzir  à  geração  de  modelos  diretos  que  não  condizem  com  a 
+realidade  geológica  da  área  de  estudo,  quer  seja  de  interesse  econômico  (para  a 
+exploração de hidrocarbonetos e minérios), ou para estudos ambientais,  arqueológicos 
+ou de mapeamento geológico.  
+
+ 
+Para  minimizar  o  efeito  de  borda,  deve-se  proceder  com  uma  preparação 
+adequada  do  mapa  original  do  campo  potencial  escalado  antes  que  se  apliquem  as 
+filtragens pertinentes no domínio da transformada.  Este processo consiste basicamente 
+das etapas de expansão das dimensões do mapa pela adição de valores nulos nas suas 
+bordas,  a  fim  de  tornar  tal  mapa  ou  perfil  periódico,  o  que  é  um  requerimento  da 
+transformada  discreta  de  Fourier  e  da  FFT,  bem  como  fazer  com  que  o  mapa  tenha 
+dimensões  retangulares,  seguido  do  processo  de  extrapolação  dos  dados  gerados  do 
+processo  de  expansão  com  os  dados  originais  do  espectro  da  anomalia.  Via  de  regra, 
+uma  boa  extrapolação  é  aquela  que  consegue  reconstruir  o  espectro  original,  com  o 
+máximo  de  precisão  possível,  a  partir  dos  dados  originais  extrapolados  com  os  dados 
+resultantes da expansão da malha de dados original. Dentre os métodos de extrapolação 
+mais  utilizados  para  tal  finalidade,  destacam-se  a  entropia  máxima  e  o  inverso  do 
+quadrado da distância, que é uma variante do método denominado 'inverso da potência 
+da distância', além do método chamado 'vizinho mais próximo'. O método da entropia 
+máxima  foi  originalmente  concebido  por  Burg  (1975),  sendo  caracterizado  por  ser 
+autorregressivo, cujo princípio particular é de que a estimativa do espectro deve ser a 
+mais  randômica  (ou  aleatória)  possível,  ou,  em  outras  palavras,  ter  uma  entropia 
+maximizada  dentro  de  todos  os  espectros  os  quais  sejam  consistentes  com  os  dados 
+medidos originalmente (Burg, 1975). O termo "autorregressivo" se refere ao fato de que 
+o algoritmo da entropia máxima utiliza um filtro de predição, ou seja, que se vale dos 
+dados  originais  para  estimar  o  espectro  obtido  pela  extrapolação  dos  dados  originais 
+com  os  dados  originados  pela  expansão  da  malha  de  dados  original.  Tal  filtro  de 
+predição  pode  ser  empregado  nas  operações  de  convolução  e  multiplicação  e  é  mais 
+preciso à medida que mais coeficientes são utilizados na sua determinação. Atualmente, 
+o  método  da  entropia  máxima  tem  o  seu  uso  consagrado  e  com  uma  eficácia 
+comprovada, por ser mais preciso que as demais metodologias, sendo o mais utilizado 
+com  a  finalidade  de  contornar  os  efeitos  de  borda  e  reconstruir  o  espectro  original, 
+apesar de o tempo de processamento ser maior do que o usado nos outros métodos de 
+extrapolação. 
+
+ 
+
+3 
+
+Em seu trabalho, Maurizio Fedi (2007) deu uma ênfase muito maior aos cálculos 
+ 
+analíticos de sua metodologia, apenas citando brevemente a parte numérica e a filtragem 
+no  domínio  de  Fourier,  sem  entrar  em  maiores  detalhes.  Esta  dissertação  se  propõe  a 
+analisar em maior profundidade os aspectos relativos aos efeitos de borda na filtragem 
+no  domínio  da  transformada  e  aplicar  estes  conceitos  à  metodologia  proposta  por 
+Maurizio Fedi (2007), oferecendo, dessa maneira, a sua contribuição a uma melhoria e 
+excelência  no  fluxo  de  processamento  de  dados  geofísicos  de  campos  potenciais, 
+aprimorando, deste modo, a metodologia proposta por Maurizio Fedi (2007).   
+
+ 
+
+2. 
+
+ 
+
+A DECONVOLUÇÃO DE EULER 
+
+ 
+Os  métodos  para  a  estimativa  de  fontes  magnéticas  e  gravimétricas  pode  ser 
+classificados em duas categorias: aqueles que analisam uma anomalia única e isolada e 
+aqueles  que  analisam  um  perfil  ou  mapa  sobre  inúmeras  fontes  causadoras  de 
+anomalias. 
+
+ 
+A deconvolução de Euler é um método de interpretação automática que fornece 
+uma estimativa da posição horizontal e da profundidade de fontes anômalas a partir de 
+dados de campos potenciais. Originalmente, este método foi amplamente utilizado para 
+interpretar  um  grande  volume  de  dados  aeromagnéticos  devido  à  alta  velocidade  de 
+processamento  e  à  ausência  de  necessidade  de  conhecimento  da  geometria  da  fonte 
+geológica  anômala  e  do  vetor  de  magnetização  das  fontes.  Entretanto,  a  formulação 
+original deste método apresentou duas grandes desvantagens: a presença de uma enorme 
+quantidade de possíveis soluções e o critério empírico e ineficiente para estimar o tipo 
+de fonte geológica (Barbosa, V. e Silva, J. B., 2005). 
+
+ 
+campo  regional  constante  e  produzida  por  uma  fonte  pontual  3D  situada  nas 
+
+A  anomalia  gravimétrica  de  campo  total (cid:7)≡(cid:7)(cid:9)(cid:5),(cid:11),(cid:12)(cid:13)  não  corrigida  de  um 
+coordenadas (cid:14)(cid:15),(cid:16)(cid:15),(cid:17)(cid:15), referidas a um sistema cartesiano, satisfaz à equação homogênea 
+
+de Euler: 
+
+(cid:20)(cid:21)(cid:7)+(cid:9)(cid:11)−(cid:11)(cid:19)(cid:13) (cid:20)
+
+(cid:20)(cid:23)(cid:7)+(cid:9)(cid:12)−(cid:12)(cid:19)(cid:13) (cid:20)
+
+(cid:20)(cid:24)(cid:7) =−(cid:26)(cid:7)		(cid:9)1(cid:13)   
+
+(cid:9)(cid:5)−(cid:5)(cid:19)(cid:13) (cid:20)
+
+,  em  que (cid:28)  é  um  parâmetro  conhecido  como  índice  estrutural,  sendo  uma  medida  da 
+
+taxa de decaimento da anomalia gravimétrica em função da distância entre a fonte e o 
+ponto de medida, ou seja, um indicador da forma geométrica da fonte anômala. 
+
+ 
+Por  exemplo,  temos  que  o  índice  estrutural  é  zero  para  um  contato  geológico, 
+tem  o  valor  unitário  para  um  dique  vertical  ou  uma  soleira,  vale  2  para  um  cilindro 
+horizontal ou vertical e equivale a 3 para uma esfera ou um dipolo (Barbosa, V. e Silva, 
+J. B., 2005). 
+
+ 
+
+4 
+
+Conforme  mencionado  anteriormente,  além  das  limitações  citadas,  podem-se 
+ 
+ainda relacionar outras deficiências, conforme explicitado por (Barbosa,  V. e Silva, J. 
+B., 2005): 
+
+1.  A  dificuldade  de  aplicar  o  método  em  levantamentos  com  poucos  dados  de 
+
+observações; 
+
+2.  A impossibilidade da determinação de outros parâmetros; 
+3.  A  ineficácia  em  ambientes  complexos  consistindo  de  múltiplos  corpos 
+
+interferentes laterais e verticais dentro de uma mesma janela; 
+
+4.  A  impossibilidade  de  integração  das  soluções  da  deconvolução  de  Euler  com 
+
+modelagem geológica 2D ou 3D. 
+ 
+
+3. A METODOLOGIA DEXP 
+
+3.1 INTRODUÇÃO 
+
+A metodologia DEXP, abreviatura em inglês para (Depth from Extreme Points), 
+ 
+ou, em tradução livre, ‘Profundidade dos Pontos Extremos’, tal como foi elaborada por 
+
+Maurizio  Fedi,  transforma  campos  potenciais,  bem  como  as  suas  derivadas (cid:3)-ésimas, 
+
+através  da  multiplicação  da  função  que  descreve  o  campo  potencial  original  por  um 
+nível continuação elevado a um expoente relacionado ao índice estrutural da teoria da 
+deconvolução  de  Euler,  que  foi  abordada  no  primeiro  capítulo.  Logo,  o  expoente  de 
+escalamento depende da forma geométrica do corpo causador da anomalia. 
+
+ 
+Como a função do campo potencial original obedece à Equação de Laplace, na 
+região  harmônica,  temos  que  a  função  potencial  é  analítica  e,  portanto,  pode  ser 
+
+diferenciável  (cid:3)  vezes.  Essa  propriedade  é  importante,  pois  garante  que  o  método 
+
+funcione também para as derivadas do campo potencial. Por outro lado, a transformação 
+do campo potencial relaciona o expoente de escalamento com a ordem da derivada do 
+campo  potencial.  Em  outras  palavras,  para  cada  ordem  de  derivação,  temos  um 
+expoente de escalamento específico. 
+
+ 
+Segundo  Maurizio  Fedi,  o  método  DEXP  permite  estimar  a  profundidade  de 
+uma  fonte  causadora  de  uma  anomalia  de  campo  potencial,  além  da  sua  densidade, 
+sendo  uma  metodologia  rápida  e  estável,  pois  aproveita  o  comportamento  regular  dos 
+campos potenciais em função da altitude.  De acordo com a metodologia proposta por 
+Maurizio Fedi, a profundidade da fonte é obtida a partir dos valores extremos do campo 
+transformado  e  a  densidade  é  obtida  a  partir  dos  valores  do  campo  transformado  (ou 
+escalado). 
+
+ 
+O  uso  das  derivadas  verticais  ajuda  a  minimizar  os  efeitos  indesejáveis  de 
+interferências  mútuas  no  caso  onde  há  mais  de  uma  fonte  ocasionando  a  anomalia 
+gravimétrica, auxiliando ainda na obtenção de representações fidedignas da distribuição 
+de fontes de acordo com as profundidades das mesmas. 
+
+ 
+
+ 
+
+5 
+
+3.2 CAMPOS ESCALADOS 
+
+ 
+
+A função de escalamento (ou de transformação) do campo potencial é definida 
+
+como  sendo  a  derivada  do  logaritmo  do  campo  potencial  original (cid:29)  com  respeito  ao 
+logaritmo da direção vertical (cid:30)(cid:31) (cid:9)(cid:12)(cid:13) (Fedi, 2007): 
+!(cid:9)(cid:12)(cid:13)= (cid:20)"#$%&(cid:9)(cid:24)(cid:13)’
+
+No caso do campo potencial originado por uma massa pontual, denotado por (cid:29)), 
+
+ 
+temos, segundo a equação (5) de (Fedi, 2007): 
+
+(cid:20)"#$(cid:9)(cid:24)(cid:13) 		(cid:9)2(cid:13)   
+
+!) =− *(cid:24)
+
+(cid:24)+(cid:24),		(cid:9)3(cid:13)   
+
+ 
+
+A função !), como esperado, possui uma singularidade isolada no ponto (cid:12) =(cid:12)(cid:19). 
+Como lim(cid:24)→(cid:24),|!)|=+∞,  temos  que  a  função !)  possui  um  pólo  simples  em (cid:12)(cid:19). 
+Portanto, a função !) possui uma representação em série de Laurent em torno do ponto 
+(cid:12)(cid:19), sendo que apenas um dos coeficientes da parte analítica da expansão de !) em série 
+de Laurent é diferente de zero, justamente no ponto (cid:12)(cid:19). Logo, a função de escalamento é 
+analítica  em  toda  vizinhança  do  ponto  (cid:12)(cid:19)  -  exceto  no  ponto  propriamente  dito  - 
+possuindo  derivadas  de  ordem  (cid:3)  nessa  vizinhança.  Mais  ainda,  se  considerarmos 
+(cid:12) =−(cid:12)(cid:19), temos que !) =−1.  
+
+ 
+
+De fato: 
+
+!)(cid:9)(cid:12)=−(cid:12)(cid:19)(cid:13)= (cid:20)"#$%&4(cid:9)(cid:24)(cid:13)’
+
+(cid:20)"#$(cid:9)(cid:24)(cid:13) =−1		(cid:9)4(cid:13)  
+
+ 
+
+Segundo as equações (9) e (10) de Fedi (2007), a derivada da função do campo 
+
+potencial  escalado  se  anula  no  pólo  simples (cid:12) =−(cid:12)(cid:19),  e  que  tal  função  do  campo 
+potencial  escalado,  denotada  por 6$,  é  dada  pelo  produto  da  função  da  função (cid:29)) 
+original com a altitude (nível de continuação) (cid:12) elevada ao expoente de escalamento: 
+
+(cid:20)(cid:24)&4(cid:20)(cid:24) (cid:9)(cid:12)=−(cid:12)(cid:19)(cid:13)=0⟺6$ =(cid:29))(cid:12)		(cid:9)5(cid:13)   
+
+ 
+Em  outras  palavras,  a  derivada  da  função  do  campo  potencial  transformado  é 
+sempre  nula  para  o  ponto  onde  a  função  de  escalamento  apresenta  uma  singularidade 
+isolada. Portanto, o extremo do campo potencial transformado para uma massa pontual 
+
+potencial transformado (ou escalado) para o caso de uma massa pontual é denotado por 
+
+está situado em (cid:12)=−(cid:12)(cid:19), pois a sua derivada se anula nesse ponto. A rigor, os pontos 
+extremos  do  campo  potencial  transformado  são: (cid:5) =(cid:5)(cid:19),(cid:11)=(cid:11)(cid:19)	(cid:2)	(cid:12) =−(cid:12)(cid:19).  O  campo 
+6$. 
+coordenadas (cid:5) =(cid:5)(cid:19),(cid:11)=(cid:11)(cid:19)	(cid:2)	(cid:12)=−(cid:12)(cid:19)  indicarão  um  máximo  absoluto  para  o  campo 
+
+Caso  consideremos  apenas  contrastes  positivos  de  densidades,  então  as 
+
+potencial  transformado.  Caso  contrastes  negativos  de  densidades  sejam  considerados, 
+tais coordenadas serão um mínimo absoluto do campo potencial escalado. 
+
+ 
+
+ 
+
+6 
+
+O expoente de escalamento é o expoente que aparece no fator (cid:12), relacionado à 
+
+ 
+altitude  considerada  para  as  medidas  do  campo  potencial,  a  qual  é  multiplicada  pelo 
+campo  potencial  original.  No  caso  de  uma  massa  pontual,  o  expoente  de escalamento 
+vale 1 (Fedi, 2007). 
+
+ 
+
+ 
+
+3.3 DERIVADAS VERTICAIS 
+
+ 
+O  escalamento  do  campo  potencial  vale  também  para  as  derivadas  parciais 
+verticais do campo potencial gravimétrico original, pois se trata de uma função analítica 
+em uma região exterior à fonte. Analogamente, podemos expandir em série de Laurent a 
+função de escalamento  correspondente para as derivadas verticais do  campo potencial 
+original  em  torno  das  singularidades  isoladas  a  fim  de  se  encontrar  a  profundidade  e 
+densidade da fonte causadora da anomalia em estudo. 
+
+ 
+No caso da derivada vertical de primeira ordem do campo potencial gravimétrico 
+original, assumindo que a densidade é unitária e considerando que a fonte causadora da 
+
+anomalia gravimétrica está posicionada nas coordenadas cartesianas :(cid:19)(cid:9)0,0,(cid:12)(cid:19)(cid:13).  
+
+Para  (cid:11)=0  e  normalizando  a  expressão  do  campo  potencial  original  pela 
+
+ 
+constante universal da gravitação, obtemos a derivada vertical de 1ª ordem do campo de 
+gravidade original (Fedi, 2007): 
+
+Segundo  Fedi  (2007),  a  função  de  escalamento  correspondente,  para (cid:5) =(cid:5)(cid:19) =
+
+ 
+
+0, é dada por: 
+
+(cid:29)(cid:9)(cid:5),(cid:12)(cid:13)= *(cid:9)(cid:24)+(cid:24),(cid:13);+(cid:21);
+
+%(cid:21);<(cid:9)(cid:24)+(cid:24),(cid:13);’= ;> 		(cid:9)6(cid:13)  
+
+!(cid:9)(cid:12)(cid:13)= (cid:20)"#$(cid:9)&(cid:13)
+
+(cid:20)"#$(cid:9)(cid:24)(cid:13) =−3 (cid:24)
+
+(cid:24)+(cid:24),		(cid:9)7(cid:13)  
+
+No  caso  da  derivada  vertical  de  1ª  ordem  do  campo  gravimétrico  original,  o 
+
+ 
+expoente de escalamento de uma massa pontual será dado, segundo Fedi (2007), por: 
+
+!*(cid:9)(cid:12)=−(cid:12)(cid:19)(cid:13)= (cid:20)"#$%&;(cid:9)(cid:24)(cid:13)’
+
+(cid:20)"#$(cid:9)(cid:24)(cid:13) (cid:9)(cid:12) =−(cid:12)(cid:19)(cid:13)=−1.5		(cid:9)8(cid:13)  
+
+ 
+
+Podemos  generalizar  os  resultados  obtidos  na  derivada  vertical  de  primeira 
+
+ordem  para  as  derivadas  de (cid:3)-ésima  ordem,  para  o  caso  de  uma  massa  pontual.  O 
+
+campo potencial gravimétrico original é dado, ainda segundo Fedi (2007), por: 
+
+(cid:29)C(cid:9)(cid:12)(cid:13)=
+
+)
+(cid:9)(cid:24)+(cid:24),(cid:13)DE4		(cid:9)9(cid:13)  
+
+Conforme  preconizou  Fedi  (2007),  a  função  de  escalamento  generalizada  é 
+
+ 
+obtida de modo similar aos casos anteriores: 
+
+!C = (cid:20)"#$%&D(cid:9)(cid:24)(cid:13)’
+
+(cid:20)"#$(cid:9)(cid:24)(cid:13) =−(cid:9)C<)(cid:13)(cid:24)
+
+(cid:24)+(cid:24), 		(cid:9)10(cid:13)   
+
+ 
+
+7 
+
+ 
+
+A função de escalamento generalizada, !C, possui uma singularidade isolada no 
+ponto (cid:12)(cid:19)  e  possui  uma  representação  em  série  de  Laurent  em  torno  desse  ponto.  De 
+de  Euler  é  dado  pelo  coeficiente  G+H  da  expansão  da  função  de  escalamento 
+
+modo análogo, é possível demonstrar que o índice estrutural envolvido na deconvolução 
+
+generalizada  em  série  de  Laurent  para  o  termo  que  contém  o  pólo.  O  valor  do  índice 
+estrutural é numericamente igual ao valor do resíduo da expansão da série de Laurent. O 
+expoente  de  escalamento  da  transformação  DEXP  será  sempre  a  metade  desse  valor.  
+De fato: 
+
+!C(cid:9)(cid:12) =−(cid:12)(cid:19)(cid:13)= (cid:20)"#$%&D(cid:9)(cid:24)(cid:13)’
+
+(cid:20)"#$(cid:9)(cid:24)(cid:13) =−(cid:9)C<)(cid:13)
+*
+
+		(cid:9)11(cid:13)   
+
+ 
+Logo,  o  campo  potencial  gravimétrico  transformado  (ou  escalado)  será  dado 
+pelo  produto  da  função  que  descreve  o  campo  potencial  gravimétrico  original  pela 
+altitude de medição elevada ao correspondente expoente de escalamento. 
+
+ 
+
+Além disso, os pontos extremos do campo potencial gravimétrico transformado 
+
+generalizado,  denotado  por 6$C,  serão  dados  pelas  coordenadas (cid:5) =(cid:5)(cid:19),(cid:11)=(cid:11)(cid:19),(cid:12) =
+−(cid:12)(cid:19) -que coincidem com a singularidade isolada da função de escalamento - pois a sua 
+
+derivada se anula para tais coordenadas. Logo: 
+
+, onde JC representa o expoente de escalamento generalizado. 
+
+6$C =(cid:12)ID(cid:29)C		(cid:9)12(cid:13)  
+
+Por sua vez, o expoente de escalamento generalizado, para o caso de uma fonte 
+
+ 
+pontual, é dado por: 
+
+JC =−!C(cid:9)(cid:12)=−(cid:12)(cid:19)(cid:13)=0.5(cid:9)(cid:3)+1(cid:13)		(cid:9)13(cid:13)   
+
+ 
+A  partir  das  informações  fundamentadas  nos  parágrafos  anteriores,  podemos 
+elaborar  uma  tabela  que  contenha  a  expressão  para  o  cálculo  do  expoente  de 
+escalamento para as principais formas geométricas de fontes, de acordo com a ordem da 
+derivada  vertical  do  campo  escalado,  comparando  o  expoente  de  escalamento  da 
+metodologia DEXP ao índice estrutural da Deconvolução de Euler: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+8 
+
+TABELA 1: EXPRESSÕES MATEMÁTICAS PARA O CÁLCULO DOS 
+EXPOENTES DE ESCALAMENTO COM EXEMPLOS PARA DIVERSAS 
+GEOMETRIAS DE FONTES E COMPARAÇÃO COM O ÍNDICE ESRTUTURAL 
+DA DEVONCOLUÇÃO DE EULER. EXTRAÍDA DE FEDI (2007): 
+
+ 
+
+J):(cid:2)(cid:5)L(cid:31)(cid:2)(cid:3)M(cid:2)	N(cid:2)	(cid:2)(cid:1)OG(cid:30)GP(cid:2)(cid:3)M(cid:31)	LG:G	(cid:31)	OGPL(cid:31)	(cid:2)(cid:1)OG(cid:30)GN(cid:31) 
+
+J*:(cid:2)(cid:5)L(cid:31)(cid:2)(cid:3)M(cid:2)	N(cid:2)	(cid:2)(cid:1)OG(cid:30)GP(cid:2)(cid:3)M(cid:31)	LG:G	G	N(cid:2):QRGNG	LG:OQG(cid:30)	R(cid:2):MQOG(cid:30)	N(cid:2)	1ª	(cid:31):N(cid:2)P	N(cid:31)	OGPL(cid:31)	(cid:2)(cid:1)OG(cid:30)GN(cid:31) 
+JT:(cid:2)(cid:5)L(cid:31)(cid:2)(cid:3)M(cid:2)	N(cid:2)	(cid:2)(cid:1)OG(cid:30)GP(cid:2)(cid:3)M(cid:31)	LG:G	G	N(cid:2):QRGNG	LG:OQG(cid:30)	R(cid:2):MQOG(cid:30)	N(cid:2)	2ª	(cid:31):N(cid:2)P	N(cid:31)	OGPL(cid:31)	(cid:2)(cid:1)OG(cid:30)GN(cid:31) 
+U*:í(cid:3)NQO(cid:2)	(cid:2)(cid:1)M:WMW:G(cid:30)	LG:G	G	N(cid:2):QRGNG	LG:OQG(cid:30)	R(cid:2):MQOG(cid:30)	N(cid:2)	1ª	(cid:31):N(cid:2)P	N(cid:31)	OGPL(cid:31)	(cid:2)(cid:1)OG(cid:30)GN(cid:31) 
+UT:í(cid:3)NQO(cid:2)	(cid:2)(cid:1)M:WMW:G(cid:30)	LG:G	G	N(cid:2):QRGNG	LG:OQG(cid:30)	R(cid:2):MQOG(cid:30)	N(cid:2)	2ª	(cid:31):N(cid:2)P	N(cid:31)	OGPLL(cid:31)	(cid:2)(cid:1)OG(cid:30)GN(cid:31) 
+
+U):í(cid:3)NQO(cid:2)	(cid:2)(cid:1)M:WMW:G(cid:30)	NG	N(cid:2)O(cid:31)(cid:3)R(cid:31)(cid:30)Wçã(cid:31)	N(cid:2)	ZW(cid:30)(cid:2):	LG:G	(cid:31)	OGPLL(cid:31)	(cid:2)(cid:1)OG(cid:30)GN(cid:31) 
+
+J) 
+
+J* 
+
+1 
+
+1.5 
+
+0.5  1 
+
+Tipo de fonte 
+
+Massas pontuais; 
+esferas 
+Cilindros 
+horizontalmente e 
+verticalmente 
+infinitos 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+expoente de 
+escalamento 
+
+JT  Expressão geral do 
+JC =0.5(cid:9)(cid:3)+1(cid:13) 
+JC =0.5(cid:3) 
+
+2 
+
+1.5 
+
+U) 
+
+U* 
+
+UT 
+
+2 
+
+1 
+
+3 
+
+2 
+
+4 
+
+3 
+
+9 
+
+4. MODELAGEM ANALÍTICA 
+
+4.1 INTRODUÇÃO 
+
+ 
+Iniciamos  o  estudo  da  metodologia  DEXP  simulando  o  efeito  da  atração 
+gravitacional de esferas homogêneas situadas na profundidade de 2 km, com raio de 500 
+
+  cada  uma.  Quando  se  utiliza  o  termo  "esfera 
+
+m  e  densidade  de  3000  [  PT>
+
+homogênea",  subentende-se  que  a  densidade  da  esfera  é  constante  em  todo  o  seu 
+volume.  Os  campos  escalados  e  as  suas  derivadas  verticais  de  1ª,  2ª,  3ª  e  4ª  ordens 
+foram obtidos analiticamente em perfis e em mapas 2D e 3D.  
+
+ 
+
+Considerando  G  como  sendo  a  constante  universal  da  gravitação,  temos  que  a 
+
+atração gravitacional exercida por uma esfera homogênea de densidade \ e raio r sobre 
+
+uma  partícula  de  massa  unitária  localizada  em  um  ponto  externo,  distante  l  do  seu 
+centro, é dada por: 
+
+] =4^_\:T
+3(cid:30)*
+
+		(cid:9)14(cid:13) 
+
+ 
+
+Adotando  o  sistema  cartesiano  de  coordenadas,  temos  que  a  distância  l  da 
+
+equação anterior entre as coordenadas do centro da esfera, denotadas por (cid:9)(cid:5)(cid:19),(cid:11)(cid:19),(cid:12)(cid:19)(cid:13) e 
+as coordenadas do ponto de medição, denotadas por (cid:9)(cid:5),(cid:11),(cid:12)(cid:13), é dada por: 
+
+(cid:30) =‘(cid:9)(cid:5)−(cid:5)(cid:19)(cid:13)*+(cid:9)(cid:11)−(cid:11)(cid:19)(cid:13)*+(cid:9)(cid:12)−(cid:12)(cid:19)(cid:13)*		(cid:9)15(cid:13) 
+
+ 
+
+ 
+
+Assim, podemos reescrever a equação da atração gravitacional exercida por uma 
+
+esfera homogênea, no ponto a(cid:9)(cid:5),(cid:11),(cid:12)(cid:13), como segue: 
+
+4^_\:T
+
+] =
+
+3%(cid:9)(cid:5)−(cid:5)(cid:19)(cid:13)*+(cid:9)(cid:11)−(cid:11)(cid:19)(cid:13)*+(cid:9)(cid:12)−(cid:12)(cid:19)(cid:13)*’.10b		(cid:9)16(cid:13) 
+mGal, uma vez que a unidade adotada para a densidade foi o [  PT>
+
+Na equação acima, o fator 10b é usado para conversão das unidades do SI para o 
+
+para o raio da esfera foi o metro e a unidade utilizada para os níveis de continuação e 
+para as coordenadas cartesianas do centro de massa da esfera e do ponto de observação 
+foi o metro, a fim de atender às unidades do SI. 
+
+, a unidade usada 
+
+A unidade de medida dos campos escalados é (cid:9)P^G(cid:30)∗(cid:12)(cid:13), onde z representa o 
+
+valor do nível de continuação para o escalamento do campo. 
+
+ 
+O cálculo analítico do campo de gravidade original e do campo escalado, bem 
+como  das  suas  derivadas  verticais,  para  diferentes  níveis  de  medição,  é  feito 
+
+simplesmente substituindo o valor de (cid:12) na equação que descreve a atração gravitacional 
+
+exercida pela esfera para o nível de medição desejado. 
+
+ 
+
+10 
+
+Em  geral,  as  fontes  geram  campos  potenciais  tais  que  eles  não  podem  ser 
+ 
+aproximados  por  uma  massa  pontual,  a  menos  que  o  plano  de  medição  da  anomalia 
+esteja  a  uma  distância  grande  o  suficiente  do  centro  de  massa  anomalia.  No  caso  da 
+esfera homogênea, podemos considerar que toda a massa está concentrada no seu centro 
+geométrico, que coincide com o centro de massa. Portanto, as equações desenvolvidas 
+para o cálculo do campo escalado e de suas derivadas para fontes pontuais são válidas 
+para a modelagem das esferas homogêneas. 
+
+ 
+Conforme  foi  visto  no  capítulo  da  metodologia  DEXP,  o  valor  correto  da 
+profundidade  da  esfera  é  o  que  corresponde  ao  nível  de  continuação  para  o  qual  o 
+campos  escalados  (ou  suas  derivadas  verticais)  atingem  o  valor  máximo.  Quando  se 
+calcula a derivada vertical do campo escalado e contrastes positivos de densidades entre 
+os corpos, a profundidade da fonte é dada para o nível de continuação no qual temos um 
+máximo  absoluto  e  quando  temos  contrastes  negativos  de  densidade,  o  valor  da 
+profundidade corresponde a um mínimo absoluto (Fedi, 2007).   
+
+Os  valores  de  densidades  podem  ser  verificados  a  partir  dos  valores  máximos 
+ 
+campos  escalados  e  utilizando  os  seus  valores  máximos,  como  segue  na  formulação 
+abaixo: 
+
+\=36$%(cid:9)(cid:5)−(cid:5)(cid:19)(cid:13)*+(cid:9)(cid:11)−(cid:11)(cid:19)(cid:13)*+(cid:9)(cid:12)−(cid:12)(cid:19)(cid:13)*’
+
+4^_:T(cid:12)$).10b
+
+		(cid:9)17(cid:13) 
+
+ 
+
+Na  equação  acima,  6$  representa  o  campo  escalado  gerado  pela  esfera 
+homogênea  e (cid:12)$  é  o  nível  de  continuação  para  o  qual  o  campo  escalado  atinge  o  seu 
+
+valor máximo.  
+
+Com relação à derivada de primeira ordem do campo escalado referente a uma 
+
+ 
+esfera homogênea, temos: 
+
+^_\:T(cid:9)(cid:12)−(cid:12)(cid:19)(cid:13)
+
+ 
+dado pelas relações a seguir: 
+
+(cid:9)(cid:9)(cid:5)−(cid:5)(cid:19)(cid:13)*+(cid:9)(cid:11)−(cid:11)(cid:19)(cid:13)*+(cid:9)(cid:12)−(cid:12)(cid:19)(cid:13)*(cid:13)*g.10b		(cid:9)18(cid:13) 
+
+](cid:24) =−(cid:9)2(cid:13)d43ef
+O campo escalado da derivada vertical de primeira ordem, denotado por 6$*, é 
+(cid:9)(cid:9)(cid:5)−(cid:5)(cid:19)(cid:13)*+(cid:9)(cid:11)−(cid:11)(cid:19)(cid:13)*+(cid:9)(cid:12)−(cid:12)(cid:19)(cid:13)*(cid:13)*gj.(cid:12)T *> .10b		(cid:9)19(cid:13) 
+
+6$* =](cid:24)(cid:12)T *> =h−(cid:9)2(cid:13)d43ef
+
+^_\iT(cid:9)(cid:12)−(cid:12)(cid:19)(cid:13)
+
+ 
+
+ 
+obtida de maneira similar à do campo escalado: 
+
+A  densidade  da  esfera  para  a  derivada  vertical  de  1ª  ordem  pode  ser 
+
+\=−36$%(cid:9)(cid:5)−(cid:5)(cid:19)(cid:13)*+(cid:9)(cid:11)−(cid:11)(cid:19)(cid:13)*+(cid:9)(cid:12)−(cid:12)(cid:19)(cid:13)*’*
+
+8^_:T(cid:9)(cid:12)−(cid:12)(cid:19)(cid:13)(cid:12)$
+
+T *> .10b
+
+		(cid:9)20(cid:13) 
+
+ 
+
+11 
+
+Na equação acima, (cid:12)$ representa o nível de continuação para o qual a derivada 
+
+ 
+vertical de 1ª ordem do campo escalado possui um máximo absoluto. 
+
+Analogamente  ao  que  foi  feito  para  a  derivada  vertical  de  1ª  ordem,  podemos 
+ 
+elaborar as formulações matemáticas pertinentes para as derivadas de 2ª, 3ª e 4ª ordens. 
+É  importante  frisar  que  as  derivadas  de  3ª  e  4ª  ordens  foram  calculadas  apenas 
+analiticamente  para  testar  a  metodologia,  uma  vez  que,  na  transformada  de  Fourier,  a 
+derivada vertical representa uma operação que amplifica ruídos de alta frequência que 
+existem  quando  se  trabalha  com  dados  reais,  razão  pela  qual  se  utiliza,  em  fluxos  de 
+processamentos de dados geofísicos usuais, somente derivadas de 1ª e 2ª ordens, sendo 
+comumente  necessária  a  aplicação  de  um  filtro  assa  baixa,  como  é  o  caso  da 
+continuação para cima. 
+
+4.2 CAMPOS ESCALADOS ANALÍTICOS 
+
+ 
+Primeiramente,  é  modelada  uma  esfera  homogênea  situada  a  2  km  de 
+profundidade.  Com  o  uso  de  um  algoritmo  elaborado  no  MATLAB,  calcula-se 
+analiticamente o campo de gravidade gerado pela esfera para os níveis de continuação 
+de 0 km, 2 km, 4 km, 6 km, 8 km e 10 km. Mapas 2D da anomalia de gravidade, da 
+anomalia continuada analiticamente para os diferentes níveis de medição anteriormente 
+listados , bem como do campo escalado analítico, foram gerados no MATLAB a fim de 
+se ilustrar o efeito da continuação analítica e do  escalamento do campo de gravidade. 
+Vale notar que, para o nível de observação de 0 km, o campo escalado se anula, devido 
+à  própria  equação  que  descreve  o  campo  escalado.  Quanto  maior  é  o  nível  de 
+continuação, ou quanto mais o nível de continuação é distante do nível correspondente à 
+profundidade da fonte, mais atenuada se torna a anomalia. Os mapas representativos de 
+uma esfera a 2 km de profundidade estão exibidos a seguir, na figura 1: 
+
+(a) 
+
+ 
+
+ 
+
+12 
+
+(b) 
+
+(c) 
+
+(d) 
+
+ 
+
+ 
+
+13 
+
+ 
+
+ 
+
+(e) 
+
+(f) 
+
+ 
+
+Figura  1:  Campo  gravimétrico  e  campo  escalado  gerados  por  uma  esfera  homogênea  a  2  km  de 
+profundidade continuados para cima para os níveis de continuação de 2 km, 4 km, 6 km, 8 km e 10 km. A 
+primeira  linha  indica  o  campo  gravitacional  original.  A  segunda  linha  indica  o  campo  gravitacional 
+original continuado para o nível de continuação indicado. A terceira linha indica o campo gravitacional 
+original  escalado  para  o  nível  de  continuação  indicado.  Notar  que  a  operação  de  continuação  atenua  a 
+anomalia  gerada  pela  esfera  homogênea,  atenuação  que  é  diretamente  proporcional  ao  incremento  do 
+nível de continuação em relação à superfície de medição, cujo nível é o de 0 km. (a) Nível de continuação 
+de 0 km; (b) Nível de continuação de 2 km; (c) Nível de continuação de 4 km; (d) Nível de continuação 
+de 6 km; (e) Nível de continuação de 8 km e (f) Nível de continuação de 10 km. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+14 
+
+A  seguir,  foram  gerados  mapas  3D  do  campo  de  gravidade  e  do  campo  de 
+gravidade  escalado  gerado  pela  esfera.  Considera-se  que  o  eixo  z,  representativo  das 
+profundidades,  é  negativo  para  baixo  e  que  as  profundidades  aumentam,  em  módulo, 
+para  baixo.  Os  dados  foram  continuados  analiticamente  na  direção  vertical  em  vários 
+níveis, num intervalo de 1000 m entre um nível e outro. Na direção horizontal (eixos x e 
+y),  o  intervalo  de  amostragem  foi  de  200  m.  Todos  os  mapas  3D  foram  gerados  na 
+plataforma  do  software  Oasis  montaj,  de  propriedade  da  empresa  Geosoft.  A 
+metodologia DEXP mostra-se eficiente, de modo tal que o mapa 3D do campo escalado 
+consegue identificar a profundidade da esfera adequadamente, com a amplitude máxima 
+do campo escalado se situando em torno da profundidade de 2 km. A figura 2 a seguir 
+ilustra o mapa em três dimensões do campo potencial gravitacional original. A figura 3 
+ilustra o campo de gravidade escalado.   
+
+ 
+
+ 
+
+ 
+
+Figura  2:  Mapa  3D  gerado  para  o  campo  potencial  gravitacional  gerado  por  uma  esfera  homogênea 
+situada a 2 km de profundidade.  
+
+ 
+
+ 
+
+15 
+
+Figura  3:  Mapa  3D  gerado  para  o  campo  potencial  gravitacional  escalado  gerado  por  uma  esfera 
+homogênea  situada  a  2  km  de  profundidade.  Neste  caso,  a  profundidade  da  esfera  é  determinada 
+corretamente  e  está  representada  pelo  ponto  preto,  o  qual  corresponde  ao  valor  máximo  do  campo 
+escalado situado na singularidade isolada localizada a 2 km de profundidade. 
+
+ 
+
+ 
+
+ 
+
+ 
+Algumas fontes reais de geometrias mais complexas podem ser aproximadas por 
+geometrias  mais  simples  de  serem  modeladas,  como  sólidos  semi-infinitos  em  duas 
+dimensões.  Um  exemplo  disso  é  o  caso  de  um  cilindro  de  comprimento  infinito  na 
+direção y, cuja geometria pode ser utilizada para modelar diversas situações geológicas 
+verossímeis.  Assim  como  no  caso  da  esfera,  podemos  considerar  o  cilindro 
+horizontalmente  infinito  em  duas  dimensões,  de  modo  que  precisamos  da  coordenada 
+cartesiana  de  apenas  um  ponto,  que  é  o  centro  de  massa  do  cilindro,  para  calcular  o 
+campo  de  gravidade  e  o  campo  escalado  analiticamente.  Assim,  podemos  obter  uma 
+representação  em  um  mapa  2D,  feito  no  MATLAB,  do  campo  escalado  para  a 
+modelagem  do  cilindro.  No  caso  deste  trabalho,  foi  modelado  um  cilindro  de 
+
+comprimento infinito na direção y, de raio igual a 1000 metros e densidade de 1 [  PT>
+
+com centro de massa situado a 2 km de profundidade. O mapa 2D do campo escalado 
+tem  em  seu  eixo  y  os  níveis  de  continuação  para  os  quais  o  campo  analítico  foi 
+calculado. É possível notar claramente que o valor máximo do campo escalado se situa 
+para o nível de continuação de 2 km, o qual corresponde ao ponto branco na figura 4 
+seguinte:  
+
+, 
+
+ 
+
+16 
+
+Figura 4: Mapa 2D para o campo escalado gerado por um cilindro homogêneo de comprimento infinito 
+na  direção  horizontal,  situado  a  uma  profundidade  de  2  km.  Notar  que  o  valor  máximo  do  campo 
+escalado, representado na figura pelo ponto branco, coincide com o valor da profundidade do cilindro. 
+
+ 
+
+ 
+
+4.3 DERIVADAS VERTICAIS ANALÍTICAS 
+
+ 
+
+ 
+Para as derivadas verticais analíticas do campo escalado, também foram gerados 
+mapas 3D no Oasis montaj a fim de simular duas esferas homogêneas com separação 
+de 8 km entre si, nos casos em que ambas estão situadas a 2 km de profundidade. Os 
+níveis de continuação para o cálculo das derivadas do campo escalado foram de 0 km 
+até  10  km,  com  intervalo  de  amostragem  de  1  km,  considerando  que  o  módulo  da 
+profundidade  cresce  para  baixo  que  o  eixo  z  é  negativo  para  baixo.  Os  intervalos  de 
+amostragem nas direções dos eixos x e y são de 200 m. A tabela abaixo, juntamente com 
+os  respectivos  mapas  3D  do  campo  de  gravidade  original,  do  campo  escalado  e  das 
+derivadas verticais analíticas de 1ª, 2ª, 3ª e 4ª ordens do campo escalado, ilustram mais 
+claramente  a  configuração  adotada  para  modelar  as  derivadas  verticais  analíticas  do 
+campo escalado, indicando as coordenadas cartesianas, profundidades e os parâmetros 
+físicos e geométricos das esferas: 
+
+TABELA  2:  PARÂMETROS  GEOMÉTRICOS  E  FÍSICOS  UTILIZADOS  NO 
+CÁLCULO  DAS  DERIVADAS  VERTICAIS  DO  CAMPO  GRAVIMÉTRICO 
+ESCALADO GERADO POR 2 ESFERAS HOMOGÊNAS: 
+
+ 
+
+ 
+
+Esfera 1 
+
+Profundidade 
+
+Coordenadas 
+Cartesianas  (x, 
+y,z) 
+(-4000, 0, -2000)  2 km 
+
+Esfera 2 
+
+(4000, 0, -2000) 
+
+2 km 
+
+ 
+
+ 
+
+Densidade 
+
+Raio 
+
+3000 [  PT>
+3000 [  PT>
+
+ 
+
+ 
+
+500 m 
+
+500 m 
+
+17 
+
+Abaixo seguem os resultados das modelagens analíticas das derivadas verticais 
+ 
+em mapas 3D. A figura 5 ilustra o mapa 3D do campo potencial gravitacional original 
+gerado  pelas  duas  esferas  homogêneas.  A  figura  6  mostra  o  campo  potencial 
+gravimétrico escalado. Já as figuras de 7 até 10 ilustram o cálculo da derivadas verticais 
+analíticas  de  1ª,  2°,  3ª  e  4ª  ordens,  respectivamente,  para  o  campo  potencial 
+gravimétrico escalado gerado pelas duas esferas homogêneas: 
+
+Figura 5: Campo potencial gravitacional gerado por duas esferas homogêneas situadas nas coordenadas 
+cartesianas  (-4000,  0,  -2000)  e  (4000,0,-2000).  Notar  que  os  valores  máximos  do  campo  gravimétrico 
+original estão situados próximos ao nível de continuação de 0 km, o que não equivale à profundidade real 
+das esferas. Além disso, não é possível distinguir as duas esferas geradoras do campo gravimétrico. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+18 
+
+Figura  6:  Campo  potencial  gravitacional  escalado  gerado  por  duas  esferas  homogêneas  situadas  nas 
+coordenadas  cartesianas  (-4000,  0,-2000)  e  (4000,0,-2000).  Os  pontos  pretos  representam  os  valores 
+máximos do campo escalado, correspondendo às profundidades das esferas. 
+
+ 
+
+Figura  7:  Derivada  vertical  de  1ª  ordem  do  campo  potencial  gravitacional  escalado  gerado  por  duas 
+esferas  homogêneas  situadas  nas  coordenadas  cartesianas  (-4000,  0,  -2000)  e  (4000,0,-2000).  A 
+distribuição de densidades está  mais bem determinada do que no caso do campo gravimétrico original, 
+sendo  que  os  valores  máximos  do  campo  gravimétrico  original  escalado,  representados  pelos  pontos 
+pretos, estão localizados a 2 km de profundidade, que é o valor correto. Ademais, já é possível fazer uma 
+distinção melhor entre as duas esferas homogêneas geradoras do campo potencial. 
+
+ 
+
+ 
+
+19 
+
+Figura  8:  Derivada  vertical  de  2ª  ordem  do  campo  potencial  gravitacional  escalado  gerado  por  duas 
+esferas  homogêneas  situadas  nas  coordenadas  (-4000,  0,-  2000)  e  (4000,0,-2000).  Os  pontos  pretos 
+correspondem aos valores máximos do campo escalado, representando as profundidades das esferas. 
+
+ 
+
+Figura  9:  Derivada  vertical  de  3ª  ordem  do  campo  potencial  gravitacional  escalado  gerado  por  duas 
+esferas  homogêneas  situadas  nas  coordenadas  (-4000,  0,-2000)  e  (4000,0,-2000).  Os  pontos  pretos 
+correspondem aos valores máximos do campo escalado, representando as profundidades das esferas. 
+
+ 
+
+ 
+
+20 
+
+Figura  10:  Derivada  vertical  de  4ª  ordem  do  campo  potencial  gravitacional  gerado  por  duas  esferas 
+homogêneas  situadas  nas  profundidades  (-4000,  0,-2000)  e  (4000,0,-2000).  Os  pontos  pretos 
+correspondem aos valores máximos do campo escalado, representando as profundidades das esferas. 
+
+ 
+
+ 
+
+ 
+
+ 
+Além  da  configuração  acima  estabelecida,  outros  modelos  foram  elaborados, 
+com diferentes distâncias horizontais de separação entre as esferas e em casos nos quais 
+as  esferas  estão  a  profundidades  diferentes  entre  si.  Com  base  nos  resultados  das 
+modelagens para as derivadas verticais analíticas, pode-se concluir que, quanto maior é 
+a  separação  entre  as  esferas,  menor  é  o  efeito  de  interferência  mútua  entre  elas.  Em 
+outras  palavras,  é  mais  fácil  distinguir  as  duas  esferas  entre  si  e  menor  é  a  ordem  da 
+derivada  vertical  analítica  necessária  para  fazer  tal  distinção.  Por  outro  lado,  para 
+esferas próximas demais entre si, a distinção se torna muito complicada, mesmo para o 
+cálculo  das  derivadas  analíticas.  Evidentemente,  quanto  maior  a  ordem  da  derivada, 
+melhor é a resolução para distinguir as duas esferas. Tal fato vale para qualquer tipo de 
+configuração  adotada  para  a  modelagem  da  derivada  vertical  analítica  neste  trabalho. 
+Quando as esferas estão situadas a mesma profundidade, o método consegue determinar 
+com  precisão  as  profundidades  de  ambas  as  esferas,  uma  vez  que  só  há  um  valor  de 
+máximo  absoluto.  Por  outro  lado,  quando  as  esferas  estão  situadas  a  profundidades 
+diferentes, o cálculo da profundidade de uma das esferas fica prejudicado. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+21 
+
+5. OS EFEITOS DE BORDA 
+
+5.1 INTRODUÇÃO 
+
+ 
+Ao longo dos anos, inúmeros artigos técnicos, livros e seminários se dedicaram 
+ao estudo do problema prático inerente à estimativa do espectro da energia de séries de 
+caráter  estacionário,  amostradas  e  de  banda  limitada  no  domínio  da  distância  (  ou  do 
+tempo), onde a informações conhecidas a respeito das séries temporais são os valores de 
+sua autocorrelação (Burg,1975). 
+
+ 
+Quase  todo  o  conhecimento  a  repeito  do  tema  é  baseado  no  uso  das  funções-
+janela,  também  chamada  de  função  pulso  retangular,  ou,  ainda,  função  caixa,  cujas 
+propriedades  podem  ser  facilmente  analisadas  a  partir  do  estudo  do  teorema  da 
+convolução na transformada de Fourier. Entretanto, o uso de tais funções retangulares 
+(janelas) produz estimativas espectrais negativas ou então que não estão de acordo com 
+os valores da função de autocorrelação original. Essa foi uma das principais motivações 
+para  o  desenvolvimento  do  método  de  extrapolação  da  Máxima  Entropia  de  Predição 
+(Burg,1975).  
+
+ 
+
+A  aproximação  convencional  da  função  de  autocorrelação  no  domínio  da 
+
+distância, denotada por i(cid:9)(cid:5)(cid:13), para |(cid:5)|≤l, onde (cid:5) representa a distância e l o número 
+
+de amostras, é assumir que a função de autocorrelação se anula para valores de distância 
+além da razão de amostragem em função do número de amostras, isto é: 
+
+i(cid:9)(cid:5)(cid:13)=0	;	|M|>l		(cid:9)21(cid:13)  
+
+ 
+janela,  concebida  ainda  como  uma  função  de  ponderação,  ou  função  de  truncamento. 
+
+Então,  calcula-se  a  transformada  de  Fourier  de 6(cid:9)(cid:5)(cid:13)i(cid:9)(cid:5)(cid:13),  onde 6(cid:9)(cid:5)(cid:13)  é  a 
+Tal  cálculo  é  equivalente  a  obter  a  transformada  de  Fourier  de  i(cid:9)(cid:5)(cid:13)6(cid:9)(cid:5)(cid:13),  para 
+−∞<M <+∞, onde 6(cid:9)(cid:5)(cid:13)=0, para |M|>l. Pelo teorema da convolução, tal produto 
+
+de funções no domínio da distância equivale à convolução destas funções no domínio 
+do número de onda. Tal procedimento matemático é eficiente desde que o espectro de 
+energia no domínio da distância seja igual ao espectro no domínio do número de onda, 
+(que  é  o  enunciado  do  Teorema  de  Parseval),  o  qual  está  sofrendo  a  operação  de 
+convolução com a transformada de Fourier da função de truncamento (Burg,1975).   
+
+ 
+Diversas  pesquisas  foram  feitas  a  fim  de  se  estudar  as  propriedades  de  tais 
+funções  de  truncamento  (janelas).  A  seleção  de  uma  função  de  truncamento  (janela) 
+envolve o compromisso entre a resolução no espectro final e a extensão para a qual um 
+componente de um espectro (número de onda ou frequência) contamina as estimativas 
+de  quaisquer  outros  componentes  do  espectro  nas  vizinhanças.  Alternativamente,  isto 
+significa que temos de impor que o pico principal da transformada de Fourier função de 
+truncamento  seja  um  impulso  e,  como  consequência,  que  os  lóbulos  laterais  da  sua 
+transformada de Fourier sejam minimizados. Outra imposição é que as estimativas do 
+espectro  sejam  estritamente  positivas.  A  princípio,  a  função  de  truncamento  teórica  é 
+satisfatória, exceto pelo fato de que problemas são artificialmente introduzidos quando 
+
+ 
+
+22 
+
+se  estima  que  a  função  de    autocorrelação  se  anula  para  um  valor  de  distância 
+
+determinado, isto  é, para i(cid:9)(cid:5)(cid:13)=0;	|M|>l e pelo fato de sermos obrigados a truncar 
+
+os dados originados pela função de truncamento, correspondente à janela no domínio do 
+número de onda e vice-versa (Burg,1975). 
+
+ 
+A computação prática de mapas transformados pode ser feita utilizando tanto a 
+convolução  no  domínio  do  tempo  (ou  do  espaço)  quanto  o  produto  no  domínio  da 
+transformada de Fourier, entre o campo potencial e o operador (ou o filtro) que efetua a 
+transformação desejada no mapa original. A multiplicação no domínio da frequência (ou 
+do  número  de  onda)  é  a  mais  usual,  pois  envolve  uma  operação  matemática  mais 
+simples  e  rápida  das  transformadas  de  Fourier  de  dois  mapas.  Como  já  se  sabe,  o 
+algoritmo  da  FFT  torna  tais  cálculos  rápidos.  Contudo,  algumas  armadilhas  são 
+inerentes  a  este  método.  Geralmente,  a  área  do  levantamento  não  é  retangular  e  pode 
+conter  lacunas.  O  cálculo  da  FFT,  para  tais  configurações,  não  é  muito  fácil  de  ser 
+conduzido com sucesso. Ademais, os dados originais precisam ser interpolados em uma 
+malha de dados regular. Se a distância entre os pontos nos quais há medições e os nós 
+das  malhas  de  dados  é  muito  grande,  haverá  distorções  dos  dados  interpolados.  Um 
+método  como  a  FFT  propagará  tais  distorções  para  todo  o  mapa  e,  por  exemplo,  um 
+artefato  de  interpolação  que  esteja  situado  na  borda  superior  direita  do  mapa  original 
+poderá afetar a borda inferior esquerda do mapa transformado. Outro problema é o fato 
+de  que  é  impossível  transformar  somente  um  fragmento  desejável  do  mapa  inteiro 
+(Gibert,D. e Galdeano, A., 1985). 
+
+ 
+As razões acima expostas fazem com que a equação da convolução seja muito 
+utilizada,  mesmo  sendo  um  método  mais  lento  do  que  a  FFT,  mas  possuindo  as 
+vantagens  de  ser  mais  local  e  de  ter  menos  propagação  de  distorções  quando  do 
+processo  de  interpolação,  além  de  ser  bem  preciso,  possuindo  uma  boa  resolução 
+(Gibert,D. e Galdeano, A., 1985). 
+
+A magnitude dos  coeficientes do filtro empregado na transformação do campo 
+ 
+potencial, no cálculo da convolução, diminui rapidamente do centro para as bordas do 
+mapa.  Por  causa  disso,  os  efeitos  de  borda  se  tornam  particularmente  acentuados  na 
+'periferia'  dos  mapas  transformados,  sendo  necessário  não  introduzir  altas  frequências 
+no processo de extrapolação dos dados. Uma boa extrapolação é feita se o espectro dos 
+dados  extrapolados  não  difere  substancialmente  do  espectro  dos  dados  originais. 
+Existem  vários  métodos  que  efetuam  a  extrapolação,  tais  como  a  extrapolação 
+polinomial, a simetrização, além da extrapolação com um filtro de predição (Gibert, D. 
+e Galdeano, A., 1985). 
+
+Um  bom  exemplo  de  algoritmo  que  utiliza  um  filtro  de  predição  é  a  Análise 
+ 
+Espectral  por  Entropia  Máxima,  desenvolvido  por  Burg  (1975).  O  principal  problema 
+quando se utiliza este método é selecionar uma razão entre o número de coeficientes do 
+filtro  de  predição  empregado  na  extrapolação  e  a  taxa  de  amostragem,  diretamente 
+proporcional  ao  número  de  dados  usados  para  efetuar  o  cálculo  referido.  Alguns 
+
+ 
+
+23 
+
+resultados  empíricos  mostram  que  tal  razão  deve  variar  entre  0,1  e  0,3,  conforme 
+explicado na figura 11 a seguir (Gibert,D. e Galdeano, A., 1985). 
+
+Figura 11: Ilustração do efeito do número de coeficientes empregados nos filtros de predição usados para 
+extrapolar os dados originais dos campos potenciais com os dados gerados pelo processo de expansão da 
+malha de dados, a fim de contornar os efeitos de borda. À medida que o número de coeficientes aumenta, 
+a  precisão  do  algoritmo  de  extrapolação  melhora,  o  que  permite  reconstruir  mais  adequadamente  o 
+espectro  de  potência  da  anomalia  original.  Neste  exemplo,  a  razão  entre  o  número  de  coeficientes  e  o 
+número de dados amostrados varia de 5 % até 40 %. Ilustração extraída de Gilbert e Galdeano (1985). 
+
+ 
+
+ 
+
+ 
+É sabido que os dados precisam ser interpolados em uma malha de dados regular 
+de dimensões retangulares.  Para o caso de levantamentos gravimétricos, a interpolação 
+é  uma  tarefa  árdua  devido  à  distribuição  irregular  e  heterogênea  dos  pontos  onde  há 
+medições.  Em  tais  situações,  métodos  de  interpolação  mais  sofisticados,  tais  como  a 
+krigagem, podem ser empregados. Em geral, a interpolação deve ser feita em malhas de 
+dados que sejam quadradas ou retangulares (Gibert,D. e Galdeano, A., 1985). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+24 
+
+5.2 PREPARAÇÃO DE MAPAS NA FFT    
+
+A preparação de um mapa 2D de anomalias de campos potenciais segue alguns 
+
+ 
+passos básicos: 
+
+1.  Remoção  das  tendências  de  primeira  ordem  do  mapa.  Como  o  mapa  pré-
+processado deve ser periódico, é importante remover as tendências de primeira 
+ordem  antes  de  se  realizar  a  expansão  e  o  preenchimento  do  mapa  no  qual  os 
+filtros no domínio de Fourier serão aplicados; 
+
+2.  Expansão  das  dimensões  do  mapa  pela  adição  de  áreas  de  valores  nulos  nas 
+bordas  do  mapa  a  fim  de  produzir  um  mapa  de  dimensões  retangulares.  A 
+expansão é dada em termos percentuais; 
+
+3.  Reposicionar  todos  os  valores  de  dummy  das  bordas  do  mapa  com  os  valores 
+interpolados das partes válidas do mapa original. Em outras palavras, os valores 
+das bordas do mapa que foi expandido são interpolados com os valores do mapa 
+original.  Quando  do  preenchimento  dos  mapas  originais,  faz-se  uma 
+reorganização  dos  valores  de  dummy  do  mapa  expandido  dentro  de  um  mapa 
+com  os  valores  originais  das  anomalias  interpolados  com  esses  valores  de 
+dummy,  iniciando  com  a  interpolação  de  todas  as  áreas  em  branco  do  mapa 
+original,  reposicionando  os  valores  de  dummy    oriundos  da  expansão  do mapa 
+original  em  cada  linha  do  mapa  de  modo  tal  que  todas  as  linhas  do  mapa  2D 
+sejam  periódicas,  sendo  que  o  mesmo  procedimento  é  aplicado  para  todas  as 
+colunas  do  mapa  2D.  Após  isto,  ocorre  a  medição  dos  resultados  a  partir  do 
+preenchimento  das  colunas  e  linhas  do  mapa  original,  utilizando  métodos 
+específicos,  tais  como  a  entropia  máxima  de  predição,  ponderação  a  partir  do 
+inverso da distância, dentre outros. Os filtros no domínio de Fourier alteram o 
+espectro. Logo, os mapas nos quais os filtros serão aplicados são suscetíveis do 
+fenômeno  de  Gibb's  caso  o  preenchimento  do  mapa  não  seja  feito  de  maneira 
+adequada.   
+ 
+
+Figura  12:  Processo  de  remoção  de  tendências  de  1ª  ordem  da  curva  de  anomalia  do  campo 
+potencial  gravitacional.  Na  curva  superior  (contínua),  temos  a  anomalia  original.  Na  curva 
+inferior,  temos  a  tendência  de  1ª  ordem  removida,  sendo  que    a  mesma  foi  tornada  periódica 
+(curva  tracejada)  a  fim  de  se  poder  efetuar  corretamente  o  algoritmo  da  FFT,  ajudando  a 
+contornar os efeitos de borda. 
+ 
+
+ 
+
+25 
+
+ 
+
+ 
+
+5.2.1 EXPANSÃO DOS MAPAS 
+
+ 
+O  tamanho  do  mapa  deve  ser  aumentado  (expandido)  a  fim  de  que  ele  tenha 
+dimensões  aceitáveis  para  o  algoritmo  da  FFT.  A  expansão  proporciona  uma  área  de 
+extensão do mapa a fim de que ele possa ser suavemente periódico. A expansão, por si 
+só, simplesmente preenche as bordas do mapa com valores em branco, que nada mais 
+são do que valores sem nenhum atributo numérico definido. 
+
+ 
+
+5.3 EXTRAPOLAÇÃO: MÁXIMA ENTROPIA DE PREDIÇÃO 
+
+ 
+Após  a  expansão  do  mapa  original,  existe  a  etapa  de  preenchimento  do  mapa 
+gerado  a  partir  da  expansão.  Como  descrito,  os  dados  do  mapa  original  serão 
+extrapolados com os dados gerados quando do processo de expansão.  
+
+ 
+Interpolar  (e  extrapolar)  é  predizer  (ou  estimar)  o  valor  da  variável  em  estudo 
+num  ponto  não  amostrado.  É  um  método  que  permite  construir  um  novo  conjunto  de 
+dados a partir de um conjunto discreto de dados pontuais conhecidos. Comumente em 
+engenharia e na Geofísica, têm-se dados pontuais, obtidos a partir de uma amostragem.  
+
+ 
+Os métodos mais comuns de interpolação são: Vizinho mais Próximo, Vizinho 
+Natural,  Triangulação  Linear,  Triangulação  de  Delaunay,  Polígonos  de  Voronoi, 
+Inverso da Potência da Distância (sendo o IQD, o Inverso do Quadrado da Distância, o 
+mais utilizado), Mínima Curvatura (Spline), Regressão Polinomial, Krigagem e Máxima 
+Entropia Bayesiana. 
+
+ 
+O  conceito  de  entropia  foi  introduzido  na  ciência  há  mais  de  um  século  por 
+Boltzmann,  tendo  sido  originado  de  estudos  de  termodinâmica,  onde  foi  introduzido 
+para  caracterizar  a  desordem  de  um  sistema.  De  uma  maneira  bem  simplificada,  o 
+método da máxima entropia amostra os dados originais próximos das bordas dos mapas 
+originais para determinar o seu conteúdo de espectro. O método então prediz, no mapa 
+que sofreu o processo de expansão, uma função de dados que teriam a mesma assinatura  
+espectral como os dados originais. Isto significa que, se os dados originais são suaves, 
+os dados preditos serão suaves e, se os dados originais são ruidosos, os dados preditos 
+são 
+resultado,  os  dados  preditos  não  alterarão 
+significativamente  o  espectro  de  energia  que  resultaria  a  partir  dos  dados  originais 
+isoladamente.  Além  disso,  o  método  da  entropia  máxima  permite  que  dados  ruidosos 
+em uma borda de um mapa sejam gradualmente interpolados para dados suavizados na 
+margem oposta do mapa. 
+
+ruidosos.  Como 
+
+também 
+
+ 
+A entropia máxima é um método de estimativa do espectro da energia de séries 
+estacionárias dependentes do tempo ou da distância a partir de um conhecimento parcial 
+das  suas  funções  de  autocorrelação.  Os  métodos  convencionais  de  estimativa  do 
+espectro  da  energia  de  uma  função  de  autocorrelação  assumem  que  a  função  de 
+autocorrelação  se  anula  para  todos  os  pontos  nos  quais  não  há  uma  estimativa 
+disponível e utiliza algum tratamento matemático para os pontos que possuem alguma 
+
+ 
+
+26 
+
+estimativa  a  fim  de  reduzir  o  efeito  de  truncamento  da  função  de  autocorrelação.  Por 
+outro lado, o método da entropia máxima não realiza nenhuma modificação nos pontos 
+que possuem estimativas e usa uma estimativa diferente de zero para os pontos que não 
+possuem  uma  estimativa  prévia  direta.  O  princípio  particular  usado  pelo  método  da 
+entropia  máxima  é  de  que  a  estimativa  do  espectro  deve  ser  a  mais  randômica  (ou 
+aleatória) possível, ou, em outras palavras, ter uma entropia maximizada dentro de todos 
+os  espectros  os  quais  sejam  consistentes  com  os  dados  medidos.  O  resultado  de  tal 
+metodologia é que é possível obter uma estimativa do espectro no domínio de Fourier 
+com  uma  precisão  e  resolução  muito  maiores  do  que  as  obtidas  pelos  métodos  de 
+estimativa 
+tempo  de  processamento 
+proporcionalmente muito menor (Burg, 1975).   
+
+tradicionais,  com  um  acréscimo  de 
+
+ 
+Talvez o trabalho mais importante a respeito da teoria da entropia máxima é a 
+tese  de  doutorado  escrita  por  Burg  em  1975,  na  Universidade  Stanford.  Praticamente 
+todo o aspecto teórico da entropia máxima neste trabalho foi pesquisado a partir desta 
+tese acima citada. 
+
+ 
+Dados  os  conhecimentos  específicos  contidos  em  um  conjunto  limitado  de 
+valores  da  função  de  autocorrelação,  somado  ao  fato  de  que  os  valores  do  espectro 
+obtido são estritamente positivos, temos a questão de que existem inúmeros (para não 
+dizer  infinitos)  espectros  que  se  ajustam  a  tais  propriedades.  Desta  maneira,  sem 
+informações  adicionais,  o  processo  de 
+reconstruir  o  espectro  original,  ou, 
+alternativamente, exibir todos os espectros disponíveis, pode se tornar algo praticamente 
+impossível (Burg,1975).  
+
+ 
+
+Uma alternativa razoável a este problema é encontrar uma função, chamada de 
+
+função única ou função singular, denotada por a(cid:9)(cid:29)(cid:13), a qual seja representativa de todas 
+
+as  classes  de  espectros  possíveis,  isto  é,  que  seja  uma  função  que  goze  de  todas  as 
+propriedades necessárias aos espectros em estudo, ou seja, não ter valores negativos e 
+obedecer ao teorema da convolução no domínio do número de onda de maneira tal que 
+o  espectro  original  possa  ser  reconstruído  a  partir  da  convolução  da  função  de 
+truncamento  com  o  espectro  no  domínio  do  número  de  onda.  Contudo,  a  base  para 
+determinar tal função é bastante subjetiva. Apesar disso, uma escolha bem criteriosa da 
+
+função a(cid:9)(cid:29)(cid:13) deve ser feita (Burg,1975).   
+
+ 
+A análise espectral a partir máxima entropia consiste na escolha do espectro que 
+corresponda à série temporal mais aleatória (randômica) cuja função de autocorrelação 
+se ajuste aos valores conhecidos da série. Esta condição, a qual corresponde ao conceito 
+da  entropia  máxima,  sendo  muito  utilizado  em  Mecânica  Estatística  e  na  Teoria  da 
+Informação,  é  mostrada  como  sendo  a  melhor  estimativa  com  respeito  aos  valores 
+desconhecidos da função de autocorrelação (Burg,1975). 
+
+ 
+
+  
+
+ 
+
+ 
+
+27 
+
+Além de nos fornecer uma estimativa espectral a qual é uma função não negativa 
+ 
+no  domínio  do  número  de  onda  e  que  se  ajusta  com  os  valores  da  função  de 
+autocorrelação, a análise espectral a partir da entropia máxima possui atributos, dentre 
+os quais é o fato de que a análise espectral a partir da entropia máxima possuir a melhor 
+resolução em comparação às estimativas convencionais (Burg,1975).   
+
+ 
+Uma  vez  que  a  série  temporal  mais  aleatória  possível  possui  um  espectro 
+'branco'  (ou  suave),  é  de  esperar  que  a  condição  de  entropia  máxima  produza  um 
+espectro  o  mais  suave  possível  que  seja  consistente  com  os  valores  da  função  de 
+autocorrelação.  Os  espectros  originados  a  partir  da  entropia  máxima  quase  sempre 
+possuem  uma  curvatura  do  pico  do  espectro  muito  mais  suave  do  que  a  obtida  por 
+outras  metodologias,  o  que  obviamente  implica  numa  resolução  muito  melhor.  Além 
+disso, muitas vezes as estimativas espectrais convencionais não estão de acordo com os 
+dados  originais  do  domínio  da  distância  (ou  do  tempo)  e  não  podem  ser  restritas  de 
+maneira que sejam estritamente positivas (Burg, 1975).  
+
+Adicionalmente, os problemas dos lóbulos laterais da função de ponderação, que 
+ 
+é a função cuja transformada de Fourier é a função de truncamento (pulso retangular ou 
+janela)  não  ocorrem  na  estimativa  espectral  da  entropia  máxima.  Deste  modo,  o 
+problema  de  truncamento  é  resolvido  e,  com  isso,  picos  do  espectro  no  domínio  do 
+número  de  onda  que  estejam  muito  próximos  entre  si  podem  ser  resolvidos,  ou  seja, 
+diferenciados entre si, a partir do método de estimativa espectral pela entropia máxima. 
+Outro importante atributo da entropia máxima é o fato de que os valores de estimativa 
+do espectro no domínio do número de onda podem ser obtidos diretamente da função de 
+
+autocorrelação, i(cid:9)(cid:5)(cid:13), no domínio da distância, para |M|≤l (Burg, 1975). 
+
+Uma  formulação  matemática  básica  do  algoritmo  de  extrapolação  da  entropia 
+
+ 
+máxima de predição é fornecida no apêndice I desta dissertação de mestrado. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+28 
+
+6. MODELAGEM NUMÉRICA 
+
+6.1 
+
+INTRODUÇÃO 
+
+ 
+A  análise  de  Fourier  consiste  em  uma  metodologia  que  transforma  funções  no 
+domínio do tempo ou do espaço em funções no domínio da frequência, ou do número de 
+onda,  oferecendo  importantes  relações  entre  as  anomalias  de  campos  potenciais  e  as 
+fontes geradoras de tais anomalias. 
+
+ 
+A análise de Fourier pode ser estudada a partir do ponto de vista de funções no 
+domínio  do  espaço  (ou  da  distância)  no  lugar  de  funções  no  domínio  do  tempo, 
+permitindo,  deste  modo,  estudar  o  comportamento  de  campos  magnéticos  e  de 
+gravidade medidos em uma determinada superfície (Brigham, 1988).  
+
+Se a função não é periódica, então a transformada de Fourier será uma  função 
+ 
+contínua dependente da frequência, isto é, será uma função representada pela soma das 
+senóides de todas  as frequências do  espectro.  A transformada de  Fourier é então uma 
+representação da função no domínio da frequência (Brigham, 1988). 
+ 
+ 
+Para os problemas os quais a transformada de Fourier contínua não seja eficaz, a 
+transformada de Fourier discreta oferece um método seguro e eficiente de solução. De 
+um  modo  simplificado,  obtemos  a  seguinte  equação  quando  fazemos  a  integração 
+numérica da transformada de Fourier contínua: 
+ 
+
+](cid:9)[(cid:13)= p(cid:29)(cid:9)M(cid:13)(cid:2)+qrs(cid:21)t(cid:9)(cid:5)q<)−(cid:5)q(cid:13)
+
+	;(cid:30) =0,1,⋯,l−1		(cid:9)22(cid:13) 
+
+u+)
+qv(cid:19)
+
+ 
+ 
+
+Neste caso, consideram-se l pontos consistindo de dados amostrados e se nós 
+queremos  determinar  separadamente  a  amplitude  das l  senóides,  então  o  tempo  de 
+processamento é proporcional a l*, ou seja, ao número de multiplicações. Mesmo com 
+
+computadores  com  processadores  mais  potentes,  o  tempo  de  processamento  da 
+transformada de Fourier discreta exige um uso de máquina muito alto para um elevado 
+número de amostras (Birgham, 1988). 
+ 
+ 
+Como  conseqüência  do  desenvolvimento  das  técnicas  para  reduzir  o  tempo  de 
+processamento da transformada de Fourier discreta em 1965 Cooley e Tukey publicou o 
+seu algoritmo matemático, o qual recebe o nome de transformada rápida de Fourier ou 
+FFT, na sigla em inglês.  A FFT é um algoritmo computacional que reduz o tempo de 
+processamento  da  transformada  discreta  de  Fourier  a  um  tempo  proporcional  a 
+
+llog*l. A FFT revolucionou o uso da transformada discreta de Fourier. É importante 
+
+salientar, no entanto, que a habilidade de utilizar plenamente a FFT depende de um bom 
+entendimento da teoria da transformada discreta de Fourier (Brigham, 1988). 
+ 
+ 
+As transformações no domínio de Fourier constituem uma classe de métodos que 
+visam facilitar a interpretação geológica a partir da transformação de dados medidos em 
+levantamentos  geofísicos  de  campo  em  novas  formas,  mais  fáceis  e  intuitivas  de  se 
+trabalhar.  Estas  transformações,  em  geral,  não  definem  diretamente  a  distribuição  de 
+fontes, mas oferecem um subterfúgio que ajuda a construir um entendimento mais geral 
+
+ 
+
+29 
+
+a respeito da natureza das fontes geradoras de anomalias de campos potenciais (Gilbert 
+e Galdeano, 1985). 
+
+ 
+Em outras palavras, temos que a  interpretação  de dados  gravimétricos  é  mais  fácil 
+quando  se  dispõem  de  mapas  transformados.    O  objetivo  de  tais  mapas  é  mostrar  mais 
+claramente os detalhes que não aparecem no  mapa inicial (original). Por exemplo, a derivada 
+vertical separa as anomalias individuais associadas a estruturas geológicas muito próximas entre 
+si. A continuação para cima, por sua vez, é um método que transforma anomalias medidas em 
+uma  dada  superfície  em  anomalias  tais  quais  seriam  medidas  em  outro  nível  (altitude)  da 
+superfície  em  questão.  O  processo  de  continuação  para  cima  tende  a  atenuar  as  anomalias 
+causadas  por  fontes  rasas  em  comparação  às  fontes  localizadas  em  profundidades  maiores 
+(Gilbert e Galdeano, 1985).  
+
+ 
+
+6.2 CAMPOS ESCALADOS NUMÉRICOS E O EFEITO DE BORDA 
+
+ 
+Na  prática,  trabalhamos  com  as  técnicas  da  transformada  de  Fourier  discreta, 
+conforme  foi  abordado  no  tópico  anterior.  Isso  significa  que  não  dispomos  de  dados 
+contínuos, mas somente de amostras de dados. Em outras palavras, os dados são ditos 
+discretos  ou  discretos.  Fontes  situadas  a  profundidades  muito  grandes  possuem  uma 
+amplitude  muito  'fraca'  para  que  possam  ser  adequadamente  modeladas  seguindo  as 
+técnicas disponíveis na transformada de Fourier discreta, razão pela qual se optou por 
+trabalhar  com  a  modelagem  numérica  de  uma  esfera  homogênea  a  2  km  de 
+
+profundidade,  cujo  raio  vale  500  m  e  densidade 3000	[  PT>
+
+,  com  um  intervalo  de 
+
+amostragem  de  50  m  nas  direções  dos  eixos  x  e  y  e  o  eixo  z,  o  qual  representa  as 
+profundidades, com módulo crescente para baixo e  com profundidades negativas para 
+baixo.  Uma situação que resulta no mesmo efeito obtido para fontes muito profundas é 
+aquela na qual se efetua a continuação para cima a um nível muito distante daquele no 
+qual o centro de massa da esfera está posicionado. 
+
+ 
+Inicialmente,  a  esfera  está  posicionada  de  maneira  simétrica  em  relação  às 
+bordas do mapa, ou seja, o seu centro de massa está equidistante dos vértices da malha 
+de dados. A fim de se poder avaliar o efeito de borda, que ocorre principalmente quando 
+as  anomalias  de  interesse  não  estão  simétricas  em  relação  às  bordas  das  malhas, 
+deslocou-se  a  esfera  de  2  km  e  4  km  em  relação  ao  centro  da  malha  de  dados.  É 
+verificado  que,  nessas  situações,  a  determinação  correta  da  profundidade  da  esfera  é 
+prejudicada  caso  não  se  aplique  uma  expansão  adequada  da  malha  de  dados  e  não  se 
+extrapole a área expandida com os dados prévios com um algoritmo adequado. 
+
+Foram elaborados, no software Oasis montaj, perfis das anomalias geradas pela 
+ 
+esfera homogênea no caso em que o campo escalado foi calculado analiticamente para 
+vários níveis e na situação na qual o campo escalado foi calculado numericamente em 
+vários  níveis,  usando  para  tal  a  operação  da  continuação  para  cima  no  domínio  da 
+transformada de Fourier, na extensão MAGMAP do software Oasis montaj. No caso 
+da  continuação  para  cima  numérica,  calculada  no  MAGMAP,  o  campo  de  gravidade 
+
+30 
+
+ 
+
+original  foi  continuado  numericamente  para  cada  nível  a  partir  do  nível  de  0  km  do 
+campo  de  gravidade  original  e  então,  a  partir  do  campo  de  gravidade  continuado 
+numericamente,  foi  calculado  o  campo  escalado  para  cada  nível  de  continuação.  O 
+termo  "campo  escalado  numérico"  é  aplicado  quando  se  usam  as  técnicas  da 
+transformada  de  Fourier  para  calculá-lo.  O  termo  "derivadas  verticais  numéricas"  tem 
+sentido análogo ao termo "campo escalado numérico". 
+
+ 
+As  figuras  de  13  até  16  a  seguir  ilustram  os  perfis  gerados  para  os  campos 
+escalados  calculados  analiticamente  e  numericamente,  para  o  caso  de  uma  esfera 
+homogênea simétrica em relação às bordas da malha de dados: 
+
+ 
+
+Figura 13: Perfil do campo escalado calculado analiticamente gerado por uma esfera homogênea situada 
+na coordenadas cartesianas (0, 0, -2000). 
+
+ 
+
+ 
+
+Figura  14: Perfil  do  campo  escalado  calculado  no  domínio  da  transformada  de  Fourier  sem  expansão. 
+Campo gerado por uma esfera homogênea situada nas coordenadas cartesianas (0, 0, -2000). 
+
+ 
+
+ 
+
+ 
+
+31 
+
+Figura 15: Perfil do campo escalado calculado no domínio da transformada de Fourier com expansão de 
+100  %  e  algoritmo  de  expansão  do  inverso  do  quadrado  da  distância.  Campo  gerado  por  uma  esfera 
+homogênea situada nas coordenadas cartesianas (0, 0, -2000). 
+
+ 
+
+ 
+
+ 
+
+Figura 16: Perfil do campo escalado calculado no domínio da transformada de Fourier com expansão de 
+100 % e algoritmo de expansão da entropia máxima de predição. Campo gerado por uma esfera situada 
+nas coordenadas cartesianas (0, 0,-2000). 
+
+ 
+No  caso  dos  campos  escalados  obtidos  numericamente,  foram  testadas  três 
+situações: i) campo escalado calculado sem expansão; ii) campo escalado obtido usando 
+expansão de 100 % e o algoritmo de expansão do inverso do quadrado da distância e iii) 
+campo escalado determinado com expansão de 100 % e algoritmo de extrapolação da 
+máxima entropia de predição. Em todos os casos, o campo de gravidade foi continuado 
+numericamente para os níveis de 2 km, 4 km, 6 km e 8 km e então o campo escalado foi 
+obtido para cada nível de continuação. 
+
+ 
+Observou-se  que  o  campo  escalado  calculado  analiticamente  possui  uma 
+amplitude máxima para o nível de 2 km (curva vermelha), que é o nível de continuação  
+que  corresponde  à  profundidade  do  centro  de  massa  da  esfera.  Portanto,  no  caso  do 
+cálculo analítico do campo escalado, a profundidade do centro de massa  da esfera foi 
+calculada corretamente. 
+
+ 
+No caso do campo escalado calculado numericamente, a profundidade do centro 
+de  massa  da  esfera  não  foi  corretamente  determinada  no  caso  em  que  não  se  aplicou 
+expansão  da  malha  de  dados  nem  algoritmo  de  extrapolação  de  dados.  Nesse  caso,  o 
+valor máximo do campo escalado foi atribuído erroneamente ao nível de continuação de 
+8 km (curva verde), nível que é o mais distante daquele que corresponde à profundidade 
+
+ 
+
+32 
+
+real  da  fonte,  que  é  de  2  km  (curva  vermelha).  Portanto,  a  falta  de  um  pré-
+processamento adequado da malha de dados, com as etapas de expansão, preenchimento 
+e  extrapolação,  resultou  na  determinação  de  uma  profundidade  de  8  km  quando,  na 
+verdade a profundidade real da esfera é de 2 km. Daí decorre a importância de efetuar 
+corretamente tais etapas. 
+
+ 
+No  caso  do  cálculo  do  campo  escalado  numérico  em  que  foi  aplicada  uma 
+expansão de 100 %, foram usados dois métodos de extrapolação: o inverso do quadrado 
+da distância e a máxima entropia de predição. Ambos os métodos indicaram um valor 
+máximo  do  campo  escalado  numérico  para  o  nível  de  continuação  de  2  km, 
+correspondente  à  profundidade 
+real  da  esfera.  Portanto,  quando  se  aplica 
+adequadamente uma expansão na malha de dados e se utiliza de um bom algoritmo de 
+extrapolação,  a  profundidade  é  determinada  corretamente.  Neste  caso,  no  qual  a 
+anomalia  é  simétrica  em  relação  às  bordas  do  mapa,  os  métodos  de  extrapolação  não 
+possuem  uma  diferença  significativa  de  precisão  e  resolução.  Entretanto,  será 
+demonstrado  adiante  que,  para  casos  nos  quais  a  anomalia  está  deslocada 
+substancialmente  do  centro  do  mapa,  a  entropia  máxima  de  predição  revela-se  um 
+método  de  extrapolação  mais  eficaz,  principalmente  no  que  concerne  a  níveis  de 
+continuação muito distantes do nível de continuação que representa a profundidade real 
+da esfera. 
+
+ 
+Com  o  intuito  de  obter  uma  representação  mais  detalhada  do  campo  escalado 
+numérico para a anomalia simétrica em relação às bordas, efetuou-se uma continuação 
+numérica para níveis mais próximos do nível de continuação que corresponde ao valor 
+máximo  absoluto  do  campo  escalado  e,  portanto,  à  profundidade  real  da  esfera.  Tais 
+níveis  são,  a  saber:  1000  m,  1500  m,  2000  m,  2500  m  e  3000  m.  As  figuras 
+correspondentes (figuras 17 até 23) estão expostas a seguir e os resultados qualitativos 
+são similares aos que foram descritos no parágrafo anterior: o cálculo analítico oferece a 
+profundidade corretamente, enquanto que o cálculo do campo escalado numérico sem 
+expansão  sempre  atribui  o  valor  máximo  do  campo  escalado  ao  nível  de  continuação 
+maior, que no caso é o mais distante do nível referente à profundidade real da esfera, O 
+resultado é, novamente, um valor incorreto de profundidade. Quanto à expansão de 100 
+% para o cálculo numérico do campo escalado e o uso dos algoritmos de extrapolação 
+do inverso do quadrado da distância e da máxima entropia de predição, o panorama não 
+se altera, ou seja, a profundidade da esfera é corretamente determinada, com o máximo 
+absoluto do campo escalado correspondendo ao nível de continuação de 2 km. 
+
+ 
+
+33 
+
+Figura 17: Perfil do campo potencial gravitacional escalado calculado analiticamente. Campo gerado por 
+uma  esfera  homogênea  situada  nas  coordenadas  cartesianas  (0,  0,-2000).  A  malha  de  dados  possui 
+dimensões quadradas de 20 km comprimento por 20 km de largura. Os níveis de continuação para cima 
+adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km. 
+
+ 
+
+Figura 18: Perfil do campo potencial gravitacional calculado analiticamente com zoom para uma melhor 
+visualização. Campo gerado por uma esfera homogênea situada nas coordenadas cartesianas (0, 0,-2000). 
+A malha de dados possui dimensões quadradas de 20 km de comprimento por 20 km de largura. Os níveis 
+de continuação para cima adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km. 
+
+ 
+
+Figura 19: Perfil do campo potencial gravitacional calculado no domínio da transformada de Fourier sem 
+expansão. Campo gerado por uma esfera homogênea situada nas coordenadas cartesianas (0, 0,-2000). A 
+malha de dados possui dimensões quadradas de 20 km de comprimento por 20 km de largura. Os níveis 
+de continuação para cima adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km. 
+
+ 
+
+ 
+
+34 
+
+Figura 20: Perfil do campo potencial gravitacional calculado no domínio da transformada de Fourier com 
+expansão de 100 % e algoritmo de extrapolação do inverso do quadrado da distância. Campo gerado por 
+uma  esfera  homogênea  situada  nas  coordenadas  cartesianas  (0,  0,-2000).  A  malha  de  dados  possui 
+dimensões  quadradas  de  20  km  de  comprimento  por  20  km  de  largura.  Os  níveis  de  continuação  para 
+cima adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km. 
+
+ 
+
+Figura 21: Perfil do campo potencial gravitacional (com  zoom, para melhor visualização) calculado no 
+domínio da transformada de Fourier com expansão de 100 % e algoritmo de extrapolação do inverso do 
+quadrado  da  distância.  Campo  gerado  por  uma  esfera  homogênea  situada  nas  coordenadas  cartesianas 
+(0,0,-2000).  A  malha  de  dados  possui  dimensões  quadradas  de  20  km  de  comprimento  por  20  km  de 
+largura. Os níveis de continuação para cima adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km. 
+
+ 
+
+ 
+
+35 
+
+Figura 22: Perfil do campo potencial gravitacional calculado no domínio da transformada de Fourier com 
+expansão de 100 % e algoritmo de extrapolação da entropia máxima de predição. Campo gerado por uma 
+esfera homogênea situada nas coordenadas cartesianas (0, 0, -2000). A malha de dados possui dimensões 
+quadradas de 20 km de comprimento por 20 km de largura. Os níveis de continuação para cima adotados 
+foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km. 
+
+ 
+
+ 
+
+Figura 23: Perfil do campo potencial gravitacional (com  zoom, para melhor visualização) calculado no 
+domínio  da  transformada  de  Fourier  com  expansão  de  100  %  e  algoritmo  de  extrapolação  da  entropia 
+máxima de predição. Campo gerado por uma esfera homogênea situada nas coordenadas cartesianas (0, 0, 
+-2000). A malha de dados possui dimensões quadradas de 20 km de comprimento por 20 km de largura. 
+Os níveis de continuação para cima adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km. 
+
+ 
+
+ 
+
+A seguir, a esfera foi deslocada de 2 km em relação ao centro da anomalia, não 
+ 
+estando, portanto, mais simétrica em relação às bordas do mapa. Nesse caso, o cálculo 
+analítico  do  campo  escalado  continua  a  determinar  corretamente  a  profundidade  da 
+esfera, uma vez que o máximo absoluto do campo escalado foi obtido na curva referente 
+ao nível de continuação de 2 km, que é a profundidade da esfera (Figura 24).  
+
+ 
+Quanto ao cálculo numérico do campo escalado, o cálculo sem expansão resulta 
+no mesmo problema de se obter o valor máximo do campo escalado numérico para o 
+nível  de  continuação  mais  distante  do  nível  de  continuação  correspondente  à 
+profundidade da esfera, resultando numa estimativa errônea da mesma (Figura 25).  
+
+ 
+
+36 
+
+Quando  se  aplica  um  percentual  de  expansão  de  110  %  e  os  algoritmos  de 
+ 
+extrapolação,  a  profundidade  é  determinada  corretamente.  Novamente,  o  método  da 
+entropia máxima de predição revelou-se mais preciso do que o inverso do quadrado da 
+distância,  principalmente  no  que  diz  respeito  à  continuidade  lateral  das  curvas 
+representativas  das  anomalias  para  os  diversos  níveis  de  continuação.  Tal  fato  é 
+evidenciado nas figuras 26 e 27. 
+
+Figura  24:  Perfil  do  campo  potencial  gravitacional  calculado  analiticamente.  Campo  gerado  por  uma 
+esfera homogênea situada nas coordenadas cartesianas (2000, 0,-2000).  
+
+ 
+
+Figura 25: Perfil do campo potencial gravitacional calculado no domínio da transformada de Fourier sem 
+expansão. Campo gerado por uma esfera homogênea situada nas coordenadas cartesianas (2000, 0,-2000).  
+
+ 
+
+Figura  26:  Perfil  do  campo  potencial  gravitacional  calculado  no  domínio  da  transformada  de  Fourier  
+com expansão de 100 % e extrapolação pelo inverso do quadrado da distância. Campo gerado por uma 
+esfera homogênea situada nas coordenadas cartesianas (2000, 0,-2000).  
+
+ 
+
+37 
+
+ 
+
+ 
+
+Figura  27:  Perfil  do  campo  potencial  gravitacional  calculado  no  domínio  da  transformada  de  Fourier  
+com expansão de 100 % e extrapolação pela entropia máxima de predição. Campo gerado por uma esfera 
+homogênea situada nas coordenadas cartesianas (2000, 0,-2000).  
+
+ 
+Uma das vantagens da operação da continuação para cima é a possibilidade de 
+economizar os custos de levantamentos aéreos, uma vez que é possível calcular o valor 
+do  campo  de  gravidade  e  dos  campos  escalados  para  várias  altitudes  de  medição, 
+dispensando  o  uso  de  uma  aeronave  equipada  de  um  gravímetro  para  realizar  tal 
+procedimento.  Contudo,  quando  a  anomalia  de  interesse  é  assimétrica  em  relação  às 
+bordas  da  área  do  levantamento,  o  efeito  de  borda  se  torna  mais  proeminente  e  a 
+continuidade  lateral  da  anomalia  tem  a  sua  resolução  prejudicada,  com  tal  efeito  se 
+acentuando  para  corpos  mais  profundos,  ou  seja,  associados  a  comprimentos  de  onda 
+maiores no espectro da transformada de Fourier. Nem sempre o fluxo de processamento 
+consistindo  da  expansão  da  malha  de  dados  e  da  aplicação  de  um  algoritmo  de 
+extrapolação é suficiente para contornar tais problemas. Então, testou-se a expansão das 
+dimensões  da  malha  de  dados  no  próprio  algoritmo  elaborado  no  MATLAB.  Como  a 
+esfera foi deslocada de 2 km em relação ao centro da malha de dados, a malha original, 
+que tinha dimensões quadradas de 20000 m x 20000 m foi convertida em uma malha de 
+dimensões retangulares de 24000 m x 20000 m, a fim de 'forçar' com que a anomalia 
+ficasse novamente centrada, ou seja, simétrica em relação às bordas da malha de dados. 
+Esse 'truque' pode ser útil quando já se tem uma noção prévia da posição da anomalia na 
+área de levantamento, mas ainda não se sabe a sua profundidade exata. Adicionalmente, 
+o campo escalado numérico foi calculado para níveis de continuação mais próximos do 
+nível  de  continuação  correspondente  à  profundidade  da  esfera.  Tais  níveis  aplicados 
+foram, a saber: 1000 m, 1500 m, 2000 m, 2500 m e 3000 m. A expansão adotada para a 
+utilização posterior dos algoritmos de extrapolação (inverso do quadrado da distância e 
+entropia  máxima  de  predição)  foi  de  100  %.  A conjugação  das  duas  operações  acima 
+descritas  minimizou  o  efeito  da  continuidade  lateral  da  anomalia  (Figura  28).  Porém, 
+quando não se aplica nenhuma expansão, a profundidade continua a ser determinada de 
+maneira  errônea,  pois  o  máximo  absoluto  do  campo  escalado  numérico,  nessas 
+circunstâncias,  continua  a  ser  referente  ao  nível  de  continuação  mais  distante  daquele 
+que corresponde à profundidade da esfera (Figura 29). Quando se aplica a expansão de 
+100 % e usando os algoritmos de extrapolação do inverso do quadrado da distância e da 
+máxima entropia de predição, o valor da profundidade é calculado  corretamente, com 
+
+ 
+
+38 
+
+ambos  os  métodos  de  extrapolação  apresentando  uma  resolução  similar  quanto  à 
+extensão lateral da anomalia (Figuras 30 e 31).  
+
+Figura  28:  Perfil  do  campo  potencial  gravitacional  calculado  analiticamente.  Campo  gerado  por  uma 
+esfera  homogênea  situada  nas  coordenadas  cartesianas  (2000,  0,-2000).  A  malha  de  dados  possui 
+dimensões retangulares de 24 km de comprimento por 20 km de largura. Os níveis de continuação para 
+cima adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km. 
+
+ 
+
+Figura 29: Perfil do campo potencial gravitacional calculado no domínio da transformada de Fourier sem 
+expansão. Campo gerado por uma esfera homogênea situada nas coordenadas cartesianas (2000, 0,-2000). 
+A  malha de dados possui dimensões retangulares de 24 km de comprimento por 20 km de largura. Os 
+níveis de continuação para cima adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km. 
+
+ 
+
+ 
+
+ 
+
+39 
+
+Figura 30: Perfil do campo potencial gravitacional calculado no domínio da transformada de Fourier com 
+expansão de 100 % e extrapolação pelo inverso do quadrado da distância. Campo gerado por uma esfera 
+homogênea  situada  nas  coordenadas  cartesianas  (2000,  0,-2000).  A  malha  de  dados  possui  dimensões 
+retangulares  de  24  km  de  comprimento  por  20  km  de  largura.  Os  níveis  de  continuação  para  cima 
+adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km. 
+
+ 
+
+ 
+
+Figura 31: Perfil do campo potencial gravitacional calculado no domínio da transformada de Fourier com 
+expansão  de  100  %  e  extrapolação  pela  entropia  máxima  de  predição.  Campo  gerado  por  uma  esfera 
+homogênea  situada  nas  coordenadas  cartesianas  (2000,  0,  -2000).  A  malha  de  dados  possui  dimensões 
+retangulares  de  24  km  de  comprimento  por  20  km  de  largura.  Os  níveis  de  continuação  para  cima 
+adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km. 
+
+ 
+Quando se desloca a anomalia de 4 km em relação ao centro da malha de dados 
+(Figuras 32, 33, 34 e 35), observa-se que o método de extrapolação da máxima entropia 
+de predição obteve uma grande vantagem em comparação com o inverso do quadrado 
+da distância (Figuras 34 e 35), principalmente no que diz respeito à extensão lateral da 
+anomalia. A questão da extensão lateral da anomalia tem uma importância muito grande 
+quando a anomalia é muito deslocada em relação ao centro da malha de dados. No caso 
+do inverso do quadrado da distância (Figura 34), a má resolução da extensão lateral da 
+
+ 
+
+40 
+
+anomalia faz com que as curvas do campo escalado referentes aos níveis de continuação 
+mais distantes do nível correspondente à profundidade da esfera apresentem valores do 
+campo escalado maiores, no lado no qual a anomalia foi deslocada, do que o máximo 
+absoluto  referente  à  curva  do  campo  escalado  numérico  para  o  nível  de  2  km, 
+caracterizando  o  efeito  de  borda  mesmo  com  a  aplicação  das  etapas  de  expansão  e 
+extrapolação na malha de dados. Para o método de extrapolação da entropia máxima de 
+predição  (Figura  35),  este  problema  não  ocorreu,  embora  a  resolução  lateral  estivesse 
+um  pouco  prejudicada.  Nesta  situação  da  anomalia  deslocada  de  4  km  em  relação  ao 
+centro  da  malha  de  dados,  o  percentual  de  expansão  aplicado  foi  de  120%.  O  campo 
+escalado  numérico  calculado  sem  expansão  novamente  não  produziu  um  cálculo 
+fidedigno da profundidade da esfera, resultando na mesma situação descrita nos casos 
+anteriores (Figura 33). 
+
+Figura  32:  Perfil  do  campo  potencial  gravitacional  calculado  analiticamente.  Campo  gerado  por  uma 
+esfera homogênea situada nas coordenadas cartesianas (4000, 0, -2000).  
+
+ 
+
+Figura 33: Perfil do campo potencial gravitacional calculado no domínio da transformada de Fourier sem 
+expansão.  Campo  gerado  por  uma  esfera  homogênea  situada  nas  coordenadas  cartesianas  (4000,  0,  -
+2000).  
+
+ 
+
+ 
+
+ 
+
+41 
+
+Figura 34: Perfil do campo potencial gravitacional calculado no domínio da transformada de Fourier com 
+expansão de 100 % e extrapolação pelo inverso do quadrado da distância. Campo gerado por uma esfera 
+homogênea situada nas coordenadas cartesianas (4000, 0,-2000).  
+
+ 
+
+ 
+
+Figura 35: Perfil do campo potencial gravitacional calculado no domínio da transformada de Fourier com 
+expansão  de  100  %  e  extrapolação  pela  entropia  máxima  de  predição.  Campo  gerado  por  uma  esfera 
+homogênea situada nas coordenadas cartesianas (4000, 0,-2000).  
+
+Os mesmos procedimentos de calcular numericamente os campos escalados para 
+ 
+níveis mais próximos daquele correspondente à profundidade da esfera e de ampliar a 
+malha de dados foi aplicado para o caso da anomalia deslocada de 4 km em relação ao 
+centro da malha de dados. Neste caso, os novos níveis foram de 1000 m, 1500 m, 2000 
+m, 2500 m e 3000 m, e a malha de dados, que era quadrada de dimensões 20000 m x 
+20000 m, tornou-se retangular com dimensões de 28000 m x 20000 m, sendo aplicada 
+uma  expansão  de  100  %  para  o  uso  dos  algoritmos  de  extrapolação  (inverso  do 
+quadrado da distância e entropia máxima de predição). As figuras 36 até 41 seguintes 
+explicitam tais procedimentos: 
+
+ 
+
+42 
+
+Figura 36: Perfil do campo potencial gravitacional calculado no domínio da transformada de Fourier sem 
+expansão.  Campo  gerado  por  uma  esfera  homogênea  situada  nas  coordenadas  cartesianas  (4000,  0,  -
+2000). A malha de dados possui dimensões retangulares de 28 km de comprimento por 20 km de largura. 
+Os níveis de continuação para cima adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km.  
+
+ 
+
+Figura 37: Perfil do campo potencial gravitacional calculado (com zoom, para uma melhor visualização) 
+no domínio da transformada de Fourier sem expansão. Campo gerado por uma esfera homogênea situada 
+nas coordenadas cartesianas (4000, 0, -2000). A malha de dados possui dimensões retangulares de 28 km 
+de comprimento por 20 km de largura. Os níveis de continuação para cima adotados foram de 1 km, 1.5 
+km, 2 km, 2.5 km e 3 km.  
+
+ 
+
+Figura 38: Perfil do campo potencial gravitacional calculado no domínio da transformada de Fourier com 
+expansão de 100 % e extrapolação pelo inverso do quadrado da distância. Campo gerado por uma esfera 
+homogênea  situada  nas  coordenadas  cartesianas  (4000,  0,  -2000).  A  malha  de  dados  possui  dimensões 
+retangulares  de  28  km  de  comprimento  por  20  km  de  largura.  Os  níveis  de  continuação  para  cima 
+adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km.  
+
+ 
+
+ 
+
+43 
+
+Figura 39: Perfil do campo potencial gravitacional calculado (com zoom, para melhor visualização) no 
+domínio da transformada de Fourier com expansão de 100 % e extrapolação pelo inverso do quadrado da 
+distância. Campo gerado por uma esfera homogênea situada nas coordenadas cartesianas (4000, 0, -2000). 
+A  malha de dados possui dimensões retangulares de 28 km de comprimento por 20 km de largura. Os 
+níveis de continuação para cima adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km.  
+
+ 
+
+Figura 40: Perfil do campo potencial gravitacional calculado no domínio da transformada de Fourier com 
+expansão  de  100  %  e  extrapolação  pela  entropia  máxima  de  predição.  Campo  gerado  por  uma  esfera 
+homogênea  situada  nas  coordenadas  cartesianas  (4000,  0,  -2000).  A  malha  de  dados  possui  dimensões 
+retangulares  de  28  km  de  comprimento  por  20  km  de  largura.  Os  níveis  de  continuação  para  cima 
+adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km.  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+44 
+
+Figura 41: Perfil do campo potencial gravitacional calculado (com zoom, para melhor visualização) no 
+domínio  da  transformada  de  Fourier  com  expansão  de  100  %  e  extrapolação  pela  entropia  máxima  de 
+predição. Campo gerado por uma esfera homogênea situada nas coordenadas cartesianas (4000, 0, -2000). 
+A  malha de dados possui dimensões retangulares de 28 km de comprimento por 20 km de largura. Os 
+níveis de continuação para cima adotados foram de 1 km, 1.5 km, 2 km, 2.5 km e 3 km.  
+
+ 
+
+ 
+
+6.3 DERIVADAS VERTICAIS NUMÉRICAS E O EFEITO DE BORDA 
+
+ 
+O algoritmo de geração da malha de dados para o cálculo analítico do campo de 
+gravidade  e  das  derivadas  verticais    do  campo  escalado  foi  gerado  no  software 
+MATLAB.  Já  no  ambiente  da  plataforma  do  software  Oasis  montaj,  o  cálculo  das 
+derivadas verticais do campo escalado utilizando as técnicas da transformada de Fourier 
+foi efetuado seguindo as seguintes etapas: 
+
+1.  A partir do mapa do campo de gravidade para o nível correspondente a 0 
+km, o campo gravitacional gerado por duas esferas homogêneas de raios 
+
+de  500  m  e  densidades  de  3000	[  PT>
+
+,  situadas  nas  coordenadas 
+
+cartesianas  (-4000  m,  0  m,  -2000  m)  e  (4000  m,  0  m,  -2000  m)  foi 
+continuado  para  cima  numericamente,  ou  seja,  no  domínio  da 
+transformada de Fourier, utilizando a extensão  MAGMAP do  software 
+Oasis montaj, da empresa Geosoft, para os níveis de 2 km, 4 km, 6 km e 
+8  km.  Novamente,  considera-se  que  o  módulo  da  profundidade  cresce 
+para  baixo  e  que  o  eixo  z  é  positivo  para  baixo.  O  intervalo  de 
+amostragem nas direções dos eixos x e y é de 50 m; 
+
+2.  A  partir  dos  mapas  dos  campos  gravitacionais  continuados 
+numericamente,  para  cada  nível,  foi  calculada  a  derivada  vertical 
+numérica,  ou  seja,  a  derivada  vertical  no  domínio  da  transformada  de 
+Fourier, também para cada nível de continuação. Como já foi enfatizado 
+anteriormente,  ao contrário do cálculo da derivada analítica, no qual se 
+dispõem de expressões matemáticas que podem ser ajustadas para cada 
+nível  de  continuação  e  também  pelo  fato  de  podermos  obter  uma 
+expressão matemática diferente para cada ordem de derivação, o cálculo 
+da derivada vertical no domínio da transformada de Fourier requer certos 
+
+45 
+
+ 
+
+cuidados,  uma  vez  que  a  operação  da  derivada  vertical  no  domínio  da 
+transformada de Fourier corresponde a um filtro passa alta, ou seja, é um 
+procedimento que, se não aplicado com critério, sendo utilizadas ordens 
+de  derivação  muito  altas,  faz  com  que  os  ruídos  de  alta  frequência 
+porventura  presentes  nos  dados  sejam  amplificados  (aumentados). 
+Enquanto que, analiticamente, é possível calcular as derivadas de ordem 
+n-ésima, no domínio da transformada de Fourier usualmente computam-
+se as derivadas de 1ª e de 2ª ordens em aplicações geofísicas práticas. Por 
+outro  lado,  a  derivada  vertical  é  uma  ferramenta  útil  para  se  obter  os 
+detalhes  do  campo  potencial  em  estudo,  permitindo  que  se  estude  as 
+variações  do  campo  em  função  da  profundidade,  permitindo  que  se 
+diferenciem  corpos  geradores  de  anomalias  de  campos  potenciais 
+próximos entre si que não seriam facilmente distinguíveis com o uso de 
+outras técnicas. Como estamos trabalhando com dados sintéticos, sem a 
+introdução  de  ruídos,  calculamos,  a  exemplo  das  derivadas  verticais 
+analíticas,  ordens  de  derivação  até  4.  Como  resultado  das  operações 
+acima  citadas,  temos  como  produto  final  desta  etapa  de  modelagem  os 
+mapas, para cada nível de continuação, das derivadas verticais do campo 
+gravitacional continuado para cima em cada nível de continuação; 
+
+3.  Depois dos cálculos da continuação para cima e das derivadas verticais, o 
+campo escalado das derivadas verticais é determinado para cada nível de 
+continuação, a fim de se verificar a eficiência do método na modelagem 
+das duas esferas de modo analítico e também com o intuito de avaliar o 
+impacto do efeito de borda quando se trabalha com os dados utilizando 
+as  técnicas  da  transformada  de  Fourier.  Então,  são  gerados  perfis, 
+utilizando  o  software  Oasis  montaj,  das  derivadas  verticais  do  campo 
+escalado analiticamente de 1ª, 2ª, 3ª e 4ª ordens, das derivadas verticais 
+numéricas  de  1ª,  2ª,  3ª  e  4ª  ordens    do  campo  escalado  utilizando 
+expansão  de  100  %  e  o  algoritmo  de  extrapolação  do  inverso  do 
+quadrado da distância e das derivadas verticais numéricas de 1ª, 2ª, 3ª e 
+4ª ordens do campo escalado utilizando uma expansão da malha de dados 
+original de 100 % e o algoritmo de extrapolação da entropia máxima de 
+predição.  Novamente,  quando  se  utiliza  o  termo  "derivada  vertical 
+numérica", subentende-se que a derivada vertical foi obtida no domínio 
+da  transformada  de  Fourier,  ou  seja,  a  partir  do  uso  das  técnicas  da 
+transformada de Fourier; 
+
+ 
+Como são aplicadas duas operações em sequência no domínio da transformada 
+de  Fourier  sobre  o  campo  potencial  gravitacional  original,  para  cada  nível  de 
+continuação, os cuidados relativos às etapas de pré-processamento - que são a remoção 
+das  tendências  de  1ª  ordem,  a  expansão  da  malha  de  dados  onde  as  operações  no 
+domínio de Fourier serão realizadas a certo percentual das dimensões da malha de dados 
+original e a extrapolação dos dados gerados pela expansão com os dados originais - são 
+ainda mais importantes do que no caso do campo escalado para a modelagem de uma 
+
+ 
+
+46 
+
+única  esfera  (sem  o  uso  das  derivadas  verticais),  uma  vez  que  na  modelagem  das 
+derivadas verticais do campo escalado temos dois pontos de máximo absoluto. 
+
+A seguir, temos os perfis gerados para as derivadas verticais analíticas (Figuras, 
+
+ 
+42, 43, 44 e 45): 
+
+Figura 42: Perfil da derivada vertical de 1ª ordem do campo escalado calculado analiticamente. Campo 
+gerado por duas esferas homogêneas situadas nas coordenadas cartesianas (-4000, 0,-2000) e  (4000,0,-
+2000).  
+
+ 
+
+Figura 43: Perfil da derivada vertical de 2ª ordem do campo escalado calculado analiticamente. Campo 
+gerado por duas esferas homogêneas situadas nas coordenadas cartesianas (-4000, 0,-2000) e  (4000,0,-
+2000).  
+
+ 
+
+Figura 44: Perfil da derivada vertical de 3ª ordem do campo escalado calculado analiticamente. Campo 
+gerado por duas esferas homogêneas situadas nas coordenadas cartesianas (-4000, 0,-2000) e  (4000,0,-
+2000).  
+
+ 
+
+ 
+
+ 
+
+47 
+
+ 
+
+Figura 45: Perfil da derivada vertical de 4ª ordem do campo escalado calculado analiticamente. Campo 
+gerado por duas esferas homogêneas situadas nas coordenadas cartesianas (-4000, 0, -2000) e (4000, 0, -
+2000).  
+
+Assim como no caso de uma esfera, o cálculo analítico identificou corretamente 
+ 
+a  profundidade  das  duas  esferas  e  conseguiu  distingui-las  satisfatoriamente,  uma  vez 
+que  os  máximos  absolutos  estão  localizados  na  curva  que  representa  o  nível  de 
+continuação  correspondente  às  profundidades  das  esferas.  Evidentemente,  a  derivada 
+vertical  de  4ª  ordem  obteve  a  melhor  resolução  das  anomalias  das  esferas  e  eliminou 
+melhor o efeito de interferência mútua entre elas.  
+
+Os resultados obtidos utilizando expansão de 100 % e extrapolação pela entropia 
+
+ 
+máxima de predição estão ilustrados abaixo (Figuras 46, 47, 48 e 49): 
+
+Figura  46:  Perfil  da  derivada  vertical  de  1ª  ordem  do  campo  escalado  calculado  no  domínio  da 
+transformada  de  Fourier  com  expansão  de  100  %  e  extrapolação  pela  entropia  máxima  de  predição. 
+Campo  gerado  por  duas  esferas  homogêneas  situadas  nas  coordenadas  cartesianas  (-4000,  0,  -2000)  e  
+(4000,0,-2000).  
+
+ 
+
+ 
+
+ 
+
+ 
+
+48 
+
+Figura  47:  Perfil  da  derivada  vertical  de  2ª  ordem  do  campo  escalado  calculado  no  domínio  da 
+transformada  de  Fourier  com  expansão  de  100  %  e  extrapolação  pela  entropia  máxima  de  predição. 
+Campo  gerado  por  duas  esferas  homogêneas  situadas  nas  coordenadas  cartesianas  (-4000,  0,  -2000)  e  
+(4000,0,-2000).  
+
+ 
+
+Figura  48:  Perfil  da  derivada  vertical  de  3ª  ordem  do  campo  escalado  calculado  no  domínio  da 
+transformada  de  Fourier  com  expansão  de  100  %  e  extrapolação  pela  entropia  máxima  de  predição. 
+Campo  gerado  por  duas  esferas  homogêneas  situadas  nas  coordenadas  cartesianas  (-4000,  0,  -2000)  e  
+(4000,0,-2000).  
+
+ 
+
+ 
+
+Figura  49:  Perfil  da  derivada  vertical  de  4ª  ordem  do  campo  escalado  calculado  no  domínio  da 
+transformada  de  Fourier  com  expansão  de  100  %  e  extrapolação  pela  entropia  máxima  de  predição. 
+Campo  gerado  por  duas  esferas  homogêneas  situadas  nas  coordenadas  cartesianas  (-4000,  0,  -2000)  e 
+(4000, 0,-2000).  
+
+A  exemplo  do  que  ocorreu  no  cálculo  analítico,  a  derivada  de  4ª  ordem 
+ 
+apresentou os melhores resultados quanto à eliminação do efeito de interferência mútua 
+entre as esferas. Observou-se ainda que a derivada vertical de 1ª ordem não conseguiu 
+atribuir o valor correto de profundidade, feito que é obtido pelo cálculo das derivadas 
+verticais de 2ª ordem em diante. Além disso, para níveis de continuação muito distantes 
+do  nível  de  continuação  correspondente  à  profundidade  da  esfera,  ou  para  fontes 
+
+ 
+
+49 
+
+situadas a profundidades muito grandes, a caracterização da anomalia fica prejudicada, 
+uma  vez  que  a  sua  amplitude  é  muito  pequena  no  espectro  da  sua  transformada  de 
+Fourier. 
+
+ 
+Finalmente,  obtemos  os  resultados  para  uma  taxa  de  expansão  de  100  %  e  a 
+utilização  do  algoritmo  de  extrapolação  do  inverso  do  quadrado  da  distância  (Figuras 
+50, 51, 52 e 53): 
+
+Figura  50:  Perfil  da  derivada  vertical  de  1ª  ordem  do  campo  escalado  calculado  no  domínio  da 
+transformada de Fourier com expansão de 100 % e extrapolação pelo inverso do quadrado da distância. 
+Campo  gerado  por  duas  esferas  homogêneas  situadas  nas  coordenadas  cartesianas  (-4000,  0,  -2000)  e  
+(4000,0,-2000).  
+
+ 
+
+Figura  51:  Perfil  da  derivada  vertical  de  2ª  ordem  do  campo  escalado  calculado  no  domínio  da 
+transformada de Fourier com expansão de 100 % e extrapolação pelo inverso do quadrado da distância. 
+Campo  gerado  por  duas  esferas  homogêneas  situadas  nas  coordenadas  cartesianas  (-4000,  0,  -2000)  e  
+(4000,0,-2000).  
+
+ 
+
+ 
+
+ 
+
+50 
+
+Figura  52:  Perfil  da  derivada  vertical  de  3ª  ordem  do  campo  escalado  calculado  no  domínio  da 
+transformada de Fourier com expansão de 100 % e extrapolação pelo inverso do quadrado da distância. 
+Campo  gerado  por  duas  esferas  homogêneas  situadas  nas  coordenadas  cartesianas  (-4000,  0,  -2000)  e  
+(4000,0,-2000).  
+
+ 
+
+ 
+
+Figura  53:  Perfil  da  derivada  vertical  de  4ª  ordem  do  campo  escalado  calculado  no  domínio  da 
+transformada de Fourier com expansão de 100 % e extrapolação pelo inverso do quadrado da distância. 
+Campo  gerado  por  duas  esferas  homogêneas  situadas  nas  coordenadas  cartesianas  (-4000,  0,  -2000)  e  
+(4000,0,-2000).  
+
+ 
+Os resultados obtidos para o algoritmo de extrapolação do inverso do quadrado 
+da distância foram similares aos obtidos para o algoritmo de extrapolação da entropia 
+máxima  de  predição.  Novamente,  a  derivada  vertical  de  1ª  ordem  não  conseguiu 
+determinar  com  precisão  a  profundidade  das  esferas,  o  que  só  foi  conseguido  com  as 
+derivadas  verticais  de  ordem  superior  a  2.  Mais  uma  vez,  o  nível  de  continuação 
+correspondente a 8 km praticamente não conseguiu caracterizar anomalia alguma. Em 
+síntese,  ambos  os  métodos  de  extrapolação  não  mostraram  diferenças  significativas 
+entre  si.  Entretanto,  como  se  tratam  de  dados  sintéticos,  faz-se  necessário  aplicar  tal 
+simulação  a  dados  reais,  os  quais  contêm  ruídos,  principalmente  de  alta  frequência,  a 
+fim de avaliar o efeito da introdução de ruídos de alta frequência quando do aumento da 
+ordem  de  derivação,  para  que  possa  efetivamente  comparar  os  dois  métodos  de 
+extrapolação  aqui  analisados  para  dados  sintéticos.  Enfatiza-se,  novamente,  que,  ara 
+dados ruidosos demais, não se recomenda calcular derivadas verticais de ordem superior 
+a dois. 
+
+ 
+
+51 
+
+7. CONSIDERAÇÕES FINAIS E CONCLUSÕES 
+
+ 
+Conforme  esperado,  a  modelagem  analítica  dos  campos  escalados  e  de  suas 
+derivadas  verticais  de  1ª,  2ª,  3ª  e  4ª  ordens  determinou  a  profundidade  da  fonte 
+corretamente.  Em  outras  palavras,  a  modelagem  analítica  atribuiu  um  valor  máximo 
+absoluto do campo escalado e de suas derivadas verticais para o nível de continuação do 
+campo de gravidade que corresponde à profundidade original da esfera. Com relação às 
+derivadas  verticais  analíticas  de  1ª,  2ª,  3  e  4ª  ordens  do  campo  escalado,  observou-se 
+que, quanto maior a ordem da derivada, melhor é a resolução na separação das esferas e 
+que, quanto maior a separação horizontal entre as esferas, menor é a ordem de derivação 
+necessária para eliminar o efeito de interferência mútua entre elas. 
+
+ 
+Quanto  à  modelagem  dos  campos  escalados  no  domínio  da  transformada  de 
+Fourier,  percebeu-se  que,  quando  não  se  aplicam  as  etapas  de  pré-processamento 
+necessárias  (remoção  de  tendências,  expansão  da  malha  de  dados  original  e 
+extrapolação),  o  nível  de  continuação  relacionado  ao  máximo  absoluto  do  campo 
+escalado  corresponde  ao  nível  de  continuação  mais  distante  daquele  correspondente  à 
+profundidade real da esfera quando, em realidade, o nível de continuação concernente à 
+profundidade da esfera deveria assinalar o valor do máximo absoluto do campo escalado 
+que fora modelado numericamente. Portanto, o  valor da profundidade da esfera não é 
+determinado corretamente.  
+
+ 
+Tal fato é ocasionado pelo efeito de borda e se torna mais evidente quanto maior 
+for o deslocamento das coordenadas cartesianas da esfera em relação ao centro da malha 
+de  dados.  Em  suma,  o  efeito  de  borda  é  uma  consequência  do  grau  de  assimetria  da 
+anomalia em relação às bordas, uma vez que, quanto mais assimétrica é a anomalia em 
+relação  às  bordas  de  um  mapa,  menos  amostrados  se  tornam  os  dados  na  região  das 
+proximidades da borda no lado para o qual a anomalia se encontra deslocada em relação 
+ao centro do mapa. Tal fato resulta na geração de tendências (que podem ser de 1ª, 2 e 
+até  3ª  ordem,  dependendo  da  função  que  a  descreva)  e  dificulta  o  processamento  no 
+domínio da FFT, uma vez que as anomalias de interesse devem ser periódicas para que 
+ela seja modelada corretamente tanto quanto à sua amplitude, refletindo a precisão no 
+cálculo da profundidade, quanto também à sua extensão lateral, que reflete a precisão na 
+determinação  dos  seus  parâmetros  físicos  e  geométricos  (raio  e  densidade). 
+Evidentemente, quanto maior for a profundidade da esfera, mais crítico se torna o efeito 
+de borda, uma vez que a amplitude de uma anomalia muito profunda é muito pequena 
+no espectro da transformada de Fourier. 
+
+ 
+A  fim  de  contornar  os  efeitos  de  borda,  lançou-se  mão  das  etapas  de  pré-
+processamento  descritas  anteriormente.  Foram  utilizados  dois  algoritmos  de 
+extrapolação  dos  dados  originais  com  os  dados  resultantes  da  expansão  da  malha  de 
+dados original: o inverso do quadrado da distância e a entropia máxima de predição. Os 
+valores de expansão aplicados foram tais que se pudesse reproduzir a periodicidade da 
+função que descreve a anomalia gerada pela esfera. Quando a anomalia se encontrava 
+simétrica em relação às bordas, o percentual de expansão foi de 100 %. Nesse caso, os 
+
+ 
+
+52 
+
+métodos  de  extrapolação  obtiveram  resultados  similares  e  conseguiram  determinar  a 
+profundidade  da  esfera  corretamente,  ou  seja,  o  nível  de  continuação  referente  ao  da 
+profundidade  da  esfera  correspondeu  àquele  ao  qual  se  atribuiu  o  valor  máximo  do 
+campo escalado. 
+
+ 
+Entretanto, à medida que a esfera modelada foi deslocada do centro da malha de 
+dados, revelou-se que o método de extrapolação da entropia máxima teve uma resolução 
+melhor  do  que  o  inverso  do  quadrado  da  distância,  principalmente  com  relação  à 
+extensão  lateral  das  curvas  dos  níveis  de  continuação,  na  região  das  bordas  de  tais 
+curvas.  Essa  diferença  de  resolução  é  diretamente  proporcional  à  distância  de 
+deslocamento  da  esfera  em  relação  ao  centro  do  mapa.  Em  alguns  casos  nos  quais  o 
+algoritmo do inverso do quadrado da distância foi utilizado, alguns valores nas bordas 
+das  curvas  de  alguns  níveis  de  continuação  acabaram  por  ter  valores  maiores  que  os 
+valores relativos à amplitude máxima na curva do nível de continuação correspondente 
+à  profundidade  da  esfera  que,  em  tese,  teria  o  valor  máximo  absoluto  do  campo 
+escalado. Tal fato ficou mais evidente quando a esfera foi deslocada de 4 km em relação 
+ao centro da malha de dados. 
+
+ 
+Com  relação  às  derivadas  verticais  numéricas  do  campo  escalado,  quando  se 
+aplica  um  percentual  de  expansão  de  100  %,  ambos  os  algoritmos  de  extrapolação 
+conseguem  determinar  a  profundidade  da  esfera  sem  que  haja  uma  diferença 
+significativa  de  resolução  entre  eles.  A  derivada  vertical  de  1ª  ordem,  para  ambos  os 
+métodos  de  extrapolação,  apresentou  certa  deficiência  em  eliminar  o  efeito  de 
+interferência mútua entre as esferas, bem  como em determinar a profundidade correta 
+das duas esferas. Como era de se esperar, as derivadas de 2ª, 3ª e 4ª ordem forneceram 
+uma resolução melhor na separação dos corpos, ou seja, conseguiram eliminar com mais 
+eficiência o efeito da interferência mútua entre as esferas. Evidentemente, quanto menor 
+for a distância horizontal entre as esferas, mais difícil se torna a remoção do efeito de 
+interferência mútua entre as esferas e vice-versa, a exemplo do que já ocorrera com o 
+cálculo analítico das derivadas verticais do campo escalado. 
+
+ 
+De  uma  maneira  geral,  o  método  de  extrapolação  da  entropia  máxima  de 
+predição revelou-se como sendo a solução mais adequada para contornar os efeitos de 
+borda  na  modelagem  numérica  dos  campos  escalados,  uma  vez  que  conseguiu 
+determinar com uma resolução melhor do que o algoritmo do inverso do quadrado da 
+distância a extensão lateral das anomalias geradas pelas esferas modeladas. Entretanto, 
+para as derivadas verticais, ambos os métodos de extrapolação apresentaram resultados 
+semelhantes.  Ressalta-se  a  importância  da  aplicação  das  técnicas  de  remoção  de 
+tendências, expansão da malha de dados original e da extrapolação dos dados originais 
+com os dados expandidos a fim de se determinar as profundidades das fontes geradores 
+de  campos  potenciais  com  uma  boa  precisão.  Como,  na  prática,  trabalhamos  com  m 
+grande volume de dados amostrados (ou discretos), lança-se mão das técnicas da FFT e 
+tais procedimentos descritos nesse parágrafo se tornam fundamentais para que se possa 
+usufruir das vantagens da metodologia DEXP em relação à Deconvolução de Euler na 
+
+ 
+
+53 
+
+determinação das profundidades das fontes, uma vez que a metodologia DEXP não gera 
+um número alto de soluções como a Deconvolução de Euler. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+54 
+
+8. REFERÊNCIAS BIBLIOGRÁFICAS 
+
+ 
+
+A  referência  bibliográfica  básica,  da  qual  derivam  as  demais,  é  o  artigo 
+intitulado  “DEXP:  A  fast  method  to  determine  the  depth  and  the  structural  index  of 
+potential sources”, publicado em 2006 por Maurizio Fedi, do Departamento de Ciências 
+da Terra da Universidade de Napoli. Este artigo expõe as bases teóricas do método.  
+
+A lista geral de referências bibliográficas inclui: 
+
+•  Barbosa,  V.  e  Silva,  J.  B.,  2005.  Deconvolução  de  Euler:  Passado,  presente  e 
+futuro – um tutorial: Revista da Sociedade Brasileira de Geofísica, vol. 23, no 3, 
+pp 243-250; 
+
+•  Blakely,  R.  J.,  1995.  Potential  Theory  in  Gravity  &  Magnetic  Applications: 
+
+Cambridge University Press; 
+
+•  Brigham, O., 1988. The Fast Fourier Transform and its Applications: Prentice-
+
+Hall, Inc.; 
+
+•  Burg, J. P., 1975, Maximum Entropy Special Analysis, Stanford University. 168 
+
+p; 
+
+•  Fedi, M., 2006. DEXP: A fast method to determine the depth and the structural 
+
+index of potential sources: Geophysics, vol. 72; 
+
+•  Gilbert,  D.  e  Galdeano,  A.,  1985.  A  computer  program 
+
+to  perform 
+transformations  of  gravimetric  and  aeromagnetic  surveys:  Computers  & 
+Geosciences, vol. 11, no. 5, pp 553-588; 
+
+•  http://www.geosoft.com/support/downloads/technical-documentation,  montaj 
+
+MAGMAP Filtering Tutorial;  
+
+ 
+
+ 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+55 
+
+APÊNDICE I 
+
+FORMULAÇÃO MATEMÁTICA BÁSICA DA ENTROPIA MÁXIMA DE 
+
+PREDIÇÃO 
+
+Formulação Matemática do Algoritmo da Entropia Máxima de Predição para a 
+
+Análise Espectral Monocanal 
+
+ 
+Antes  de  iniciar  este  tópico  da  dissertação,  é  importante  salientar  que  apenas 
+uma  parte  da  teoria  matemática  do  método  de  extrapolação  da  entropia  máxima  de 
+predição será abordada. Para um detalhamento maior, a referência a ser consultada é a 
+tese de doutorado de Burg, de 1975, a qual está, evidentemente, incluída nas referências 
+bibliográficas.  
+
+Na  forma  mais  elementar  e  usual  do  princípio  da  entropia  máxima  para  a 
+ 
+estimativa  do  espectro  de  potência  a  partir  de  um  canal  único,  a  determinação  do 
+
+espectro de potência consiste simplesmente em encontrar o espectro de potência a(cid:9)(cid:29)(cid:13), 
+
+ao qual está relacionada uma série temporal complexa, que maximize o valor da integral 
+a seguir (Burg, 1975): 
+
+|
+z lna(cid:9)(cid:29)(cid:13)	N(cid:29)
++|
+
+		(cid:9)}.1(cid:13) 
+
+, sabendo que a(cid:9)(cid:29)(cid:13) satisfaz um conjunto de l equações funcionais, como seguem: 
+
+|
+z a(cid:9)(cid:29)(cid:13)^C(cid:9)(cid:29)(cid:13)N(cid:29)
++|
+
+= C	;(cid:3) =1	GMé	l		(cid:9)}.2(cid:13) 
+
+ 
+As condições de contorno usuais que são definidas na análise de séries temporais 
+também  são  válidas  no  estudo  do  princípio  da  entropia  máxima.  Isto  é,  as  séries 
+
+temporais  são  amostradas  para  um  período  fundamental  uniforme  de ∆M,  sendo  que  a 
+
+frequência de Nyquist é definida como (Burg,1975): 
+
+6 = 1(cid:9)2∆M(cid:13)		(cid:9)}.3(cid:13) 
+
+ 
+
+Deste modo, temos que a série temporal é uma série de banda limitada para ±6. 
+Os  termos ^C(cid:9)(cid:29)(cid:13)  são  chamados  de  funções  de  teste  e  os  termos  C  são  os  valores 
+
+resultantes das medições (Burg, 1975). 
+
+A  premissa  básica  da  análise  espectral  pela  entropia  máxima  é  que  as  séries 
+ 
+temporais que estão sendo analisadas e usadas para reconstruir o espectro de potência 
+são  as  mais  randômicas  (ou  aleatórias),  ou,  ainda,  as  séries  temporais  menos  preditas 
+que  sejam  consistentes  com  as  medições.  Em  termos  da  teoria  da  informação,  esta 
+afirmação  pode  ser  entendida  como  sendo  que  a  entropia  por  amostra  de  uma  série 
+temporal é um valor máximo. Para um dado espectro de potência, a série temporal de 
+
+ 
+
+56 
+
+máxima  entropia  é  governada  por  uma  função  gaussiana  de  probabilidade  e  que  a 
+entropia é proporcional à integral do logaritmo do espectro de potência. Deste modo, a 
+série temporal estacionária de máxima entropia é definida como sendo a série temporal 
+gaussiana  cujo  espectro  de  potência  maximiza  a  integral  da  equação  (I.1),  sob  as 
+condições impostas pela equação (I.2) (Burg, 1975).  
+
+ 
+O  espectro  de  potência  de  uma  série  temporal  estacionária  especifica 
+completamente as informações estatísticas de 2ª ordem de um processo randômico. Se 
+aplicamos dois filtros digitais, lineares e invariantes no tempo, cujas transformadas de 
+
+Fourier são denotadas por (cid:129))(cid:9)(cid:29)(cid:13) e (cid:129)*(cid:9)(cid:29)(cid:13), respectivamente, de modo tal que obtemos as 
+séries temporais resultantes, denotadas respectivamente por (cid:11))(cid:9)M(cid:13) e (cid:11)*(cid:9)M(cid:13), então o valor 
+médio de (cid:11))∗(cid:9)M(cid:13)(cid:11)*(cid:9)M(cid:13) é dado por (Burg,1975): 
+
+(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)= z a(cid:9)(cid:29)(cid:13)(cid:129))∗(cid:9)(cid:29)(cid:13)(cid:129)*(cid:9)(cid:29)(cid:13)
+(cid:11))∗(cid:9)M(cid:13)(cid:11)*(cid:9)M(cid:13)
+
+N(cid:29)		(cid:9)}.4(cid:13) 
+
+|
++|
+
+, onde o símbolo * indica o conjugado complexo. 
+
+ 
+Deste  modo,  o  espectro  contém  todas  as  informações  estatísticas  a  respeito  da 
+série temporal que são necessárias para  encontrar o produto médio de duas operações 
+lineares e invariantes no tempo (Burg, 1975).  
+
+ 
+Embora  tão  somente  o  conhecimento  das  informações  estatísticas  de  2ª  ordem 
+seja insuficiente para a determinação da entropia por amostra das séries temporais,  ele 
+consegue  determinar  um  limite  superior,  por  amostra,  para  o  valor  da  entropia.  Este 
+limite superior é alcançado se a série temporal é um processo gaussiano (Burg, 1975).  
+
+É possível derivar a entropia de uma série temporal gaussiana, lembrando que a 
+
+ 
+entropia de uma variável gaussiana aleatória de média zero cuja variância é igual a (cid:131)*é 
+dada por )
+
+*(cid:30)(cid:3)(cid:9)2_(cid:2)(cid:131)*(cid:13) (Burg, 1975). 
+
+ 
+
+Considerando a situação na qual nós temos todas as amostras com valores acima 
+
+quadrático  da  série  temporal  de  média  nula.  Contudo,  se  a  série  temporal  tem  um 
+
+de um certo parâmetro (cid:5)(cid:19) e que se deseja determinar o quanto de informação se obtém 
+quando se encontra o valor de (cid:5)(cid:19), temos que, se a série temporal consiste de um ruído 
+branco  gaussiano,  então  a  entropia  de (cid:5)(cid:19)  será )
+*(cid:30)(cid:3)(cid:9)2_(cid:2)a(cid:19)(cid:13),  onde a(cid:19)  é  o  valor  médio 
+espectro que não corresponde a um ruído branco gaussiano, então a incógnita (cid:5)(cid:19) será ao 
+menos  predita  a  partir  das  amostras  prévias  e  a  sua  entropia  será  menor  do  que  
+)
+*(cid:30)(cid:3)(cid:9)2_(cid:2)a(cid:19)(cid:13) (Burg, 1975). 
+predição de (cid:5)(cid:19) a partir das amostras prévias tem a forma ∑
+
+Para  um  processo  gaussiano,  o  filtro  de  predição  é  linear.  Isto  é,  a  melhor 
+. Adicionalmente, 
+o erro na predição é distribuído segundo um processo gaussiano com média nula (Burg, 
+1975).  
+
++(cid:133)Cv+)
+
+GC(cid:5)C
+
+ 
+
+ 
+
+57 
+
+Uma vez que parte não predita de (cid:5)(cid:19) contém as informações atuais do espectro 
+ 
+que  serão  recebidas  quando  o  valor  de (cid:5)(cid:19)  for  conhecido,  a  entropia  atual  de (cid:5)(cid:19)  é 
+)
+*(cid:30)(cid:3)(cid:9)2_(cid:2)a(cid:133)(cid:13),  onde a(cid:133)  é  o  menor  erro  médio  quadrático  na  predição  de (cid:5)(cid:19)  de  um 
+conjunto  infinito  de  amostras  anteriores.  Temos  a  seguinte  formulação  para  a 
+determinação da entropia do espectro de uma série temporal aleatória qualquer (Burg, 
+1975): 
+
+126 z lna(cid:9)(cid:29)(cid:13)N(cid:29)
+
+|
++|
+
+=(cid:30)(cid:3)da(cid:133)26e		(cid:9)}.5(cid:13) 
+
+ 
+
+Para uma série temporal do tipo gaussiana, a entropia por amostra é dada por: 
+
+146 z (cid:30)(cid:3)(cid:134)4_(cid:2)6a(cid:9)(cid:29)(cid:13)(cid:135)
+
+|
++|
+
+N(cid:29)		(cid:9)}.6(cid:13) 
+
+,  sendo  que  a  integral  acima  fornece  o  limite  superior  da  entropia  de  qualquer  série 
+
+temporal gaussiana cujo espectro de potência seja a(cid:9)(cid:29)(cid:13) (Burg, 1975). 
+
+ 
+Sem  que  seja  postulado  qualquer  pressuposto  acerca  de  distribuições  de 
+probabilidade,  a  única  coisa  que  pode  ser  afirmada  é  que  o  espectro  de  potência  que 
+maximiza a equação (I.1), sob as condições impostas pela equação (I.2), tem o menor 
+erro  médio  quadrático  de  predição,  sendo  tal  erro  o  mais  linear  possível.  Em  outras 
+
+palavras, o menor erro quadrático na predição da variável (cid:5)(cid:19) por uma combinação linear 
+
+de  todas  as  amostras  anteriores  é  um  máximo.  Neste  caso,  lidamos  com  as  séries 
+temporais  que  pertencerem  à  classe  das  séries  temporais  mais  randômicas  que 
+satisfaçam as equações (I.1) e (I.2).  Assumindo que a entropia de uma série temporal é 
+uma função não decrescente do erro médio quadrático linear, então a maximização da 
+equação (I.1) acarreta uma maximização da entropia da série temporal (Burg, 1975).  
+
+Quando  temos  dois  espectros  de  potência,  denotados  por  a)(cid:9)(cid:29)(cid:13)  e  a*(cid:9)(cid:29)(cid:13), 
+
+ 
+respectivamente, temos que: 
+|
+z (cid:30)(cid:3)a)(cid:9)(cid:29)(cid:13)N(cid:29)
++|
+
+|
+≥ z (cid:30)(cid:3)a*(cid:9)(cid:29)(cid:13)N(cid:29)
++|
+
+		(cid:9)}.7(cid:13) 
+
+, então a entropia de a)(cid:9)(cid:29)(cid:13) é maior ou igual do que a entropia de a*(cid:9)(cid:29)(cid:13). Restringindo o 
+espectro de potência a(cid:9)(cid:29)(cid:13) ao conjunto de espectros que satisfaçam a equação (I.2), um 
+
+espectro  com  entropia  máxima  pode  então  ser  obtido  de  dois  espectros  de  potência 
+distintos (Burg, 1975). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+58 
+
+Análise Espectral da Entropia Máxima de Predição Mono Canal a partir de 
+
+Medidas de Autocorrelação 
+
+ 
+A  aplicação  mais  importante  da  análise  espectral  da  entropia  máxima  de 
+predição  (MESA, na sigla em inglês) é  estimativa ou reconstrução de um espectro de 
+potência  a  partir  do  conhecimento  parcial  da  função  de  autocorrelação,  denotada  por 
+
+i(cid:9)(cid:3)(cid:13). Nesta situação, a equação de medição é definida como segue (Burg, 1975): 
+
+i(cid:9)(cid:3)(cid:13)= z a(cid:9)(cid:29)(cid:13)(cid:2)q*(cid:137)&C∆(cid:138)N(cid:29)
+
+	;	(cid:9)−l ≤(cid:3)≤l(cid:13)		(cid:9)}.8(cid:13) 
+
+|
++|
+
+Neste caso, ∆M representa o período fundamental (ou básico) de amostragem e:  
+
+6 =1 (cid:9)2∆M(cid:13)
+
+>
+
+		(cid:9)}.9(cid:13) 
+
+símbolo  *  representa  o  conjugado  complexo,  de  modo  tal  que  n  pode  ser  restrito  ao 
+
+representa  a  frequência  de  Nyquist.  É  interessante  notar  que i(cid:9)(cid:3)(cid:13)=i∗(cid:9)−(cid:3)(cid:13),  onde  o 
+intervalo de 0 até l (Burg, 1975). 
+
+ 
+Apesar de a análise espectral pela entropia máxima não se limitar às informações 
+da  função  de  autocorrelação,  a  base  da  teoria  foi  feita  nas  medidas  da  função  de 
+autocorrelação  devido  ao  fato  de  a  estimativa  do  espectro  de  potência  pela  função  de 
+autocorrelação  ter  sido  definida  a  partir  da  relação  existente,  no  domínio  da 
+transformada  de  Fourier,  entre  o  espectro  de  potência  e  a  função  de  autocorrelação. 
+Neste  processo,  primeiramente  é  feita  uma  estimativa  da  função  de  autocorrelação, 
+seguida  do  cálculo  da  sua  transformada  de  Fourier  a  fim  de  se  obter  finalmente  o 
+espectro  de  potência.  Os  valores  da  função  de  autocorrelação  podem  ser  facilmente 
+estimados  a  partir  de  dados  de  séries  temporais  discretas.  Além  disso,  é  muito  fácil 
+resolver,  em  termos  computacionais,  o  problema  de  se  determinar  a  máxima  entropia 
+variacional  em  termos  das  suas  medições  de  autocorrelações.  Muito  do  sucesso  do 
+método da entropia máxima se deve ao fato de que, com posse dos valores iniciais de 
+autocorrelação,  o  cálculo  do  espectro  de  potência  por  entropia  máxima  não  é 
+consideravelmente  mais  complexo  do  que  o  cálculo  das  estimativas  convencionais  de 
+espectros de potência (Burg, 1975). 
+
+A Técnica de Estimativa de Burg 
+
+ 
+Embora  o  cálculo  do  espectro  de  potência  pelo  método  da  entropia  máxima  a 
+partir dos valores da função de autocorrelação tenha sua importância teórica, histórica e 
+computacional  prática,  é  necessário  lançar  mão  de  um  processo  que  considere  os 
+problemas envolvidos na análise de dados amostrados. A fim de contornar tal questão, 
+são  aplicados  filtros  de  predição  às  séries  temporais.  É  o  chamado  processo 
+autorregressivo,  o  qual  permite  estabelecer  uma  conexão  entre  as  premissas  do 
+algoritmo  da  entropia  máxima  e  a  modelagem  de  séries  temporais.  Com  a  técnica  de 
+
+ 
+
+59 
+
+Burg, são determinados os chamados coeficientes de reflexão dos filtros de predição ao 
+invés dos valores da função de autocorrelação (Burg, 1975).  
+
+ 
+desejemos  predizer  o  próximo  valor  da  série  temporal  pelo  uso  de  uma  combinação 
+
+Suponhamos que temos uma série temporal estacionária, denotada por (cid:5)(cid:139), e que 
+linear das l amostras imediatamente anteriores. Considerando G+C como sendo o fator 
+de ponderação da n-ésima amostra anterior, temos que o valor predito de (cid:5)(cid:139) será dado 
+
+por (Burg, 1975): 
+
+u
+p(cid:9)−GC(cid:13)(cid:5)(cid:139)+C
+Cv)
+, e o erro na predição será dado por: 
+
+		(cid:9)}.10(cid:13) 
+
+u
+Cv)
+
+		(cid:9)}.11(cid:13) 
+
+(cid:5)(cid:139)−p(cid:9)−GC(cid:13)(cid:5)(cid:139)+C = pGC(cid:5)(cid:139)+C
+
+u
+Cv(cid:19)
+(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)= p pGH∗ (cid:5)(cid:139)+H∗
+u
+(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)
+GC
+p GH∗ (cid:5)(cid:139)+H∗
+Hv(cid:19)
+
+, onde se define G(cid:19) =1. O erro médio quadrático é dado por: 
+u
+u
+= p pGH∗ i(cid:9)P−(cid:3)(cid:13)
+Hv(cid:19)
+Cv(cid:19)
+(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)(cid:130)		(cid:9)}.13(cid:13) 
+
+u
+u
+Hv(cid:19)
+Cv(cid:19)
+i(cid:9)!(cid:13)=(cid:5)C∗(cid:5)C<(cid:140)
+
+u
+pGC(cid:5)(cid:139)+C
+Cv(cid:19)
+
+GC
+
+		(cid:9)}.12(cid:13) 
+
+, onde a função de autocorrelação da série temporal estacionária é definida como segue: 
+
+Há várias maneiras de se calcular o valor de GC(cid:9)(cid:3) =1	GMé	l(cid:13) que tornem o erro 
+
+ 
+médio quadrático um valor mínimo. Um dos métodos usuais se assemelha ao processo 
+de completar quadrados de equações. Podemos formular a equação (I.11) na sua forma 
+matricial,  assumindo  que  a  ordem  n-ésima  da  chamada  matriz  de  autocorrelação, 
+
+formada  pelos  valores  de i(cid:9)!(cid:13),  é  sempre  definida  com  valores  positivos.  Tomando 
+(cid:141)C	(cid:9)(cid:3)=0	GMé	l(cid:13) e (cid:141)(cid:19) =1, temos (Burg, 1975): 
+
+=au+ p p(cid:9)GH∗ −(cid:141)H∗ (cid:13)
+
+u
+u
+p pGH∗ i(cid:9)P−(cid:3)(cid:13)GC
+Hv(cid:19)
+Cv(cid:19)
+Se  tivermos au >0  e i(cid:9)P−(cid:3)(cid:13)  definida  de  modo  a  assumir  apenas  valores 
+positivos,  o  valor  mínimo  ocorre  quando  temos GH =(cid:141)H.  Deste  modo, au  é  o  erro 
+fornece um filtro linear ótimo. Se o filtro GC difere do filtro ótimo (cid:141)C, então o erro de 
+
+médio  quadrático  de  predição  de  valor  mínimo  e  a  solução  da  equação  (I.14)  nos 
+
+predição será maior e não disporemos mais de um filtro ótimo de predição (Burg, 1975). 
+
+i(cid:9)P−(cid:3)(cid:13)(cid:9)GC−(cid:141)C(cid:13)
+
+		(cid:9)}.14(cid:13) 
+
+u
+Hv(cid:19)
+
+u
+Cv(cid:19)
+
+ 
+
+ 
+
+Supondo  agora  que  desejemos  encontrar  o  erro  médio  quadrático  de  valor 
+
+mínimo  da  estimativa  de  predição  de  uma  incógnita (cid:5)(cid:139),  mas  não  a  partir  dos  valores 
+prévios l  das  séries  temporais,  mas  a  partir  dos   l	valores  subsequentes.  Tome N+C 
+
+ 
+
+60 
+
+como sendo o fator ótimo de ponderação para a n-ésima amostra subsequente. Então, o 
+
+N-ésimo valor predito de (cid:5)(cid:139) será (Burg, 1975): 
+u
+p(cid:9)−NC(cid:13)(cid:5)(cid:139)<C
+Cv)
+
+ 
+
+O erro em tal estimativa será dado por: 
+
+		(cid:9)}.15(cid:13) 
+
+(cid:5)(cid:139)−p(cid:9)−NC(cid:13)(cid:5)(cid:139)<C
+
+u
+Cv)
+
+, onde temos N(cid:19) =1.  
+
+u
+= pNC(cid:5)(cid:139)<C
+Cv(cid:19)
+
+			(cid:9)}.16(cid:13) 
+
+Resolvendo  a  equação  matricial  de  maneira  análoga  ao  que  foi  feito  para  o 
+ 
+cálculo  do  erro  de  predição  para  amostras  anteriores  à  N-ésima  amostra,  temos  que  o 
+filtro  ótimo  de  predição  para  amostras  posteriores  à  amostra  em  estudo  é  apenas  o 
+conjugado complexo, reverso no tempo, do filtro ótimo de predição para estimativas de 
+amostras  anteriores  àquela  em  estudo.  Deste  modo,  é  possível  reescrever  o  erro  de 
+
+predição  para  amostras  posteriores,  denotado  por ℎ(cid:139),  em  termos  dos  coeficientes  do 
+
+filtro de predição para amostras anteriores àquele em estudo, como segue (Burg, 1975): 
+
+ℎ(cid:139) = pGC∗(cid:5)(cid:139)<C
+
+u
+Cv(cid:19)
+
+		(cid:9)}.17(cid:13) 
+
+ 
+
+É importante notar que o erro de predição para amostras posteriores também é 
+
+igual ao valor de au definido para o erro de predição para amostras anteriores. Contudo, 
+
+o fato de a predição para amostras anteriores e posteriores terem o mesmo espectro de 
+potência  de  saída  não  é  uma  propriedade  única  e  exclusiva  dos  filtros  ótimos  de 
+predição. Tal propriedade é simplesmente uma consequência da operação do conjugado 
+complexo,  a  qual  se  reflete  na  propriedade  de  reversão  no  domínio  do  tempo  (Burg, 
+1975). 
+
+Por exemplo, para o filtro arbitrário G(cid:19)+G)(cid:12)+⋯+Gu(cid:12)u, temos que: 
+		(cid:9)}.18(cid:13) 
+
+u
+Cv(cid:19) p GH∗ (cid:12)+H
+= pGC(cid:12)C
+
+u
+(cid:143)pGC(cid:12)C
+Cv(cid:19)
+
+u
+Hv(cid:19)
+
+*
+
+u
+=(cid:143)p GH∗ (cid:12)+H
+Hv(cid:19)
+
+(cid:143)
+
+*
+(cid:143)
+
+61 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+O Processo Autorregressivo 
+
+ 
+
+Tomando a equação de erro da predição: 
+
+(cid:2)(cid:139) = pGC(cid:5)(cid:139)+C
+
+u
+Cv(cid:19)
+
+		(cid:9)}.19(cid:13) 
+
+, podemos reescrevê-la como segue: 
+
+(cid:5)(cid:139) =(cid:2)(cid:21)−pGC(cid:5)(cid:139)+C
+
+		(cid:9)}.20(cid:13) 
+
+u
+Cv)
+
+ 
+
+Se assumirmos que (cid:2)(cid:139) se constitui de variáveis linearmente independentes, isto 
+é, se as séries temporais de (cid:2)(cid:139) possuem um espectro branco, então as séries temporais 
+geradas pela equação (I.20) são processos autorregressivos de ordem l. A fim de que a 
+equação  (I.20) caracterize um processo estável, o filtro ∑
+séries temporais de (cid:5)(cid:139) são claramente dados pelo espectro de máxima entropia de ordem 
+l (Burg, 1975). 
+
+ deve ser de fase com 
+valor  mínimo,  uma  vez que  se  trata  de  um  filtro  ótimo  de  predição.  Os espectros  das 
+
+GC(cid:12)C
+
+uCv(cid:19)
+
+ 
+
+APÊNDICE II 
+
+CONTINUAÇÃO PARA CIMA 
+
+ 
+A premissa básica consiste nas propriedades harmônicas dos campos potenciais 
+para regiões localizadas fora das fontes causadoras de anomalias. Se não há fontes no 
+semi espaço superior, então temos que: 
+
+∆%(cid:144)(cid:9)(cid:5),(cid:11),(cid:12)(cid:13)’=0	,O(cid:31)P	(cid:12) ≥0		(cid:9)}}.1(cid:13) 
+
+, onde (cid:144)(cid:9)(cid:5),(cid:11),(cid:12)(cid:13) é o campo gravimétrico e ∆ representa o operador laplaciano (Blakely, 
+1995).  Se  o  campo  gravimétrico (cid:144)(cid:9)(cid:5),(cid:11),(cid:12)(cid:13)  é  conhecido  em  qualquer  ponto  do  semi 
+
+espaço  superior,  então  é  possível  continuar  o  campo  gravimétrico  no  semi  espaço 
+superior. O problema de determinar o campo  gravimétrico para níveis de continuação 
+maiores que zero é chamado de problema de Dirichlet. A solução para tal problema é 
+obtida através de uma integral que usa a função de Green, cuja expressão, no sistema de 
+coordenadas retangulares, é dada por (Blakely, 1995): 
+
+(cid:144)(cid:9)(cid:5),(cid:11),(cid:12)(cid:19)−∆(cid:12)(cid:13)= ∆(cid:12)2_(cid:145)
+
+∞
+
++∞
+
+(cid:144)(cid:9)(cid:5) ′,(cid:11) ′,(cid:12)(cid:19)(cid:13)
+
+%(cid:9)(cid:5)−(cid:5) ′(cid:13)*+(cid:9)(cid:11)−(cid:11) ′(cid:13)*+(cid:9)∆(cid:12)(cid:13)*’T *>
+
+N(cid:5)′N(cid:11) ′	;	∆(cid:12) >0		(cid:9)}}.2(cid:13) 
+
+A equação acima é chamada de integral da continuação para cima. Tal equação 
+ 
+ilustra como calcular o valor do campo potencial para qualquer ponto acima de um nível 
+situado em uma superfície horizontal a partir de um conhecimento completo do campo 
+
+ 
+
+62 
+
+na  tal  superfície.  Evidentemente,  alguns  compromissos  são  exigidos  em  aplicações 
+práticas, uma vez que nós nunca sabemos com precisão os valores do campo potencial 
+para  cada  ponto  de  um  plano  infinito.  É  de  particular  importância  conhecer  com 
+precisão o campo para cada nível de continuação, bem comoa extensão lateral de todas 
+as fontes causadoras de anomalias, uma recomendação que é difícil de ser conseguida 
+na prática (Blakely, 1995).   
+
+ 
+A  integral  da  continuação  para  cima  pode  ser  utilizada  para  continuar  dados 
+medidos em um nível de continuação (altura ou altitude) de uma dada superfície para 
+outro  nível  de  continuação  de  outra  superfície.  Para  cada  ponto  da  nova  superfície,  a 
+integral dupla deve ser avaliada, o que se torna uma tarefa muito árdua do ponto de vista 
+computacional. Tal procedimento pode ser realizado de modo mais eficiente no domínio 
+da transformada de Fourier (Blakely, 1995). 
+
+A  integral  da  continuação  para  cima  pode  ser  vista  como  uma  convolução  em 
+
+ 
+duas dimensões: 
+
+(cid:144)(cid:9)(cid:5),(cid:11),(cid:12)(cid:19)−∆(cid:12)(cid:13)= (cid:145)(cid:144)(cid:9)(cid:5) ′,(cid:11) ′,(cid:12)(cid:19)(cid:13)(cid:146)(cid:147)(cid:9)(cid:5)−(cid:5) ′,(cid:11)−(cid:11) ′, ∆(cid:12)(cid:13)N(cid:5)′N(cid:11) ′
+
+		(cid:9)}}.3(cid:13) 
+
+∞
+
++∞
+
+, onde: 
+
+(cid:146)(cid:147)(cid:9)(cid:5),(cid:11), ∆(cid:12)(cid:13)= ∆(cid:12)2_
+
+1
+
+(cid:9)(cid:5)*+(cid:11)*+(cid:9)∆(cid:12)(cid:13)*(cid:13)T *> 		(cid:9)}}.4(cid:13) 
+
+Se  o  campo  potencial  (cid:144)  medido  na  superfície(cid:12) =(cid:12)(cid:19)  satisfaz  a  seguinte 
+
+ 
+inequação: 
+
+∞
+
+z|(cid:29)(cid:9)(cid:5)(cid:13)|N(cid:5) < ∞
++∞
+
+		(cid:9)}}.5(cid:13) 
+
+,  então  temos  uma  transformada  de  Fourier,  denotada  por ℱ%(cid:144)’.  A  representação  da 
+
+operação  da  continuação  para  cima  no  domínio  da  transformada  de  Fourier  é  obtida 
+aplicando  (calculando)  a  transformada  de  Fourier  para  ambos  os  lados  da  integral  da 
+continuação  para  cima  analítica  e  em  seguida  aplicando  o  teorema  da  convolução  no 
+domínio da transformada de Fourier, como segue (Blakely, 1995):  
+
+ℱ%(cid:144)(cid:147)’=ℱ%(cid:144)’ℱ%(cid:146)(cid:147)’		(cid:9)}}.6(cid:13) 
+
+,  onde ℱ%(cid:144)(cid:147)’  é  a  transformada  de  Fourier  do  campo  continuado  para  cima.  O  que  é 
+necessário  obter  é  uma  expressão  analítica  para  o  termo  ℱ%(cid:146)(cid:147)’,  a  qual  pode  ser 
+encontrada a partir da transformada de Fourier de (cid:146)(cid:147)(cid:9)(cid:5),(cid:11), ∆(cid:12)(cid:13). É importante, contudo, 
+
+notar que (Blakely, 1995): 
+
+(cid:146)(cid:147)(cid:9)(cid:5),(cid:11), ∆(cid:12)(cid:13)=− 12_ (cid:149)(cid:149)∆(cid:12)1:		(cid:9)}}.7(cid:13) 
+
+ 
+
+63 
+
+, onde: 
+
+ 
+
+: =‘(cid:5)*+(cid:11)*+(cid:9)∆(cid:12)(cid:13)*		(cid:9)}}.8(cid:13) 
+
+Logo, a transformada de Fourier do termo (cid:146)(cid:147)(cid:9)(cid:5),(cid:11), ∆(cid:12)(cid:13) é dada por: 
+ℱ%(cid:146)(cid:147)’=− 12_ (cid:149)(cid:149)∆(cid:12)ℱ(cid:150)1:(cid:151)=− (cid:149)(cid:149)∆(cid:12)(cid:2)+|r|∆(cid:24)
+
+|[| =(cid:2)+∆(cid:24)|r|	;	∆(cid:12) >0		(cid:9)}}.9(cid:13) 
+
+ 
+Em termos qualitativos, a continuação para cima transforma o campo potencial 
+medido em uma superfície em um campo potencial medido em outra superfície acima 
+de todas as fontes de interesse. A continuação para cima atenua anomalias em função do 
+seu respectivo número de onda. Quanto menor é o número de onda, maior é a atenuação 
+ocasionada pela operação de continuação para cima. Ou seja, a continuação para cima 
+atenua  fontes  situadas  a  profundidades  menores,  enfatizando  as  anomalias  mais 
+profundas.  É  interessante  notar  que  um  campo  potencial  pode  ser  calculado  para 
+qualquer ponto dentro de uma região de modo tal que nenhum conhecimento adicional a 
+respeito  das  fontes  do  campo  seja  necessário,  exceto  pelo  fato  de  que  nenhuma  fonte 
+possa estar localizada dentro da região em questão (Blakely, 1995). 
+
+É  importante  ainda  enfatizar  outros  aspectos  concernentes  à  operação  da 
+
+ 
+continuação para cima no domínio da transformada de Fourier (Blakely, 1995): 
+
+1.  O processo de continuação para cima atenua todos os números de onda, exceto 
+
+2.  Cada número de onda é atenuado para um grau maior do que todos os demais 
+
+|[|=0; 
+3.  O grau de atenuação aumenta com o aumento de ∆(cid:12); 
+
+números de onda menores; 
+
+ 
+
+O operador da continuação para cima permite o cálculo da anomalia do campo 
+
+atenua  consideravelmente  as  altas  frequências.  Quando  se  considera  níveis  de 
+
+potencial (cid:144) para  cada nível tal que (cid:12) >0. Como exposto anteriormente, tal operador 
+continuação  tais  que  (cid:12) <0,  temos  então  a  operação  de  continuação  para  baixo. 
+
+Contudo, o operador de continuação para baixo se torna incorreto se há algumas fontes 
+acima  do  nível  de  continuação  considerado.  Este  formalismo  permite  que  sejam 
+definidos outros operadores. Por exemplo, podemos definir a diferenciação vertical de 
+ordem n-ésima, a seguir (Blakely, 1995): 
+
+(cid:152)C(cid:153)(cid:9)W,R(cid:13)=(cid:9)−2_\(cid:13)C		(cid:9)}}.10(cid:13) 
+
+ 
+É possível combinar as operações elementares (por exemplo, continuações para 
+cima  e  ara  baixo,  derivada  vertical)  da  maneira  tal  como  elas  foram  definidas.  Por 
+exemplo, nós podemos determinar facilmente a expressão do operador o qual efetua a 
+derivada  vertical  da  continuação  para  cima  de  uma  anomalia  de  um  campo  potencial 
+(Blakely, 1995). Temos então: 
+
+^(cid:154)(cid:9)W,R(cid:13)=ℱ%(cid:146)(cid:147)’(cid:152)C(cid:153)(cid:9)W,R(cid:13)		(cid:9)}}.11(cid:13) 
+
+ 
+
+64 
+
+APÊNDICE III 
+
+DERIVADAS DIRECIONAIS 
+
+ 
+
+são facilmente estimadas utilizando métodos simples, tais como o de diferenças finitas e 
+
+Considerando  uma  quantidade  escalar (cid:155)(cid:9)(cid:5),(cid:11)(cid:13)  que  varia  suavemente  em  uma 
+dada  superfície  horizontal  de  medição,  temos  que  as  derivadas  horizontais  de (cid:155)(cid:9)(cid:5),(cid:11)(cid:13) 
+através  de  medições  discretas  de  (cid:155)(cid:9)(cid:5),(cid:11)(cid:13).  Por  exemplo,  se  os  valores  (cid:155)q(cid:156),Q =
+1,2,…;	(cid:158)=1,2,…  representam  medições  discretas  de  (cid:155)(cid:9)(cid:5),(cid:11)(cid:13)  para 
+uniformes de amostragem  ∆x e  ∆(cid:11), respectivamente, então as derivadas horizontais de 
+(cid:155)(cid:9)(cid:5),(cid:11)(cid:13) para pontos genéricos Q,(cid:158) são dadas aproximadamente por (Blakely, 1995): 
+
+intervalos 
+
+e 
+
+N(cid:155)(cid:9)(cid:5),(cid:11)(cid:13)
+N(cid:5)
+N(cid:155)(cid:9)(cid:5),(cid:11)(cid:13)
+N(cid:11)
+
+2∆(cid:5)
+
+≈(cid:155)q<),(cid:156)−(cid:155)q+),(cid:156)
+≈(cid:155)q,(cid:156)<)−(cid:155)q,(cid:156)+)
+
+2∆(cid:11)
+
+		(cid:9)}}}.1(cid:13) 
+
+		(cid:9)}}}.2(cid:13) 
+
+ 
+As derivadas horizontais são facilmente calculadas no domínio da transformada 
+de Fourier. De acordo com o teorema da diferenciação no domínio da transformada de 
+
+Fourier, as derivadas horizontais de (cid:155)(cid:9)(cid:5),(cid:11)(cid:13) são dadas por (Blakely, 1995): 
+
+ 
+
+e 
+
+ 
+
+ℱ(cid:150)NC(cid:155)N(cid:5)C(cid:151)=(cid:9)Q[(cid:21)(cid:13)Cℱ%(cid:155)’		(cid:9)}}}.3(cid:13) 
+ℱ(cid:150)NC(cid:155)N(cid:11)C(cid:151)=(cid:134)Q[(cid:23)(cid:135)Cℱ%(cid:155)’		(cid:9)}}}.4(cid:13) 
+
+Deste  modo, (cid:9)Q[(cid:21)(cid:13)C  e (cid:134)Q[(cid:23)(cid:135)C  são  filtros  que  transformam  uma  função  medida 
+
+em  uma  superfície  horizontal  nas  suas  derivadas  de  ordem  n  com  respeito  aos  eixos 
+cartesianos x e y, respectivamente (Blakely, 1995). 
+
+Se (cid:155)  representa  um  campo  potencial,  podemos  calcular  também  os  gradientes 
+
+verticais. A derivada vertical de segunda ordem é uma consequência direta da Equação 
+
+de Laplace, pois temos ∇*(cid:155) =0 e, portanto (Blakely, 1995): 
+(cid:149)*(cid:155)(cid:149)(cid:12)* =−(cid:149)*(cid:155)(cid:149)(cid:5)* −(cid:149)*(cid:155)(cid:149)(cid:11)*		(cid:9)}}}.5(cid:13) 
+
+ 
+
+ 
+
+ 
+
+65 
+
+Como o campo potencial (cid:155) é medido sobre uma superfície horizontal, então a 
+
+Equação  de  Laplace  pode  ser  transformada  para  o  domínio  de  Fourier,  como  segue 
+(Blakely, 1995): 
+
+ 
+
+ℱf(cid:149)*(cid:155)(cid:149)(cid:12)*g=[(cid:21)*ℱ%(cid:155)’+[(cid:23)*ℱ%(cid:155)’=|[|*ℱ%(cid:155)’		(cid:9)}}}.6(cid:13) 
+
+, onde k representa o número de onda. 
+
+A derivada vertical de segunda ordem tem uma grande importância nas técnicas 
+de  interpretação  geofísica,  pois  se  trata  de  um  filtro  que  ajuda  a  resolver  e  acentuar 
+
+fontes rasas. Consideremos dois monopolos observados a partir de um mesmo ponto a, 
+um dos quais está situado a uma profundidade mais rasa denotada por N) e o outro a 
+uma  profundidade  maior  denotada  por N*.  O  campo  potencial  de  cada  monopolo  é 
+inversamente  proporcional  ao  quadrado  da  distância  até  o  ponto a.  Deste  modo,  o 
+
+campo devido ao monopolo raso aumentará mais rapidamente do que o campo devido 
+ao monopolo mais profundo. Evidentemente, a derivada vertical de segunda ordem terá 
+o mesmo efeito. Similarmente, a derivada vertical de segunda ordem ajuda a delimitar 
+mais  precisamente  as  bordas  de  fontes  causadoras  de  campos  potenciais  (Blakely, 
+1995). 
+
+ 
+Tais propriedades da derivada vertical de segunda ordem podem ser facilmente 
+verificadas,  uma  vez  que  a  multiplicação  do  campo  potencial,  no  domínio  da 
+
+transformada  de  Fourier,  pelo  fator  |[|*  claramente  amplifica  os  componentes  de 
+
+comprimento de onda menores do campo potencial em detrimento dos componentes de 
+comprimento de onda maior (Blakely, 1995). 
+
+Conforme foi explicitado anteriormente, a derivada vertical de segunda ordem é 
+uma  consequência  direta  da  Equação  de  Laplace.  As  derivadas  verticais  de  ordem  n 
+qualquer podem também ser obtidas diretamente  a partir dos seus respectivos campos 
+
+potenciais. Convencionando que o eixo cartesiano z aumenta para baixo e, para ∆(cid:12) >0, 
+
+a derivada vertical de 1ª ordem é dada por (Blakely, 1995): 
+
+ 
+ 
+
+ 
+
+(cid:149)(cid:149)(cid:12)(cid:155)(cid:9)(cid:5),(cid:11),(cid:12)(cid:13)= lim∆(cid:24)→(cid:19)(cid:155)(cid:9)(cid:5),(cid:11),(cid:12)(cid:13)−(cid:155)(cid:9)(cid:5),(cid:11),(cid:12)−∆(cid:12)(cid:13)
+
+∆(cid:12)
+
+		(cid:9)}}}.7(cid:13) 
+
+Fisicamente,  a  equação  (III.7)  implica  que  os  dados  do  campo  potencial  são 
+continuados  para  cima  em  uma  distância  infinitesimal  e  que  o  valor  obtido  de  tal 
+operação é subtraído do campo potencial original (Blakely, 1995).  
+
+ 
+
+ 
+
+66 
+
+A transformada de Fourier da derivada vertical de 1ª ordem é dada por (Blakely, 
+
+1995): 
+
+ 
+
+ 
+
+ℱ(cid:150)(cid:149)(cid:155)(cid:149)(cid:12)(cid:151)= lim∆(cid:24)→(cid:19)ℱ%(cid:155)’−ℱ%(cid:155)’(cid:2)+|r|∆(cid:24)
+=|[|ℱ%(cid:155)’		(cid:9)}}}.8(cid:13) 
+
+∆(cid:12)
+
+= lim∆(cid:24)→(cid:19)1−(cid:2)+|r|∆(cid:24)
+∆(cid:12)
+
+ℱ%(cid:155)’
+
+De  maneira  similar,  é  possível  obter  uma  formulação  matemática  para  as 
+derivadas verticais de n-ésima ordem, sendo que o gradiente vertical de ordem n é igual 
+
+ao produto da transformada de Fourier do campo potencial pelo fator |[|C, onde k indica 
+
+o  número  de  onda  e  n  é  a  ordem  da  derivada  vertical.  Mais  precisamente,  temos 
+(Blakely, 1995): 
+
+ 
+
+ 
+
+ℱ(cid:150)(cid:149)C(cid:155)(cid:149)(cid:12)*(cid:151)=|[|Cℱ%(cid:155)’		(cid:9)}}}.9(cid:13) 
+
+A forma simples da equação (III.9) permite o uso de valores não inteiros para a 
+ordem n de derivação, o que fornece as derivadas verticais fracionadas, as quais têm um 
+conteúdo  de  frequências  intermediário,  quando  comparadas  às  derivadas  verticais  de 
+ordem n inteira (Blakely, 1995). 
+
+Um  método  comum  de  remoção  de  feições  regionais  e  residuais  envolve  a 
+continuação  para  cima  dos  dados  e  a  posterior  subtração  deste  resultado  do  campo 
+potencial  original.  Isto  é  equivalente  à  aplicação  da  equação  (III.7)  com  um  limite 
+
+diferente  em ∆(cid:12),    ignorando  o  fator  de  escala.  Desta  forma,  um  nível  de  suavização 
+desejado  pode  ser  alcançado.  Fica  claro  que,    pelo  incremento  no  limite  de ∆(cid:12)  na 
+
+equação  (III.7),  o  nível  de  continuação  para  cima  também  é  aumentado  e  diferentes 
+níveis de separações regionais e residuais podem ser obtidos. No domínio da frequência 
+(domínio  da  transformada  de  Fourier),  isto  tal  procedimento  equivale  ao  uso  de  um 
+valor não inteiro de n na equação (III.9). Na prática, as derivadas verticais fracionadas 
+podem  ser  utilizadas  na  separação  regional  e  residual,  onde  a  alteração  do  grau  (ou 
+ordem) de diferenciação remove mais ou menos sinais de baixas frequências, bem como 
+para  enfatizar  altas  frequências  em  dados  de  baixa  qualidade.  Por  exemplo,  se  a 
+derivada  vertical  de  primeira  ordem  apresenta  um  sinal  muito  pobre  para  a  razão  dos 
+ruídos contidos nos dados, então uma derivada de ordem 0.5 ou 0.75, por exemplo, pode 
+enfatizar  as  feições  geológicas  da  região  de  levantamento  geofísico  sem  reforçar, 
+enfatizar ou introduzir os ruídos anteriormente referidos (Blakely, 1995). 
+
+ 
+
+ 
+
+ 
+
+67 
+
+Outra  maneira  de  se  escrever  a  derivadas  verticais  de  ordem  n  no  domínio  da 
+
+transformada de Fourier é exposta a seguir (Blakely, 1995): 
+
+ℱ%∇(cid:155)’=[ ′ℱ%(cid:155)’		(cid:9)}}}.10(cid:13) 
+
+, onde [ =(cid:134)Q[(cid:21),Q[(cid:23),|[|(cid:135). 
+Como o campo de força F está relacionado ao seu potencial (cid:155) de acordo com a 
+relação ] =∇(cid:155), a equação (III.10) expressa tal relação no domínio da transformada de 
+A componente do campo de força F em uma direção (cid:29)¢ qualquer é simplesmente 
+uma derivada direcional do potencial (cid:155), sendo calculada no domínio da transformada de 
+
+Fourier (Blakely, 1995). 
+
+Fourier como segue (Blakely, 1995): 
+
+ 
+
+ 
+
+ℱ£(cid:29)¢.∇(cid:155)⁄=(cid:134)(cid:29)¢.[(cid:135)ℱ%(cid:155)’		(cid:9)}}}.11(cid:13) 
+
+ 
+
+É sabido que a componente vertical da aceleração gravitacional é dada por: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ (cid:24) = (cid:149)(cid:149)(cid:12)(cid:144)		(cid:9)}}}.12(cid:13) 
+
+, onde (cid:144) representa o potencial Newtoniano. 
+
+No  domínio  da  transformada  de  Fourier,  temos  a  seguinte  relação  para  a 
+
+ 
+aceleração gravitacional vertical (Blakely, 1995): 
+
+ 
+
+ℱ% (cid:24)’=|[|ℱ%(cid:144)’		(cid:9)}}}.13(cid:13) 
+
+Podemos  ainda  expressar  a  atração  vertical  da  gravidade  em  termos  dos  seus 
+respectivos  potenciais  no  domínio  da  transformada  de  Fourier.  Neste  caso,  a 
+componente vertical da aceleração gravitacional é medida em uma superfície horizontal 
+em  termos  dos  seus  respectivos  potenciais  nesta  mesma  superfície  horizontal,  como 
+segue (Blakely, 1995): 
+
+ℱ%(cid:144)’= 1|[|ℱ% (cid:24)’	;	|[|≠0		(cid:9)}}}.14(cid:13) 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+68 
+
+ 
+
+ 
+
+APÊNDICE IV 
+
+ 
+
+TEOREMA DA CONVOLUÇÃO 
+
+A convolução de duas funções (cid:29)(cid:9)(cid:5)(cid:13) e  (cid:9)(cid:5)(cid:13) é definida matematicamente como: 
+
+ℎ(cid:9)(cid:5)(cid:13)=(cid:29)(cid:9)(cid:5)(cid:13)∗ (cid:9)(cid:5)(cid:13)= z(cid:29)(cid:9)(cid:5) ′(cid:13) (cid:9)(cid:5)−(cid:5) ′(cid:13)
+
+N(cid:5)′		(cid:9)}ƒ.1(cid:13) 
+
+∞
+
++∞
+
+Para funções de duas dimensões, temos: 
+
+ℎ(cid:9)(cid:5),(cid:11)(cid:13)= (cid:145)(cid:29)(cid:9)(cid:5) ′,(cid:11) ′(cid:13) (cid:9)(cid:5)−(cid:5) ′,(cid:11)−(cid:11) ′(cid:13)N(cid:5)′N(cid:11) ′
+
+		(cid:9)}ƒ.2(cid:13) 
+
+∞
+
++∞
+
+ 
+O teorema da convolução diz que uma convolução de duas funções no domínio 
+do  tempo  corresponde  a  um  produto  das  transformadas  de  Fourier  destas  funções  no 
+domínio  do  número  de  onda.  Ainda,  a  convolução  e  o  produto  de  tais  funções 
+constituem um par de transformadas de Fourier contínua (Blakely, 1995). Temos: 
+
+ 
+
+Para a transformada de Fourier contínua inversa, temos um resultado análogo: 
+
+(cid:29)(cid:9)(cid:5)(cid:13)∗ (cid:9)(cid:5)(cid:13)↔](cid:9)[(cid:13) (cid:9)[(cid:13)		(cid:9)}ƒ.3(cid:13) 
+(cid:29)(cid:9)(cid:5)(cid:13) (cid:9)(cid:5)(cid:13)↔](cid:9)[(cid:13)∗^(cid:9)[(cid:13)		(cid:9)}ƒ.4(cid:13) 
+
+ 
+
+Significado Físico da Convolução 
+
+ 
+A integral da Convolução tem um significado físico importante, o qual pode ser 
+visto  considerando  um  circuito  elétrico.  Suponha  que  seja  possível  "inserir"  uma 
+corrente em uma parte deste circuito e medir a voltagem resultante em outra parte do 
+mesmo  circuito  elétrico.  Suponha  ainda  que  um  pulso  de  corrente  de  duração  muito 
+
+uma  função  impulso  é  chamada  de  resposta  impulsiva.  Circuitos  elétricos  podem  ser 
+considerados  aproximadamente  sistemas  lineares,  sendo  lógico  que  outro  impulso 
+
+curta,  ou  seja,  um  impulso,  submetido  ao  circuito  no  tempo M=0,  resulte  numa 
+voltagem  (cid:9)M(cid:13). A resposta de um circuito elétrico a uma entrada com características de 
+submetido  ao  circuito  elétrico M(cid:19)  segundos  depois  produziria  uma  resposta  idêntica, 
+atrasada  (ou  defasada)  por  exatamente M(cid:19)  segundos;  isto  é,  a  voltagem  seria  denotada 
+por  (cid:9)M−M(cid:19)(cid:13).  Uma  série  de  impulsos  nos  tempos M),M*,⋯,  ponderados  por G),G*,⋯ 
+resultaria  numa  saída  denotada  por  G) (cid:9)M−M)(cid:13)+G* (cid:9)M−M*(cid:13)+⋯  .  Em  outras 
+
+palavras, a resposta a uma série de impulsos é simplesmente uma combinação linear de 
+respostas  impulsionais.  Como  os  impulsos  são  feitos  de  modo  tal  que  estejam  muito 
+próximos  entre  si,  a  entrada  de  um  circuito  se  torna  uma  corrente  variando 
+continuamente.  Fica  claro  que,  para  este  limite,  a  voltagem  de  saída  será  uma 
+combinação contínua de respostas impulsionais.    
+
+ 
+
+69 
+
+Como um exemplo geofísico de aplicação da Convolução, considera-se o caso 
+ 
+simples de propagação de ondas elásticas. Define-se a saída como o registro sísmico, o 
+sistema como o sismógrafo e a entrada como o movimento do solo. Ou então, a entrada 
+pode  ser  a  fonte  sísmica,  o  sistema  corresponder  ao  meio  de  propagação  (Terra)  e  ao 
+sismógrafo  formando  um  sistema  sequencial  (em  cascata)  e  a  saída  como  sendo  o 
+sismograma. 
+
+ 
+
+A Função Impulso 
+
+A função impulso ¤(cid:9)M(cid:13) é uma importante ferramenta matemática na análise de 
+
+ 
+Fourier contínua e discreta. O seu uso simplifica muitas operações que seriam, de outra 
+maneira,  muito  mais  difíceis.  Normalmente,  a  definição  da  função  impulso  é 
+normalmente desprovida de significado matemático. Para garantir que a função impulso 
+seja bem definida, deve-se interpretar a função impulso não como uma função "normal", 
+mas como um conceito baseado na teoria da distribuição. 
+
+ 
+
+Normalmente, a função impulso é definida como: 
+
+¤(cid:9)M−M(cid:19)(cid:13)=0	;M ≠M(cid:19)	(cid:9)}ƒ.5(cid:13) 
+(cid:133)
+z¤(cid:9)M−M(cid:19)(cid:13)
+NM =1	(cid:9)}ƒ.6(cid:13) 
++(cid:133)
+
+Deste  modo,  podemos  definir  a  função  impulso  como  tendo  magnitude 
+ 
+indefinida para um determinado tempo de ocorrência e tendo magnitude zero (nula) nos 
+demais instantes de tempo, com a propriedade adicional de que a área sob a função é 
+unitária. Obviamente, é muito difícil relatar um impulso como um sinal físico. Contudo, 
+pode-se pensar no impulso como uma comprimento de onda de magnitude muito grande 
+e  de  duração  infinitesalmente  pequena,  tal  que  a  área  do  pulso  é  unitária.  Com  tal 
+interpretação,  constrói-se  uma  série  de  funções  (isto  é,  de  pulsos),  que  aumentam 
+progressivamente em amplitude, diminuem em duração e possuem uma área constante e 
+unitária. Logo, podemos definir  matematicamente a função impulso como segue: 
+
+¤(cid:9)M(cid:13)= lim'→(cid:19)(cid:29)(cid:9)M,G(cid:13)	(cid:9)}ƒ.7(cid:13) 
+
+ 
+
+Propriedades da Função impulso 
+
+A função impulso é uma distribuição, a qual atribui a uma função de teste (cid:155)(cid:9)M(cid:13) o 
+
+(cid:133)
+z ¤(cid:9)M(cid:13)(cid:155)(cid:9)M(cid:13)
++(cid:133)
+
+NM =(cid:155)(cid:9)0(cid:13)	(cid:9)}ƒ.8(cid:13) 
+
+70 
+
+ 
+
+número (cid:155)(cid:9)0(cid:13): 
+
+ 
+
+ 
+
+ 
+
+A função ¤(cid:9)M−M(cid:19)(cid:13) é definida por: 
+
+(cid:133)
+z ¤(cid:9)M−M(cid:19)(cid:13)(cid:155)(cid:9)M(cid:13)NM
++(cid:133)
+
+=(cid:155)(cid:9)M(cid:19)(cid:13)		(cid:9)}ƒ.9(cid:13) 
+
+Esta  propriedade  é  chamada  de  propriedade  de  "peneiramento"  ("Sifting")  e 
+ 
+implica que a função impulso assume o valor da função de teste no tempo para o qual a 
+função impulso está definida e é aplicada. O termo "peneiramento" ("Sifting") é devido 
+
+ao fato de que, se deixarmos M(cid:19) variar continuamente, nós podemos obter cada valor da 
+
+função  de  teste  para  cada  instante.  Esta  é  propriedade  mais  importante  da  função 
+impulso.   
+
+ 
+
+A função impulso em duas dimensões, denotada por ¤(cid:9)(cid:5),(cid:11)(cid:13), é uma distribuição 
+que  atribui  à  função  de  teste  em  duas  dimensões,  denotada  por (cid:155)(cid:9)(cid:5),(cid:11)(cid:13),  o  número  
+(cid:155)(cid:9)0,0(cid:13): 
+
+(cid:133)
+(cid:145)¤(cid:9)(cid:5),(cid:11)(cid:13)(cid:155)(cid:9)(cid:5),(cid:11)(cid:13)N(cid:5)N(cid:11)
++(cid:133)
+
+=(cid:155)(cid:9)0,0(cid:13)	(cid:9)}ƒ.10(cid:13) 
+
+A  partir  da  definição  da  função  impulso  em  duas  dimensões,  a  propriedade 
+ 
+fundamental  de  "peneiramento"  ("Sifting")  da  função  impulso  em  duas  dimensões,  a 
+qual  é  a  chave  fundamental  para  o  desenvolvimento  e  o  entendimento  do  teorema  da 
+amostragem em duas dimensões, pode ser derivada como segue: 
+
+(cid:133)
+(cid:145)¤(cid:9)(cid:5)−(cid:5)(cid:19),(cid:11)−(cid:11)(cid:19)(cid:13)ℎ(cid:9)(cid:5),(cid:11)(cid:13)N(cid:5)N(cid:11)
++(cid:133)
+
+=ℎ(cid:9)(cid:5)(cid:19),(cid:11)(cid:19)(cid:13)		(cid:9)}ƒ.11(cid:13) 
+
+ 
+
+APÊNDICE V 
+
+TEOREMA DE PARSEVAL 
+
+ 
+
+A  energia  total  de  uma  função  real  (cid:29)(cid:9)(cid:5)(cid:13)  pode  ser  encontrada  tanto  pela 
+integração  de (cid:29)*(cid:9)(cid:5)(cid:13)  sobre  todo  o  espaço  ou  então  pela  integração  do  espectro  de 
+energia total de (cid:29)(cid:9)(cid:5)(cid:13) sobre todos os números de onda [. Esta relação é expressa pela 
+Fórmula de Parseval. Se (cid:29)(cid:9)(cid:5)(cid:13) é uma função real e possui uma transformada de Fourier 
+denotada por (cid:29)(cid:9)(cid:5)(cid:13)↔](cid:9)[(cid:13), então (Blakely, 1995): 
+
+∞
+
+2_“ |(cid:29)(cid:9)(cid:5)(cid:13)|*N(cid:5)
+
++∞
+
+∞
+
+=“ |](cid:9)[(cid:13)|*N[
++∞
+
+	(cid:9)ƒ.1(cid:13)  
+
+ 
+
+71 
+
+

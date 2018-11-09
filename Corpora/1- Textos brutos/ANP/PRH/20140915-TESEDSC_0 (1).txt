@@ -1,0 +1,9787 @@
+ 
+
+ 
+
+ 
+
+ 
+
+SOLUÇÃO NUMÉRICA DAS EQUAÇÕES DE EULER 3D COMPRESSÍVEIS EM 
+
+AMBIENTE DE COMPUTAÇÃO PARALELA DE MEMÓRIA DISTRIBUÍDA 
+
+ATRAVÉS DE UMA FORMULAÇÃO ESTABILIZADA DE ELEMENTOS FINITOS 
+
+ 
+ 
+ 
+ 
+
+Anderson de Lima Mendonça 
+
+ 
+ 
+ 
+
+Tese  de  Doutorado  apresentada  ao  Programa  de 
+Pós-graduação em Engenharia Civil, COPPE, da 
+Universidade  Federal  do  Rio  de  Janeiro,  como 
+parte  dos  requisitos  necessários  à  obtenção  do 
+título de Doutor em Engenharia Civil.  
+ 
+ 
+Orientador: Alvaro Luiz Gayoso de Azeredo 
+                   Coutinho 
+
+ 
+
+ 
+
+ 
+
+Rio de Janeiro 
+Agosto de 2013 
+
+ 
+
+SOLUÇÃO NUMÉRICA DAS EQUAÇÕES DE EULER 3D COMPRESSÍVEIS EM 
+
+AMBIENTE DE COMPUTAÇÃO PARALELA DE MEMÓRIA DISTRIBUÍDA 
+
+ATRAVÉS DE UMA FORMULAÇÃO ESTABILIZADA DE ELEMENTOS FINITOS  
+ 
+
+Anderson de Lima Mendonça 
+
+ 
+TESE  SUBMETIDA  AO  CORPO  DOCENTE  DO  INSTITUTO  ALBERTO  LUIZ 
+COIMBRA DE PÓS-GRADUAÇÃO E PESQUISA DE ENGENHARIA (COPPE) DA 
+UNIVERSIDADE  FEDERAL  DO  RIO  DE  JANEIRO  COMO  PARTE  DOS 
+REQUISITOS NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE DOUTOR EM 
+CIÊNCIAS EM ENGENHARIA CIVIL. 
+ 
+Examinada por: 
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+________________________________________________ 
+
+Prof. Alvaro Luiz Gayoso de Azeredo Coutinho, D.Sc. 
+
+________________________________________________ 
+
+Prof. Luiz Landau, D.Sc. 
+
+________________________________________________ 
+
+Prof. José Luis Drummond Alves, D.Sc. 
+
+________________________________________________ 
+
+Dr. Norberto Mangiavacchi, Ph.D. 
+
+________________________________________________ 
+
+Prof. José da Rocha Miranda Pontes, Ph.D. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+RIO DE JANEIRO, RJ - BRASIL 
+
+AGOSTO DE 2013
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+Mendonça, Anderson de Lima 
+
+Solução  Numérica  das  Equações  de  Euler  3D 
+Compressíveis  em  Ambiente  de  Computação  Paralela  de 
+Memória  Distribuída  através  de  uma  Formulação 
+Estabilizada  de  Elementos  Finitos  /  Anderson  de  Lima 
+Mendonça. – Rio de Janeiro: UFRJ/COPPE, 2013. 
+
+X, 132 p.: il.; 29,7 cm. 
+Orientador: Alvaro Luiz Gayoso de Azeredo Coutinho 
+Tese  (doutorado)  –  UFRJ/  COPPE/  Programa  de 
+
+Engenharia Civil, 2013. 
+
+Referências Bibliográficas: p. 116-123. 
+1.  Solução  Numérica  das  Equações  de  Euler  3D 
+Compressíveis. 2. Formulação Estabilizada de Elementos 
+Finitos.  3.  Computação  em  Ambiente  Paralelo  de 
+Memória Distribuída. I. Coutinho, Alvaro Luiz Gayoso de 
+Azeredo.  II.  Universidade  Federal  do  Rio  de  Janeiro, 
+COPPE, Programa de Engenharia Civil. III. Título. 
+
+ 
+
+ 
+ 
+ 
+
+ 
+
+iii 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+À minha esposa Márcia Cristina 
+Aos meus filhos Anderson e Vinícius 
+
+iv 
+
+ 
+
+Agradecimentos 
+
+Primeiramente  agradeço  a  Deus  por  ter  me  conduzido  nessa  jornada.  Deus  sempre 
+iluminou  o  meu  caminhou  e  me  deu  forças  para  que  eu  pudesse  superar  esse  grande 
+desafio. 
+ 
+Ao  Prof.  Alvaro  Luiz  Gayoso  de  Azeredo  Coutinho,  amigo  e  orientador,  por  sua 
+dedicação, paciência, confiança e incentivo ao longo de todo o desenvolvimento desse 
+trabalho de pesquisa. 
+ 
+Aos  Professores  Luiz  Landau  e  José  Luis  Drummond  Alves  pela  constante 
+prestatividade durante toda realização desse trabalho. 
+ 
+À  ANP  (Agência  Nacional  de  Petróleo)  pelo  apoio  financeiro  através  da  bolsa  de 
+doutorado, indispensável à realização dessa pesquisa. 
+ 
+Ao  amigo  Renato  Nascimento  Elias  pelas  longas  e  valiosas  discussões  que  muito 
+contribuíram para a realização desse trabalho de pesquisa. 
+ 
+de  Alto  Desempenho 
+Ao  Núcleo 
+(NACAD/COPPE/UFRJ) e ao Laboratório de Métodos Computacionais em Engenharia 
+(LAMCE/COPPE/UFRJ) pelo apoio computacional. 
+ 
+Aos amigos da COPPE/UFRJ, José Camata e Adriano Côrtes, que sempre me apoiaram. 
+ 
+Aos amigos de Mangaratiba, Fábio e Luciene, que sempre me incentivaram. 
+ 
+Um  agradecimento  todo  especial  a  minha  maravilhosa  esposa  Márcia  Cristina.  Nos 
+momentos  mais  difíceis  ela  sempre  esteve  ao  meu  lado  oferecendo  apoio,  carinho, 
+atenção e  motivação,  ingredientes que  me  ajudaram a  seguir  em  frente.  Durante  toda 
+duração  do  curso  ela  abriu  mão  de  muita  coisa  para  ficar  ao  meu  lado,  sempre  me 
+
+em  Computação 
+
+de  Atendimento 
+
+ 
+
+v 
+
+apoiando e me incentivando. Por isso, tenho de agradecer a Deus por Ele ter colocado 
+essa pessoa tão especial na minha vida. 
+
+ 
+
+vi 
+
+Resumo  da  Tese  apresentada  à  COPPE/UFRJ  como  parte  dos  requisitos  necessários 
+para a obtenção do grau de Doutor em Ciências (D.Sc.) 
+ 
+ 
+
+SOLUÇÃO NUMÉRICA DAS EQUAÇÕES DE EULER 3D COMPRESSÍVEIS EM 
+
+AMBIENTE DE COMPUTAÇÃO PARALELA DE MEMÓRIA DISTRIBUÍDA 
+
+ATRAVÉS DE UMA FORMULAÇÃO ESTABILIZADA DE ELEMENTOS FINITOS 
+ 
+
+Anderson de Lima Mendonça 
+
+ 
+
+Agosto/2013 
+
+ 
+
+Orientador: Alvaro Luiz Gayoso de Azeredo Coutinho 
+ 
+Programa: Engenharia Civil 
+ 
+
+Esse trabalho apresenta a solução numérica em ambiente de computação paralela 
+das  equações  de  Euler  3D  compressíveis.  Essas  equações  regem  o  escoamento  de 
+fluidos  compressíveis  não  viscosos  e  apresentam  grande  aplicação  na  indústria  de 
+petróleo. O presente trabalho foi desenvolvido com ênfase nesse tipo de aplicação onde 
+é possível simular a sobrepressão proveniente de uma explosão acidental ocorrida em 
+plataformas  de  petróleo  e  aplicar  esses  resultados  em  estudos  de  análise  de  risco.  A 
+solução  numérica  foi  obtida  através  de  uma  formulação  estabilizada  de  elementos 
+finitos  do tipo  SUPG  acrescida  de  um  operador  de  captura  de choque.  Foram  usados 
+diferentes operadores de captura de choque. O desenvolvimento computacional ocorreu 
+sobre  o  EdgeCFD,  que  é  um  software  de  CFD  desenvolvido  e  mantido  pelo 
+NACAD/UFRJ.  O  EdgeCFD  é  um  software  de  elementos  finitos  construído  em 
+ambiente de computação paralela (paralelismo de memória distribuída, compartilhada e 
+híbrida), código escrito em Fortran 90 e utiliza estrutura de dados baseada nas arestas 
+dos  elementos  para  armazenar  as  matrizes  oriundas  da  discretização  das  equações. 
+Foram utilizados problemas clássicos para avaliar a qualidade das soluções numéricas e 
+a robustez do código. 
+
+ 
+
+vii 
+
+Abstract  of  Thesis  presented  to  COPPE/UFRJ  as  a  partial  fulfillment  of  the 
+requirements for the degree of Doctor of Science (D.Sc.) 
+ 
+ 
+
+NUMERICAL SOLUTION OF 3D COMPRESSIBLE EULER EQUATIONS IN 
+
+PARALLEL ENVIRONMENT OF DISTRIBUTED MEMORY THROUGH 
+
+STABILIZED FINITE ELEMENT FORMULATION 
+
+ 
+
+Anderson de Lima Mendonça 
+
+ 
+
+August/2013 
+
+ 
+
+Advisor: Alvaro Luiz Gayoso de Azeredo Coutinho 
+ 
+Department: Civil Engineering 
+ 
+
+This work presents a numerical solution of 3D compressible Euler equations in a 
+parallel framework. These equations, governing compressible inviscid fluid flow have 
+application in the oil industry. This work is developed with emphasis in this application, 
+where it is possible to simulate the overpressure arising from accidental explosions in 
+oil platforms. The simulation results can be used in the risk analysis of the platforms. 
+The  numerical  solution  has  been  obtained  through  a  stabilized  finite  element 
+formulation  (SUPG-type)  plus  a  shock  capturing  operator.  Different  shock  capturing 
+operators have been used. The development of the computational code has been done in 
+the in-house software EdgeCFD, which is a CFD software developed and maintained by 
+NACAD/UFRJ.  EdgeCFD  is  a  finite  element  software  that  works  in  parallel 
+environments  (distributed  memory,  shared  memory  and  hybrid),  it  was  written  in 
+Fortran 90 and uses edge based scheme to store the matrix generated by discretization. 
+Benchmarks problems are used to assess the quality of the numerical solutions and the 
+robustness of the code. 
+ 
+
+ 
+
+viii 
+
+Sumário 
+
+Capítulo 1 ................................................................................................. 1 
+
+Introdução ................................................................................................ 1 
+
+1.1  Considerações Iniciais ................................................................................. 1 
+
+1.2  Objetivos do Trabalho................................................................................. 6 
+
+1.3  Organização do Texto.................................................................................. 7 
+
+Capítulo 2 ................................................................................................. 9 
+
+Formulação Matemática.......................................................................... 9 
+
+2.1  Equações Governantes ................................................................................ 9 
+
+2.2  Condições de Contorno e Condições Iniciais............................................ 12 
+
+2.3  Adimensionalização das Equações Governantes...................................... 13 
+
+2.4  Classificação de Escoamentos Compressíveis........................................... 15 
+
+Capítulo 3 ............................................................................................... 17 
+
+Formulação Numérica ........................................................................... 17 
+
+3.1  Formulação Estabilizada de Elementos Finitos........................................ 17 
+3.1.1  Operador de Captura de Choque δ91................................................ 20 
+3.1.2  Operador de Captura de Choque CAU ............................................. 21 
+Parâmetros de Estabilização KIRK1................................................. 23 
+3.1.3 
+Parâmetros de Estabilização KIRK2................................................. 23 
+3.1.4 
+3.1.5 
+Parâmetros de Estabilização YZβ1................................................... 23 
+Parâmetros de Estabilização YZβ2................................................... 25 
+3.1.6 
+
+3.2 
+
+Integração no Tempo................................................................................. 26 
+
+Capítulo 4 ............................................................................................... 30 
+
+ 
+
+ix 
+
+Técnicas Computacionais ...................................................................... 30 
+
+4.1 
+
+Implementação do Código Computacional............................................... 30 
+
+4.2  Solução dos Sistemas Lineares.................................................................. 31 
+
+4.3  Estrutura de Dados por Aresta................................................................. 33 
+
+4.4  Produto Matriz-Vetor por Aresta............................................................. 40 
+
+4.5  Computação Paralela ................................................................................ 42 
+
+Capítulo 5 ............................................................................................... 47 
+
+Resultados............................................................................................... 47 
+
+5.1  Verificação e Validação (V&V)................................................................. 48 
+
+5.2  Casos de Teste 1D...................................................................................... 49 
+5.2.1  Descrição do Tubo de Choque.......................................................... 50 
+5.2.2  Tubo de Choque de Sod ................................................................... 53 
+5.2.3  Tubo de Choque de Lax-Harden....................................................... 61 
+
+5.3  Casos de Teste 2D...................................................................................... 68 
+5.3.1  Choque Oblíquo............................................................................... 68 
+5.3.2  Choque Refletido ............................................................................. 75 
+5.3.3  Túnel de Vento com um Degrau a Mach 3 ....................................... 82 
+
+5.4  Caso de Aplicação 3D ................................................................................ 90 
+5.4.1  Explosão em uma Plataforma Semi-Submersível.............................. 91 
+
+Conclusões ............................................................................................ 111 
+
+Considerações Finais......................................................................................... 111 
+
+Trabalhos Futuros............................................................................................. 114 
+
+Referências Bibliográficas ................................................................... 116 
+
+Apêndice A............................................................................................ 124 
+
+ 
+
+ 
+
+x 
+
+CAPÍTULO 1 
+
+INTRODUÇÃO 
+
+1.1  Considerações Iniciais 
+
+Nos  últimos  anos  a  Fluidodinâmica  Computacional  (CFD  da  sigla  em  inglês, 
+Computational Fluid Dynamics) tem se desenvolvido bastante. Atualmente as técnicas 
+de  CFD  têm  sido  aplicadas  em  diversas  áreas  da  engenharia.  Com  o  avanço  da 
+computação,  principalmente a  computação paralela, a  área de  CFD se  torna cada  vez 
+mais  presente  no  dia-a-dia  das  empresas  de  engenharia,  pois  atualmente  é  possível 
+resolver problemas de grande porte, os quais no passado não apresentavam viabilidade 
+de solução em função da falta de recursos computacionais daquela época. A solução de 
+problemas cada vez mais robustos gera soluções com confiabilidade cada vez maior e 
+faz  com  que  CFD  se  torne  uma  ferramenta  importante  na  tomada  de  decisões  no 
+ambiente corporativo. 
+
+Basicamente,  a  mecânica  dos  fluidos  é  subdividida  em  duas  áreas  principais, 
+escoamentos incompressíveis e escoamentos compressíveis. Os líquidos são geralmente 
+modelados  como  incompressíveis.  Enquanto  os  gases  são  quase  sempre  tratados  com 
+compressíveis,  embora  exista  uma  ampla  faixa  de  escoamentos  lentos  onde  os  gases 
+apresentam comportamento quase incompressível. Também existem aplicações práticas 
+onde  os  líquidos  apresentam  compressibilidade  considerável.  Portanto,  não  existe  um 
+limite  físico  totalmente  definido  separando  o  comportamento  dos  fluidos  em 
+incompressível ou compressível. Em CFD as dificuldades e os métodos numéricos que 
+surgem em cada uma das áreas (incompressível e compressível) são bastante específicos. 
+Por exemplo, em escoamento incompressível há uma preocupação com a condição de 
+Babusza-Brezzi,  enquanto  produção  de  entropia  e  captura  de  choque  são  as  maiores 
+
+ 
+
+1 
+
+preocupações no regime compressível. Diferentes conjuntos de variáveis são usados em 
+cada caso. No caso incompressível geralmente são usadas variáveis primitivas, enquanto 
+variáveis  conservativas  são  quase  sempre  consideradas  no  caso  compressível.  Do 
+mesmo  modo,  é  comum  usar  diferentes  ordens  de  interpolação  em  escoamentos 
+incompressíveis,  enquanto  no  caso  compressível  interpolações  de  mesma  ordem  são 
+quase  uma  regra.  As  estratégias  numéricas  adotadas  para  resolver  os  sistemas  de 
+equações também são diferentes. Em escoamentos incompressíveis soluções segregadas 
+são  amplamente  empregadas,  enquanto  em  escoamentos  compressíveis  soluções 
+totalmente  acopladas  são  as  mais  utilizadas  (HAUKE;  HUGHES,  1998).  Diante  das 
+diferenças apresentadas em relação ao regime de escoamento considerado fica evidente 
+a necessidade de se tratar cada tipo de escoamento de forma bem específica. 
+
+No  presente  trabalho  será  considerado  o  tratamento  numérico  de  escoamentos 
+compressíveis.  Será  apresentada  toda  a  estratégia  numérica  adotada  para  tratar  os 
+escoamentos  compressíveis,  assim  como  aplicações  práticas  para  esse  tipo  de 
+escoamento. 
+
+Em soluções numéricas de problemas predominantemente advectivos o método 
+de  diferenças  finitas  centradas  e  a  formulação  variacional  clássica  de  Galerkin  de 
+elementos  finitos  não  são  estáveis.  As  soluções  calculadas  utilizando  esses  métodos 
+apresentam  oscilações  espúrias.  Uma  alternativa  eficiente  para  o  controle  de  tais 
+instabilidades  são  os  métodos  upwind  de  elementos  finitos,  como  é  o  caso  da 
+formulação SUPG (Streamline-Upwind / Petrov-Galerkin) desenvolvida por BROOKS 
+e  HUGHES (1982). Essa formulação  prevê a utilização de funções peso descontínuas 
+que contém uma ponderação à montante na direção das linhas de fluxo, adicionando à 
+formulação clássica de Galerkin  um termo  que acrescenta estabilidade  na direção das 
+linhas  de  corrente  e  desta  maneira  controlam  as  oscilações  espúrias.  BROOKS  e 
+HUGHES  (1982)  desenvolveram  a  formulação  SUPG  para  a  equação  linear  de 
+advecção-difusão e a estenderam para escoamentos incompressíveis de fluidos viscosos 
+regidos pelas equações de Navier-Stokes. HUGHES e MALLET (1986a) apresentaram 
+uma  versão  da  formulação  SUPG  generalizada  para  sistema  advectivo-difusivo 
+multidimensional. 
+
+HUGHES e TEZDUYAR (1984) estenderam a formulação SUPG para resolver 
+as  equações  de  Euler  compressíveis,  onde  foram  tratados  escoamentos  com  grandes 
+
+ 
+
+2 
+
+velocidades  e  ocorrência  de  choques  usando  variáveis  conservativas.  Embora  os 
+resultados  tenham  sido  considerados  satisfatórios  nesse  trabalho,  oscilações  espúrias 
+ainda permaneceram na vizinhança de regiões de gradientes elevados. 
+
+BROOKS  e  HUGHES  (1982) e  HUGHES  e TEZDUYAR (1984)  utilizaram  a 
+formulação SUPG para  tratar  as oscilações  espúrias  ao longo  das linhas de correntes. 
+Entretanto, uma série de escoamentos, principalmente os escoamentos compressíveis a 
+altas  velocidades,  apresentam  variações  abruptas  em  suas  propriedades,  gerando 
+grandes descontinuidades. Essas descontinuidades, ou choque, não são bem capturadas 
+pela formulação SUPG, que é instável nessas regiões. Assim, foi necessário desenvolver 
+um novo esquema de estabilização para evitar as oscilações espúrias nas proximidades 
+das descontinuidades e, portanto, surgiram os operadores de captura de descontinuidade 
+(ou operadores de captura de choque). HUGHES et. al. (1986b) mostraram, para o caso 
+da equação  de advecção-difusão de um escalar, que era  possível  estabilizar  a solução 
+nas  proximidades  das  regiões  de  descontinuidade  adicionando  um  termo  referente  ao 
+operador de captura de descontinuidade à formulação SUPG. Essa estrutura composta 
+pela  formulação  SUPG  acrescida  de  um  termo  referente  ao  operador  de  captura  de 
+descontinuidade  tornou-se  uma  formulação  estabilizada  amplamente  utilizada  até  os 
+dias de hoje. Ao longo dos anos os parâmetros de estabilização SUPG e de captura de 
+descontinuidades  foram  sendo  cada  vez  mais  aperfeiçoados,  mas  a  estrutura  da 
+formulação praticamente não se alterou. 
+
+A formulação SUPG acrescida de um operador de captura de descontinuidade é 
+uma formulação estabilizada de elementos finitos amplamente aplicada em escoamentos 
+compressíveis e será objeto de estudo do presente trabalho. 
+
+Ao longo dos anos diversas formas de cálculo dos parâmetros de estabilização 
+SUPG e captura de descontinuidade foram desenvolvidas. Nesse contexto, HUGHES e 
+MALLET (1986b) apresentaram uma versão do operador de captura de descontinuidade 
+multidimensional.  SHAKIB 
+(1988)  acrescentou  um  operador  de  captura  de 
+descontinuidade a uma formulação espaço-tempo de Galerkin com Mínimos Quadrados 
+(GLS  –  Galerkin  Least  Squares)  em  variáveis  de  entropia.  GALEÃO  e  DUTRA  DO 
+CARMO  (1988)  desenvolveram,  para  a  equação  advecção-difusão  de  um  escalar,  o 
+operador  de  captura  de  descontinuidade  CAU  (Consistent  Approximate  Upwind) 
+proporcional ao resíduo no interior dos elementos.  LE BEAU e TEZDUYAR (1991) 
+
+ 
+
+3 
+
+acrescentaram um operador de captura de descontinuidades em variáveis conservativas 
+a uma formulação SUPG semidiscreta para resover as equações de Euler compressíveis. 
+Esse operador foi construído a partir de uma transformação inversa do operador dado 
+originalmente em variáveis de entropia em HUGHES e MALLET (1986). Esse mesmo 
+operador apresentado em LE BEAU e TEZDUYAR (1991) foi usado em ALIABADI e 
+TEZDUYAR (1995) para resolver as equações de Euler e Navier-Stokes compressíveis. 
+ALMEIDA  e  GALEÃO  (1996)  estenderam  a  estrutura  do  operador  CAU  para 
+escoamentos  compressíveis  regidos  pelas  equações  de  Euler  e  Navier-Stokes.  Os 
+primeiros  operadores  de  captura  de  descontinuidades  eram  desenvolvidos  geralmente 
+em variáveis de entropia. Muitas vezes usavam-se uma transformação de variáveis para 
+aplicá-los em formulações escritas em variáveis conservativas. LE BEAU et. al. (1993) 
+e  ALIABADI  et.  al.  (1993)  realizaram  comparações  entre  soluções  obtidas  com 
+variáveis de entropia e variáveis conservativas. Eles usaram a formulação estabilizada 
+SUPG  acrescida  de  um  operador  de  captura  de  descontinuidade  para  resolver  as 
+equações de Euler e Navier-Stokes compressíveis. As conclusões foram que as soluções 
+obtidas  a  partir  dos  dois  conjuntos  de  variáveis  (variáveis  de  entropia  e  variáveis 
+conservativas)  são  muito  próximas  e  algumas  vezes  quase  idênticas.  CATABRIGA  e 
+COUTINHO (2002) usaram um operador  de captura  de descontinuidade em variáveis 
+conservativas  que  foi  originalmente  dado  em  variáveis  de  entropia  em  ALMEIDA  e 
+GALEÃO (1996). TEZDUYAR e SENGA (2006, 2007) e TEZDUYAR et. al. (2006) 
+desenvolveram  o  operador  de  captura  de  descontinuidade  YZβ  em  variáveis 
+conservativas e o aplicaram em formulações SUPG  semidiscreta e espaço-tempo  para 
+resolver  problemas  de  escoamentos  compressíveis.  CATABRIGA  et.  al.  (2009) 
+apresentaram uma comparação de operadores de captura de descontinuidade na solução 
+das  equações  de  Euler  3D  e  mostraram  que  o  método  YZβ  apresenta  melhores 
+resultados quando comparado com métodos de captura de choque mais antigos. KIRK 
+et.  al.  (2010)  e  KIRK  (2010)  apresentaram  uma  formulação  de  elementos  finitos 
+semidiscreta  com  um  operador  de  captura  de  descontinuidade  similar  ao  operador 
+apresentado em CATABRIGA e COUTINHO (2002). Entretanto, KIRK et. al. (2010) e 
+KIRK  (2010)  desenvolveram  um  método  para  determinar  um  novo  parâmetro  de 
+estabilização  da 
+formulação  SUPG  dependente  do  operador  de  captura  de 
+descontinuidade.  HUGHES  et.  al.  (2010)  apresentaram  uma  perspectiva  histórica  dos 
+últimos  25  anos  de  pesquisas  realizados  pelos  autores  no  contexto  de  escoamentos 
+compressíveis.  
+
+ 
+
+4 
+
+O  presente  trabalho  apresenta  uma  comparação  de  operadores  de  captura  de 
+descontinuidades  implementados  em  um  ambiente  de  computação  paralela  utilizando 
+estrutura  de  dados  baseada  nas  arestas  dos  elementos.  Para  tal  foi  adotada  uma 
+formulação estabilizada de elementos finitos do tipo SUPG para resolver as equações de 
+Euler 3D compressíveis. Cabe ressaltar que é comum denominar a descrição matemática 
+de  escoamentos  compressíveis  invíscidos  simplesmente  como  equações  de  Euler 
+compressíveis. Portanto, daqui por diante será adotada essa denominação. 
+
+A  solução  numérica  desenvolvida  nesse  trabalho  poderá  ser  empregada  na 
+simulação  numérica  de  explosões  em  áreas  abertas  ou  pouco  congestionadas,  muito 
+comum na indústria de óleo e gás, onde é possível simular a sobrepressão proveniente 
+de  uma  explosão  acidental  ocorrida  em  plataformas  de  petróleo  e  aplicar  esses 
+resultados em estudos de análise de risco. 
+
+No presente trabalho adotou-se uma formulação de elementos finitos euleriana, 
+onde  a malha  de elementos permanece fixa durante a análise. Em função da  natureza 
+dos  escoamentos 
+regidos  pelas  equações  de  Euler  apresentarem  grandes 
+descontinuidades em somente algumas regiões (onda de choque), o uso de formulações 
+que utilizam malhas adaptativas que acompanham o deslocamento da onda de choque é 
+bastante  comum  para  resolver  essas  equações,  como,  por  exemplo,  em  SCOVAZZI 
+(2007) e NAZAROV (2010). No presente trabalho a malha de elementos é refinada em 
+todo  o  domínio  resultando,  geralmente,  em  malhas  consideradas  de  grande  porte.  A 
+estratégia de solução adotada no presente trabalho consiste em utilizar um paralelismo 
+por  troca  de  mensagens  em  conjunto  com  uma  estrutura  de  dados  por  aresta  para 
+alcançar uma solução eficiente e robusta que possa ser aplicada às equações de Euler 
+compressíveis. 
+
+A  estrutura  de  dados  por  arestas  tem  provado,  em  diversos  trabalhos,  sua 
+habilidade  em  acelerar  processos  iterativos  de  solução.  VENKATAKRISHNAN  e 
+MAVRIPLIS (1993) apresentaram testes de desempenho utilizando estruturas de dados 
+por  arestas  para  a  solução  implícita  das  equações  de  Navier-Stokes  compressíveis 
+utilizando  o  método  dos  volumes  finitos.  CATABRIGA  e  COUTINHO  (2002) 
+empregaram com sucesso esta estrutura de dados na solução das equações de Euler em 
+2D  utilizando  triângulos  lineares  e  formulação  SUPG  com  operador  de  captura  de 
+descontinuidade. COUTINHO et. al. (2001) aplicaram a estrutura de dados por arestas 
+
+ 
+
+5 
+
+em  elementos  tetraédricos  na  solução  de  problemas  de  plasticidade.  A  estrutura  de 
+dados por aresta apresentou resultados superiores, em relação ao tempo de computação 
+e  consumo  de  memória,  quando  comparada  com  a  estrutura  de  dados  por  elemento. 
+RIBEIRO  e  COUTINHO  (2005)  fizeram  uma  comparação  detalhada  dos  custos 
+computacionais  relacionados  aos  esquemas  de  estrutura  de  dados  por  aresta,  por 
+elemento  e  CSR  (Compressed  Sparse  Row)  e  a  conclusão  desse  trabalho  foi  que  a 
+estrutura de dados por aresta é computacionalmente mais eficiente para problemas com 
+mais de 3 de graus de liberdade por nó. ELIAS et. al. (2006b) empregaram a estrutura 
+de  dados  por  arestas  na  solução  paralela  das  equações  de  Navier-Stokes  para 
+escoamentos viscoplásticos utilizando uma formulação estabilizada de elementos finitos 
+do tipo SUPG/PSPG. 
+
+1.2  Objetivos do Trabalho 
+
+O  presente  trabalho  apresenta  uma  comparação  de  operadores  de  captura  de 
+descontinuidades  implementados  em  um  ambiente  de  computação  paralela  utilizando 
+estrutura  de  dados  por  arestas.  Para  tal  foi  adotada  uma  formulação  estabilizada  de 
+elementos finitos do tipo SUPG para resolver as equações de Euler 3D compressíveis.  
+
+Para atender aos objetivos do trabalho serão realizadas as seguintes etapas:  
+
+i) Na solução das equações de Euler será adotada uma formulação estabilizada 
+de elementos finitos do tipo SUPG acrescida de um operador de descontinuidade. Serão 
+analisados diferentes operadores de captura de descontinuidade. Além disso, diferentes 
+estruturas do parâmetro de estabilização SUPG também serão avaliadas. 
+
+ii)  Será  adotado  um  paralelismo  por  troca  de  mensagens  com  o  intuito  de 
+resolver  problemas  com  malhas  de  grande  porte  em  um  ambiente  de  memória 
+distribuída.  Problemas  regidos  pelas  equações  de  Euler  geralmente  exigem  malhas 
+grandes, portanto, a computação em paralelo torna-se imprescindível nesses casos. 
+
+iii)  Será  adotado  um  esquema  de  solução  baseado  em  estrutura  de  dados  por 
+aresta.  Este  tipo  de  estrutura  de  dados  tem  se  mostrado  bastante  eficiente,  conforme 
+resultados  apresentados  na  literatura.  O  produto  matriz-vetor,  intensamente  resolvido 
+durante a solução do problema, será realizado de forma a tirar proveito da estrutura de 
+
+ 
+
+6 
+
+dados  por  aresta,  fornecendo  assim  mais  eficiência  a  essa  operação  que  é  muito 
+dispendiosa do ponto de vista computacional. 
+
+iv) Ao final do trabalho pretende-se mostrar que a ferramenta computacional que 
+será desenvolvida poderá ser aplicada a problemas de projeto de engenharia. Pretende-
+se simular a explosão ocorrida por vazamento e acúmulo de gás em uma plataforma de 
+petróleo. 
+
+1.3  Organização do Texto 
+
+O restante desse trabalho está organizado conforme descrito a seguir. 
+
+O  Capítulo  2  apresentará  a  formulação  matemática  que  será  tratada  nesse 
+trabalho. Serão apresentadas as equações de Euler 3D compressíveis e suas respectivas 
+condições de contorno e condições iniciais. Nesse capítulo também serão apresentadas a 
+estratégia de adimensionalização das equações de Euler e a classificação dos regimes de 
+escoamentos compressíveis. 
+
+No Capítulo 3  será  apresentada a formulação estabilizada  de elementos finitos 
+usada no presente trabalho. Trata-se de uma formulação do tipo SUPG acrescida de um 
+operador  de  captura  de  descontinuidade.  Serão  mostrados  diferentes  operadores  de 
+captura  de  descontinuidade.  Esse capítulo  também apresentará  o  algoritmo  de  avanço 
+temporal adotado. 
+
+No  Capítulo  4  serão  apresentadas  as  técnicas  computacionais  usadas  nesse 
+trabalho. Serão apresentados o método iterativo de solução de sistemas lineares, o pré-
+condicionador  usado  para  acelerar  a  solução  iterativa  e  o  tipo  de  estrutura  de  dados 
+adotados.  Será  discutida  também  a  estratégia  usada  na  implementação  do  produto 
+matriz-vetor e as técnicas de computação paralela usadas. 
+
+O  Capítulo  5  apresentará  os  resultados  obtidos  no  presente  trabalho.  Nesse 
+capítulo  serão  usados  problemas  clássicos  para  verificar  a  qualidade  das  soluções 
+obtidas. Também será apresentado um problema de aplicação, onde será mostrada toda 
+a robustez computacional da ferramenta numérica desenvolvida nesse trabalho. 
+
+ 
+
+7 
+
+Por  fim  serão  apresentadas  as  Conclusões  do  trabalho.  Nesse  capítulo  serão 
+
+expostas as considerações finais e as sugestões de trabalhos futuros. 
+
+ 
+
+ 
+
+8 
+
+CAPÍTULO 2 
+
+FORMULAÇÃO MATEMÁTICA 
+
+2.1  Equações Governantes 
+
+As  equações  governantes  para  o  escoamento  de  fluidos  compressíveis  não 
+viscosos regidos pelas equações de Euler são apresentadas nesta seção de acordo com 
+HIRSH  (1992).  Tais  equações  são  provenientes  da  aplicação  dos  princípios  de 
+conservação  de massa, quantidade de movimento e energia que regem a mecânica do 
+contínuo. Maiores detalhes a respeito do desenvolvimento das equações de conservação 
+podem ser obtidos em HIRSH (1992). 
+
+As equações de Euler formam um sistema invíscido de equações de conservação 
+hiperbólicas, ou ainda, um conjunto acoplado de equações diferenciais não-lineares de 
+primeira ordem. As equações de Euler compressíveis podem ser entendidas como um 
+caso especial das equações de Navier-Stokes compressíveis onde o fluxo difusivo (ou 
+viscoso) e o vetor de termos fonte são considerados nulos. 
+
+As equações de Euler podem ser escritas de forma compacta, ou conservativa, 
+
+em um domínio espaço-tempo 
+
+
+
+[0,
+
+]T
+
+, conforme equação 2.1: 
+
+U
+
+t
+
+
+
+
+F
+
+x
+x
+
+
+
+
+F
+
+y
+y
+
+
+
+
+F
+
+z
+z
+
+
+
+
+0
+
+, em     
+
+ 
+
+t
+
+
+
+0,
+T
+
+, 
+
+(2.1) 
+
+3R   e 
+
+t
+
+]
+
+onde 
+de Euler Fi para i=x,y,z, são dados, respectivamente, nas expressões 2.2 e 2.3: 
+
+. O vetor de variáveis conservativas U e os vetores dos fluxos 
+
+T
+[0,
+
+ 
+
+9 
+
+U
+
+
+
+U
+
+
+U
+
+U
+
+
+U
+
+
+U
+
+
+1
+
+2
+
+3
+
+4
+
+5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x
+
+y
+
+1
+u
+u
+u
+e
+T
+
+z
+
+, 
+
+
+
+
+
+
+
+
+
+
+(2.2) 
+
+ 
+
+F
+i
+
+
+
+u
+
+i
+
+
+
+
+
+
+
+
+
+
+x
+
+y
+
+1
+u
+u
+u
+e
+T
+
+z
+
+
+
+p
+
+
+
+
+
+
+
+
+
+
+1
+
+
+
+
+xi
+
+
+yi
+
+
+
+zi
+
+u
+
+i
+
+
+
+
+
+
+
+
+
+
+i
+,   para  
+
+
+
+x y z
+,
+,
+
+. 
+
+(2.3) 
+
+Nas equações  2.2 e 2.3, ρ  é a massa específica do fluido, u =  [ux,  uy,  uz]T é a 
+velocidade,  Te  é  a  densidade  total  de  energia  por  unidade  de  massa,  p  é  a  pressão 
+ij  é o delta de Kronecker. Na equação 2.2, as variáveis U1, U2, U3, U4, 
+termodinâmica e 
+U5 são as variáveis conservativas enquanto as variáveis ρ, ux, uy, uz, e são as variáveis 
+primitivas. 
+
+A  densidade  total  de  energia  por  unidade  de  massa  Te  é  dada  pela  soma  da 
+energia interna por unidade de massa ei e da energia cinética do escoamento por unidade 
+de massa, conforme expresso na equação 2.4: 
+
+e
+T
+
+e 
+
+i
+
+2
+
+u
+2
+
+, 
+
+(2.4) 
+
+onde o segundo termo da lado direito da equação 2.4 é a energia cinética por unidade de 
+massa. 
+
+Considerando  que  o  fluido  segue  a  lei  dos  gases  ideais,  a  relação  constitutiva 
+
+para gases perfeitos é dada pelas equações 2.5, 2.6 e 2.7: 
+
+e
+i
+
+c 
+, 
+
+v
+
+ 
+
+ 
+
+p
+
+
+
+
+e
+ 
+i
+
+1
+
+
+
+(2.5) 
+
+(2.6) 
+
+ 
+
+ 
+
+10 
+
+
+
+c
+p
+c
+v
+
+, 
+
+(2.7) 
+
+onde  cv  é  o  calor  específico  a  volume  constante,  cp  é  o  calor  específico  a  pressão 
+constante,   é a temperatura absoluta e  é a razão entre cp e cv. 
+
+Duas relações úteis serão apresentadas a seguir. Trata-se da velocidade acústica 
+(ou  velocidade  do  som)  e  do  número  de  Mach,  que  serão  usadas  na  seção  2.4  na 
+classificação do regime de escoamento compressível. Considerando o fluido como um 
+gás ideal tem-se: 
+
+p
+
+onde  c  é a velocidade acústica do gás ideal. 
+
+c 
+
+
+
+, 
+
+(2.8) 
+
+O número  de Mach é dado pela  relação entre a velocidade  do escoamento e a 
+
+velocidade acústica conforme equação 2.9. 
+
+M
+
+
+
+u
+c
+
+, 
+
+(2.9) 
+
+onde  M  é o número de Mach. 
+
+As  equações  de  Euler apresentadas  na  forma compacta na equação 2.1 podem 
+
+ser escritas na forma quasi-linear conforme equação 2.10: 
+
+U
+
+t
+
+
+
+
+A
+
+x
+
+U
+
+x
+
+
+
+
+A
+
+y
+
+U
+
+y
+
+
+
+
+A
+
+z
+
+U
+
+z
+
+
+
+
+0
+
+, 
+
+(2.10) 
+
+onde a matrizes Jacobianas dos fluxos de Euler Ax, Ay, e Az são matrizes de ordem 5 5  
+definidas pela equação 2.11: 
+
+A
+
+x
+
+=
+
+F
+
+x
+U
+
+
+,
+
+A
+
+=
+
+y
+
+F
+
+y
+U
+
+
+,
+
+A
+
+=
+
+z
+
+F
+
+z
+U
+
+
+. 
+
+(2.11) 
+
+A forma geral das matrizes Jacobianas dos fluxos de Euler é dada pela equação 
+
+A
+
+i
+
+=
+
+
+
+
+
+F
+
+i
+U
+
+
+1
+
+F
+
+i
+U
+
+
+2
+
+F
+
+i
+U
+
+
+3
+
+F
+
+i
+U
+
+
+4
+
+2.12: 
+
+ 
+
+F
+
+
+i
+
+U 
+
+
+
+5
+
+5 5
+
+11 
+
+i
+, para 
+
+
+
+x y z
+,
+,
+
+, 
+
+(2.12) 
+
+onde 
+
+F  é um vetor de 5 posições para
+
+i
+jU
+
+
+j 
+
+1,2,3, 4,5
+
+. 
+
+O  desenvolvimento  das  matrizes  Jacobianas  dos  fluxos  de  Euler  em  variáveis 
+conservativas  pode  ser  encontrado  em  HUGHES  e  TEZDUYAR  (1984)  e  em 
+ALIABADI e TEZDUYAR (1995). 
+
+2.2  Condições de Contorno e Condições Iniciais 
+
+Considerando  o  domínio  espaço-tempo 
+
+ de  definição  do  problema, 
+com  contorno    as  equações  de  Euler  admitem  condições  de  contorno  e  condições 
+iniciais conforme descrito a seguir. 
+
+
+
+[0,
+
+]T
+
+ 
+
+Condições de contorno de Dirichlet, dadas pela equação 2.13: 
+
+BU G  , em     
+
+ 
+
+t
+
+
+
+0,
+T
+
+. 
+
+ 
+
+Condições iniciais, dadas na equação 2.14: 
+
+
+U x
+
+
+,0 
+
+ 
+
+U x ,  em    . 
+
+ 
+
+0
+
+(2.13) 
+
+(2.14) 
+
+Nas  equações  acima  B  é  um  operador  de  condição  de contorno  e G  e 
+
+ 
+0U x  
+são  funções  dadas.  Nas  condições  de  contorno  de  Dirichlet  são  especificados  valores 
+para  as  variáveis  conservativas  U  no  contorno    
+.  Nas  condições  iniciais 
+
+ 
+
+t
+
+
+
+0,
+T
+
+são especificados valores para as variáveis conservativas  U  no domínio    no instante 
+t  . As condições de contorno e iniciais apresentadas aqui estão de acordo com LE 
+BEAU e TEZDUYAR (1991). 
+
+0
+
+Nas equações de Euler o termo viscoso presente nas equações de Navier-Stokes 
+não  é considerado e, por  isso, a componente tangencial da velocidade do escoamento 
+nas  superfícies  impermeáveis  não  é  nula.  Essa  situação  caracteriza  a  condição  de 
+
+ 
+
+12 
+
+escorregamento, onde o fluido em contato com uma superfície impermeável não sofre 
+atrito viscoso. 
+
+A  componente  perpendicular  da  velocidade  do  escoamento  nas  superfícies 
+impermeáveis é nula para garantir a condição de parede impermeável. Portanto, em cada 
+ponto da superfície a solução das equações de Euler deve satisfazer a seguinte condição: 
+
+(2.15) 
+onde  u  é  vetor  velocidade  do  escoamento  e n  é  o  vetor  unitário  normal  à  superfície 
+impermeável. 
+
+u n
+
+ 
+
+0
+
+, 
+
+As  condições  de  escorregamento  e  de  parede  impermeável  devem  ser 
+
+consideradas na solução das equações de Euler sempre que necessário. 
+
+2.3  Adimensionalização das Equações Governantes 
+
+A  adimensionalização  das  equações  que  governam  um  escoamento  reduz  os 
+problemas  relacionados  aos  erros  de  truncamento  computacionais  e  permite  que  um 
+mesmo  problema  numérico  represente  vários  problemas  físicos.  Esse  procedimento 
+baseia-se no conceito de similaridade de escoamentos, onde a solução do problema de 
+escoamento  resolvido  em  diferentes  escalas  é  equivalente.  Portanto,  o  problema  de 
+escoamento  pode  ser  resolvido  em  escalas  menores  (escalas  de  protótipos)  ou  em 
+escalas  maiores  (escala  real)  e  suas  respectivas  soluções  serão  equivalentes.  Dois 
+problemas  possuem  soluções  equivalentes  quando  suas  respectivas  soluções  são 
+proporcionais, sendo a constante de proporcionalidade entre as soluções dependente das 
+propriedades do escoamento na região não perturbada. 
+
+A similaridade de escoamentos é garantida quando a similaridade geométrica e a 
+similaridade  dinâmica  estão  simultaneamente  presentes  no  problema.  Na similaridade 
+geométrica as proporções nas dimensões do modelo geométrico precisam permanecer as 
+mesmas tanto nas escalas menores quanto nas escalas maiores. A similaridade dinâmica 
+é  garantida  quando  um  parâmetro  de  similaridade  é  mantido  constante  nas  diferentes 
+escalas.  Em  escoamentos  viscosos  geralmente  usa-se  o  número  de  Reynolds  como 
+parâmetro de similaridade. Dessa forma, o escoamento nas escalas menores e maiores 
+precisam necessariamente apresentar o mesmo número de Reynolds para que se tenha a 
+
+ 
+
+13 
+
+similaridade dinâmica. No caso de escoamentos não viscosos de velocidades elevadas 
+usa-se o número de Mach para garantir a similaridade dinâmica dos escoamentos. 
+
+Nesta  seção  serão  apresentados  os  procedimentos  de  adimensionalização  das 
+equações  de  Euler.  Os  procedimentos  adotados  nessa  seção  estão  descritos  em 
+ANDERSON JR. (1990) e são apresentados a seguir. 
+
+O tempo adimensional  *t  é dado por: 
+
+*
+
+t
+
+
+
+t
+
+c
+
+l
+0
+
+, 
+
+(2.16) 
+
+onde  c  é  a  velocidade  do  som  no  escoamento  não  perturbado  e  0l  é  o  comprimento 
+característico do escoamento. 
+
+O comprimento adimensional  *l  é dado por: 
+
+*
+
+l
+
+
+
+, 
+
+l
+l
+0
+
+onde l  é o comprimento com dimensão. 
+
+A massa específica adimensional 
+
+*  é dada por: 
+
+
+
+* 
+
+
+
+, 
+
+onde   é a massa específica no escoamento não perturbado. 
+
+As componentes de velocidade adimensionais 
+
+xu , 
+*
+
+yu , e 
+*
+
+zu  são dadas por: 
+*
+
+u
+
+*
+x
+
+
+
+u
+x
+c
+
+, 
+
+u
+
+*
+y
+
+
+
+u
+y
+c
+
+, 
+
+u
+
+*
+z
+
+
+
+u
+z
+c
+
+, 
+
+onde  c  é a velocidade do som no escoamento não perturbado. 
+
+A pressão adimensional 
+
+*p  é dada por: 
+
+*
+
+p
+
+
+
+p
+c 
+2
+
+,  
+
+ 
+
+14 
+
+(2.17) 
+
+(2.18) 
+
+(2.19) 
+
+(2.20) 
+
+onde    e  c  são,  respectivamente,  a  massa  específica  e  a  velocidade  do  som  no 
+escoamento não perturbado. 
+
+O  número  de  Mach  no  escoamento  não  perturbado  M   é  dado  pela  equação 
+
+2.21. 
+
+M
+
+
+
+
+
+
+
+u
+c
+
+
+, 
+
+(2.21) 
+
+onde  u  é a velocidade no escoamento não perturbado. 
+
+2.4  Classificação de Escoamentos Compressíveis 
+
+Os  escoamentos  compressíveis  podem  ser  classificados  em  quatro  diferentes 
+regimes (ANDERSON JR., 1990). Essa classificação baseia-se no número de Mach no 
+escoamento  não  perturbado  M   e  no  número  de  Mach  local  M .  O  número  de  Mach 
+local  M  representa  os  valores  de  Mach  em  cada  ponto  do  escoamento  como,  por 
+exemplo, no escoamento ao redor de um aerofólio, onde o valor de Mach pode variar ao 
+longo do aerofólio. 
+
+A classificação dos escoamentos compressíveis são os seguintes: 
+
+1  -  Escoamentos  subsônicos:  são  escoamentos  em  que  o  número  de  Mach  é 
+sempre  menor  do  que  1  ( M  <  1)  em  qualquer  região.  Geralmente  esse  tipo  de 
+escoamento ocorre para  M  < 0,8. 
+
+2 - Escoamentos transônicos: são escoamentos que ocorrem para 0,8 <  M   < 1,2. 
+Nesses escoamentos algumas regiões podem apresentar  M  > 1 enquanto outras regiões 
+podem apresentar  M  < 1. 
+
+3 - Escoamentos supersônicos: são escoamentos em que o número de Mach local 
+é  sempre  maior  do  que  1  ( M  >  1)  em  qualquer  região.  Geralmente  esse  tipo  de 
+escoamento ocorre para  M   > 1,2. 
+
+4 - Escoamentos hipersônicos: são escoamentos que ocorrem para  M   > 5. 
+
+ 
+
+15 
+
+Os  problemas  tratados  nesse  trabalho  são  geralmente  classificados  como 
+escoamentos supersônicos. Cabe ressaltar que os escoamentos hipersônicos apresentam 
+variações  extremas  de  temperatura,  pressão  e  massa  específica,  o  que  acrescenta 
+enormes dificuldades para se alcançar a solução nesse regime de escoamento. Entretanto, 
+o tratamento de escoamentos hipersônicos está fora do escopo desse trabalho. 
+
+ 
+
+ 
+
+ 
+
+16 
+
+CAPÍTULO 3 
+
+FORMULAÇÃO NUMÉRICA 
+
+3.1  Formulação Estabilizada de Elementos Finitos 
+
+Nesta seção é apresentada a formulação estabilizada de elementos finitos para as 
+equações  de  Euler  em  variáveis  conservativas.  Trata-se  de  uma  formulação  semi-
+discreta  que  se  caracteriza  por  uma  discretização  de  elementos  finitos  no  espaço 
+resultando em um conjunto de equações diferenciais ordinárias dependentes do tempo. 
+A  discretização  temporal  do  problema  será  realizada  através  do  algoritmo  preditor-
+multicorretor apresentado na seção 3.2. 
+
+Por questões de simplificação, inicialmente a equação 2.10 será escrita na forma 
+
+de um operador dado pela equação 3.1: 
+
+L
+
+
+
+U
+
+
+
+
+
+U
+
+t
+
+
+
+
+A
+
+x
+
+U
+
+x
+
+
+
+
+A
+
+y
+
+U
+
+y
+
+
+
+
+A
+
+z
+
+U
+
+z
+
+
+
+
+0
+
+. 
+
+(3.1) 
+
+ 
+
+O método dos elementos finitos consiste em subdividir o domínio do problema 
+
+  em  um  conjunto  de  subdomínios 
+
+e  (elementos  finitos)  tal  que, 
+
+  
+
+e
+
+ e 
+
+nel
+
+e
+1
+
+   
+
+
+
+e
+j
+
+e
+i
+
+i
+ para 
+
+
+
+j
+
+, onde  nel  representa o número total de elementos da malha e o 
+
+superíndice  e indica o e-ésimo elemento da malha.  
+
+O  espaço  das  funções  teste 
+
+hS  e  o  espaço  das  funções  peso 
+
+hV  são  dados, 
+
+respectivamente, por: 
+
+ 
+
+17 
+
+h
+
+S
+
+
+
+
+
+h
+
+U U
+
+h
+
+
+
+H
+h
+1
+
+
+
+
+
+
+
+
+
+
+
+
+
+5
+
+h
+
+,
+
+U
+
+P
+1
+
+
+
+
+
+
+e
+
+
+
+5
+
+
+
+
+
+
+e
+
+
+
+,
+
+h
+
+BU G
+
+ em 
+
+
+
+
+ 
+
+
+
+h
+
+V W W H
+
+
+
+
+
+h
+
+h
+
+
+
+
+h
+1
+
+5
+
+
+
+
+
+
+
+
+
+
+h
+
+,
+
+W
+
+e
+
+
+
+P
+1
+
+
+
+
+
+
+e
+
+
+
+5
+
+
+
+
+
+
+,
+
+BW 
+
+h
+
+0 em 
+
+
+
+
+ 
+
+(3.2) 
+
+(3.3) 
+
+ 
+
+ 
+
+onde o superíndice  h  indica a discretização de elementos finitos, 
+
+P   representa o 
+1
+
+e
+
+
+
+
+
+conjunto  de  polinômios  de  grau  1  em 
+
+H
+h  
+1
+
+1 H
+
+H
+1
+
+e ,   representa  o  contorno  de   , 
+ representa  um  espaço  de  dimensões  finitas  sobre  o  domínio    e 
+
+
+ é o espaço das funções cuja a primeira derivada é quadrado integrável, isto é, 
+
+
+
+
+
+
+
+
+
+se: 
+
+ 
+
+f
+
+ 
+
+H
+1
+
+2
+
+
+
+
+
+
+
+
+
+df
+dx
+
+
+
+
+
+d
+
+
+
+ < 
+
+
+
+. 
+
+(3.4) 
+
+A  formulação  de  elementos  finitos  para  as  equações  de  Euler  consiste  em 
+
+encontrar 
+
+h
+
+hU
+
+S  tal que 
+
+ 
+
+
+
+ 
+
+h
+
+W V , tem-se: 
+
+h
+
+h
+
+W
+
+
+
+L
+
+
+
+h
+
+U
+
+
+
+
+
+
+
+d
+
+ 
+
+nel
+
+ 
+
+1
+ 
+
+e
+
+e
+
+e
+
+
+h
+
+
+
+
+
+W
+
+x
+
+i
+
+ 
+
+ 
+ 
+
+T
+
+
+τ A
+e
+
+h
+k
+
+
+
+h
+
+W
+
+
+
+x
+
+k
+
+
+
+
+
+
+
+L
+
+
+
+h
+
+U
+
+
+
+d
+
+e
+
+ 
+
+d
+
+e
+
+ 
+
+0
+
+, 
+
+(3.5) 
+
+nel
+
+
+
+e
+1
+
+U
+
+x
+
+i
+
+
+h
+
+e
+
+
+
+
+
+
+onde 
+
+hU  é a função incógnita discreta e 
+
+hW  é a função peso discreta.  
+
+A  matriz  de  estabilização  SUPG 
+
+eτ  é  definida  como  diagonal.  Essa  forma  de 
+estabilização foi inicialmente proposta em HUGHES a TEZDUYAR (1984). Mais tarde 
+ocorreram  alguns  aperfeiçoamentos  na  formulação,  por  exemplo,  em  LE  BEAU  e 
+TEZDUYAR (1991) e em ALIABADI  e TEZDUYAR  (1995). A primeira  integral  na 
+equação  3.5  representa  o  termo  de  Galerkin,  o  primeiro  somatórios  de  integrais 
+representa o termo de estabilização SUPG e o segundo somatório de integrais representa 
+o termo de estabilização referente ao operador de captura de descontinuidades. 
+
+ 
+
+18 
+
+O  parâmetro  de  estabilização    apresentado  a  seguir  é  o  definido  em 
+ALIABADI e TEZDUYAR (1995). Já o parâmetro de estabilização  será definido em 
+cada subseção que se seguirá. 
+
+A matriz de estabilização SUPG 
+
+τ
+I
+e  
+5 5
+
+ depende do parâmetro  dada pelas 
+
+equações 3.6, 3.7, 3.8 e 3.9: 
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+max 0,
+
+
+t
+
+
+
+
+
+
+
+CFL
+2
+e
+
+CFL
+1 2
+e
+
+
+
+
+ 
+
+
+
+
+a
+
+
+t
+
+
+
+2
+
+3 1 2
+
+
+
+
+eCFL
+
+
+a
+
+, 
+
+
+
+ 
+
+a
+
+e
+
+h
+u β
+ 
+
+, 
+
+
+
+2
+
+
+
+e
+
+c
+
+ 
+
+
+e
+
+u β
+ 
+
+, 
+
+2
+
+
+
+ec
+
+, 
+
+
+
+
+
+
+
+(3.6) 
+
+(3.7) 
+
+(3.8) 
+
+(3.9) 
+
+onde 
+
+ec  é  a  velocidade  acústica  do  elemento, 
+
+correspondentes  aos  termos  dependentes  do  tempo, 
+
+t  é  o  parâmetro  de  estabilização 
+a  é  o  parâmetro  de  estabilização 
+correspondentes  aos  termos  advectivos  e    é  o  parâmetro  de  estabilização  para 
+descontar os efeitos do termo de captura de descontinuidade. O parâmetro  controla a 
+estabilidade e a precisão do algoritmo da marcha temporal e será discutido na seção 3.2. 
+
+O número de Courant-Fredrichs-Lewy 
+
+eCFL  é definido pela equação 3.10: 
+
+CFL
+e
+
+
+
+
+
+e
+
+c
+
+
+
+t
+
+
+, 
+
+u β
+ 
+h
+e
+
+(3.10) 
+
+e β  é um vetor arbitrário normalizado dado pela equação 3.11: 
+
+ 
+
+19 
+
+β
+
+
+
+
+
+
+U
+U
+
+2
+*
+2
+* 2
+
+, 
+
+(3.11) 
+
+sendo 
+
+  
+*
+
+2
+
+ ou 
+
+*
+
+1
+
+0
+
+   Ã  conforme descrito em ALIABADI e TEZDUYAR (1995). 
+0Ã  é definida em HUGHES et. 
+
+     . A matriz 
+*
+
+2
+
+No presente trabalho adotou-se 
+
+1
+
+al. (1986a). 
+
+O  parâmetro 
+
+eh  apresentado  na  equação  3.10  é  o  tamanho  característico  de 
+eh  
+
+elemento.  No  presente  trabalho  adotou-se  o  tamanho  característico  do  elemento 
+como sendo a raiz cúbica do volume do elemento 
+
+eV , dado pela equação 3.12. 
+
+onde 
+
+eV  é o volume do elemento. 
+
+e
+
+h
+
+3
+
+V
+
+e
+
+, 
+
+A velocidade acústica do elemento 
+
+ec  é dada pela equação 3.13: 
+
+e
+
+c
+
+
+
+
+ 
+
+
+
+1
+
+e
+i
+
+
+
+
+
+
+
+
+2
+
+u
+2
+
+
+
+
+
+
+. 
+
+(3.12) 
+
+(3.13) 
+
+A equação 3.13 é equivalente à equação 2.8 apresentada anteriormente. 
+
+Alternativas para o cálculo da matriz de estabilização SUPG 
+
+eτ  são apresentadas 
+em  CATABRIGA  et.  al.  (2005)  e  CATABRIGA  et.  al.  (2006),  onde  a  matriz 
+eτ  é 
+calculada a partir dos coeficientes das matrizes de elementos e das arestas. No presente 
+eτ  dado em ALIABADI e TEZDUYAR (1995), equação 
+trabalho, entretanto, adotou-se 
+3.6. 
+
+Foram avaliados diferentes métodos para o cálculo do parâmetro do operador de 
+
+captura de descontinuidade , apresentados a seguir. 
+
+3.1.1  Operador de Captura de Choque δ91 
+
+O  parâmetro  do  operador  de  captura  de  descontinuidade 
+
+91  foi  definido  em 
+variáveis  conservativas  em  LE  BEAU  e  TEZDUYAR  (1991).  Esse  operador  foi 
+construído a partir de  uma transformação inversa do operador  dado originalmente em 
+91  em variáveis 
+variáveis de entropia em HUGHES e MALLET (1986b). O parâmetro 
+
+ 
+
+20 
+
+conservativas é dado na equação 3.14. Daqui por diante esse método será identificado 
+somente como 
+
+91 . 
+
+A
+
+h
+x
+
+U
+h
+
+x
+
+
+
+
+
+91
+
+
+
+ 
+
+A
+
+h
+y
+
+U
+h
+
+y
+
+U
+h
+
+
+
+
+
+A
+
+h
+z
+
+h
+
+U
+
+z
+
+
+Ã
+
+1
+
+0
+
+. 
+
+Ã
+
+1
+
+0
+
+(3.14) 
+
+3.1.2  Operador de Captura de Choque CAU 
+
+O  parâmetro  do  operador  de  captura  de  descontinuidade  CAU  é  definido  em 
+ALMEIDA  e  GALEÃO  (1996).  Esse  parâmetro  foi  inicialmente  desenvolvido  em 
+variáveis de entropia em ALMEIDA e GALEÃO (1996) e posteriormente foi escrito em 
+variáveis  conservativas  em  CATABRIGA  e  COUTINHO  (2002)  conforme  equação 
+3.15. Daqui por diante esse método será identificado somente como CAU. 
+
+ 
+
+
+
+CAU
+
+onde: 
+
+ 
+U
+
+t
+
+
+ 
+
+
+
+
+h
+
+
+
+A
+
+h
+x
+
+U
+h
+
+x
+
+
+
+
+A
+
+h
+y
+
+U
+h
+
+y
+
+
+
+
+A
+
+h
+z
+
+h
+
+U
+
+z
+
+
+h
+
+U
+
+
+
+1
+
+Ã
+
+
+0
+
+Ã
+
+1
+
+0
+
+se 
+
+h
+
+U
+
+
+
+
+
+0
+
+, 
+
+Ã
+
+1
+
+0
+
+(3.15) 
+
+0                                                              se 
+
+h
+
+U
+
+
+
+
+
+0 
+
+Ã
+
+1
+
+0
+
+(3.16) 
+
+(3.17) 
+
+h
+
+U
+
+
+
+1
+
+Ã
+
+
+0
+
+
+U Ã
+ 
+
+
+
+
+h
+
+ 1
+U . 
+1
+
+
+0
+
+
+h
+
+2
+
+A equação 3.16 pode ser escrita conforme a seguir: 
+
+h
+
+U
+
+
+
+
+
+Ã
+
+1
+
+0
+
+
+
+1
+x
+
+
+U
+h
+
+x
+
+
+
+
+
+
+1
+y
+
+
+U
+h
+
+y
+
+
+
+
+
+
+1
+z
+
+
+h
+
+U
+
+z
+
+
+                   
+
+                   
+
+
+
+2
+x
+
+
+
+
+3
+x
+
+
+U
+h
+
+x
+
+
+U
+h
+
+x
+
+
+
+
+
+
+
+
+2
+y
+
+
+U
+h
+
+y
+
+
+
+
+
+
+2
+z
+
+
+h
+
+U
+
+z
+
+
+
+
+3
+y
+
+
+U
+h
+
+y
+
+
+
+
+
+
+3
+z
+
+
+h
+
+U
+
+z
+
+
+
+
+Ã
+
+1
+
+0
+
+
+
+. 
+
+1
+
+Ã
+
+
+0
+
+Ã
+
+1
+
+0
+
+ 
+
+ 
+
+21 
+
+O  termo 
+
+hU
+
+é  o  gradiente  generalizado  de 
+
+hU  em  relação  ao  sistema  de 
+
+coordenadas locais dos elementos ξ  dado pela equação 3.18: 
+
+
+
+1
+x
+
+
+
+2
+x
+
+
+
+3
+x
+
+
+h
+
+
+
+U
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+U
+h
+
+x
+
+U
+h
+
+x
+
+U
+h
+
+x
+
+
+
+
+
+
+
+
+
+
+1
+y
+
+
+
+2
+y
+
+
+
+3
+y
+
+
+U
+h
+
+y
+
+U
+h
+
+y
+
+U
+h
+
+y
+
+
+
+
+
+
+
+
+
+
+1
+z
+
+
+
+2
+z
+
+
+
+3
+z
+
+
+h
+
+h
+
+U
+
+z
+
+U
+
+z
+
+U
+h
+
+z
+
+
+
+
+
+
+
+
+
+
+
+
+
+. 
+
+(3.18) 
+
+ξ
+Os componentes  
+x
+
+
+ são os termos da matriz 
+
+1J  dada pela equação 3.19. 
+
+1
+
+
+J
+
+
+
+
+
+ 
+
+
+
+
+
+
+  
+
+1
+1
+z
+x
+
+
+
+  
+
+2
+2
+z
+x
+
+
+  
+
+
+3
+3
+z
+x
+
+
+
+
+1
+y
+
+
+2
+y
+
+
+3
+y
+
+
+
+
+
+
+
+
+
+
+
+
+. 
+
+O termo 
+
+hU
+
+ é obtido a partir da equação 3.20 (COSTA et. al., 2005). 
+
+h
+
+
+
+ξU
+
+ 
+
+J U . 
+1
+
+
+h
+
+(3.19) 
+
+(3.20) 
+
+O  termo 
+
+hU é  o  gradiente de 
+
+hU em  relação as coordenadas  globais e é  dado 
+
+pela equação 3.21. 
+
+h
+
+U
+h
+
+
+
+
+
+x
+
+U
+h
+
+
+U
+  
+
+y
+
+
+
+U
+h
+
+
+
+z
+
+
+. 
+
+(3.21) 
+
+1
+
+
+
+0Ã
+
+O termo 
+
+ é definido  como a  norma  de um vetor induzida pela matriz 
+
+0Ã  
+1
+(norma  de  energia).  Por  exemplo,  a  norma  do  vetor  de  velocidade  u  induzida  pela 
+matriz 
+
+0Ã  é dada pela equação 3.22. 
+
+1
+
+Ãu
+
+1
+
+
+0
+
+
+
+
+
+ 1
+u Ã u . 
+
+1
+
+0
+
+
+
+2
+
+(3.22) 
+
+ 
+
+22 
+
+3.1.3 
+
+Parâmetros de Estabilização KIRK1 
+Em  KIRK  et.  al.  (2010)  o  parâmetro  de  estabilização  SUPG  é  calculado 
+
+conforme equação 3.23. 
+
+ 
+
+ 
+
+
+
+kirk
+
+1
+
+=
+
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+c
+
+
+
+u
+h
+SUPG
+
+e
+
+
+
+2
+
+
+  
+
+
+
+
+CAU
+
+4
+
+h
+2
+SUPG
+
+
+
+1
+2
+
+2
+
+
+
+
+
+
+
+
+
+
+
+, 
+
+                   
+
+nen
+
+
+
+
+
+=2
+
+h
+SUPG
+
+ u
+ˆ
+a
+1
+
+                   
+
+
+
+N
+
+a
+
+1
+
+
+
+
+
+
+, 
+
+ˆ 
+u
+
+u
+u
+
+, 
+
+(3.23) 
+
+(3.24) 
+
+(3.25) 
+
+onde  nen  é  o  número  de  nós  por  elemento  e 
+
+aN  são  as  funções  de  forma  usadas  na 
+formulação  de  elementos  finitos.  Daqui  por  diante  esse  método  será  identificado 
+somente como KIRK1. 
+
+3.1.4 
+
+Parâmetros de Estabilização KIRK2 
+Em KIRK (2010) o  parâmetro de estabilização  SUPG  é  calculado conforme 
+
+equação 3.26. 
+
+
+
+kirk
+
+2
+
+=
+
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+c
+
+
+
+u
+h
+SUPG
+
+e
+
+
+
+2
+
+
+2
+
+  
+t
+
+
+
+
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+2
+
+, 
+
+(3.26) 
+
+                   
+
+onde 
+t  é o passo de tempo da análise e os demais parâmetros estão apresentados nas 
+equações  3.24  e  3.25.  Nesse  método  o  parâmetro  do  operador  de  captura  de 
+descontinuidade  usado  é  o 
+CAU .  Daqui  por  diante  esse  método  será  identificado 
+somente como KIRK2. 
+
+3.1.5 
+
+Parâmetros de Estabilização YZβ1 
+TEZDUYAR  e  SENGA  (2007)  apresentam  o  método  YZβ  para  o  cálculo  do 
+parâmetro  de  estabilização  SUPG  e  para  o  parâmetro  do  operador  de  captura  de 
+descontinuidade . TEZDUYAR e SENGA (2007) apresentam diferentes formas para 
+
+ 
+
+23 
+
+o  cálculo  dos  parâmetros  de  estabilização.  No  presente  trabalho  adotaram-se  os 
+procedimentos  de  cálculo  dos  parâmetros  de  estabilização  do  método  YZβ  conforme 
+mostrado a seguir. 
+
+O parâmetro de estabilização SUPG para o método YZβ é definido na equação 
+
+3.27 
+
+
+
+
+SUPG
+
+
+
+UGN
+
+
+
+
+
+
+
+
+1
+
+
+
+
+SUGN
+1
+
+1
+
+
+
+
+SUGN
+
+r
+
+
+
+2
+
+
+
+r
+
+
+
+
+
+1
+r
+
+
+
+
+
+
+, 
+
+(3.27) 
+
+onde 
+
+  é  dado  em  função  do  vetor  unitário  j ,  da  velocidade  acústica 
+SUGN
+
+ec ,  das 
+
+funções de forma 
+
+aN  e do passo de tempo 
+
+t , conforme equações  3.28, 3.29 e 3.30. É 
+
+adotado 
+
+r   (TEZDUYAR; SENGA, 2007). 
+
+2
+
+
+
+SUGN
+1
+
+
+
+
+
+
+
+ 
+
+ 
+
+nen
+
+e
+
+ j
+
+c
+
+
+
+a
+
+1
+
+
+
+
+N
+
+a
+
+ 
+
+u
+
+N
+
+1
+
+
+, 
+
+
+
+
+
+
+
+a
+
+j
+
+
+
+
+
+
+
+
+
+, 
+
+
+
+SUGN
+
+2
+
+
+
+O parâmetro do operador de captura de descontinuidade 
+
+t
+
+2
+
+. 
+
+definido na equação 3.31: 
+
+
+
+shoc
+1
+
+
+
+shoc
+
+2
+u , 
+
+
+
+shoc
+
+
+
+h
+shoc
+u
+2
+
+
+
+
+
+
+h
+shoc
+
+
+
+h
+JGN
+
+
+
+2
+
+
+
+
+
+h
+shoc
+
+
+
+
+
+ref
+
+
+
+
+
+
+
+, 
+
+nen
+
+ j
+
+a
+
+1
+
+
+
+
+N
+
+a
+
+1
+
+
+. 
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+24 
+
+(3.28) 
+
+(3.29) 
+
+(3.30) 
+
+shoc do método YZβ é 
+
+1
+
+(3.31) 
+
+(3.32) 
+
+(3.33) 
+
+Na  equação  3.32 
+
+ref  é  a  massa  específica  de  referência,  o  parâmetro   é 
+2  para choques acentuados. Para levar 
+shoc  é  calculado  a  partir  da 
+
+adotado como 
+
+1  para choques suaves e 
+
+em  consideração  os  dois  valores  de   o  parâmetro 
+expressão: 
+
+
+
+shoc
+
+
+
+1
+2
+
+
+
+
+
+
+shoc
+
+
+
+
+
+
+
+
+1
+
+
+
+shoc
+
+
+
+
+
+
+
+
+. 
+
+2
+
+(3.34) 
+
+Daqui por diante o método YZβ apresentado em TEZDUYAR e SENGA (2007) 
+
+e descrito nesta seção será identificado somente por YZβ1. 
+
+3.1.6 
+
+Parâmetros de Estabilização YZβ2 
+Outra  possibilidade  de  estabilização  é  considerar  o  mesmo  parâmetro  de 
+estabilização definido na equação 3.27 e calcular o parâmetro do operador de captura de 
+choque 
+shoc  conforme apresentado nas equações 3.35, 3.36, 3.37 e 3.38. Neste caso a 
+
+2
+
+matriz  Y  é uma matriz diagonal construída a partir dos valores de referência de  U . 
+
+
+
+shoc
+
+2
+
+
+
+1
+
+
+Y Z
+
+
+
+
+
+
+sdn
+
+
+
+i
+
+1
+
+
+1
+
+
+Y
+
+
+2 1
+
+
+U
+
+x
+
+i
+
+2
+
+
+
+
+
+
+1
+
+
+
+1
+
+
+Y U
+
+h
+
+h
+shoc
+2
+
+
+
+
+
+
+
+
+
+
+, 
+
+Y
+
+
+U
+
+
+1
+0
+0
+0
+0
+
+
+
+
+
+ 
+
+
+
+
+
+
+ref
+
+
+U
+
+ref
+
+
+U
+
+0
+
+2
+0
+0
+0
+
+0
+0
+
+3
+0
+0
+
+ref
+
+
+U
+
+0
+0
+0
+
+4
+0
+
+0
+0
+0
+0
+
+
+5
+
+ref
+
+
+
+
+
+
+
+
+
+
+
+
+, 
+
+ref
+
+
+U
+
+ 
+
+ 
+
+(3.35) 
+
+(3.36) 
+
+(3.37) 
+
+Z
+
+
+
+U
+
+t
+
+
+
+
+A
+
+h
+i
+
+h
+
+. 
+
+U
+
+x
+
+i
+1  para  choques  suaves  e 
+
+O  parâmetro   é  adotado  como 
+
+2  para 
+choques  acentuados.  Para  levar  em  consideração  os  dois  valores  de   o  parâmetro 
+shoc  é calculado a partir da expressão 3.38: 
+
+2
+
+
+
+shoc
+
+2
+
+
+
+
+
+1
+2
+
+
+
+
+shoc
+
+
+
+
+
+
+1
+
+
+
+
+
+shoc
+
+
+
+
+
+
+2
+
+
+
+. 
+
+(3.38) 
+
+ 
+
+25 
+
+Daqui por diante o método YZβ apresentado em TEZDUYAR e SENGA (2007) 
+
+e descrito nesta seção será identificado somente por YZβ2. 
+
+3.2  Integração no Tempo 
+
+A  discretização  espacial  da  equação  3.5  leva  a  um  conjunto  de  equações 
+
+diferenciais não-lineares ordinárias dependentes do tempo dadas pela equação 3.39. 
+
+(3.39) 
+onde  v  é o vetor de valores nodais de  U , a  é a derivada temporal de  v ,  M  é a matriz 
+de massa generalizada e C  é a matriz de convecção generalizada. 
+
+Ma Cv
+
+0 , 
+
+
+
+
+
+As matrizes globais  M  e C  são  obtidas pelo assembly (ou montagem) a partir 
+ec ,  respectivamente.  A  operação  de  assembly  é 
+das  matrizes  de  elementos 
+definida em HUGHES (1987). As matrizes de elementos são definidas pelas equações 
+3.40 e 3.41. 
+
+em  e 
+
+e
+
+m m m  
+e
+pg
+
+
+
+
+
+e
+g
+
+ 
+
+e
+
+c
+
+
+
+c
+
+e
+ag
+
+
+
+c
+
+e
+apg
+
+
+
+c , 
+e
+cc
+
+(3.40) 
+
+(3.41) 
+
+onde 
+
+Galerkin, 
+
+Galerkin e 
+
+e
+
+pgm  é a matriz de massa de Petrov-
+gm  é a matriz de massa consistente Galerkin, 
+agc  é matriz de convecção de Galerkin, 
+pgc
+e
+e
+ccc  é a matriz de captura de choque. 
+e
+
+ é matriz de convecção de Petrov-
+
+e
+
+Nesse  trabalho  emprega-se  o  elemento  tetraedro  linear  com  um  ponto  de 
+integração para se obter as matrizes de elementos. Uma descrição detalhada da obtenção 
+de  cada  matriz  de  elemento  para  as  equações  de  Euler  3D  é  fornecida  em  SESINI 
+(2006).  SOUZA  (2008)  também  descreve  detalhes  da  discretização  das  equações  de 
+Euler. 
+
+A  operação  de  assembly  para  montagem  das  matrizes  M  e  C ,  descrita  em 
+
+HUGHES (1987), é representada conforme as equações 3.42 e 3.43. 
+
+ 
+
+26 
+
+ 
+
+M
+
+C
+
+nel
+
+
+mA
+
+e
+1
+
+e
+
+
+
+ 
+
+nel
+
+
+cA , 
+
+
+
+e
+
+e
+1
+
+(3.42) 
+
+(3.43) 
+
+onde nel é o número de elementos e o superíndice e indica contribuição das matrizes de 
+elemento. 
+
+No presente trabalho as matrizes globais nunca são explicitamente montadas e, 
+além  disso,  elas  são  computadas  a  partir  da  contribuição  das  arestas  dos  elementos. 
+Portanto,  as  equações  3.42  e  3.43  representam  apenas  um  esquema  didático  para 
+facilitar o entendimento desse assunto. 
+
+Para  solucionar  o  sistema  3.39  é  usado  o  algoritmo  preditor-multicorretor 
+apresentado  em  ALIABADI  e  TEZDUYAR  (1995),  conforme  Quadro  3.1.  Neste 
+algoritmo o sistema 3.39 é discretizado por diferenças finitas, n é o contador de passos 
+de tempo, i é o contador das multicorreções (iterações não-lineares), maxit é o número 
+ são 
+máximo de iterações não-lineares do algoritmo, as aproximações para 
+
+ e 
+
+
+nta
+
+
+ntv
+
+representadas por 
+
+na  e 
+tempo inicial da análise, 
+
+nv , respectivamente, e 
+ft
+
+t  é o passo de tempo da análise,  0t  é o 
+ é o tempo final da análise e  a  é o incremento da derivada 
+
+temporal. O algoritmo preditor-multicorretor pode ser resumido conforme apresentado 
+no Quadro 3.1. 
+
+Dependendo da escolha de 
+
+*M  pode-se ter um algoritmo implícito ou explicito 
+conforme descrito em ALIABADI e TEZDUYAR (1995). No presente trabalho adota-
+se 
+
+*M  conforme equação 3.44. 
+
+*
+
+C , 
+
+M M
+
+t
+ 
+
+(3.44) 
+*M  não-simétrica.  O 
+que  leva  a  um  algoritmo  implícito,  resultando  em  uma  matriz 
+parâmetro  controla a estabilidade e a precisão do algoritmo da marcha temporal. No 
+ o  que  leva  a  um  método  de  segunda  ordem  de 
+presente  trabalho  adota-se 
+precisão  em  relação  ao  tamanho do  passo de tempo 
+t  chamado de  regra trapezoidal 
+(ALIABADI; TEZDUYAR, 1995). 
+
+0,5
+
+ 
+
+27 
+
+ 
+
+Quadro 3.1 – Algoritmo preditor-multicorretor. 
+nv . 
+
+na  e 
+
+Dados: 
+
+Para 
+
+n t  até 
+
+0
+
+n t    Fazer 
+
+f
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Passo 1: 
+
+v
+
+i
+n
+
+ 
+1
+
+v
+
+n
+
+
+1
+ 
+
+nt
+
+
+
+
+
+a                       (Predição ou Inicialização) 
+
+Passo 2: 
+
+a
+
+i
+n 
+1
+
+0
+
+                                              (Predição ou Inicialização) 
+
+Para  
+
+i   até  i  maxit   ou até Convergir   Fazer 
+
+0
+
+ 
+
+ 
+
+ 
+
+ 
+
+Passo 3: Calcule: 
+
+r
+
+ 
+
+
+
+Ma
+
+i
+n
+
+1
+
+
+
+
+Cv
+
+i
+n
+
+1
+
+
+
+
+ 
+
+Passo 4: Resolve: 
+
+* M a r  
+
+Passo 5: 
+
+v
+
+i
+1
+
+n
+1
+
+
+
+
+v
+
+i
+n
+
+1
+
+
+t
+  
+
+a               (Correção ou Atualização) 
+
+Passo 6: 
+
+a
+
+i
+1
+
+n
+1
+
+
+a
+i
+
+n
+1
+
+ 
+
+a                      (Correção ou Atualização) 
+
+Fim do laço em i  
+
+Fim do laço em  n  
+
+O  critério  de  parada  para  as  iterações  não-lineares  do  algoritmo  preditor 
+, onde tol  é uma tolerância fornecida.  O 
+multicorretor é alcançado quando 
+número  de  iterações  não-lineares  pode  ser  reduzido  usando  uma  tolerância  para 
+controlar o resíduo linear. Assim o Passo 4 do algoritmo preditor multicorretor, dado no 
+Quadro 3.1, é substituída por: 
+
+r
+i
+
+tol
+
+r
+ 
+
+
+
+0
+
+i
+
+i
+
+*
+
+ 
+
+
+
+r , 
+
+i
+
+M a r
+ 
+
+(3.45) 
+levando  a  solução  não-linear  a  um  método  do  tipo  Newton  Inexato  (ELIAS  et.  al., 
+2006a). A tolerância  é o  termo forçante e sua  estrutura é discutida em detalhes em 
+KELLY (1995). Neste trabalho adotaram-se os mesmos procedimentos de ELIAS et. al. 
+(2006a) para o cálculo do termo forçante . A utilização do termo forçante  conduz a 
+
+ 
+
+28 
+
+um  algoritmo  não-linear  adaptativo.  Portanto,  a  idéia  do  método  de  Newton  Inexato, 
+também  conhecido  por  Newton  Truncado,  é  minimizar  o  esforço  empregado  para  a 
+solução dos sistemas de equações lineares quando a direção de busca não-linear estiver 
+longe da solução de equilíbrio. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+29 
+
+CAPÍTULO 4 
+
+TÉCNICAS COMPUTACIONAIS 
+
+Neste capítulo serão listadas as técnicas e os métodos computacionais que foram 
+utilizados nesse trabalho durante a implementação da solução numérica das equações de 
+Euler. 
+
+4.1  Implementação do Código Computacional 
+
+A solução numérica das equações de Euler desenvolvida no presente trabalho foi 
+realizada  sobre  a  estrutura  computacional  do  EdgeCFD,  que  é  um  software  de 
+elementos finitos desenvolvido e mantido pelo NACAD/UFRJ.  
+
+O  EdgeCFD 
+
+foi  desenvolvido 
+
+inicialmente  para 
+
+tratar  escoamentos 
+incompressíveis  e  viscosos  (ELIAS,  2007).  Desde  então  o  EdgeCFD  vem  recebendo 
+diversas  contribuições,  como  por  exemplo,  PARAIZO  (2009)  e  GONÇALVES  JR. 
+(2011). Além disso, diversos trabalhos têm sido conduzidos com o EdgeCFD, tais como, 
+ELIAS et. al. (2006a, 2006b, 2011) e ALVES et. al. (2012). Esse software é escrito em 
+Fortran  90,  usa estrutura de dados por aresta e trabalha em ambientes de computação 
+paralela de memória distribuída, compartilhada e híbrida. 
+
+O  fluxo  de  uma  simulação  computacional  pode  ser  resumido  basicamente  em 
+três  etapas:  pré-processamento,  processamento  e  pós-processamento.  No  pré-
+processamento constrói-se o modelo geométrico e a malha discreta. No processamento é 
+realizada a solução do problema. No pós-processamento é realizada a visualização dos 
+resultados  obtidos.  Nesse  contexto,  o  EdgeCFD  é  usado  apenas  na  etapa  de 
+processamento de uma simulação computacional.  
+
+ 
+
+30 
+
+O EdgeCFD é composto por dois módulos, o EdgeCFD-Pre e o EdgeCFDSolver. 
+No  EdgeCFD-Pre  são  realizados  o  particionamento  do  domínio,  através  da  biblioteca 
+Metis  (KARYPIS;  KUMAR,  1998),  e  a  extração  de  dados,  através  da  biblioteca 
+EdgePack  (MARTINS  et.  al.,  2006).  O  EdgeCFDSolver  é  responsável  pelo 
+processamento da análise. 
+
+O  EdgeCFD  escreve  arquivos  de  resultados  que  podem  ser  pós-processados 
+diretamente  no  software  Paraview.  O  pré-processamento  do  EdgeCFD  pode  ser 
+realizado em qualquer software gerador de malhas. No presente trabalho será usado o 
+software ANSYS ICEM CFD para realizar o pré-processamento. Para esta finalidade foi 
+desenvolvido um programa computacional que transforma as informações de malha do 
+ANSYS ICEM CFD no formato do EdgeCFD. Detalhes desse programa computacional 
+estão apresentados no Apêndice A. 
+
+Todas  as  funcionalidades  computacionais  presentes  no  EdgeCFD  foram 
+adaptadas  e  estão  disponíveis  na  solução  das  equações  de  Euler  desenvolvida  no 
+presente  trabalho.  As  próximas  seções  desse  capítulo  farão  uma  abordagem  mais 
+detalhada das técnicas computacionais mais importantes presentes nesse trabalho. 
+
+4.2  Solução dos Sistemas Lineares 
+
+No  algoritmo  preditor-multicorretor,  apresentado  no  Quadro  3.1,  a  cada 
+* M a r , onde 
+multicorreção (ou iteração não-linear), é necessário resolver o sistema 
+*M  é uma matriz não-simétrica. O método utilizado para resolver o sistema 
+* M a r  
+foi o método iterativo GMRES (SAAD; SCHULTZ, 1986) com um pré-condicionador 
+do tipo bloco diagonal nodal (SHAKIB et. al., 1989). 
+
+O  método  GMRES  (Generalized  Minimum  RESidual)  é  um  método  iterativo 
+usado na solução de sistemas de equações que tem como objetivo minimizar a norma 
+residual do sistema. Considere o sistema de equações hipotético dado pela equação 4.1. 
+
+Ax b . 
+O resíduo do sistema 4.1 é dado por: 
+
+r Ax b . 
+
+
+
+
+
+(4.1) 
+
+(4.2) 
+
+ 
+
+31 
+
+No método GMRES a solução do sistema é obtida quando a norma do resíduo 
+Ax b , 
+
+0x  como a solução inicial do sistema 
+
+r  alcança uma tolerância. Considerando 
+
+uma solução aproximada irá apresentar a forma 
+Krylov.  O  método  GMRES  determina  z  tal  que  a  norma  do 
+r
+
+z  onde  z  é um vetor do espaço de 
+resíduo 
+b - A x + z  seja mínima. Esse procedimento se repete até que o valor da norma 
+
+0 x
+
+
+
+
+
+
+
+0
+
+do resíduo  r  alcance uma tolerância desejada. 
+
+De  maneira  simples  pode-se  dizer  que  o  GMRES  é  composto  por  dois  laços 
+iterativos. O laço externo, também chamado de ciclos GMRES, poderá ter um número 
+máximo de iterações igual a  max
+ é um valor adotado. O laço interno, também 
+chamado de iterações GMRES, terá sempre um número de iterações igual a  k  que é o 
+número de vetores de Krylov adotado. 
+
+, onde  max
+
+l
+
+l
+
+A utilização de pré-condicionadores acelera a taxa de convergência dos métodos 
+iterativos  (SAAD,  1996).  A  técnica  de  pré-condicionamento  baseia-se  na  idéia  de 
+transformar  o  sistema  de  equações  original  em  outro  sistema  que  seja  equivalente  ao 
+sistema original, ou seja, que possua a mesma solução do sistema original, porém com 
+um melhor condicionamento, o que aumenta a taxa de convergência do método iterativo.  
+
+Por  exemplo,  a  aplicação  da  técnica  de  pré-condicionamento  ao  sistema  4.1 
+
+conduz ao sistema: 
+
+M Ax M b . 
+1M  é uma aproximação da inversa de  A . 
+
+
+
+1
+
+
+1
+
+
+onde 
+
+(4.3) 
+
+A  escolha  de 
+
+1M  define  o  tipo  de  pré-condicionador  que  será  adotado.  Uma 
+
+discussão detalhada sobre esse tema pode ser encontrada em SAAD (1996). 
+
+Uma estratégia simples de pré-condicionamento é o pré-condicionador diagonal, 
+
+A e o operador  diag  extrai a diagonal principal de  A . O sistema pré-
+D
+
+diag
+
+
+
+onde 
+
+condicionado tem a seguinte forma: 
+
+1
+
+
+D Ax D b . 
+
+1
+
+
+(4.4) 
+
+ 
+
+32 
+
+No  presente  trabalho  foi  adotado  o  pré-condicionador  bloco  diagonal  nodal 
+
+A , 
+
+(SHAKIB  et.  al.,  1989).  Nesse  tipo  de  pré-condicionamento  tem-se 
+
+block
+
+B
+
+
+
+onde o operador block  extrai de  A  as matrizes bloco-diagonais nodais de ordem  m m , 
+onde  m  é  o  número  de  graus  de  liberdade  por  nó.  Para  as  equações  de  Euler 
+compressíveis em três dimensões 
+5m  . A Figura 4.1 mostra de forma esquemática a 
+estrutura da matriz  B . 
+
+B =  
+
+Figura 4.1 – Pré-condicionador bloco diagonal nodal. 
+
+ 
+
+ 
+
+No caso do pré-condicionador bloco diagonal nodal o sistema pré-condicionado 
+
+tem a seguinte forma: 
+
+1
+
+
+1
+
+
+B Ax B b . 
+
+(4.5) 
+O bloco-diagonal nodal representa uma técnica de pré-condicionamento de fácil 
+implementação,  com  custo  de  armazenamento  e  computacional  maior  que  no  pré-
+condicionador  diagonal,  porém  com  uma  maior  eficiência  na  aceleração  da  solução 
+iterativa de sistemas de equações. 
+
+4.3  Estrutura de Dados por Aresta 
+
+A matriz 
+
+*M , resolvida a cada multicorreção (ou iteração não-linear), conforme 
+Quadro  3.1,  é  a  matriz  global  do  problema.  Na  implementação  computacional  essa 
+matriz  pode  ser  armazenada  de  diferentes  formas.  Diversas  estratégias  podem  ser 
+utilizadas gerando códigos com diferentes tipos de estruturas de dados. As estruturas de 
+dados  por  elemento  e  por  aresta  são  alternativas  onde  não  é  necessário  realizar  a 
+*M , reduzindo consideravelmente o esforço computacional. 
+montagem da matriz global 
+Outras  vantagens  desses  tipos  de  estrutura  de  dados  podem  ser  encontradas  em 
+RIBEIRO e COUTINHO  (2005), onde os autores  fizeram  uma comparação detalhada 
+dos custos computacionais relacionados aos esquemas de estrutura de dados por aresta, 
+
+ 
+
+33 
+
+por elemento e CSR (Compressed Sparse Row) e a conclusão desse trabalho foi que a 
+estrutura de dados por aresta é computacionalmente mais eficiente, quando comparada 
+com os outros tipos de estruturas de dados, para problemas com mais de 3 de graus de 
+liberdade por nó. No presente trabalho a solução das equações de Euler 3D apresenta 5 
+graus de liberdade por nó, o que justifica a aplicação da estrutura de dados por aresta 
+nesse trabalho. 
+
+No presente trabalho utilizou-se estrutura de dados por aresta na implementação 
+computacional das equações de Euler. A partir das matrizes dos elementos oriundas da 
+formulação  estabilizada,  representadas  pelas  equações  3.42  e  3.43,  define-se  um 
+desmembramento  dos  coeficientes  dessas  matrizes  gerando  as  contribuições  de  cada 
+aresta. A mudança de estrutura de dados é feita considerando que os dados referentes à 
+malha de elementos já existam. As informações da malha são manipuladas de forma a 
+gerar  a  nova  estrutura  baseada  nas  arestas  dos  elementos.  Para  realizar  essa  tarefa 
+utilizou-se  a  biblioteca  EdgePack  (MARTINS  el.  al.,  2006).  Assim  as  matrizes 
+definidas nas equações 3.42 e 3.43 podem ser  escritas pelas contribuições das arestas 
+dos elementos conforme equações 4.6 e 4.7. 
+
+ 
+
+M
+
+C
+
+nedges
+
+
+mA
+
+s
+1
+
+s
+
+
+
+ 
+
+
+cA , 
+
+
+
+s
+
+nedges
+
+s
+1
+
+(4.6) 
+
+(4.7) 
+
+onde nedges é o número de arestas da malha e o superíndice s indica contribuição das 
+*M  é  formada  a  partir  da 
+matrizes  baseadas  nas  arestas.  Dessa  forma  a  matriz 
+contribuição  das  arestas  dos  elementos.  CATABRIGA  (2000),  MARTINS  (2001)  e 
+ELIAS  (2007)  descrevem  as  etapas  de  construção  das  matrizes  de  arestas,  conforme 
+apresentado a seguir. 
+
+Quando se adotam estruturas de dados do tipo elemento-por-elemento ou aresta-
+*M  nunca são explicitamente montadas. Nesses 
+por-aresta as matrizes globais  M , C  e 
+casos  apenas  as  matrizes  relativas  aos  elementos,  ou  às  arestas,  são  montadas  e 
+armazenadas. Como no presente trabalho adotou-se a estrutura de dados do tipo aresta-
+por-aresta, será feita uma descrição de tipo de estrutura de dados a partir desse ponto. 
+
+ 
+
+34 
+
+As  matrizes  oriundas  da  discretização  realizada  pelo  método  dos  elementos 
+finitos são matrizes com alto grau de esparsidade. Isto significa que a maior parte dos 
+coeficientes dessas matrizes são coeficientes nulos. No caso de elementos tetraédricos 
+com  funções  de  interpolação  lineares  existe  relação  entre  matrizes  esparsas,  grafos  e 
+malha (SAAD, 1996). A estrutura de dados por aresta tira proveito dessa relação. 
+
+A  Teoria  dos  Grafos  é  discutida  em  SAAD  (1996).  No  presente  trabalho  será 
+apresentada uma abordagem simplificada apenas para ilustrar a utilização de grafos no 
+contexto do método dos elementos finitos. Basicamente os grafos são formados por um 
+conjunto de vértices e um conjunto de arestas. Os grafos mais utilizados nesse tipo de 
+aplicação são: nodal e dual. Os vértices do grafo nodal correspondem aos nós da malha 
+e  as  arestas  do  grafo  correspondem  às  arestas  da  malha.  Os  vértices  do  grafo  dual 
+correspondem aos elementos das malhas e as arestas do grafo correspondem às arestas 
+comuns  dos  elementos  adjacentes.  A  figura  4.2  mostra  a  relação  entre  a  malha  de 
+triângulos, a matriz de coeficientes, o grafo nodal e o grafo dual. Pode-se observar que 
+na  figura  4.2  a  numeração  dos  elementos  foi  substituída  por  letras  para  facilitar  a 
+compreensão.  Na  figuras  4.2b  o  símbolo    representa  os  coeficientes  não  nulos  da 
+matriz. 
+
+ 
+
+(a) Malha 
+
+ 
+ 
+
+ 
+
+(c) Grafo nodal 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(b) Matriz 
+
+ 
+ 
+ 
+
+ 
+ 
+
+(d) Grafo dual 
+
+Figura 4.2 – Relação entre malha, matriz e grafos. 
+
+ 
+
+ 
+
+35 
+
+ 
+
+As malhas usadas nos métodos de elementos finitos geralmente são organizadas 
+em  arranjos  denominados  incidências  ou  conectividades.  No  presente  trabalho  foram 
+adotados os seguintes arranjos: 
+
+IEN(nnoel,nel): conectividade dos nós que formam o elemento, 
+
+IEDGE(2,nare) conectividade dos nós que formam a aresta, 
+
+IEEI(nae,nel): conectividade das arestas que formam o elemento, 
+
+onde  nnoel  é  o  número  de  nós  por  elemento, nel  é  o  número  de elementos,  nare  é  o 
+número de arestas e nae é o número de arestas por elemento. A figura 4.3 será usada 
+para exemplificar a construção desses arranjos. Nessa figura a numeração dos nós está 
+em azul, a numeração dos elementos está em vermelho e a numeração das arestas está 
+em preto. 
+
+Figura 4.3 – Construção das incidências de elemento e aresta 
+
+ 
+
+ 
+
+Os arranjos de incidências para malha apresentada na figuras 4.3 são: 
+
+ 
+
+IEN: 
+1  2  3 
+ie  
+ien(1,ie):  1  5  4 
+ien(2,ie):  4  2  2 
+ien(3,ie):  3  4  3 
+
+ 
+
+ 
+
+ 
+
+36 
+
+IEDGE: 
+1  2  3  4  5  6  7 
+ia  
+iedge(1,ia):  1  3  4  2  3  4  4 
+iedge(2,ia):  4  1  3  5  2  5  2 
+
+ 
+
+IEEI: 
+ie  
+ieei(1,ie) 
+ieei(2,ie) 
+ieei(3,ie) 
+
+ 
+
+1 
+1 
+3 
+2 
+
+2 
+6 
+-4 
+-7 
+
+3 
+7 
+-5 
+-3 
+
+No  arranjo  IEEI foi convencionado  atribuir  valor  negativo  para as  arestas  que 
+não possuem incidência nodal correspondente às incidências nodais dos elementos. Por 
+exemplo,  a  aresta  4  de  acordo  com  o  arranjo  IEDGE  é  formada  pelos  nós  2-5.  Essa 
+mesma  aresta  é  formada  pelos  nós  5-2  no  arranjo  IEN.  Portanto,  à  aresta  4  foi 
+convencionado atribuir um valor negativo. 
+
+As  informações  referentes  aos  arranjos  IEDGE  e  IEEI  não  são  normalmente 
+disponibilizadas pelos softwares de geração de malha. Portanto, esses arranjos precisam 
+ser construídos a partir das informações de malha fornecidas pelos softwares geradores 
+de  malha.  No  presente  trabalho  esses  arranjos  foram  construídos  com  o  uso  da 
+biblioteca EdgePack desenvolvida por MARTINS el. al. (2006). 
+
+As  matrizes  de  arestas  são  construídas  a  partir  do  desmembramento  dos 
+coeficientes das matrizes de elementos (MARTINS, 2001). Portanto, a matriz de aresta 
+considerando apenas um grau de liberdade por nó, qualquer que seja o elemento, sempre 
+será dada por: 
+
+e
+T
+ij
+
+
+
+ 
+
+
+
+e
+k
+ii
+e
+k
+ji
+
+e
+k
+ij
+e
+k
+jj
+
+ 
+
+
+
+
+
+
+
+(4.8) 
+
+onde  e
+
+ijk  é o coeficiente da matriz de elemento correspondente à aresta ij  do elemento 
+
+e . Para mais de um grau de liberdade por nó,  e
+
+ijk  corresponderá a blocos de matrizes de 
+
+dimensão ngl
+
+ngl
+
+, onde ngl  é o número de graus de liberdade por nó.  
+
+ 
+
+37 
+
+A matriz de aresta dada na equação 4.8 só está recebendo a contribuição de um 
+único elemento  e . Um exemplo típico dessa configuração são as arestas localizadas no 
+contorno  do  domínio.  No  caso  geral,  é  conveniente  formular  as  matrizes  das  arestas 
+levando em consideração a contribuição de todos os seus elementos concorrentes, como: 
+
+a
+T
+ij
+
+
+
+
+
+ 
+
+
+
+
+
+e
+
+
+1
+n
+
+e
+
+
+1
+n
+
+n
+
+n
+
+ 
+
+e
+k
+ii
+
+ 
+
+e
+k
+ji
+
+e
+
+
+1
+
+e
+
+
+1
+
+e
+k
+ij
+
+e
+k
+jj
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+(4.9) 
+
+onde n  é o número total de elementos que compartilham a aresta ij  e  e
+
+ijk  é a submatriz 
+
+do elemento e  correspondente aos graus de liberdade dos nós i  e  j  da aresta a . 
+
+Um  exemplo  para  a  contribuição  de  6  elementos  para  uma  única  aresta  “a1”, 
+
+destacada em vermelho, é dado na figura 4.4. 
+
+Figura 4.4 – Contribuição de 6 elementos para a matriz de aresta a1. 
+
+ 
+
+ 
+
+Usando  a  relação  dada  na  equação  4.9  pode-se  obter  a  matriz  da  aresta  “a1”, 
+destacada  em  vermelho  na  figura  4.4,  através  da  contribuição  de  cada  elemento  que 
+compartilha essa aresta, conforme descrito na equação 4.10. 
+
+a
+T
+1
+
+1 2
+
+
+
+
+
+
+
+
+
+1
+k
+11
+1
+k
+21
+
+1
+k
+12
+1
+k
+22
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2
+k
+11
+2
+k
+21
+
+2
+k
+12
+2
+k
+2
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3
+k
+11
+3
+k
+21
+
+3
+k
+12
+3
+k
+22
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+k
+k
+
+4
+11
+4
+21
+
+k
+k
+
+4
+12
+4
+22
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5
+k
+11
+5
+k
+21
+
+5
+k
+12
+5
+k
+2
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6
+k
+11
+6
+k
+21
+
+6
+k
+12
+6
+k
+22
+
+
+
+
+
+
+
+ 
+
+(4.10) 
+
+ 
+
+ 
+
+38 
+
+O elemento utilizado no  pressente trabalho é o tetraedro  linear e a formulação 
+numérica aplicada às equações de Euler gera matrizes de elementos não simétricas. A 
+figura 4.5 mostra o esquema de montagem das 6 matrizes de aresta do tetraedro linear a 
+partir do desmembramento da matriz de elemento. 
+
+e
+K
+
+ 
+
+ 
+ 
+ 
+ 
+
+22
+
+k
+12
+k
+k
+k
+
+32
+
+42
+
+2
+1
+
+k
+11
+k
+k
+k
+
+31
+
+41
+
+23
+
+k
+13
+k
+k
+k
+
+3
+
+43
+
+3
+
+
+
+
+
+ 
+
+
+
+
+
+Matriz de elemento 
+
+(b)  
+ 
+
+24
+
+k
+1
+4
+k
+k
+k
+
+3
+4
+
+44
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+22
+
+23
+
+k
+k
+
+e
+T
+B
+
+
+
+ 
+
+
+
+
+
+
+
+
+Matriz da aresta B 
+
+k
+k
+
+32
+
+33
+
+ 
+
+(d) 
+ 
+
+14
+
+e
+T
+D
+
+k
+11
+k
+
+
+
+ 
+
+
+
+
+
+
+
+
+Matriz da aresta D 
+
+k
+k
+
+41
+
+44
+
+ 
+
+(f) 
+ 
+
+33
+
+34
+
+k
+k
+
+e
+T
+F
+
+
+
+ 
+
+
+
+
+
+
+
+
+Matriz da aresta F 
+
+k
+k
+
+43
+
+44
+
+ 
+
+(h) 
+ 
+
+(a)  
+ 
+ 
+k
+11
+k
+
+(c) 
+ 
+ 
+k
+11
+k
+
+(e) 
+ 
+ 
+
+(g) 
+ 
+ 
+
+Tetraedro Linear 
+
+e
+T
+A
+
+
+
+ 
+
+
+
+
+
+
+
+
+Matriz da aresta A 
+
+k
+12
+k
+
+21
+
+22
+
+ 
+
+e
+T
+C
+
+
+
+ 
+
+
+
+
+
+
+
+
+Matriz da aresta C 
+
+k
+13
+k
+
+31
+
+33
+
+ 
+
+22
+
+24
+
+k
+k
+
+e
+T
+E
+
+
+
+ 
+
+
+
+
+
+
+
+
+Matriz da aresta E 
+
+k
+k
+
+42
+
+44
+
+ 
+
+Figura 4.5 – Montagem das 6 matrizes de arestas do elemento tetraédrico a partir do 
+
+desmembramento da matriz de elemento. 
+
+ 
+
+Na figura 4.5 a matriz de elemento tem a dimensão de  nnoel ngl nnoel ngl
+
+, 
+onde  ngl  é  o  número  de  graus  de  liberdade  por  nó  e  nnoel  é  o  número  de  nós  por 
+elemento. Para o tetraedro linear 
+nnoel  . As matrizes de arestas têm a dimensão de 
+
+
+
+4
+
+
+
+
+
+ 
+
+39 
+
+
+
+ngl
+
+ngl
+
+2
+ 
+
+.  As  matrizes  de  aresta  possuem  sentido  convencionado  conforme  seu 
+2
+arranjo de incidências e representado por setas na figura 4.5a. Portanto, a submatriz 1-3, 
+por exemplo, é igual a transposta da submatriz matriz 3-1. 
+
+A seqüência básica de construção das matrizes de aresta é dada no Quadro 4.1. 
+
+Quadro 4.1 – Seqüência de construção das matrizes de aresta. 
+
+Para cada elemento fazer: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Passo 1: Recuperar incidência nodal do elemento (arranjo IEN) 
+
+Passo 2: Calcular coeficientes da matriz de elemento 
+
+Passo 3: Recuperar incidência de aresta do elemento (arranjo IEEI) 
+
+Passo 4: Acumular as contribuições para cada aresta 
+
+Fim do laço 
+
+ 
+
+4.4  Produto Matriz-Vetor por Aresta 
+
+A  cada  iteração  do  método  GMRES,  descrito  anteriormente,  é  necessário 
+resolver  uma  série  de  operações,  dentre  as  quais  o  produto  matriz-vetor  é  a  que 
+apresenta o maior custo computacional. A estrutura de dados por aresta poder ser usada 
+para otimizar o produto matriz-vetor, como será mostrado adiante. 
+
+Considerando a estrutura  de  dados  por  aresta,  o  produto  matriz-vetor  pode  ser 
+
+representado por: 
+
+y Ap
+
+
+
+A p  
+a a
+
+(4.11) 
+
+nare
+ 
+a
+1
+
+onde  nare  é o número de arestas da malha,  y  é o vetor global que armazena a solução, 
+ap  são as componentes de p  restritas aos graus de liberdade da aresta e 
+aA  é a matriz 
+da aresta. É importante destacar novamente que adotando um esquema de estrutura de 
+dados por aresta a matriz global  A  nunca será explicitamente montada. 
+
+ 
+
+40 
+
+O  produto  matriz-vetor  por  aresta  dado  pela  equação  4.11  pode  ser 
+
+esquematizado conforme Quadro 4.2. 
+
+Quadro 4.2 – Produto matriz-vetor por aresta. 
+
+Para cada aresta  a  fazer 
+
+ 
+
+ 
+
+ 
+
+Passo 1: Localize as componentes de  ap  no vetor global p  
+
+Passo 2: Realize o produto matriz-vetor local:  a
+
+y
+
+A p  
+a a
+
+Passo 3: Espalhe o resultado local  ap   no vetor global p  
+
+Fim do laço 
+
+ 
+
+Para  aumentar  a  eficiência  do  produto  matriz-vetor  por  aresta  utiliza-se  uma 
+técnica que armazena o arranjo bloco-diagonal nodal da matriz  A  em um arranjo global 
+B  fora  da  matriz  A .  Essa  técnica  aumenta  a  eficiência  do  produto  matriz-vetor  por 
+aresta, pois evita o armazenamento redundante dos componentes da diagonal por aresta 
+e reduz o número de operações de pontos flutuantes em relação ao produtor matriz-vetor 
+apresentado no Quadro 4.2. Essa técnica foi inicialmente proposta por GIJZEN (1995) 
+em relação aos termos da diagonal da matriz e, posteriormente, a utilização do arranjo 
+bloco-diagonal nodal foi adotada por CATABRIGA (2000) e ELIAS (2007). 
+
+O produto matriz-vetor utilizando a técnica  proposta inicialmente por  GIJZEN 
+
+(1995) pode ser escrito da seguinte forma: 
+
+y Bp
+
+
+
+A p  
+a a
+
+(4.12) 
+
+nare
+ 
+a
+1
+
+onde  B  é o arranjo bloco-diagonal nodal global e 
+do arranjo bloco-diagonal nodal. 
+
+aA  é a matriz de aresta sem o termo 
+
+O  produto  matriz-vetor  por  aresta  dado  pela  equação  4.12  pode  ser 
+
+esquematizado conforme Quadro 4.3. 
+
+ 
+
+41 
+
+Portanto,  no  presente 
+
+trabalho,  o  produto  matriz-vetor  por  aresta  foi 
+implementado conforme o esquema GIJZEN (1995) descrito no Quadro 4.3. Trata-se de 
+um esquema mais eficiente do que o produto matriz-vetor apresentado no Quadro 4.2 
+onde  todas  as  operações  são  realizadas  localmente.  No  esquema  GIJZEN  (1995)  as 
+operações  locais são  realizadas apenas  com  os termos  da matriz  A  que se encontram 
+fora do arranjo bloco-diagonal nodal, deixando o produto matriz-vetor mais eficiente. 
+
+Quadro 4.3 – Produto matriz-vetor por aresta (GIJZEN, 1995). 
+
+Para cada aresta  a  fazer 
+
+ 
+
+ 
+
+ 
+
+Passo 1: Localize as componentes de  ap  no vetor global  p 
+
+Passo 2: Realize o produto da matriz-vetor local:  a
+
+y
+
+A p  
+a a
+
+Passo 3: Espalhe o resultado local  ay  no vetor global  y  
+
+Fim do laço 
+
+Para cada nó n  fazer 
+
+ 
+
+ 
+
+Passo 4: Multiplique  nB  por  np  
+
+Passo 5: Adicione o resultado a  ny  , ou seja:  n
+y
+
+
+
+y
+n
+
+
+
+B p  
+n n
+
+Fim do laço 
+
+ 
+
+4.5  Computação Paralela 
+
+Nesse trabalho utilizou-se o paralelismo por troca de mensagens através do uso 
+da biblioteca MPI (Message Passing Interface). Nesse tipo de paralelismo o domínio do 
+problema é particionado em subdomínios. Cada subdomínio é enviado para um núcleo 
+computacional  que  resolve  cada  problema  particionado  quase  que  de  forma 
+independente.  A  interface  entre  as  partições  vizinhas  compartilham  os  mesmos  nós. 
+Esses nós compartilhados entre as interfaces vizinhas precisam se comunicar através do 
+
+ 
+
+42 
+
+envio  e  recebimento  de  mensagens.  As  interfaces  entre  as  partições  vizinhas  são 
+denominadas  interface  de  comunicação  ou  interface  paralela.  A  figura  4.6  mostra  o 
+particionamento  de  uma  malha  triangular  em  duas  partições.  Na  figura  4.6a  a 
+numeração  dos  elementos  foi  substituída  por  letras  para  facilitar  a  compreensão.  Na 
+figura 4.6b a interface de comunicação está pintada em azul e é formada pelos nós 3 e 4. 
+O  particionamento  apresentado  na  figura  4.6  é  chamado  de  dual,  pois  é  feito  por 
+elementos. Também existe particionamento nodal, mas no presente trabalho adotou-se 
+trabalhar com particionamento dual. 
+
+ 
+ 
+
+ 
+
+Malha original 
+
+ 
+ 
+
+(a) 
+ 
+
+ 
+
+ 
+
+Malha particionada 
+
+ 
+
+(b) 
+
+Figura 4.6 – Particionamento de uma malha triangular. 
+
+ 
+
+Esse particionamento do domínio, que se dá pelo particionamento da malha de 
+elementos,  é  obtido  através  do  uso  da  biblioteca  Metis  (KARYPIS;  KUMAR,  1998), 
+que  também  é  responsável  por  manter  um  balanceamento  de  carga  e  um  volume  de 
+comunicação  adequado.  Balanceamento  de  carga  significa  partições  com  número  de 
+elementos  e  nós  semelhantes.  Volume  de  comunicação  adequado  significa  uma 
+interface de comunicação com o menor número possível de nós. A figura 4.7 apresenta 
+diferentes combinações de balanceamento de carga e volume de comunicação obtidos 
+após o particionamento de uma malha. A melhor situação está representada pela figura 
+4.7c, onde tem-se a carga balanceada e o volume de comunicação pequeno. 
+
+ 
+
+ 
+
+ 
+
+43 
+
+(a) Carga balanceada e grande volume de comunicação 
+
+ 
+ 
+ 
+
+(b) Carga desbalanceada e pequeno volume de comunicação 
+
+ 
+ 
+
+(c) Carga balanceada e pequeno volume de comunicação 
+
+ 
+
+Figura 4.7 – Balanceamento de carga e volume de comunicação. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Após  o  particionamento  da  malha  de  elementos  é  necessário  renumerar 
+localmente  as  entidades  de  malha  (elementos  e  nós)  de  cada  partição  para  que  cada 
+núcleo  computacional  possa  resolver  sua  partição  como  se  fosse  um  problema 
+independente.  Essa  renumeração  das  entidades  de  malha  de  cada  partição  é  realizada 
+através do uso da biblioteca EdgePack (MARTINS el. al., 2006). A figura 4.8 apresenta 
+o particionamento de uma malha e compara a diferença entre a malha particionada com 
+numeração  original,  figura  4.8a,  e  a  malha  particionada  e  renumerada,  figura  4.8b. 
+Nessas figuras os números dos elementos foram substituídos por letras para facilitar a 
+compreensão. A malha original particionada na figura 4.8 possui 16 elementos e 20 nós. 
+Analisando a figura 4.8a observa-se que a numeração dos nós (e também a numeração 
+dos elementos, embora omitida na figura) ficou descontínua, em função da distribuição 
+das entidades de malha entre as partições criadas. Um possível arranjo de renumeração 
+local  é  apresentado  na  figura  4.8b,  onde  as  entidades  de  malha  foram  redistribuídas 
+entre as partições e os nós internos de cada partição e os nós da interface de paralela 
+estão agrupados de forma organizada. 
+
+ 
+
+44 
+
+(a) Malha particionada e com numeração original 
+
+ 
+ 
+
+(b) Malha particionada e renumerada 
+
+ 
+
+ 
+ 
+
+Figura 4.8 – Renumeração local das partições. 
+
+ 
+
+ 
+
+ 
+
+Os  nós  das  interfaces  de  comunicação  podem  se  comunicar  através  de 
+comunicação coletiva  ou  comunicação  ponto-a-ponto.  Na  comunicação coletiva  todos 
+os  nós  de  todas  as  interfaces  de  comunicação  trocam  mensagens  entre  si.  Na 
+comunicação  ponto-a-ponto  a  troca  de  mensagens  ocorre  apenas  entre  os  nós  das 
+interfaces  de  comunicação  vizinhas,  o  que  torna  a  comunicação  ponto-a-ponto  mais 
+eficiente. Nesse trabalho utilizou-se o tipo de comunicação ponto-a-ponto para realizar 
+
+ 
+
+45 
+
+o  envio  e  o  recebimento  de  mensagens  entre  os  nós  das  interfaces  de  comunicação 
+vizinhas conforme estratégia descrita em ELIAS et. al. (2011). Os nós das interfaces de 
+comunicação  são  frequentemente  acessados  nas  trocas  de  mensagens  e,  por  isso, 
+precisam ser de fácil localização. Portanto, foram criados mapas de localização para os 
+nós  das  interfaces  de  comunicação.  É  importante  destacar  que  no  EdgeCFD  os  dois 
+modos  de  comunicação  estão  disponíveis.  O  modo  de  comunicação  ponto-a-ponto  é 
+ativado quando o programa encontra os arquivos *.p2p, que são os próprios mapas de 
+localização gerados pelo EdgeCFD. A chave de ativação da comunicação ponto-a-ponto 
+é  a  variável  lógica UsingP2P.  O  trecho  de  ativação  da  comunicação  ponto-a-ponto 
+usado no EdgeCFD pode ser resumido no Quadro 4.4. 
+
+Quadro 4.4 – Ativação de comunicação paralela no EdgeCFD. 
+
+ 
+      if (UsingP2P) then 
+            ! Chama as rotinas de comunicação ponto-a-ponto 
+      else 
+            ! Chama as rotinas de comunicação coletiva 
+      end if 
+ 
+
+Os resultados paralelos obtidos nesse trabalho são avaliados usando as seguintes 
+
+medidas de desempenho: speed up e eficiência. 
+
+O speed up é definido como: 
+
+S
+
+p
+
+
+
+T
+1
+T
+p
+
+, 
+
+(4.13) 
+
+onde 
+
+pS  é  o  speed  up,  1T  é  o  tempo  de  rodada  gasto  pelo  algoritmo  serial  e 
+
+pT  é  o 
+
+tempo gasto pelo algoritmo paralelo rodando com  p  núcleos computacionais.  
+
+A eficiência é definida como: 
+
+onde 
+
+pE  é a eficiência e  p  é o número de núcleos computacionais utilizados na rodada. 
+
+E
+
+p
+
+
+
+S
+p
+p
+
+, 
+
+(4.14) 
+
+Caso  não  seja  possível  de  se  obter  o  tempo  serial,  como  por  exemplo,  se  o 
+problema  não cabe na memória disponível,  1T  é substituído pelo tempo de solução do 
+problema com o menor número de núcleos. 
+
+ 
+
+46 
+
+CAPÍTULO 5 
+
+RESULTADOS 
+
+Neste  capítulo  é  realizada  a  verificação  da  solução  numérica  desenvolvida  no 
+presente  trabalho.  Para  tal,  inicialmente  se  faz  uma  revisão  sobre  o  conceito  de 
+Verificação e Validação (V&V), mostrando a necessidade de se buscar uma forma de 
+quantificar  o  erro  numérico  embutido  nos  resultados  computacionais.  Em  seguida  os 
+casos de testes são apresentados. Os problemas usados para avaliar a solução numérica 
+proposta nesse trabalho estão divididos em: i) casos de teste 1D; ii) casos de teste 2D; 
+iii) caso de aplicação 3D. Cada um dos itens mencionados anteriores será descrito em 
+detalhes neste capítulo. 
+
+Considera-se que todos os problemas se encontram em um sistema compatível 
+de  unidades.  A  visualização  dos  resultados  será  realizada  no  software  Paraview.  Os 
+recursos  computacionais  usados  nesse  trabalho  encontram-se  instalados  no  Núcleo 
+Avançado  em  Computação  de  Alto  Desempenho  (NACAD/UFRJ).  Os  testes  foram 
+realizados na máquina SGI Altix ICE 8400, que possui 64 nós de processamento com 
+128  processadores  Intel  Xeon  totalizando  640  núcleos  de  processamento.  São  64 
+processadores  Six  Core  Intel  Xeon  X5650  (Westmere)  2.67  GHz  totalizando  384 
+núcleos  de  processamento  e  64  processadores  Quad  Core  Intel  Xeon  X5355 
+(Clovertown)  2.66  GHz  totalizando  256  núcleos  de  processamento.  Trata-se  de  uma 
+máquina baseada em arquitetura de memória distribuída com um total de 1,28 TBytes 
+de RAM. Na interligação entre os nós usa-se uma rede Infiniband. 
+
+Em  todos  os  problemas  analisados  utilizou-se  35  vetores  de  Krylov  e  um 
+máximo de 200 ciclos para o método GMRES. O número máximo de multicorreções no 
+algoritmo preditor-multicorretor foi de 18 em cada uma das análises. Cabe ressaltar que 
+
+ 
+
+47 
+
+nenhuma análise alcançou o número máximo de multicorreções, pois a convergência em 
+cada passo não-linear sempre foi alcançada com um número de iterações menor do que 
+o máximo. Todos os modelos geométricos e suas respectivas malhas de tetraedros foram 
+gerados no programa ANSYS ICEM CFD. As malhas de tetraedros foram convertidas 
+para o formato do EdgeCFD com o programa apresentado no Apêndice A. 
+
+5.1  Verificação e Validação (V&V) 
+
+Tão importante quanto obter um resultado numérico é saber avaliar sua exatidão. 
+Em  Computação Científica,  o termo exatidão refere-se à proximidade entre a solução 
+numérica  e  a  solução  exata  do  problema.  Ou  seja,  quanto  maior  a  exatidão,  mais 
+próximo  a  solução  numérica  estará  da  solução  exata.  Em  inglês  utiliza-se  o  termo 
+accuracy  para  se  referenciar  exatidão  (HEATH,  2002).  Dessa  forma,  é  importante 
+definir um critério para quantificar a qualidade da solução numérica obtida. Geralmente 
+definem-se  métricas  para  essa  finalidade.  Essas  métricas  podem  ser  grandezas 
+elaboradas  especificamente  para  cada  tipo  de  problema  conforme  mostrado  em 
+OBERKAMPF e TRUCANO (2002), OBERKAMPF e BARONE (2006) e SCHWER 
+(2007).  Alternativamente,  essas  métricas  podem  ser  adotadas  como  relações  mais 
+simples. No presente trabalho adotou-se uma medida de erro numérico dependente da 
+norma euclidiana. Entretanto, é importante destacar os esforços que têm sido realizados 
+para  se  elaborar  estratégias  e  métodos  de  avaliações  mais  rigorosos  das  soluções 
+oriundas da computação numérica. 
+
+Com o aumento da modelagem computacional na área da engenharia e ciências 
+físicas,  torna-se  necessário  o  melhoramento  de  métodos  usados  para  comparação  de 
+resultados  computacionais  e  medidas  experimentais,  assim  como  para  a  comparação 
+entre  resultados  computacionais  e  soluções  analíticas  de  problemas  clássicos 
+(OBERKAMPF; BARONE, 2006). 
+
+Quantificar a comparação de respostas transientes é muito útil para análises que 
+buscam  melhorar  a  avaliação  de  métodos  numéricos.  Tradicionalmente,  comparações 
+gráficas de respostas transientes têm sido usadas para realizar julgamentos subjetivos se 
+os  resultados  são  aceitáveis  ou  não.  Recentemente,  tem  se  aumentado  o  interesse  em 
+quantificar essas comparações com o intuito de minimizar a subjetividade nesse tipo de 
+
+ 
+
+48 
+
+decisão (SCHWER, 2007). Esse é um esforço que tem sido organizado no bojo de uma 
+nova área de pesquisa, hoje conhecida como Verificação & Validação (V&V). 
+
+Verificação e Validação (V&V) permite avaliar a exatidão e a confiabilidade de 
+uma simulação computacional (OBERKAMPF; TRUCANO, 2002). A Verificação trata 
+da  precisão  com  que  o  problema  matemático  é  resolvido.  Portanto,  na  Verificação 
+compara-se  o  resultado  computacional  com  soluções  exatas  (analíticas)  de  problemas 
+clássicos.  A  Validação  representa  a  avaliação  de  como  a  realidade  está  representada 
+pelo modelo matemático, base do modelo computacional. Então, no caso da Validação, 
+compara-se o resultado computacional com valores experimentais obtidos a partir de um 
+problema  real.  Nesse  contexto,  o  modelo  computacional  pode  ser  entendido  como  o 
+conjunto que engloba, por exemplo, a malha utilizada na discretização do domínio, os 
+modelos  matemáticos  adotados  para  representar  a  física  do  problema,  os  métodos 
+matemáticos usados na solução dos sistemas de equações e o conjunto de condições de 
+contorno e condições iniciais adotados.  
+
+Conforme  já  mencionado,  no  presente  trabalho  adotou-se  uma  medida  de  erro 
+
+numérico baseada na norma euclidiana dada pela equação 5.1. 
+
+e
+num
+
+
+
+num
+
+ex
+
+s
+
+s
+
+s
+ex
+
+, 
+
+(5.1) 
+
+onde  nume
+
+ é o erro numérico, 
+
+exs  é a solução exata e  nums
+
+ é a solução numérica. 
+
+Sempre que a solução exata do problema de teste existir e estiver disponível, o 
+erro  numérico  será  calculado  e  apresentado.  Cabe  ressaltar  que  o  cálculo  do  erro 
+numérico  nesse  trabalho  é  realizado  com  base  no  pós-processamento  dos  resultados 
+realizado no software Paraview utilizando o filtro de pós-processamento PlotOverLine. 
+Foram  extraídos  100  pontos  em  cada  pós-processamento  realizado  no  Paraview 
+utilizando o filtro PlotOverLine. 
+
+5.2  Casos de Teste 1D 
+
+Os  casos  de  teste  1D  pertencem  à  classe  de  problemas  mais  simples  que  será 
+apresentada nesse trabalho. Embora simples esses tipos de problemas têm se mostrado 
+bastante  úteis  nas  avaliações  de  soluções  numéricas.  Uma  vantagem  desse  tipo  de 
+
+ 
+
+49 
+
+problema  é  que  geralmente  eles  apresentam  soluções  exatas  que  podem ser  aplicadas 
+nas  etapas  de  verificações  de códigos  computacionais.  O  tubo  de choque é  um típico 
+representante da classe de problemas 1D usados na avaliação de soluções numéricas das 
+equações  Euler.  Nesse  trabalho  utilizaram-se  duas  versões  desse  tipo  de  problema 
+conhecidas  como  tubo  de  choque  de  Sod  e  tubo  de  choque  de  Lax-Harden.  Nas 
+próximas subseções será feita uma breve discussão sobre o problema de tubo de choque 
+e serão apresentados os resultados obtidos para os casos de teste 1D. 
+
+A  solução  desenvolvida  nesse trabalho  é totalmente  3D e  para  ser aplicada  na 
+solução  de  problemas  1D  considera-se  o  escoamento  apenas  em  uma  das  direções 
+cartesianas.  Isto  significa  que  a  velocidade  em  duas  das  direções  cartesianas  será 
+mantida nula durante toda a simulação. 
+
+5.2.1  Descrição do Tubo de Choque 
+
+O problema clássico de tubo de choque, ou problema de Riemann, é comumente 
+usado para testar códigos computacionais aplicados na solução das equações de Euler. 
+Uma das vantagens de se utilizar o problema de tubo de choque é que, sob determinadas 
+condições,  o  mesmo  apresenta  solução  analítica.  Neste  trabalho  adotaram-se  os 
+procedimentos  apresentados  em  ANDERSON  JR.  (1990)  para  se  obter  a  solução 
+analítica  do  problema  de  tubo  de  choque,  utilizando-se  um  código  para  o  software 
+Matlab disponível em WÜTHRICH (2007). A descrição do tubo de choque, elaborada 
+nessa seção, também é a mesma encontrada em ANDERSON JR. (1990). 
+
+Basicamente, tubo de choque é um tubo longo no qual uma onda de choque forte 
+é gerada. Em sua configuração inicial, o tubo é dividido em duas seções distintas por 
+um diafragma: uma seção carreadora contendo gás a alta pressão e uma seção carreada 
+contendo gás a baixa pressão. Os gases existentes nas duas seções podem ser diferentes 
+ou não. Na figura 5.1 tem-se um esquema de um tubo de choque em sua configuração 
+inicial,  onde  ambos  fluidos  se  encontram  em  repouso  e  separados  pelo  diafragma.  O 
+índice  1 representa a seção de alta pressão enquanto  o índice 2  representa a seção de 
+baixa pressão. 
+
+ 
+
+50 
+
+Região (1) 
+
+Alta pressão 
+
+Seção carreadora 
+
+Região (2) 
+
+Baixa pressão 
+
+Seção carreada 
+
+ρ1 
+
+Diafragma 
+
+ρ2 
+
+P1 
+
+P2 
+
+Posição 
+
+ 
+
+Figura 5.1 – Tubo de choque em sua configuração inicial. 
+
+ 
+o
+ã
+s
+s
+e
+r
+P
+
+ 
+
+Quando o diafragma se rompe os seguintes fenômenos são observados: 1) ocorre 
+a propagação de uma onda de choque normal na seção carreada se deslocando para a 
+direita;  2)  a  superfície  de  contato  entre  as  duas  seções  (descontinuidade  de  contato) 
+também  se  desloca para a direita e 3) ocorre  a propagação de uma onda  de  expansão 
+contínua  dentro  da  seção  carreadora  se  deslocando  para  a  esquerda.  A  figura  5.2 
+apresenta  um  esboço  desses  fenômenos,  onde  as  diferentes  regiões  do  escoamento 
+encontram-se representadas pelos índices de 1 a 2. A onda de choque se propaga com 
+uma  velocidade  superior  a  velocidade  da  onda  de  contato.  Na  onda  de  expansão  a 
+velocidade da “cabeça da onda” é maior do que a velocidade da “cauda da onda”. Esse 
+fato  faz  com  que  o  gradiente  da  solução  nessa  região  do  escoamento diminua  com  o 
+tempo conforme pode ser observado no esboço de pressão na figura 5.2. 
+
+ 
+
+51 
+
+O comportamento da solução de um tubo de choque, apresentando regiões com 
+descontinuidades  e  expansão,  torna  esse  tipo  de  exemplo  muito  adequado  a  testes  de 
+verificação  para  códigos  computacionais  que  resolvem  equações  hiperbólicas.  Os 
+códigos  precisam  capturar  de  maneira  satisfatória  as  diferentes  descontinuidades  e  a 
+região de expansão que surgem com o passar do tempo. 
+
+Com  a finalidade  de  avaliar  a  qualidade  das  soluções numéricas  obtidas nesse 
+trabalho foram utilizados dois exemplos de tubo de choque: o tubo de choque de Sod e 
+o  tubo  choque  de  Lax-Harden.  Esses  resultados  serão  apresentados  nas  próximas 
+subseções. 
+
+ 
+
+ 
+
+ 
+
+o
+ã
+s
+s
+e
+r
+P
+
+Vexpansão 
+
+Vcontato 
+
+Vchoque 
+
+ 
+
+o
+ã
+s
+n
+a
+p
+x
+e
+ 
+e
+d
+
+ 
+a
+d
+n
+O
+
+Região (1) 
+
+ρ1 
+
+P1 
+
+Região (3) 
+
+Região (4)  Região (2) 
+
+ρ3 
+
+(ρ3 > ρ4) 
+
+ρ4 
+
+ρ2 
+
+Descontinuidade de 
+contato 
+
+Onda de 
+choque 
+
+P3 = P4  
+
+P2 
+
+Figura 5.2 – Tubo de choque após o rompimento do diafragma. 
+
+Posição 
+
+ 
+
+ 
+
+52 
+
+5.2.2  Tubo de Choque de Sod 
+
+O tubo de choque de Sod passou a ser utilizado de forma intensa na verificação 
+de códigos  aplicados  na  solução  das equações de  Euler após  SOD  (1978).  A solução 
+analítica do problema de tubo de choque de Sod foi obtida através dos procedimentos 
+dados em ANDERSON JR. (1990). Esse problema foi usado em WALTZ (2013) para 
+avaliar o desempenho da solução paralela apresentada no referido trabalho. O tubo de 
+x   onde  o  diafragma  encontra-se 
+choque  de  Sod  consiste  em  um  domínio  0
+localizado em 
+. As condições iniciais estão apresentadas na tabela 5.1, onde  
+é a massa específica do fluido, u  é a velocidade e  p  é a pressão. 
+
+x 
+
+0,5
+
+1
+
+Tabela 5.1 - Dados do tubo de choque de Sod. 
+
+Região de alta pressão 
+
+Região de baixa pressão 
+
+1 1   
+
+u   
+0
+1
+
+p   
+1 1
+
+ 
+
+ 
+
+2
+
+0,125
+
+ 
+
+u   
+0
+2
+
+p 
+2
+
+0,1
+
+ 
+
+um 
+
+1,3
+
+t 
+
+0,05
+
+y 
+
+Para esse exemplo adotou-se o passo de tempo fixo 
+
+ que resultou em 
+CFL  . A razão entre os calores específicos a pressão e volume constantes é 
+
+0,001
+
+t 
+
+x  ,  0
+
+max
+. As soluções foram analisadas no instante 
+1
+
+. O domínio do problema é 
+1,4
+.  As  velocidades  nas  direções  y  e  z  foram 
+0
+mantidas nulas durante toda a análise. Foi utilizada uma malha com 302.169 tetraedros, 
+55.236 nós e 377.189 arestas. Foram realizadas análises considerando 1, 8, 16, 32 e 64 
+núcleos  com  o  objetivo  de  avaliar  o  desempenho  da  solução  em  paralelo.  A  solução 
+desse problema, apresentada na figura 5.3, foi obtida ao longo da linha formada pelos 
+pontos 
+
+0,0,0  e 
+
+
+1,0,0 . 
+
+0,20
+
+,  0
+
+z 
+
+0,05
+
+
+
+As figuras 5.3 a 5.8 apresentam a solução para o problema de tubo de choque de 
+Sod  descrito nessa  seção.  A figura  5.3  mostra que  os  métodos  YZβ1  e  YZβ2  tem  os 
+melhores  desempenho quando comparado com  os  demais. Os métodos  δ91, KIRK1  e 
+KIRK2  apresentaram  comportamentos  similares  entre  si,  enquanto  o  operador  CAU 
+apresentou  a  solução  mais  difusiva  nas  regiões  de  gradientes  elevados.  A  figura  5.4 
+
+ 
+
+53 
+
+mostra a solução do tubo de choque obtida com o operador YZβ1, tendo sido adotado 
+neste caso o particionamento do domínio em 8 subdomínios. O erro numérico para essa 
+análise, calculado em relação à massa específica, encontra-se na tabela 5.2. Os métodos 
+YZβ1 e YZβ2 apresentaram os menores erros numéricos da análise, sendo que o YZβ1 
+apresentou  o  menor  erro  numérico  da  análise.  Os  métodos  δ91,  KIRK1  e  KIRK2 
+apresentaram  erros  numéricos semelhantes,  enquanto  o CAU apresentou  o  maior  erro 
+numérico para esse problema. 
+
+ 
+
+Figura 5.3 – Comparação da massa específica para o tubo de choque de Sod em t = 
+
+0,20 para diferentes métodos. 
+
+ 
+
+ 
+
+A figura 5.9 mostra detalhes do particionamento para o caso do tubo de choque 
+de  Sod  considerando a divisão  do domínio em  8  subdomínios. Cada  subdomínio está 
+representado por uma cor. Por questão de comodidade apenas o particionamento em 8 
+subdomínios  é  apresentado.  A  figura  5.10  apresenta  a  malha  de  tetraedros  usada  na 
+solução do tubo de choque. Nessa figura tem-se o detalhe da malha em apenas um dos 
+subdomínios. 
+
+ 
+
+54 
+
+Tabela 5.2 – Erro numérico para o tubo de choque de Sod. 
+
+Método de Estabilização 
+
+Erro Numérico (%) 
+
+δ91 
+
+CAU 
+
+YZβ1 
+
+YZβ2 
+
+KIRK1 
+
+KIRK2 
+
+3,96 
+
+4,56 
+
+2,57 
+
+3,22 
+
+3,98 
+
+3,97 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 5.4 – Massa específica para o tubo de choque de Sod em t = 0,20 obtida com o 
+
+ 
+
+método YZβ1. 
+
+ 
+
+ 
+
+ 
+
+55 
+
+Figura 5.5 – Massa específica para o tubo de choque de Sod em t = 0,20. 
+ 
+
+ 
+
+ 
+
+Figura 5.6 – Pressão para o tubo de choque de Sod em t = 0,20. 
+
+56 
+
+ 
+
+ 
+
+Figura 5.7 – Velocidade para o tubo de choque de Sod em t = 0,20. 
+
+Figura 5.8 – Energia interna para o tubo de choque de Sod em t = 0,20. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+57 
+
+ 
+
+ 
+
+ 
+
+Sod. 
+
+Figura 5.9 – Particionamento do domínio em 8 subdomínios para o tubo de choque de 
+
+ 
+
+ 
+Figura 5.10 – Detalhe da malha de tetraedros em um subdomínio para o tubo de choque 
+
+de Sod particionado em 8 subdomínios. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+58 
+
+Figura 5.11 – Tempo de análise normalizado para o tubo de choque de Sod (YZβ1). 
+
+ 
+
+ 
+
+Figura 5.12 – Speed up da solução em paralelo para o tubo de choque de Sod (YZβ1). 
+
+ 
+
+ 
+
+59 
+
+ 
+
+ 
+
+ 
+
+Figura 5.13 – Eficiência da solução em paralelo para o tubo de choque de Sod (YZβ1). 
+
+ 
+
+ 
+
+ 
+
+Tabela 5.3 – Comparação de desempenho da solução paralela para o tubo de choque de 
+
+Sod (YZβ1). 
+
+Número de Núcleos  Tempo de Análise 
+DD:HH:MM:SS 
+
+Speed up 
+
+Eficiência 
+
+1 
+
+8 
+
+16 
+
+32 
+
+64 
+
+ 
+
+00:03:42:36 
+
+00:00:32:13 
+
+00:00:20:02 
+
+00:00:16:48 
+
+00:00:22:41 
+
+1 
+
+6,91 
+
+11,11 
+
+13,25 
+
+9,81 
+
+1 
+
+0,86 
+
+0,69 
+
+0,41 
+
+0,15 
+
+As  figuras  5.11  a  5.13  apresentam  uma  análise  de  escalabilidade  da  solução 
+paralela do problema de tubo de choque de Sod. De acordo com a figura 5.12 é possível 
+obter ganhos significativos em relação ao tempo de análise com a utilização de até 16 
+
+ 
+
+60 
+
+núcleos para esse problema, cuja malha pode ser considerada pequena. No caso onde se 
+utilizou 16 núcleos cada partição tem aproximadamente 3.200 nós, 19.000 elementos e 
+24.000 arestas. A tabela 5.3 apresenta os tempos de simulação para o problema de tubo 
+de choque de Sod em função do número de núcleos utilizados. 
+
+5.2.3  Tubo de Choque de Lax-Harden 
+
+Este exemplo é muito semelhante ao tubo de choque de Sod, exceto pelo fato de 
+que  em  sua  configuração  inicial  o  tubo  de  choque  de  Lax-Harden  já  apresenta  uma 
+descontinuidade na velocidade. Portanto, o problema de tubo de choque de Lax-Harden 
+consiste em um domínio  0
+. 
+0,5
+As  condições  iniciais  para  esse  problema  são  dadas  em  LUO  et.  al.  (2006)  e  estão 
+apresentadas na tabela 5.4, onde  é a massa específica do fluido, u  é a velocidade e 
+p  é a pressão. 
+
+x   onde o diafragma encontra-se localizado em 
+
+x 
+
+1
+
+Tabela 5.4 - Dados do tubo de choque de Lax-Harden. 
+
+Região de alta pressão 
+
+Região de baixa pressão 
+
+ 
+1
+
+0,445
+
+ 
+
+u 
+1
+
+0,698
+
+ 
+
+p 
+1
+
+3,528
+
+ 
+
+ 
+
+ 
+
+2
+
+0,50
+
+ 
+
+u   
+0
+2
+
+p 
+2
+
+0,571
+
+ 
+
+Para esse exemplo adotou-se o passo de tempo fixo 
+
+ que resultou em 
+CFL  . A razão entre os calores específicos a pressão e volume constantes é 
+
+0,001
+
+t 
+
+3
+
+um 
+
+max
+. As soluções foram analisadas no instante 
+
+t 
+
+0,15
+
+. O domínio computacional e 
+1,4
+a  malha  são  os  mesmos  que  foram  usados  no  problema  de  tubo  de  choque  de  Sod. 
+Novamente,  as  velocidades  nas  direções  y  e  z  foram  mantidas  nulas  durante  toda  a 
+análise. Foram realizadas análises considerando 1, 8, 16, 32 e 64 núcleos com o objetivo 
+de  avaliar  o  desempenho  da  solução  em  paralelo.  A  solução  desse  problema, 
+apresentada na figura 5.14, foi obtida ao longo da linha formada pelos pontos 
+0,0,0  e 
+
+
+1,0,0 . 
+
+
+
+ 
+
+61 
+
+As figuras 5.14 a 5.19 apresentam a solução para o problema de tubo de choque 
+de  Lax-Harden  descrito  nessa  seção.  A  figura  5.14  mostra  que  os  métodos  YZβ1  e 
+YZβ2  novamente  têm  os  melhores  desempenho  quando  comparados  com  os  demais 
+métodos.  Os  métodos  CAU,  δ91,  KIRK1  e  KIRK2  apresentaram  comportamentos 
+praticamente  idênticos.  A  figura  5.15  mostra  a  solução  do  tubo  de  choque  de  Lax-
+Harden obtida com o operador YZβ1, tendo sido adotado neste caso o particionamento 
+do domínio em 8 subdomínios. O erro numérico para essa análise, calculado em relação 
+à massa específica, encontra-se na tabela 5.5. Os métodos YZβ1 e YZβ2 apresentaram 
+os menores erros numéricos da análise, sendo que o YZβ1 mais uma vez apresentou o 
+menor erro numérico da análise. Os métodos CAU, δ91, KIRK1 e KIRK2 apresentaram 
+erros numéricos semelhantes. 
+
+ 
+
+Figura 5.14 – Comparação da massa específica para o tubo de choque de Lax-Harden 
+
+em t = 0,15 para diferentes métodos. 
+
+ 
+
+ 
+
+As  figuras  5.20  a  5.22  apresentam  uma  análise  de  escalabilidade  da  solução 
+paralela do problema de tubo de choque de Lax-Harden. De acordo com a figura 5.21 é 
+possível  também  nesse problema  obter  ganhos  significativos  em  relação  ao  tempo de 
+
+ 
+
+62 
+
+análise com a utilização de até 16 núcleos para esse problema. A tabela 5.6 apresenta os 
+tempos de simulação para o problema de tubo de choque de Lax-Harden em função do 
+número de núcleos utilizados. 
+
+Tabela 5.5 – Erro numérico para o tubo de choque de Lax-Harden 
+
+Método de Estabilização 
+
+Erro Numérico (%) 
+
+δ91 
+
+CAU 
+
+YZβ1 
+
+YZβ2 
+
+KIRK1 
+
+KIRK2 
+
+18,90 
+
+18,86 
+
+16,16 
+
+18,42 
+
+19,03 
+
+19,02 
+
+ 
+
+ 
+
+ 
+
+ 
+Figura 5.15 – Massa específica para o tubo de choque de Lax-Harden em t = 0,15 obtida 
+
+com o método YZβ1. 
+
+ 
+
+ 
+
+63 
+
+Figura 5.16 – Massa específica para o tubo de choque de Lax-harden em t = 0,15. 
+
+ 
+
+ 
+
+Figura 5.17 – Pressão para o tubo de choque de Lax-Harden em t = 0,15. 
+ 
+
+ 
+
+ 
+
+64 
+
+ 
+Figura 5.18 – Velocidade para o tubo de choque de Lax-Harden em t = 0,15. 
+
+ 
+
+ 
+Figura 5.19 – Energia interna para o tubo de choque de Lax-Harden em t = 0,15. 
+
+ 
+
+ 
+
+65 
+
+Figura 5.20 – Tempo de análise normalizado para o tubo de choque de Lax-Harden 
+
+(YZβ1). 
+
+ 
+
+ 
+
+Figura 5.21 – Speed up da solução em paralelo para o tubo de choque de Lax-Harden 
+
+(YZβ1). 
+
+ 
+
+66 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 5.22 – Eficiência da solução em paralelo para o tubo de choque de Lax-Harden 
+
+ 
+
+(YZβ1). 
+
+Tabela 5.6 – Comparação de desempenho solução paralela para o tubo de choque de 
+
+Lax-Harden (YZβ1). 
+
+Número de Núcleos  Tempo de Análise 
+DD:HH:MM:SS 
+
+Speed up 
+
+Eficiência 
+
+1 
+
+8 
+
+16 
+
+32 
+
+64 
+
+ 
+
+00:03:38:24 
+
+00:00:30:54 
+
+00:00:18:05 
+
+00:00:13:56 
+
+00:00:20:29 
+
+1 
+
+7,06 
+
+12,07 
+
+15,67 
+
+10,66 
+
+1 
+
+0,88 
+
+0,75 
+
+0,48 
+
+0,16 
+
+ 
+
+67 
+
+5.3  Casos de Teste 2D 
+
+Os casos de teste 2D também foram usados nesse trabalho, pois, assim como os 
+casos de teste 1D, são bastante úteis nas avaliações de soluções numéricas. A maioria 
+dos problemas apresentados possui soluções exatas disponíveis que podem ser aplicadas 
+nas  etapas  de  verificações  de  códigos  computacionais.  Foram  usados  os  problemas 
+clássicos conhecidos como choque oblíquo, choque refletido e túnel de vento com um 
+degrau. Nas próximas subseções serão apresentados os resultados obtidos para os casos 
+de teste 2D. 
+
+A  solução  desenvolvida  nesse trabalho  é totalmente  3D e  para  ser aplicada na 
+solução  de  problemas  2D  considera-se  o  escoamento  apenas  em  duas  direções 
+cartesianas.  Isto  significa  que  a  velocidade  em  uma  das  direções  cartesianas  será 
+mantida nula durante toda a simulação. 
+
+5.3.1  Choque Oblíquo 
+
+O problema de choque oblíquo apresentado aqui está descrito em SHAKIB et. al. 
+(1991). Um esboço esquemático desse problema é apresentado na figura 5.23. Trata-se 
+de um escoamento supersônico a Mach 2 onde o fluxo de entrada faz um ângulo de 10 
+graus em relação ao eixo  x , conforme mostrado na figura 5.23. 
+
+ 
+Figura 5.23 – Descrição do problema de choque obliquo (SHAKIB et. al., 1991). 
+
+ 
+
+68 
+
+Na  figura  5.23  o  número  de  Mach  M  relaciona  as  variáveis  do  problema 
+
+conforme equação 2.9. 
+
+Foram aplicadas condições de contorno na face à esquerda e no topo do domínio. 
+Na parede impermeável, fundo do domínio, considera-se a condição de escorregamento, 
+ou seja, 
+
+yu  . Na face à direita não há prescrição alguma. 
+
+xu   e 
+
+0
+
+0
+
+As prescrições na face à esquerda e no topo domínio são fornecidas por: 
+
+2M            
+
+1           
+
+xu 
+
+0,9848
+
+          
+
+yu  
+
+0,17364
+
+          
+
+p 
+
+0,17857
+
+ 
+
+(5.2) 
+
+ 
+
+A solução exata na região inferior da face à direita é dada por: 
+
+M 
+
+1,64052
+
+       
+
+
+
+1, 45843
+
+       
+
+xu 
+
+0,88731
+
+       
+
+yu         
+
+0
+
+p 
+
+0,30475
+
+ 
+
+(5.3) 
+
+ 
+
+Para esse exemplo adotou-se o passo de tempo fixo 
+
+t 
+
+0,001
+
+ que resultou em 
+
+um 
+
+CFL 
+
+0,3
+
+. A razão entre os calores específicos a pressão e volume constantes é 
+
+max
+. As soluções foram analisadas no instante 
+
+3
+
+1
+
+0,1
+
+z 
+
+y  ,  0
+
+t   para garantir que o problema já 
+1,4
+x  , 
+tivesse  alcançado  seu  estado  permanente.  O  domínio  do  problema  é  0
+.  A  velocidade  na  direção  z  foi  mantida  nula  durante  toda  a 
+0
+análise. Foi utilizada uma malha com 410.006 tetraedros, 74.257 nós e 507.176 arestas. 
+Foram  realizadas  análises  considerando  1,  8,  16,  32  e  64  núcleos  com  o  objetivo  de 
+avaliar o desempenho da solução em paralelo. A solução desse problema, apresentada 
+na figura 5.24, foi obtida ao longo da linha 
+
+ mostrada na figura 5.23. 
+
+0,9
+
+x 
+
+1
+
+As figuras 5.24 a 5.27 apresentam a solução para o problema do choque refletido 
+descrito nessa seção. Para esse problema apenas o método YZβ1 foi utilizado. A figura 
+5.24 mostra que o método YZβ1 apresenta elevado desempenho na solução do problema 
+de choque refletido. O método YZβ1 representou bem toda a solução do problema de 
+choque  refletido,  inclusive  as  regiões  de  gradientes  elevados.  O  erro  numérico  dessa 
+análise, calculado em relação à massa específica, foi de 2,57%. 
+
+ 
+
+69 
+
+Figura 5.24 – Massa específica para o choque oblíquo em t = 3 (YZβ1). 
+
+ 
+
+Figura 5.25 – Massa específica para o choque oblíquo em t = 3 (YZβ1). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+70 
+
+Figura 5.26 – Pressão para o choque oblíquo em t = 3 (YZβ1). 
+
+ 
+
+ 
+
+ 
+
+Figura 5.27 – Velocidade na direção x para o choque oblíquo em t = 3 (YZβ1). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+71 
+
+Figura 5.28 – Particionamento do domínio em 8 subdomínios para o choque oblíquo. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 5.29 – Detalhe da malha de tetraedros em um subdomínio para o choque 
+
+oblíquo particionado em 8 subdomínios. 
+
+A figura 5.28 mostra detalhes do particionamento para o caso do choque oblíquo 
+considerando  a  divisão  do  domínio  em  8  subdomínios.  Cada  subdomínio  está 
+representado por uma cor. Por questão de comodidade apenas o particionamento em 8 
+subdomínios  é  apresentado.  A  figura  5.29  apresenta  a  malha  de  tetraedros  usada  na 
+solução do choque oblíquo. Nessa figura tem-se o detalhe da malha em apenas um dos 
+subdomínios.  A  figura  5.25  mostra  a  solução  do  problema  de  choque  oblíquo  obtida 
+
+ 
+
+72 
+
+com o método YZβ1, tendo sido adotado neste caso o particionamento do domínio em 8 
+subdomínios.  Na figura 5.25  é possível  observar a formação das 2 regiões, típicas da 
+solução do problema de choque oblíquo, geradas na face à direita do domínio. 
+
+As  figuras  5.30  a  5.32  apresentam  uma  análise  de  escalabilidade  da  solução 
+paralela do problema de choque oblíquo. De acordo com a figura 5.31 é possível obter 
+ganhos significativos em relação ao tempo de análise com a utilização de até 32 núcleos 
+para  esse  problema.  No  caso  onde  se  utilizou  32  núcleos  cada  partição  tem 
+aproximadamente 2.000 nós, 13.000 elementos e 16.000 arestas. A tabela 5.7 apresenta 
+os tempos de simulação para o problema de choque oblíquo em função do número de 
+núcleos utilizados. 
+
+ 
+
+Figura 5.30 – Tempo de análise normalizado para o choque oblíquo (YZβ1). 
+ 
+
+ 
+
+ 
+
+ 
+
+73 
+
+Figura 5.31 – Speed up da solução em paralelo para o choque oblíquo (YZβ1). 
+
+ 
+
+Figura 5.32 – Eficiência da solução em paralelo para o choque oblíquo (YZβ1). 
+
+ 
+
+ 
+
+74 
+
+ 
+
+ 
+
+ 
+
+Tabela 5.7 – Comparação de desempenho da solução paralela para o choque oblíquo 
+
+(YZβ1). 
+
+Número de Núcleos  Tempo de Análise 
+DD:HH:MM:SS 
+
+Speed up 
+
+Eficiência 
+
+1 
+
+8 
+
+16 
+
+32 
+
+64 
+
+ 
+
+02:00:31:13 
+
+00:07:03:49 
+
+00:03:34:08 
+
+00:02:05:33 
+
+00:01:39:59 
+
+1 
+
+6,86 
+
+13,59 
+
+23,18 
+
+29,11 
+
+1 
+
+0,85 
+
+0,84 
+
+0,72 
+
+0,45 
+
+5.3.2  Choque Refletido 
+
+O problema de choque refletido apresentado aqui está descrito em SHAKIB et. 
+al.  (1991).  Um  esboço  esquemático  desse  problema  é  apresentado  na  figura  5.33.  O 
+problema consiste em 3 regiões separadas por um choque oblíquo e por sua reflexão ao 
+longo de uma parede, conforme figura 5.33. 
+
+Figura 5.33 – Descrição do problema de choque refletido (SHAKIB et. al., 1991). 
+
+ 
+
+ 
+
+Na  figura  5.33  o  número  de  Mach  M  relaciona  as  variáveis  do  problema 
+
+conforme equação 2.9. 
+
+Foram aplicadas condições de contorno na face à esquerda e no topo do domínio. 
+Na parede impermeável, fundo do domínio, considera-se a condição de escorregamento, 
+
+ 
+
+75 
+
+ou  seja, 
+
+xu   e 
+
+0
+
+yu  .  Na  face  à  direita,  situada  na  região  3,  não  há  prescrição 
+
+0
+
+alguma. 
+
+As  prescrições  na  face  à  esquerda  e  no  topo  do  domínio  são  fornecidas, 
+
+respectivamente, nas expressões 5.4 e 5.5. 
+
+Regiao 1  
+Regiao 2   
+
+M 
+M 
+
+2,9
+2,3781
+
+         
+   
+
+1      
+  
+1,7
+
+xu 
+xu 
+
+yu                 
+2,9
+          
+0
+  
+  
+yu  
+2,61934
+0,50632
+
+p 
+p 
+
+0,71429
+1,52819
+
+ 
+ 
+
+(5.4) 
+(5.5) 
+
+ 
+
+A solução exata na região 3 é dada na expressão 5.6. 
+
+Regiao 3  
+
+M 
+
+1,94235
+
+   
+
+
+
+2,68728
+
+  
+
+xu 
+
+2, 40140
+
+  
+
+yu      
+
+0
+
+p 
+
+2,93407
+
+ 
+
+(5.6) 
+
+ 
+
+Para esse exemplo adotou-se o passo de tempo fixo 
+
+t 
+
+0,001
+
+ que resultou em 
+
+x 
+
+4,1
+
+,  0
+
+t 
+
+3,4
+
+1,4
+
+um 
+
+CFL 
+
+0,65
+
+. A razão entre os calores específicos a pressão e volume constantes 
+
+max
+.  As  soluções  foram  analisadas  no  instante 
+
+y  ,  0
+
+ para  garantir  que  o 
+é 
+problema  já  tivesse  alcançado  seu  estado  permanente.  O  domínio  do  problema  é 
+.  A  velocidade  na  direção  z  foi  mantida  nula 
+0
+durante toda a análise. Foi utilizada uma malha com 760.498 tetraedros, 140.918 nós e 
+961.387 arestas. Foram realizadas análises considerando 1, 8, 16, 32 e 64 núcleos com o 
+objetivo de avaliar o desempenho da solução em paralelo. A solução desse problema, 
+apresentada  na  figura  5.34,  foi  obtida  ao  longo  da  linha 
+ mostrada  na  figura 
+5.33. 
+
+z 
+
+0,1
+
+1
+
+y 
+
+0, 25
+
+As figuras 5.34 a 5.37 apresentam a solução para o problema do choque refletido 
+descrito nessa seção. Para esse problema apenas o operador YZβ1 foi utilizado. A figura 
+5.34 mostra que o método YZβ1 apresenta elevado desempenho na solução do problema 
+de choque refletido. O método YZβ1 representou bem toda a solução do problema de 
+choque  refletido,  inclusive  as  regiões  de  gradientes  elevados.  Nessa  análise  o  erro 
+numérico, calculado em relação à massa específica, foi de 2,83%. 
+
+ 
+
+76 
+
+ 
+Figura 5.34 – Massa específica para o choque refletido em t = 3,4 (YZβ1). 
+ 
+
+ 
+
+Figura 5.35 – Massa específica para o choque refletido em t = 3,4 (YZβ1). 
+ 
+
+ 
+
+ 
+
+ 
+
+77 
+
+Figura 5.36 – Pressão para o choque refletido em t = 3,4 (YZβ1). 
+
+ 
+
+ 
+
+ 
+
+Figura 5.37 – Velocidade na direção x para o choque refletido em t = 3,4 (YZβ1). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+78 
+
+Figura 5.38 – Particionamento do domínio em 8 subdomínios para o choque refletido. 
+
+ 
+
+ 
+
+Figura 5.39 – Detalhe da malha de tetraedros em um subdomínio para o choque 
+
+refletido particionado em 8 subdomínios. 
+
+ 
+
+ 
+
+ 
+
+A  figura  5.38  mostra  detalhes  do  particionamento  para  o  caso  do  choque 
+refletido  considerando  a  divisão  do  domínio  em  8  subdomínios.  Novamente,  cada 
+subdomínio  está  representado  por  uma  cor.  A  figura  5.39  apresenta  a  malha  de 
+tetraedros usada na solução do choque refletido. Nessa figura tem-se o detalhe da malha 
+em apenas um dos subdomínios. A figura 5.35 mostra a solução do problema de choque 
+refletido obtida com o método YZβ1, tendo sido adotado neste caso o particionamento 
+
+ 
+
+79 
+
+do  domínio  em  8  subdomínios.  Na  figura  5.35  é  possível  observar  a  formação  das  3 
+regiões, típicas da solução do problema de choque refletido, separadas por um choque 
+oblíquo e por sua reflexão ao longo da parede inferior do domínio. 
+
+Figura 5.40 – Tempo de análise normalizado para o choque refletido (YZβ1). 
+
+ 
+
+ 
+
+Figura 5.41 – Speed up da solução em paralelo para o choque refletido (YZβ1). 
+
+ 
+
+ 
+
+ 
+
+80 
+
+ 
+
+Figura 5.42 – Eficiência da solução em paralelo para o choque refletido (YZβ1). 
+
+ 
+
+ 
+
+ 
+
+Tabela 5.8 – Comparação de desempenho da solução paralela para o choque refletido 
+
+(YZβ1). 
+
+Número de Núcleos  Tempo de Análise 
+DD:HH:MM:SS 
+
+Speed up 
+
+Eficiência 
+
+1 
+
+8 
+
+16 
+
+32 
+
+64 
+
+ 
+
+04:05:54:26 
+
+00:13:59:00 
+
+00:07:11:07 
+
+00:04:00:52 
+
+00:03:57:42 
+
+1 
+
+7,28 
+
+14,18 
+
+25,38 
+
+25,72 
+
+1 
+
+0,91 
+
+0,88 
+
+0,79 
+
+0,40 
+
+As  figuras  5.40  a  5.42  apresentam  uma  análise  de  escalabilidade  da  solução 
+paralela do problema de choque refletido. De acordo com a figura 5.41 é possível obter 
+ganhos significativos em relação ao tempo de análise com a utilização de até 32 núcleos 
+para  esse  problema.  No  caso  onde  se  utilizou  32  núcleos  cada  partição  tem 
+
+ 
+
+81 
+
+aproximadamente 4.300 nós, 24.000 elementos e 30.000 arestas. A tabela 5.8 apresenta 
+os tempos de simulação para o problema de choque refletido em função do número de 
+núcleos utilizados 
+
+5.3.3  Túnel de Vento com um Degrau a Mach 3 
+
+Este  problema  foi  apresentado  em  WOODWARD  e  COLELLA  (1984).  É  um 
+problema muito utilizado até hoje para se avaliar a evolução da solução transiente em 
+códigos computacionais que resolvem as equações de Euler. 
+
+O  problema  inicia-se  com  um  escoamento  uniforme  com  número  de  Mach 
+3M  . A entrada situa-se à esquerda e a saída à direita do domínio. As condições na 
+saída  não  afetam  o  escoamento,  pois  a  velocidade  de  saída  é  sempre  supersônica. 
+Portanto, as condições de contorno são prescritas apenas na entrada. Inicialmente o todo 
+o domínio encontra-se preenchido por um gás perfeito com a relação entre os calores 
+1p  ,  massa  específica 
+específicos  a  pressão  e  volume  constantes 
+yu  .  A  entrada  é  alimentada 
+continuamente  com  gás  apresentando  esses  valores  de  pressão,  massa  específica  e 
+velocidade. Ao longo das paredes, topo e base do domínio, são aplicadas condições de 
+xu   e 
+contorno  de  parede  impermeável  e  condição  de  escorregamento,  ou  seja, 
+yu   nessas paredes. Um esboço esquemático desse problema é apresentado na figura 
+5.43. 
+
+ e  velocidade  com  as  componentes 
+
+,  pressão 
+
+1,4
+
+1,4
+xu   e 
+
+3
+
+0
+
+0
+
+0
+
+Figura 5.43 – Descrição do problema do túnel de vento com um degrau a Mach 3 
+
+(WOODWARD; COLELLA, 1984). 
+
+ 
+
+ 
+
+ 
+
+82 
+
+Na  figura  5.43  o  número  de  Mach  M  relaciona  as  variáveis  do  problema 
+
+conforme equação 2.9. 
+
+Para esse exemplo adotou-se o passo de tempo fixo 
+
+t 
+
+0,001
+
+ que resultou em 
+
+um 
+
+CFL 
+
+1,84
+
+x  ,  0
+
+. A razão entre os calores específicos a pressão e volume constantes é 
+
+max
+.  A  solução  foi  conduzida  até  o  instante 
+3
+
+t  .  O  domínio  do  problema  é 
+1,4
+.  A  velocidade  na  direção  z  foi  mantida  nula 
+0
+durante toda a análise. Foi utilizada uma malha com 3.099.013 tetraedros, 581.831 nós e 
+3.871.411 arestas. Foram realizadas análises considerando 1, 8, 16, 32 e 64 núcleos com 
+o objetivo de avaliar o desempenho da solução em paralelo. 
+
+y  ,  0
+
+1
+
+z 
+
+0,03
+
+4
+
+As figuras 5.44 a 5.51 apresentam a solução para o problema do túnel de vento 
+com  um  degrau a Mach  3 descrito nessa seção. Para  esse problema  apenas  o método 
+YZβ1 foi utilizado. O método YZβ1 representou bem todas as regiões do escoamento 
+que estão descritas e apresentadas em WOODWARD e COLELLA (1984). A evolução 
+transiente da solução também foi representada adequadamente. Essa análise não possui 
+solução  analítica  disponível  e,  portanto,  neste  caso  não  se  avaliou  o  erro  numérico. 
+Nesse  problema  foi  realizada  uma  comparação  qualitativa  em  relação  aos  resultados 
+apresentados em WOODWARD e COLELLA (1984). 
+
+ 
+
+Figura 5.44 – Massa específica para o problema do túnel de vento com um degrau a 
+
+Mach 3 em t = 0,2 (YZβ1). 
+
+ 
+
+ 
+
+ 
+
+83 
+
+ 
+
+ 
+
+Figura 5.45 – Massa específica para o problema do túnel de vento com um degrau a 
+
+Mach 3 em t = 0,4 (YZβ1). 
+
+Figura 5.46 – Massa específica para o problema do túnel de vento com um degrau a 
+
+Mach 3 em t = 0,6 (YZβ1). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+84 
+
+ 
+
+ 
+
+Figura 5.47 – Massa específica para o problema do túnel de vento com um degrau a 
+
+Mach 3 em t = 0,8 (YZβ1). 
+
+Figura 5.48 – Massa específica para o problema do túnel de vento com um degrau a 
+
+Mach 3 em t = 1 (YZβ1). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+85 
+
+Figura 5.49 – Massa específica para o problema do túnel de vento com um degrau a 
+
+Mach 3 em t = 2 (YZβ1). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 5.50 – Massa específica para o problema do túnel de vento com um degrau a 
+
+Mach 3 em t = 3 (YZβ1). 
+
+ 
+
+86 
+
+ 
+
+ 
+
+Figura 5.51 – Massa específica para o problema do túnel de vento com um degrau a 
+
+Mach 3 em t = 4 (YZβ1). 
+
+Figura 5.52 – Particionamento do domínio em 8 subdomínios para o problema do túnel 
+
+de vento com um degrau. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+87 
+
+Figura 5.53 – Detalhe da malha de tetraedros em um subdomínio para o problema do 
+
+túnel de vento com um degrau particionado em 8 subdomínios. 
+
+ 
+
+ 
+
+A figura 5.52 mostra detalhes do particionamento para o caso do túnel de vento 
+com  um  degrau  a  Mach  3  considerando  a  divisão  do  domínio  em  8  subdomínios.  A 
+figura  5.53  apresenta  a  malha  de  tetraedros  usada  na  solução  desse  problema.  Nessa 
+figura tem-se o detalhe da malha em apenas um dos subdomínios.  
+
+ 
+Figura 5.54 – Tempo de análise normalizado para o problema do túnel de vento com um 
+
+degrau (YZβ1). 
+
+ 
+
+ 
+
+88 
+
+Figura 5.55 – Speed up da solução em paralelo para o problema do túnel de vento com 
+
+um degrau (YZβ1). 
+
+ 
+
+ 
+
+ 
+Figura 5.56 – Eficiência da solução em paralelo para o problema do túnel de vento com 
+
+um degrau (YZβ1). 
+
+ 
+
+ 
+
+89 
+
+As  figuras  5.54  a  5.56  apresentam  uma  análise  de  escalabilidade  da  solução 
+paralela para o problema do túnel de vento com um degrau a Mach 3. De acordo com a 
+figura 5.55 é possível obter ganhos significativos em relação ao tempo de análise com a 
+utilização de até 64 núcleos para esse problema. No caso onde se utilizou 64 núcleos 
+cada  partição tem aproximadamente 9.000  nós, 48.000  elementos  e  60.000  arestas.  A 
+tabela 5.9 apresenta os tempos de simulação para o problema do túnel de vento com um 
+degrau a Mach 3 em função do número de núcleos utilizados. A partir dos resultados 
+obtidos nesse caso ficou demonstrado que problemas com malhas ainda maiores do que 
+a apresentada nesse caso devem ser resolvidos com 64 núcleos. 
+
+ 
+
+Tabela 5.9 – Comparação de desempenho da solução paralela para o problema do túnel 
+
+Eficiência 
+
+1 
+
+0,91 
+
+0,91 
+
+0,90 
+
+0,82 
+
+Número de Núcleos  Tempo de Análise 
+DD:HH:MM:SS 
+
+de vento com um degrau (YZβ1). 
+Speed up 
+
+1 
+
+8 
+
+16 
+
+32 
+
+64 
+
+ 
+
+25:16:55:48 
+
+03:11:52:55 
+
+01:18:13:18 
+
+00:21:23:13 
+
+00:11:48:51 
+
+1 
+
+7,35 
+
+14,61 
+
+28,84 
+
+52,21 
+
+5.4  Caso de Aplicação 3D 
+
+Nesta  seção  será  apresentada  uma  aplicação  prática  da  solução  numérica 
+desenvolvida nesse trabalho. Será considerada a explosão gerada a partir de uma nuvem 
+de gás na área de processo de uma plataforma de petróleo do tipo semi-submersível. O 
+objetivo dessa análise é verificar a sobrepressão que as estruturas da plataforma serão 
+submetidas.  Esse  tipo  de  informação  é  útil  no  projeto  estrutural  dos  componentes  da 
+própria  plataforma  e  também  é  importante  nos  estudos  de  análise  de  risco  realizados 
+nessas embarcações. A seguir serão apresentados os detalhes dessa análise numérica. 
+
+ 
+
+90 
+
+5.4.1  Explosão em uma Plataforma Semi-Submersível 
+
+Esse  problema  mostra  que  a  ferramenta  computacional  desenvolvida  ao  longo 
+desse trabalho pode ser aplicada em casos práticos de projetos de engenharia. Portanto, 
+não  faz parte do escopo  desse trabalho  a discussão detalhada de metodologias  usadas 
+em estudos de análise de risco onde a simulação de explosão é apenas uma das diversas 
+análises envolvidas. 
+
+Nessa simulação será considerado um caso hipotético de uma explosão ocorrida 
+na área de processo de uma plataforma semi-submersível. As dimensões da plataforma 
+são dimensões típicas desses tipos de embarcações e também foram adotadas de forma 
+hipotética.  A  quantidade  de  energia  liberada  durante  a  explosão  também  foi  adotada 
+hipoteticamente  considerando  valores  típicos  geralmente  recomendados  por  normas 
+internacionais. 
+
+Um estudo detalhado sobre explosões pode ser encontrado em BJERKETVEDT 
+et. al. (1997). Entretanto, não é escopo do presente trabalho discutir detalhes sobre esse 
+tipo  de  análise.  Apenas  serão  apresentados  conceitos  fundamentais  desse  tópico  para 
+que se  possa  fazer uma  ligação entre  a  solução numérica  das equações  de  Euler  e as 
+simulações de explosões em plataformas.  
+
+Basicamente, as explosões em plataformas são causadas pela combustão de uma 
+mistura ar-gás combustível seguida de liberação rápida de energia, gerando uma onda 
+de pressão. Esse processo se dá geralmente por deflagração ou detonação. No primeiro 
+caso as ondas de pressão formadas se propagam em um regime subsônico, enquanto no 
+segundo  a  propagação  é  supersônica.  As  explosões  podem  ocorrer  em  áreas  abertas, 
+confinadas  ou  parcialmente  confinadas.  Além  disso,  o  congestionamento  gerado  por 
+obstáculos  ao  escoamento,  como  tubulações  e  equipamentos  em  um  ambiente  de 
+processamento  de  petróleo,  pode  favorecer  o  aumento  da  sobrepressão,  que  é  a 
+diferença  entre  pressão  gerada  durante  a  explosão  e  a  pressão  ambiente 
+(BJERKETVEDT et. al., 1997). 
+
+Áreas  de  explosão  com  alto  grau  de  congestionamento  tendem  a  gerar 
+escoamentos mais turbulentos, que por sua vez tendem a gerar maiores sobrepressões, 
+criando assim um ciclo de retroalimentação. 
+
+ 
+
+91 
+
+Dessa  forma,  dependendo  do  tipo  de  área  de  explosão  a  ser  considerada  o 
+fenômeno de turbulência pode se tornar significativo na análise. No presente trabalho 
+são considerados escoamentos não viscosos regidos pelas equações de Euler e, portanto, 
+a turbulência  não é  levada em  conta.  Assim,  para se aplicar  as  equações  de  Euler  na 
+simulação de explosões em plataformas serão consideradas áreas de explosão abertas e 
+com baixo grau de congestionamento. 
+
+Geralmente  uma  análise  de  explosão  em  plataformas  de  petróleo  possui  três 
+etapas.  A  primeira  etapa  é  a  simulação  da  dispersão  de  gases,  onde  são  levados  em 
+consideração  diversos  fatores,  como  a  composição  química  dos  gases  e  a  ventilação 
+local.  O  objetivo  principal  da  simulação  de  dispersão  é  determinar  o  volume  e  a 
+concentração  de  gás  combustível  que  podem  se  acumular  na  área  de  processo  da 
+plataforma. A segunda etapa é a simulação da explosão propriamente dita. Nessa etapa a 
+partir de composição química e da concentração da nuvem de gás que se acumulou na 
+plataforma pode-se determinar a quantidade de energia que será liberada na explosão. 
+Existem  diversos  modelos  que  permitem  estimar  a  quantidade  de  energia  liberada  na 
+explosão, como por exemplo, o modelo de TNT (BJERKETVEDT et. al., 1997). Após a 
+determinação  da  quantidade  de  energia  que  será  liberada  realiza-se  a  simulação  da 
+propagação  da  onda  de  pressão  gerada  pela  explosão.  Outro  fator  importante  nessa 
+segunda  etapa  é  a  localização  do  ponto  de  ignição  da  nuvem  de  gás  combustível 
+(BJERKETVEDT et. al., 1997). A terceira e última etapa é a verificação da integridade 
+de todas as estruturas que foram submetidas ao carregamento gerado pela explosão. 
+
+A API (2007) apresenta as práticas recomendadas a serem seguidas no projeto 
+de plataformas offshore. Nesse contexto, é recomendado que os cenários  de explosão 
+analisados sejam estabelecidos a partir de estudos de análise de risco. As sobrepressões 
+geradas nas explosões podem variar de valores próximos de zero à valores maiores do 
+que 2 bars. As cargas de sobrepressão, utilizadas no projeto das estruturas da plataforma, 
+são caracterizadas pela curva sobrepressão-tempo (API, 2007). 
+
+ 
+
+ 
+
+92 
+
+Figura 5.57 – Modelo simplificado da plataforma semi-submersível. 
+
+ 
+
+ 
+
+Conforme já mencionado anteriormente nesse trabalho serão consideradas áreas 
+de explosão abertas e com baixo grau de congestionamento. Além disso, a análise será 
+limitada  à  simulação  da  propagação  da  onda  de  pressão  gerada  após  a  explosão.  A 
+figura 5.57 apresenta um modelo simplificado da plataforma semi-submersível que será 
+analisada. Nessa figura pode-se observar a área de processo separada do compartimento 
+de  acomodações  por  uma  parede  de  proteção,  geralmente  denominada  blast  wall.  Na 
+área de processo estão instalados todos os equipamentos utilizados no processamento de 
+óleo  ou  gás  da  unidade.  No  compartimento  de  acomodações  encontram-se  os 
+dormitórios  e  a  sala  de  controle  da  plataforma.  Será  considerada  uma  nuvem  de  gás 
+acumulada  na  região  entre  a  parede  de  proteção  e  os  módulos  de  equipamentos, 
+conforme mostrado na figura 5.57. O objetivo dessa análise é verificar a sobrepressão 
+que as estruturas da plataforma serão submetidas. 
+
+ 
+
+ 
+
+93 
+
+ 
+Figura 5.58 – Vista frontal da plataforma semi-submersível. 
+
+Figura 5.59 – Vista superior da plataforma semi-submersível. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+O  deck  da  plataforma  é  um  bloco  com  dimensões  de  50x50x2.  A  origem  do 
+sistema  de  coordenadas  localiza-se  no  canto  inferior  esquerdo  da  figura  5.59  e  sua 
+elevação  é o  piso da plataforma,  onde  Z=0.  As pernas da  plataforma são  blocos  com 
+dimensões de 8x8x20. O compartimento das acomodações é um bloco com dimensões 
+de 6x15x5. Os equipamentos de processo são formados por 3 blocos com dimensões de 
+8x4x12 e um bloco com dimensões de 12x10x12. A parede de proteção está localizada a 
+30 unidades de comprimento da origem e é um bloco com dimensões 2x50x7. A região 
+
+ 
+
+94 
+
+de explosão é um semi-esfera de raio 5 com o centro localizado ponto 
+figuras  5.58  e  5.59  apresentam  a localização  de cada  módulo considerado  no  modelo 
+simplificado da plataforma. 
+
+27,20,0 . As 
+
+
+
+ 
+
+Figura 5.60 – Domínio computacional utilizado na simulação da explosão. 
+ 
+
+ 
+
+Nesse  problema  considerou-se  hipoteticamente  que  a  explosão  ocorrida  na 
+plataforma gerou uma sobrepressão inicial de 2 na região da nuvem de gás. Esse valor é 
+um valor típico recomendado pela API (2007) e, por isso, foi usado nessa análise. Dessa 
+forma, adotou-se uma pressão igual a 3 no interior da região de explosão e a pressão 
+ambiente  foi  considerada  igual  a  1.  Por  questões  de  simplicidade  a  massa  específica 
+inicial foi adotada igual a 1 em todo o domínio. 
+
+O domínio computacional utilizado se limitou a região do deck da plataforma, 
+conforme  apresentado  na  figura  5.60.  Foi  considerado  um  bloco  com  dimensões  de 
+50x50x50. A região das pernas da plataforma não foi simulada para evitar a geração de 
+uma malha de tetraedros excessivamente grande e desnecessária, visto que o foco dessa 
+análise é a área de processo da plataforma. 
+
+ 
+
+95 
+
+ 
+
+Figura 5.61 – Detalhe da malha de tetraedros, mostrando apenas suas respectivas 
+
+superfícies, usada na explosão na plataforma semi-submersível, vista 1. 
+
+ 
+
+ 
+
+Figura 5.62 – Detalhe da malha de tetraedros, mostrando apenas suas respectivas 
+
+superfícies, usada na explosão na plataforma semi-submersível, vista 2. 
+
+ 
+
+ 
+
+ 
+
+Um detalhe da malha de tetraedros utilizada nesse problema é apresentado nas 
+figuras 5.61 e 5.62, onde apenas a malha de superfície está mostrada. A malha utilizada 
+possui  13.025.999  tetraedros,  2.220.842  nós  e  15.848.701  arestas.  Essa  análise  foi 
+conduzida com 64 núcleos. Para esse exemplo adotou-se o passo de tempo fixo 
+ 
+0,1
+
+t 
+
+ 
+
+96 
+
+que  resultou  em  um 
+
+CFL
+
+ .  A  razão  entre  os  calores  específicos  a  pressão  e 
+
+2
+
+volume constantes é 
+
+max
+. A simulação foi conduzida até o instante 
+1,4
+
+t  . 
+5
+
+A solução desse problema  está apresentada nas figuras 5.63  a 5.86. A pressão 
+em vários instantes está apresentada nas figuras 5.63 a 5.74. Foi possível observar que 
+quando a onda de pressão encontra um obstáculo ocorre um aumento de pressão e em 
+seguida  o  fenômeno  de  reflexão.  Esses  fenômenos  foram  representados  de  forma 
+adequada  pela  simulação.  As  figuras  5.75  a  5.86  mostram  a  massa  específica  em 
+diferentes instantes. 
+
+ 
+
+Figura 5.63 – Pressão durante a explosão na plataforma semi-submersível em  
+
+ 
+
+t = 0. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+97 
+
+ 
+
+ 
+
+Figura 5.64 – Pressão durante a explosão na plataforma semi-submersível em  
+
+t = 1. 
+
+Figura 5.65 – Pressão durante a explosão na plataforma semi-submersível em  
+
+t = 2. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+98 
+
+ 
+
+ 
+
+Figura 5.66 – Pressão durante a explosão na plataforma semi-submersível em  
+
+t = 3. 
+
+Figura 5.67 – Pressão durante a explosão na plataforma semi-submersível em  
+
+t = 4. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+99 
+
+Figura 5.68 – Pressão durante a explosão na plataforma semi-submersível em  
+
+t = 5. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 5.69 – Pressão durante a explosão na plataforma semi-submersível em  
+
+t = 0. 
+
+ 
+
+100 
+
+ 
+
+ 
+
+Figura 5.70 – Pressão durante a explosão na plataforma semi-submersível em  
+
+t = 1. 
+
+Figura 5.71 – Pressão durante a explosão na plataforma semi-submersível em  
+
+t = 2. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+101 
+
+ 
+
+ 
+
+Figura 5.72 – Pressão durante a explosão na plataforma semi-submersível em  
+
+t = 3. 
+
+Figura 5.73 – Pressão durante a explosão na plataforma semi-submersível em  
+
+t = 4. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+102 
+
+Figura 5.74 – Pressão durante a explosão na plataforma semi-submersível em  
+
+ 
+
+t = 5. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figura 5.75 – Massa específica durante a explosão na plataforma semi-submersível em  
+
+t = 0. 
+
+ 
+
+103 
+
+ 
+Figura 5.76 – Massa específica durante a explosão na plataforma semi-submersível em  
+
+t = 1. 
+
+ 
+Figura 5.77 – Massa específica durante a explosão na plataforma semi-submersível em  
+
+t = 2. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+104 
+
+ 
+Figura 5.78 – Massa específica durante a explosão na plataforma semi-submersível em  
+
+t = 3. 
+
+ 
+Figura 5.79 – Massa específica durante a explosão na plataforma semi-submersível em  
+
+t = 4. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+105 
+
+ 
+Figura 5.80 – Massa específica durante a explosão na plataforma semi-submersível em  
+
+t = 5. 
+
+ 
+Figura 5.81 – Massa específica durante a explosão na plataforma semi-submersível em  
+
+t = 0. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+106 
+
+ 
+Figura 5.82 – Massa específica durante a explosão na plataforma semi-submersível em  
+
+t = 1. 
+
+ 
+Figura 5.83 – Massa específica durante a explosão na plataforma semi-submersível em  
+
+t = 2. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+107 
+
+ 
+Figura 5.84 – Massa específica durante a explosão na plataforma semi-submersível em  
+
+t = 3. 
+
+ 
+Figura 5.85 – Massa específica durante a explosão na plataforma semi-submersível em  
+
+t = 4. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+108 
+
+ 
+Figura 5.86 – Massa específica durante a explosão na plataforma semi-submersível em  
+
+ 
+
+t = 5. 
+
+A  figura  5.87  mostra  a  curva  típica  de  sobrepressão  gerada  pela  explosão  na 
+plataforma.  Essa  curva  é  caracterizada  pelo  pico  de  sobrepressão  de  0,7  unidades  de 
+pressão  e  4  unidades  de  tempo.  Através  das  relações  dadas  na  seção  2.3  é  possível 
+converter esses valores para um sistema de unidades desejado. Para gerar esse resultado 
+foi adotado o ponto de monitoramento com as coordenadas 
+27,31,0 . Esse resultado é 
+usado  nos  estudos  de  análise  de  risco  realizados  em  plataformas  (API,  2007).  Dessa 
+forma,  foi  possível  mostrar  que  a  ferramenta  computacional  desenvolvida  ao  longo 
+desse trabalho pode ser usada em projetos de engenharia. 
+
+
+
+ 
+
+109 
+
+Figura 5.87 – Sobrepressão durante a explosão na plataforma semi-submersível em 
+
+função do tempo de análise. 
+
+ 
+
+ 
+
+A tabela 5.10 apresenta o tempo gasto nessa análise, o método de estabilização 
+utilizado e número de núcleos adotado. A malha usada nessa análise é considerada de 
+grande porte e tempo gasto para resolver esse problema mostra a robustez da ferramenta 
+desenvolvida para alcançar a solução paralela das equações de Euler. 
+
+ 
+
+Tabela 5.10 – Tempo de análise para o problema da explosão na plataforma. 
+Tempo de Análise 
+DD:HH:MM:SS 
+
+Número de Núcleos 
+
+Método de Estabilização  
+
+YZβ1 
+
+64 
+
+00:00:46:35 
+
+ 
+
+ 
+
+ 
+
+ 
+
+110 
+
+CONCLUSÕES 
+
+Considerações Finais 
+
+O  presente  trabalho  apresentou a  solução  numérica  das  equações  de  Euler  3D 
+compressíveis em um ambiente de computação paralela de memória distribuída. Nesse 
+trabalho foi utilizado o paralelismo por troca de mensagens através do uso da biblioteca 
+MPI. 
+
+Foi adotada uma formulação estabilizada de elementos finitos para discretizar a 
+formulação matemática. A formulação de elementos finitos usada foi uma formulação 
+do tipo SUPG acrescida de um operador de captura de descontinuidades. Foram testados 
+diferentes parâmetros de estabilização e, portanto, diferentes métodos de estabilização 
+foram avaliados. 
+
+No presente trabalho foi adotado um esquema de estrutura de dados por aresta. 
+Neste caso a matriz global referente a discretização do problema nunca é explicitamente 
+montada. As  matrizes originadas da discretização foram armazenas por arestas, o que 
+melhora a eficiência computacional da solução. 
+
+Foram  utilizados  problemas  clássicos  para  avaliar  a  solução  numérica  obtida 
+nesse  trabalho.  Foram  usados  problemas  1D,  2D  e  3D.  Todos  os  métodos  de 
+estabilização avaliados apresentaram bons resultados.  
+
+No problema  de tubo de  choque de Sod foram avaliados  todos  os  métodos de 
+estabilização.  O  método  CAU  apresentou  os  resultados mais  difusivos  nas  regiões de 
+gradientes  elevados  e  também  apresentou  o  maior  erro  numérico  dessa  análise.  Os 
+métodos  δ91,  KIRK1  e  KIRK2  apresentaram  comportamentos  semelhantes  entre  si, 
+com  valores  de  erros  numéricos  praticamente  iguais.  Os  métodos  YZβ1  e  YZβ2 
+apresentaram os menores erros numéricos da análise e, conseqüentemente os melhores 
+
+ 
+
+111 
+
+desempenho. Esses métodos capturam bem as regiões de gradientes elevados. O método 
+YZβ1 apresentou o melhor desempenho da análise.  
+
+No problema de tubo de choque de Lax-Harden também foram avaliados todos 
+os métodos de estabilização. Mais uma vez os métodos YZβ1 e YZβ2 apresentaram os 
+melhores  desempenho  quando  comparado  com  os  demais  métodos.  Esses  métodos 
+capturaram  bem  as  regiões  de  gradientes  elevados.  O  método  YZβ1  apresentou  o 
+melhor desempenho da análise. Os métodos CAU, δ91, KIRK1 e KIRK2 apresentaram 
+comportamento difusivo nas regiões de gradientes elevados e os seus respectivos erros 
+numéricos foram quase idênticos. Nesse caso o método CAU apresentou erro numérico 
+ligeiramente  menor do  que  os  métodos  δ91,  KIRK1  e  KIRK2.  Os  métodos  KIRK1  e 
+KIRK2 foram os que apresentaram o maior erro numérico nessa análise. 
+
+Os testes 1D mostraram que os métodos YZβ1 e YZβ2 apresentam desempenhos 
+superiores quando comparados com os demais métodos. Esses métodos capturaram bem 
+as  regiões  de  gradientes  elevados  presentes  nos  problemas  de  tubo  de  choque.  Os 
+métodos CAU, δ91,  KIRK1  e  KIRK2 apresentaram comportamentos semelhantes nos 
+teste  de  tubo  de  choque.  Esses  métodos  apresentaram  comportamentos  difusivos  nas 
+regiões  de  gradientes  elevados.  O  método  YZβ1  foi  o  melhor  nos  dois  problemas  de 
+tubos de choque. Nos dois casos de tubo de choque foi utilizada a mesma malha com 
+302.169 tetraedros. É importante destacar que o tubo de choque de Lax-Harden é um 
+problema que apresenta um grau de dificuldade bem maior do que o tubo de choque de 
+Sob.  Esse fato pode  ser confirmado pelos valores  dos erros  numéricos calculados em 
+cada  um  dos  casos.  No  tubo  de  choque  Sod  o  erro  numérico  máximo  foi  3,98% 
+enquanto no tubo de choque de Lax-Harden o maior valor de erro numérico foi 19,03%. 
+
+Com  base  nos  resultados  obtidos  nos  casos  1D  apenas  o  método  YZβ1  foi 
+
+avaliado nos casos 2D e 3D.  
+
+Os  problemas  de  choque  oblíquo  e  choque  refletido  apresentaram  resultados 
+semelhantes.  Nesses  problemas  o  método  YZβ1  apresentou  um  bom  desempenho, 
+representando muito bem todas as regiões do escoamento. Esses casos apresentam um 
+grau  de  dificuldade  da  solução  menor  do  que  nos  problemas  de  tubo  de  choque.  A 
+malha  usada  no  problema  do  choque  oblíquo  tem  410.006  elementos  tetraédricos, 
+enquanto  a  malha  do  choque  refletido  tem  760.498  tetraedros.  O  método  YZβ1 
+
+ 
+
+112 
+
+apresentou  2,57%  de  erro  numérico  no  caso  do  choque  oblíquo  e  2,83%  no  caso  do 
+choque refletido. Mais uma vez o método YZβ1 capturou bem as regiões de elevados 
+gradientes presentes nos problemas de choque oblíquo e choque refletido.  
+
+O problema do túnel de vento com um degrau a Mach 3 também foi resolvido 
+apenas  com  o  método  YZβ1.  Esse  problema  não  apresenta  a  solução  analítica  e, 
+portanto,  apenas  uma  comparação  qualitativa  foi  realizada  com  base  nos  resultados 
+disponíveis na literatura. A malha adotada nessa simulação possui 3.099.013 tetraedros. 
+O  método  YZβ1  representou  bem  todas  as  regiões  presentes  no  escoamento  e  a 
+evolução transiente da solução também foi representada adequadamente. 
+
+O paralelismo adotado nesse trabalho mostrou-se bastante eficiente nos testes de 
+escalabilidade,  principalmente  quando  foram  utilizadas  malhas  de  grande  porte.  Os 
+resultados mostraram que a eficiência do paralelismo aumenta com o tamanho da malha 
+de  tetraedros.  Nos  problemas  de  tubo  de choque,  onde  a  malha  pode  ser considerada 
+pequena,  obteve-se  ganho  computacional  com  até  16  núcleos.  Nos  casos  do  choque 
+oblíquo e o choque refletido, onde as malhas podem ser consideradas de porte médio, 
+obteve-se ganho computacional com até 32 núcleos. No caso do problema do túnel de 
+vento,  onde  a  malha  já  pode  ser  considerada  de  grande  porte,  foram  obtidos  ganhos 
+computacionais com até 64 núcleos. Portanto, para malhas ainda maiores optou-se em 
+resolvê-las  somente  com  64  núcleos.  O  problema  da  simulação  da  explosão  na 
+plataforma  utilizou  uma  malha  com  mais  de  13  milhões  de  tetraedros,  que  pode  ser 
+considerada uma  malha de  grande  porte, e  sua  solução foi  alcançada em  cerca  de  46 
+minutos com a utilização de 64 núcleos. 
+
+Foi  utilizado  um  problema  de  aplicação  3D  para  demonstrar  a  robustez  da 
+ferramenta computacional desenvolvida. Neste caso simulou-se a explosão ocorrida na 
+área de processo de uma plataforma semi-submersível. Tratou-se de um caso hipotético 
+de  aplicação  onde  a  explosão  se  deu  pelo  acúmulo  de  gás  combustível  na  área  de 
+processo  da  plataforma.  A  simulação  da  propagação  da  onda  de  pressão  mostrou-se 
+adequada.  Foi  possível  verificar  os  efeitos  de  reflexão  ocorridos  na  onda  de  pressão 
+quando  a  mesma  chocou-se  contra  obstáculos.  Os  resultados  mostraram  que  o 
+compartimento  de  acomodações  não  foi  submetido  a  sobrepressões  geradas  pela 
+explosão. 
+
+ 
+
+113 
+
+As  principais  contribuições  desse  trabalho  foram:  i)  A  avaliação  de  vários 
+métodos  estabilizados  na  solução  das  equações de  Euler.  Neste  caso  o método  YZβ1 
+mostrou-se a  melhor opção, embora todos  os  métodos avaliados  tenham apresentados 
+bons resultados; ii) A solução de problemas de grande porte usando o paralelismo por 
+troca de mensagens. A solução paralela apresentada nesse trabalho se mostrou bastante 
+eficiente ao resolver um problema com mais de 13 milhões de tetraedros em cerca de 46 
+minutos.  A  implementação  da  solução  em  paralelo  permite  resolver  problemas  ainda 
+maiores, ficando o tamanho do problema limitado ao recurso computacional disponível. 
+Problemas  regidos  pelas  equações  de  Euler  compressíveis  geralmente  necessitam  de 
+malhas  de  grande  porte  para  serem  solucionados.  Portanto,  a  solução  paralela  das 
+equações de Euler é uma estratégia extremamente útil e importante na solução desses 
+problemas;  iii)  O  desenvolvimento  de  um módulo  de escoamentos compressíveis  que 
+será  acoplado ao  EdgeCFD.  Esse módulo  computacional permitirá que novos estudos 
+sejam conduzidos no NACAD a partir do que foi desenvolvido no presente trabalho. 
+
+Embora tenha sido usado um caso de aplicação na área de petróleo, simulação de 
+uma  explosão  em  uma  plataforma  semi-submersível,  a  ferramenta  computacional 
+desenvolvida nesse trabalho está perfeitamente pronta para ser aplicada em outras áreas. 
+Uma possível aplicação seria na área aeronáutica, onde é possível simular o escoamento 
+supersônico  ao  redor  de  uma  aeronave  e  usar  os  resultados  para  avaliar  o  perfil 
+aerodinâmico dos componentes da aeronave. 
+
+Trabalhos Futuros 
+
+Uma sugestão de trabalho futuro é estender a formulação matemática para tratar 
+escoamentos regidos pelas equações de Navier-Stokes compressíveis.  Nesse caso será 
+preciso acrescentar às equações de Euler o termo viscoso e o termo fonte. Isso implica 
+acrescentar novas matrizes à formulação discreta. Essas matrizes serão referentes a cada 
+novo termo adicionado. Ainda nesse contexto, o tratamento do fenômeno de turbulência 
+se tornará importante no caso de escoamentos regidos pelas equações de Navier-Stokes. 
+Portanto,  modelos  de  turbulência  também  deverão  ser  considerados  nesse  novo 
+problema.  Essa  nova  formulação  matemática  permitirá  aplicação,  por  exemplo,  em 
+simulações de explosões em ambientes confinados e com alto grau de congestionamento, 
+caso em que as equações de Euler não se aplicam. 
+
+ 
+
+114 
+
+Uma segunda sugestão para trabalhos futuros é o tratamento da interação fluido-
+estrutura, onde o código de escoamento é acoplado a um código de análise estrutural. 
+Nas simulações de explosões, por exemplo, a onda de pressão ao se propagar choca-se 
+contra obstáculos e, conseqüentemente, ocorre uma aplicação de força nesses obstáculos. 
+Assim, o resultado do escoamento é usado como carregamento numa análise estrutural 
+para verificar a integridade das estruturas que foram submetidas aos efeitos da explosão. 
+
+ 
+
+115 
+
+REFERÊNCIAS BIBLIOGRÁFICAS 
+
+ALIABADI,  S.  K.,  RAY,  S.  E.,  TEZDUYAR,  T.  E.,  1993,  “SUPG  Finite  Element 
+Computation  of  Viscous  Compressible  Flows  Based  on  the  Conservation  and 
+Entropy Variables Formulations”, Computational Mechanics, vol. 11, pp. 300-312. 
+
+ALIABADI, S. K., TEZDUYAR, T. E., 1995, “Parallel Fluid Dynamics Computations 
+in  Aerospace  Applications”,  International  Journal  for  Numerical  Methods  in 
+Fluids, vol. 21, pp. 783-805. 
+
+ALMEIDA,  R.  C.,  GALEÃO,  A.  C.,  1996,  “An  Adaptative  Petrov-Galerkin 
+Formulation for the Compressible Euler and Navier-Stokes Equations”, Computer 
+Methods in Applied Mechanics and Engineering, vol. 129, pp. 157-176. 
+
+ALVES, J. L. D., COUTINHO, A. L. G. A., MARTINS, M. A. D., da SILVA, C. E.; 
+ELIAS, R. N., FERREIRA, M. D. A. S., GUEVARA Jr., N. O., ROCHINHA, F. 
+A., da SILVA, D. F .C., 2012, “EdgeCFD-ALE: A stabilized finite element system 
+in  offshore  engineering”,  In:  International 
+for  fluid-structure 
+Conference  on  Ocean,  Offshore  and  Arctic  Engineering,  Rio  de  Janeiro. 
+Proceedings of the 31st OMAE 2012, vol. 4. pp. 299-308. 
+
+interaction 
+
+ANDERSON JR, J. D., 1990, Modern Compressible Flow: With Historical Perspective. 
+
+2 ed. New York, McGraw-Hill. 
+
+API,  2007,  “RP  2A-WSD:  Recommended  Practice  for  Planning,  Designing  and 
+Construction  Fixed  Offshore  Platforms  –  Working  Stress  Design  (WSD)”, 
+American Petroleum Institute. 
+
+BJERKETVEDT,  D.,  BAKKE,  J.  R.,  van  WINGERDEN,  K.,  1997,  “Gas  Explosion 
+
+Handbook”, Journal of Hazardous Materials, vol. 52, pp. 1-150. 
+
+ 
+
+116 
+
+BROOKS,  A.  N.,  HUGHES,  T.J.R.,  1982,  “Streamline  Upwind/Petrov-Galerkin 
+formulations  for  convection  dominated  flows  with  particular  emphasis  on  the 
+incompressible  Navier-Stokes  equations”,  Computer  Methods 
+in  Applied 
+Mechanics and Engineering, vol. 32, pp.199-259. 
+
+CATABRIGA,  L.,  2000,  Soluções  Implícitas  das  Equações  de  Euler  empregando 
+Estruturas de Dados por Aresta. Tese de D.Sc., COPPE/UFRJ, Rio de Janeiro, RJ, 
+Brasil. 
+
+CATABRIGA, L., COUTINHO, A. L. G. A., 2002, “Implicit SUPG Solution of Euler 
+Equations  using  Edge-based  Data  Structure”,  Computer  Methods  in  Applied 
+Mechanics and Engineering, vol. 191, pp. 3477-3490. 
+
+CATABRIGA,  L.,  COUTINHO,  A.L.G.A.,  TEZDUYAR,  T.E.,  2005,“Compressible 
+Flow  SUPG  Parameters  Computed from  Element  Matrices”,  Communications  in 
+Numerical Methods in Engineering, vol. 21, pp. 465–476. 
+
+CATABRIGA,  L.,  COUTINHO,  A.L.G.A.,  TEZDUYAR,  T.E., 2006, “Compressible 
+from  degree-of-freedom 
+
+Flow  SUPG  Stabilization  Parameters  Computed 
+Submatrices”, Computational Mechanics, vol. 38, pp. 334–343. 
+
+CATABRIGA,  L.,  SOUZA,  D.  A.  F.,  COUTINHO,  A.  L.  G.  A.,  TEZDUYAR,  T., 
+2009,  “Three-Dimensional  Edge-based  SUPG  Computation  of 
+Inviscid 
+Compressible Flows with YZβ Shock-Capturing”, Journal of Applied Mechanics, 
+vol. 76, 021208, doi: 10.1115/1. 3062968. 
+
+COSTA, G. K., LYRA, P. R. M., de OLIVEIRA LIRA, C. A. B., 2005, “Numerical 
+Simulation  of  Two  Dimensional  Compressible  and  Incompressible  Flows”, 
+Journal of the Brazilian Society of Mechanical Sciences and Engineering, vol. 27, 
+pp. 372-380. 
+
+COUTINHO,  A.  L.  G.  A.,  MARTINS,  A.  D.,  ALVES,  J.  L.  D.,  LANDAU,  L., 
+MORAES, A., 2001, “Edge-based Finite Element Techniques for Non-linear Solid 
+in 
+Mechanics  Problems”, 
+Engineering, vol. 50, pp. 2053-2068. 
+
+for  Numerical  Methods 
+
+International  Journal 
+
+ 
+
+117 
+
+ELIAS,  R.  N.,  2007,  Estrutura  de  Dados  por  Aresta  para  Simulação  Paralela  de 
+Escoamentos  Incompressíveis  pelo  Método  Estabilizado  dos  Elementos  Finitos. 
+Tese de D.Sc., COPPE/UFRJ, Rio de Janeiro, RJ, Brasil. 
+
+ELIAS, R. N., CAMATA, J. J., AVELEDA, A. A., COUTINHO, A. L. G. A., 2011, 
+“Evaluation  of  Message  Passing  Communication  Patterns  in  Finite  Element 
+Solution of Coupled Problems”, Lecture Notes in Computer Science, vol. 6449, pp. 
+306-313. 
+
+ELIAS,  R.  N.,  COUTINHO,  A.  L.  G.  A.,  MARTINS  M.  A.  D.,  2006,  “Inexact 
+Newton-Type  Methods  for  the  Solution  of  Steady  Incompressible  Viscoplastic 
+Flows with the SUPG/PSPG Finite Element Formulation”, Computer Methods in 
+Applied Mechanics and Engineering, vol. 195, pp. 3145-3167. 
+
+ELIAS, R. N., MARTINS M. A. D., COUTINHO, A. L. G. A., 2006, “Parallel Edge-
+based  Solution  of  Viscoplastic  Flows  with  the  SUPG/PSPG  Formulation”, 
+Computational Mechanics, vol. 38, pp. 365-381. 
+
+GALEÃO,  A.  C.,  DUTRA  DO  CARMO,  E.  G.,  1988,  “A  Consistent  Approximate 
+Upwind Petrov-Galerkin Method for Convection-Dominated Problems”, Computer 
+Methods in Applied Mechanics and Engineering, vol. 68, pp. 83-95. 
+
+GONÇALVES  JR.,  2011,  Uma  Formulação  Estável  de  Elementos  Finitos  com 
+Precisão Temporal de 2ª Ordem para Simulação de Escoamentos Incompressíveis. 
+Tese de D.Sc., COPPE/UFRJ, Rio de Janeiro, RJ, Brasil. 
+
+HAUKE,  G.,  HUGHES,  T.J.R.,  1998,  “A  Comparative  Study  of  Different  Sets  of 
+Variables  for  Solving  Compressible  and  Incompressible  Flows”,  Computer 
+Methods in Applied Mechanics and Engineering, vol. 153, pp.1-44. 
+
+HEATH, M. T., 2002, Scientific Computing: A Introductory Survey. 2 ed. New York, 
+
+McGraw-Hill.. 
+
+ 
+
+118 
+
+HIRSH  C.,  1992,  Numerical  computation  of 
+
+flows: 
+Computational  methods  for  inviscid  and  viscous  flows.  New  York,  Johns  Wiley 
+and Sons Ltd. 
+
+internal  and  external 
+
+HUGHES,  T.  J.  R.,  1987,  The  Finite  Element Method  –  Linear  Static  and  Dynamic 
+
+Finite Element Analysis. Englewoods Cliffs, New Jersey, Prentice-Hall. 
+
+HUGHES,  T.  J.  R.,  FRANCA,  L.  P.,  MALLET,  M.,  1986,  “A  New  Finite  Element 
+Formulation  for  Computational  Fluid  Dynamics:  I.  Symmetric  Forms  of  the 
+Compressible  Euler  and  Navier-Stokes  Equations  and  The  Second  Law  of 
+Thermodynamics”, Computer Methods in Applied Mechanics and Engineering, vol. 
+54, pp. 223-234. 
+
+HUGHES,  T.  J.  R.,  MALLET,  M.,  1986,  “A  New  Finite  Element  Formulation  for 
+Computational  Fluid  Dynamics:  III.  The  Generalized  Streamline  Operator  for 
+Multidimensional  Advective-Diffusive  Systems”,  Computer  Methods  in  Applied 
+Mechanics and Engineering, vol. 58, pp. 305-328. 
+
+HUGHES,  T.  J.  R.,  MALLET,  M.,  1986,  “A  New  Finite  Element  Formulation  for 
+Computational  Fluid  Dynamics:  IV.  A  Discontinuity-Capturing  Operator  for 
+Multidimensional  Advective-Diffusive  Systems”,  Computer  Methods  in  Applied 
+Mechanics and Engineering, vol. 58, pp. 329-336. 
+
+HUGHES,  T.  J.  R.,  MALLET,  M.,  MIZUKAMI,  A.,  1986,  “A  New  Finite  Element 
+Formulation for Computational Fluid Dynamics: II. BEYOND SUPG”, Computer 
+Methods in Applied Mechanics and Engineering, vol. 54, pp. 341-355. 
+
+HUGHES, T. J. R., TEZDUYAR, T. E., 1984, “Finite Element Methods for First-Order 
+Hyperbolic  Systems  with  Particular  Emphasis  on  the  Compressible  Euler 
+Equations”, Computer Methods in Applied Mechanics and Engineering, vol. 45, pp. 
+217-284. 
+
+HUGHES, T. JR, SCOVAZZI, G., TEZDUYAR, T. E., 2010, “Stabilized Methods for 
+
+Compressible Flows”, Journal of Scientific Computing, vol. 43, pp. 343-368. 
+
+ 
+
+119 
+
+KARYPIS, G., KUMAR, V., 1998. Metis 4.0: Unstructured Graph Partitioning and 
+
+Sparse Matrix Ordering System. Technical report. Department of Computer 
+Science, University of Minnesota, EUA. Disponível em: 
+<http://glaros.dtc.umn.edu/gkhome> 
+
+KELLY, C. T., 1995, Iterative Methods for Linear and Nonlinear Equations. Frontiers 
+
+in Applied Mathematics, SIAM, Philadelphia. 
+
+KIRK,  B.,  2010,  “Adiabatic  Shock  Capturing  in  Perfect  Gas  Hypersonic  Flows”, 
+
+International Journal for Numerical Methods in Fluids, vol. 64, pp. 1041-1062. 
+
+KIRK, B., BOVA, S. W., BOND, B., 2010, “Influence of Stabilization Parameters in 
+the  SUPG  Finite  Element  Method  for  Hypersonic  Flows”,  48th  AIAA  American 
+Institute of Aeronautics and Astronautics, Aerospace Sciences Meeting Including 
+the New Horizons Foruns and Aerospace Exposition 4-7 January 2010, Orlando, 
+Florida, USA. 
+
+LE BEAU, G. J., RAY, S. E., ALIABADI, S. K., TEZDUYAR, T. E., 1993, “SUPG 
+Finite  Element  Computation  of  Compressible  Flows  with  the  Entropy  and 
+Conservation Variables Formulations”, Computer Methods in Applied Mechanics 
+and Engineering, vol. 104, pp. 397-422. 
+
+LE  BEAU,  G.  J.,  TEZDUYAR,  T.  E.,  1991,  “Finite  Element  Computation  of 
+Compressible  Flows  with  the  SUPG  Formulation”,  Advances  in  Finite  Element 
+Analysis in Fluid Dynamics, ASME, vol. 123, pp. 21-27. 
+
+LUO,  H.,  BAUM,  J.  D.,  LÖHNER,  R.,  2006,  “A  hybrid  Cartesian  grid and  gridless 
+method for compressible flow”, Journal of Computational Physics, vol. 214, pp. 
+618-632. 
+
+MARTINS,  M.  A.  D.,  2001,  Estrutura  de  Dados  por  Aresta  para  Simulação  de 
+Problemas de Plasticidade Computacional. Tese de D.Sc., COPPE/UFRJ, Rio de 
+Janeiro, RJ, Brasil. 
+
+ 
+
+120 
+
+MARTINS, M., ELIAS, R., COUTINHO, A., 2006, “EdgePack: A Parallel Vertex and 
+Node  Reordering  Package 
+in 
+Unstructured  Grids”,  7th.  High  Performance  Computing  Science  –  VECPAR’06, 
+LNCS 4395, Rio de Janeiro, Brazil. 
+
+for  Optimizing  Edge-Based  Computations 
+
+NAZAROV,  M.,  HOFFMAN,  J.,  2010,  “An  Adaptative  Finite  Element  Method  for 
+Inviscid  Compressible  Flow”,  International  Journal  for  Numerical  Methods  in 
+Fluids, vol. 64, pp. 1102-1128. 
+
+OBERKAMPF,  W.  L.,  BARONE,  M.  F.,  2006,  “Measures  of  agreement  between 
+computational  and  experimental:  Validation  metrics”,  Journal  of  Computational 
+Physics, vol. 217, pp. 5-36. 
+
+OBERKAMPF,  W.  L.,  TRUCANO,  T.  G.,  2002,  “Verification  and  validation  in 
+computational fluid dynamics”, Progress in Aerospace Science, vol. 38, pp. 209-
+272. 
+
+PARAIZO,  P.  L.  B.,  2009,  Modelagem  Numérica  dos  Processos  de  Transporte  e 
+Deposição de Areia por Correntes de Densidade: Uma Ferramenta para o Estudo 
+dos Turbiditos. Tese de D.Sc., COPPE/UFRJ, Rio de Janeiro, RJ, Brasil. 
+
+RIBEIRO, F. L. B., COUTINHO A. L. G. A., 2005, “Comparison between Element, 
+Edge and Compressed Storage Schemes for Iterative Solutions in Finite Element 
+Analysis, International Journal for Numerical Methods in Engineering, vol. 63, pp. 
+569-588. 
+
+SAAD,  Y,  SCHULTZ,  M.  H.,  1986,  “GMRES:  A  Generalized  Minimal  Residual 
+Algorithm for Solving Non-Symmetric Systems”, SIAM Journal of Scientific and 
+Statistical Computing, vol.7, pp. 856-869. 
+
+SAAD,  Y.,  1996,  Iterative  Methods  for  Sparse  Linear  Systems.  Boston,  PWS 
+
+Publishing Company. 
+
+SCHWER,  L.  E.,  2007,  “Validation  metrics  for  response  histories:  perspectives  and 
+
+case study”, Engineering with Computers, vol. 23, pp. 295-309. 
+
+ 
+
+121 
+
+SCOVAZZI,  G..,  CHRISTON,  M.  A.,  HUGHES,  T.  J.  R.,  SHADID,  J.  N.,  2007, 
+“Stabilized Shock Hydrodynamics: I. A Lagrandian Method”, Computer Methods 
+in Applied Mechanics and Engineering, vol. 196, pp. 923-966. 
+
+SESINI,  P.  A.,  2006,  Um  Estudo  Sobre  a  Solução  de  Leis  de  Conservação  Não 
+Lineares por Elementos Finitos Estabilizados. Tese de D.Sc., COPPE/UFRJ, Rio 
+de Janeiro, RJ, Brasil. 
+
+SHAKIB,  F.,  1988,  Finite  Element  Analysis  of  the  Compressible  Euler  and  Navier-
+
+Stokes Equations. Ph.D. Thesis, Stanford University. 
+
+SHAKIB,  F.,  HUGHES,  T.  J.  R.,  JOHAN,  Z.,  1989,  “A  Multi-element  Group 
+Preconditioned  GMRES  Algorithm  for  Nonsymmetric  Systems  Arising  in  Finite 
+Element  Analysis”,  Computer  Methods  in  Applied  Mechanics  and  Engineering, 
+vol. 75, pp. 415-456. 
+
+SHAKIB,  F.,  HUGHES,  T.  J.  R.,  JOHAN,  Z.,  1991,  “A  New  Finite  Element 
+Formulation for Computational Fluid Dynamics: X. The Compressible Euler and 
+Navier  Stokes  Equations”,  Computer  Methods  in  Applied  Mechanics  and 
+Engineering, vol. 89, pp. 141-219. 
+
+SOD,  G.  A.,  1978,  “A  Survey  of  Several  Finite  Difference  Methods  for  Systems  of 
+Nonlinear Hyperbolic Conservation Laws”, Journal of Computational Physics, vol. 
+27, pp. 1-31. 
+
+SOUZA,  D.  A.  F.,  2008,  Técnicas  Computacionais  para  Elementos  Finitos 
+Estabilizados na Solução de Leis de Conservação Hiperbólicas não Lineares. Tese 
+de D.Sc., COPPE/UFRJ, Rio de Janeiro, RJ, Brasil. 
+
+TEZDUYAR,  T.  E.,  SENGA,  M.,  2006,  “Stabilization  and  Shock-Capturing 
+Parameters in SUPG formulation of Compressible Flows”, Computer Methods in 
+Applied Mechanics and Engineering, vol. 195, pp. 1612-1632. 
+
+ 
+
+122 
+
+TEZDUYAR,  T.  E.,  SENGA,  M.,  2007,  “SUPG  Finite  Element  Computation  of 
+Inviscid Supersonic Flows with YZβ Shock-Capturing”, Computer & Fluids, vol. 
+36, pp. 147-159. 
+
+TEZDUYAR,  T.  E.,  SENGA,  M.,  VICKER,  D.,  2006,  “Computation  of  Inviscid 
+Supersonic Flows Around Cylinders and Spheres with the SUPG formulation and 
+YZβ Shock-Capturing”, Computational mechanics, vol. 38, pp. 469-481. 
+
+VAN GIJZEN, M. B., 1995, “Large Scale Finite Element Computations with GMRES-
+like  Methods on a CRAY  Y-MP”, Applied  Numerical Mathematics,  vol.  19,  pp. 
+51-62. 
+
+VENKATAKRISHNAN,  V.,  MAVRIPLIS,  D.  J.,  1993,  “Implicit  Solvers  on 
+
+Unstructured Meshes”, Journal of Computational Physics, vol. 105, pp. 83-91. 
+
+WALTZ,  J.,  2013,  “Spatial  Accuracy  and  Performance  of  a  Mixed-Order,  Explicit 
+Multi-Stage  Method  for  Unsteady  Flows”,  International  Journal  for  Numerical 
+Methods in Fluids, vol. 71, pp. 1361-1368. 
+
+WÜTHRICH,  B.,  2007,  Simulation  and  Validation  of  Compressible  Flow  in  Nozzle 
+Geometries  and  Validation  of  OpenFOAM  for  this  Application.  M.Sc..  Thesis, 
+Institute of Fluid Dynamics, ETH Zurich. 
+
+ 
+
+ 
+
+123 
+
+APÊNDICE A 
+
+Neste  apêndice  é  apresentado  o  código  computacional  usado  para  fazer  a 
+integração  entre  o  software  gerador  de  malhas  ANSYS  ICEM  CFD  com  o  solver 
+EdgeCFD.  Esse  código,  denominado  ReadIcemFIDAP,  foi  escrito  em  Fortran  90  e 
+utiliza como entrada de dados um arquivo exportado pelo ANSYS ICEM CFD. A malha 
+de  tetraedros  gerada  no  ANSYS  ICEM  CFD  deve  ser  exportada  no  formato  FIDAP. 
+Esse  arquivo  contendo  as  informações  da  malha  de  tetraedros  no  formato  FIDAP  é 
+usado como entrada de dados no código ReadIcemFIDAP, que faz a leitura da malha e 
+escreve os arquivos de entrada de dados do EdgeCFD com base na malha gerada pelo 
+ANSYS ICEM CFD. Abaixo é apresentado o código em Fortran 90 para o programa de 
+leitura de malha ReadIcemFIDAP. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+124 
+
+ 
+
+!**************************************************************************** 
+! PROGRAMA: ReadIcemFIDAP versao 1.0 
+! 
+! Este programa serve para usar o arquivo de saida do ICEM CFD (fidap.FDNEUT) e 
+! transforma-lo no formato do programa EdgeCFD-Pre 
+! 
+! Apos gerar a malha de tetraedros no ICEM CFD o usuario a exportara no formato FIDAP. 
+! Isso ira gerar um arquivo com as informacoes da  
+! malha de tetraedros e suas respectivas parts (fidap.FDNEUT) 
+! 
+! Arquivos de entrada: 
+! fidap.FDNEUT (arquivo de saida ICEM no formato FIDAP) 
+! input_ReadIcemFIDAP.txt (arquivo de input do programa) 
+! 
+! Arquivos de saida: 
+! filename.mesh (arquivo contendo as informacoes da malha) 
+! *.nds (um para cada part gerada no ICEM) 
+! 
+! Obs.: Caso o arquivo de input do programa nao seja encontrado no diretorio 
+! de trabalho o programa vai criar um arquivo de input padrao. 
+! 
+! Autor: Anderson Mendonca 
+! email: alimamendonca@gmail.com 
+! 
+!**************************************************************************** 
+ 
+ 
+!==== 
+module var_global 
+ 
+character(len=60)       :: filename       !variavel que contem o nome do arquivo FIDAP 
+character(len=60)       :: filename2      !variavel que contem o nome dos arquivos *.nds 
+character(len=60)       :: radical        !radical para as saidas do programa 
+integer                 :: iin       = 30 !arquivo de entrada do programa 
+integer                 :: ifidap    = 31 !arquivo no formato *.fidap 
+integer                 :: iout      = 32 !arquivo temporario de saida da malha *.temp 
+integer                 :: iFilePart = 33 !arquivos de saida dos nos prescritos *.nds 
+integer                 :: iout2     = 34 !arquivo de saida da malha *.mesh 
+integer                 :: isolve         !flag que determina o tipo de escoamento 
+                                          !(0=incompressivel e 1=compressivel) 
+integer,dimension(:),allocatable    :: ivector !ivector para armazenar as  
+                                               !incidencias: ivector(nel*nodes_per_elem) 
+ 
+end module var_global 
+!==== 
+ 
+ 
+ 
+ 
+!==== 
+program ReadIcemFIDAP  
+use var_global   
+ 
+!**************************************************************************** 
+implicit real(8) (a-h,o-z) 
+character(len=1)  :: commented_line 
+!**************************************************************************** 
+ 
+write(*,'(//,a,//)') ' Programa: ReadIcemFIDAP versao 1.0' 
+ 
+!abrindo o arquivo de descricao do programa 
+open(unit=1,file='ReadIcemFIDAP.dat') 
+ 
+!escrevendo a descricao do programa no arquivo .dat 
+write(1,100) 
+ 
+!fechando o arquivo de descricao do programa 
+close(1) 
+      
+!abrindo o arquivo de entrada 
+!se nao for encontrado o programa escrevera um arquivo padrao 
+open (unit=iin, file='input_ReadIcemFIDAP.txt', status = 'old' , iostat = ierr) 
+     
+
+ 
+
+125 
+
+if (ierr .eq. 0) then 
+     
+    !notificando na tela a leitura do arquivo de input 
+    write(*,'(a)') ' Iniciando a leitura do arquivo de input' 
+     
+    !pulando linha de comentario 
+    read (iin,*) commented_line 
+         
+    !leitura do nome do arquivo FIDAP 
+    read (iin,*) filename 
+         
+    !pulando linha de comentario 
+    read (iin,*) commented_line 
+     
+    !leitura do nome do radical usado nas saidas ensight 
+    read (iin,*) radical 
+     
+    !pulando linha de comentario 
+    read (iin,*) commented_line 
+ 
+    !leitura do nome do flag que determina o tipo de escoamento 
+    read (iin,*) isolve 
+         
+    !notificando na tela a leitura do arquivo de input 
+    write(*,'(a,/)') ' Leitura do arquivo de input realizada com sucesso' 
+        
+else 
+         
+    !notificando na tela por nao encontrar o arquivo de input 
+    write(*,'(a)')   ' O arquivo input nao foi encontrado' 
+    write(*,'(a)')   ' O programa vai escrever um arquivo input padrao' 
+    write(*,'(a)')   ' Basta altera-lo e rodar o programa novamente' 
+    write(*,'(a)')   ' Aperte a tecla ENTER para fechar o programa' 
+    read(*,*) 
+         
+    !abrindo o arquivo input 
+    open  (unit=iin , file='input_ReadIcemFIDAP.txt') 
+         
+    !escrevendo o texto padrao no arquivo input 
+    write (iin , 200) 
+         
+    !fecha o arquivo input 
+    close (iin) 
+         
+    !termina a execucao do programa 
+    stop 
+         
+end if 
+  
+200 format ( '#Nome do arquivo FIDAP'                   , / & 
+             'fidap.FDNEUT'                             , / & 
+             ''                                         , / & 
+             '#Nome do radical para as saidas'          , / & 
+             'radical'                                  , / & 
+             ''                                         , / & 
+             '#Tipo de escoamento (0=incompressivel e 1=compressivel)' , / & 
+             '1' ) 
+                    
+!abertura do arquivo .fidap 
+open (unit=ifidap,file=trim(filename)) 
+     
+!notificando na tela a leitura do arquivo .fidap 
+write(*,'(a)') ' Iniciando a leitura do arquivo '//trim(filename) 
+ 
+!pulando 4 linhas de comentarios do arquivo .fidap 
+do i=1,4     
+    read (ifidap,*) commented_line 
+end do 
+     
+!lendo na 5a linha do arquivo apenas as primeira, segunda e terceira posicoes 
+read (ifidap,*) nnos, nel_total, igroup_total 
+ 
+!pulando 4 linhas de comentarios do arquivo .fidap 
+do i=1,4     
+   read (ifidap,*) commented_line 
+end do 
+ 
+
+ 
+
+126 
+
+!abertura do arquivo de saida temporario .mesh-temp 
+open (unit=iout,file=trim(radical)//'.mesh-temp') 
+ 
+!notificando na tela a escrita do arquivo .mesh-temp 
+write(*,'(a,/)') ' Escrevendo o arquivo '//trim(radical)//'.mesh-temp' 
+ 
+!deixando a 1a linha do arquivo .mesh-temp em branco, para posteriormente escrever 
+!nel_tetra 
+write(iout,*) '' 
+ 
+!escrevendo nnos na 2a linha do arquivo .mesh-temp 
+write(iout,'(i20)') nnos 
+ 
+!leitura das coordenadas nodais 
+do i=1,nnos 
+ 
+   !lendo as coordenadas nodais do arquivo .fidap 
+   read (ifidap,*)                       node, x, y, z 
+    
+   !escrevendo as coordenadas nodais no arquivo .mesh-temp 
+   write(iout  ,'(i20,9x,3(e20.12,9x))') node, x, y, z 
+    
+end do 
+ 
+!pulando 3 linhas de comentarios do arquivo .fidap 
+do i=1,3 
+   read (ifidap,*) commented_line 
+end do 
+ 
+!inicializando nel_tetra 
+nel_tetra = 0 
+ 
+do ii=1,igroup_total  !esse loop do eh limitado 
+  
+   !lendo o numero de elementos (nel) e o numero de nos por elemento (nodes_per_elem) 
+   read(ifidap,*) commented_line, igroup, commented_line, nel, commented_line, 
+nodes_per_elem 
+    
+   !lendo o nome da part e armazenando em filename 
+   read(ifidap,*) commented_line, commented_line, filename2 
+    
+   !quando o programa chegar na parte de elementos com 2 nos o programa para de ler o 
+   !arquivo FIDAP 
+   if (nodes_per_elem < 3) exit 
+ 
+   if (nodes_per_elem == 4) then 
+      !incrementando o numero total de elementos tetraedros 
+      !...somente quando nodes_per_elem = 4 
+      nel_tetra = nel_tetra + nel 
+   end if 
+    
+   !abrindo um arquivo .nsd 
+   open(iFilePart , file=trim(filename2)//'.nds') 
+    
+   !notificando na tela a abertura do arquivo .nds 
+   write(*,'(a)') ' Abrindo o arquivo '//trim(filename2)//'.nds' 
+    
+   !escrevendo no arquivo .nds 
+   write(iFilePart,'(i20)') nel*nodes_per_elem 
+    
+   !notificando na tela a escrita do arquivo .nds 
+   write(*,'(a)') ' Escrevendo no arquivo '//trim(filename2)//'.nds' 
+    
+   !leitura e escrita de uma determinada part 
+   do j=1,nel 
+ 
+      !para nodes_per_elem = 4 
+      if (nodes_per_elem == 4) then 
+       
+         !lendo as incidencias do arquivo .ifidap 
+         read(ifidap,*) inel, node1, node2, node3, node4 
+       
+         !escrevendo as incidencias no arquivo .mesh-temp 
+         write(iout,'(4(i20))') node1, node2, node3, node4 
+          
+         !escrevendo os nos no arquivo .nds 
+         !mesmo escrevendo repeticoes nao havera probrema 
+
+ 
+
+127 
+
+         !...para o programa, pois o programa ira sobrescrever 
+         !...as condicoes de contorno de nos repetidos 
+         write(iFilePart,'(3(i20,/),i20)') node1, node2, node3, node4 
+ 
+      !para nodes_per_elem = 3 
+      else if (nodes_per_elem == 3) then 
+       
+         !lendo as incidencias do arquivo .ifidap 
+         read(ifidap,*) inel, node1, node2, node3 
+          
+         !escrevendo os nos no arquivo .nds 
+         !mesmo escrevendo repeticoes nao havera probrema 
+         !...para o programa, pois o programa ira sobrescrever 
+         !...as condicoes de contorno de nos repetidos 
+         write(iFilePart,'(2(i20,/),i20)') node1, node2, node3 
+       
+      end if !if para nodes_per_elem = 4 e 3 
+       
+   end do !leitura e escrita de uma determinada part 
+    
+   !fechando um arquivo .nsd fora dos teste condicionais if's 
+   close(iFilePart) 
+    
+   !notificando na tela a escrita do arquivo .nds 
+   write(*,'(a,/)') ' O arquivo '//trim(filename2)//'.nds foi escrito com sucesso' 
+    
+    
+end do  
+ 
+ 
+!notificando na tela a leitura do arquivo .fidap 
+write(*,'(a)') ' Leitura do arquivo '//trim(filename)//' realizada com sucesso' 
+ 
+!notificando na tela a escrita do arquivo .mesh-temp 
+write(*,'(a,/)') ' O arquivo '//trim(radical)//'.mesh-temp foi escrito com sucesso' 
+ 
+!fechando a arquivo .mesh-temp 
+close(iout) 
+ 
+!abrindo o arquivo .mesh-temp para iniciar a leitura na 1a posicao do arquivo 
+open(unit=iout,file=trim(radical)//'.mesh-temp',status='old') 
+ 
+!abrindo o arquivo de malha .mesh 
+open(iout2, file=trim(radical)//'.mesh') 
+ 
+!notificando na tela a abertura do arquivo .mesh 
+write(*,'(a)') ' Abrindo o arquivo '//trim(radical)//'.mesh' 
+ 
+!notificando na tela a escrita no arquivo .mesh 
+write(*,'(a)') ' Escrevendo no arquivo '//trim(radical)//'.mesh' 
+ 
+!escrevendo nel_tetra na 1a linha do arquivo .mesh 
+write(iout2,'(i20)') nel_tetra 
+ 
+!lendo a 1a posicao do arquivo .mesh-temp 
+read(iout,*) nnos 
+ 
+!escrevendo na 2a posicao do arquivo .mesh 
+write(iout2,'(i20)') nnos 
+ 
+!leitura e escrita das coordenadas nodais 
+do i=1,nnos 
+ 
+   !lendo as coordenadas nodais do arquivo .mesh-temp 
+   read (iout,*)                          node, x, y, z 
+ 
+   !escrevendo as coordenadas nodais no arquivo .mesh 
+   write(iout2  ,'(i20,9x,3(e20.12,9x))') node, x, y, z 
+ 
+end do !leitura e escrita das coordenadas nodais 
+ 
+!leitura e escrita das incidencias 
+do i=1,nel_tetra 
+ 
+   !lendo as incidencias do arquivo .mesh-temp 
+   read (iout,*)                           node1, node2, node3, node4 
+ 
+
+ 
+
+128 
+
+   !escrevendo as incidencias no arquivo .mesh 
+   write(iout2  ,'(4(i20))')               node1, node2, node3, node4 
+ 
+end do !leitura e escrita das incidencias 
+ 
+!fecha o arquivo de saida (.mesh-temp) 
+close (iout) 
+ 
+!fecha o arquivo de saida (.mesh) 
+close (iout2) 
+ 
+!notificando na tela a escrita do arquivo .mesh 
+write(*,'(a,/)') ' O arquivo '//trim(radical)//'.mesh foi escrito com sucesso' 
+ 
+!subrotina para escrever os arquivos: .solver, .preprocessor, .materials, .ic, .bc 
+call WriteOtherFiles () 
+ 
+!fecha o arquivo input 
+close (iin) 
+     
+!fecha o arquivo FIDAP 
+close (ifidap) 
+ 
+!notificando em tela que o programa foi executado com sucesso 
+write(*,'(/,a)') ' O programa foi executado com sucesso' 
+write(*,'(a,/)') ' Fim!' 
+write(*,'(a)') ' Aperte a tecla ENTER para fechar o programa' 
+read(*,*) 
+ 
+!formato para a escrita do arquivo de descricao do programa - cabecalho do codigo 
+100 format('                                                                      ', / & 
+'!****************************************************************************    ', / & 
+'! PROGRAMA: ReadIcemFIDAP versao 1.0                                             ', / & 
+'!                                                                                ', / & 
+'! Este programa serve para usar o arquivo de saida do ICEM CFD (fidap.FDNEUT) e  ', / & 
+'! transforma-lo no formato do programa EdgeCFD-Pre                               ', / & 
+'!                                                                                ', / & 
+'! Apos gerar a malha de tetraedros no ICEM CFD o usuario a exportara no formato  ', / & 
+'! FIDAP. Isso ira gerar um arquivo com as informacoes da malha de                ', / & 
+'! tetraedros e suas respectivas parts (fidap.FDNEUT)                             ', / & 
+'!                                                                                ', / & 
+'! Arquivos de entrada:                                                           ', / & 
+'! fidap.FDNEUT (arquivo de saida ICEM no formato FIDAP)                          ', / & 
+'! input_ReadIcemFIDAP.txt (arquivo de input do programa)                         ', / & 
+'                                                                                 ', / & 
+'! Arquivos de saida:                                                             ', / & 
+'! filename.mesh (arquivo contendo as informacoes da malha)                       ', / & 
+'! *.nds (um para cada part gerada no ICEM)                                       ', / & 
+'!                                                                                ', / & 
+'! Obs.: Caso o arquivo de input do programa nao seja encontrado no diretorio     ', / & 
+'! de trabalho o programa vai criar um arquivo de input padrao.                   ', / & 
+'!                                                                                ', / & 
+'! Autor: Anderson Mendonca                                                       ', / & 
+'! email: alimamendonca@gmail.com                                                 ', / & 
+'!                                                                                ', / & 
+'!****************************************************************************    ', / & 
+ '            ' ) 
+ 
+end program ReadIcemFIDAP  
+!==== 
+ 
+ 
+!==== 
+subroutine WriteOtherFiles () 
+use var_global 
+ 
+!Essa rotina escreve os arquivos: 
+! - radical.solver 
+! - radical.preprocessor 
+! - radical.materials 
+! - radical.ic 
+! - radical.bc 
+ 
+i1 = 50 !solver 
+i2 = 51 !preprocessor 
+i3 = 52 !materials 
+i4 = 53 !ic 
+
+ 
+
+129 
+
+i5 = 54 !bc 
+i6 = 55 !SetupEuler 
+ 
+open(unit=i1,file=trim(radical)//'.solver') 
+ 
+!notificando na tela - escrevendo o arquivo .solver 
+write(*,'(a)') ' Escrevendo o arquivo '//trim(radical)//'.solver' 
+write(i1,201) 
+ 
+!notificando na tela - escrevendo o arquivo .solver 
+write(*,'(a,/)') ' O arquivo '//trim(radical)//'.solver foi escrito com sucesso' 
+close(i1) 
+ 
+open(unit=i2,file=trim(radical)//'.preprocessor') 
+ 
+!notificando na tela - escrevendo o arquivo .preprocessor 
+write(*,'(a)') ' Escrevendo o arquivo '//trim(radical)//'.preprocessor' 
+write(i2,202) 
+ 
+!notificando na tela - escrevendo o arquivo .preprocessor 
+write(*,'(a,/)') ' O arquivo '//trim(radical)//'.preprocessor foi escrito com sucesso' 
+close(i2) 
+ 
+open(unit=i3,file=trim(radical)//'.materials') 
+ 
+!notificando na tela - escrevendo o arquivo .materials 
+write(*,'(a)') ' Escrevendo o arquivo '//trim(radical)//'.materials' 
+if (isolve == 0) then 
+    write(i3,203) !escoamento incompressivel 
+else 
+    write(i3,204) !escoamento compressivel 
+end if 
+ 
+!notificando na tela - escrevendo o arquivo .materials 
+write(*,'(a,/)') ' O arquivo '//trim(radical)//'.materials foi escrito com sucesso' 
+close(i3) 
+ 
+open(unit=i4,file=trim(radical)//'.ic') 
+ 
+!notificando na tela - escrevendo o arquivo .ic 
+write(*,'(a)') ' Escrevendo o arquivo '//trim(radical)//'.ic' 
+if (isolve == 0) then 
+    write(i4,205) !escoamento incompressivel 
+else 
+    write(i4,206) !escoamento compressivel 
+end if 
+ 
+!notificando na tela - escrevendo o arquivo .ic 
+write(*,'(a,/)') ' O arquivo '//trim(radical)//'.ic foi escrito com sucesso' 
+close(i4) 
+ 
+open(unit=i5,file=trim(radical)//'.bc') 
+ 
+!notificando na tela - escrevendo o arquivo .bc 
+write(*,'(a)') ' Escrevendo o arquivo '//trim(radical)//'.bc' 
+if (isolve == 0) then 
+    write(i5,207) !escoamento incompressivel 
+else 
+    write(i5,208) !escoamento compressivel 
+end if 
+ 
+!notificando na tela - escrevendo o arquivo .bc 
+write(*,'(a,/)') ' O arquivo '//trim(radical)//'.bc foi escrito com sucesso' 
+close(i5) 
+ 
+open(unit=i6,file='SetupEuler.dat') 
+ 
+!notificando na tela - escrevendo o arquivo SetupEuler 
+write(*,'(a)') ' Escrevendo o arquivo SetupEuler.dat' 
+if (isolve /= 0) then 
+    write(i6,209) !escoamento compressivel 
+end if 
+ 
+!notificando na tela - escrevendo o arquivo SetupEuler 
+write(*,'(a,/)') ' O arquivo SetupEuler.dat foi escrito com sucesso' 
+close(i6) 
+ 
+
+ 
+
+130 
+
+!solver 
+201 format(                              & 
+' &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&      ',/& 
+' Solver Parameters           &&      ',/& 
+' &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&      ',/& 
+' csmag     0.100d0                   ',/& 
+' flsic     1                         ',/& 
+' iprint    5                         ',/& 
+' noal      0                         ',/& 
+' csi       1.0d-04                   ',/& 
+' sigma0    0.100d0                   ',/& 
+' sigma1    0.500d0                   ',/& 
+' gamma     0.900d0                   ',/& 
+' dt       -1.0d-03                   ',/& 
+' tmax      1.000d0                   ',/& 
+' cflmin    0.500d0                   ',/& 
+' cflmax    5.000d0                   ',/& 
+' tol_v     0.200d0                   ',/& 
+' dtmin     0.001d0                   ',/& 
+' dtmax     0.500d0                   ',/& 
+' gravx     0.000d0                   ',/& 
+' gravy     0.000d0                   ',/& 
+' gravz     0.000d0                   ',/& 
+' beta      0.000d0                   ',/& 
+' tref      0.000d0                   ',/& 
+' eta_f     0.100d0                   ',/& 
+' rtol_f    0.001d0                   ',/& 
+' dutol_f   0.001d0                   ',/& 
+' maxit_f   7                         ',/& 
+' maxslv_f -200                       ',/& 
+' kmax_f    35                        ',/& 
+' eta_t     0.001d0                   ',/& 
+' rtol_t    0.001d0                   ',/& 
+' dutol_t   0.001d0                   ',/& 
+' maxit_t   7                         ',/& 
+' maxslv_t -200                       ',/& 
+' kmax_t    35') 
+ 
+ 
+!preprocessor 
+202 format('JOIN' , / & 
+           '1  0  0  0  0  0  0  0  0  0')   
+ 
+!materials - escoamento incompressivel 
+203 format('1' , / &   
+'1  Water  Newtonian  0.01d0  0  1.0d0  0  0  0  0') 
+ 
+!materials - escoamento compressivel 
+204 format('1' , / & 
+'1  IdealGas  Newtonian  0  0  1.4d0  0  0  0  0') 
+ 
+!ic - escoamento incompressivel 
+205 format('NUMBER_OF_ICS   1'   ,/ & 
+'PartName1   4'                  ,/ & 
+'1  Constant   0.0d0    ! pres'  ,/ & 
+'2  Constant   0.0d0    ! vx'    ,/ & 
+'3  Constant   0.0d0    ! vy'    ,/ & 
+'4  Constant   0.0d0    ! vz' ) 
+ 
+!ic - escoamento compressivel 
+206 format('NUMBER_OF_ICS   1'         ,/ & 
+'PartName1   5'                        ,/ & 
+'21  Constant   0.0d0    ! dens'       ,/ & 
+'22  Constant   0.0d0    ! dens*vx'    ,/ & 
+'23  Constant   0.0d0    ! dens*vy'    ,/ & 
+'24  Constant   0.0d0    ! dens*vz'    ,/ & 
+'25  Constant   0.0d0    ! dens*et') 
+ 
+!bc - escoamento incompressivel 
+207 format('NUMBER_OF_BCS   1'   ,/ & 
+'PartName1   4'                  ,/ & 
+'1  Constant   0.0d0    ! pres'  ,/ & 
+'2  Constant   0.0d0    ! vx'    ,/ & 
+'3  Constant   0.0d0    ! vy'    ,/ & 
+'4  Constant   0.0d0    ! vz' ) 
+ 
+!bc - escoamento compressivel 
+
+ 
+
+ 
+
+131 
+
+208 format('NUMBER_OF_BCS   1'         ,/ & 
+'PartName1   5'                        ,/ & 
+'21  Constant   0.0d0    ! dens'       ,/ & 
+'22  Constant   0.0d0    ! dens*vx'    ,/ & 
+'23  Constant   0.0d0    ! dens*vy'    ,/ & 
+'24  Constant   0.0d0    ! dens*vz'    ,/ & 
+'25  Constant   0.0d0    ! dens*et') 
+ 
+!SetupEuler - escoamento compressivel 
+209 format('        ',/& 
+'   ! SetupEuler    ',/& 
+'                   ',/& 
+'   ! Funcao peso para formulacao de Petrov Galerkin (0=[Tk=A formulacao A2] ; ',/& 
+'    1=[Tk=At formulacao AtA]) ',/& 
+'   ! ipg           ',/& 
+'     0             ',/& 
+'                   ',/& 
+'   ! Operador de captura de choque (0=sim ; 1=nao)       ',/& 
+'   ! iopc          ',/& 
+'    0              ',/& 
+'                   ',/& 
+'   ! Diferentes maneiras de calcular delta (0=Delta91; 1=CAU; 2=YZBeta; 3=KIRK)    ',/& 
+'   ! iop           ',/& 
+'     2             ',/& 
+'                   ',/& 
+'   ! Estabilizacao SUPG (0=sim ; 1=nao)                  ',/& 
+'   ! isupg         ',/& 
+'     0             ',/& 
+'                   ',/& 
+'   ! Versao do metodo YZBeta (1=versao1 ; 2=versao2)     ',/& 
+'   ! iYZBeta       ',/& 
+'     2             ',/& 
+'                   ',/& 
+'   ! Versao do metodo KIRK (1=versao1 ; 2=versao2)       ',/& 
+'   ! iKIRK         ',/& 
+'     2             ',/& 
+'                   ',/& 
+'   ! Termo forcante (0=EWK; 1=EWC; 2=GLT; 3=PP)          ',/& 
+'   ! iterm_force   ',/& 
+'     0             ',/& 
+'                   ',/& 
+'   ! Valor minimo para a massa especifica do fluido (Minimum Density)  ',/& 
+'   ! rho_min       ',/& 
+'     1.0d-3        '   ) 
+ 
+end subroutine WriteOtherFiles 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+132 
+
+

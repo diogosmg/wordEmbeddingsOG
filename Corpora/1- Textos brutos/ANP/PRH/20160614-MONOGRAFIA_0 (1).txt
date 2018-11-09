@@ -1,0 +1,4443 @@
+ 
+
+ 
+
+UNIVERSIDADE FEDERAL DO RIO DE JANEIRO 
+
+ESCOLA POLITÉCNICA 
+
+CURSO DE ENGENHARIA DE PRODUÇÃO 
+
+ 
+
+Felipe Mazurek dos Santos Pereira Lima 
+
+SIMULAÇÃO DE UM SISTEMA DE MANUTENÇÃO PARA TURBOGERADORES EM 
+
+UM FPSO 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RIO DE JANEIRO, RJ - BRASIL 
+
+ABRIL DE 2016 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ SIMULAÇÃO DE UM SISTEMA DE MANUTENÇÃO PARA TURBOGERADORES EM 
+
+ 
+
+UM FPSO 
+
+Felipe Mazurek dos Santos Pereira Lima 
+
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Projeto de Graduação apresentado no Curso de 
+Engenharia de Produção da Escola Politécnica, 
+Universidade Federal do Rio de Janeiro, como 
+parte dos requisitos necessários à obtenção do 
+título de Engenheiro de Produção. 
+
+Orientador:  
+
+Prof. Virgílio José M. Ferreira Filho, D.Sc 
+
+ 
+
+RIO DE JANEIRO, RJ - BRASIL 
+
+ABRIL DE 2016 
+
+ 
+
+SIMULAÇÃO DE UM SISTEMA DE MANUTENÇÃO PARA TURBOGERADORES EM 
+
+ 
+
+UM FPSO 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Felipe Mazurek dos Santos Pereira Lima 
+
+PROJETO  DE  GRADUAÇÃO  SUBMETIDO  AO  CORPO  DOCENTE  DO  CURSO 
+
+DE ENGENHARIA DE PRODUÇÃO DA ESCOLA POLITÉCNICA DA UNIVERSIDADE 
+
+FEDERAL  DO  RIO  DE  JANEIRO  COMO  PARTE  DOS  REQUISITOS  NECESSÁRIOS 
+
+PARA A OBTENÇÃO DO GRAU DE ENGENHEIRO DE PRODUÇÃO. 
+
+ 
+
+ 
+
+Aprovado por: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________ 
+
+Prof. Virgílio J. M. Ferreira Filho, D.Sc. (Orientador) 
+
+ 
+
+____________________________________________ 
+
+Prof. Edilson Fernandes de Arruda, D.Sc. 
+
+ 
+
+____________________________________________ 
+
+Prof. Lino Guimarães Marujo, D.Sc. 
+
+ 
+
+ 
+
+ 
+
+RIO DE JANEIRO, RJ - BRASIL 
+
+ABRIL DE 2016 
+
+ 
+
+ 
+
+iv 
+
+Lima, Felipe Mazurek dos Santos Pereira 
+
+Simulação  de  um  Sistema  de  Manutenção  para 
+
+Turbogeradores em um FPSO – Rio de Janeiro: UFRJ/ Escola 
+
+Politécnica, 2016. 
+
+ 
+
+ 
+
+ X, 70 p.: il.; 29,7 cm. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Engenharia de Produção, 2016. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+3. Turbogeradores. 
+
+FPSO. 
+
+ 
+
+ 
+
+ 
+
+Orientador: Virgílio José Martins Ferreira Filho 
+
+Projeto Graduação – UFRJ/ Escola Politécnica/ Curso de 
+
+Referências Bibliográficas: p.63-64.  
+
+1. Simulação Computacional. 2. Sistemas de Manutenção. 
+
+I.  Universidade  Federal  do  Rio  de  Janeiro,  Escola 
+
+Politécnica, Curso de Engenharia de Produção. II. Simulação 
+
+de  um  Sistema  de  Manutenção  para  Turbogeradores  em  um 
+
+v 
+
+ 
+
+ 
+
+ 
+
+AGRADECIMENTOS 
+
+ 
+
+À minha família, em especial a meus pais, Humberto e Roselma e irmãos, Paulo e Lucas, 
+
+por todo carinho, dedicação e apoio durante toda minha vida, sem os quais eu não teria chegado 
+
+até onde cheguei. 
+
+ 
+
+Ao professor Virgílio pela orientação, paciência e tempo disponibilizado para que fosse 
+
+possível escrever este trabalho, além de todos os conhecimentos transmitidos ao longo de minha 
+
+trajetória acadêmica. 
+
+  
+
+À meus amigos e professores da Engenharia de Produção, por todo aprendizado, experiência 
+
+e obtidos durante todos esses anos. 
+
+ 
+
+Aos  engenheiros  entrevistados  durante  este  trabalho,  sempre  muito  solícitos  e  que 
+
+contribuíram para que seu desenvolvimento fosse possível.   
+
+ 
+
+Por  fim,  ao  programa  PRH-21,  formado  com  recursos  da  ANP  (Agência  Nacional  do 
+
+Petróleo), pelo incentivo dado para que eu realizasse um projeto de graduação na área de Logística 
+
+e Operação no setor de Óleo e Gás. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Felipe Mazurek 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+vi 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Depois de escalar uma grande 
+
+montanha, você apenas descobre que 
+
+há muitas outras para escalar. 
+
+Nelson Mandela 
+
+ 
+
+Resumo do Projeto de Graduação apresentado à Escola Politécnica UFRJ como parte dos 
+
+requisitos necessários para a obtenção do grau de Engenheiro de Produção. 
+
+vii 
+
+SIMULAÇÃO DE UM SISTEMA DE MANUTENÇÃO PARA TURBOGERADORES EM 
+
+ 
+
+UM FPSO 
+
+ 
+
+Felipe Mazurek dos Santos Pereira Lima 
+
+Abril/2016 
+
+ 
+
+ 
+
+Orientador: Prof. Virgílio José Martins Ferreira Filho, D.Sc.  
+
+Curso: Engenharia de Produção 
+
+Nos  últimos  anos,  o  preço  do  barril  de  petróleo  caiu  consideravelmente,  ameaçando  a 
+
+viabilidade de diversos projetos de exploração e produção de óleo e gás, especialmente aqueles 
+
+relacionados às reservas do pré-sal e de xisto. Apesar disso, a demanda pelo desenvolvimento 
+
+e aperfeiçoamento de métodos e tecnologias para a extração de petróleo continuou crescendo 
+
+de forma intensa nos últimos anos. Por dois motivos: a necessidade das empresas do setor em 
+
+investir em iniciativas que aumentem a eficiência de suas operações para combater a redução 
+
+de suas margens de lucro e para se preparar para o futuro, já que o mercado mantém elevadas 
+
+expectativas sobre os projetos mencionados e seus retornos financeiros, apostando que a queda 
+
+de preço do barril de petróleo é momentânea. Nesse sentido, este trabalho busca contribuir para 
+
+uma dessas iniciativas de melhoria de operações de empresas deste setor. Seu objetivo é analisar 
+
+o funcionamento e o processo de manutenção dos turbogeradores de um sistema de geração de 
+
+energia  numa  unidade  de  produção  de  petróleo,  por  meio  de  um  modelo  de  simulação 
+
+computacional que consiga representar o sistema e possibilitar a identificação de maneiras de 
+
+operá-lo de forma mais eficiente. 
+
+ 
+
+Palavras-chave: Simulação Computacional, Sistemas de Manutenção, Turbogeradores. 
+
+viii 
+
+ 
+
+Abstract of Undergraduate Project presented to POLI/UFRJ as a partial fulfillment of the 
+
+requirements for the degree of Industrial Engineering 
+
+ 
+
+SIMULATION OF A MAINTENANCE SYSTEM FOR TURBOGENERATORS IN A 
+
+FLOATING PRODUCTION STORAGE AND OFFLOADING SHIP 
+
+ 
+
+Felipe Mazurek dos Santos Pereira Lima 
+
+April/2016 
+
+ 
+
+ 
+
+ 
+
+Advisor: Prof. Virgílio José Martins Ferreira Filho, D.Sc.  
+
+Course: Industrial Engineering 
+
+In recent years, the oil price has dropped considerably, threatening the viability of many oil and 
+
+gas  exploration  and  production  projects,  especially  those  related  to  the  pre-salt  reserves  and 
+
+shale.  Nevertheless,  the  demand  for  the  development  and  improvement  of  methods  and 
+
+technologies for oil extraction continued to grow intensively in the last years. For two reasons: 
+
+the need for oil companies to invest in initiatives that increase the efficiency of their operations 
+
+to combat the profit margin reductions and to prepare for the future, as the market holds high 
+
+expectations about the mentioned projects and their financial returns, betting that the price drop 
+
+of  the  oil  barrel  is  momentary.  In  this  sense,  this  work  aims  to  contribute  to  one  of  these 
+
+improvement initiatives regarding the operations of companies in this sector. Its objective is to 
+
+analyze the turbogenerators operation and maintenance processes within a power  generation 
+
+system at  an oil production facility through a computer simulation model that represents the 
+
+system and to permit the identification of ways to operate it more efficiently. 
+
+ 
+
+Keywords: Computer Simulation, Maintenance Systems, Turbogenerators. 
+
+ 
+
+ 
+
+LISTA DE FIGURAS 
+
+ 
+
+ix 
+
+Figura 1: Cadeia de Petróleo e seus principais ativos. Fonte: FERREIRA FILHO (2016) .................. 17 
+
+Figura 2: Tipos de Sistemas Flutuantes. Fonte: CLAUSS (2007)......................................................... 19 
+
+Figura 3: Sistemas/componentes de um navio FPSO. ........................................................................... 20 
+
+Figura 4: Posição do turbogerador num sistema de geração de energia. ............................................... 20 
+
+Figura 5: Evolução do conceito de perda na TPM. Fonte: RODRIGUES (2014)................................. 21 
+
+Figura 6: Pilares da TMP. Fonte: RODRIGUES (2014) ....................................................................... 22 
+
+Figura 7: Categorias de manutenção (traduzida). Fonte: ISO 14224:2006(E). ..................................... 23 
+
+Figura 8: Etapas de um estudo de simulação. Fonte: BANKS et al. (1996). ........................................ 26 
+
+Figura 9: Subsistemas de um turbogerador (Adaptada). Fonte: ISO 14224:2006(E). .......................... 30 
+
+Figura 10: Diagrama de transição de estados de uma turbomáquina. ................................................... 32 
+
+Figura 11: Sobreposição de downtimes. Fonte: PROMODEL CORPORATION (2014) ..................... 35 
+
+Figura 12: Teste de ajuste dos dados de manutenção corretiva para a TG1 numa amostra por minutos.
+
+ ...................................................................................................................................................... 37 
+
+Figura 13: Teste de ajuste dos dados de stand-by para a TG1 numa amostragem por minutos. ........... 38 
+
+Figura 14: Detalhamento do teste de ajuste dos dados de stand-by para TG1 em amostra diária......... 38 
+
+Figura 15: Modelo computacional com animação gráfica ativada. ....................................................... 41 
+
+Figura 16: Variáveis globais definidas no ProModel. ........................................................................... 42 
+
+Figura 17: Locais do modelo computacional. ....................................................................................... 42 
+
+Figura 18: Paradas por relógio da TG2 no modelo computacional. ...................................................... 43 
+
+Figura 19: Lógica de parada por relógio. .............................................................................................. 43 
+
+Figura 20: Paradas por chamada e sua lógica........................................................................................ 44 
+
+Figura 21: Distribuições de usuário. ..................................................................................................... 45 
+
+Figura 22: Definição de entidades e suas características. ..................................................................... 45 
+
+Figura 23: Definição das chegadas e suas características. .................................................................... 46 
+
+Figura 24: Processos definidos para os locais. ...................................................................................... 46 
+
+Figura 25: Definição de Sub-rotina e sua lógica. .................................................................................. 47 
+
+Figura 26: Ativação das sub-rotinas usando macro. .............................................................................. 48 
+
+Figura 27: Definição de recursos e suas características no modelo computacional. ............................. 49 
+
+Figura 28: Definição da rede de caminhos pela qual os recursos poderiam se locomover. .................. 49 
+
+Figura 29: Relatório de resultados do ProModel................................................................................... 51 
+
+Figura 30: Modelagem as máquinas não receberem manutenção preventiva ao mesmo tempo. .......... 53 
+
+ 
+
+ 
+
+ 
+
+LISTA DE GRÁFICOS 
+
+x 
+
+Gráfico 1: Resultados obtidos com a simulação final. .......................................................................... 54 
+
+Gráfico 2: Comparação do resultado para o modelo com o tempo de simulação aumentado. .............. 56 
+
+Gráfico 3: Comparação entre os resultados originais e a simulação com a manutenção corretiva 
+
+padronizada com distribuição exponencial. .................................................................................. 57 
+
+Gráfico 4: Comparação dos resultados originais e da simulação com distribuição Gamma para os 
+
+tempos de stand-by. ...................................................................................................................... 58 
+
+Gráfico 5: Comparação entre os resultados originais e a simulação os tempos de stand-by utilizando 
+
+uma amostragem mensal. ............................................................................................................. 59 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+xi 
+
+LISTA DE TABELAS  
+
+Tabela 1: Definições de tempo relacionadas ao funcionamento de uma máquina (adaptado). Fonte: 
+
+ISO 14224:2006(E). ..................................................................................................................... 24 
+
+Tabela 2: Frequência de realização de manutenção preventiva. ........................................................... 28 
+
+Tabela 3: Duração e homem/hora estimado para cada manutenção preventiva. ................................... 29 
+
+Tabela 4: Locais do modelo conceitual e suas capacidades. ................................................................. 33 
+
+Tabela 5: Recursos do modelo conceitual e seus estados. .................................................................... 33 
+
+Tabela 6: Entidades do modelo conceitual e suas atividades. ............................................................... 33 
+
+Tabela 7: Resumo dos resultados de aderência dos dados por tipo de amostragem. ............................ 39 
+
+Tabela 8: Tabela resumo com as distribuições e amostragem selecionadas para stand-by. .................. 39 
+
+Tabela 9: Tabela resumo com as distribuições e amostragem escolhidas para manutenção corretiva.. 39 
+
+Tabela 10: Frequência de eventos de Stand-by. .................................................................................... 40 
+
+Tabela 11: Frequência de eventos de manutenção corretiva. ................................................................ 40 
+
+Tabela 12: Parâmetros Gerais da Simulação. ........................................................................................ 41 
+
+Tabela 13: Tabela resumo para lógica de parada por relógio. ............................................................... 44 
+
+Tabela 14: Características do computador utilizado para executar a simulação. .................................. 50 
+
+Tabela 15: Esforço computacional para execução do modelo. ............................................................. 50 
+
+Tabela 16: Resultados obtidos com o modelo inicial. ........................................................................... 52 
+
+Tabela 17: Resultados obtidos com o modelo ajustado. ....................................................................... 53 
+
+Tabela 18: Resultados obtidos com o modelo final. ............................................................................. 54 
+
+Tabela 19: Utilização do mecânico de bordo. ....................................................................................... 55 
+
+Tabela 20: Resultado da simulação com o tempo de simulação aumentado. ........................................ 55 
+
+Tabela 21: Comparativo entre a simulação validada e a simulação da manutenção corretiva 
+
+padronizada com a distribuição exponencial. ............................................................................... 57 
+
+Tabela 22: Comparativo entre a simulação validada e a simulação com distribuições de stand-by 
+
+padronizadas. ................................................................................................................................ 58 
+
+Tabela 23: Comparativo entre a simulação validada e a simulação com stand-by usando amostragem 
+
+mensal. .......................................................................................................................................... 59 
+
+ 
+
+ 
+
+xii 
+
+ 
+
+ 
+
+SUMÁRIO 
+
+1. 
+
+INTRODUÇÃO ............................................................................................................. 15 
+
+1.1.  Objetivo ........................................................................................................................... 15 
+
+1.2.  Estrutura do Trabalho ...................................................................................................... 16 
+
+2.  REFERENCIAL TEÓRICO ........................................................................................ 17 
+
+2.1.  Cadeia Produtiva do Petróleo .......................................................................................... 17 
+
+2.2.  Unidades de Produção de Petróleo .................................................................................. 18 
+
+2.3.  Conceitos de Manutenção ................................................................................................ 21 
+
+2.4.  Simulação ........................................................................................................................ 24 
+
+3.  DESCRIÇÃO DO SISTEMA ....................................................................................... 27 
+
+3.1.  Detalhamento do caso em estudo .................................................................................... 27 
+
+3.2.  Fontes de dados e informações ........................................................................................ 30 
+
+4.  DESENVOLVIMENTO DO MODELO ..................................................................... 32 
+
+4.1.  Modelo Conceitual .......................................................................................................... 32 
+
+4.2.  Variáveis de Resposta ...................................................................................................... 34 
+
+4.3.  Hipóteses consideradas .................................................................................................... 34 
+
+4.4.  Codificação do Modelo ................................................................................................... 36 
+
+5.  EXPERIMENTAÇÃO .................................................................................................. 51 
+
+5.1.  Validação do modelo ....................................................................................................... 51 
+
+5.2.  Experimentações com o modelo validado ....................................................................... 55 
+
+6.  CONCLUSÃO ................................................................................................................ 60 
+
+6.1.  Críticas ao modelo ........................................................................................................... 60 
+
+6.2.  Sugestões para Trabalhos Futuros ................................................................................... 61 
+
+6.3.  Aprendizado..................................................................................................................... 62 
+
+BIBLIOGRAFIA .................................................................................................................... 63 
+
+APÊNDICE A – Testes de Aderência para stand-by ........................................................... 65 
+
+APÊNDICE B – Testes de Aderência para Manutenção Corretiva .................................. 68 
+
+ 
+
+15 
+
+ 
+
+1.  INTRODUÇÃO 
+
+Na última década, as descobertas de grandes reservas de petróleo nas camadas do pré-
+
+sal no Brasil causaram grande impacto na indústria de óleo e gás. Por conta do preço do barril 
+
+de petróleo elevado, o setor considerava muito interessante a exploração de tais reservas, que 
+
+apresentavam um petróleo de alta qualidade e em abundância, por mais que os investimentos 
+
+necessários e os desafios técnicos fossem enormes. 
+
+Nesse  sentido,  a  demanda  pelo  desenvolvimento  e  aperfeiçoamento  dos  métodos 
+
+utilizados para a extração de petróleo cresceu de forma intensa, especialmente ao se observar a 
+
+complexidade  das  operações,  os  custos  envolvidos  e  as  escalas  de  produção  esperadas  pelo 
+
+mercado. Apesar do preço do barril de petróleo ter caído consideravelmente nos últimos anos, 
+
+tal demanda não cessou por conta das expectativas de retornos financeiros significativos e de 
+
+que a queda de preços é momentânea.  
+
+Ao longo do ciclo de vida de uma unidade de produção de petróleo (UPP), temos um 
+
+conjunto de custos bastante relevante que está relacionado aos turbogeradores da unidade, que 
+
+tem por finalidade produzir a energia necessária para toda a UPP. A relevância dessas máquinas, 
+
+em termos de custo, está associada aos altos investimentos realizados para adquiri-las e a seu 
+
+custo operacional. Cada máquina equivale a um investimento (CAPEX) da ordem de dezenas 
+
+de milhões de reais, com seu custo operacional (OPEX) em cerca de milhões de reais ao ano. 
+
+Além  disso,  dependendo  da  unidade  de  produção,  as  falhas  nos  turbogeradores  podem 
+
+comprometer seriamente a produção da unidade, gerando custos de oportunidade significativos. 
+
+Em relação ao cenário de descoberta do pré-sal, segundo FERREIRA FILHO (2016), 
+
+justamente pelas grandes escalas envolvidas, é razoável que a introdução de pequenas melhorias 
+
+nos  processos  se  traduza  em  ganhos  bastante  relevantes  na  operação  como  um  todo.  Nesse 
+
+cenário,  este  trabalho  busca  estudar  o  comportamento  dos  turbogeradores  e  seu  sistema  de 
+
+manutenção numa unidade de produção de petróleo do tipo FPSO (floating production, storage 
+
+and Offloading) para identificar maneiras de operar o sistema de forma mais eficiente. 
+
+ 
+
+1.1. Objetivo 
+
+O principal objetivo do trabalho é analisar o funcionamento e o processo de manutenção 
+
+dos turbogeradores de um sistema de geração de energia numa unidade de produção de petróleo. 
+
+Isto é feito por meio do desenvolvimento de um modelo de simulação que consiga replicar o 
+
+comportamento desses turbogeradores e seu sistema de manutenção. 
+
+ 
+
+ 
+
+16 
+
+ 
+
+O trabalho também visa atingir alguns objetivos secundários: 
+
+1.  Realizar experimentos com esse modelo para identificar como o sistema reage a 
+
+mudanças em seus elementos; 
+
+2.  Identificar  oportunidades  de  melhoria  que  consigam  melhorar  a  eficiência  do 
+
+sistema. 
+
+3.  Em  termos  de  aprendizado,  possibilitar  a  fixação  dos  conhecimentos  das 
+
+disciplinas de simulação e manutenção na indústria do petróleo. 
+
+ 
+
+1.2. Estrutura do Trabalho 
+
+Este  trabalho  pode  ser  condensado  em  três  grandes  partes,  que  contém  as  seções 
+
+apresentadas em seu sumário e esclarecem a forma como ele foi desenvolvido. São elas: 
+
+i) 
+
+Contextualização 
+
+Esta  parte  trata  das  seguintes  seções:  1.  Introdução,  2.  Referencial  Teórico  e  3. 
+
+Descrição  do  sistema.  A  primeira  seção  explica  os  motivos  para  a  realização  do  estudo  em 
+
+questão,  fazendo  uma  breve  apresentação  do  problema.  Já  a  segunda  seção,  apresenta  os 
+
+conceitos e referências teóricas que permitirão ao leitor compreender o trabalho desenvolvido. 
+
+Por fim, a última seção, delimita o sistema estudado, fornecendo detalhes sobre seu escopo e as 
+
+fontes de dados e informações obtidas. 
+
+ii) 
+
+Desenvolvimento do modelo 
+
+Essa parte é constituída basicamente pela seção 4. Desenvolvimento de Modelo. Esta 
+
+seção  apresenta  de  que  forma  optou-se  por  modelar  o  problema,  conceitualmente  e 
+
+computacionalmente,  explicitando  como  foram  estimados  os  parâmetros  utilizados,  quais 
+
+hipóteses foram consideradas e as variáveis resposta definidas. 
+
+iii) 
+
+Experimentação e avaliação dos resultados 
+
+A última parte consiste nas seções 5. Experimentação e 6. Conclusão. A seção 5 trata 
+
+da validação do modelo computacional gerado e sua utilização para realizar experimentos de 
+
+interesse. Por fim, a sexta seção  apresenta as principais conclusões sobre o modelo criado e 
+
+sobre este estudo. 
+
+ 
+
+17 
+
+ 
+
+2.  REFERENCIAL TEÓRICO 
+
+2.1. Cadeia Produtiva do Petróleo 
+
+De  acordo  com  MONIÉ  et  al.  (2012),  a  indústria  do  petróleo  se  divide  em  dois 
+
+segmentos principais: upstream ou montante, e downstream ou jusante. O primeiro inclui as 
+
+fases de exploração, desenvolvimento e produção, enquanto o segundo compreende as etapas 
+
+de transporte, refino e distribuição. Alguns autores classificam as etapas de transporte e refino 
+
+como midstream, como mostra a Figura 1. 
+
+Figura 1: Cadeia de Petróleo e seus principais ativos. Fonte: FERREIRA FILHO (2016) 
+
+ 
+
+ 
+
+Segundo  PIQUET  et  al.  (2007),  a  etapa  de  upstream  concentra  a  maior  parte  dos 
+
+investimentos feitos da cadeia de petróleo, em torno de 80% no Brasil. De acordo com BAIN 
+
+et al. (2009), as fases deste segmento compreendem as seguintes atividades: 
+
+  Exploração:  precede  as  fases  de  desenvolvimento  e  produção  e  consiste  em 
+
+identificar e quantificar novas reservas de óleo e gás, por meio de análises do 
+
+subsolo. Além disso, essa fase também trata do acesso a essas reservas, por meio 
+
+de negociações com agentes públicos ou privados. 
+
+  Desenvolvimento: acontece logo após a fase de exploração e tem por objetivo 
+
+avaliar as características e a viabilidade dos poços encontrados, por meio de um 
+
+plano  para  a  utilização  dos  recursos  que  busque  maximizar  a  produção  e  os 
+
+lucros ao longo do ciclo de vida do poço e inclui a definição da localização das 
+
+perfurações,  além  das  especificações  da  infraestrutura  de  produção  a  ser 
+
+implementada. 
+
+  Produção: é a última fase do upstream e trata da extração do petróleo e do gás 
+
+do reservatório. Para isso, utiliza diversas técnicas de recuperação, a manutenção 
+
+ 
+
+ 
+
+18 
+
+de  níveis  de  extração  otimizados,  incluindo  também  a  preocupação  com  o 
+
+encerramento das atividades de produção (desativação da infraestrutura utilizada 
+
+e o descarte de resíduos tóxicos). 
+
+Na  fase  de  produção  é  importante  ressaltar  a  importância  do  sistema  de  geração  de 
+
+energia  para  que  os  níveis  de  produção  sejam  otimizados.  Segundo  PERERA  et  al.  (2015), 
+
+plantas industriais de energia são sistemas críticos em plataformas offshore. Isto porque elas 
+
+afetam  diretamente  a  produção  das  unidades,  podendo  gerar  perdas  significativas,  além  de 
+
+apresentarem custos significativos operacionais e de investimento. 
+
+Existem ainda atividades que são essenciais ao segmento de upstream: as atividades de 
+
+apoio logístico. De acordo com BAIN et al. (2009), essas atividades têm por objetivo lidar com 
+
+o transporte de insumos, equipamentos e pessoas para as unidades de produção e podem ser 
+
+divididas em dois tipos: apoio marítimo e apoio aéreo.  
+
+O primeiro tipo consiste no transporte de materiais e equipamentos entre a costa e às 
+
+unidades de produção utilizando de modais marítimos. Já o segundo tem foco no transporte de 
+
+pessoas entre as plataformas e a costa, por meio da utilização de modais aeroportuários. 
+
+Por fim, as fases do setor de downstream apresentam as seguintes atividades: 
+
+  Transporte:  compreende  a  transferência  da  produção  dos  campos  petrolíferos 
+
+para  as  refinarias.  Tal  transporte  é  feito  a  partir  de  embarcações,  caminhões, 
+
+vagões ou tubulações (oleodutos e gasodutos). 
+
+  Refino: consiste no processamento  do óleo e gás em  seus derivados, por uma 
+
+série de processos de separação, conversão e tratamento. 
+
+  Distribuição: trata da transferência e comercialização dos derivados resultantes 
+
+da fase de refino com as distribuidoras, que são responsáveis por oferecer tais 
+
+produtos ao consumidor final, por exemplo, a população de dada região. 
+
+ 
+
+2.2. Unidades de Produção de Petróleo 
+
+Existem  diversos  tipos  de  unidade  de  produção  de  petróleo  e  que  são  utilizadas 
+
+conforme  as  necessidades  e  características  que  cada  área  de  operação  exige.  Dentre  os 
+
+principais  tipos  de  plataforma,  destacam-se  as  plataformas  fixas,  as  auto-elevadas  e  as 
+
+flutuantes.  Para  esse  trabalho,  aquelas  que  mais  importam  são  as  flutuantes,  que  são 
+
+apresentadas na Figura 2 . 
+
+ 
+
+19 
+
+ 
+
+Figura 2: Tipos de Sistemas Flutuantes. Fonte: CLAUSS (2007). 
+
+ 
+
+ 
+
+Dentre os sistemas flutuantes apresentados, os navios de Floating Production, Storage 
+
+and Offloading (FPSO) receberão atenção especial. Segundo MITRA (2009), os navios FPSO 
+
+são utilizados para a extração de óleo em águas profundas e também possuem a vantagem de 
+
+não  necessitarem  que  o  transporte  do  óleo  e  gás  produzidos  seja  feito  por  tubulações.  Por 
+
+último, eles também podem ser movimentados para outro campo assim que as reservas de seu 
+
+poço se esgotam. 
+
+A figura abaixo apresenta os principais subsistemas do FPSO. São eles: os subsistemas 
+
+de  compressão  e  de  processamento  de  gás,  de  processamento  de  óleo,  de  tratamento  e  de 
+
+produção  de  água,  de  geração  de  energia,  de  utilidades,  de  tocha  de  segurança  (flare),  de 
+
+controle  e  automação  e  de  ancoragem  dos  riseres.    Todos  subsistemas  são  alimentados  pela 
+
+energia gerada pelo sistema de geração de energia. 
+
+ 
+
+20 
+
+Figura 3: Sistemas/componentes de um navio FPSO. 
+
+ 
+
+ 
+
+ 
+
+O sistema de geração de energia é composto por um conjunto de 3 ou 4 turbogeradores, 
+
+que produzem eletricidade a partir da combustão de gás natural associado ou mesmo de diesel. 
+
+O  turbogerador  é  uma  máquina  bastante  pesada,  cujo  transporte  e  armazenamento  não  são 
+
+simples.  Logo,  é  difícil  e  custoso  transportá-la  até  a  plataforma,  o  que  não  é  também  uma 
+
+atividade rápida de se fazer, ainda mais para plataformas em águas profundas. A posição de um 
+
+turbogerador no sistema de geração é apresentada na Figura 4. 
+
+Figura 4: Posição do turbogerador num sistema de geração de energia. 
+
+O funcionamento da unidade de produção é completamente dependente do sistema de 
+
+geração de energia, sem o qual não os demais sistemas do FPSO não conseguem realizar suas 
+
+ 
+
+ 
+
+ 
+
+21 
+
+funções.  Tamanha  é  a  importância  deste  sistema  que  ele  conta  com  uma  equipe  própria  de 
+
+manutenção na unidade de produção, além de outro setor em terra que o monitora a distância. 
+
+É importante ressaltar também a importância de uma operação para o sistema de geração 
+
+de energia: o Offloading. Ele é uma operação de descarga do óleo armazenado no FPSO, em 
+
+que as bombas de carga são acionadas para transferir esse óleo para um navio aliviador, que 
+
+tem por finalidade esvaziar o tanque da unidade de produção e levar o óleo para a costa, dando 
+
+sequência às demais fases da cadeia produtiva de petróleo. Esta operação demanda considerável 
+
+energia do sistema de geração e acontece com uma frequência relevante. 
+
+ 
+
+2.3. Conceitos de Manutenção 
+
+Como observado na introdução o objetivo deste trabalho é analisar o funcionamento do 
+
+processo  de  manutenção  dos  turbogeradores,  desta  forma  nesta  seção  são  revisados  os 
+
+principais conceitos de manutenção.  
+
+A  manutenção  produtiva  total  (ou  Total  Productive  Maintenance  –  TPM)  surgiu  nos 
+
+anos  70,  com  o  objetivo  de  aumentar  a  eficiência  dos  equipamentos  focada  nas  perdas  por 
+
+quebra. Ao longo do tempo, ela expandiu seu conceito acerca do que é uma perda, aumentando 
+
+também seu escopo de atuação, conforme apresenta a Figura 5. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 5: Evolução do conceito de perda na TPM. Fonte: RODRIGUES (2014) 
+
+ 
+
+22 
+
+ 
+
+Segundo RODRIGUES (2014), os objetivos da TPM são: 
+
+  Eliminar  variabilidade  em  processos  de  produção:  Evitando  quebras  não 
+
+planejadas, aumentando a confiabilidade do processo, buscando zero falha e zero 
+
+quebra. 
+
+  Minimizar perdas: quebras, ajustes (setup), pequenas paradas, tempo ocioso, 
+
+baixa velocidade; 
+
+  Comprometimento de todos os funcionários: buscando o aprimoramento da 
+
+manutenção  e  operação,  maior  responsabilidade  dos  colaboradores  por  suas 
+
+máquinas  e  equipamentos,  realização  de  atividades  rotineiras  de  manutenção 
+
+pelos operadores; 
+
+  Mudar o Conceito tradicional: Os atores do processo industrial passam a ter 
+
+obrigações e responsabilidades sobre seu trabalho. 
+
+Para isso, a manutenção produtiva total utiliza os princípios apresentados na Figura 6 
+
+para ser implementada. 
+
+Figura 6: Pilares da TMP. Fonte: RODRIGUES (2014) 
+
+ 
+
+ 
+
+Dentre esses conceitos, são destacados a gestão da manutenção planejada, a gestão da 
+
+manutenção focada e a gestão de equipamentos. Ainda segundo RODRIGUES (2014), a gestão 
+
+da manutenção planejada trata da elaboração de um plano de manutenção preventiva e preditiva 
+
+para maximizar a utilização do equipamento. Já a manutenção focada trata da eliminação de 
+
+ 
+
+ 
+
+23 
+
+perdas  por  meio  de  melhorias  regulares  e  incrementais.  Por  fim,  a  gestão  de  equipamentos 
+
+consiste  em  garantir,  por  meio  da  eficiência  dos  equipamentos,  o  atendimento  das 
+
+especificações do produto final com as características e especificações desejadas. 
+
+Dito isso, ainda resta explicar como as manutenções se enquadram na utilização diária 
+
+dos equipamentos. Mas antes, é necessário a apresentação de algumas definições. De acordo 
+
+com a ISO 14224:2006(E), existem duas categorias básicas de manutenção: 
+
+  Corretiva: feita para corrigir um item após sua falha; 
+
+  Preventiva: realizada para prevenir a falha de um item, sendo feita em intervalos 
+
+pré-determinados ou de acordo com um critério pré-estabelecido para reduzir a 
+
+probabilidade  de  falha  ou  degradação  do  funcionamento  de  um  item.  Estão 
+
+incluídas nessa categoria: inspeções, ensaios e testes para verificar a condição 
+
+do equipamento. 
+
+A ocorrência da manutenção antes ou depois da falha é o que separa as duas categorias 
+
+de manutenção, portanto é importante defini-la. Segundo a ISO 14224:2006(E), a falha é um 
+
+evento no qual determinado item perde a capacidade de desempenhar sua função. Com base 
+
+nessas  definições,  a  Figura  7  apresenta  esquematicamente  as  categorias  de  manutenção 
+
+descritas. 
+
+Figura 7: Categorias de manutenção (traduzida). Fonte: ISO 14224:2006(E). 
+
+ 
+
+ 
+
+A  ISO  14224:2006(E)  também  apresenta  como  as  manutenções  se  enquadram  na 
+
+utilização diária dos equipamentos, definindo como são compostos os tempos relacionados ao 
+
+funcionamento de uma máquina, conforme apresenta a Tabela 1. 
+
+ 
+
+ 
+
+ 
+
+24 
+
+ 
+
+ 
+
+Tempo Total  
+
+Downtime  
+
+Paradas planejadas 
+
+Paradas não planejadas 
+
+Manutenções 
+preventivas 
+
+Outras paradas 
+
+Manutenções 
+
+planejadas 
+
+corretiva 
+
+Outras paradas 
+não planejadas 
+
+Uptime 
+
+Tempo de 
+operação 
+
+Tempo não 
+operado (ou 
+
+ocioso) 
+
+Tabela 1: Definições de tempo relacionadas ao funcionamento de uma máquina (adaptado). Fonte: ISO 
+
+14224:2006(E). 
+
+O tempo total (ou tempo corrido) representa a soma dos tempos de downtime e uptime 
+
+de uma determinada máquina. O downtime representa quando a máquina está inoperante por 
+
+algum  motivo,  devido  a  paradas  planejadas  ou  não.  “Outras  paradas  planejadas”  incluem  o 
+
+tempo de stand-by1, enquanto  “outras paradas não-planejadas” incluem  queda do sistema de 
+
+produção como um todo, por exemplo, por falta de combustível. Já o uptime se refere ao tempo 
+
+em que a máquina está em atividade (tempo de operação) ou inativa (tempo não operado), por 
+
+não haver necessidade de utilizá-la. 
+
+O estado de stand-by se refere à quando uma máquina só precisa ser ativada para ser 
+
+posta  em  funcionamento,  o  que  somente  ocorre  quando  há  necessidade.  Ele  é  comumente 
+
+utilizado em  sistemas redundantes. No  caso do sistema de  geração de energia de um  FPSO, 
+
+quando uma máquina para de operar, ou seja, entra em downtime por algum motivo, a máquina 
+
+que está em stand-by rapidamente pode ser colocada em operação, evitando com que haja uma 
+
+queda significativa na produção de energia para o navio. 
+
+ 
+
+2.4. Simulação 
+
+Os problemas encontrados pela indústria brasileira de óleo e gás tem se tornado cada 
+
+vez mais complexos. Num cenário de queda de lucratividade, é importantíssimo que a tomada 
+
+de  decisão  seja  realizada  de  forma  mais  assertiva,  conhecendo-se  ao  máximo  os  possíveis 
+
+resultados e seu o risco atrelado. Quando esses problemas ainda incluem um grau significativo 
+
+de  fenômenos  aleatórios,  surge  uma  necessidade  por  técnicas  que  consigam  lidar  com  essas 
+
+questões.  
+
+                                            
+1 A 14224:2006(E) separa o stand-by em dois tipos: “hot” stand-by e “cold” stand-by. O primeiro 
+
+trata de quando a máquina só precisa ser ativada para ser posta em funcionamento, quando o segundo 
+
+requer  que  algumas  atividades  sejam  realizadas  para  que  se  possa  colocar  a  máquina  em 
+
+funcionamento. No entanto, para os propósitos desse trabalho essa divisão não é necessária e pode 
+
+atrapalhar seu entendimento. 
+
+ 
+
+ 
+
+25 
+
+SHANNON  (1998)  define  simulação  como  o  processo  de  criar  um  modelo  de  um 
+
+sistema real e conduzir experiências com esse modelo visando compreender o comportamento 
+
+do sistema e/ou avaliar as várias estratégias para operá-lo. Por conta disso, o autor defende que 
+
+é crucial que o modelo seja criado de uma forma que imite o comportamento do sistema e seus 
+
+eventos ao longo do tempo.  
+
+Segundo CAMPOS (2012), a simulação pode ser usada com os seguintes objetivos: 
+
+  Promover o estudo e experimentação de interações internas complexas ou de 
+
+um subsistema com sistemas complexos; 
+
+  Estudar mudanças ambientais e organizacionais, bem como os efeitos das suas 
+
+alterações; 
+
+  Promover  a  aplicação  de  melhorias  num  sistema  por  meio  do  conhecimento 
+
+obtido na construção do modelo; 
+
+  Usar a simulação para fins pedagógicos para formar colaboradores e técnicos; 
+
+  Para testar novos desenhos de processos e na definição de prioridades de gestão; 
+
+  Para resolver analiticamente problemas de engenharia; 
+
+É importante mencionar que os problemas resolvidos por simulação na maior parte dos 
+
+casos exigem a utilização de computadores. Segundo FERREIRA FILHO (2016) as razões mais 
+
+comuns para a utilização de modelos computacionais são que o sistema real ainda não existe, a 
+
+experimentação com o sistema real é dispendiosa e a experimentação com o sistema real não é 
+
+apropriada. 
+
+FERREIRA FILHO (2016) também defende que existem diversos tipos de simulação. 
+
+Dentre  eles,  o  autor  cita  que  os  modelos  podem  ser  classificados  em  determinísticos  e 
+
+estocásticos, estáticos ou dinâmicos e discretos ou contínuos. A definição de cada classificação 
+
+é dada a seguir: 
+
+  Determinísticos  x  Estocásticos:  Os  modelos  determinísticos  são  aqueles  em  que  as 
+
+variáveis de entrada ou saída são bem determinadas, enquanto os modelos estocásticos 
+
+apresentam ao menos uma das variáveis de entrada ou de saída probabilística. 
+
+  Estáticos  x  Dinâmicos:  Modelos  estáticos  são  aqueles  em  que  o  tempo  não  é  uma 
+
+variável levada em conta, enquanto para os modelos dinâmicos o estado do sistema é 
+
+baseado numa variável de tempo que muda ao decorrer do tempo. 
+
+  Discretos x Contínuos: Já modelos discretos apresentam mudanças em pontos discretos 
+
+no tempo e não de forma contínua. 
+
+ 
+
+ 
+
+ 
+
+26 
+
+Por fim, de acordo com BANKS et al. (1996), o processo de construção de um modelo 
+
+de simulação é composto por 12 etapas, conforme apresenta a Figura 8. 
+
+Figura 8: Etapas de um estudo de simulação. Fonte: BANKS et al. (1996). 
+
+ 
+
+ 
+
+27 
+
+ 
+
+3.  DESCRIÇÃO DO SISTEMA 
+
+As  informações  utilizadas  para  escrever  este  capítulo  foram  obtidas  por  meio  de 
+
+reuniões  com  2  engenheiros  de  manutenção  que  estudam  e/ou  trabalham  com  a  unidade  de 
+
+produção em questão. 
+
+ 
+
+3.1. Detalhamento do caso em estudo 
+
+No  caso  escolhido  estuda-se  o  comportamento  de  um  sistema  de  geração  de  uma 
+
+unidade de produção do tipo FPSO. Esta unidade possui a capacidade de produção de 150 mil 
+
+barris por dia e funciona continuamente (24 horas por dia, 7 dias por semana). A cada 7 dias, 
+
+em média, ocorre a realização de um Offloading, que gera um pico na demanda por energia, o 
+
+que requer um aumento de sua produção por parte dos turbogeradores durante esse período. 
+
+O sistema de geração estudado compreende 4 turbogeradores que operam em paralelo. 
+
+Num cenário de operação normal, três turbogeradores operam continuamente e um deles fica 
+
+em stand-by até que seja necessário colocá-lo em uso, devido a pelo menos um dos seguintes 
+
+casos: 
+
+1.  Durante um offloading quando é preciso absorver o aumento na demanda por 
+
+energia na unidade; 
+
+2.  Algum dos outros turbogeradores em  operação  precisa  ser parado para  passar 
+
+por determinada manutenção. 
+
+3.  Quando  um  dos  outros  3  turbogeradores  está  em  operação  por  um  tempo 
+
+demasiadamente longo e deve ser posto em stand-by, para que seu tempo total 
+
+de uso não fique muito maior do que os demais, ocasionando numa chegada ao 
+
+fim  de  vida  útil  da  máquina  antes  do  planejado.  Isto  afeta  a  capacidade  da 
+
+unidade de produção de absorver variações na demanda por energia no futuro e 
+
+cria  um  aumento  de  gastos  com  manutenção  para  estender  a  vida  útil  do 
+
+equipamento. 
+
+Nesse cenário, todas as máquinas acabam tendo um período de stand-by ao longo de sua 
+
+vida útil. No entanto, é uma tarefa muito difícil predizer quando uma máquina deve estar em 
+
+stand-by, pois além das 3 situações citadas, existem diversas outras que não foram mapeadas. 
+
+As regras não são muito claras e não foi possível determiná-las em conjunto com os engenheiros 
+
+entrevistados para fazer esse detalhamento. 
+
+Além disso, muitas vezes, na prática, esse tempo de stand-by se mistura com os tempos 
+
+de manutenção. Isso acontece porque os mecânicos de bordo aproveitam quando uma máquina 
+
+ 
+
+ 
+
+28 
+
+está em stand-by para realizar algumas manutenções, usufruindo do fato de que ela está parada. 
+
+Aparentemente, essa é uma prática ruim, pois se uma das outras máquinas falhar enquanto o 
+
+turbogerador  em  stand-by  estiver  sofrendo  uma  manutenção  que  o  incapacite  de  ser  ativado 
+
+naquele momento, a produção pode ser afetada.  
+
+Em  relação  às  manutenções  dessas  máquinas,  existem  dois  tipos:  preventivas  e 
+
+corretivas. As primeiras, em tese, são planejadas e realizadas de acordo com as indicações do 
+
+fabricante, visando garantir que os equipamentos funcionem da maneira mais adequada e para 
+
+maximizar  sua  vida  útil.  Já  as  manutenções  corretivas  decorrem  da  correção  de  problemas 
+
+causados por falhas operacionais, que são aleatórias e podem acontecer em qualquer subsistema 
+
+dos turbogeradores. 
+
+As manutenções preventivas devem seguir os tempos estipulados pelos fornecedores, 
+
+conforme  indicado  pela  Tabela  2.  Cada  atividade  de  manutenção  pode  ocorrer  com  base  no 
+
+tempo em que a máquina ficou em operação (tempo operado), que pode ser determinado por 
+
+seu  horímetro,  ou  no  tempo  corrido,  que  inclui  o  tempo  em  que  a  máquina  não  estava  em 
+
+operação.  Ou  seja,  caso  uma  máquina  tenha  operado  por  1000  horas,  ela  deve  receber  uma 
+
+lavagem com água; no entanto, caso ela não tenha sido utilizada por 1000 horas, mas já tenha 
+
+se passado 1,5 mês desde que ela iniciou sua operação, uma lavagem também deve ser realizada. 
+
+Núm. 
+
+Atividades de manutenção 
+
+Tempo operado 
+
+Tempo corrido 
+
+(em horas) 
+
+(em meses) 
+
+1 
+
+2 
+
+Lavagem com água 
+
+Análise de óleo preditiva 
+
+3  Manutenção preventiva de vibração 
+
+4  Manutenção mecânica das turbinas (GGs)  
+
+5 
+
+Limpeza dos filtros de ar de combustão 
+
+6  Manutenção mecânica suplementar 
+
+7 
+
+Termografia dos painéis elétricos 
+
+8  Manutenção das baterias 
+
+9 
+
+Troca dos filtros de ar de combustão 
+
+10 
+
+Troca das válvulas de combustível 
+
+11  Manutenção preventiva de detecção de fogo e gás 
+
+12  Manutenção preventiva da instrumentação 
+
+13 
+
+Revisão de meia vida (Mid Life) 
+
+14  Vistoria por empresa especializada (Overhaul) 
+
+1000 
+
+1368 
+
+2052 
+
+4000 
+
+4000 
+
+4104 
+
+4104 
+
+4104 
+
+8000 
+
+8208 
+
+8208 
+
+16416 
+
+25000 
+
+50000 
+
+1,5 
+
+2,0 
+
+3,0 
+
+5,8 
+
+5,8 
+
+6,0 
+
+6,0 
+
+6,0 
+
+11,7 
+
+12,0 
+
+12,0 
+
+24,0 
+
+36,5 
+
+73,1 
+
+Tabela 2: Frequência de realização de manutenção preventiva. 
+
+Dentre as atividades de manutenção, duas merecem atenção especial: a revisão de Mid 
+
+Life e a vistoria por empresa especializada (Overhaul). Ambas necessitam que haja a remoção 
+
+da  turbina  para  envio  à  manutenção.  Para  evitar  a  diminuição  da  capacidade  do  sistema  de 
+
+geração  de  energia,  uma  outra  turbina  deve  ser  colocada  no  lugar  daquela  que  é  retirada  e 
+
+ 
+
+ 
+
+29 
+
+enviada para manutenção. A turbina que é posta em uso, fica armazenada numa oficina em terra 
+
+e  é  enviada  para  a  unidade  de  produção  somente  quando  o  turbogerador  em  questão  está 
+
+próximo  de  requisitar  uma  das  duas  manutenções.  Após  o  retorno  da  turbina  enviada  à 
+
+manutenção, ela não necessariamente volta a ser colocada no turbogerador da qual fora retirada. 
+
+Uma  estimativa  de  duração  para  cada  atividade  de  manutenção  preventiva  também  é 
+
+estabelecida por parte do fornecedor do equipamento, observar coluna downtime na Tabela 3. 
+
+Mais um tempo de cooldown (desligamento da máquina) deve ser adicionado a esse downtime 
+
+em alguns casos, para que se possa determinar qual é o tempo real em que a máquina fica em 
+
+manutenção preventiva, ou seja, o tempo em que ela não está completamente operacional. Além 
+
+disso, há uma previsão de quantos homem/hora devem ser gastos para cada atividade. 
+
+Atividades de manutenção 
+
+Homem / 
+
+Hora Gasto 
+
+Downtime  
+(em horas) 
+
+Cooldown 
+(em horas) 
+
+ 
+Núm. 
+
+1 
+
+2 
+
+Lavagem com água 
+
+Análise de óleo preditiva 
+
+3  Manutenção preventiva de vibração 
+
+4  Manutenção mecânica das turbinas (GGs)  
+
+5 
+
+Limpeza dos filtros de ar de combustão 
+
+6  Manutenção mecânica suplementar 
+
+7 
+
+Termografia dos painéis elétricos 
+
+8  Manutenção das baterias 
+
+9 
+
+Troca dos filtros de ar de combustão 
+
+10 
+
+Troca das válvulas de combustível 
+
+11  Manutenção preventiva de detecção de fogo e gás 
+
+12  Manutenção preventiva da instrumentação 
+
+13 
+
+Revisão de meia vida (Mid Life) 
+
+14  Vistoria por empresa especializada (Overhaul) 
+
+6 
+
+1 
+
+4 
+
+10 
+
+6 
+
+6 
+
+2 
+
+12 
+
+6 
+
+4 
+
+6 
+
+72 
+
+84 
+
+84 
+
+7 
+
+0 
+
+0 
+
+12 
+
+3 
+
+6 
+
+0 
+
+12 
+
+6 
+
+4 
+
+3 
+
+72 
+
+168 
+
+168 
+
+0 
+
+0 
+
+0 
+
+1 
+
+1 
+
+1 
+
+0 
+
+0 
+
+1 
+
+1 
+
+1 
+
+0 
+
+1 
+
+1 
+
+Tabela 3: Duração e homem/hora estimado para cada manutenção preventiva. 
+
+Outro  ponto  de  interesse  diz  respeito  aos  materiais  utilizados  nessas  atividades. 
+
+Algumas delas, sempre requisitam a troca de peças, a utilização de equipamentos ou materiais 
+
+específicos,  o  que  pode  afetar  a  realização  das  manutenções  num  caso  de  falta.  Além  disso, 
+
+também há a questão do custo atrelado a esses insumos ao passar do tempo, que é significativo. 
+
+Com relação às manutenções corretivas, primeiramente é importante ressaltar que cada 
+
+turbogerador  é  composto  por  um  conjunto  de  subsistemas,  cada  um  com  uma  determinada 
+
+função, conforme apresenta a Figura 9. Não é de interesse deste trabalho explicar a função de 
+
+todos  eles,  porém  é  relevante  ressaltar  que  o  funcionamento  desses  subsistemas  impacta 
+
+diretamente na quantidade de falhas operacionais que cada máquina tem. Além disso, todos eles 
+
+podem apresentar problemas que impactem a produção de energia e  gerem a necessidade de 
+
+manutenções corretivas.  
+
+ 
+
+ 
+
+ 
+
+Figura 9: Subsistemas de um turbogerador (Adaptada). Fonte: ISO 14224:2006(E). 
+
+30 
+
+ 
+
+Nesse  sentido,  é  bastante  trabalhoso  e  complexo  realizar  uma  análise  individual  dos 
+
+componentes  da  máquina  para  determinar  a  ocorrência  das  falhas.  Por  conta  disso,  um 
+
+comportamento único para o conjunto dessas falhas foi estudado, ou melhor, das falhas de cada 
+
+turbogerador. Entretanto, analisar somente isso não é suficiente, é preciso também determinar 
+
+os gastos de tempo com manutenção corretiva.  
+
+Por  fim,  as  atividades  de  manutenção  corretiva  e  preventiva  são  realizadas  pelos 
+
+mecânicos de bordo, que se localizam na oficina de bordo da unidade de produção. Existem 
+
+dois mecânicos de bordo que trabalham na oficina, cada um realizando um turno de 12h por 
+
+dia.  Além  disso,  um  acompanhamento  do  funcionamento  dos  turbogeradores  é  feito  por 
+
+engenheiros  num  centro  de  monitoramento  em  terra,  durante  o  regime  administrativo.  Em 
+
+situações excepcionais, também  é possível  recorrer aos especialistas em  turbomáquinas para 
+
+realizar determinadas manutenções ou mesmo auxiliar na identificação e solução de problemas 
+
+relacionados às máquinas. 
+
+ 
+
+3.2. Fontes de dados e informações 
+
+Essa seção apresenta quais informações e fontes de dados foram disponibilizadas para 
+
+a elaboração do modelo. 
+
+Primeiramente, as tabelas com informações da frequência e duração das atividades de 
+
+manutenção  preventiva  foram  utilizadas  como  informações  para  construção  do  modelo.  Do 
+
+ 
+
+ 
+
+31 
+
+mesmo modo, as regras relacionadas aos processos e as atividades do sistema levantadas junto 
+
+aos engenheiros entrevistados também foram usadas. 
+
+Teve-se acesso a duas bases de dados referentes ao funcionamento dos turbogeradores: 
+
+uma do centro de monitoramento e outra dos mecânicos de bordo. A primeira continha uma 
+
+visão mais geral acerca do funcionamento das turbomáquinas, enquanto a outra uma visão mais 
+
+detalhada. 
+
+A base de dados referente ao centro de monitoramento apresentava informações para 
+
+um período de aproximadamente 9,5 anos. Nesta base os dados estão segmentados para cada 
+
+turbina por mês, apresentando a quantidade de horas operadas, horas disponíveis, quantidade 
+
+de falhas operacionais e o tempo referente aos dias no calendário daquele mês, em horas. 
+
+Já a base referente aos mecânicos de bordo se refere a um período aproximado de 10,5 
+
+anos. Nestes dados, havia um grau de detalhamento maior, no qual foi possível identificar os 
+
+eventos que ocorreram ao longo do tempo  com cada máquina. Tais  eventos foram divididos 
+
+em: manutenção preventiva, manutenção  corretiva, stand-by e  externo. Para cada um  desses 
+
+tipos de eventos, havia a duração, o momento em que tiveram início e um complemento sobre 
+
+a descrição do evento.  
+
+Por motivo de maior detalhamento e precisão dos dados, a base referente aos mecânicos 
+
+de  bordo  foi  a  utilizada.  No  entanto,  é  importante  mencionar  que  por  se  tratar  de  diferentes 
+
+fontes  de  registro,  divergências  foram  encontradas  entre  as  bases,  seja  por  registros 
+
+aparentemente incorretos ou pela falta deles. 
+
+ 
+
+32 
+
+ 
+
+4.  DESENVOLVIMENTO DO MODELO 
+
+4.1. Modelo Conceitual 
+
+Primeiramente, as limitações básicas do modelo foram definidas. O modelo deve retratar 
+
+um sistema fechado, ou seja, a quantidade de turbogeradores e mecânicos de bordo no sistema 
+
+deve ser sempre constante. Outra consideração importante é que eventos externos às máquinas, 
+
+como shutdown da plataforma devem ser desconsiderados. 
+
+O comportamento  dos turbogeradores  deve funcionar  como  um  processo  estocástico, 
+
+que  nada  mais  é  que  a  “descrição  de  um  fenômeno  aleatório  que  varia  com  o  tempo” 
+
+FERREIRA FILHO (2016). Além disso, ao longo do tempo, cada turbogerador apresenta um 
+
+conjunto limitado e discreto de diferentes estados.  
+
+Para  representar  graficamente  esse  conjunto  de  estados,  a  utilização  de  um  diagrama 
+
+transição de estados foi  escolhida. O diagrama representa todo  o conjunto  de estados de um 
+
+processo estocástico e as probabilidades para transição entre os estados2, o que é apresentado 
+
+na Figura 10. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 10: Diagrama de transição de estados de uma turbomáquina. 
+
+Cada  arco  do  diagrama  representa  quais  as  transições  possíveis  entre  os  estados.  Por 
+
+exemplo, é possível que uma máquina que esteja em manutenção corretiva (estado 2) passe ao 
+
+estado de stand-by (estado 4). Todavia, não é possível que ela faça o caminho oposto, saindo 
+
+diretamente do estado 4 para o estado 2. 
+
+                                            
+2 Numa situação em que se possuísse todas as probabilidades de transição de estado, elas 
+
+deveriam ser representadas no diagrama. Como não é o caso, usou-se o diagrama como uma forma 
+
+mais visual de representar os estados dos turbogeradores e suas relações. 
+
+ 
+
+ 
+
+33 
+
+Para descrever o modelo conceitual num grau de detalhe maior, essa seção foi dividida 
+
+de  acordo  com  os  elementos  julgados  mais  relevantes  para  o  problema.  Nesse  sentido,  os 
+
+seguintes  elementos  foram  selecionados:  locais,  entidades,  recursos,  atividades,  variáveis  de 
+
+resposta e hipóteses consideradas. As seções 4.1.1 à 4.3 contêm a descrição de tais itens. 
+
+4.1.1.  Locais 
+
+São  as  posições  físicas  que  podem  ser  ocupadas  pelos  recursos  e  entidades,  onde 
+
+ocorrem  operações  sobre  estes  últimos.  No  modelo  elaborado,  tem-se  2  tipos  de  locais:  as 
+
+turbomáquinas  (TGs)  e  a  oficina  de  bordo.  Cada  local  tem  uma  capacidade  definida  que  é 
+
+apresentada na Tabela 4. 
+
+Quantidade 
+
+Locais 
+
+4 
+
+1 
+
+Turbogeradores 
+
+Oficina de bordo 
+
+Capacidades 
+
+1 Turbina 
+
+Ilimitado 
+
+Tabela 4: Locais do modelo conceitual e suas capacidades. 
+
+4.1.2.  Recursos 
+
+Os recursos são elementos que podem ser consumidos ou não durante uma simulação e 
+
+tem por objetivo viabilizar a realização de uma determinada atividade. No modelo proposto, só 
+
+se contou com um tipo de recurso, o mecânico de bordo, que pode ficar em 3 estados ao longo 
+
+do tempo (Tabela 5). A disciplina para atendimento de cada atividade é FIFO. 
+
+ 
+
+Quantidade 
+
+Recursos 
+
+Estados 
+
+1 
+
+Mecânico de Bordo 
+
+1.  Ocioso 
+2.  Em movimentação 
+3.  Realizando Manutenção 
+
+Tabela 5: Recursos do modelo conceitual e seus estados. 
+
+4.1.3.  Entidades 
+
+Uma  entidade  é  qualquer  elemento  que  sofre  alguma  ação  por  parte  de  dos  demais 
+
+elementos da simulação. No caso, só um tipo de entidade foi utilizado: as turbinas (GGs). As 
+
+ações que acontecem sobre as turbinas são encontradas na Tabela 6. 
+
+Quantidade 
+
+Entidade 
+
+Ações/Atividades 
+
+4 
+
+Turbina (GG) 
+
+1.  Operação 
+2.  Manutenção Corretiva 
+3.  Manutenção Preventiva 
+4.  Stand-by 
+
+Tabela 6: Entidades do modelo conceitual e suas atividades. 
+
+ 
+
+ 
+
+ 
+
+34 
+
+Todas  atividades  possuem  uma  frequência  e  duração  pré-definida,  por  meio  de  uma 
+
+distribuição,  função  ou  um  parâmetro  determinado.  No  caso  da  manutenção  preventiva, 
+
+convencionou-se que esta deve seguir as sugestões do fornecedor dos equipamentos (Tabela 2 
+
+e Tabela 3).  
+
+Com relação a manutenção corretiva, uma probabilidade define sua ocorrência ou não, 
+
+e  sua  duração  é  determinada  por  meio  de  uma  distribuição  de  probabilidade.  A  mesma 
+
+modelagem é utilizada para determinar as atividades de stand-by. Por fim, a operação da turbina 
+
+é determinada pelo tempo total da simulação, menos o tempo das outras atividades (manutenção 
+
+corretiva, preventiva e stand-by). 
+
+ 
+
+4.2. Variáveis de Resposta 
+
+As variáveis de resposta do modelo determinam o que deve ser avaliado para verificar 
+
+se o modelo pode ser considerado aderente à realidade. No caso, as variáveis consideradas são: 
+
+os tempos totais de manutenção corretiva, de manutenção preventiva e de stand-by para cada 
+
+turbomáquina. 
+
+ 
+
+4.3. Hipóteses consideradas 
+
+Essa seção apresenta as simplificações realizadas para a criação do modelo conceitual, 
+
+devido à indisponibilidade de dados ou à complexidade do modelo em si. Elas são expostas nos 
+
+tópicos a seguir: 
+
+ 
+
+1.  Locais 
+
+a.  Não há restrição de fornecimento de combustível aos TGs. 
+
+b.  Não foi considerado o impacto do offloading no funcionamento das TGs. 
+
+c.  Quando  uma  turbina  é  retirada  de  uma  TG  para  uma  manutenção  de 
+
+Overhaul ou Mid Life, a outra turbina que é colocada em seu lugar apresenta 
+
+a  mesma  probabilidade  de  falhar  e  distribuição  de  tempos  de  manutenção 
+
+corretiva.  
+
+d.  Sendo assim, o modelo não precisa se preocupar em mapear o que acontece 
+
+com a turbina que foi enviada ao fornecedor. Somente há a preocupação com 
+
+o funcionamento do turbogerador, que apresenta um tempo de manutenção 
+
+preventiva  para  troca  da  turbina  e  depois  deve  ser  posto  em  operação 
+
+novamente. 
+
+ 
+
+35 
+
+ 
+
+2.  Atividades 
+
+a.  As peças e insumos para as manutenções são infinitos. 
+
+b.  Duas  ou  mais  atividades  de  manutenção  preventiva  podem  ser  feitas  ao 
+
+mesmo tempo, contanto que respeitem as restrições de frequência e duração. 
+
+c.  A  duração  total  de  duas  ou  mais  atividades  realizadas  ao  mesmo  tempo  é 
+
+sempre igual à soma da duração de ambas menos o tempo em que  elas se 
+
+sobrepuseram, conforme mostra a Figura 11. 
+
+ 
+
+ 
+
+Figura 11: Sobreposição de downtimes. Fonte: PROMODEL CORPORATION (2014) 
+
+ 
+
+d.  Uma  atividade  de  manutenção  preventiva  pode  ser  realizada  quando  uma 
+
+máquina estiver em stand-by. 
+
+e.  Turbomáquinas  diferentes  não  podem  receber  manutenções  ao  mesmo 
+
+tempo, devido a limitação de somente um mecânico de bordo. 
+
+f.  Uma  manutenção  corretiva  não  pode  ser  feita  em  conjunto  com  uma 
+
+atividade de manutenção preventiva ou stand-by. 
+
+g.  Para  simplificar  o  modelo,  adotou-se  só  o  critério  de  tempo  corrido  para 
+
+realizar as manutenções preventivas apresentadas na Tabela 3. 
+
+3.  Recursos 
+
+a.  A  troca  de  mecânicos  de  bordo  a  cada  12  horas  é  desconsiderada  pela 
+
+simplificação de se colocar um mecânico de bordo trabalhando 24 horas por 
+
+dia e 7 dias por semana. 
+
+b.  Os tempos de movimentação para o mecânico de bordo são insignificantes, 
+
+pela proximidade das turbomáquinas entre si e também da oficina de bordo. 
+
+c.  A única tarefa do mecânico de bordo é realizar as manutenções. 
+
+ 
+
+ 
+
+ 
+
+36 
+
+ 
+
+4.4. Codificação do Modelo 
+
+4.4.1.  Software Escolhido 
+
+O  software  utilizado  foi  o  Promodel.  Ele  é  descrito  como  “uma  tecnologia  para 
+
+“simulação de eventos discretos utilizada para planejar, modelar e melhorar novos ou existentes 
+
+sistemas  de  manufatura,  de  logística  e  outros  sistemas  operacionais”  pela  PROMODEL 
+
+CORPORATION (2015).  
+
+Diversos foram os motivos para sua escolha. Ele possui as funcionalidades básicas para 
+
+a criação de uma simulação computacional e está disponível na universidade. Além  disso, a 
+
+companhia dona do FPSO possui a licença do software, o que possibilita um posterior uso do 
+
+modelo desenvolvido e até mesmo permite que ele seja expandido. E, por último, o ProModel 
+
+apresenta  um  suíte  de  estatística,  o  StatFit,  que  possibilita  realizar  a  análise  estatística  dos 
+
+dados, bem como a estimação de parâmetros para a criação da simulação. 
+
+ 
+
+4.4.2.  Estimativas de Parâmetros 
+
+Para poder criar um modelo computacional e fazê-lo funcionar adequadamente, deve-
+
+se  definir  os  valores  das  variáveis  de  entrada  que  serão  utilizados.  No  caso,  ainda  é  preciso 
+
+determinar a frequência e o tempo para as seguintes variáveis aleatórias de entrada: manutenção 
+
+corretiva e stand-by.  
+
+As bases de dados apresentam informações dessas variáveis para um período de 10,5 
+
+anos. A partir deles é possível determinar o tempo gasto com manutenção corretiva e stand-by 
+
+a cada ano, mês, dia, hora ou até mesmo minuto para cada máquina. No entanto, deve existir 
+
+alguma  amostragem  dessas,  que  modela  melhor  os  dados,  ou  seja,  que  apresenta  uma 
+
+distribuição com melhor ajuste dos dados. Para isso, é necessário realizar um estudo estatístico 
+
+com esses dados segmentados ou baseados em amostras para os períodos descritos.  
+
+Primeiramente, o comportamento dos dados foi testado numa amostra a cada minuto. A 
+
+Figura 22 demonstra o resultado do ajuste dos dados de manutenção corretiva da turbina em 
+
+TG1 a alguma distribuição de probabilidade. 
+
+ 
+
+ 
+
+37 
+
+Figura 12: Teste de ajuste dos dados de manutenção corretiva para a TG1 numa amostra por minutos. 
+
+ 
+
+ 
+
+Na Figura 12, a coluna mais à esquerda indica a distribuição na qual se tentou ajustar os 
+
+dados e as duas colunas à direita indicam o resultado do ajuste. A coluna rank indica o quão 
+
+bom é o ajuste à determinada distribuição, sendo que quanto maior o rank, mais aderentes os 
+
+dados são àquela distribuição. Ele é calculado através da combinação de dois testes de aderência 
+
+de  distribuição,  o  teste  de  Anderson-Darling  e  Kolmogorov  e  Smirnov,  que  também 
+
+determinam o resultado da coluna de aceitação.  
+
+Pela  análise  do  rank  e  pela  aceitabilidade  do  teste  de  ajuste,  conclui-se  que  não  faz 
+
+sentido  representar  a  manutenção  corretiva  por  uma  amostra  a  cada  minuto.  No  entanto,  o 
+
+resultado é positivo para os tempos de stand-by na TG1 para uma amostra no mesmo período, 
+
+como indica a Figura 13. 
+
+ 
+
+ 
+
+38 
+
+Figura 13: Teste de ajuste dos dados de stand-by para a TG1 numa amostragem por minutos. 
+
+ 
+
+ 
+
+O resultado indica que a distribuição LogLogística pode representar o comportamento 
+
+da variável aleatória de stand-by numa amostragem por minuto. O rank é bastante elevado e a 
+
+aderência  não  é  rejeitada  para  um  grau  de  significância  de  5%  (padrão  do  StatFit).  Um 
+
+detalhamento melhor dos cálculos realizados para chegar à Figura 13 se apresenta na Figura 14. 
+
+ 
+
+Figura 14: Detalhamento do teste de ajuste dos dados de stand-by para TG1 em amostra diária. 
+
+ 
+
+A  Figura  14  exibe  os  dois  testes  de  aderência  utilizados  para  verificar  o  grau  de 
+
+aderência  dos  dados  em  questão  a  distribuição  LogLogística.  Logo  abaixo  do  nome  da 
+
+distribuição,  na  figura  pode-se  notar  os  parâmetros  calculados  para  essa  distribuição.  No 
+
+entanto, esse resultado positivo não se repete para os tempos de stand-by nas demais turbinas.  
+
+ 
+
+ 
+
+39 
+
+Com isso, o comportamento dos dados de ambas variáveis foi testado quando se utiliza 
+
+outras  amostragens:  diária,  quinzenal  e  mensal.  Um  resumo  dos  resultados  desses  testes  é 
+
+apresentado  na  Tabela  7.  A  escala  utilizada  na  tabela  varia  de  1  a  5,  onde  quanto  melhor  a 
+
+aderência da variável ao tipo de amostragem, mais próximo o índice é de 1 e quanto pior, mais 
+
+próximo é de 5.  
+
+Variável por Tipo de Amostragem  Minuto 
+
+Hora 
+
+Dia 
+
+Quinzenal  Mensal 
+
+Manutenção Corretiva 
+
+5 
+
+4 
+
+3 
+
+2 
+
+1 
+
+Stand-by 
+
+2 
+Tabela 7: Resumo dos resultados de aderência dos dados por tipo de amostragem. 
+
+5 
+
+4 
+
+3 
+
+1 
+
+O critério utilizado para determinar esse índice é a quantidade de TGs com maior rank 
+
+por  tipo  de  amostragem.  Sendo  assim,  os  dados  de  todas  as  TGs  apresentam  uma  maior 
+
+aderência  a  alguma  distribuição  no  caso  da  manutenção  corretiva  quanto  a  amostragem  é 
+
+mensal e no caso do stand-by quando ela é quinzenal.  
+
+Sendo  assim,  o  modelo  computacional  deve  sortear  a  cada  quinze  dias  o  valor  da 
+
+variável aleatória que se refere ao tempo em que a máquina deve ficar em stand-by. Do mesmo 
+
+modo, a cada 1 mês a variável correspondente ao tempo gasto com manutenção corretiva deve 
+
+ser sorteada, determinando o tempo gasto com a manutenção corretiva naquele mês. 
+
+As  tabelas  Tabela  8  e  Tabela  9  apresentam  um  resumo  das  distribuições,  seus 
+
+parâmetros, o tipo de amostragem e o rank alcançado por cada turbogerador para cada variável 
+
+aleatória. 
+
+Stand-by 
+
+Distribuição 
+
+Amostragem 
+
+Rank 
+
+TG1 
+
+TG2 
+
+TG3 
+
+TG4 
+
+Gamma (0, 1.46, 49.1) 
+
+Weibull (0, 1.35, 71) 
+
+Gamma (0, 1.52, 41.1) 
+
+Gamma (0, 1.37, 45.1) 
+
+Quinzenal 
+
+Quinzenal 
+
+Quinzenal 
+
+Quinzenal 
+
+85.2 
+
+100 
+
+100 
+
+97.1 
+
+Tabela 8: Tabela resumo com as distribuições e amostragem selecionadas para stand-by. 
+
+ 
+
+Manutenção Corretiva 
+
+Distribuição 
+
+Amostragem 
+
+Rank 
+
+TG1 
+
+TG2 
+
+TG3 
+
+TG4 
+
+Gamma (0, 0.765, 66.2) 
+
+Beta (0, 174, 0.691, 2.46) 
+
+Exponencial (0, 35.9) 
+
+Beta (0, 219, 0.701, 3.13) 
+
+Mensal 
+
+Mensal 
+
+Mensal 
+
+Mensal 
+
+96.5 
+
+62.1 
+
+22.8 
+
+100 
+
+Tabela 9: Tabela resumo com as distribuições e amostragem escolhidas para manutenção corretiva. 
+
+ 
+
+É interessante observar que para a manutenção corretiva, não só há ranks baixos para os 
+
+turbogeradores B e C, como também o resultado para as distribuições variam bastante, o que 
+
+pode ser consequência das inconsistências na base de dados. 
+
+ 
+
+ 
+
+40 
+
+Faz-se  necessário  ainda  definir  com  que  frequência  esses  tempos  de  manutenção 
+
+corretiva e stand-by acontecem. Para isso, foi feita uma definição simples de probabilidade, ao 
+
+se  contar,  por  exemplo,  quantas  vezes  o  tempo  de  manutenção  corretiva  da  máquina  A  é 
+
+diferente  de  zero  no  total  de  períodos  observados  e  esse  número  foi  dividido  pelo  total  de 
+
+períodos  da  amostragem.  Para  calcular  a  probabilidade  de  não  ocorrência  do  evento, 
+
+simplesmente subtrai-se a probabilidade de o evento ser diferente de zero de 100%, chegando 
+
+assim na Tabela 10 e Tabela 11. 
+
+ 
+
+ Definição da Frequência de Eventos de Stand-by 
+
+TG1  TG2  TG3  TG4 
+
+Períodos com tempo de stand-by maior do que zero 
+
+Total de períodos (quinzenas) 
+
+198 
+
+253 
+
+177 
+
+253 
+
+184 
+
+253 
+
+183 
+
+253 
+
+Probabilidade de ocorrer 1 stand-by numa quinzena 
+
+78,3%  70,0%  72,7%  72,3% 
+
+Probabilidade de não ocorrer 1 stand-by numa quinzena  21,7%  30,0%  27,3%  27,7% 
+
+Tabela 10: Frequência de eventos de Stand-by. 
+
+ 
+
+ 
+
+ Definição da Frequência de Eventos 
+
+de Manutenção Corretiva 
+
+Períodos com tempo de manutenção 
+
+corretiva maior do que zero 
+
+TG1 
+
+TG2 
+
+TG3 
+
+TG4 
+
+82 
+
+71 
+
+72 
+
+76 
+
+Total de períodos (meses) 
+
+126 
+
+126 
+
+126 
+
+126 
+
+Probabilidade de ocorrer 1 
+
+manutenção corretiva em 1 mês 
+
+Probabilidade de não ocorrer 1 
+manutenção corretiva em 1 mês 
+
+65,1% 
+
+56,3% 
+
+57,1% 
+
+60,3% 
+
+34,9% 
+
+43,7% 
+
+42,9% 
+
+39,7% 
+
+Tabela 11: Frequência de eventos de manutenção corretiva. 
+
+4.4.3.  Modelo Computacional 
+
+Para  criar  o  modelo  de  simulação  no  ProModel,  foram  definidos  7  elementos: 
+
+parâmetros  gerais,  variáveis  globais,  locais,  entidades,  chegadas,  processos  e  recursos.  Por 
+
+conta  disso,  essa  seção  foi  escrita  e  subdividida  de  acordo  a  descrição  de  cada  um  desses 
+
+elementos.  
+
+ 
+
+ 
+
+ 
+
+4.4.3.1.  Parâmetros Gerais 
+
+Esses elementos definem como deve ser o funcionamento geral da simulação. Resume-
+
+se na Tabela 12 os parâmetros utilizados. 
+
+ 
+
+ 
+
+41 
+
+Parâmetros Gerais 
+
+Valor 
+
+Unidade 
+
+Tempo de Simulação (Duração da Corrida) 
+
+      91.200  
+
+Horas 
+
+Tempo de Aquecimento 
+
+        9.120  
+
+Horas 
+
+Número de Replicações do Experimento (ou de Corridas) 
+
+          999  
+
+Visualização da execução (Animação) 
+
+ Desativada  
+
+Tabela 12: Parâmetros Gerais da Simulação. 
+
+- 
+
+- 
+
+O tempo de simulação foi  definido como  91200  horas pelo  fato  de que este tempo  é 
+
+equivalente ao tempo dos dados da base utilizada, o que permitiria uma comparação entre o 
+
+resultado da simulação e os dados originais. Já o tempo de aquecimento  equivale  a 10% do 
+
+tempo  de  simulação,  pois  empiricamente  julgou-se  que  este  era  um  tempo  adequado  para  a 
+
+estabilização do sistema. Por último, o número de replicações foi determinado como o limite 
+
+disponível do ProModel para que o sistema apresentasse a menor variabilidade.  
+
+Inicialmente, a visualização da execução na forma ativada foi utilizada, mas para que a 
+
+simulação fosse  executada mais rapidamente, ela foi desativada.  Uma foto  da simulação em 
+
+dois momentos distintos, com a animação gráfica ativada, é apresentada na Figura 15. 
+
+Figura 15: Modelo computacional com animação gráfica ativada. 
+
+  
+
+ 
+
+4.4.3.2.  Variáveis Globais 
+
+As variáveis globais foram definidas por dois motivos. Para permitir a determinação de 
+
+parâmetros  de  entrada  do  sistema,  como  o  tempo  de  aquecimento  (“tempo_aquecimento”)  e 
+
+para  poder  capturar  algumas  das  variáveis  de  resposta,  como  o  tempo  total  de  manutenção 
+
+corretiva (vTMC [1, 2, 3, 4]) para cada máquina. A Figura 16 apresenta como as variáveis foram 
+
+adicionadas no ProModel. 
+
+ 
+
+ 
+
+42 
+
+Figura 16: Variáveis globais definidas no ProModel. 
+
+As  variáveis  vMP_Hh  [1,2,3  e  4]  são  utilizadas  para  calcular  o  total  de 
+
+homem/hora  gasto  pelas  atividades  de  manutenção  preventiva  para  cada  uma  das 
+
+máquinas. Já as variáveis SomaTSb [1,2,3 e 4] são utilizadas para calcular o tempo 
+
+total de stand-by para cada uma das máquinas. 
+
+ 
+
+ 
+
+4.4.3.3.  Locais 
+
+Foram definidos 5 locais sendo 4 para turbogeradores (TG 1, 2, 3 e 4) e 1 para oficina 
+
+de bordo, como mostra a Figura 17. A capacidade de cada um deles é de 1 entidade por vez e 
+
+cada local  apresenta paradas de dois  tipos: por  Relógio  e por Chamada  (Called). Cada local 
+
+armazena estatísticas de séries de tempo, menos a oficina de bordo, que não geraria informações 
+
+que  eram  necessárias.  Por  fim,  na  coluna  “Regras...”  define-se  como  é  tratada  a  ordem  de 
+
+chegada de entidades no local, que para esse modelo não é relevante. 
+
+Figura 17: Locais do modelo computacional. 
+
+ 
+
+As paradas por relógio modelam as manutenções preventivas, pois determinam quando 
+
+uma  turbina  (entidade)  deve  parar  de  operar  quando  o  relógio  da  simulação  chegava  a  um 
+
+determinado horário. As paradas por relógio da TG2 são apresentadas na Figura 18.  
+
+ 
+
+ 
+
+ 
+
+43 
+
+ 
+
+Figura 18: Paradas por relógio da TG2 no modelo computacional. 
+
+Na  tabela  apresentada  pela  Figura  18,  todas  as  atividades  de  manutenção  preventiva 
+
+foram  colocadas, com  sua frequência  e primeira  vez que a parada  deve  acontecer. A coluna 
+
+“Primeira vez” é fundamental para garantir que os tempos de manutenção preventiva entre as 
+
+diferentes  turbomáquinas  não  aconteçam  ao  mesmo  tempo,  pois  as  frequências  das 
+
+manutenções são as mesmas, mas elas não acontecem ao mesmo tempo em diferentes máquinas. 
+
+Outro ponto importante é a definição da coluna “Planejado”, que permite diferenciar se 
+
+esta  é  uma  manutenção  preventiva  ou  corretiva.  Ao  colocar  “sim”  na  coluna,  indica-se  ao 
+
+software que aquela é uma manutenção preventiva. Na coluna lógica, deve ser escrito o código 
+
+para indicar o que devia ser feito em uma determinada manutenção. 
+
+Figura 19: Lógica de parada por relógio. 
+
+O  código  apresentado  na  Figura  19  retrata  a  atividade  de  vistoria  por  empresa 
+
+especializada (Overhaul). Os parâmetros utilizados são provenientes das Tabela 2 e Tabela 3, 
+
+cujas informações para esta atividade em questão são sumarizadas na Tabela 13 para facilitar a 
+
+leitura. A frequência apresentada na tabela, indica que a cada 52632 horas um Overhaul deve 
+
+ser realizado, o que é uma recomendação feita pelo fornecedor do equipamento. Como somente 
+
+ 
+
+ 
+
+ 
+
+44 
+
+tem-se um homem-hora gasto de 84 horas, o mecânico de bordo só é utilizado por esse tempo 
+
+e a máquina precisa aguardar parada até que o tempo do Downtime + Cooldown seja atingido, 
+
+ou seja, um tempo de 85 horas (169 – 84 = 85). A variável vMP_Hh2 calcula o homem/hora 
+
+gasto para realizar a manutenção. 
+
+Núm. 
+
+Atividades de manutenção 
+
+Homem / 
+
+Hora Gasto 
+
+Downtime + 
+Cooldown 
+(em horas) 
+
+Frequência 
+
+[tempo corrido] 
+
+(em horas) 
+
+14  Vistoria por empresa especializada (Overhaul) 
+
+84 
+
+169 
+
+52632 
+
+Tabela 13: Tabela resumo para lógica de parada por relógio. 
+
+O  outro  tipo  de  parada  é  a  parada  por  chamada,  que  é  utilizada  para  representar  os 
+
+tempos  de  stand-by  de  cada  máquina.  Sua  diferença  para  a  parada  por  relógio  é  que  sua 
+
+frequência é definida pela quantidade de vezes que ela é chamada em um processo. Fora isso, 
+
+ela é uma parada planejada e com uma lógica conforme apresenta a Figura 20.  
+
+Figura 20: Paradas por chamada e sua lógica. 
+
+ 
+
+No código apresentado na Figura 20, a ocorrência e a duração do tempo de stand-by da 
+
+máquina 1 é determinada pela variável TSb1. Ela é resultado de um sorteio da distribuição de 
+
+probabilidade DistSb1, que retorna valores de 1 ou 0 que determina se haverá (“1”) ou não (“0”) 
+
+stand-by naquele período, e havendo stand-by, sua duração será determinada pela distribuição 
+
+de tempo Gamma [ G(1.46,49,1) ]. A função Wait faz com que a turbina entre em stand-by pelo 
+
+tempo  TSb1  e  a  variável  SomaTSb1  faz  a  contagem  de  quanto  tempo  a  turbina  1  ficou  em 
+
+Stand-by. 
+
+A distribuição de probabilidade DistSb (1, 2, 3 e 4) é uma distribuição de usuário. Ela é 
+
+determinada com base na probabilidade da turbomáquina entrar em stand-by a cada 15 dias e a 
+
+ 
+
+ 
+
+45 
+
+Figura  21  apresenta  sua  configuração.  A  mesma  lógica  é  aplicada  para  distribuições  de 
+
+manutenção corretiva DistTMC (1, 2, 3 e 4). 
+
+Figura 21: Distribuições de usuário. 
+
+ 
+
+ 
+
+4.4.3.4.  Entidades e Chegadas 
+
+Com relação às entidades, apenas um tipo foi definido (Figura 22): a turbina (GG). Nela, 
+
+se adicionou a coleta de estatísticas de tempo e uma velocidade suficientemente alta, para que 
+
+quando ela entrasse no sistema, o que é definido pelas Chegadas, rapidamente ela seja colocada 
+
+em sua respectiva TG. 
+
+Figura 22: Definição de entidades e suas características. 
+
+Criou-se 4 chegadas de entidades GGs para cada turbogerador (TG 1, 2, 3 e 4). Somente 
+
+1 entidade chega para cada local, o que ocorre somente 1 vez e pela primeira vez no tempo zero, 
+
+como se pode observar pela Figura 23. A frequência de uma nova ocorrência para cada entidade 
+
+é igual a zero e não há uma lógica de chegadas definida. 
+
+ 
+
+ 
+
+ 
+
+46 
+
+ 
+
+Figura 23: Definição das chegadas e suas características. 
+
+4.4.3.5.  Processos 
+
+Os  processos  definem  o  que  acontece  com  uma  entidade  em  um  determinado  local. 
+
+Nesse sentido, para cada combinação GG e TG foi necessário estabelecer um processo, mas 
+
+que foram todos processos iguais, como mostra a Figura 24.  
+
+Figura 24: Processos definidos para os locais. 
+
+ 
+
+Os processos apresentados na Figura 24 serviram simplesmente para definir que cada 
+
+turbina deveria ficar operando num mesmo local durante todo o tempo de simulação. Por isso, 
+
+uma condição que é sempre verdadeira “While 1 Do” foi colocada no código referente ao campo 
+
+“Operação”,  obrigando  que  a  máquina  opere  em  ciclos  contínuos  de  1000  horas  seguidas 
+
+durante  toda  a  simulação.  Isso  foi  feito  por  questões  de  modelagem  no  software,  o  que  é 
+
+explicado mais à frente nesta seção do trabalho. 
+
+Ainda se faz necessário representar como acontecem as manutenções corretivas e como 
+
+é feita a chamada dos downtimes referentes ao stand-by de cada turbogerador. Para isso, criou-
+
+se uma sub-rotina que faz o papel do processo para cada máquina e que é apresentada na Figura 
+
+25. 
+
+ 
+
+ 
+
+47 
+
+Figura 25: Definição de Sub-rotina e sua lógica. 
+
+ 
+
+Da  mesma  forma  que  no  processo,  um  argumento  “While”  foi  adicionado  nas  Sub-
+
+rotinas, para que a TG realize sempre as mesmas ações sobre a turbina durante todo tempo de 
+
+simulação. A cada 360 horas, ou 1 quinzena, a função de parada por chamada de Standby1 é 
+
+executada e realiza-se um  sorteio  da quantidade de tempo que o turbogerador  deve ficar em 
+
+stand-by durante as próximas 360 horas.  
+
+Independente  da  máquina  entrar  ou  não  em  stand-by  com  a  chamada  da  Sub-rotina, 
+
+devido a sua distribuição de probabilidade, o relógio da simulação continua a contar mais 360 
+
+horas. Quando o relógio contabiliza mais 360 horas, totaliza-se 1 mês e sorteia-se o tempo T1, 
+
+que se refere ao tempo de manutenção corretiva para aquele período.  
+
+O  funcionamento  do  cálculo  do  tempo  de  manutenção  corretiva  é  igual  ao  tempo  de 
+
+stand-by. Ele possui uma distribuição de probabilidade de acontecer ou não (DistTMC1, 2, 3 
+
+ou 4), que multiplica a distribuição de tempos de manutenção corretiva. No caso apresentado 
+
+pela Figura 25, a distribuição Gamma foi utilizada (G(0,765, 66,2)).  
+
+Para calcular o tempo total de manutenção corretiva, uma variável (vTMC1, 2, 3, ou 4) 
+
+faz o somatório desses tempos ao longo da simulação, o que somente é feito após o período de 
+
+aquecimento da simulação. Da mesma forma, calcula-se o custo da utilização do mecânico de 
+
+bordo. Por fim, novamente a função de parada de stand-by é utilizada para determinar se ao fim 
+
+de mais um período de 15 dias, o turbogerador deve entrar ou não em stand-by. 
+
+ 
+
+ 
+
+ 
+
+48 
+
+Duas perguntas  ainda precisam ser respondidas:  por que  se utiliza uma sub-rotina ao 
+
+invés de um processo para definir o funcionamento do stand-by e da manutenção corretiva? E 
+
+por que o tempo de manutenção corretiva não funciona como uma parada por chamada, como 
+
+o stand-by? 
+
+A resposta da primeira pergunta está relacionada ao tempo de execução de cada código. 
+
+Uma parada por chamada é considerada como um downtime pelo ProModel e, a cada vez que 
+
+ocorre um downtime num determinado local, o processo do qual o local é dono é interrompido, 
+
+o que afeta a contagem de tempo realizada pelo “Wait” dentro desse processo. Assim, o tempo 
+
+contabilizado acaba sendo diferente do tempo real da simulação e o sorteio dos tempos de stand-
+
+by não acontece a cada 15 dias, mas em tempos superiores a uma quinzena. Isso não acontece 
+
+numa Sub-rotina, que simplesmente chama a função de parada e continua a contagem de tempo 
+
+por meio de seu “Wait” sem que ele seja interrompido. 
+
+Com relação a segunda questão, a manutenção corretiva não é colocada para funcionar 
+
+como uma parada por chamada, para que não seja possível sobrepor seus tempos com os tempos 
+
+de stand-by e manutenção preventiva. Além disso, sua colocação na Sub-rotina é feita para que 
+
+sua frequência de ocorrência seja mensal. 
+
+Por  fim,  para  que  as  sub-rotinas  funcionem,  elas  devem  ser  iniciadas  no  começo  da 
+
+simulação, por meio de uma macro. A Figura 26 demonstra como são ativadas cada uma das 
+
+sub-rotinas pela macro “Inicial”. 
+
+Figura 26: Ativação das sub-rotinas usando macro. 
+
+ 
+
+4.4.3.6.  Recursos 
+
+Os últimos elementos do sistema definidos são os recursos. No modelo conceitual, só 
+
+foi considerado como recurso o mecânico de bordo. Assim, a Figura 27 demonstra como ele é 
+
+ 
+
+ 
+
+49 
+
+acrescentado  ao  modelo.  A  figura  apresenta  as  especificações  desse  recurso:  a  rede  de 
+
+caminhos, na qual ele deve se locomover, e qual é sua Base (“R1” – equivalente à oficina de 
+
+bordo); que ele deve voltar à Base se estiver ocioso; e que ele deve sempre atender a entidade 
+
+que estiver esperando por mais tempo. 
+
+Figura 27: Definição de recursos e suas características no modelo computacional. 
+
+A rede de caminhos é apresentada na Figura 28. A partir dela, determinou-se quais rotas 
+
+o mecânico pode  percorrer para acessar as turbomáquinas e voltar à oficina de bordo.  Além 
+
+disso, como o modelo conceitual considera que seu tempo de movimentação é desprezível, cada 
+
+percurso é percorrido pelo mecânico num tempo de 0,1 segundo.  
+
+ 
+
+Figura 28: Definição da rede de caminhos pela qual os recursos poderiam se locomover. 
+
+ 
+
+ 
+
+ 
+
+50 
+
+ 
+
+4.4.4.  Esforço Computacional 
+
+Para  executar  o  modelo  computacional,  utilizou-se  de  um  computador  com  as 
+
+características apresentadas na Tabela 14. 
+
+Características do 
+
+Computador Utilizado 
+
+Sistema Operacional 
+
+Descrição 
+
+      Windows 10 
+
+Processador 
+
+        Intel ® Core™ i5-4210U CPU @ 1.70 GHz 2.40GHz 
+
+Memória instalada (RAM) 
+
+          4,00 GB 
+
+Tipo de sistema 
+
+ Sistema Operacional de 64 bits, processador com base em x64 
+
+Tabela 14: Características do computador utilizado para executar a simulação. 
+
+Com esse computador, obteve-se os resultados para esforço computacional mostrados 
+
+na  Tabela  15.  Considera-se  que  uma  corrida  tenha  início  no  momento  em  que  se  clica  em 
+
+“Executar” na simulação e termina no momento em que todas as informações do Output Viewer 
+
+são exibidas. 
+
+Esforço Computacional 
+
+Corrida de Simulação 
+
+Duração de Todas as Corridas de Simulação (999) 
+
+ 
+
+Valor 
+
+Unidade 
+
+9  
+
+178 
+
+Segundos 
+
+Segundos 
+
+Tabela 15: Esforço computacional para execução do modelo. 
+
+ 
+
+ 
+
+51 
+
+ 
+
+5.  EXPERIMENTAÇÃO 
+
+Esta  seção  apresenta  a  validação  do  modelo  computacional  e  a  utilização  do  modelo 
+
+validado para realizar os experimentos. 
+
+ 
+
+5.1. Validação do modelo 
+
+Para  validar  o  modelo,  foram  utilizadas  as  seguintes  variáveis  resposta:  o  tempo  de 
+
+manutenção corretiva, o tempo de manutenção preventiva e o tempo de stand-by para cada uma 
+
+das máquinas.  
+
+O resultado de uma ou mais corridas de simulação no ProModel podem ser observados 
+
+no  relatório  de  resultados,  conforme  mostra  a  Figura  29,  de  onde  é  possível  extrair  as 
+
+informações referentes às variáveis resposta.  
+
+Figura 29: Relatório de resultados do ProModel. 
+
+No quadrado vermelho a esquerda da imagem, estão os tempos programados para cada 
+
+turbogerador. Para  calcular a  combinação dos tempos de manutenção preventiva e stand-by, 
+
+pois eles podem ser sobrepostos, é necessário resolver a Equação 1. 
+
+ 
+
+ 
+
+ 
+
+𝑇𝑀𝑃 & 𝑆𝐵 = 𝑡𝑒𝑚𝑝𝑜 𝑑𝑒 𝑠𝑖𝑚𝑢𝑙𝑎çã𝑜 − 𝑡𝑒𝑚𝑝𝑜 𝑝𝑟𝑜𝑔𝑟𝑎𝑚𝑎𝑑𝑜 
+
+Equação 1 – Cálculo do tempo de manutenção preventiva e stand-by. 
+
+TMP & SB – tempo de manutenção preventiva & stand-by 
+
+ 
+
+ 
+
+ 
+
+52 
+
+Assim,  no  caso  da  TG1,  TMP  &  SB  =  91.200  –  75.934,28  =  15.265,72  horas.  Para 
+
+determinar o tempo de manutenção corretiva, basta observar as variáveis vTMC. No caso da 
+
+turbomáquina 2, o tempo gasto com manutenção corretiva é igual a 2.756,69 horas. Com isso, 
+
+resta  apenas  comparar  os  dados  obtidos  na  simulação  com  os  dados  originais,  o  que  é 
+
+apresentado pela Tabela 16. 
+
+Conjunto de Atividades  TG1 
+
+TG2 
+
+TG3 
+
+TG4  Total Geral 
+
+vTMC 
+
+4.181 
+
+2.757 
+
+2.603 
+
+3.062 
+
+Erro Relativo 
+
+0,18%  1,28%  0,47%  1,35% 
+
+12.603 
+
+0,76% 
+
+TMP & SB 
+
+15.612  14.532  15.356  15.749 
+
+61.250 
+
+Erro Relativo 
+
+7,04%  21,27%  29,17%  34,13% 
+
+22,01% 
+
+Total Geral 
+
+19.793  17.289  17.960  18.811 
+
+73.853 
+
+Tabela 16: Resultados obtidos com o modelo inicial. 
+
+Como  é  possível  observar,  os  resultados  da  simulação  na  parte  de  manutenção 
+
+preventiva e stand-by apresentam uma variação grande em relação aos dados originais.   
+
+No  modelo  conceitual  definiu-se  que  somente  um  mecânico  de  bordo  seria  utilizado 
+
+(24/7) e que ele deveria  atender  cada uma das máquinas à medida que  elas apresentassem  a 
+
+necessidade de manutenção preventiva. No mundo real, uma máquina 2 só seria parada quando 
+
+o mecânico pudesse realizar uma manutenção nela, pois ele poderia estar trabalhando em uma 
+
+máquina 1, por exemplo. A máquina 2 ficaria em operação mesmo que o tempo de realização 
+
+da  manutenção  preventiva  para  a  máquina  2  fosse  alcançado,  aguardando  que  o  mecânico 
+
+terminasse a manutenção na outra máquina e pudesse realizar a manutenção nela. 
+
+No  ProModel,  quando  a  hora  de  uma  manutenção  preventiva  chega,  ele 
+
+automaticamente coloca a máquina em manutenção preventiva, mesmo que o mecânico ainda 
+
+esteja realizando uma manutenção em outra máquina, o que não é realista. Por conta disso, os 
+
+tempos de manutenção preventiva ficaram supervalorizados na Tabela 16. 
+
+O gargalo do processo não aparenta ser o mecânico de bordo, pois neste caso seria algo 
+
+relativamente fácil de se perceber pelos gestores da plataforma e uma solução imediata seria a 
+
+colocação de mais mecânicos para minimizar o problema, o que não é o caso. Por isso, uma 
+
+forma de contornar a restrição imposta pelo ProModel, foi adicionar mais um pressuposto ao 
+
+modelo, que a capacidade do mecânico é suficiente para atender a todas as máquinas sem gerar 
+
+atrasos  no  atendimento  das  máquinas.  Com  isso,  não  é  mais  necessário  testar  o  impacto  do 
+
+mecânico no sistema, pois sempre que uma máquina entrar em manutenção, ele poderá atende-
+
+la  adequadamente.  Após  essa  mudança,  os  resultados  encontrados  são  os  apresentados  na 
+
+Tabela 17. 
+
+ 
+
+ 
+
+ 
+
+53 
+
+Conjunto de Atividades  TG1  TG2 
+
+TG3 
+
+TG4  Total Geral 
+
+vTMC 
+
+4.181  2.757 
+
+2.603 
+
+3.062 
+
+Erro Relativo 
+
+0,18%  1,28%  0,47%  1,35% 
+
+12.603 
+
+0,76% 
+
+TMP & SB 
+
+15.266  13.179  13.304  13.319 
+
+55.068 
+
+Erro Relativo 
+
+4,66%  9,97%  11,91%  13,43% 
+
+9,70% 
+
+Total Geral 
+
+19.447  15.936  15.908  16.380 
+
+67.671 
+
+Tabela 17: Resultados obtidos com o modelo ajustado. 
+
+A  melhora  nos  tempos  de  manutenção  preventiva  e  stand-by  é  clara  e  significativa. 
+
+Outra  hipótese  está  diretamente  ligada  à  capacidade  de  realizar  manutenções  por  parte  do 
+
+mecânico. Esta hipótese é que turbomáquinas diferentes não podem receber manutenções ao 
+
+mesmo tempo, devido  a limitação de somente um mecânico de bordo. Para representa-la no 
+
+modelo  computacional,  cada  manutenção  preventiva  é  realizada  pela  primeira  vez  em  um 
+
+instante de tempo diferente, conforme pode-se observar na Figura 30. 
+
+Figura 30: Modelagem as máquinas não receberem manutenção preventiva ao mesmo tempo. 
+
+Com isso, as máquinas não passam por uma manutenção, por exemplo de lavagem com 
+
+água, ao mesmo tempo, já que a frequência e duração de cada manutenção preventiva são as 
+
+mesmas para todas as máquinas. No entanto, a partir do momento que se assume que o mecânico 
+
+consegue  atender  todas  as  máquinas  e  que  não  ocorrem  atrasos  significativos  nesse 
+
+atendimento, deixa de ser necessário representar essa consideração na simulação3.  
+
+ 
+
+                                            
+3 Por mais que seja irreal representar que as manutenções preventivas podem acontecer ao 
+
+mesmo tempo em diferentes máquinas, por exemplo, por conta da necessidade de parar a produção 
+
+para tal, essa simplificação foi feita pela mudança das hipóteses e para verificar se o modelo melhoraria 
+
+seus resultados. 
+
+ 
+
+ 
+
+54 
+
+Por conta disso, o modelo foi alterado novamente e seu resultado pode ser encontrado 
+
+na Tabela 18. Esta tabela apresenta cada conjunto de atividades simulado e o erro em relação 
+
+aos dados originais para dado conjunto e seu turbogerador. 
+
+Conjunto de Atividades  TG1  TG2  TG3  TG4  Total Geral 
+
+vTMC 
+
+4.181  2.757  2.603  3.062 
+
+12.603 
+
+Erro Relativo 
+
+0,18%  1,28%  0,47%  1,35% 
+
+0,76% 
+
+TMP & SB 
+
+15.266  12.694  12.639  12.488 
+
+53.086 
+
+Erro Relativo 
+
+4,66%  5,92%  6,31%  6,36% 
+
+5,75% 
+
+Total Geral 
+
+19.447  15.450  15.242  15.550 
+
+65.597 
+
+Tabela 18: Resultados obtidos com o modelo final. 
+
+ 
+
+Gráfico 1: Resultados obtidos com a simulação final. 
+
+Os  resultados  encontrados  foram  muito  melhores  com  a  retirada  das  duas  restrições, 
+
+conforme também se observa no Gráfico 1. Este gráfico apresenta o comportamento médio de 
+
+cada turbogerador para os dados originais e os resultados da simulação. Como a variação entre 
+
+os dois resultados é bastante pequena, pode-se concluir que o modelo, apesar da simplicidade, 
+
+apresenta uma razoável aproximação do comportamento observado no sistema. 
+
+Além disso, pelos resultados originais e da simulação este FPSO não pode ser operado 
+
+nas  condições  em  que  ele  se  encontra  com  menos  de  4  máquinas.  Isto  porque  em  média  as 
+
+máquinas ficam em stand-by durante menos de 15% do tempo total. Para que fosse possível 
+
+operar com somente 3 máquinas, o tempo de stand-by deveria ser de pelo menos 25% para cada 
+
+máquina. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+55 
+
+ 
+
+5.2. Experimentações com o modelo validado 
+
+Essa seção apresenta as experimentações com o modelo validado na seção 5.1, visando 
+
+ampliar o conhecimento sobre o comportamento do sistema em determinadas situações. Cada 
+
+situação é apresentada em um tópico desta seção. 
+
+ 
+
+5.2.1.  Utilização do mecânico de bordo 
+
+O mecânico de bordo é utilizado toda vez que há uma manutenção corretiva e quando a 
+
+manutenção  preventiva  apresenta  um  gasto  de  homem/hora,  conforme  apresenta  a  Tabela  3. 
+
+Nesse sentido, é possível estimar o tempo de utilização do mecânico de bordo pela soma dos 
+
+tempos  de  manutenção  corretiva  (variáveis  vTMC  [1,2,3,4]),  e  pelos  gastos  de  homem/hora 
+
+com manutenção preventiva (variáveis vMP_Hh [1,2,3,4]).  
+
+Atividades que consomem H/h 
+
+TG1 
+
+TG2 
+
+TG3 
+
+TG4 
+
+Total Geral 
+
+vTMC 
+
+vMP_Hh 
+
+4.181 
+
+2.757 
+
+2.603 
+
+3.062 
+
+2.486 
+
+2.486 
+
+2.486 
+
+2.486 
+
+Horas em manutenção (total) 
+
+6.667 
+
+5.243 
+
+5.089 
+
+5.548 
+
+Horas em manutenção (mensal) 
+
+52 
+
+41 
+
+40 
+
+44 
+
+Tabela 19: Utilização do mecânico de bordo. 
+
+12.603 
+
+9.944 
+
+22.547 
+
+178 
+
+A  Tabela  19  mostra  os  resultados  da  utilização  do  mecânico  de  bordo.  Essas 
+
+informações permitem estimar que o mecânico gasta 5,93 horas por dia, considerando que ele 
+
+trabalha 30 dias no mês.  
+
+ 
+
+5.2.2.  Aumento do Tempo de Simulação 
+
+Conforme  os  requerimentos  normativos  da  indústria  do  petróleo  (ISO  e  API),  os 
+
+turbogeradores devem apresentar uma vida útil de 20 anos. Sendo assim, nesta seção testa-se o 
+
+que aconteceria se o tempo da simulação fosse igual a essa vida útil. Para calcular o tempo de 
+
+20  anos  em  horas,  fez-se  a  seguinte  consideração:  cada  ano  possui  12  meses,  cada  mês 
+
+apresentando 30 dias e cada dia 24 horas. A Tabela 20 apresenta os resultados em termos de 
+
+tempos para cada conjunto de atividades. 
+
+Conjunto de Atividades 
+
+vTMC 
+
+TMP & SB 
+
+Total Geral 
+
+TG1 
+
+7.907 
+
+TG2 
+
+5.183 
+
+29.303 
+
+24.459 
+
+37.210 
+
+29.642 
+
+TG3 
+
+4.922 
+
+24.395 
+
+29.317 
+
+TG4 
+
+5.804 
+
+24.083 
+
+29.887 
+
+Tabela 20: Resultado da simulação com o tempo de simulação aumentado. 
+
+ 
+
+ 
+
+ 
+
+56 
+
+Para  se  ter  um  comparativo,  uma  comparação  foi  feita  entre  os  dados  originais 
+
+projetados e a simulação de 20 anos, por meio do Gráfico 2. Ele representa o comportamento 
+
+médio  dos  turbogeradores  ao  longo  do  tempo,  em  que  é  possível  se  perceber  que  há  pouca 
+
+variação  entre  os  dois  resultados.  No  entanto,  existe  um  aumento  do  tempo  de  manutenção 
+
+preventiva e stand-by, se comparado com os resultados do modelo validado no Gráfico 1. 
+
+Gráfico 2: Comparação do resultado para o modelo com o tempo de simulação aumentado. 
+
+A manutenção corretiva se mantém constante ao ser comparada com o modelo validado 
+
+na seção 5.1. Isto se deve a não existência de um fator que cause um aumento da necessidade 
+
+de manutenção das máquinas ao longo do tempo, o que seria um comportamento esperado no 
+
+ 
+
+sistema real. 
+
+ 
+
+5.2.3.  Padronização da Distribuições para Manutenção Corretiva 
+
+De  acordo  com  FOGLIATTO  et  al.  (2011)  e  NASA(1994),  a  lognormal  é  uma 
+
+distribuição  muito  utilizada  na  modelagem  de  tempos  de  reparo  em  unidades  reparáveis.  Já 
+
+outros autores sugerem que a distribuição exponencial pode ajustar bem esses tempos, como 
+
+MENDES (2014) e MANNAN (2014).  
+
+No  caso,  observa-se  no  APÊNDICE  B  –  Testes  de  Aderência  para  Manutenção 
+
+Corretiva, que a lognormal é rejeitada para todos os turbogeradores e apresenta um rank baixo. 
+
+Por  outro  lado,  o  ajuste  à  distribuição  exponencial  não  é  rejeitado  por  nenhum  dos 
+
+equipamentos,  apesar  desta  apresentar  um  baixo  rank  em  alguns  deles.  Por  conta  disso,  a 
+
+utilização da distribuição exponencial foi testada para todas as turbomáquinas, cujo resultado é 
+
+apresentado na Tabela 21. 
+
+ 
+
+ 
+
+ 
+
+57 
+
+Conjunto de Atividades 
+
+TG4  Média 
+Distribuições com melhor ajuste  4.181  2.757  2.603  3.062  3.151 
+0,18%  1,28%  0,47%  1,35%  0,82% 
+
+Erro relativo 
+
+TG1 
+
+TG2 
+
+TG3 
+
+Distribuição exponencial 
+
+4.190  2.722  2.595  3.044  3.138 
+
+Erro relativo 
+
+0,38%  -0,01%  0,13%  0,75%  0,31% 
+
+Tabela 21: Comparativo entre a simulação validada e a simulação da manutenção corretiva padronizada 
+
+com a distribuição exponencial. 
+
+Surpreendentemente, os resultados para a modelagem da manutenção corretiva com a 
+
+distribuição  exponencial  são  melhores  do  que  para  as  distribuições  utilizadas  no  modelo 
+
+validado, onde o critério de escolha era a distribuição com o maior  rank. No entanto, ambas 
+
+apresentam erros relativos médios próximos e abaixo de 1%, representando assim muito bem 
+
+os dados originais, o que pode ser observado no Gráfico 3. 
+
+Gráfico  3: Comparação  entre os resultados originais e  a simulação com a  manutenção corretiva 
+
+ 
+
+padronizada com distribuição exponencial. 
+
+ 
+
+5.2.4.  Padronização da Distribuições para stand-by 
+
+No caso dos tempos de stand-by, todas as máquinas foram mais bem modeladas pela 
+
+distribuição  Gamma,  à  exceção  do  turbogerador  2,  cuja  distribuição  com  maior  rank  foi  a 
+
+Weibull. Sendo assim, este experimento apresenta o resultado de uma simulação com os tempos 
+
+de stand-by de todos os turbogeradores sendo modelados pela distribuição Gamma. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Tempo de Manutenção Preventiva & Stand-by 
+
+TG1 
+
+TG2 
+
+TG3 
+
+TG4 
+
+Distribuições originais da simulação validada 
+
+15.266 
+
+12.694 
+
+12.639 
+
+12.488 
+
+Erro relativo 
+
+4,66% 
+
+5,92% 
+
+6,31% 
+
+6,36% 
+
+58 
+
+Média 
+
+13.272 
+
+5,81% 
+
+Distribuições Gamma 
+
+15.238 
+
+12.751 
+
+12.680 
+
+12.496 
+
+13.291 
+
+Erro relativo 
+
+4,47% 
+
+6,40% 
+
+6,66% 
+
+6,43% 
+
+5,99% 
+
+Tabela 22: Comparativo entre a simulação validada e a simulação com distribuições de stand-by 
+
+padronizadas. 
+
+A Tabela 22 mostra os resultados da simulação para o tempo de manutenção preventiva 
+
+e  stand-by  na  simulação  validada  e  na  simulação  com  a  padronização  desses  tempos  pela 
+
+distribuição  Gamma.  Além  disso,  ela  também  mostra  o  erro  relativo  de  cada  uma  das  duas 
+
+simulações em relação aos resultados originais.  
+
+O  erro  relativo  médio  (entre  todas  as  turbinas)  é  maior  quando  se  utiliza  todas  as 
+
+distribuições  como  Gamma.  Isto  é  esperado,  já  que  num  dos  turbogeradores  ela  não  é  a 
+
+distribuição que melhor ajusta seus dados. No entanto, a diferença é bastante pequena, o que 
+
+significa que com a padronização das distribuições também se obtém bons resultados.  
+
+Gráfico 4: Comparação dos resultados originais e da simulação com distribuição Gamma para os 
+
+tempos de stand-by. 
+
+O Gráfico 4 compara o comportamento médio das turbinas para os resultados originais 
+
+e para a simulação padronizada por Gamma nesta seção. A variação entre os resultados continua 
+
+sendo pequena de uma forma geral. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+59 
+
+5.2.5.  Mudança de Amostragem para as Distribuições de stand-by 
+
+De acordo com a Tabela 7, a amostragem que apresenta o segundo melhor ajuste das 
+
+distribuições de stand-by é a mensal. Sendo assim, esta seção apresenta a experimentação do 
+
+que aconteceria se esta amostragem fosse utilizada. 
+
+Tempo de Manutenção Preventiva & Stand-by 
+
+TG1 
+
+TG2 
+
+TG3 
+
+TG4 
+
+Média 
+
+Distribuições originais da simulação validada 
+
+15.266 
+
+12.694 
+
+12.639 
+
+12.488 
+
+13.272 
+
+Erro relativo 
+
+4,66% 
+
+5,92% 
+
+6,31% 
+
+6,36% 
+
+5,81% 
+
+Stand-by com amostragem mensal 
+
+15.594 
+
+12.795 
+
+12.639 
+
+12.096 
+
+13.281 
+
+Erro relativo 
+
+6,91% 
+
+6,76% 
+
+6,32% 
+
+3,02% 
+
+5,75% 
+
+Tabela 23: Comparativo entre a simulação validada e a simulação com stand-by usando amostragem 
+
+mensal. 
+
+A Tabela 23 apresenta os resultados desse experimento e os compara com os resultados 
+
+da simulação validada. Em média, a amostragem mensal apresenta um erro relativo menor que 
+
+a simulação original, entretanto, individualmente ela é pior para 3 das 4 máquinas. De forma 
+
+geral,  os  resultados  do  experimento  ficaram  pouco  distantes  dos  resultados  originais,  como 
+
+pode ser observado no Gráfico 5. 
+
+Gráfico 5: Comparação entre os resultados originais e a simulação os tempos de stand-by utilizando uma 
+
+ 
+
+ 
+
+amostragem mensal. 
+
+ 
+
+60 
+
+ 
+
+6.  CONCLUSÃO 
+
+6.1. Críticas ao modelo 
+
+A  partir  do  desenvolvimento  do  modelo  e  da  realização  de  experimentos  com  ele, 
+
+percebeu-se que o modelo apresenta algumas falhas ou limitações. Dois principais fatores que 
+
+contribuem para isso são: as simplificações/hipóteses adotadas, a falta e inexatidão dos dados 
+
+de entrada. 
+
+Devido  à  falta  de  dados  de  entrada  alguns  fatores  não  puderam  ser  considerados  no 
+
+modelo. Este é o caso das peças e materiais utilizados nas manutenções, bem como seus custos. 
+
+Tais  elementos  poderiam  agregar  informações  bastante  interessantes  ao  sistema,  que 
+
+permitiriam  avaliar  o  custo  operacional  dos  turbogeradores,  a  gestão  do  estoque  de  peças  e 
+
+materiais, além da avaliação da qualidade das manutenções por parte dos mecânicos de bordo, 
+
+por exemplo, relacionadas ao consumo excessivo de materiais/peças. Como um dos focos deste 
+
+trabalho era identificar como operar o sistema de forma mais eficiente, estes elementos seriam 
+
+muito úteis, pois são elementos que normalmente apresentam oportunidades de melhoria. 
+
+Outros  dados  que  seriam  interessantes  de  se  acrescentar  ao  modelo  estariam 
+
+relacionados à demanda e a produção de energia por parte dos turbogeradores. Isto porque eles 
+
+permitiriam avaliar a cadeia de eventos que vai desde a falha no turbogerador até a possível 
+
+geração de um custo de oportunidade relacionado a uma queda na produção de óleo por falta 
+
+de energia. 
+
+Com  relação  à  inexatidão  dos  dados  de  entrada,  pode-se  dizer  que  ela  ajudou  a 
+
+simplificar o modelo. Isto porque uma maior precisão dos dados permitiria uma avaliação mais 
+
+adequada  de  quais  tempos  se  relacionam,  por  exemplo,  à  manutenção  preventiva  e  quais  a 
+
+stand-by.  
+
+Além disso, uma maior precisão dos dados permitiria avaliar se é possível modelar cada 
+
+atividade numa amostragem menor (minutos ou horas), ao invés de meses ou quinzenas. Uma 
+
+amostragem  menor  permitiria  representar  de  uma  maneira  mais  realista  o  sistema,  já  que  as 
+
+máquinas podem ter diversos tempos de manutenção corretiva ou de stand-by ao longo de um 
+
+mês ou uma quinzena.  
+
+No  modelo  validado,  ao  invés  de  representar  esses  vários  tempos  ao  longo  do 
+
+mês/quinzena  (como  se  fossem  realmente  eventos  ao  longo  do  tempo),  no  completar  de  um 
+
+mês/quinzena sorteava-se a chance de haver ou não falhas (ou stand-by) naquele período, e em 
+
+seguida,  no  caso  de  haver  falhas  ou  stand-by,  sorteava-se  o  tempo  total  gasto  com  essas 
+
+atividades  naquele  período.  Isto  prejudica  uma  avaliação  mais  dinâmica  do  modelo,  que 
+
+ 
+
+ 
+
+61 
+
+permitiria  identificar  quantas  vezes  as  máquinas  requereram  manutenções  corretivas  ou 
+
+falharam ao mesmo tempo ou quantas vezes e quando uma máquina entrou ou saiu de stand-
+
+by. 
+
+O modelo apresenta uma boa aderência aos dados do sistema num nível mais macro. No 
+
+entanto, ele não consegue representa-lo num grau de detalhe que seja suficiente para avaliar o 
+
+impacto de interferências no mesmo. Por exemplo, ele não é capaz de identificar o impacto de 
+
+acrescentar uma manutenção preventiva para reduzir a taxa de falhas; quantas vezes ao longo 
+
+do tempo de simulação houveram máquinas com falhas ao mesmo tempo; ou qual o impacto 
+
+do  Offloading  no  funcionamento  dos  turbogeradores;  dentre  outros.  Isto  se  deve  às 
+
+simplificações adotadas para a realização do modelo, seja por opções do modelador ou devido 
+
+a limitações do software.  
+
+Uma simplificação que certamente gerou uma menor aderência do modelo foi o fato da 
+
+frequência de ocorrência e dos tempos de manutenção preventiva serem considerados variáveis 
+
+determinísticas,  quando  na  realidade  são  estocásticas.  Além  disso,  são  vários  os  fatores  que 
+
+impactam na decisão de realizar uma manutenção preventiva ou não. Um exemplo disso, é que 
+
+certamente um mecânico de bordo priorizaria realizar uma manutenção corretiva numa máquina 
+
+A,  ao  invés  de  uma  preventiva  numa  máquina  B,  para  evitar  que  o  sistema  de  geração 
+
+diminuísse sua produção de energia. 
+
+Uma limitação observada nesta utilização do software foi a necessidade de afirmar que 
+
+o  mecânico  de  bordo  consegue  atender  todas  as  máquinas  sem  gerar  atrasos,  conforme 
+
+explicado na seção 5.1, o que não necessariamente é verdade. Sem representar adequadamente 
+
+o atendimento do mecânico e o correto cálculo das manutenções preventivas ao mesmo tempo, 
+
+certamente a aderência do modelo diminuiu.  
+
+Por fim, o modelo não diferencia uma falha de um defeito. Um defeito causa uma queda 
+
+de desempenho na máquina, sem necessariamente causar uma parada do equipamento, ou seja, 
+
+uma falha. Nesse sentido, um defeito também requisita uma manutenção que pode ser diferente 
+
+em termos de frequência e tempo de realização de um caso de falha. 
+
+6.2. Sugestões para Trabalhos Futuros 
+
+Para  trabalhos  futuros  seria  interessante  buscar  resolver  os  problemas  levantados  no 
+
+item anterior. Primeiramente, a obtenção dos dados acerca dos insumos é bastante importante, 
+
+junto das informações relacionadas a produção de cada turbogerador e a demanda por energia 
+
+da unidade ao longo do tempo. Com isso, o modelo já traria mais informações sobre o sistema. 
+
+ 
+
+ 
+
+62 
+
+Um passo adiante seria coletar dados mais precisos sobre as atividades de manutenção 
+
+e stand-by. A partir disso, as chances de conseguir obter distribuições mais aderentes para uma 
+
+amostragem de um período menor seria maximizada e utilizando de um período de amostragem 
+
+menor,  o  modelo  poderia  apresentar  uma  granularidade  maior  de  detalhes.  Além  disso,  a 
+
+determinação e aplicação de regras relacionadas à quando colocar uma máquina em stand-by 
+
+ou  a  quando  uma  máquina  efetivamente  deve  entrar  em  stand-by  complementaria  o  passo 
+
+anterior. 
+
+Outro ponto interessante seria tentar determinar quais são os parâmetros da manutenção 
+
+preventiva  de  forma  estocástica.  Isto  possibilitaria  uma  comparação  com  o  plano  de 
+
+manutenção sugerido pelo fornecedor de equipamentos, além de trazer uma maior realidade ao 
+
+modelo. É importante observar que também uma maior complexidade seria atrelada ao modelo 
+
+após a adição de todos esses elementos. 
+
+Por  último,  não  se  deve  esquecer  de  buscar  contornar  as  limitações  encontradas  no 
+
+ProModel. Isto pode ser feito pela utilização de um código diferente, que contabilize de forma 
+
+diferente as variáveis e determine uma forma mais real de utilização do mecânico de bordo, ou 
+
+pela busca de outro software que não limite a criação do modelo computacional. Por meio disto, 
+
+a interação entre os elementos do modelo seria mais parecida com aquela do sistema estudado. 
+
+ 
+
+6.3. Aprendizado 
+
+Primeiramente, este projeto permitiu a seu autor o desenvolvimento de sua habilidade 
+
+de lidar com problemas complexos. A capacidade de compreender um problema complexo, de 
+
+conseguir modelá-lo e de propor uma solução que seja razoável, além de aderente a realidade, 
+
+é uma competência essencial a qualquer profissional diferenciado nos dias de hoje.  
+
+A respeito do problema estudado, os conhecimentos aplicados e adquiridos de gestão de 
+
+operações no setor de óleo e gás, manutenção, estatística e simulação reforçaram as habilidades 
+
+do autor nesses assuntos. Outro ponto importante foi o aprendizado relacionado a utilização de 
+
+um software de simulação, cuja aplicabilidade na resolução de diversos problemas práticos é 
+
+bastante alta. 
+
+Por fim, ter a oportunidade de lidar com profissionais do ramo e observar as práticas do 
+
+mercado foram elementos bastante agregadores de conhecimento. 
+
+ 
+
+63 
+
+ 
+
+BIBLIOGRAFIA 
+
+ 
+
+BAIN  &  COMPANY,  TOZZINIFREIRE  ADVOGADOS,  2009,  Estudos  de  Alternativas 
+
+Regulatórias, Institucionais e Financeiras para a Exploração e Produção de Petróleo e Gás 
+
+Natural e para o Desenvolvimento Industrial da Cadeia Produtiva de Petróleo e Gás Natural 
+
+no Brasil. Realizado com recursos do Fundo de Estruturação de Projetos do BNDES (FEP). 
+
+ 
+
+BANKS,  J.;  CARSON  II, J.;  NELSON,  B.  Discrete Event  Simulation.  2ª. ed.  New Jersey: 
+
+Prentice Hall, 1996. 
+
+ 
+
+CLAUSS,  G.  F.  The  Conquest  of  Inner  Space  -  Challenges  and  Innovations  in  Offshore 
+
+Technology. Marine Systems and Ocean Technology, Rio de Janeiro, v. 3, n. 1, Junho 2007. 
+
+ 
+
+FERREIRA FILHO, V. J. M. Gestão de Operações e Logística na Produção de Petróleo. 1ª. 
+
+ed. Rio de Janeiro: Elsevier, 2016. 
+
+ 
+
+FOGLIATTO, F. S.; RIBEIRO, D. . J. L.  Confiabilidade e Manutenção Industrial. 1ª. ed. 
+
+Rio de Janeiro: Elsevier, 2011. 
+
+ 
+
+ISO 14224:2006(E). Petroleum, petrochemical and natural gas industries - Collection and 
+
+exchange of reliability and maintenance data for equipment. 2ª. ed. Genebra: ISO, 2006. 
+
+ 
+
+KELTON,  W.  D.;  SMITH,  J.  S.;  STURROCK,  D.  T.  Simio  and  Simulation:  Modeling, 
+
+Analysis, Applications. 3ª. ed. Pittsburgh: Simio LLC, 2013. 
+
+ 
+
+MANNAN,  S.  Lee's  Process  Safety  Essentials:  Hazard  Identification,  Assessment  and 
+
+Control. 1ª. ed. Oxford: Elsevier, 2014. 
+
+ 
+
+MENDES,  A.  A.  Uma  Contribuição  para  a  Análise  da  Confiabilidade  de  Sistemas 
+
+Redundantes com Inspeção Periódica. Porto Alegre: Universidade Federal do Rio Grande do 
+
+Sul, 2014. 
+
+ 
+
+ 
+
+ 
+
+64 
+
+MILLER, J. H.; PAGE, S. E. Complex Adaptive Systems: An Introduction to Computational 
+
+Models of Social Life. 1ª. ed. Princeton: Princeton University Press, 2007. 
+
+ 
+
+MITRA,  N.  K.  Fundamentals  of  Floating  Production  Systems.  1ª.  ed.  New  Delhi:  Allied 
+
+Publishers Private Limited, 2009. 
+
+ 
+
+MONIÉ,  F.;  BINSZTOK,  J.  Geografia  e  Geopolítica  do  Petróleo.  1ª.  ed.  Rio  de  Janeiro: 
+
+Mauad, 2012. 
+
+ 
+
+NASA, 
+
+[1994].  Mean  Time 
+
+do  Repair 
+
+Predictions.  Disponivel 
+
+em: 
+
+<http://llis.nasa.gov/lesson/840 >. Acesso em: 12 mar. 2016. 
+
+ 
+
+PERERA,  L.  P.  et  al.  Modelling  of  System  Failures  in  Gas  Turbine  Engines  on  Offshore 
+
+Platforms. IFAC-Oilfield 2015. Florianópolis, maio 2015, p. 200-205. 
+
+ 
+
+PIQUET, R.; SERRA, R. V. Petróleo e região no Brasil: o desafio da abundância. 1ª. ed. Rio 
+
+de Janeiro: Garamound, 2007. 
+
+ 
+
+PROMODEL CORPORATION. ProModel User Guide,  9.1: ProModel Corporation, 2014. 
+
+ 
+
+PROMODEL  CORPORATION.  ProModel.  ProModel, 
+
+2015.  Disponivel 
+
+em: 
+
+<https://www.promodel.com/Products/ProModel/>. Acesso em: 12 mar. 2016. 
+
+ 
+
+RODRIGUES, M. V. Entendendo, apredendo e desenvolvendo sistemas de produção Lean 
+
+Manufacturing. 2ª. ed. Rio de Janeiro: Elsevier, 2014. 
+
+ 
+
+SHANNON,  R.  E.  Introduction  do  The  Art  and  Science  of  Simulation.  Winter  Simulation 
+
+Conference, Texas, 1998. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+APÊNDICE A – Testes de Aderência para stand-by 
+
+ 
+
+AMOSTRAGEM POR MINUTO 
+
+ 
+
+AMOSTRAGEM POR HORA 
+
+ 
+
+ 
+
+65 
+
+ 
+
+ 
+
+TG1TG2TG3TG4TG1TG2TG3TG466 
+
+ 
+
+ 
+
+ 
+
+AMOSTRAGEM DIÁRIA 
+
+AMOSTRAGEM QUINZENAL 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+TG1TG2TG3TG4TG1TG2TG3TG4 
+
+AMOSTRAGEM MENSAL 
+
+67 
+
+ 
+
+ 
+
+TG1TG2TG3TG4 
+
+APÊNDICE B – Testes de Aderência para Manutenção Corretiva 
+
+ 
+
+ 
+
+AMOSTRAGEM POR MINUTO 
+
+ 
+
+AMOSTRAGEM POR HORA 
+
+ 
+
+ 
+
+68 
+
+ 
+
+ 
+
+TG1TG2TG3TG4TG1TG2TG3TG4 
+
+AMOSTRAGEM DIÁRIA 
+
+AMOSTRAGEM QUINZENAL 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+69 
+
+ 
+
+ 
+
+TG1TG2TG3TG4TG1TG2TG3TG4 
+
+AMOSTRAGEM MENSAL 
+
+70 
+
+ 
+
+ 
+
+TG1TG2TG3TG4

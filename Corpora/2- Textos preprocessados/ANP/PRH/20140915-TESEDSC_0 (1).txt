@@ -1,0 +1,1403 @@
+solucao numerica equacoes euler compressiveis ambiente computacao paralela memoria distribuida atraves formulacao estabilizada elementos finitos anderson lima mendonca tese doutorado apresentada programa posgraduacao engenharia civil coppe universidade federal rio janeiro parte requisitos necessarios obtencao titulo doutor engenharia civil 
+ orientador alvaro luiz gayoso azeredo coutinho rio janeiro agosto solucao numerica equacoes euler compressiveis ambiente computacao paralela memoria distribuida atraves formulacao estabilizada elementos finitos anderson lima mendonca tese submetida corpo docente instituto alberto luiz coimbra posgraduacao pesquisa engenharia coppe universidade federal rio janeiro parte requisitos necessarios obtencao grau doutor ciencias engenharia civil 
+ alvaro luiz gayoso azeredo coutinho 
+ jose luis drummond alves 
+ norberto mangiavacchi ph 
+ jose rocha miranda pontes ph 
+ rio janeiro rj brasil agosto mendonca anderson lima solucao numerica equacoes euler compressiveis ambiente computacao paralela memoria distribuida atraves formulacao estabilizada elementos finitos anderson lima mendonca 
+ rio janeiro ufrj coppe 
+ orientador alvaro luiz gayoso azeredo coutinho tese doutorado ufrj coppe programa engenharia civil 
+ solucao numerica equacoes euler compressiveis 
+ formulacao estabilizada elementos finitos 
+ computacao ambiente paralelo memoria distribuida 
+ coutinho alvaro luiz gayoso azeredo 
+ universidade federal rio janeiro coppe programa engenharia civil 
+ esposa marcia cristina filhos anderson vinicius iv agradecimentos primeiramente agradeco deus ter conduzido nessa jornada 
+ deus sempre iluminou caminhou deu forcas pudesse superar grande desafio 
+ alvaro luiz gayoso azeredo coutinho amigo orientador dedicacao paciencia confianca incentivo longo todo desenvolvimento desse trabalho pesquisa 
+ professores luiz landau jose luis drummond alves constante prestatividade durante toda realizacao desse trabalho 
+ anp agencia nacional petroleo apoio financeiro atraves bolsa doutorado indispensavel realizacao dessa pesquisa 
+ amigo renato nascimento elias longas valiosas discussoes contribuiram realizacao desse trabalho pesquisa 
+ alto desempenho nucleo nacad coppe ufrj laboratorio metodos computacionais engenharia lamce coppe ufrj apoio computacional 
+ amigos coppe ufrj jose camata adriano cortes sempre apoiaram 
+ amigos mangaratiba fabio luciene sempre incentivaram 
+ agradecimento todo especial maravilhosa esposa marcia cristina 
+ momentos dificeis sempre lado oferecendo apoio carinho atencao motivacao ingredientes ajudaram seguir frente 
+ durante toda duracao curso abriu mao muita coisa ficar lado sempre computacao atendimento apoiando incentivando 
+ agradecer deus ter colocado pessoa tao especial vida 
+ vi resumo tese apresentada coppe ufrj parte requisitos necessarios obtencao grau doutor ciencias 
+ solucao numerica equacoes euler compressiveis ambiente computacao paralela memoria distribuida atraves formulacao estabilizada elementos finitos anderson lima mendonca agosto orientador alvaro luiz gayoso azeredo coutinho programa engenharia civil trabalho apresenta solucao numerica ambiente computacao paralela equacoes euler compressiveis 
+ equacoes regem escoamento fluidos compressiveis viscosos apresentam grande aplicacao industria petroleo 
+ presente trabalho desenvolvido enfase nesse tipo aplicacao onde possivel simular sobrepressao proveniente explosao acidental ocorrida plataformas petroleo aplicar resultados estudos analise risco 
+ solucao numerica obtida atraves formulacao estabilizada elementos finitos tipo supg acrescida operador captura choque 
+ usados diferentes operadores captura choque 
+ desenvolvimento computacional ocorreu sobre edgecfd software cfd desenvolvido mantido nacad ufrj 
+ edgecfd software elementos finitos construido ambiente computacao paralela paralelismo memoria distribuida compartilhada hibrida codigo escrito fortran utiliza estrutura dados baseada arestas elementos armazenar matrizes oriundas discretizacao equacoes 
+ utilizados problemas classicos avaliar qualidade solucoes numericas robustez codigo 
+ vii abstract thesis presented coppe ufrj partial fulfillment requirements degree doctor science 
+ numerical solution compressible euler equations parallel environment distributed memory stabilized finite element formulation anderson lima mendonca august advisor alvaro luiz gayoso azeredo coutinho department civil engineering work presents numerical solution compressible euler equations parallel framework 
+ equations governing compressible inviscid fluid flow application oil industry 
+ work developed emphasis application possible simulate overpressure arising accidental explosions oil platforms 
+ simulation results used risk analysis platforms 
+ numerical solution obtained stabilized finite element formulation supgtype plus shock capturing operator 
+ different shock capturing operators used 
+ development computational code done inhouse software edgecfd cfd software developed maintained nacad ufrj 
+ edgecfd finite element software works parallel environments distributed memory shared memory hybrid written fortran uses edge based scheme store matrix generated discretization 
+ benchmarks problems used assess quality numerical solutions robustness code 
+ viii sumario capitulo 
+ condicoes contorno condicoes iniciais 
+ adimensionalizacao equacoes governantes 
+ classificacao escoamentos compressiveis 
+ formulacao estabilizada elementos finitos 
+ operador captura choque δ 
+ operador captura choque cau 
+ parametros estabilizacao kirk 
+ parametros estabilizacao kirk 
+ parametros estabilizacao yzβ 
+ parametros estabilizacao yzβ 
+ ix tecnicas computacionais 
+ implementacao codigo computacional 
+ solucao sistemas lineares 
+ estrutura dados aresta 
+ produto matrizvetor aresta 
+ verificacao validacao v&v 
+ descricao tubo choque 
+ tubo choque sod 
+ tubo choque laxharden 
+ tunel vento degrau mach 
+ explosao plataforma semisubmersivel 
+ consideracoes iniciais ultimos anos fluidodinamica computacional cfd sigla ingles computational fluid dynamics desenvolvido bastante 
+ atualmente tecnicas cfd sido aplicadas diversas areas engenharia 
+ avanco computacao principalmente computacao paralela area cfd torna cada vez presente diaadia empresas engenharia pois atualmente possivel resolver problemas grande porte quais passado apresentavam viabilidade solucao funcao falta recursos computacionais daquela epoca 
+ solucao problemas cada vez robustos gera solucoes confiabilidade cada vez maior faz cfd torne ferramenta importante tomada decisoes ambiente corporativo 
+ basicamente mecanica fluidos subdividida duas areas principais escoamentos incompressiveis escoamentos compressiveis 
+ liquidos geralmente modelados incompressiveis 
+ enquanto gases quase sempre tratados compressiveis embora exista ampla faixa escoamentos lentos onde gases apresentam comportamento quase incompressivel 
+ existem aplicacoes praticas onde liquidos apresentam compressibilidade consideravel 
+ portanto existe limite fisico totalmente definido separando comportamento fluidos incompressivel compressivel 
+ cfd dificuldades metodos numericos surgem cada areas incompressivel compressivel bastante especificos 
+ exemplo escoamento incompressivel preocupacao condicao babuszabrezzi enquanto producao entropia captura choque maiores preocupacoes regime compressivel 
+ diferentes conjuntos variaveis usados cada caso 
+ caso incompressivel geralmente usadas variaveis primitivas enquanto variaveis conservativas quase sempre consideradas caso compressivel 
+ modo comum usar diferentes ordens interpolacao escoamentos incompressiveis enquanto caso compressivel interpolacoes mesma ordem quase regra 
+ estrategias numericas adotadas resolver sistemas equacoes diferentes 
+ escoamentos incompressiveis solucoes segregadas amplamente empregadas enquanto escoamentos compressiveis solucoes totalmente acopladas utilizadas hauke hughes 
+ diante diferencas apresentadas relacao regime escoamento considerado fica evidente necessidade tratar cada tipo escoamento forma bem especifica 
+ presente trabalho considerado tratamento numerico escoamentos compressiveis 
+ apresentada toda estrategia numerica adotada tratar escoamentos compressiveis assim aplicacoes praticas tipo escoamento 
+ solucoes numericas problemas predominantemente advectivos metodo diferencas finitas centradas formulacao variacional classica galerkin elementos finitos estaveis 
+ solucoes calculadas utilizando metodos apresentam oscilacoes espurias 
+ alternativa eficiente controle tais instabilidades metodos upwind elementos finitos caso formulacao supg streamlineupwind petrovgalerkin desenvolvida brooks hughes 
+ formulacao preve utilizacao funcoes peso descontinuas contem ponderacao montante direcao linhas fluxo adicionando formulacao classica galerkin termo acrescenta estabilidade direcao linhas corrente desta maneira controlam oscilacoes espurias 
+ brooks hughes desenvolveram formulacao supg equacao linear adveccaodifusao estenderam escoamentos incompressiveis fluidos viscosos regidos equacoes navierstokes 
+ hughes mallet apresentaram versao formulacao supg generalizada sistema advectivodifusivo multidimensional 
+ hughes tezduyar estenderam formulacao supg resolver equacoes euler compressiveis onde tratados escoamentos grandes velocidades ocorrencia choques usando variaveis conservativas 
+ embora resultados sido considerados satisfatorios nesse trabalho oscilacoes espurias ainda permaneceram vizinhanca regioes gradientes elevados 
+ brooks hughes hughes tezduyar utilizaram formulacao supg tratar oscilacoes espurias longo linhas correntes 
+ entretanto serie escoamentos principalmente escoamentos compressiveis altas velocidades apresentam variacoes abruptas propriedades gerando grandes descontinuidades 
+ descontinuidades choque bem capturadas formulacao supg instavel nessas regioes 
+ assim necessario desenvolver novo esquema estabilizacao evitar oscilacoes espurias proximidades descontinuidades portanto surgiram operadores captura descontinuidade operadores captura choque 
+ mostraram caso equacao adveccaodifusao escalar possivel estabilizar solucao proximidades regioes descontinuidade adicionando termo referente operador captura descontinuidade formulacao supg 
+ estrutura composta formulacao supg acrescida termo referente operador captura descontinuidade tornouse formulacao estabilizada amplamente utilizada dias hoje 
+ longo anos parametros estabilizacao supg captura descontinuidades sendo cada vez aperfeicoados estrutura formulacao praticamente alterou 
+ formulacao supg acrescida operador captura descontinuidade formulacao estabilizada elementos finitos amplamente aplicada escoamentos compressiveis objeto estudo presente trabalho 
+ longo anos diversas formas calculo parametros estabilizacao supg captura descontinuidade desenvolvidas 
+ nesse contexto hughes mallet apresentaram versao operador captura descontinuidade multidimensional 
+ shakib acrescentou operador captura descontinuidade formulacao espacotempo galerkin minimos quadrados gls galerkin least squares variaveis entropia 
+ galeao dutra carmo desenvolveram equacao adveccaodifusao escalar operador captura descontinuidade cau consistent approximate upwind proporcional residuo interior elementos 
+ le beau tezduyar acrescentaram operador captura descontinuidades variaveis conservativas formulacao supg semidiscreta resover equacoes euler compressiveis 
+ operador construido partir transformacao inversa operador dado originalmente variaveis entropia hughes mallet 
+ operador apresentado le beau tezduyar usado aliabadi tezduyar resolver equacoes euler navierstokes compressiveis 
+ almeida galeao estenderam estrutura operador cau escoamentos compressiveis regidos equacoes euler navierstokes 
+ primeiros operadores captura descontinuidades desenvolvidos geralmente variaveis entropia 
+ muitas vezes usavamse transformacao variaveis aplicalos formulacoes escritas variaveis conservativas 
+ realizaram comparacoes solucoes obtidas variaveis entropia variaveis conservativas 
+ usaram formulacao estabilizada supg acrescida operador captura descontinuidade resolver equacoes euler navierstokes compressiveis 
+ conclusoes solucoes obtidas partir dois conjuntos variaveis variaveis entropia variaveis conservativas proximas algumas vezes quase identicas 
+ catabriga coutinho usaram operador captura descontinuidade variaveis conservativas originalmente dado variaveis entropia almeida galeao 
+ tezduyar senga tezduyar 
+ desenvolveram operador captura descontinuidade yzβ variaveis conservativas aplicaram formulacoes supg semidiscreta espacotempo resolver problemas escoamentos compressiveis 
+ apresentaram comparacao operadores captura descontinuidade solucao equacoes euler mostraram metodo yzβ apresenta melhores resultados comparado metodos captura choque antigos 
+ kirk apresentaram formulacao elementos finitos semidiscreta operador captura descontinuidade similar operador apresentado catabriga coutinho 
+ kirk desenvolveram metodo determinar novo parametro estabilizacao formulacao supg dependente operador captura descontinuidade 
+ apresentaram perspectiva historica ultimos anos pesquisas realizados autores contexto escoamentos compressiveis 
+ presente trabalho apresenta comparacao operadores captura descontinuidades implementados ambiente computacao paralela utilizando estrutura dados baseada arestas elementos 
+ tal adotada formulacao estabilizada elementos finitos tipo supg resolver equacoes euler compressiveis 
+ cabe ressaltar comum denominar descricao matematica escoamentos compressiveis inviscidos simplesmente equacoes euler compressiveis 
+ portanto daqui diante adotada denominacao 
+ solucao numerica desenvolvida nesse trabalho podera ser empregada simulacao numerica explosoes areas abertas pouco congestionadas comum industria oleo gas onde possivel simular sobrepressao proveniente explosao acidental ocorrida plataformas petroleo aplicar resultados estudos analise risco 
+ presente trabalho adotouse formulacao elementos finitos euleriana onde malha elementos permanece fixa durante analise 
+ funcao natureza escoamentos regidos equacoes euler apresentarem grandes descontinuidades somente algumas regioes onda choque uso formulacoes utilizam malhas adaptativas acompanham deslocamento onda choque bastante comum resolver equacoes exemplo scovazzi nazarov 
+ presente trabalho malha elementos refinada todo dominio resultando geralmente malhas consideradas grande porte 
+ estrategia solucao adotada presente trabalho consiste utilizar paralelismo troca mensagens conjunto estrutura dados aresta alcancar solucao eficiente robusta possa ser aplicada equacoes euler compressiveis 
+ estrutura dados arestas provado diversos trabalhos habilidade acelerar processos iterativos solucao 
+ venkatakrishnan mavriplis apresentaram testes desempenho utilizando estruturas dados arestas solucao implicita equacoes navierstokes compressiveis utilizando metodo volumes finitos 
+ catabriga coutinho empregaram sucesso estrutura dados solucao equacoes euler utilizando triangulos lineares formulacao supg operador captura descontinuidade 
+ aplicaram estrutura dados arestas elementos tetraedricos solucao problemas plasticidade 
+ estrutura dados aresta apresentou resultados superiores relacao tempo computacao consumo memoria comparada estrutura dados elemento 
+ ribeiro coutinho fizeram comparacao detalhada custos computacionais relacionados esquemas estrutura dados aresta elemento csr compressed sparse row conclusao desse trabalho estrutura dados aresta computacionalmente eficiente problemas graus liberdade 
+ empregaram estrutura dados arestas solucao paralela equacoes navierstokes escoamentos viscoplasticos utilizando formulacao estabilizada elementos finitos tipo supg pspg 
+ objetivos trabalho presente trabalho apresenta comparacao operadores captura descontinuidades implementados ambiente computacao paralela utilizando estrutura dados arestas 
+ tal adotada formulacao estabilizada elementos finitos tipo supg resolver equacoes euler compressiveis 
+ atender objetivos trabalho realizadas seguintes etapas solucao equacoes euler adotada formulacao estabilizada elementos finitos tipo supg acrescida operador descontinuidade 
+ analisados diferentes operadores captura descontinuidade 
+ alem disso diferentes estruturas parametro estabilizacao supg avaliadas 
+ adotado paralelismo troca mensagens intuito resolver problemas malhas grande porte ambiente memoria distribuida 
+ problemas regidos equacoes euler geralmente exigem malhas grandes portanto computacao paralelo tornase imprescindivel nesses casos 
+ adotado esquema solucao baseado estrutura dados aresta 
+ tipo estrutura dados mostrado bastante eficiente conforme resultados apresentados literatura 
+ produto matrizvetor intensamente resolvido durante solucao problema realizado forma tirar proveito estrutura dados aresta fornecendo assim eficiencia operacao dispendiosa ponto vista computacional 
+ iv final trabalho pretendese mostrar ferramenta computacional desenvolvida podera ser aplicada problemas projeto engenharia 
+ pretende simular explosao ocorrida vazamento acumulo gas plataforma petroleo 
+ organizacao texto restante desse trabalho organizado conforme descrito seguir 
+ capitulo apresentara formulacao matematica tratada nesse trabalho 
+ apresentadas equacoes euler compressiveis respectivas condicoes contorno condicoes iniciais 
+ nesse capitulo apresentadas estrategia adimensionalizacao equacoes euler classificacao regimes escoamentos compressiveis 
+ capitulo apresentada formulacao estabilizada elementos finitos usada presente trabalho 
+ tratase formulacao tipo supg acrescida operador captura descontinuidade 
+ mostrados diferentes operadores captura descontinuidade 
+ capitulo apresentara algoritmo avanco temporal adotado 
+ capitulo apresentadas tecnicas computacionais usadas nesse trabalho 
+ apresentados metodo iterativo solucao sistemas lineares pre condicionador usado acelerar solucao iterativa tipo estrutura dados adotados 
+ discutida estrategia usada implementacao produto matrizvetor tecnicas computacao paralela usadas 
+ capitulo apresentara resultados obtidos presente trabalho 
+ nesse capitulo usados problemas classicos verificar qualidade solucoes obtidas 
+ apresentado problema aplicacao onde mostrada toda robustez computacional ferramenta numerica desenvolvida nesse trabalho 
+ fim apresentadas conclusoes trabalho 
+ nesse capitulo expostas consideracoes finais sugestoes trabalhos futuros 
+ capitulo formulacao matematica 
+ equacoes governantes equacoes governantes escoamento fluidos compressiveis viscosos regidos equacoes euler apresentadas nesta secao acordo hirsh 
+ tais equacoes provenientes aplicacao principios conservacao massa quantidade movimento energia regem mecanica continuo 
+ maiores detalhes respeito desenvolvimento equacoes conservacao podem ser obtidos hirsh 
+ equacoes euler formam sistema inviscido equacoes conservacao hiperbolicas ainda conjunto acoplado equacoes diferenciais naolineares primeira ordem 
+ equacoes euler compressiveis podem ser entendidas caso especial equacoes navierstokes compressiveis onde fluxo difusivo viscoso vetor termos fonte considerados nulos 
+ equacoes euler podem ser escritas forma compacta conservativa dominio espacotempo  conforme equacao 
+                  
+ r  onde euler fi ix dados respectivamente expressoes 
+ vetor variaveis conservativas vetores fluxos t                                    
+                        xi   yi    zi            
+ ρ massa especifica fluido ux uy uzt velocidade densidade total energia unidade massa pressao ij delta kronecker 
+ variaveis termodinamica variaveis conservativas enquanto variaveis ρ ux uy uz variaveis primitivas 
+ densidade total energia unidade massa dada soma energia interna unidade massa ei energia cinetica escoamento unidade massa conforme expresso equacao 
+ onde segundo termo lado direito equacao 
+ energia cinetica unidade massa 
+ considerando fluido segue lei gases ideais relacao constitutiva gases perfeitos dada equacoes 
+        
+ onde cv calor especifico volume constante cp calor especifico pressao constante  temperatura absoluta  razao cp cv 
+ duas relacoes uteis apresentadas seguir 
+ tratase velocidade acustica velocidade som numero mach usadas secao 
+ classificacao regime escoamento compressivel 
+ considerando fluido gas ideal temse  onde velocidade acustica gas ideal 
+ numero mach dado relacao velocidade escoamento velocidade acustica conforme equacao 
+ onde numero mach 
+ equacoes euler apresentadas forma compacta equacao 
+ podem ser escritas forma quasilinear conforme equacao 
+             
+ onde matrizes jacobianas fluxos euler ax ay az matrizes ordem  definidas equacao 
+       
+ forma geral matrizes jacobianas fluxos euler dada equacao            
+        
+ onde vetor posicoes  ju   
+ desenvolvimento matrizes jacobianas fluxos euler variaveis conservativas pode ser encontrado hughes tezduyar aliabadi tezduyar 
+ condicoes contorno condicoes iniciais considerando dominio espacotempo definicao problema contorno  equacoes euler admitem condicoes contorno condicoes iniciais conforme descrito seguir 
+  condicoes contorno dirichlet dadas equacao 
+ bu      
+ condicoes iniciais dadas equacao 
+     
+ equacoes acima operador condicao contorno   funcoes dadas 
+ condicoes contorno dirichlet especificados valores variaveis conservativas contorno  
+ condicoes iniciais     especificados valores variaveis conservativas dominio  instante  
+ condicoes contorno iniciais apresentadas aqui acordo le beau tezduyar 
+ equacoes euler termo viscoso presente equacoes navierstokes considerado componente tangencial velocidade escoamento superficies impermeaveis nula 
+ situacao caracteriza condicao escorregamento onde fluido contato superficie impermeavel sofre atrito viscoso 
+ componente perpendicular velocidade escoamento superficies impermeaveis nula garantir condicao parede impermeavel 
+ portanto cada ponto superficie solucao equacoes euler deve satisfazer seguinte condicao 
+ onde vetor velocidade escoamento vetor unitario normal superficie impermeavel 
+   condicoes escorregamento parede impermeavel devem ser consideradas solucao equacoes euler sempre necessario 
+ adimensionalizacao equacoes governantes adimensionalizacao equacoes governam escoamento reduz problemas relacionados erros truncamento computacionais permite problema numerico represente varios problemas fisicos 
+ procedimento baseiase conceito similaridade escoamentos onde solucao problema escoamento resolvido diferentes escalas equivalente 
+ portanto problema escoamento pode ser resolvido escalas menores escalas prototipos escalas maiores escala real respectivas solucoes equivalentes 
+ dois problemas possuem solucoes equivalentes respectivas solucoes proporcionais sendo constante proporcionalidade solucoes dependente propriedades escoamento regiao perturbada 
+ similaridade escoamentos garantida similaridade geometrica similaridade dinamica simultaneamente presentes problema 
+ similaridade geometrica proporcoes dimensoes modelo geometrico precisam permanecer mesmas tanto escalas menores quanto escalas maiores 
+ similaridade dinamica garantida parametro similaridade mantido constante diferentes escalas 
+ escoamentos viscosos geralmente usase numero reynolds parametro similaridade 
+ dessa forma escoamento escalas menores maiores precisam necessariamente apresentar numero reynolds similaridade dinamica 
+ caso escoamentos viscosos velocidades elevadas usase numero mach garantir similaridade dinamica escoamentos 
+ nesta secao apresentados procedimentos adimensionalizacao equacoes euler 
+ procedimentos adotados nessa secao descritos anderson jr 
+ tempo adimensional dado   
+ onde c velocidade som escoamento perturbado comprimento caracteristico escoamento 
+ comprimento adimensional dado  onde comprimento dimensao 
+ massa especifica adimensional  dada     onde  massa especifica escoamento perturbado 
+ componentes velocidade adimensionais xu yu zu dadas  c  c  c onde c velocidade som escoamento perturbado 
+ pressao adimensional dada  c  
+ onde  c respectivamente massa especifica velocidade som escoamento perturbado 
+ numero mach escoamento perturbado  dado equacao 
+     
+ onde u velocidade escoamento perturbado 
+ classificacao escoamentos compressiveis escoamentos compressiveis podem ser classificados quatro diferentes regimes anderson jr 
+ classificacao baseiase numero mach escoamento perturbado  numero mach local 
+ numero mach local representa valores mach cada ponto escoamento exemplo escoamento redor aerofolio onde valor mach pode variar longo aerofolio 
+ classificacao escoamentos compressiveis seguintes escoamentos subsonicos escoamentos numero mach sempre menor qualquer regiao 
+ geralmente tipo escoamento ocorre  
+ escoamentos transonicos escoamentos ocorrem  
+ nesses escoamentos algumas regioes podem apresentar enquanto outras regioes podem apresentar 
+ escoamentos supersonicos escoamentos numero mach local sempre maior qualquer regiao 
+ geralmente tipo escoamento ocorre  
+ escoamentos hipersonicos escoamentos ocorrem  
+ problemas tratados nesse trabalho geralmente classificados escoamentos supersonicos 
+ cabe ressaltar escoamentos hipersonicos apresentam variacoes extremas temperatura pressao massa especifica acrescenta enormes dificuldades alcancar solucao nesse regime escoamento 
+ entretanto tratamento escoamentos hipersonicos escopo desse trabalho 
+ capitulo formulacao numerica 
+ formulacao estabilizada elementos finitos nesta secao apresentada formulacao estabilizada elementos finitos equacoes euler variaveis conservativas 
+ tratase formulacao semi discreta caracteriza discretizacao elementos finitos espaco resultando conjunto equacoes diferenciais ordinarias dependentes tempo 
+ discretizacao temporal problema realizada atraves algoritmo preditor multicorretor apresentado secao 
+ questoes simplificacao inicialmente equacao 
+ escrita forma operador dado equacao 
+                
+ metodo elementos finitos consiste subdividir dominio problema  conjunto subdominios e elementos finitos tal    nel e       onde nel representa numero total elementos malha superindice indica eesimo elemento malha 
+ espaco funcoes teste hs espaco funcoes peso hv dados respectivamente                   bu g                     bw    
+ onde superindice indica discretizacao elementos finitos  representa   conjunto polinomios grau     h e  representa contorno  representa espaco dimensoes finitas sobre dominio   espaco funcoes cuja primeira derivada quadrado integravel            df dx      
+ formulacao elementos finitos equacoes euler consiste encontrar hu tal  w temse        nel                   τ                
+ nel          onde hu funcao incognita discreta hw funcao peso discreta 
+ matriz estabilizacao supg eτ definida diagonal 
+ forma estabilizacao inicialmente proposta hughes tezduyar 
+ tarde ocorreram alguns aperfeicoamentos formulacao exemplo le beau tezduyar aliabadi tezduyar 
+ primeira integral equacao 
+ representa termo galerkin primeiro somatorios integrais representa termo estabilizacao supg segundo somatorio integrais representa termo estabilizacao referente operador captura descontinuidades 
+ parametro estabilizacao  apresentado seguir definido aliabadi tezduyar 
+ parametro estabilizacao  definido cada subsecao seguira 
+ matriz estabilizacao supg τ   depende parametro  dada equacoes 
+   max      cfl  cfl             ecfl     β         β     ec     
+ onde ec velocidade acustica elemento correspondentes termos dependentes tempo t parametro estabilizacao a parametro estabilizacao correspondentes termos advectivos  parametro estabilizacao descontar efeitos termo captura descontinuidade 
+ parametro  controla estabilidade precisao algoritmo marcha temporal discutido secao 
+ numero courantfredrichslewy ecfl definido equacao 
+ cfl     β   
+ β vetor arbitrario normalizado dado equacao 
+ β    
+ sendo        conforme descrito aliabadi tezduyar 
+ a definida hughes 
+      
+ matriz presente trabalho adotouse al 
+ parametro eh apresentado equacao 
+ tamanho caracteristico eh elemento 
+ presente trabalho adotouse tamanho caracteristico elemento sendo raiz cubica volume elemento ev dado equacao 
+ onde ev volume elemento 
+ v velocidade acustica elemento ec dada equacao 
+                
+ alternativas calculo matriz estabilizacao supg eτ apresentadas catabriga 
+ onde matriz eτ calculada partir coeficientes matrizes elementos arestas 
+ presente eτ dado aliabadi tezduyar equacao trabalho entretanto adotouse 
+ avaliados diferentes metodos calculo parametro operador captura descontinuidade  apresentados seguir 
+ operador captura choque δ parametro operador captura descontinuidade  definido variaveis conservativas le beau tezduyar 
+ operador construido partir transformacao inversa operador dado originalmente  variaveis variaveis entropia hughes mallet 
+ parametro conservativas dado equacao 
+ daqui diante metodo identificado somente  
+              
+ operador captura choque cau parametro operador captura descontinuidade cau definido almeida galeao 
+ parametro inicialmente desenvolvido variaveis entropia almeida galeao posteriormente escrito variaveis conservativas catabriga coutinho conforme equacao 
+ daqui diante metodo identificado somente cau 
+  cau onde                            
+     
+          
+    equacao 
+ pode ser escrita conforme seguir                                                           
+   termo hu gradiente generalizado hu relacao sistema coordenadas locais elementos ξ dado equacao 
+                                                                           
+ ξ componentes   termos matriz j dada equacao 
+                                                
+ termo hu obtido partir equacao 
+  ξu   
+ termo hu gradiente hu relacao coordenadas globais dado equacao 
+                    
+  a termo definido norma vetor induzida matriz a norma energia 
+ exemplo norma vetor velocidade induzida matriz a dada equacao 
+ au     
+ parametros estabilizacao kirk kirk 
+ parametro estabilizacao supg  calculado conforme equacao 
+  kirk            supg          cau  supg          nen    supg  ˆ       ˆ  
+ onde nen numero elemento funcoes forma usadas formulacao elementos finitos 
+ daqui diante metodo identificado somente kirk 
+ parametros estabilizacao kirk kirk parametro estabilizacao supg  calculado conforme equacao 
+  kirk            supg                   
+ onde t passo tempo analise demais parametros apresentados equacoes 
+ nesse metodo parametro operador captura descontinuidade usado cau 
+ daqui diante metodo identificado somente kirk 
+ parametros estabilizacao yzβ tezduyar senga apresentam metodo yzβ calculo parametro estabilizacao supg  parametro operador captura descontinuidade  
+ tezduyar senga apresentam diferentes formas calculo parametros estabilizacao 
+ presente trabalho adotaramse procedimentos calculo parametros estabilizacao metodo yzβ conforme mostrado seguir 
+ parametro estabilizacao supg metodo yzβ definido equacao 
+    supg  ugn         sugn    sugn         
+ onde  dado funcao vetor unitario velocidade acustica sugn ec funcoes forma passo tempo t conforme equacoes 
+ adotado  tezduyar senga 
+  sugn     nen                  sugn  parametro operador captura descontinuidade  
+  shoc  shoc  shoc  shoc     shoc  jgn     shoc    ref      nen     
+    
+ shoc metodo yzβ 
+ ref massa especifica referencia parametro   choques acentuados 
+ levar shoc calculado partir adotado  choques suaves consideracao dois valores  parametro expressao  shoc     shoc      shoc     
+ daqui diante metodo yzβ apresentado tezduyar senga descrito nesta secao identificado somente yzβ 
+ parametros estabilizacao yzβ outra possibilidade estabilizacao considerar parametro estabilizacao definido equacao 
+ calcular parametro operador captura choque shoc conforme apresentado equacoes 
+ neste caso matriz matriz diagonal construida partir valores referencia 
+  shoc       sdn               shoc                     ref  ref    ref    ref           ref  
+     
+    choques suaves parametro  adotado  choques acentuados 
+ levar consideracao dois valores  parametro shoc calculado partir expressao 
+  shoc     shoc      shoc     
+ daqui diante metodo yzβ apresentado tezduyar senga descrito nesta secao identificado somente yzβ 
+ integracao tempo discretizacao espacial equacao 
+ leva conjunto equacoes diferenciais naolineares ordinarias dependentes tempo dadas equacao 
+ onde vetor valores nodais derivada temporal matriz massa generalizada matriz conveccao generalizada 
+ cv   matrizes globais obtidas assembly montagem partir ec respectivamente 
+ operacao assembly matrizes elementos definida hughes 
+ matrizes elementos definidas equacoes 
+ pg    ag  apg  cc 
+ onde galerkin galerkin pgm matriz massa petrov gm matriz massa consistente galerkin agc matriz conveccao galerkin pgc ccc matriz captura choque 
+ matriz conveccao petrov nesse trabalho empregase elemento tetraedro linear ponto integracao obter matrizes elementos 
+ descricao detalhada obtencao cada matriz elemento equacoes euler fornecida sesini 
+ souza descreve detalhes discretizacao equacoes euler 
+ operacao assembly montagem matrizes descrita hughes representada conforme equacoes 
+ m c nel  e  nel  ca  e 
+ onde nel numero elementos superindice indica contribuicao matrizes elemento 
+ presente trabalho matrizes globais nunca explicitamente montadas alem disso computadas partir contribuicao arestas elementos 
+ representam apenas esquema didatico facilitar entendimento desse assunto 
+ usado algoritmo preditormulticorretor apresentado aliabadi tezduyar conforme quadro 
+ neste algoritmo sistema 
+ discretizado diferencas finitas contador passos tempo contador multicorrecoes iteracoes naolineares maxit numero maximo iteracoes naolineares algoritmo aproximacoes  nta  ntv representadas tempo inicial analise nv respectivamente ft t passo tempo analise tempo final analise a incremento derivada temporal 
+ algoritmo preditormulticorretor pode ser resumido conforme apresentado quadro 
+ dependendo escolha podese ter algoritmo implicito explicito conforme descrito aliabadi tezduyar 
+ presente trabalho adota conforme equacao 
+ t   
+ leva algoritmo implicito resultando matriz parametro  controla estabilidade precisao algoritmo marcha temporal 
+ leva metodo segunda ordem presente trabalho adotase precisao relacao tamanho passo tempo t chamado regra trapezoidal aliabadi tezduyar 
+ dados t t fazer passo      nt   predicao inicializacao passo n  predicao inicializacao   maxit convergir fazer passo calcule      cv   passo resolve  m passo     t    correcao atualizacao passo      correcao atualizacao fim laco fim laco criterio parada iteracoes naolineares algoritmo preditor onde tol tolerancia fornecida 
+ multicorretor alcancado numero iteracoes naolineares pode ser reduzido usando tolerancia  controlar residuo linear 
+ assim passo algoritmo preditor multicorretor dado quadro 
+ substituida r tol   i   
+ levando solucao naolinear metodo tipo newton inexato elias 
+ tolerancia  termo forcante estrutura discutida detalhes kelly 
+ neste trabalho adotaramse mesmos procedimentos elias 
+ calculo termo forcante  
+ utilizacao termo forcante  conduz algoritmo naolinear adaptativo 
+ portanto ideia metodo newton inexato conhecido newton truncado minimizar esforco empregado solucao sistemas equacoes lineares direcao busca naolinear longe solucao equilibrio 
+ capitulo tecnicas computacionais neste capitulo listadas tecnicas metodos computacionais utilizados nesse trabalho durante implementacao solucao numerica equacoes euler 
+ implementacao codigo computacional solucao numerica equacoes euler desenvolvida presente trabalho realizada sobre estrutura computacional edgecfd software elementos finitos desenvolvido mantido nacad ufrj 
+ edgecfd desenvolvido inicialmente tratar escoamentos incompressiveis viscosos elias 
+ desde entao edgecfd vem recebendo diversas contribuicoes exemplo paraizo goncalves jr 
+ alem disso diversos trabalhos sido conduzidos edgecfd tais elias 
+ software escrito fortran usa estrutura dados aresta trabalha ambientes computacao paralela memoria distribuida compartilhada hibrida 
+ fluxo simulacao computacional pode ser resumido basicamente tres etapas preprocessamento processamento posprocessamento 
+ pre processamento constroise modelo geometrico malha discreta 
+ processamento realizada solucao problema 
+ posprocessamento realizada visualizacao resultados obtidos 
+ nesse contexto edgecfd usado apenas etapa processamento simulacao computacional 
+ edgecfd composto dois modulos edgecfdpre edgecfdsolver 
+ edgecfdpre realizados particionamento dominio atraves biblioteca metis karypis kumar extracao dados atraves biblioteca edgepack martins 
+ edgecfdsolver responsavel processamento analise 
+ edgecfd escreve arquivos resultados podem ser posprocessados diretamente software paraview 
+ preprocessamento edgecfd pode ser realizado qualquer software gerador malhas 
+ presente trabalho usado software ansys icem cfd realizar preprocessamento 
+ finalidade desenvolvido programa computacional transforma informacoes malha ansys icem cfd formato edgecfd 
+ detalhes desse programa computacional apresentados apendice 
+ todas funcionalidades computacionais presentes edgecfd adaptadas disponiveis solucao equacoes euler desenvolvida presente trabalho 
+ proximas secoes desse capitulo farao abordagem detalhada tecnicas computacionais importantes presentes nesse trabalho 
+ solucao sistemas lineares algoritmo preditormulticorretor apresentado quadro 
+ cada  m onde multicorrecao iteracao naolinear necessario resolver sistema matriz naosimetrica 
+ metodo utilizado resolver sistema  m metodo iterativo gmres saad schultz precondicionador tipo bloco diagonal nodal shakib 
+ metodo gmres generalized minimum residual metodo iterativo usado solucao sistemas equacoes objetivo minimizar norma residual sistema 
+ considere sistema equacoes hipotetico dado equacao 
+ metodo gmres solucao sistema obtida norma residuo ax solucao inicial sistema alcanca tolerancia 
+ considerando solucao aproximada ira apresentar forma krylov 
+ metodo gmres determina tal norma onde vetor espaco residuo minima 
+ procedimento repete valor norma x    residuo alcance tolerancia desejada 
+ maneira simples podese dizer gmres composto dois lacos iterativos 
+ laco externo chamado ciclos gmres podera ter numero maximo iteracoes igual max valor adotado 
+ laco interno chamado iteracoes gmres sempre numero iteracoes igual numero vetores krylov adotado 
+ onde max utilizacao precondicionadores acelera taxa convergencia metodos iterativos saad 
+ tecnica precondicionamento baseiase ideia transformar sistema equacoes original outro sistema equivalente sistema original possua mesma solucao sistema original porem melhor condicionamento aumenta taxa convergencia metodo iterativo 
+ exemplo aplicacao tecnica precondicionamento sistema 
+ conduz sistema ax 
+ m aproximacao inversa 
+    onde 
+ escolha m define tipo precondicionador adotado 
+ discussao detalhada sobre tema pode ser encontrada saad 
+ estrategia simples precondicionamento precondicionador diagonal  operador diag extrai diagonal principal 
+ sistema pre d diag  onde condicionado seguinte forma  ax 
+ presente trabalho adotado precondicionador bloco diagonal nodal  shakib 
+ nesse tipo precondicionamento temse block b  onde operador block extrai matrizes blocodiagonais nodais ordem m onde numero graus liberdade 
+ equacoes euler compressiveis tres dimensoes  
+ mostra forma esquematica estrutura matriz 
+ precondicionador bloco diagonal nodal 
+ caso precondicionador bloco diagonal nodal sistema precondicionado seguinte forma   ax 
+ blocodiagonal nodal representa tecnica precondicionamento facil implementacao custo armazenamento computacional maior pre condicionador diagonal porem maior eficiencia aceleracao solucao iterativa sistemas equacoes 
+ estrutura dados aresta matriz resolvida cada multicorrecao iteracao naolinear conforme quadro 
+ matriz global problema 
+ implementacao computacional matriz pode ser armazenada diferentes formas 
+ diversas estrategias podem ser utilizadas gerando codigos diferentes tipos estruturas dados 
+ estruturas dados elemento aresta alternativas onde necessario realizar reduzindo consideravelmente esforco computacional 
+ montagem matriz global outras vantagens desses tipos estrutura dados podem ser encontradas ribeiro coutinho onde autores fizeram comparacao detalhada custos computacionais relacionados esquemas estrutura dados aresta elemento csr compressed sparse row conclusao desse trabalho estrutura dados aresta computacionalmente eficiente comparada outros tipos estruturas dados problemas graus liberdade 
+ presente trabalho solucao equacoes euler apresenta graus liberdade justifica aplicacao estrutura dados aresta nesse trabalho 
+ presente trabalho utilizouse estrutura dados aresta implementacao computacional equacoes euler 
+ partir matrizes elementos oriundas formulacao estabilizada representadas equacoes 
+ definese desmembramento coeficientes dessas matrizes gerando contribuicoes cada aresta 
+ mudanca estrutura dados feita considerando dados referentes malha elementos existam 
+ informacoes malha manipuladas forma gerar nova estrutura baseada arestas elementos 
+ realizar tarefa utilizouse biblioteca edgepack martins el 
+ assim matrizes definidas equacoes 
+ podem ser escritas contribuicoes arestas elementos conforme equacoes 
+ m c nedges  s   ca  nedges s 
+ onde nedges numero arestas malha superindice indica contribuicao formada partir matrizes baseadas arestas 
+ dessa forma matriz contribuicao arestas elementos 
+ catabriga martins elias descrevem etapas construcao matrizes arestas conforme apresentado seguir 
+ adotam estruturas dados tipo elementoporelemento aresta nunca explicitamente montadas 
+ nesses poraresta matrizes globais casos apenas matrizes relativas elementos arestas montadas armazenadas 
+ presente trabalho adotouse estrutura dados tipo aresta poraresta feita descricao tipo estrutura dados partir desse ponto 
+ matrizes oriundas discretizacao realizada metodo elementos finitos matrizes alto grau esparsidade 
+ significa maior parte coeficientes dessas matrizes coeficientes nulos 
+ caso elementos tetraedricos funcoes interpolacao lineares existe relacao matrizes esparsas grafos malha saad 
+ estrutura dados aresta tira proveito dessa relacao 
+ teoria grafos discutida saad 
+ presente trabalho apresentada abordagem simplificada apenas ilustrar utilizacao grafos contexto metodo elementos finitos 
+ basicamente grafos formados conjunto vertices conjunto arestas 
+ grafos utilizados nesse tipo aplicacao nodal dual 
+ vertices grafo nodal correspondem malha arestas grafo correspondem arestas malha 
+ vertices grafo dual correspondem elementos malhas arestas grafo correspondem arestas comuns elementos adjacentes 
+ mostra relacao malha triangulos matriz coeficientes grafo nodal grafo dual 
+ podese observar figura 
+ numeracao elementos substituida letras facilitar compreensao 
+ simbolo  representa coeficientes nulos matriz 
+ malha grafo nodal matriz grafo dual figura 
+ relacao malha matriz grafos 
+ malhas usadas metodos elementos finitos geralmente organizadas arranjos denominados incidencias conectividades 
+ presente trabalho adotados seguintes arranjos ien nnoel nel conectividade formam elemento iedge nare conectividade formam aresta ieei nae nel conectividade arestas formam elemento onde nnoel numero elemento nel numero elementos nare numero arestas nae numero arestas elemento 
+ usada exemplificar construcao desses arranjos 
+ nessa figura numeracao azul numeracao elementos vermelho numeracao arestas preto 
+ construcao incidencias elemento aresta arranjos incidencias malha apresentada figuras 
+ ien ie ien ie ien ie ien ie iedge ia iedge ia iedge ia ieei ie ieei ie ieei ie ieei ie arranjo ieei convencionado atribuir valor negativo arestas possuem incidencia nodal correspondente incidencias nodais elementos 
+ exemplo aresta acordo arranjo iedge formada 
+ mesma aresta formada arranjo ien 
+ portanto aresta convencionado atribuir valor negativo 
+ informacoes referentes arranjos iedge ieei normalmente disponibilizadas softwares geracao malha 
+ portanto arranjos precisam ser construidos partir informacoes malha fornecidas softwares geradores malha 
+ presente trabalho arranjos construidos uso biblioteca edgepack desenvolvida martins el 
+ matrizes arestas construidas partir desmembramento coeficientes matrizes elementos martins 
+ portanto matriz aresta considerando apenas grau liberdade qualquer elemento sempre dada ij       ji ij jj      
+ onde ijk coeficiente matriz elemento correspondente aresta ij elemento 
+ grau liberdade ijk correspondera blocos matrizes dimensao ngl ngl onde ngl numero graus liberdade 
+ matriz aresta dada equacao 
+ recebendo contribuicao unico elemento 
+ exemplo tipico dessa configuracao arestas localizadas contorno dominio 
+ caso geral conveniente formular matrizes arestas levando consideracao contribuicao todos elementos concorrentes ij                 ji   ij jj          
+ onde numero total elementos compartilham aresta ij ijk submatriz elemento correspondente graus liberdade aresta 
+ exemplo contribuicao elementos unica aresta destacada vermelho dado figura 
+ contribuicao elementos matriz aresta 
+ usando relacao dada equacao 
+ podese obter matriz aresta destacada vermelho figura 
+ atraves contribuicao cada elemento compartilha aresta conforme descrito equacao 
+                                                                    
+ elemento utilizado pressente trabalho tetraedro linear formulacao numerica aplicada equacoes euler gera matrizes elementos simetricas 
+ mostra esquema montagem matrizes aresta tetraedro linear partir desmembramento matriz elemento 
+           matriz elemento                     matriz aresta            matriz aresta            matriz aresta tetraedro linear            matriz aresta            matriz aresta            matriz aresta figura 
+ montagem matrizes arestas elemento tetraedrico partir desmembramento matriz elemento 
+ matriz elemento dimensao nnoel ngl nnoel ngl onde ngl numero graus liberdade nnoel numero elemento 
+ tetraedro linear nnoel  
+ matrizes arestas dimensao     ngl ngl   
+ matrizes aresta possuem sentido convencionado conforme arranjo incidencias representado setas figura 
+ portanto submatriz exemplo igual transposta submatriz matriz 
+ sequencia basica construcao matrizes aresta dada quadro 
+ sequencia construcao matrizes aresta 
+ cada elemento fazer passo recuperar incidencia nodal elemento arranjo ien passo calcular coeficientes matriz elemento passo recuperar incidencia aresta elemento arranjo ieei passo acumular contribuicoes cada aresta fim laco 
+ produto matrizvetor aresta cada iteracao metodo gmres descrito anteriormente necessario resolver serie operacoes dentre quais produto matrizvetor apresenta maior custo computacional 
+ estrutura dados aresta poder ser usada otimizar produto matrizvetor mostrado adiante 
+ considerando estrutura dados aresta produto matrizvetor pode ser representado ap  
+ nare   a onde nare numero arestas malha vetor global armazena solucao ap componentes restritas graus liberdade aresta aa matriz aresta 
+ importante destacar novamente adotando esquema estrutura dados aresta matriz global nunca explicitamente montada 
+ produto matrizvetor aresta dado equacao 
+ pode ser esquematizado conforme quadro 
+ produto matrizvetor aresta 
+ cada aresta fazer passo localize componentes ap vetor global passo realize produto matrizvetor local y passo espalhe resultado local ap vetor global fim laco aumentar eficiencia produto matrizvetor aresta utilizase tecnica armazena arranjo blocodiagonal nodal matriz arranjo global matriz 
+ tecnica aumenta eficiencia produto matrizvetor aresta pois evita armazenamento redundante componentes diagonal aresta reduz numero operacoes pontos flutuantes relacao produtor matrizvetor apresentado quadro 
+ tecnica inicialmente proposta gijzen relacao termos diagonal matriz posteriormente utilizacao arranjo blocodiagonal nodal adotada catabriga elias 
+ produto matrizvetor utilizando tecnica proposta inicialmente gijzen pode ser escrito seguinte forma bp  
+ nare   a onde arranjo blocodiagonal nodal global arranjo blocodiagonal nodal 
+ aa matriz aresta termo produto matrizvetor aresta dado equacao 
+ pode ser esquematizado conforme quadro 
+ portanto presente trabalho produto matrizvetor aresta implementado conforme esquema gijzen descrito quadro 
+ tratase esquema eficiente produto matrizvetor apresentado quadro 
+ onde todas operacoes realizadas localmente 
+ esquema gijzen operacoes locais realizadas apenas termos matriz encontram arranjo blocodiagonal nodal deixando produto matrizvetor eficiente 
+ produto matrizvetor aresta gijzen 
+ cada aresta fazer passo localize componentes ap vetor global passo realize produto matrizvetor local y passo espalhe resultado local ay vetor global fim laco cada fazer passo multiplique nb np passo adicione resultado ny   fim laco 
+ computacao paralela nesse trabalho utilizouse paralelismo troca mensagens atraves uso biblioteca mpi message passing interface 
+ nesse tipo paralelismo dominio problema particionado subdominios 
+ cada subdominio enviado nucleo computacional resolve cada problema particionado quase forma independente 
+ interface particoes vizinhas compartilham mesmos 
+ compartilhados interfaces vizinhas precisam comunicar atraves envio recebimento mensagens 
+ interfaces particoes vizinhas denominadas interface comunicacao interface paralela 
+ mostra particionamento malha triangular duas particoes 
+ numeracao elementos substituida letras facilitar compreensao 
+ interface comunicacao pintada azul formada 
+ particionamento apresentado figura 
+ chamado dual pois feito elementos 
+ existe particionamento nodal presente trabalho adotouse trabalhar particionamento dual 
+ malha original malha particionada figura 
+ particionamento malha triangular 
+ particionamento dominio particionamento malha elementos obtido atraves uso biblioteca metis karypis kumar responsavel manter balanceamento carga volume comunicacao adequado 
+ balanceamento carga significa particoes numero elementos semelhantes 
+ volume comunicacao adequado significa interface comunicacao menor numero possivel 
+ apresenta diferentes combinacoes balanceamento carga volume comunicacao obtidos apos particionamento malha 
+ melhor situacao representada figura 
+ onde temse carga balanceada volume comunicacao pequeno 
+ carga balanceada grande volume comunicacao carga desbalanceada pequeno volume comunicacao carga balanceada pequeno volume comunicacao figura 
+ balanceamento carga volume comunicacao 
+ apos particionamento malha elementos necessario renumerar localmente entidades malha elementos cada particao cada nucleo computacional possa resolver particao problema independente 
+ renumeracao entidades malha cada particao realizada atraves uso biblioteca edgepack martins el 
+ apresenta particionamento malha compara diferenca malha particionada numeracao original figura 
+ malha particionada renumerada figura 
+ nessas figuras numeros elementos substituidos letras facilitar compreensao 
+ malha original particionada figura 
+ observase numeracao numeracao elementos embora omitida figura ficou descontinua funcao distribuicao entidades malha particoes criadas 
+ possivel arranjo renumeracao local apresentado figura 
+ onde entidades malha redistribuidas particoes internos cada particao interface paralela agrupados forma organizada 
+ malha particionada numeracao original malha particionada renumerada figura 
+ renumeracao local particoes 
+ interfaces comunicacao podem comunicar atraves comunicacao coletiva comunicacao pontoaponto 
+ comunicacao coletiva todos todas interfaces comunicacao trocam mensagens si 
+ comunicacao pontoaponto troca mensagens ocorre apenas interfaces comunicacao vizinhas torna comunicacao pontoaponto eficiente 
+ nesse trabalho utilizouse tipo comunicacao pontoaponto realizar envio recebimento mensagens interfaces comunicacao vizinhas conforme estrategia descrita elias 
+ interfaces comunicacao frequentemente acessados trocas mensagens precisam ser facil localizacao 
+ portanto criados mapas localizacao interfaces comunicacao 
+ importante destacar edgecfd dois modos comunicacao disponiveis 
+ modo comunicacao pontoaponto ativado programa encontra arquivos 
+ pp proprios mapas localizacao gerados edgecfd 
+ chave ativacao comunicacao pontoaponto variavel logica usingpp 
+ trecho ativacao comunicacao pontoaponto usado edgecfd pode ser resumido quadro 
+ ativacao comunicacao paralela edgecfd 
+ chama rotinas comunicacao pontoaponto else 
+ chama rotinas comunicacao coletiva end resultados paralelos obtidos nesse trabalho avaliados usando seguintes medidas desempenho speed eficiencia 
+ speed definido  
+ onde ps speed tempo rodada gasto algoritmo serial pt tempo gasto algoritmo paralelo rodando nucleos computacionais 
+ eficiencia definida onde pe eficiencia numero nucleos computacionais utilizados rodada 
+ caso possivel obter tempo serial exemplo problema cabe memoria disponivel substituido tempo solucao problema menor numero nucleos 
+ capitulo resultados neste capitulo realizada verificacao solucao numerica desenvolvida presente trabalho 
+ tal inicialmente faz revisao sobre conceito verificacao validacao v&v mostrando necessidade buscar forma quantificar erro numerico embutido resultados computacionais 
+ seguida casos testes apresentados 
+ problemas usados avaliar solucao numerica proposta nesse trabalho divididos casos teste casos teste caso aplicacao 
+ cada itens mencionados anteriores descrito detalhes neste capitulo 
+ considerase todos problemas encontram sistema compativel unidades 
+ visualizacao resultados realizada software paraview 
+ recursos computacionais usados nesse trabalho encontramse instalados nucleo avancado computacao alto desempenho nacad ufrj 
+ testes realizados maquina sgi altix ice possui processamento processadores intel xeon totalizando nucleos processamento 
+ processadores six core intel xeon westmere 
+ ghz totalizando nucleos processamento processadores quad core intel xeon clovertown 
+ ghz totalizando nucleos processamento 
+ tratase maquina baseada arquitetura memoria distribuida total tbytes ram 
+ interligacao usase rede infiniband 
+ todos problemas analisados utilizouse vetores krylov maximo ciclos metodo gmres 
+ numero maximo multicorrecoes algoritmo preditormulticorretor cada analises 
+ cabe ressaltar nenhuma analise alcancou numero maximo multicorrecoes pois convergencia cada passo naolinear sempre alcancada numero iteracoes menor maximo 
+ todos modelos geometricos respectivas malhas tetraedros gerados programa ansys icem cfd 
+ malhas tetraedros convertidas formato edgecfd programa apresentado apendice 
+ verificacao validacao v&v tao importante quanto obter resultado numerico saber avaliar exatidao 
+ computacao cientifica termo exatidao referese proximidade solucao numerica solucao exata problema 
+ quanto maior exatidao proximo solucao numerica estara solucao exata 
+ ingles utilizase termo accuracy referenciar exatidao heath 
+ dessa forma importante definir criterio quantificar qualidade solucao numerica obtida 
+ geralmente definemse metricas finalidade 
+ metricas podem ser grandezas elaboradas especificamente cada tipo problema conforme mostrado oberkampf trucano oberkampf barone schwer 
+ alternativamente metricas podem ser adotadas relacoes simples 
+ presente trabalho adotouse medida erro numerico dependente norma euclidiana 
+ entretanto importante destacar esforcos sido realizados elaborar estrategias metodos avaliacoes rigorosos solucoes oriundas computacao numerica 
+ aumento modelagem computacional area engenharia ciencias fisicas tornase necessario melhoramento metodos usados comparacao resultados computacionais medidas experimentais assim comparacao resultados computacionais solucoes analiticas problemas classicos oberkampf barone 
+ quantificar comparacao respostas transientes util analises buscam melhorar avaliacao metodos numericos 
+ tradicionalmente comparacoes graficas respostas transientes sido usadas realizar julgamentos subjetivos resultados aceitaveis 
+ recentemente aumentado interesse quantificar comparacoes intuito minimizar subjetividade nesse tipo decisao schwer 
+ esforco sido organizado bojo nova area pesquisa hoje conhecida verificacao validacao v&v 
+ verificacao validacao v&v permite avaliar exatidao confiabilidade simulacao computacional oberkampf trucano 
+ verificacao trata precisao problema matematico resolvido 
+ portanto verificacao comparase resultado computacional solucoes exatas analiticas problemas classicos 
+ validacao representa avaliacao realidade representada modelo matematico base modelo computacional 
+ entao caso validacao comparase resultado computacional valores experimentais obtidos partir problema real 
+ nesse contexto modelo computacional pode ser entendido conjunto engloba exemplo malha utilizada discretizacao dominio modelos matematicos adotados representar fisica problema metodos matematicos usados solucao sistemas equacoes conjunto condicoes contorno condicoes iniciais adotados 
+ conforme mencionado presente trabalho adotouse medida erro numerico baseada norma euclidiana dada equacao 
+  ex  ex 
+ onde nume erro numerico exs solucao exata nums solucao numerica 
+ sempre solucao exata problema teste existir disponivel erro numerico calculado apresentado 
+ cabe ressaltar calculo erro numerico nesse trabalho realizado base posprocessamento resultados realizado software paraview utilizando filtro posprocessamento plotoverline 
+ extraidos pontos cada posprocessamento realizado paraview utilizando filtro plotoverline 
+ casos teste casos teste pertencem classe problemas simples apresentada nesse trabalho 
+ embora simples tipos problemas mostrado bastante uteis avaliacoes solucoes numericas 
+ vantagem desse tipo problema geralmente apresentam solucoes exatas podem ser aplicadas etapas verificacoes codigos computacionais 
+ tubo choque tipico representante classe problemas usados avaliacao solucoes numericas equacoes euler 
+ nesse trabalho utilizaramse duas versoes desse tipo problema conhecidas tubo choque sod tubo choque laxharden 
+ proximas subsecoes feita breve discussao sobre problema tubo choque apresentados resultados obtidos casos teste 
+ solucao desenvolvida nesse trabalho totalmente ser aplicada solucao problemas considerase escoamento apenas direcoes cartesianas 
+ significa velocidade duas direcoes cartesianas mantida nula durante toda simulacao 
+ descricao tubo choque problema classico tubo choque problema riemann comumente usado testar codigos computacionais aplicados solucao equacoes euler 
+ vantagens utilizar problema tubo choque sob determinadas condicoes apresenta solucao analitica 
+ neste trabalho adotaramse procedimentos apresentados anderson jr 
+ obter solucao analitica problema tubo choque utilizandose codigo software matlab disponivel wuthrich 
+ descricao tubo choque elaborada nessa secao mesma encontrada anderson jr 
+ basicamente tubo choque tubo longo onda choque forte gerada 
+ configuracao inicial tubo dividido duas secoes distintas diafragma secao carreadora contendo gas alta pressao secao carreada contendo gas baixa pressao 
+ gases existentes duas secoes podem ser diferentes 
+ temse esquema tubo choque configuracao inicial onde ambos fluidos encontram repouso separados diafragma 
+ indice representa secao alta pressao enquanto indice representa secao baixa pressao 
+ regiao alta pressao secao carreadora regiao baixa pressao secao carreada ρ diafragma ρ posicao figura 
+ tubo choque configuracao inicial 
+ diafragma rompe seguintes fenomenos observados ocorre propagacao onda choque normal secao carreada deslocando direita superficie contato duas secoes descontinuidade contato desloca direita ocorre propagacao onda expansao continua dentro secao carreadora deslocando esquerda 
+ apresenta esboco desses fenomenos onde diferentes regioes escoamento encontramse representadas indices 
+ onda choque propaga velocidade superior velocidade onda contato 
+ onda expansao velocidade cabeca onda maior velocidade cauda onda 
+ fato faz gradiente solucao nessa regiao escoamento diminua tempo conforme pode ser observado esboco pressao figura 
+ comportamento solucao tubo choque apresentando regioes descontinuidades expansao torna tipo exemplo adequado testes verificacao codigos computacionais resolvem equacoes hiperbolicas 
+ codigos precisam capturar maneira satisfatoria diferentes descontinuidades regiao expansao surgem passar tempo 
+ finalidade avaliar qualidade solucoes numericas obtidas nesse trabalho utilizados dois exemplos tubo choque tubo choque sod tubo choque laxharden 
+ resultados apresentados proximas subsecoes 
+ vexpansao vcontato vchoque regiao ρ regiao regiao regiao ρ ρ ρ ρ ρ descontinuidade contato onda choque figura 
+ tubo choque apos rompimento diafragma 
+ tubo choque sod tubo choque sod passou ser utilizado forma intensa verificacao codigos aplicados solucao equacoes euler apos sod 
+ solucao analitica problema tubo choque sod obtida atraves procedimentos dados anderson jr 
+ problema usado waltz avaliar desempenho solucao paralela apresentada referido trabalho 
+ tubo x  onde diafragma encontrase choque sod consiste dominio localizado 
+ condicoes iniciais apresentadas tabela 
+ onde  massa especifica fluido velocidade pressao 
+ dados tubo choque sod 
+ regiao alta pressao regiao baixa pressao          y  exemplo adotouse passo tempo fixo resultou cfl  
+ razao calores especificos pressao volume constantes t  x  max 
+ solucoes analisadas instante 
+ dominio problema  
+ velocidades direcoes mantidas nulas durante toda analise 
+ realizadas analises considerando nucleos objetivo avaliar desempenho solucao paralelo 
+ solucao desse problema apresentada figura 
+ obtida longo linha formada pontos    
+ z   figuras 
+ apresentam solucao problema tubo choque sod descrito nessa secao 
+ mostra metodos yzβ yzβ melhores desempenho comparado demais 
+ metodos δ kirk kirk apresentaram comportamentos similares si enquanto operador cau apresentou solucao difusiva regioes gradientes elevados 
+ mostra solucao tubo choque obtida operador yzβ tendo sido adotado neste caso particionamento dominio subdominios 
+ erro numerico analise calculado relacao massa especifica encontrase tabela 
+ metodos yzβ yzβ apresentaram menores erros numericos analise sendo yzβ apresentou menor erro numerico analise 
+ metodos δ kirk kirk apresentaram erros numericos semelhantes enquanto cau apresentou maior erro numerico problema 
+ comparacao massa especifica tubo choque sod diferentes metodos 
+ mostra detalhes particionamento caso tubo choque sod considerando divisao dominio subdominios 
+ cada subdominio representado cor 
+ questao comodidade apenas particionamento subdominios apresentado 
+ apresenta malha tetraedros usada solucao tubo choque 
+ nessa figura temse detalhe malha apenas subdominios 
+ erro numerico tubo choque sod 
+ metodo estabilizacao erro numerico δ cau yzβ yzβ kirk kirk figura 
+ massa especifica tubo choque sod obtida metodo yzβ 
+ massa especifica tubo choque sod 
+ pressao tubo choque sod 
+ velocidade tubo choque sod 
+ energia interna tubo choque sod 
+ particionamento dominio subdominios tubo choque figura 
+ detalhe malha tetraedros subdominio tubo choque sod particionado subdominios 
+ tempo analise normalizado tubo choque sod yzβ 
+ speed solucao paralelo tubo choque sod yzβ 
+ eficiencia solucao paralelo tubo choque sod yzβ 
+ comparacao desempenho solucao paralela tubo choque sod yzβ 
+ numero nucleos tempo analise ddhhmmss speed eficiencia figuras 
+ apresentam analise escalabilidade solucao paralela problema tubo choque sod 
+ possivel obter ganhos significativos relacao tempo analise utilizacao nucleos problema cuja malha pode ser considerada pequena 
+ caso onde utilizou nucleos cada particao aproximadamente 
+ apresenta tempos simulacao problema tubo choque sod funcao numero nucleos utilizados 
+ tubo choque laxharden exemplo semelhante tubo choque sod exceto fato configuracao inicial tubo choque laxharden apresenta descontinuidade velocidade 
+ portanto problema tubo choque laxharden consiste dominio 
+ condicoes iniciais problema dadas luo 
+ onde  massa especifica fluido velocidade pressao 
+ x  onde diafragma encontrase localizado  tabela 
+ dados tubo choque laxharden 
+ regiao alta pressao regiao baixa pressao         exemplo adotouse passo tempo fixo resultou cfl  
+ razao calores especificos pressao volume constantes t  max 
+ solucoes analisadas instante  
+ dominio computacional  malha mesmos usados problema tubo choque sod 
+ novamente velocidades direcoes mantidas nulas durante toda analise 
+ realizadas analises considerando nucleos objetivo avaliar desempenho solucao paralelo 
+ solucao desse problema apresentada figura 
+ obtida longo linha formada pontos    
+ apresentam solucao problema tubo choque laxharden descrito nessa secao 
+ mostra metodos yzβ yzβ novamente melhores desempenho comparados demais metodos 
+ metodos cau δ kirk kirk apresentaram comportamentos praticamente identicos 
+ mostra solucao tubo choque lax harden obtida operador yzβ tendo sido adotado neste caso particionamento dominio subdominios 
+ erro numerico analise calculado relacao massa especifica encontrase tabela 
+ metodos yzβ yzβ apresentaram menores erros numericos analise sendo yzβ vez apresentou menor erro numerico analise 
+ metodos cau δ kirk kirk apresentaram erros numericos semelhantes 
+ comparacao massa especifica tubo choque laxharden diferentes metodos 
+ apresentam analise escalabilidade solucao paralela problema tubo choque laxharden 
+ possivel nesse problema obter ganhos significativos relacao tempo analise utilizacao nucleos problema 
+ apresenta tempos simulacao problema tubo choque laxharden funcao numero nucleos utilizados 
+ erro numerico tubo choque laxharden metodo estabilizacao erro numerico δ cau yzβ yzβ kirk kirk figura 
+ massa especifica tubo choque laxharden obtida metodo yzβ 
+ massa especifica tubo choque laxharden 
+ pressao tubo choque laxharden 
+ velocidade tubo choque laxharden 
+ energia interna tubo choque laxharden 
+ tempo analise normalizado tubo choque laxharden yzβ 
+ speed solucao paralelo tubo choque laxharden yzβ 
+ eficiencia solucao paralelo tubo choque laxharden yzβ 
+ comparacao desempenho solucao paralela tubo choque laxharden yzβ 
+ numero nucleos tempo analise ddhhmmss speed eficiencia 
+ casos teste casos teste usados nesse trabalho pois assim casos teste bastante uteis avaliacoes solucoes numericas 
+ maioria problemas apresentados possui solucoes exatas disponiveis podem ser aplicadas etapas verificacoes codigos computacionais 
+ usados problemas classicos conhecidos choque obliquo choque refletido tunel vento degrau 
+ proximas subsecoes apresentados resultados obtidos casos teste 
+ solucao desenvolvida nesse trabalho totalmente ser aplicada solucao problemas considerase escoamento apenas duas direcoes cartesianas 
+ significa velocidade direcoes cartesianas mantida nula durante toda simulacao 
+ choque obliquo problema choque obliquo apresentado aqui descrito shakib 
+ esboco esquematico desse problema apresentado figura 
+ tratase escoamento supersonico mach onde fluxo entrada faz angulo graus relacao eixo conforme mostrado figura 
+ descricao problema choque obliquo shakib 
+ numero mach relaciona variaveis problema conforme equacao 
+ aplicadas condicoes contorno face esquerda topo dominio 
+ parede impermeavel fundo dominio considerase condicao escorregamento yu  
+ face direita prescricao alguma 
+ xu  prescricoes face esquerda topo dominio fornecidas   xu  yu    
+ solucao exata regiao inferior face direita dada   xu  yu   
+ exemplo adotouse passo tempo fixo t  resultou cfl  
+ razao calores especificos pressao volume constantes max 
+ solucoes analisadas instante z  y   garantir problema  x  alcancado estado permanente 
+ velocidade direcao mantida nula durante toda analise 
+ realizadas analises considerando nucleos objetivo avaliar desempenho solucao paralelo 
+ solucao desse problema apresentada figura 
+ obtida longo linha mostrada figura 
+ apresentam solucao problema choque refletido descrito nessa secao 
+ problema apenas metodo yzβ utilizado 
+ mostra metodo yzβ apresenta elevado desempenho solucao problema choque refletido 
+ metodo yzβ representou bem toda solucao problema choque refletido inclusive regioes gradientes elevados 
+ erro numerico dessa analise calculado relacao massa especifica 
+ massa especifica choque obliquo yzβ 
+ massa especifica choque obliquo yzβ 
+ pressao choque obliquo yzβ 
+ velocidade direcao choque obliquo yzβ 
+ particionamento dominio subdominios choque obliquo 
+ detalhe malha tetraedros subdominio choque obliquo particionado subdominios 
+ mostra detalhes particionamento caso choque obliquo considerando divisao dominio subdominios 
+ cada subdominio representado cor 
+ questao comodidade apenas particionamento subdominios apresentado 
+ apresenta malha tetraedros usada solucao choque obliquo 
+ nessa figura temse detalhe malha apenas subdominios 
+ mostra solucao problema choque obliquo obtida metodo yzβ tendo sido adotado neste caso particionamento dominio subdominios 
+ possivel observar formacao regioes tipicas solucao problema choque obliquo geradas face direita dominio 
+ apresentam analise escalabilidade solucao paralela problema choque obliquo 
+ possivel obter ganhos significativos relacao tempo analise utilizacao nucleos problema 
+ caso onde utilizou nucleos cada particao aproximadamente 
+ apresenta tempos simulacao problema choque obliquo funcao numero nucleos utilizados 
+ tempo analise normalizado choque obliquo yzβ 
+ speed solucao paralelo choque obliquo yzβ 
+ eficiencia solucao paralelo choque obliquo yzβ 
+ comparacao desempenho solucao paralela choque obliquo yzβ 
+ numero nucleos tempo analise ddhhmmss speed eficiencia 
+ choque refletido problema choque refletido apresentado aqui descrito shakib 
+ esboco esquematico desse problema apresentado figura 
+ problema consiste regioes separadas choque obliquo reflexao longo parede conforme figura 
+ descricao problema choque refletido shakib 
+ numero mach relaciona variaveis problema conforme equacao 
+ aplicadas condicoes contorno face esquerda topo dominio 
+ parede impermeavel fundo dominio considerase condicao escorregamento xu  yu  
+ face direita situada regiao prescricao alguma 
+ prescricoes face esquerda topo dominio fornecidas respectivamente expressoes 
+ regiao regiao     xu  xu  yu  yu     
+ solucao exata regiao dada expressao 
+ regiao   xu  yu   
+ exemplo adotouse passo tempo fixo t  resultou x    cfl  
+ razao calores especificos pressao volume constantes max 
+ solucoes analisadas instante y  garantir problema alcancado estado permanente 
+ velocidade direcao mantida nula durante toda analise 
+ realizadas analises considerando nucleos objetivo avaliar desempenho solucao paralelo 
+ solucao desse problema apresentada figura 
+ obtida longo linha mostrada figura 
+ z   figuras 
+ apresentam solucao problema choque refletido descrito nessa secao 
+ problema apenas operador yzβ utilizado 
+ mostra metodo yzβ apresenta elevado desempenho solucao problema choque refletido 
+ metodo yzβ representou bem toda solucao problema choque refletido inclusive regioes gradientes elevados 
+ nessa analise erro numerico calculado relacao massa especifica 
+ massa especifica choque refletido yzβ 
+ massa especifica choque refletido yzβ 
+ pressao choque refletido yzβ 
+ velocidade direcao choque refletido yzβ 
+ particionamento dominio subdominios choque refletido 
+ detalhe malha tetraedros subdominio choque refletido particionado subdominios 
+ mostra detalhes particionamento caso choque refletido considerando divisao dominio subdominios 
+ novamente cada subdominio representado cor 
+ apresenta malha tetraedros usada solucao choque refletido 
+ nessa figura temse detalhe malha apenas subdominios 
+ mostra solucao problema choque refletido obtida metodo yzβ tendo sido adotado neste caso particionamento dominio subdominios 
+ possivel observar formacao regioes tipicas solucao problema choque refletido separadas choque obliquo reflexao longo parede inferior dominio 
+ tempo analise normalizado choque refletido yzβ 
+ speed solucao paralelo choque refletido yzβ 
+ eficiencia solucao paralelo choque refletido yzβ 
+ comparacao desempenho solucao paralela choque refletido yzβ 
+ numero nucleos tempo analise ddhhmmss speed eficiencia figuras 
+ apresentam analise escalabilidade solucao paralela problema choque refletido 
+ possivel obter ganhos significativos relacao tempo analise utilizacao nucleos problema 
+ caso onde utilizou nucleos cada particao aproximadamente 
+ apresenta tempos simulacao problema choque refletido funcao numero nucleos utilizados 
+ tunel vento degrau mach problema apresentado woodward colella 
+ problema utilizado hoje avaliar evolucao solucao transiente codigos computacionais resolvem equacoes euler 
+ problema iniciase escoamento uniforme numero mach  
+ entrada situase esquerda saida direita dominio 
+ condicoes saida afetam escoamento pois velocidade saida sempre supersonica 
+ portanto condicoes contorno prescritas apenas entrada 
+ inicialmente todo dominio encontrase preenchido gas perfeito relacao calores  massa especifica especificos pressao volume constantes yu  
+ entrada alimentada continuamente gas apresentando valores pressao massa especifica velocidade 
+ longo paredes topo base dominio aplicadas condicoes xu  contorno parede impermeavel condicao escorregamento yu  nessas paredes 
+ esboco esquematico desse problema apresentado figura 
+ velocidade componentes pressao   xu  figura 
+ descricao problema tunel vento degrau mach woodward colella 
+ numero mach relaciona variaveis problema conforme equacao 
+ exemplo adotouse passo tempo fixo t  resultou cfl  x  
+ razao calores especificos pressao volume constantes max 
+ solucao conduzida instante  
+ dominio problema  
+ velocidade direcao mantida nula durante toda analise 
+ realizadas analises considerando nucleos objetivo avaliar desempenho solucao paralelo 
+ y  z  figuras 
+ apresentam solucao problema tunel vento degrau mach descrito nessa secao 
+ problema apenas metodo yzβ utilizado 
+ metodo yzβ representou bem todas regioes escoamento descritas apresentadas woodward colella 
+ evolucao transiente solucao representada adequadamente 
+ analise possui solucao analitica disponivel portanto neste caso avaliou erro numerico 
+ nesse problema realizada comparacao qualitativa relacao resultados apresentados woodward colella 
+ massa especifica problema tunel vento degrau mach yzβ 
+ massa especifica problema tunel vento degrau mach yzβ 
+ massa especifica problema tunel vento degrau mach yzβ 
+ massa especifica problema tunel vento degrau mach yzβ 
+ massa especifica problema tunel vento degrau mach yzβ 
+ massa especifica problema tunel vento degrau mach yzβ 
+ massa especifica problema tunel vento degrau mach yzβ 
+ massa especifica problema tunel vento degrau mach yzβ 
+ particionamento dominio subdominios problema tunel vento degrau 
+ detalhe malha tetraedros subdominio problema tunel vento degrau particionado subdominios 
+ mostra detalhes particionamento caso tunel vento degrau mach considerando divisao dominio subdominios 
+ apresenta malha tetraedros usada solucao desse problema 
+ nessa figura temse detalhe malha apenas subdominios 
+ tempo analise normalizado problema tunel vento degrau yzβ 
+ speed solucao paralelo problema tunel vento degrau yzβ 
+ eficiencia solucao paralelo problema tunel vento degrau yzβ 
+ apresentam analise escalabilidade solucao paralela problema tunel vento degrau mach 
+ possivel obter ganhos significativos relacao tempo analise utilizacao nucleos problema 
+ caso onde utilizou nucleos cada particao aproximadamente 
+ apresenta tempos simulacao problema tunel vento degrau mach funcao numero nucleos utilizados 
+ partir resultados obtidos nesse caso ficou demonstrado problemas malhas ainda maiores apresentada nesse caso devem ser resolvidos nucleos 
+ comparacao desempenho solucao paralela problema tunel eficiencia numero nucleos tempo analise ddhhmmss vento degrau yzβ 
+ caso aplicacao nesta secao apresentada aplicacao pratica solucao numerica desenvolvida nesse trabalho 
+ considerada explosao gerada partir nuvem gas area processo plataforma petroleo tipo semisubmersivel 
+ objetivo dessa analise verificar sobrepressao estruturas plataforma submetidas 
+ tipo informacao util projeto estrutural componentes propria plataforma importante estudos analise risco realizados nessas embarcacoes 
+ seguir apresentados detalhes dessa analise numerica 
+ explosao plataforma semisubmersivel problema mostra ferramenta computacional desenvolvida longo desse trabalho pode ser aplicada casos praticos projetos engenharia 
+ portanto faz parte escopo desse trabalho discussao detalhada metodologias usadas estudos analise risco onde simulacao explosao apenas diversas analises envolvidas 
+ nessa simulacao considerado caso hipotetico explosao ocorrida area processo plataforma semisubmersivel 
+ dimensoes plataforma dimensoes tipicas desses tipos embarcacoes adotadas forma hipotetica 
+ quantidade energia liberada durante explosao adotada hipoteticamente considerando valores tipicos geralmente recomendados normas internacionais 
+ estudo detalhado sobre explosoes pode ser encontrado bjerketvedt 
+ entretanto escopo presente trabalho discutir detalhes sobre tipo analise 
+ apenas apresentados conceitos fundamentais desse topico possa fazer ligacao solucao numerica equacoes euler simulacoes explosoes plataformas 
+ basicamente explosoes plataformas causadas combustao mistura argas combustivel seguida liberacao rapida energia gerando onda pressao 
+ processo geralmente deflagracao detonacao 
+ primeiro caso ondas pressao formadas propagam regime subsonico enquanto segundo propagacao supersonica 
+ explosoes podem ocorrer areas abertas confinadas parcialmente confinadas 
+ alem disso congestionamento gerado obstaculos escoamento tubulacoes equipamentos ambiente processamento petroleo pode favorecer aumento sobrepressao diferenca pressao gerada durante explosao pressao ambiente bjerketvedt 
+ areas explosao alto grau congestionamento tendem gerar escoamentos turbulentos vez tendem gerar maiores sobrepressoes criando assim ciclo retroalimentacao 
+ dessa forma dependendo tipo area explosao ser considerada fenomeno turbulencia pode tornar significativo analise 
+ presente trabalho considerados escoamentos viscosos regidos equacoes euler portanto turbulencia levada conta 
+ assim aplicar equacoes euler simulacao explosoes plataformas consideradas areas explosao abertas baixo grau congestionamento 
+ geralmente analise explosao plataformas petroleo possui tres etapas 
+ primeira etapa simulacao dispersao gases onde levados consideracao diversos fatores composicao quimica gases ventilacao local 
+ objetivo principal simulacao dispersao determinar volume concentracao gas combustivel podem acumular area processo plataforma 
+ segunda etapa simulacao explosao propriamente dita 
+ nessa etapa partir composicao quimica concentracao nuvem gas acumulou plataforma podese determinar quantidade energia liberada explosao 
+ existem diversos modelos permitem estimar quantidade energia liberada explosao exemplo modelo tnt bjerketvedt 
+ apos determinacao quantidade energia liberada realizase simulacao propagacao onda pressao gerada explosao 
+ outro fator importante nessa segunda etapa localizacao ponto ignicao nuvem gas combustivel bjerketvedt 
+ terceira ultima etapa verificacao integridade todas estruturas submetidas carregamento gerado explosao 
+ api apresenta praticas recomendadas serem seguidas projeto plataformas offshore 
+ nesse contexto recomendado cenarios explosao analisados estabelecidos partir estudos analise risco 
+ sobrepressoes geradas explosoes podem variar valores proximos zero valores maiores bars 
+ cargas sobrepressao utilizadas projeto estruturas plataforma caracterizadas curva sobrepressaotempo api 
+ modelo simplificado plataforma semisubmersivel 
+ conforme mencionado anteriormente nesse trabalho consideradas areas explosao abertas baixo grau congestionamento 
+ alem disso analise limitada simulacao propagacao onda pressao gerada apos explosao 
+ apresenta modelo simplificado plataforma semisubmersivel analisada 
+ nessa figura podese observar area processo separada compartimento acomodacoes parede protecao geralmente denominada blast wall 
+ area processo instalados todos equipamentos utilizados processamento oleo gas unidade 
+ compartimento acomodacoes encontramse dormitorios sala controle plataforma 
+ considerada nuvem gas acumulada regiao parede protecao modulos equipamentos conforme mostrado figura 
+ objetivo dessa analise verificar sobrepressao estruturas plataforma submetidas 
+ vista frontal plataforma semisubmersivel 
+ vista superior plataforma semisubmersivel 
+ deck plataforma bloco dimensoes xx 
+ origem sistema coordenadas localizase canto inferior esquerdo figura 
+ elevacao piso plataforma onde 
+ pernas plataforma blocos dimensoes xx 
+ compartimento acomodacoes bloco dimensoes xx 
+ equipamentos processo formados blocos dimensoes xx bloco dimensoes xx 
+ parede protecao localizada unidades comprimento origem bloco dimensoes xx 
+ regiao explosao semiesfera raio centro localizado ponto  figuras 
+ apresentam localizacao cada modulo considerado modelo simplificado plataforma 
+ dominio computacional utilizado simulacao explosao 
+ nesse problema considerouse hipoteticamente explosao ocorrida plataforma gerou sobrepressao inicial regiao nuvem gas 
+ valor valor tipico recomendado api usado nessa analise 
+ dessa forma adotouse pressao igual interior regiao explosao pressao ambiente considerada igual 
+ questoes simplicidade massa especifica inicial adotada igual todo dominio 
+ dominio computacional utilizado limitou regiao deck plataforma conforme apresentado figura 
+ considerado bloco dimensoes xx 
+ regiao pernas plataforma simulada evitar geracao malha tetraedros excessivamente grande desnecessaria visto foco dessa analise area processo plataforma 
+ detalhe malha tetraedros mostrando apenas respectivas superficies usada explosao plataforma semisubmersivel vista 
+ detalhe malha tetraedros mostrando apenas respectivas superficies usada explosao plataforma semisubmersivel vista 
+ detalhe malha tetraedros utilizada nesse problema apresentado figuras 
+ onde apenas malha superficie mostrada 
+ malha utilizada possui 
+ analise conduzida nucleos 
+ exemplo adotouse passo tempo fixo t  resultou cfl  
+ razao calores especificos pressao volume constantes max 
+ simulacao conduzida instante   
+ solucao desse problema apresentada figuras 
+ pressao varios instantes apresentada figuras 
+ possivel observar onda pressao encontra obstaculo ocorre aumento pressao seguida fenomeno reflexao 
+ fenomenos representados forma adequada simulacao 
+ mostram massa especifica diferentes instantes 
+ pressao durante explosao plataforma semisubmersivel 
+ pressao durante explosao plataforma semisubmersivel 
+ pressao durante explosao plataforma semisubmersivel 
+ pressao durante explosao plataforma semisubmersivel 
+ pressao durante explosao plataforma semisubmersivel 
+ pressao durante explosao plataforma semisubmersivel 
+ pressao durante explosao plataforma semisubmersivel 
+ pressao durante explosao plataforma semisubmersivel 
+ pressao durante explosao plataforma semisubmersivel 
+ pressao durante explosao plataforma semisubmersivel 
+ pressao durante explosao plataforma semisubmersivel 
+ pressao durante explosao plataforma semisubmersivel 
+ massa especifica durante explosao plataforma semisubmersivel 
+ massa especifica durante explosao plataforma semisubmersivel 
+ massa especifica durante explosao plataforma semisubmersivel 
+ massa especifica durante explosao plataforma semisubmersivel 
+ massa especifica durante explosao plataforma semisubmersivel 
+ massa especifica durante explosao plataforma semisubmersivel 
+ massa especifica durante explosao plataforma semisubmersivel 
+ massa especifica durante explosao plataforma semisubmersivel 
+ massa especifica durante explosao plataforma semisubmersivel 
+ massa especifica durante explosao plataforma semisubmersivel 
+ massa especifica durante explosao plataforma semisubmersivel 
+ massa especifica durante explosao plataforma semisubmersivel 
+ mostra curva tipica sobrepressao gerada explosao plataforma 
+ curva caracterizada pico sobrepressao unidades pressao unidades tempo 
+ atraves relacoes dadas secao 
+ possivel converter valores sistema unidades desejado 
+ gerar resultado adotado ponto monitoramento coordenadas  
+ resultado usado estudos analise risco realizados plataformas api 
+ dessa forma possivel mostrar ferramenta computacional desenvolvida longo desse trabalho pode ser usada projetos engenharia 
+ sobrepressao durante explosao plataforma semisubmersivel funcao tempo analise 
+ apresenta tempo gasto nessa analise metodo estabilizacao utilizado numero nucleos adotado 
+ malha usada nessa analise considerada grande porte tempo gasto resolver problema mostra robustez ferramenta desenvolvida alcancar solucao paralela equacoes euler 
+ tempo analise problema explosao plataforma 
+ tempo analise ddhhmmss numero nucleos metodo estabilizacao yzβ conclusoes consideracoes finais presente trabalho apresentou solucao numerica equacoes euler compressiveis ambiente computacao paralela memoria distribuida 
+ nesse trabalho utilizado paralelismo troca mensagens atraves uso biblioteca mpi 
+ adotada formulacao estabilizada elementos finitos discretizar formulacao matematica 
+ formulacao elementos finitos usada formulacao tipo supg acrescida operador captura descontinuidades 
+ testados diferentes parametros estabilizacao portanto diferentes metodos estabilizacao avaliados 
+ presente trabalho adotado esquema estrutura dados aresta 
+ neste caso matriz global referente discretizacao problema nunca explicitamente montada 
+ matrizes originadas discretizacao armazenas arestas melhora eficiencia computacional solucao 
+ utilizados problemas classicos avaliar solucao numerica obtida nesse trabalho 
+ todos metodos estabilizacao avaliados apresentaram bons resultados 
+ problema tubo choque sod avaliados todos metodos estabilizacao 
+ metodo cau apresentou resultados difusivos regioes gradientes elevados apresentou maior erro numerico dessa analise 
+ metodos δ kirk kirk apresentaram comportamentos semelhantes si valores erros numericos praticamente iguais 
+ metodos yzβ yzβ apresentaram menores erros numericos analise consequentemente melhores desempenho 
+ metodos capturam bem regioes gradientes elevados 
+ metodo yzβ apresentou melhor desempenho analise 
+ problema tubo choque laxharden avaliados todos metodos estabilizacao 
+ vez metodos yzβ yzβ apresentaram melhores desempenho comparado demais metodos 
+ metodos capturaram bem regioes gradientes elevados 
+ metodo yzβ apresentou melhor desempenho analise 
+ metodos cau δ kirk kirk apresentaram comportamento difusivo regioes gradientes elevados respectivos erros numericos quase identicos 
+ nesse caso metodo cau apresentou erro numerico ligeiramente menor metodos δ kirk kirk 
+ metodos kirk kirk apresentaram maior erro numerico nessa analise 
+ testes mostraram metodos yzβ yzβ apresentam desempenhos superiores comparados demais metodos 
+ metodos capturaram bem regioes gradientes elevados presentes problemas tubo choque 
+ metodos cau δ kirk kirk apresentaram comportamentos semelhantes teste tubo choque 
+ metodos apresentaram comportamentos difusivos regioes gradientes elevados 
+ metodo yzβ melhor dois problemas tubos choque 
+ dois casos tubo choque utilizada mesma malha 
+ importante destacar tubo choque laxharden problema apresenta grau dificuldade bem maior tubo choque sob 
+ fato pode ser confirmado valores erros numericos calculados cada casos 
+ tubo choque sod erro numerico maximo enquanto tubo choque laxharden maior valor erro numerico 
+ base resultados obtidos casos apenas metodo yzβ avaliado casos 
+ problemas choque obliquo choque refletido apresentaram resultados semelhantes 
+ nesses problemas metodo yzβ apresentou bom desempenho representando bem todas regioes escoamento 
+ casos apresentam grau dificuldade solucao menor problemas tubo choque 
+ malha usada problema choque obliquo 
+ elementos tetraedricos enquanto malha choque refletido 
+ metodo yzβ apresentou erro numerico caso choque obliquo caso choque refletido 
+ vez metodo yzβ capturou bem regioes elevados gradientes presentes problemas choque obliquo choque refletido 
+ problema tunel vento degrau mach resolvido apenas metodo yzβ 
+ problema apresenta solucao analitica portanto apenas comparacao qualitativa realizada base resultados disponiveis literatura 
+ malha adotada nessa simulacao possui 
+ metodo yzβ representou bem todas regioes presentes escoamento evolucao transiente solucao representada adequadamente 
+ paralelismo adotado nesse trabalho mostrouse bastante eficiente testes escalabilidade principalmente utilizadas malhas grande porte 
+ resultados mostraram eficiencia paralelismo aumenta tamanho malha tetraedros 
+ problemas tubo choque onde malha pode ser considerada pequena obtevese ganho computacional nucleos 
+ casos choque obliquo choque refletido onde malhas podem ser consideradas porte medio obtevese ganho computacional nucleos 
+ caso problema tunel vento onde malha pode ser considerada grande porte obtidos ganhos computacionais nucleos 
+ portanto malhas ainda maiores optouse resolvelas somente nucleos 
+ problema simulacao explosao plataforma utilizou malha milhoes tetraedros pode ser considerada malha grande porte solucao alcancada cerca minutos utilizacao nucleos 
+ utilizado problema aplicacao demonstrar robustez ferramenta computacional desenvolvida 
+ neste caso simulouse explosao ocorrida area processo plataforma semisubmersivel 
+ tratouse caso hipotetico aplicacao onde explosao deu acumulo gas combustivel area processo plataforma 
+ simulacao propagacao onda pressao mostrouse adequada 
+ possivel verificar efeitos reflexao ocorridos onda pressao mesma chocouse contra obstaculos 
+ resultados mostraram compartimento acomodacoes submetido sobrepressoes geradas explosao 
+ principais contribuicoes desse trabalho avaliacao varios metodos estabilizados solucao equacoes euler 
+ neste caso metodo yzβ mostrouse melhor opcao embora todos metodos avaliados apresentados bons resultados solucao problemas grande porte usando paralelismo troca mensagens 
+ solucao paralela apresentada nesse trabalho mostrou bastante eficiente resolver problema milhoes tetraedros cerca minutos 
+ implementacao solucao paralelo permite resolver problemas ainda maiores ficando tamanho problema limitado recurso computacional disponivel 
+ problemas regidos equacoes euler compressiveis geralmente necessitam malhas grande porte serem solucionados 
+ portanto solucao paralela equacoes euler estrategia extremamente util importante solucao desses problemas desenvolvimento modulo escoamentos compressiveis acoplado edgecfd 
+ modulo computacional permitira novos estudos conduzidos nacad partir desenvolvido presente trabalho 
+ embora sido usado caso aplicacao area petroleo simulacao explosao plataforma semisubmersivel ferramenta computacional desenvolvida nesse trabalho perfeitamente pronta ser aplicada outras areas 
+ possivel aplicacao area aeronautica onde possivel simular escoamento supersonico redor aeronave usar resultados avaliar perfil aerodinamico componentes aeronave 
+ trabalhos futuros sugestao trabalho futuro estender formulacao matematica tratar escoamentos regidos equacoes navierstokes compressiveis 
+ nesse caso preciso acrescentar equacoes euler termo viscoso termo fonte 
+ implica acrescentar novas matrizes formulacao discreta 
+ matrizes referentes cada novo termo adicionado 
+ ainda nesse contexto tratamento fenomeno turbulencia tornara importante caso escoamentos regidos equacoes navierstokes 
+ portanto modelos turbulencia deverao ser considerados nesse novo problema 
+ nova formulacao matematica permitira aplicacao exemplo simulacoes explosoes ambientes confinados alto grau congestionamento caso equacoes euler aplicam 
+ segunda sugestao trabalhos futuros tratamento interacao fluido estrutura onde codigo escoamento acoplado codigo analise estrutural 
+ simulacoes explosoes exemplo onda pressao propagar chocase contra obstaculos consequentemente ocorre aplicacao forca nesses obstaculos 
+ assim resultado escoamento usado carregamento analise estrutural verificar integridade estruturas submetidas efeitos explosao 
+ referencias bibliograficas aliabadi 
+ supg finite element computation viscous compressible flows based conservation entropy variables formulations computational mechanics vol 
+ parallel fluid dynamics computations aerospace applications international journal numerical methods fluids vol 
+ adaptative petrovgalerkin formulation compressible euler navierstokes equations computer methods applied mechanics engineering vol 
+ edgecfdale stabilized finite element system offshore engineering international fluidstructure conference ocean offshore arctic engineering rio janeiro 
+ proceedings st omae vol 
+ interaction anderson jr 
+ modern compressible flow historical perspective 
+ new york mcgrawhill 
+ api rp awsd recommended practice planning designing construction fixed offshore platforms working stress design wsd american petroleum institute 
+ gas explosion handbook journal hazardous materials vol 
+ streamline upwind petrovgalerkin formulations convection dominated flows particular emphasis incompressible navierstokes equations computer methods applied mechanics engineering vol 
+ solucoes implicitas equacoes euler empregando estruturas dados aresta 
+ coppe ufrj rio janeiro rj brasil 
+ implicit supg solution euler equations using edgebased data structure computer methods applied mechanics engineering vol 
+ compressible flow supg parameters computed element matrices communications numerical methods engineering vol 
+ compressible degreeoffreedom flow supg stabilization parameters computed submatrices computational mechanics vol 
+ threedimensional edgebased supg computation inviscid compressible flows yzβ shockcapturing journal applied mechanics vol 
+ numerical simulation two dimensional compressible incompressible flows journal brazilian society mechanical sciences engineering vol 
+ edgebased finite element techniques nonlinear solid mechanics problems engineering vol 
+ numerical methods international journal elias 
+ estrutura dados aresta simulacao paralela escoamentos incompressiveis metodo estabilizado elementos finitos 
+ coppe ufrj rio janeiro rj brasil 
+ evaluation message passing communication patterns finite element solution coupled problems lecture notes computer science vol 
+ inexact newtontype methods solution steady incompressible viscoplastic flows supg pspg finite element formulation computer methods applied mechanics engineering vol 
+ parallel edge based solution viscoplastic flows supg pspg formulation computational mechanics vol 
+ consistent approximate upwind petrovgalerkin method convectiondominated problems computer methods applied mechanics engineering vol 
+ formulacao estavel elementos finitos precisao temporal ordem simulacao escoamentos incompressiveis 
+ coppe ufrj rio janeiro rj brasil 
+ comparative study different sets variables solving compressible incompressible flows computer methods applied mechanics engineering vol 
+ scientific computing introductory survey 
+ new york mcgrawhill 
+ numerical computation flows computational methods inviscid viscous flows 
+ new york johns wiley sons ltd 
+ internal external hughes 
+ finite element method linear static dynamic finite element analysis 
+ englewoods cliffs new jersey prenticehall 
+ new finite element formulation computational fluid dynamics 
+ symmetric forms compressible euler navierstokes equations second law thermodynamics computer methods applied mechanics engineering vol 
+ new finite element formulation computational fluid dynamics 
+ generalized streamline operator multidimensional advectivediffusive systems computer methods applied mechanics engineering vol 
+ new finite element formulation computational fluid dynamics iv 
+ discontinuitycapturing operator multidimensional advectivediffusive systems computer methods applied mechanics engineering vol 
+ new finite element formulation computational fluid dynamics 
+ beyond supg computer methods applied mechanics engineering vol 
+ finite element methods firstorder hyperbolic systems particular emphasis compressible euler equations computer methods applied mechanics engineering vol 
+ stabilized methods compressible flows journal scientific computing vol 
+ unstructured graph partitioning sparse matrix ordering system 
+ department computer science university minnesota eua 
+ disponivel http glaros 
+ edu gkhome kelly 
+ iterative methods linear nonlinear equations 
+ frontiers applied mathematics siam philadelphia 
+ adiabatic shock capturing perfect gas hypersonic flows international journal numerical methods fluids vol 
+ influence stabilization parameters supg finite element method hypersonic flows th aiaa american institute aeronautics astronautics aerospace sciences meeting including new horizons foruns aerospace exposition january orlando florida usa 
+ supg finite element computation compressible flows entropy conservation variables formulations computer methods applied mechanics engineering vol 
+ finite element computation compressible flows supg formulation advances finite element analysis fluid dynamics asme vol 
+ hybrid cartesian grid gridless method compressible flow journal computational physics vol 
+ estrutura dados aresta simulacao problemas plasticidade computacional 
+ coppe ufrj rio janeiro rj brasil 
+ edgepack parallel vertex node reordering package unstructured grids th 
+ high performance computing science vecpar lncs rio janeiro brazil 
+ optimizing edgebased computations nazarov 
+ adaptative finite element method inviscid compressible flow international journal numerical methods fluids vol 
+ measures agreement computational experimental validation metrics journal computational physics vol 
+ verification validation computational fluid dynamics progress aerospace science vol 
+ modelagem numerica processos transporte deposicao areia correntes densidade ferramenta estudo turbiditos 
+ coppe ufrj rio janeiro rj brasil 
+ comparison element edge compressed storage schemes iterative solutions finite element analysis international journal numerical methods engineering vol 
+ gmres generalized minimal residual algorithm solving nonsymmetric systems siam journal scientific statistical computing vol 
+ iterative methods sparse linear systems 
+ boston pws publishing company 
+ validation metrics response histories perspectives case study engineering computers vol 
+ stabilized shock hydrodynamics 
+ lagrandian method computer methods applied mechanics engineering vol 
+ estudo sobre solucao leis conservacao lineares elementos finitos estabilizados 
+ coppe ufrj rio janeiro rj brasil 
+ finite element analysis compressible euler navier stokes equations 
+ thesis stanford university 
+ multielement group preconditioned gmres algorithm nonsymmetric systems arising finite element analysis computer methods applied mechanics engineering vol 
+ new finite element formulation computational fluid dynamics 
+ compressible euler navier stokes equations computer methods applied mechanics engineering vol 
+ survey several finite difference methods systems nonlinear hyperbolic conservation laws journal computational physics vol 
+ tecnicas computacionais elementos finitos estabilizados solucao leis conservacao hiperbolicas lineares 
+ coppe ufrj rio janeiro rj brasil 
+ stabilization shockcapturing parameters supg formulation compressible flows computer methods applied mechanics engineering vol 
+ supg finite element computation inviscid supersonic flows yzβ shockcapturing computer fluids vol 
+ computation inviscid supersonic flows around cylinders spheres supg formulation yzβ shockcapturing computational mechanics vol 
+ large scale finite element computations gmres like methods cray ymp applied numerical mathematics vol 
+ implicit solvers unstructured meshes journal computational physics vol 
+ spatial accuracy performance mixedorder explicit multistage method unsteady flows international journal numerical methods fluids vol 
+ simulation validation compressible flow nozzle geometries validation openfoam application 
+ thesis institute fluid dynamics eth zurich 
+ apendice neste apendice apresentado codigo computacional usado fazer integracao software gerador malhas ansys icem cfd solver edgecfd 
+ codigo denominado readicemfidap escrito fortran utiliza entrada dados arquivo exportado ansys icem cfd 
+ malha tetraedros gerada ansys icem cfd deve ser exportada formato fidap 
+ arquivo contendo informacoes malha tetraedros formato fidap usado entrada dados codigo readicemfidap faz leitura malha escreve arquivos entrada dados edgecfd base malha gerada ansys icem cfd 
+ abaixo apresentado codigo fortran programa leitura malha readicemfidap 
+ programa readicemfidap versao 
+ programa serve usar arquivo saida icem cfd fidap 
+ transformalo formato programa edgecfdpre 
+ apos gerar malha tetraedros icem cfd usuario exportara formato fidap 
+ ira gerar arquivo informacoes 
+ malha tetraedros respectivas parts fidap 
+ fdneut arquivo saida icem formato fidap 
+ txt arquivo input programa 
+ mesh arquivo contendo informacoes malha 
+ nds cada part gerada icem 
+ caso arquivo input programa encontrado diretorio 
+ trabalho programa vai criar arquivo input padrao 
+ autor anderson mendonca 
+ module varglobal character len filename 
+ variavel contem nome arquivo fidap character len filename 
+ variavel contem nome arquivos 
+ nds character len radical 
+ radical saidas programa integer iin 
+ arquivo entrada programa integer ifidap 
+ fidap integer iout 
+ arquivo temporario saida malha 
+ temp integer ifilepart 
+ arquivos saida prescritos 
+ nds integer iout 
+ arquivo saida malha 
+ mesh integer isolve 
+ flag determina tipo escoamento 
+ incompressivel compressivel integer dimension allocatable ivector 
+ incidencias ivector nelnodesperelem end module varglobal 
+ program readicemfidap use varglobal 
+ implicit real ah oz character len commentedline 
+ write programa readicemfidap versao 
+ abrindo arquivo descricao programa open unit filereadicemfidap 
+ escrevendo descricao programa arquivo 
+ fechando arquivo descricao programa close 
+ abrindo arquivo entrada 
+ encontrado programa escrevera arquivo padrao open unitiin fileinputreadicemfidap 
+ txt status old iostat ierr ierr 
+ notificando tela leitura arquivo input write iniciando leitura arquivo input 
+ pulando linha comentario read iin commentedline 
+ leitura nome arquivo fidap read iin filename 
+ pulando linha comentario read iin commentedline 
+ leitura nome radical usado saidas ensight read iin radical 
+ pulando linha comentario read iin commentedline 
+ leitura nome flag determina tipo escoamento read iin isolve 
+ notificando tela leitura arquivo input write leitura arquivo input realizada sucesso else 
+ notificando tela encontrar arquivo input write arquivo input encontrado write programa vai escrever arquivo input padrao write basta alteralo rodar programa novamente write aperte tecla enter fechar programa read 
+ abrindo arquivo input open unitiin fileinputreadicemfidap 
+ escrevendo texto padrao arquivo input write iin 
+ fecha arquivo input close iin 
+ termina execucao programa stop end format nome arquivo fidap fidap 
+ fdneut nome radical saidas radical tipo escoamento incompressivel compressivel 
+ fidap open unitifidap filetrim filename 
+ notificando tela leitura arquivo 
+ fidap write iniciando leitura arquivo trim filename 
+ pulando linhas comentarios arquivo 
+ fidap read ifidap commentedline end 
+ lendo linha arquivo apenas primeira segunda terceira posicoes read ifidap nnos neltotal igrouptotal 
+ pulando linhas comentarios arquivo 
+ fidap read ifidap commentedline end 
+ abertura arquivo saida temporario 
+ meshtemp open unitiout filetrim radical 
+ notificando tela escrita arquivo 
+ meshtemp write escrevendo arquivo trim radical 
+ deixando linha arquivo 
+ meshtemp branco posteriormente escrever 
+ neltetra write iout 
+ escrevendo nnos linha arquivo 
+ meshtemp write iout nnos 
+ leitura coordenadas nodais nnos 
+ lendo coordenadas nodais arquivo 
+ fidap read ifidap node 
+ escrevendo coordenadas nodais arquivo 
+ meshtemp write iout 
+ pulando linhas comentarios arquivo 
+ fidap read ifidap commentedline end 
+ inicializando neltetra neltetra igrouptotal 
+ loop eh limitado 
+ lendo numero elementos nel numero elemento nodesperelem read ifidap commentedline igroup commentedline nel commentedline nodesperelem 
+ lendo nome part armazenando filename read ifidap commentedline commentedline filename 
+ programa chegar parte elementos programa ler 
+ arquivo fidap nodesperelem exit nodesperelem 
+ incrementando numero total elementos tetraedros 
+ somente nodesperelem neltetra neltetra nel end 
+ nsd open ifilepart filetrim filename 
+ notificando tela abertura arquivo 
+ nds write abrindo arquivo trim filename 
+ nds write ifilepart nelnodesperelem 
+ notificando tela escrita arquivo 
+ nds write escrevendo arquivo trim filename 
+ leitura escrita determinada part nel 
+ lendo incidencias arquivo 
+ ifidap read ifidap inel node node node node 
+ escrevendo incidencias arquivo 
+ meshtemp write iout node node node node 
+ escrevendo repeticoes havera probrema 
+ programa pois programa ira sobrescrever 
+ condicoes contorno repetidos write ifilepart node node node node 
+ nodesperelem else nodesperelem 
+ lendo incidencias arquivo 
+ ifidap read ifidap inel node node node 
+ escrevendo repeticoes havera probrema 
+ programa pois programa ira sobrescrever 
+ condicoes contorno repetidos write ifilepart node node node end 
+ leitura escrita determinada part 
+ nsd teste condicionais ifs close ifilepart 
+ notificando tela escrita arquivo 
+ nds write arquivo trim filename 
+ nds escrito sucesso end 
+ notificando tela leitura arquivo 
+ fidap write leitura arquivo trim filename realizada sucesso 
+ notificando tela escrita arquivo 
+ meshtemp write arquivo trim radical 
+ meshtemp escrito sucesso 
+ meshtemp close iout 
+ meshtemp iniciar leitura posicao arquivo open unitiout filetrim radical 
+ abrindo arquivo malha 
+ mesh open iout filetrim radical 
+ notificando tela abertura arquivo 
+ mesh write abrindo arquivo trim radical 
+ notificando tela escrita arquivo 
+ mesh write escrevendo arquivo trim radical 
+ escrevendo neltetra linha arquivo 
+ mesh write iout neltetra 
+ lendo posicao arquivo 
+ meshtemp read iout nnos 
+ escrevendo posicao arquivo 
+ mesh write iout nnos 
+ leitura escrita coordenadas nodais nnos 
+ lendo coordenadas nodais arquivo 
+ meshtemp read iout node 
+ escrevendo coordenadas nodais arquivo 
+ mesh write iout 
+ leitura escrita coordenadas nodais 
+ leitura escrita incidencias neltetra 
+ lendo incidencias arquivo 
+ meshtemp read iout node node node node 
+ escrevendo incidencias arquivo 
+ mesh write iout node node node node end 
+ leitura escrita incidencias 
+ fecha arquivo saida 
+ meshtemp close iout 
+ fecha arquivo saida 
+ mesh close iout 
+ notificando tela escrita arquivo 
+ mesh write arquivo trim radical 
+ mesh escrito sucesso 
+ subrotina escrever arquivos 
+ bc call writeotherfiles 
+ fecha arquivo input close iin 
+ fecha arquivo fidap close ifidap 
+ notificando tela programa executado sucesso write programa executado sucesso write fim 
+ write aperte tecla enter fechar programa read 
+ formato escrita arquivo descricao programa cabecalho codigo format 
+ programa readicemfidap versao 
+ programa serve usar arquivo saida icem cfd fidap 
+ transformalo formato programa edgecfdpre 
+ apos gerar malha tetraedros icem cfd usuario exportara formato 
+ ira gerar arquivo informacoes malha 
+ tetraedros respectivas parts fidap 
+ fdneut arquivo saida icem formato fidap 
+ txt arquivo input programa 
+ mesh arquivo contendo informacoes malha 
+ nds cada part gerada icem 
+ caso arquivo input programa encontrado diretorio 
+ trabalho programa vai criar arquivo input padrao 
+ autor anderson mendonca 
+ end program readicemfidap 
+ subroutine writeotherfiles use varglobal 
+ rotina escreve arquivos 
+ setupeuler open uniti filetrim radical 
+ notificando tela escrevendo arquivo 
+ solver write escrevendo arquivo trim radical 
+ notificando tela escrevendo arquivo 
+ solver write arquivo trim radical 
+ solver escrito sucesso close open uniti filetrim radical 
+ notificando tela escrevendo arquivo 
+ preprocessor write escrevendo arquivo trim radical 
+ notificando tela escrevendo arquivo 
+ preprocessor write arquivo trim radical 
+ preprocessor escrito sucesso close open uniti filetrim radical 
+ notificando tela escrevendo arquivo 
+ materials write escrevendo arquivo trim radical 
+ materials isolve write 
+ escoamento incompressivel else write 
+ escoamento compressivel end 
+ notificando tela escrevendo arquivo 
+ materials write arquivo trim radical 
+ materials escrito sucesso close open uniti filetrim radical 
+ notificando tela escrevendo arquivo 
+ ic write escrevendo arquivo trim radical 
+ ic isolve write 
+ escoamento incompressivel else write 
+ escoamento compressivel end 
+ notificando tela escrevendo arquivo 
+ ic write arquivo trim radical 
+ ic escrito sucesso close open uniti filetrim radical 
+ notificando tela escrevendo arquivo 
+ bc write escrevendo arquivo trim radical 
+ bc isolve write 
+ escoamento incompressivel else write 
+ escoamento compressivel end 
+ notificando tela escrevendo arquivo 
+ bc write arquivo trim radical 
+ bc escrito sucesso close open uniti filesetupeuler 
+ notificando tela escrevendo arquivo setupeuler write escrevendo arquivo setupeuler 
+ dat isolve write 
+ escoamento compressivel end 
+ notificando tela escrevendo arquivo setupeuler write arquivo setupeuler 
+ dat escrito sucesso close 
+ solver format &&&&&&&&&&&&&&&&&&&&&&&&&&&&&& solver parameters && &&&&&&&&&&&&&&&&&&&&&&&&&&&&&& csmag 
+ flsic iprint noal csi 
+ maxitf maxslvf kmaxf etat 
+ maxitt maxslvt kmaxt 
+ preprocessor format join 
+ materials escoamento incompressivel format water newtonian 
+ materials escoamento compressivel format idealgas newtonian 
+ ic escoamento incompressivel format numberofics partname constant 
+ ic escoamento compressivel format numberofics partname constant 
+ bc escoamento incompressivel format numberofbcs partname constant 
+ bc escoamento compressivel format numberofbcs partname constant 
+ setupeuler escoamento compressivel format 
+ funcao peso formulacao petrov galerkin tka formulacao tkat formulacao ata 
+ operador captura choque sim 
+ diferentes maneiras calcular delta delta cau yzbeta kirk 
+ estabilizacao supg sim 
+ versao metodo yzbeta versao versao 
+ versao metodo kirk versao versao 
+ termo forcante ewk ewc glt pp 
+ valor minimo massa especifica fluido minimum density 

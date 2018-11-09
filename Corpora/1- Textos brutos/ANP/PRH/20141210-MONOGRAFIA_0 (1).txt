@@ -1,0 +1,2381 @@
+ 
+
+UNIVERSIDADE ESTADUAL DE CAMPINAS 
+FACULDADE DE ENGENHARIA MECÂNICA 
+
+COORDENAÇÃO DE ENGENHARIA DE CONTROLE E AUTOMAÇÃO 
+
+Henrique Malatesta Motomura 
+
+061432 
+
+ 
+
+Controle Ativo de Embarcações com 
+
+Posicionamento Dinâmico Durante a Operação 
+
+de Reentrada em Águas Ultraprofundas 
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+
+ 
+ 
+
+i 
+
+Henrique Malatesta Motomura 
+
+061432 
+
+ 
+ 
+ 
+ 
+
+Controle Ativo de Embarcações com 
+
+Posicionamento Dinâmico Durante a Operação de 
+
+Reentrada em Águas Ultraprofundas 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Relatório  final  da  Disciplina  ES952  –  Trabalho  de  Graduação  II 
+apresentada  à  comissão  de  Graduação  da  Faculdade  de 
+Engenharia Mecânica, como requisito para obtenção do Título de 
+Engenheiro de Controle e Automação. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+Área de Concentração: Engenharia de Petróleo 
+
+ 
+
+Orientador: Prof. Dr. Celso Kazuyuki Morooka 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ii 
+
+UNIVERSIDADE ESTADUAL DE CAMPINAS 
+
+FACULDADE DE ENGENHARIA MECÂNICA 
+
+COORDENAÇÃO DE ENGENHARIA DE CONTROLE E AUTOMAÇÃO 
+
+TRABALHO FINAL DE GRADUAÇÃO 
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+Controle Ativo de Embarcações com 
+
+Posicionamento Dinâmico Durante a Operação de 
+
+Reentrada em Águas Ultraprofundas 
+
+ 
+ 
+Autor: Henrique Malatesta Motomura 
+Orientador: Prof. Dr. Celso Kazuyuki Morooka 
+ 
+ 
+Curso: Engenharia de Controle e Automação  
+Área de Concentração: Engenharia de Petróleo 
+ 
+
+A Banca Examinadora composta pelos membros abaixo aprovou este Trabalho:  
+ 
+____________________________________________________ 
+Prof. Dr.                                                                 , Presidente 
+Departamento 
+ 
+ 
+____________________________________________________ 
+Prof. Dr.  
+Departamento 
+ 
+ 
+____________________________________________________ 
+Prof. Dr.  
+Departamento 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Campinas,           de                            de 2011. 
+
+ 
+ 
+ 
+ 
+
+ 
+
+iii 
+
+                  Dedicatória 
+
+À  minha  mãe,  ao  meu  pai,  aos  meus 
+
+irmãos e familiares que foram a prima-
+
+base  na  formação  de  meus  valores  e 
+
+sempre  me  ajudaram  a  seguir  meus 
+
+sonhos. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+iv 
+
+ 
+
+Agradecimentos 
+
+ 
+
+ 
+
+A todos aqueles que me auxiliaram direta ou indiretamente com esse trabalho, fosse com 
+
+uma  ajuda  técnica,  fosse  uma  comemoração  com  os  resultados  obtidos,  deixo  meus 
+
+mais profundos e sinceros agradecimentos. Em especial, agradeço: 
+
+ 
+
+Ao meu orientador Prof. Dr. Celso Kazuyuki Morooka, pela oportunidade, suporte e apoio 
+
+durante todo o trabalho. 
+
+ 
+
+Aos meus companheiros do LabRiser/UNICAMP pelo apoio, paciência e companheirismo 
+
+nesses anos de convivência. 
+
+ 
+
+À minha família, por todo suporte e presença nos momentos difíceis. 
+
+ 
+
+À minha namorada Bruna, por todo apoio e compreensão. 
+
+ 
+
+Aos meus amigos de turma, por todo o apoio e companheirismo. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+v 
+
+“Tudo o que quereis que os homens vos 
+façam, fazei-o vós a eles” – Regra de Ouro 
+ 
+(Matheus, 7:12) 
+
+ 
+
+vi 
+
+ 
+
+ 
+
+Resumo 
+
+ 
+ 
+Mais  de  85%  do  petróleo  produzido  pela  Petrobras  no  Brasil  vêm  de  campos 
+
+marítimos. Com a explotação de reservatórios em águas cada vez mais profundas, é 
+
+comprovada  a  necessidade  de  avançar  no  estudo  de  novas  tecnologias  e  soluções 
+
+para problemas relacionados a sistemas marítimos para perfuração e produção destes 
+
+campos.  Um  dos  principais  componentes  desse  sistema  são  os  risers  marítimos  de 
+
+produção  e  de  perfuração,  e  uma  operação  recorrente  é  a  de  reentrada  de  poços 
+
+durante a perfuração e/ou completação/intervenção de poços submarinos. A operação 
+
+de  reentrada  consiste  em  posicionar  a  extremidade  inferior  do  riser  de  perfuração 
+
+acima  da  cabeça  do  poço,  com  a  finalidade  de  conectá-los  entre  si.  Contudo,  em 
+
+águas muito profundas esta operação torna-se muito difícil, principalmente devido aos 
+
+deslocamentos  flexionais  do  riser,  gerados  pela  força  das  ondas  e  da  corrente 
+
+marítima  (Yamamoto  et  al,  2007).  A  falta  de  um  sistema  de  controle  capaz  de 
+
+posicionar,  de  forma  precisa,  a  extremidade  inferior  do  riser  pode  obrigar  a 
+
+embarcação a aguardar dias por melhores condições de mar para realizar a reentrada 
+
+do poço e reiniciar a operação em seu processo normal. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Palavras Chaves:  Dynamic Positioning System, Plataforma Semi-submersível, 
+Controle Ativo, Engenharia de Petróleo, Perfuração Offshore 
+
+vii 
+
+ 
+
+Lista de Figuras 
+
+ 
+Figura 2.1 –  Plataforma durante a operação de reentrada  .................................... 2 
+ 
+Figura 2.2 –  ROV utilizado para auxiliar a operação de reentrada  ........................ 3 
+ 
+Figura 4.1 –  Arquivo dps.inp onde parâmetros, como a trajetória de referência 
+ da plataforma, são definidos. ................................................................................. 8 
+ 
+Figura 4.2 –  Parte do arquivo eugenio.inp onde a série temporal  
+contendo a trajetória de referência é definida. ........................................................ 9 
+ 
+Figura 4.3 –  Declaração das novas variáveis adicionada ao código  
+fonte  ..................................................................................................................... 10 
+ 
+Figura 4.4 –  Código responsável pela leitura do arquivo eugenio. ....................... 12 
+ 
+Figura 4.5 –  Código inserido na sub-rotina COREDPS, onde a dinâmica 
+ da plataforma é calculada  ................................................................................... 13 
+ 
+Figura 4.6 –  Código inserido no fim do programa principal para liberar  
+a memória utilizada para armazenar a trajetória de referência  ............................ 14 
+ 
+Figura 5.1.1 –  Trajetória de referência da plataforma e comportamento  
+esperado da extremidade inferior do riser, para um deslocamento de 15 metros  17 
+ 
+Figura 5.1.2 –  Comportamento do sistema plataforma-riser obtido no  
+RiserProd, para uma trajetória com deslocamento de 15 metros  ......................... 17 
+ 
+Figura 5.1.3 –  Trajetória de referência da plataforma e comportamento  
+Esperado da extremidade inferior do riser, para um deslocamento de 20 metros  18 
+ 
+Figura 5.1.4 –  Comportamento do sistema plataforma-riser obtido no  
+RiserProd, para uma trajetória com deslocamento de 20 metros  ......................... 18 
+ 
+Figura 5.2.1 –  Comportamento do sistema plataforma-riser obtido no Anflex,  
+para uma trajetória com deslocamento de 15 metros  .......................................... 20 
+ 
+Figura 5.2.2 –  Comportamento do sistema plataforma-riser obtido no Anflex,  
+para uma trajetória com deslocamento de 20 metros  .......................................... 20 
+ 
+Figura 5.3.1 –  Comparação das trajetórias da extremidade inferior do riser  
+obtidas em ambos os softwares, para um deslocamento de 15 metros  ............... 21 
+ 
+Figura 5.3.2 –  Comparação das trajetórias da extremidade inferior do riser  
+obtidas em ambos os softwares, para um deslocamento de 20 metros  ............... 22 
+
+viii 
+
+ 
+
+Lista de Tabelas 
+
+ 
+ 
+Tabela 5.1.1 –  Dimensões principais da plataforma semi-submersível  ............... 15 
+ 
+Tabela 5.1.2 –  Propriedades do riser utilizado nas simulações  ........................... 16 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ix 
+
+Índice 
+
+ 
+ 
+1.  Introdução .................................................................................. 1 
+
+ 
+
+2.  A Operação de Reentrada ................................................................................ 2 
+
+ 
+
+3.  Modelagem Matemática .................................................................................... 3 
+
+ 
+
+3.1.  Planejamento da Trajetória ........................................................................ 4 
+
+3.2.  Simulação Numérica (Software RiserProd) ................................................ 5 
+
+4.  Alterações no RiserProd ................................................................................... 7 
+
+ 
+
+5.  Resultados ...................................................................................................... 12 
+
+ 
+
+ 
+
+5.1.  Simulações no RiserProd ......................................................................... 15 
+
+5.2.  Simulações no Anflex ............................................................................... 19 
+
+5.3.  Comparação dos Resultados Obtidos ...................................................... 21 
+
+6.  Conclusão ....................................................................................................... 22 
+
+ 
+
+7.  Referências ..................................................................................................... 23 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ 
+
+1 
+
+ 
+
+ 
+
+ 
+
+ 
+
+1.  INTRODUÇÃO 
+
+A  exploração  e  produção  mundial  de  petróleo  são  crescentes  devido  ao 
+
+aumento da demanda por seus produtos derivados. Segundo dados da Petrobras 
+
+(2011), o recorde anual de produção de petróleo e gás foi atingido em 2010, com a 
+
+produção  média  de  2,583  milhões  de  barris  por  dia,  sendo  que  mais  de  85%  do 
+
+petróleo  produzido  pela  empresa  no  Brasil  vêm  de  campos  marítimos. 
+
+Adicionalmente, as perspectivas do aumento da produção, através dos campos do 
+
+Pré-sal  em  águas  ultraprofundas  (mais  de  1500  m  de  profundidade),  são 
+
+promissoras. 
+
+ 
+
+Com  a  explotação  de  reservatórios  em  águas  cada  vez  mais  profundas,  é 
+
+comprovada  a  necessidade  de  avançar  no  estudo  de  novas  tecnologias  e 
+
+soluções  para  problemas  relacionados  a  sistemas  marítimos  para  perfuração  e 
+
+produção  destes  campos.  Um  dos  principais  componentes  desse  sistema  são  os 
+
+risers marítimos de produção e de perfuração, e  uma operação recorrente é a de 
+
+reentrada de poços durante a perfuração e/ou completação/intervenção de poços 
+
+submarinos. 
+
+ 
+
+A  falta  de  um  sistema  de  controle  capaz  de  posicionar  precisamente  a 
+
+extremidade  inferior  do  riser,  pode  obrigar  a  embarcação  a  aguardar  dias  por 
+
+melhores  condições  de  mar  para  realizar  a  reentrada  do  poço  e  reiniciar  a 
+
+operação em seu processo normal. 
+
+ 
+
+Nesse  contexto,  encontra-se  o  trabalho  de  Fortaleza  et  al.  [1]  que  apresenta 
+
+uma  metodologia  onde,  através  de  um  controle  ativo  na  embarcação,  é  possível 
+
+mover  a  extremidade  inferior  do  riser  para  a  cabeça  do  poço  de  uma  maneira 
+
+rápida  e  fazê-la  parar,  precisamente,  acima  da  cabeça  do  poço,  facilitando  a 
+
+operação de reentrada.  
+
+ 
+
+Este  trabalho  apresenta  a  dinâmica  de  uma  plataforma  semi-submersível 
+
+equipada  com  Dynamic  Positioning  System  (DPS)  e  acoplada  com  um  riser  de 
+
+ 
+
+perfuração em uma profundidade de 2020 m, e tem o intuito de verificar a eficácia 
+
+da metodologia proposta por Fortaleza através de simulações numéricas. 
+
+2 
+
+ 
+
+2.  A OPERAÇÃO DE REENTRADA 
+
+ 
+
+A  operação  de  reentrada  (Figura  2.1)  consiste  em  posicionar  a  extremidade 
+
+inferior  do  riser  de  perfuração  acima  da  cabeça  do  poço,  com  a  finalidade  de 
+
+conectá-los entre si. Atualmente, o posicionamento da extremidade inferior do riser 
+
+é  feito  através  do  controle  manual  da  posição  da  embarcação,  com  o  auxílio  de 
+
+uma câmera acoplada a um Remote Operated Vehicle (ROV), Figura 2.2. O ROV 
+
+mostra  a  distância  entre  o  riser  e  a  cabeça  do  poço,  auxiliando  o  operador 
+
+responsável a fazer o ajuste necessário para conectá-los. 
+
+ 
+
+ 
+
+ 
+
+Figura 2.1: Plataforma durante a operação de reentrada 
+
+ 
+
+ 
+
+3 
+
+Figura 2.2: ROV utilizado para auxiliar a operação de reentrada. 
+
+ 
+
+ 
+
+Contudo,  em  águas  muito  profundas  esta  operação  torna-se  muito  difícil, 
+
+principalmente  devido  aos  deslocamentos  flexionais  do  riser,  gerados  pela  força 
+
+das  ondas  e  da  corrente  marítima.  O  que  a  torna  uma  operação  demorada  e, 
+
+conseqüentemente,  muito  cara.  Uma  vez  que  o  aluguel  de  uma  sonda  de 
+
+perfuração  offshore  pode  alcançar  a  cifra  de  um  milhão  de  dólares  por  dia,  se 
+
+considerado o custo operacional. 
+
+ 
+
+Dessa  maneira,  a  operação  de  reentrada  pode  ser  considerada  uma 
+
+oportunidade  de  melhoria,  uma  vez  que  a  diminuição  do  seu  tempo  representa 
+
+uma economia considerável, que impactaria positivamente no custo total do poço.  
+
+ 
+
+ 
+
+ 
+
+3.  MODELAGEM MATEMÁTICA 
+
+ 
+
+A  simulação  do  sistema  riser-plataforma  é  feita em  duas  etapas.  Na  primeira, 
+
+uma  trajetória  em  malha  aberta  para  a  plataforma  é  gerada  de  acordo  com  a 
+
+metodologia  proposta por Fortaleza et al [1]. Já na segunda, utiliza-se o software 
+
+Riserpord, desenvolvido pelo grupo de pesquisa do LabRiser/Unicamp, para fazer 
+
+a simulação numérica, no domínio do tempo.  
+
+4 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3.1   PLANEJAMENTO DA TRAJETÓRIA 
+
+O planejamento da trajetória  da plataforma segue a metodologia proposta por 
+
+Fortaleza et al [1]. Onde o riser pode ser considerado  um cabo submerso em um 
+
+fluido e modelado pela equação para cabos definida por Bernoulli, adicionada de 
+
+um fator de amortecimento que depende linearmente da velocidade. 
+
+ 
+
+ 
+
+   
+
+                
+
+  
+
+      
+  
+
+           
+
+  
+
+  
+
+        
+
+ 
+
+ 
+
+    (1) 
+
+Na  equação  acima,     representa  a  aceleração  da  gravidade;    o  eixo  vertical 
+
+(heave);          é  o  deslocamento  na  direção     (surge);       
+ 
+
+      
+  
+
+   ,  onde:     é  a 
+
+constante  de  arrasto,  e                ,  sendo     a  massa  linear  do  riser  e      a 
+
+massa adicional. 
+
+ 
+
+No  contexto  do  trabalho  de  Petit  and  Rouchon  et  al  [5],  a  solução  dessa 
+
+equação diferencial parcial é dada pela Eq. (2), onde      é uma função de Bessel 
+de primeira espécie e    é a transformada de Laplace de  . 
+
+ 
+
+ 
+
+                                               
+
+(2) 
+
+ 
+
+A Eq. (2), quando expandida em série de Taylor e calculada sua transformada 
+
+de  Laplace  inversa  resulta  na  Eq.  (3),  onde     é  o  ângulo  de  flexão  do  riser  e 
+
+               , onde            . 
+
+ 
+
+           
+  
+
+                 
+
+ 
+  
+
+                 
+
+                    
+
+      
+
+ 
+
+ 
+           
+ 
+
+ 
+
+   
+
+           
+
+                    
+
+(3) 
+
+ 
+
+5 
+
+ 
+
+A solução em malha aberta         , onde L é o comprimento do riser, é obtida 
+
+pela  integração  numérica  da  Eq.  (3),  uma  vez  que  ela  é  um  modelo  simplificado 
+
+que  representa  uma  boa  aproximação  para  a  dinâmica  do  sistema,  sendo  assim 
+
+utilizado  para  obter  uma  relação  explícita  entre  a  extremidade  superior  do  riser, 
+
+fixa na plataforma, e sua extremidade inferior.  
+
+ 
+
+Dessa maneira, definindo a trajetória ideal da extremidade inferior do riser para 
+
+que a reentrada ocorra rapidamente e, utilizando a relação obtida, a trajetória ideal 
+
+da plataforma é encontrada. 
+
+ 
+
+ 
+
+3.2  SIMULAÇÃO NUMÉRICA (SOFTWARE RISERPROD) 
+
+ 
+
+Para a realização das simulações numéricas utilizou-se o software RiserProd. 
+
+Nele  o  movimento  da  plataforma  é  considerado  como  a  dinâmica  de  um  corpo 
+
+rígido e o riser é considerado um corpo elástico.  
+
+ 
+
+A dinâmica da plataforma é calculada somente nas direções surge e sway, e a 
+
+modelagem  matemática  utilizada  para  representar  o  movimento  da  plataforma 
+
+flutuante  nessas direções  é a  equação integral-diferencial  proposta  por  Cummins 
+
+et al. [6]. 
+
+ 
+
+ 
+
+                      
+
+ 
+  
+
+                                                   
+
+(4) 
+
+ 
+
+Na equação acima, x representa o deslocamento da plataforma; M a inércia da 
+
+plataforma  (massa);  m  é  a  massa  adicional  calculada  segundo  a  Eq.  (5);  K  é  a 
+
+função  da  resposta  ao  impulso  estimada  pela  Eq.  (6);  B  representa o  coeficiente 
+
+de  amortecimento  viscoso  da  plataforma;  C  é  o  coeficiente  de  restauração 
+
+hidrostática, que é zero para  surge, sway e yaw; e diferente de zero para heave, 
+
+roll e pitch;    é o carregamento devido à corrente;    é a força devido às ondas; 
+
+    é  a  reação  do  riser  na  plataforma,  que  é  considerada  igual  à  força  de 
+
+cisalhamento  atuante  no  elemento  finito  localizado  na  extremidade  superior  do 
+
+riser ; e E é a força gerada pelos thrusters. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+6 
+
+            
+
+ 
+
+                  
+
+ 
+  
+
+   
+
+ 
+
+                   (5) 
+
+        
+
+ 
+
+                  
+
+                                             (6) 
+
+ 
+  
+
+ 
+
+Onde     e     são  a  massa  adicional  e  o  amortecimento  da  plataforma, 
+
+respectivamente, e ambos são dependentes da freqüência  . 
+
+ 
+
+As forças dos thrusters podem ser representadas como um sistema de primeira 
+
+ordem  como  na  Eq.  (7),  onde     é  o  impulso  e      é  o  impulso  requerido  pelo 
+
+controlador. 
+
+ 
+
+ 
+
+                        
+
+  
+
+  
+
+                                    (7) 
+
+O  riser  é  modelado  como  uma  viga  delgada  com  carregamentos  transversais 
+
+devido às pressões hidrostática e hidrodinâmica, e é dividido em finitos elementos 
+
+com  o  mesmo  comprimento.  Assume-se  que  a  massa  em  cada  elemento  se 
+
+concentra no nó superior e no inferior do mesmo.  
+
+ 
+
+A  dinâmica  do  riser  é  calculada  separadamente  paras  as  direções  X  e  Y,  de 
+
+acordo com as Eqs. (8) e (9). 
+
+ 
+
+                                    
+
+ 
+
+                                    
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ (8) 
+
+(9) 
+
+Nas equações acima,    e    são os vetores que contêm a posição de cada nó 
+
+do riser nas direções X e Y, respectivamente;   é a matriz de massa concentrada 
+
+que  inclui  a  massa  adicional  hidrodinâmica;      e      são  as  matrizes  de 
+
+amortecimento,  e      e      são  as  matrizes  de  rigidez  nas  direções  X  e  Y, 
+
+respectivamente;     e     são os vetores das forças hidrodinâmicas, incluindo o 
+
+ 
+
+efeito  do  amortecimento  viscoso,  atuantes  no  riser  nas  direções  X  e  Y, 
+
+7 
+
+respectivamente. 
+
+ 
+
+Os  dois  sistemas  dinâmicos,  plataforma  semi-submersível  e  riser  de 
+
+perfuração,  são  acoplados  através  do  centro  de  gravidade  da  plataforma  e  da 
+
+extremidade  superior  do  riser.  Para  isso,  a  posição  do  centro  de  gravidade  da 
+
+plataforma é imposta como uma condição de contorno para o nó superior do riser. 
+
+ 
+
+ 
+
+ 
+
+4. ALTERAÇÕES NO RISERPROD 
+
+ 
+
+Originalmente, o software RiserProd possui três formas de definir o movimento 
+
+da plataforma na direção surge: degrau, freqüência e rampa. Em cada uma delas, 
+
+a  trajetória  definida  é  passada  como  referência  para  a  plataforma  e,  a  cada 
+
+instante de tempo, a posição atual da plataforma é comparada com a referência. A 
+
+diferença  proveniente  dessa  comparação  é  utilizada  pelo  sistema  de  DPS  para 
+
+calcular o esforço com que os thrusters devem atuar na plataforma. A escolha da 
+
+referência é feita através do arquivo dps.inp. 
+
+ 
+
+Porém,  para  verificar  a  eficácia  da  metodologia  proposta  por  Fortaleza,  uma 
+
+série temporal deve ser passada como trajetória de referência para a plataforma. 
+
+Esta  série  temporal  deve  conter  a  posição  de  referência  da  plataforma  a  cada 
+
+instante de tempo. Para isso, adicionou-se a possibilidade de optar por uma quarta 
+
+opção  de  referência,  denominada  Eugenio,  através  da  escolha  do  número  3.  O 
+
+arquivo dps.inp modificado é ilustrado na Figura 4.1, onde as linhas iniciadas com 
+
+aspas  são  comentários  e  serão  descartadas  pelo  programa  ao  fazer  leitura  do 
+
+arquivo. 
+
+ 
+
+8 
+
+ 
+
+Figura 4.1: Arquivo dps.inp onde parâmetros, como a trajetória de referência 
+
+ da plataforma, são definidos. 
+
+ 
+
+ 
+
+ 
+
+Em  seguida,  foi  criado  um  arquivo  contendo  o  tamanho  do  vetor  para 
+
+armazenar a trajetória de referência e as posições que a plataforma deve assumir 
+
+em  cada  instante  de  tempo.  O  tamanho  do  vetor  depende  de  dois  parâmetros: 
+
+tempo da simulação e passo de tempo; sendo o resultado da divisão do primeiro 
+
+pelo segundo. Este arquivo foi denominado eugenio.inp e é ilustrado, em parte, na 
+
+Figura 4.2. 
+
+ 
+
+9 
+
+Figura 4.2: Parte do arquivo eugenio.inp onde a série temporal contendo a  
+
+ 
+
+trajetória de referência é definida. 
+
+ 
+
+ 
+
+ 
+
+Através dessas duas modificações iniciais, o usuário é capaz de informar para 
+
+o software que o tipo de movimento da plataforma requerido é dado por uma séria 
+
+temporal,  que  está  armazenada  no  arquivo  eugenio.inp.  Uma  vez  finalizadas  as 
+
+modificações  para  fornecer  todos  os  inputs  necessários,  o  próximo  passo  é 
+
+realizar modificações no código fonte do software, que foi desenvolvido utilizando-
+
+se a linguagem de programação FORTRAN 90. 
+
+ 
+
+A  primeira  modificação  feita  no  código  fonte  foi  a  declaração  de  um  vetor 
+
+chamado EUGENIO, que será utilizado para armazenar a séria temporal contendo 
+
+ 
+
+a trajetória de referência, e de duas variáveis do tipo inteiro: tamanhovetor e moto. 
+
+Essa declaração de variáveis é feita no início do código fonte, antes do programa 
+
+principal. O código criado é ilustrado na Figura 4.3, abaixo. 
+
+10 
+
+ 
+
+ 
+
+ 
+
+Figura 4.3: Declaração das novas variáveis adicionada ao código fonte. 
+
+ 
+
+No  programa  principal,  foi  adicionada  uma  rotina  computacional  responsável 
+
+pela leitura e armazenamento dos dados contidos no arquivo  eugenio.inp (Figura 
+
+4.4). A leitura é feita na ordem com que as informações estão contidas no arquivo 
+
+referenciado, e é basicamente composta por quatro comandos: 
+
+ 
+
+1) 
+
+ 
+
+Comando  utilizado  para  conectar  um  arquivo  a  uma  unidade  lógica  e  definir 
+
+algumas  características  de  conexão.  Nela,  UNIT  indica  a  unidade  lógica  do 
+
+arquivo;  FILE  especifica,  entre  aspas,  o  nome  do  arquivo  que  será  lido; 
+
+DEFAULTFILE  indica  a  localização  do  arquivo;  e  o  STATUS,  nesse  caso  OLD, 
+
+indica que o arquivo já existe. 
+
+ 
+
+2)         
+
+ 
+
+Comando  utilizado  para 
+
+ler  valores  e  armazená-los  nas  variáveis 
+
+especificadas. Nela, o primeiro elemento dentro dos parênteses indica a UNIDADE 
+
+de onde os dados serão lidos, nesse caso o número sete indica que será lido de 
+
+um  arquivo;  o  segundo  elemento  dentro  dos  parênteses  indica  o  formato  da 
+
+ 
+
+leitura,  nesse  caso  o  “  *  ”  indica  que  a  leitura  terá  formato  livre;  e  por  último,  a 
+
+indicação  da  variável  que  armazenará  o  dado  lido.  A  variável  AUX4  é  utilizada 
+
+para descartar as linhas do arquivo que possuem comentários. 
+
+11 
+
+ 
+
+3)       
+
+ 
+
+Comando  utilizado  para  alocar  memória.  Nesse  caso,  esse  comando  está 
+
+criando  um  vetor  denominado  EUGENIO  com  o  tamanho  do  valor  armazenado 
+
+pela variável  tamanhovetor. Isso é feito, pois foi utilizada a alocação dinâmica de 
+
+memória, evitando assim a utilização de memória sem necessidade. 
+
+ 
+
+4)          
+
+ 
+
+ 
+
+O  comando  DO  é  utilizado  para  realizar  um  loop  com  um  número  fixo  de 
+
+ciclos. Nesse caso, o comando está sendo utilizado para realizar a leitura da série 
+
+temporal presente no arquivo eugenio.inp,  e o armazenamento desses valores no 
+
+vetor eugenio. A variável hmm é utilizada para indicar a posição do vetor onde o 
+
+dado  lido  será  armazenado,  ela  é  iniciada  com  o  valor  1,  e  é  incrementada  uma 
+
+unidade  até  alcançar  o  valor  armazenado  na  variável  tamanhovetor,  quando  a 
+
+execução do programa sai do loop. 
+
+ 
+
+ 
+
+12 
+
+ 
+
+Figura 4.4: Código responsável pela leitura do arquivo eugenio.inp. 
+
+ 
+
+ 
+
+ 
+
+Em  seguida,  ao  realizar  a leitura  do  arquivo dps.inp,  o  programa  armazena  o 
+
+número  referente  à  escolha  da  trajetória  de  referência  na  variável  “tipoinput”. 
+
+Dessa  maneira,  ao  entrar  na  sub-rotina  COREDPS,  onde  a  dinâmica  da 
+
+plataforma é calculada, pode-se verificar a escolha da referência feita e proceder 
+
+com o cálculo.  
+
+Para  o  caso  da  trajetória  de  referência  Eugenio,  onde  a  variável  tipoinput 
+
+armazena  o  valor  3,  uma  modificação  foi  implementada  no  programa  principal, 
+
+fazendo com que o programa entre no laço IF destacado na Figura 4.5, abaixo.  
+
+ 
+
+13 
+
+Figura 4.5: Código inserido na sub-rotina COREDPS, onde a dinâmica 
+
+ da plataforma é calculada. 
+
+ 
+
+ 
+
+ 
+
+14 
+
+ 
+
+ 
+
+O  comando  IF  impõe  uma  execução  condicional,  fazendo  com  que  um 
+
+determinado  bloco  de  comandos  seja  executado  se  uma  condição  lógica  for 
+
+verdadeira.  No  caso  destacado  na  Figura  4.5,  acima,  a  variável  IPamp  recebe  o 
+
+valor  armazenado  em  uma  posição  específica  do  vetor  eugenio,  posição  esta 
+
+determinada  pela  variável  moto,  que  é  iniciada  com  zero  para  que  a  primeira 
+
+posição  do  vetor  seja  a  lida  no  primeiro  passo  de  tempo.    Enquanto  a  variável 
+
+moto for menor que a tamanhovetor, a referência (REF) recebe o valor de IPamp e 
+
+o  valor  de  moto  é  incrementado  uma  unidade,  isto  é  feito  para  que,  no  próximo 
+
+passo  de  tempo,  o  próximo  elemento  do  vetor  eugenio  seja  utilizado.  Quando  o 
+
+valor  armazenado  em  moto  for  maior  que  o  armazenado  em  tamanhovetor,  a 
+
+referência (REF) recebe o valor zero, fazendo com que a plataforma volta para a 
+
+posição inicial. 
+
+ 
+
+Por  último,  no  final  do  programa  principal,  é  feita  a  liberação  da  memória 
+
+utilizada  para  armazenar  o  vetor  eugenio  que  contém  a  trajetória  de  referência. 
+
+Para isso é utilizado o comando DEALLOCATE, como ilustrado na Figura 4.6. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 4.6: Código inserido no fim do programa principal para liberar a  
+
+memória utilizada para armazenar a trajetória de referência. 
+
+ 
+
+As  modificações  no  código  fonte  do  software  RiserProd,  especificadas 
+
+anteriormente,  possibilitaram  a  passagem  de  uma  série  temporal  como  trajetória 
+
+ 
+
+de  referência  para  a  plataforma.  Dessa  maneira,  a  metodologia  de  controle 
+
+proposta por Fortaleza pôde ser verificada utilizando-se o RiserProd.  
+
+15 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5. RESULTADOS  
+
+5.1  SIMULAÇÕES NO RISERPROD 
+
+A  plataforma  utilizada  nas  simulações  realizadas  no  software  RiserProd  foi  a 
+
+plataforma  semi-submersível  padrão,  definida  pela  International  Towing  Tank 
+
+Conference  (ITTC).  Essa  plataforma  semi-submersível  possui  dois  pontoons 
+
+submersos e paralelos, cada um com 115 m de comprimento, 15 m de largura e 8 
+
+m  de  altura,  e  oito  colunas  verticais,  com  diâmetros  de  10  m  para  as  quatro 
+
+colunas externas e 8 m para as quarto colunas centrais. As dimensões principais 
+
+da plataforma estão na Tabela (5.1.1). 
+
+Tabela 5.1.1: Dimensões principais da plataforma semi-submersível 
+
+Comprimento 
+
+Largura 
+
+Altura do Deck 
+
+Pontoons 
+
+(2 peças) 
+
+Diâmetro das 
+
+Colunas 
+
+(4 peças de cada) 
+
+Calado 
+
+Massa de 
+
+Água Deslocada 
+
+115 m 
+
+75 m 
+
+43 m 
+
+Comprimento 
+
+115 m 
+
+Largura 
+
+Altura 
+
+Externas 
+
+Centrais 
+
+15 m 
+
+8 m 
+
+10 m 
+
+8 m 
+
+20 m 
+
+35,000 ton 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Neste  trabalho,  o  deslocamento  vertical  e  o  rotacional  do  riser  não  são 
+
+considerados.  As  propriedades  do  riser  utilizado  nas  simulações,  e  suas 
+
+dimensões principais, são mostradas na Tabela (5.1.2).  
+
+16 
+
+Tabela 5.1.2: Propriedades do riser utilizado nas simulações 
+
+Comprimento Abaixo 
+
+ do Nível do Mar 
+
+2000 m 
+
+Diâmetro Externo 
+
+0.55 m 
+
+Diâmetro Interno 
+
+0.5 m 
+
+Módulo de Young 
+
+210 MPa 
+
+Densidade do Material 
+
+7860 kg/m3 
+
+ 
+
+ 
+
+ 
+
+Através  da  metodologia  proposta  por  Fortaleza  et  al  [1],  foi  obtida  uma 
+
+trajetória  de  referência  para  a  plataforma  flutuante, que indica  a  posição ideal  da 
+
+plataforma a cada instante de tempo.  Uma rotina computacional foi implementada 
+
+no  Riserprod  para  possibilitar  a  utilização  de  um  vetor,  contendo  as  posições  de 
+
+referência da plataforma a cada instante de tempo, como parâmetro de entrada do 
+
+sistema.  
+
+ 
+
+O  sistema  de  DPS  da  plataforma  é  um  controle  automático  que  controla  a 
+
+posição  da  plataforma.  Ele  recebe  a  posição  da  plataforma  por  um  sistema  de 
+
+sensores e controla os thrusters, fazendo com que a plataforma siga a referência 
+
+e, conseqüentemente, a trajetória proposta. Dessa maneira,  é possível verificar o 
+
+comportamento  da  extremidade inferior  do  riser  quando  a  plataforma  percorre  tal 
+
+trajetória. 
+
+ 
+
+A Figura 5.1.1 mostra a trajetória de referência da plataforma, gerada segundo 
+
+a  metodologia  de  Fortaleza  et  al.  [1],  e  a  trajetória  esperada  para  a  extremidade 
+
+inferior do riser, considerando que a plataforma esteja à 15 metros da cabeça do 
+
+poço, na direção sway. 
+
+ 
+
+ 
+
+17 
+
+Trajetórias de Referência 
+
+ 
+)
+
+m
+
+(
+ 
+o
+t
+n
+e
+m
+a
+c
+o
+
+l
+s
+e
+D
+
+16 
+
+14 
+
+12 
+
+10 
+
+8 
+
+6 
+
+4 
+
+2 
+
+0 
+
+Trajetória de Referência da 
+Plataforma 
+
+Trajetória Esperada para a 
+Extremidade Inferior do Riser 
+
+0 
+
+200 
+
+400 
+
+600 
+
+800 
+
+1000 
+
+Tempo (s) 
+
+ 
+
+Figura 5.1.1: Trajetória de referência da plataforma e comportamento esperado 
+
+da extremidade inferior do riser, para um deslocamento de 15 metros. 
+
+ 
+
+ 
+
+A Figura 5.1.2 mostra o resultado da simulação numérica para o deslocamento 
+
+da  plataforma  e  do  riser,  na  direção  sway,  quando  a  trajetória  da  plataforma, 
+
+ilustrada na Fig. 5.1.1, é utilizada como referência. Esse resultado foi obtido para o 
+
+caso não perturbado, ou seja, na ausência de ondas e correnteza. 
+
+ 
+
+Comportamento do Sistema Plataforma-Riser 
+
+ 
+)
+
+m
+
+(
+ 
+o
+t
+n
+e
+m
+a
+c
+o
+
+l
+s
+e
+D
+
+16 
+
+14 
+
+12 
+
+10 
+
+8 
+
+6 
+
+4 
+
+2 
+
+0 
+
+Trajetória da Extremidade 
+Inferior do Riser 
+Trajetória da Plataforma 
+
+Trajetória de Referência 
+da Plataforma 
+
+0 
+
+200 
+
+400 
+
+600 
+
+800 
+
+1000 
+
+Tempo (s) 
+
+ 
+
+Figura 5.1.2: Comportamento do sistema plataforma-riser obtido no RiserProd, 
+
+ para uma trajetória com deslocamento de 15 metros. 
+
+18 
+
+ 
+
+ 
+
+A mesma metodologia aplicada anteriormente foi utilizada para o caso de uma 
+
+distância  de  20  metros  entre  a  plataforma  e a  cabeça  do  poço,  na  direção  sway. 
+
+Os resultados são ilustrados nas Figuras 5.1.3 e 5.1.4. 
+
+ 
+
+Trajetórias de Referência 
+
+ 
+)
+
+m
+
+(
+ 
+o
+t
+n
+e
+m
+a
+c
+o
+
+l
+s
+e
+D
+
+25 
+
+20 
+
+15 
+
+10 
+
+5 
+
+0 
+
+Trajetória de Referência da 
+Plataforma 
+
+Trajetória Esperada para a 
+Extremidade Inferior do Riser 
+
+0 
+
+200 
+
+400 
+
+600 
+
+800 
+
+1000 
+
+Tempo (s) 
+
+ 
+
+Figura 5.1.3: Trajetória de referência da plataforma e comportamento esperado 
+
+da extremidade inferior do riser, para um deslocamento de 20 metros. 
+
+ 
+
+Comportamento do Sistema Plataforma-Riser 
+
+ 
+)
+
+m
+
+(
+ 
+o
+t
+n
+e
+m
+a
+c
+o
+
+l
+s
+e
+D
+
+25 
+
+20 
+
+15 
+
+10 
+
+5 
+
+0 
+
+Trajetória de Referência da 
+Plataforma 
+Trajetória da Plataforma 
+
+Trajetória da Extremidade 
+Inferior do Riser 
+
+0 
+
+200 
+
+400 
+
+600 
+
+800 
+
+1000 
+
+Tempo (s) 
+
+ 
+
+Figura 5.1.4: Comportamento do sistema plataforma-riser obtido no RiserProd, 
+
+ para uma trajetória com deslocamento de 20 metros. 
+
+19 
+
+ 
+
+ 
+
+ 
+
+Nos resultados ilustrados acima, tanto para o deslocamento de 15 como para o 
+
+de  20  metros,  a  extremidade  inferior  do  riser  apresentou  uma  oscilação 
+
+inesperada em torno da sua posição final. A possível razão para essa oscilação é 
+
+o  fato  da  plataforma  não  ser  capaz  de  percorrer  a  trajetória  passada  como 
+
+referência com perfeição. 
+
+ 
+
+ 
+
+Apesar de modificações terem sido feitas no software RiserProd, com o intuito 
+
+de  fazer  com  que  a  plataforma  seja  capaz  de  seguir  a  trajetória  passada  a  ela 
+
+como  referência,  nenhum  resultado  satisfatório  foi  obtido.  Decorrente  desta 
+
+dificuldade,  optou-se  pela  realização  de  simulações  numéricas  utilizando  o 
+
+software Anflex. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5.2  SIMULAÇÕES NO ANFLEX 
+
+O Anflex é um software desenvolvido pela Petrobras. Sua escolha foi motivada 
+
+pela possibilidade de impor um movimento do nó superior do riser através de uma 
+
+série  temporal,  simulando  dessa  maneira  a  movimentação  de  uma  plataforma 
+
+semi-submersível.  Dessa  maneira,  a  trajetória  obtida  pela  metodologia  proposta 
+
+por  Fortaleza  poderá  ser  imposta  de  tal  forma  que  a  plataforma  a  siga 
+
+perfeitamente,  possibilitando  a  verificação  do  comportamento  da  extremidade 
+
+inferior do riser nessa situação. 
+
+ 
+
+Os resultados ilustrados nas Figuras 5.2.1 e 5.2.2 foram obtidos utilizando-se a 
+
+versão  6.6.6  R3.4  do  Anflex.  Nessas  simulações  numéricas,  o  riser  considerado 
+
+possui  as  mesmas  características  do  utilizado  nas  simulações  realizadas  com  o 
+
+RiserProd (Tabela 5.1.2). 
+
+ 
+
+ 
+
+ 
+
+ 
+)
+
+m
+
+(
+ 
+o
+t
+n
+e
+m
+a
+c
+o
+
+l
+s
+e
+D
+
+18 
+
+16 
+
+14 
+
+12 
+
+10 
+
+8 
+
+6 
+
+4 
+
+2 
+
+0 
+
+20 
+
+Comportamento do Sistema Plataforma-Riser 
+
+Trajetória de Referência da 
+Plataforma 
+Trajetória da Plataforma 
+
+Trajetória da Extremidade 
+Inferior do Riser 
+
+0 
+
+200 
+
+400 
+
+600 
+Tempo (s) 
+
+800 
+
+1000 
+
+ 
+
+Figura 5.2.1: Comportamento do sistema plataforma-riser obtido no Anflex, 
+
+ para uma trajetória com deslocamento de 15 metros. 
+
+ 
+
+ 
+
+Comportamento do Sistema Plataforma-Riser 
+
+ 
+)
+
+m
+
+(
+ 
+o
+t
+n
+e
+m
+a
+c
+o
+
+l
+s
+e
+D
+
+25 
+
+20 
+
+15 
+
+10 
+
+5 
+
+0 
+
+Trajetória de Referência 
+da Plataforma 
+Trajetória da Plataforma 
+
+Trajetória da Extremidade 
+Inferior do Riser 
+
+0 
+
+200 
+
+400 
+
+600 
+
+800 
+
+1000 
+
+Tempo (s) 
+
+ 
+
+Figura 5.2.2: Comportamento do sistema plataforma-riser obtido no Anflex,  
+
+para uma trajetória com deslocamento de 20 metros. 
+
+ 
+
+ 
+
+ 
+
+Ao contrário das expectativas, mesmo quando a plataforma segue a trajetória 
+
+passada como referência com perfeição, a extremidade inferior do  riser apresenta 
+
+uma oscilação ao redor da sua posição final. 
+
+21 
+
+ 
+
+ 
+
+ 
+
+5.3  COMPARAÇÃO DOS RESULTADOS OBTIDOS 
+
+ 
+
+Em virtude da presença de uma  oscilação mesmo no caso onde a plataforma 
+
+segue  a  trajetória  de  referência,  as  Figuras  5.3.1  e  5.3.2  apresentam  um 
+
+comparativo  das  trajetórias  da  extremidade  inferior  do  riser  obtidas  nos  dois 
+
+softwares, para ambos os deslocamentos. 
+
+ 
+
+Comparação das Respostas Obtidas 
+
+ 
+)
+
+m
+
+(
+ 
+o
+t
+n
+e
+m
+a
+c
+o
+
+l
+s
+e
+D
+
+18 
+
+16 
+
+14 
+
+12 
+
+10 
+
+8 
+
+6 
+
+4 
+
+2 
+
+0 
+
+Trajetória da Extremidade 
+Inferior do Riser Obtida no 
+RiserProd 
+
+Trajetória da Extremidade 
+Inferior do Riser Obtida no 
+Anflex 
+
+0 
+
+200 
+
+400 
+
+600 
+Tempo (s) 
+
+800 
+
+1000 
+
+ 
+
+Figura 5.3.1: Comparação das trajetórias da extremidade inferior do riser 
+
+obtidas em ambos os softwares, para um deslocamento de 15 metros. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+22 
+
+Comparação das Respostas Obtidas 
+
+ 
+)
+
+m
+
+(
+ 
+o
+t
+n
+e
+m
+a
+c
+o
+
+l
+s
+e
+D
+
+25 
+
+20 
+
+15 
+
+10 
+
+5 
+
+0 
+
+Trajetória da Extremidade 
+Inferior do Riser Obtida no 
+RiserProd 
+
+Trajetória da Extremidade 
+Inferior do Riser Obtida no 
+Anflex 
+
+0 
+
+200 
+
+400 
+
+600 
+Tempo (s) 
+
+800 
+
+1000 
+
+ 
+
+Figura 5.3.2: Comparação das trajetórias da extremidade inferior do riser 
+
+obtidas em ambos os softwares, para um deslocamento de 20 metros. 
+
+ 
+
+ 
+
+Em  ambas  as  figuras,  a  extremidade  inferior  do  riser  apresentou  uma 
+
+amplitude  de  vibração,  em  torno  da  posição  final,  e  um  tempo  de  estabilização 
+
+maior  nas  simulações  numéricas  realizadas  no  Anflex,  ou  seja,  quando  a 
+
+plataforma seguiu a trajetória proposta com perfeição. 
+
+ 
+
+ 
+
+ 
+
+6. CONCLUSÃO 
+
+ 
+
+No  presente  trabalho,  a  metodologia  para  verificar  a  eficácia  da  trajetória 
+
+proposta por Fortaleza et al. [1], que visa a diminuição do tempo da operação de 
+
+reentrada, foi apresentada.  
+
+ 
+
+Nos  primeiros  resultados,  obtidos  no  RiserProd,  atribuiu-se  a  oscilação  da 
+
+extremidade inferior do riser ao fato da plataforma não ter seguido a trajetória de 
+
+referência  com  perfeição.  Porém,  ao  analisar  os  resultados  das  simulações 
+
+ 
+
+realizadas  no  Anflex,  verificou-se  a  existência  de  uma  oscilação  com  uma 
+
+amplitude  e  um  tempo  de  estabilização  maior.  Ou  seja,  o  comportamento  da 
+
+extremidade  inferior  do  riser  foi  pior  nos  casos  onde  a  plataforma  seguiu  com 
+
+23 
+
+precisão a trajetória controlada proposta. 
+
+ 
+
+Apesar  dos  resultados  obtidos  não  serem  os  esperados,  a  modelagem  do 
+
+sistema  plataforma-riser  e  o  controle,  propostos  por  Fortaleza,  não  podem  ser 
+
+invalidados. E uma análise das hipóteses feitas durante a modelagem do sistema 
+
+e o projeto do controle faz-se necessária, com o intuito de averiguar a natureza do 
+
+resultado inesperado. 
+
+ 
+
+ 
+
+ 
+
+7. REFERÊNCIAS  
+
+ 
+
+[1]. 
+
+Fortaleza,  E.,  Creff,  Y.,  Levine,  J.,  2009.  Active  Control  of  a  Dynamically 
+
+Positioned Vessel for the Installation of Subsea Structures. In: Vienna International 
+
+Conference on Mathematical Modeling, Vienna - Austria. 
+
+[2]. 
+
+Fortaleza,  E.,  Creff,  Y.,  Levine,  J.,  2009.  Active  Control  for  the  Re-Entry 
+
+Operation of Flexible Risers. In: Vienna International Conference on Mathematical 
+
+Modeling, Vienna - Austria. 
+
+[3].  Morooka,  C.K.,  Yamamoto,  M.,  2006.  Dynamic  Positioned  Semi-
+
+submersible  Platform  Motion  with  Riser  in  Ultra  Deep  Water.  In:  9th  International 
+
+Conference  on  Stability  of  Ships  and  Ocean  Vehicles  -  STAB2006,  2006,  Rio  de 
+
+Janeiro. Proceedings of the 9th International Conference on Stability of Ships and 
+
+Ocean Vehicles, 2006. v. 2. p. 857-865.  
+
+ 
+
+[4].  Yamamoto,  M.,  Morooka,  C.  K.,  Ueno,  S.,  2007.  Dynamic  Behavior  of  a 
+
+Semi-Submersible Platform Coupled With Drilling Riser During Re-Entry Operation 
+
+in  Ultra-Deep  Water.  In:  International  Conference  on  Offshore  Mechanics  and 
+
+Arctic Engineering, San Diego - USA. 
+
+24 
+
+ 
+
+ 
+
+[5].  Petit,  N.,  Rouchon,  P.,  2001.  Flatness  of  Heavy  Chain  Systems,  SIAM 
+
+Journal on Control and Optimization 40, pp. 475-495. 
+
+ 
+
+[6].  Cummins,  W.  E.,  1962.  The  impulse-response  function  and  ship  motions, 
+
+Schiffstechnik, PP. 101-109. 
+
+ 
+
+[7].  Mourelle,  M.  M.,  Gonzalez,  E.  C.,  Jacob,  B.  P.,  1995,  Anflex  – 
+
+Computational  System  for  Flexible  and  Rigid  Riser  Analysis,  Proceedings  of  the 
+
+International Symposium on Offshore Engineering, Rio de Janeiro, Brasil, PP. 441-
+
+458. 
+
+ 
+
+ 
+
+ 
+
+

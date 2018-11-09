@@ -1,0 +1,2068 @@
+CLIENTE: 
+
+RELATÓRIO  
+ANP – AGÊNCIA NACIONAL DO PETRÓLEO, GÁS NATURAL E 
+
+RL-ANP-FPL-041 
+1 
+
+FOLHA: 
+
+Nº: 
+
+BIOCOMBUSTÍVEIS 
+
+de
+
+21 
+
+PROGRAMA:  MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+- 
+- 
+- 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+Faculdades Católicas – PUC-Rio – SIMDUT 
+
+ÍNDICE DE REVISÕES 
+
+DESCRIÇÃO E/OU FOLHAS ATINGIDAS 
+
+EMISSÃO ORIGINAL 
+REVISÃO APÓS COMENTÁRIOS DA ANP/SCM E PADRONIZAÇÃO DOS RELATÓRIOS 
+ 
+
+REV. 
+
+0 
+A 
+
+ 
+
+REV. 0 
+
+REV. A 
+
+REV. B 
+
+REV. C 
+
+REV. D 
+
+REV. E 
+
+REV. F 
+
+REV. G 
+
+REV. H 
+
+ANP 
+
+ANP 
+
+19/06/2015 03/08/2015 
+
+DATA 
+PROJETO 
+EXECUÇÃO 
+VERIFICAÇÃO 
+APROVAÇÃO 
+AS INFORMAÇÕES DESTE DOCUMENTO SÃO PROPRIEDADE DA ANP, SENDO PROIBIDA A UTILIZAÇÃO FORA DA SUA FINALIDADE. 
+ 
+
+P. Krause  P. Krause 
+I.Patrocinio I.Patrocinio 
+
+L. Pires 
+
+L. Pires 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+ÍNDICE 
+
+ 
+
+FOLHA
+
+REV.
+
+A 
+
+2  de
+
+21 
+
+- 
+- 
+
+ 
+
+1  OBJETIVO _______________________________________________________________ 3 
+2  DOCUMENTOS DE REFERÊNCIA ____________________________________________ 3 
+3  DESCRIÇÃO GERAL DO MODELO ___________________________________________ 3 
+4  PREMISSAS DE CÁLCULO  _________________________________________________ 6 
+4.1 
+CONDIÇÕES DE REFERÊNCIA ___________________________________________ 6 
+
+4.2 
+
+4.3 
+
+4.4 
+
+4.5 
+
+4.6 
+
+4.7 
+
+4.8 
+
+MODELO DE TRANSFERÊNCIA DE CALOR _________________________________ 6 
+
+TEMPERATURA DO SOLO _______________________________________________ 6 
+
+CORRELAÇÕES ADOTADAS _____________________________________________ 6 
+
+SOFTWARE UTILIZADO _________________________________________________ 7 
+
+CARACTERÍSTICAS DO GÁS _____________________________________________ 7 
+
+TEMPERATURA AMBIENTE ______________________________________________ 7 
+
+VISCOSIDADE _________________________________________________________ 7 
+
+5  CARACTERÍSTICAS DOS SISTEMAS DE GASODUTOS __________________________ 7 
+DIÂMETRO, ESPESSURA E PMOA ________________________________________ 7 
+5.1 
+
+5.2 
+
+5.3 
+
+5.4 
+
+5.5 
+
+5.6 
+
+PERFIL ALTIMÉTRICO __________________________________________________ 8 
+
+RUGOSIDADE ________________________________________________________ 10 
+
+PONTOS DE ENTREGA (PTE) ___________________________________________ 10 
+
+PONTOS DE RECEBIMENTO (PTR)  ______________________________________ 11 
+
+PONTOS DE INTERCONEXÃO  __________________________________________ 11 
+
+6  CONDIÇÕES DE CONTORNO ______________________________________________ 11 
+6.1 
+PERFIL DE CONSUMO _________________________________________________ 11 
+
+6.2 
+
+6.3 
+
+MÁXIMA PRESSÃO ADMISSÍVEL DE OPERAÇÃO ___________________________ 12 
+
+PRESSÃO DE ENTREGA NOMINAL CONTRATUAL __________________________ 12 
+
+7  RESULTADOS DA SIMULAÇÃO _____________________________________________ 12 
+8  ANEXOS  _______________________________________________________________ 16 
+8.1 
+“STEADY STATE REPORT” DO MODELO __________________________________ 16 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+OBJETIVO 
+
+ 
+
+1 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+FOLHA
+
+REV.
+
+A 
+
+3  de
+
+21 
+
+- 
+- 
+
+Documentar as informações necessárias para a criação dos modelos computacionais de 
+parte  da  malha  Nordeste  Setentrional,  especificamente  a  malha  Bahia,  composta  pelos 
+gasodutos  Santiago  Camaçari  14”  e  18”  e  Candeias  Camaçari  12”  e  14”  e  apresentar  as 
+características  físicas  e  valores  limite  de  projeto  dos  diversos  elementos  que  compõem  os 
+modelos de simulação termo-hidráulica. Permitindo, assim, a reprodutibilidade do modelo por 
+qualquer interessado. O modelo foi criado para o programa de simulação PipelineStudio versão 
+3.4.1.0 da Energy Solutions. 
+
+ 
+ 
+
+2 
+
+DOCUMENTOS DE REFERÊNCIA 
+
+Os  documentos  técnicos  codificados  utilizados  como  referência  para  elaboração  do 
+
+Relatório são: 
+2.1.  RL-ANP-FPL-012_Rev.A – Metodologia para Cálculo de Capacidade 
+2.2.  RL-ANP-FPL-007_Rev.A – Análise da Influência de Parâmetros Utilizados no Modelo de 
+
+Cálculo da Capacidade 
+
+2.3.  MO-5TP-00084-A – Manual de Operação do gasoduto Candeias-Aratu 12” 
+2.4.  MO-5TP-00080-A – Manual de Operação do gasoduto Candeias-Camaçari 12” 
+2.5.  MO-5TP-00091-A – Manual de Operação do gasoduto Candeias-Camaçari 14” 
+2.6.  MO-5TP-00089-A – Manual de Operação do gasoduto Santiago-Camaçari 14” 
+2.7.  MO-5TP-00090-A – Manual de Operação do gasoduto Santiago -Camaçari 18” 
+2.8.  DE-4717.01-6521-940-WFT-001_Rev. 0 – Perfil do Gasoduto Candeias-Camaçari 12” 
+2.9.  DE-4717.13-6521-940-WFT-001_Rev. 0 – Perfil do Gasoduto Candeias-Camaçari 14” 
+2.10.  DE-4717.04-6521-940-WFT-001_Rev. 0 – Perfil do Gasoduto Santiago-Camaçari 14” 
+2.11.  DE-4717.03-6521-940-WFT-001_Rev. 0 – Perfil do Gasoduto Santiago-Camaçari 18” 
+2.12.  Autorização ANP N° 71 de 22.1.2013 – DOU 23.1.2013 (SCOMP Catu) 
+2.13.  Autorização ANP N° 826 de  12.11.2013 – DOU 13.11.2013 (Candeias) 
+2.14.  Autorização ANP N° 17  de  23.1.2002 – DOU 24.1.2002 (FAFEN-BA) 
+2.15.  Processo ANP n° 48610.010500/2012-40 
+2.16.  RL-ANP-FPL-042_RA - Cálculo de Capacidade da Malha Bahia 
+
+ 
+
+3 
+
+DESCRIÇÃO GERAL DO MODELO 
+
+A  rede  de  gasodutos  Nordeste  Meridional  foi  composta  por  vários  modelos,  de  acordo 
+com a metodologia apresentada na referência 2.1. Ela se liga a malha Nordeste Setentrional no 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+FOLHA
+
+REV.
+
+A 
+
+4  de
+
+21 
+
+- 
+- 
+
+ 
+
+PTR  de  Pilar  e  a  Malha  Sudeste  no  PTR  de  Cacimbas.  O  modelo  em  questão  trata 
+especificamente  da  Malha  Bahia,  composta  pelos  gasodutos  Santiago  Camaçari  14”  e  18”  e 
+Candeias Camaçari 12” e 14”. 
+
+De  acordo com  a  referência  2.4,  o  gasoduto Candeias-Camaçari  12”  liga  a  estação  de 
+distribuição de gás (EDG) de São Francisco (Candeias) à EDG de Camaçari. Ele possui um 
+único ponto de entrega intermediário, o PTE Cexis. 
+
+O gasoduto Candeias-Camaçari 14” foi construído em duas etapas: em 2002 o trecho de 
+Candeias até a EDG Aratu e em 2005 o trecho da EDG Aratu até a EDG Camaçari, possuindo 
+42 km de extensão no total, sendo 15 km da EDG São Francisco (Candeias) à Caboto, 7 km 
+até a EDG Aratu e mais 20 km até a EDG Camaçari (referência 2.5). 
+
+De acordo com a referência 2.6, o gasoduto Santiago-Camaçari 14” foi construído no ano 
+de 1964, iniciou sua operação em 1975, possuindo uma extensão de 32 km, sendo: 3,5 km da 
+EDG de Catu até a Estação Pojuca; 13,7 km até a estação Mata de São João; 9,8 km até a 
+Estação Dias D’Ávila e mais 5 km até a EDG Camaçari. 
+
+O  gasoduto  Santiago-Camaçari  18”  foi  construído  no  ano  de  1983  (referência  2.7)  e 
+começou a operar em 1985, possuindo uma extensão de 32 km, sendo 17 km da EDG Catu até 
+a estação Mata de São João (km 17,2) e mais 14,8 km até a EDG Camaçari (km 32). 
+
+Uma visão geral de todo o sistema está apresentada na Figura 1. O modelo de simulação 
+desenvolvido  compreende  os  dutos  descritos  acima.  Para  o  desenvolvimento  do  modelo  foi 
+utilizado  o  programa  comercial  Pipeline  Simulator  da  EnergySolutions  Inc,  versão  3.4.1.0.  A 
+representação gráfica do modelo está apresentada na Figura 2. 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+FOLHA
+
+REV.
+
+A 
+
+5  de
+
+21 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+Figura 1 – Visão geral da malha Bahia(fonte: tag.petrobras.com.br – adaptado) 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+FOLHA
+
+REV.
+
+A 
+
+6  de
+
+21 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+Figura 2 – Fluxograma do modelo 
+
+ 
+
+ 
+ 
+
+4 
+
+PREMISSAS DE CÁLCULO 
+
+4.1  Condições de Referência 
+
+As  vazões  volumétricas  apresentadas  neste  relatório  utilizam  os  seguintes  valores  de 
+
+pressão e temperatura como referência. 
+
+  Pressão: 1 atm 
+  Temperatura: 20°C 
+
+ 
+
+4.2  Modelo de transferência de calor 
+
+  Coeficiente global de transferência de calor solo-tubo: 1,9 Kcal/hm2°C (valor arbitrado, 
+
+não disponível nos documentos de referência) 
+
+ 
+
+4.3  Temperatura do solo 
+
+  30°C (Valor arbitrado, não disponível nos documentos de referência) 
+
+ 
+
+4.4  Correlações Adotadas 
+
+De  forma  a  seguir  as  orientações  gerais  para  construção  de  modelos  de  simulação 
+computacional  de  gasodutos  apresentadas  na  referência  2.1,  as  seguintes  correlações 
+foram adotadas: 
+
+  Equação de Estado: BWRS 
+  Fator de Atrito: Colebrook 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+TÍTULO: 
+
+ 
+
+ 
+
+ 
+
+FOLHA
+
+REV.
+
+A 
+
+7  de
+
+21 
+
+- 
+- 
+
+4.5  Software utilizado 
+
+  Pipeline Studio versão 3.4.1.0 
+
+ 
+
+4.6  Características do Gás 
+
+As composições apresentadas na Tabela 1 são referentes ao mês de janeiro de 2015 e 
+foram  obtidas  a  partir  dos  sumários  estatísticos  dos  Certificados  de  Qualidade  do  Gás  (Ref. 
+2.15). 
+ 
+
+Tabela 1 – Composição do Gás Natural 
+
+Fonte 
+C1 
+C2 
+C3 
+C4 
+N2 
+CO2 
+
+ 
+
+Pojuca 
+88,30 
+9,35 
+0,21 
+0,00 
+1,00 
+1,14 
+
+4.7  Temperatura ambiente 
+
+Candeias UO-BA 
+
+Manati (EVF) 
+
+89,63 
+4,87 
+0,16 
+0,02 
+4,89 
+0,43 
+
+88,94 
+3,55 
+0,6 
+0,64 
+5,92 
+0,35 
+
+GNL 
+96,82 
+2,74 
+0,31 
+0,1 
+0,03 
+
+0 
+
+  O  valor  de  temperatura  do  solo  adotado  para  todo  o  modelo  foi  de  30  oC  (Valor 
+
+arbitrado, não disponível nos documentos de referência) 
+
+ 
+
+4.8  Viscosidade 
+
+  Dado não disponível nos documentos de referência, utilizou-se a equação para cálculo 
+
+de viscosidade LGE (referência 2.2) 
+
+ 
+ 
+
+5 
+
+CARACTERÍSTICAS DOS SISTEMAS DE GASODUTOS 
+
+5.1  Diâmetro, Espessura e PMOA 
+
+A Tabela 2 apresenta a simplificação dos dutos utilizada nos modelos de simulação, de 
+acordo com cada trecho de duto. Foram ignoradas as variações de espessura devido a trechos 
+alagados  e  passagens  de  rios  para  simplificar  a  elaboração  do  modelo,  sem  afetar 
+significativamente o resultado das simulações. As referências utilizadas para a modelagem dos 
+trechos de dutos foram as 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11 e 2.15. 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+A 
+
+8  de
+
+21 
+
+TÍTULO: 
+
+ 
+
+Gasoduto 
+
+Candeias-Camaçari 12" 
+
+Candeias-Camaçari 14" 
+
+Santiago-Camaçari 14" 
+
+Santiago-Camaçari 18" 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+Tabela 2 - Trechos do Gasodutos 
+
+Duto 
+
+Duto 01 
+Duto 02 
+Duto 01 
+Duto 02 
+Duto 03 
+Duto 01 
+Duto 02 
+Duto 01 
+Duto 02 
+
+Comprimento 
+
+(km desenvolvido) 
+
+Diâmetro 
+
+Nominal (pol) 
+
+25 
+12 
+12 
+11 
+19 
+27 
+5 
+27 
+5 
+
+12 
+12 
+14 
+14 
+14 
+14 
+14 
+18 
+18 
+
+- 
+- 
+
+PMOA 
+(kgf/cm²) 
+
+51 
+51 
+51 
+51 
+51 
+51 
+51 
+51 
+51 
+
+Espessura 
+
+(pol) 
+0,279 
+0,279 
+0,219 
+0,219 
+0,219 
+0,252 
+0,386 
+0,343 
+0,343 
+
+ 
+Nesse  documento,  as  localizações  e  extensões,  expressas  em  km,  referem-se  ao 
+
+comprimento desenvolvido (real), salvo quando disposto em contrário. 
+
+ 
+
+5.2  Perfil Altimétrico 
+
+O  perfil  do  gasoduto  em  estudo  se  encontra  a  seguir.  Este  perfil  foi  simplificado  para 
+tempo  computacional  e  respeitando 
+atender  ao  modelo  de  simulação,  priorizando  o 
+principalmente  as  mudanças  de  espessuras  pertinentes  ao  modelo.  Não  foram  modeladas 
+passagens de rios e situações similares. Os perfis levantados foram baseado nas referências 
+2.4,  2.5,  2.6,  2.7,  2.8,  2.9,  2.10,  2.11  e  2.15.  As  cotas  dos  pontos  notáveis  do  perfil,  como 
+PTEs, PTRs, válvulas, etc, encontram-se nas descrições de cada item. 
+
+ 
+
+ 
+
+Figura 3 - Perfil de elevação – Candeias-Camaçari 12” 
+
+ 
+
+ 
+
+ 
+
+ 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+A 
+
+9  de
+
+21 
+
+- 
+- 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+Figura 4 - Perfil de elevação – Candeias-Camaçari 14” 
+
+Figura 5 - Perfil de elevação – Santiago-Camaçari 14” 
+
+TÍTULO: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+FOLHA
+
+REV.
+
+A 
+
+10  de
+
+21 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+Figura 6 - Perfil de elevação – Santiago-Camaçari 18” 
+
+ 
+
+ 
+
+5.3  Rugosidade 
+
+Tendo  em  vista  o  tempo  de  operação  dos  dutos  e  falta  de  um  valor  disponível  nos 
+documentos  de  referência,  adotou-se  por  hipótese  e  com  base  na  referência  2.2,  o  valor  de 
+0,04572 mm para todos os gasodutos. 
+
+ 
+
+5.4  Pontos de Entrega (PTE) 
+
+A  Tabela  3  apresenta  a  localização,  em  função  do  gasoduto  ou  estação  em  que  se 
+encontram,  e  os  limites  de  projeto  dos  pontos  de  entrega  do  sistema,  de  acordo  com  as 
+referências 2.3, 2.4, 2.5, 2.6, 2.7, 2.12, 2.13, 2.14 e 2.15  
+
+ 
+
+Ponto de 
+Entrega 
+(PTE) 
+
+Catu / EDG Catu 
+Camaçari UTE 
+
+CHESF 
+Camaçari 
+
+Camaçari-Manati 
+
+FAFEN-BA 
+UTE-FAFEN 
+
+Candeias Residual
+Candeias-Manati 
+
+RLAM 6” 
+
+Tabela 3 – Pontos de Entrega 
+
+Gasoduto/ 
+Estação 
+
+Catu 
+
+Camaçari 
+
+Camaçari 
+Camaçari 
+Camaçari 
+Camaçari 
+
+São Fco. do Conde 
+São Fco. do Conde 
+São Fco. do Conde 
+
+Localização na 
+Linha tronco 
+
+(km desenvolvido) 
+
+Elevação 
+
+(m) 
+
+- 
+
+- 
+
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+
+75 
+
+60 
+
+60 
+60 
+60 
+60 
+
+69,25 
+69,25 
+69,25 
+
+Vazão 
+Máxima 
+(m³/d) 
+200.000 
+
+3.100.000 
+
+2.700.000 
+4.200.000 
+2.960.000 
+2.960.000 
+400.000 
+200.000 
+400.000 
+
+Pressão 
+Mínima 
+(kgf/cm²) 
+
+23 
+
+21 
+
+21 
+21 
+21 
+21 
+22 
+22 
+23 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+FOLHA
+
+TÍTULO: 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+ 
+
+Ponto de 
+Entrega 
+(PTE) 
+
+TermoBahia 
+
+Manati 
+Cexis 
+
+Caboto / Dow 
+
+Química 
+
+Aratu-Manati 
+CIA-Salvador 
+
+RLAM 14” 
+
+ 
+
+Gasoduto/ 
+Estação 
+
+Localização na 
+Linha tronco 
+
+(km desenvolvido) 
+
+São Fco. do Conde 
+São Fco. do Conde 
+
+Candeias-Camaçari 12”
+
+Candeias-Camaçari 14”
+
+Candeias-Camaçari 14”
+Candeias-Camaçari 14”
+
+São Fco. do Conde 
+
+- 
+- 
+9 
+
+14,5 
+
+22,95 
+22,95 
+
+- 
+
+Elevação 
+
+(m) 
+
+69,25 
+69,25 
+
+60 
+
+60 
+
+65 
+65 
+
+69,25 
+
+Vazão 
+Máxima 
+(m³/d) 
+
+1.500.000 
+1.500.000 
+
+30.000 
+
+1.200.000 
+
+1.000.000 
+1.000.000 
+2.400.000 
+
+REV.
+
+A 
+
+11  de
+
+21 
+
+- 
+- 
+Pressão 
+Mínima 
+(kgf/cm²) 
+
+23 
+34 
+20 
+
+23 
+
+26 
+26 
+23 
+
+5.5  Pontos de recebimento (PTR) 
+
+O  sistema  possui  2  pontos  de  recebimento  localizados  na  EDG  de  São  Francisco  do 
+Conde: o PTR de Candeias UO-BA e o de Manati EVF e um PTR na EDG de Catu, o PTR de 
+Pojuca..  Para  este  caso,  foi  utilizada  como  condição  de  contorno  apenas  a  pressão  máxima 
+dos gasodutos, que é de 51 kgf/cm², de acordo com as referências 2.1, 2.4, 2.5, 2.6, 2.7 e 2.15. 
+
+ 
+
+5.6  Pontos de Interconexão 
+
+O  sistema  possui  1  único  ponto  de  interconexão,  referente  ao  GNL  do  TRBA, 
+respectivamente.  Para  este  caso,  foi  utilizada  como  condição  de  contorno  tanto  a  pressão 
+máxima dos gasodutos, que é de 51 kgf/cm², como a vazão máxima, de 6 milhões de m³ por 
+dia, de acordo com as referências 2.1, 2.3, 2.4 e 2.15. 
+
+Devido às limitações do programa de simulação, apenas o PTR de Candeias UO-BA foi 
+configurado corretamente, devido as limitações do programa de simulação em possuir múltiplos 
+pontos  de  recebimento  com  configuração  similar  no  mesmo  nó.  Entretanto,  todos  os  PTRs 
+foram introduzidos no modelo, de acordo com a Figura 2. 
+
+ 
+ 
+
+6 
+
+CONDIÇÕES DE CONTORNO 
+
+6.1  Perfil de Consumo 
+
+A  Tabela  4  apresenta  a  distribuição  de  demanda  nos  pontos  de  entrega  utilizada  no 
+modelo.  Os  valores  apresentados  representam  a  média  diária  do  mês  de  janeiro  de  2015, 
+conforme apresentado em http://tag.petrobras.com.br/ > Informações à ANP. 
+
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+FOLHA
+
+REV.
+
+A 
+
+12  de
+
+21 
+
+- 
+- 
+
+TÍTULO: 
+
+ 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+Tabela 4 - Perfil de Consumo 
+Pontos de 
+
+Vazão Média 
+Jan/15 (m3/d) 
+
+Entrega (PTE) 
+Catu / EDG Catu 
+
+Camaçari UTE CHESF 
+
+Camaçari 
+
+Camaçari-Manati 
+
+FAFEN-BA 
+UTE-FAFEN 
+
+Candeias Residual 
+Candeias-Manati 
+
+RLAM 6” 
+
+TermoBahia 
+
+Manati 
+Cexis 
+
+Caboto / Dow Química 
+
+Aratu-Manati 
+CIA-Salvador 
+
+RLAM 14” 
+
+54.961 
+
+2.063.086 
+402.071 
+495.582 
+1.173.588 
+604.857 
+199.839 
+
+56 
+18 
+
+1.138.658 
+
+0 
+
+6.846 
+173.363 
+
+0 
+
+233.884 
+569.222 
+
+ 
+
+6.2  Máxima Pressão Admissível de Operação 
+
+A PMOA do sistema pode ser observada na Tabela 2. 
+ 
+
+6.3  Pressão de Entrega Nominal Contratual 
+
+A Tabela 3, apresentada no item 5.4, apresenta as pressões mínimas de cada ponto de 
+entrega, de acordo com a referência 2.4. Por questões relacionadas a operação do programa 
+utilizado para o desenvolvimento do modelo, quando ocorre mais de um ponto de entrega num 
+mesmo local (nó), somente é possível fixar o limite de pressão mínima em um deles. Nesse 
+caso, quando diferentes, o limite escolhido foi o de maior pressão mínima contratual. 
+
+ 
+ 
+
+7 
+
+RESULTADOS DA SIMULAÇÃO 
+
+As  pressões  nos  diversos  pontos  de  entrega  estão  apresentadas  na  Tabela  5.  A 
+distribuição de pressão e vazão da linha tronco para a condição média de janeiro de 2015 é 
+apresentada entre a Figura 7 e a Figura 10. 
+
+Deve-se  ressaltar  que  os  resultados  das  simulações  que  detalham  as  capacidades  de 
+
+transporte e disponível encontram-se na referência 2.16. 
+
+ 
+
+ 
+
+ 
+
+TÍTULO: 
+
+ 
+
+Ponto de 
+Entrega 
+(PTE) 
+
+Catu / EDG Catu 
+
+Camaçari UTE CHESF 
+
+Camaçari 
+
+Camaçari-Manati 
+
+FAFEN-BA 
+UTE-FAFEN 
+
+Candeias Residual 
+Candeias-Manati 
+
+RLAM 6” 
+
+TermoBahia 
+
+Manati 
+Cexis 
+
+Gasoduto/ 
+Estação 
+
+Catu 
+
+Camaçari 
+Camaçari 
+Camaçari 
+Camaçari 
+Camaçari 
+
+São Fco. do Conde 
+São Fco. do Conde 
+São Fco. do Conde 
+São Fco. do Conde 
+São Fco. do Conde 
+
+Localização na 
+Linha tronco 
+
+(km desenvolvido) 
+
+Elevação 
+
+(m) 
+
+Pressão 
+(kgf/cm²) 
+
+Na estação 
+Na estação 
+Na estação 
+Na estação 
+Na estação 
+Na estação 
+Na estação 
+Na estação 
+Na estação 
+Na estação 
+Na estação 
+
+12 
+12 
+
+22,95 
+22,95 
+
+75 
+60 
+60 
+60 
+60 
+60 
+
+69,25 
+69,25 
+69,25 
+69,25 
+69,25 
+
+60 
+60 
+65 
+65 
+
+51,00 
+50,09 
+50,09 
+50,09 
+50,09 
+50,09 
+51,00 
+51,00 
+51,00 
+51,00 
+51,00 
+50,73 
+50,60 
+50,30 
+50,30 
+51,00 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+Tabela 5 - Pressões nos PTEs 
+
+FOLHA
+
+REV.
+
+A 
+
+13  de
+
+21 
+
+- 
+- 
+
+Candeias-Camaçari 14” 
+Caboto / Dow Química  Candeias- Camaçari 12”
+Candeias- Camaçari 12”
+Candeias- Camaçari 12”
+
+Aratu-Manati 
+CIA-Salvador 
+
+RLAM 14” 
+
+São Fco. do Conde 
+
+Na estação 
+
+69,25 
+
+ 
+
+ 
+
+Figura 7 – Perfil de pressão, vazão e elevação – Candeias-Camaçari 12” 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+FOLHA
+
+REV.
+
+A 
+
+14  de
+
+21 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 8 – Perfil de pressão, vazão e elevação – Candeias-Camaçari 14” 
+
+Figura 9 – Perfil de pressão, vazão e elevação – Santiago-Camaçari 14” 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+FOLHA
+
+REV.
+
+A 
+
+15  de
+
+21 
+
+- 
+- 
+
+Figura 10 – Perfil de pressão, vazão e elevação – Santiago-Camaçari 18” 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+FOLHA
+
+REV.
+
+A 
+
+16  de
+
+21 
+
+- 
+- 
+
+8  ANEXOS 
+8.1  “STEADY STATE REPORT” DO MODELO 
+ 
+                           ******************************************************************************* 
+                           *                                  SIMULACAO                                  * 
+                           ******************************************************************************* 
+ 
+ 
+                                          * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                          *                                               * 
+                                          *      Default Initial Values Selected:         * 
+                                          *                                               * 
+                                          *      Pressure ................    51.000      * 
+                                          *      Flow ....................   429.825      * 
+                                          *      Temperature .............    30.000      * 
+                                          *      % Nitrogen ..............     2.945      * 
+                                          *      % Carbon Dioxide ........     0.785      * 
+                                          *      % Methane ...............    88.965      * 
+                                          *      % Ethane ................     7.110      * 
+                                          *      % Propane ...............     0.185      * 
+                                          *      % i-Butane ..............     0.010      * 
+                                          *                                               * 
+                                          * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                       *                                                     * 
+                                       *                 Problem Size Report                 * 
+                                       *                                                     * 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                       *                                                     * 
+                                       *                                 Number   Maximum    * 
+                                       *                                  Used    Allowed    * 
+                                       *                                 ------   -------    * 
+                                       *                                                     * 
+                                       *     External Regulators            20      5000     * 
+                                       *     Equipment Devices               3      3000     * 
+                                       *     Drivers/Turbines                0       500     * 
+                                       *     Legs                            9     10000     * 
+                                       *     Nodes                          11     20000     * 
+                                       *     Knots                         118     30000     * 
+                                       *     Stations                        0       500     * 
+                                       *     Banks                           0      1000     * 
+                                       *     Groups                          0      1000     * 
+                                       *     Plants                          0        10     * 
+                                       *     Compressor Perf Types           0       500     * 
+                                       *     Driver/Turb Perf Types          0       500     * 
+                                       *     Cylinder Types                  0       500     * 
+                                       *     Fluids                          4       100     * 
+                                       *     Qualities                      12        26     * 
+                                       *                                                     * 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+                           ******************************************************************************* 
+                           *                      Steady State Convergence Summary                       * 
+                           ******************************************************************************* 
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+FOLHA
+
+REV.
+
+A 
+
+17  de
+
+21 
+
+- 
+- 
+
+                 ================================================================================================== 
+                                              Greatest       Greatest        Greatest                    
+                 Iteration     Tolerance     Hydraulic      Temperature     Composition           Associated 
+                  Number       Requested     Adjustment     Adjustment      Adjustment              Device 
+                 ---------     ---------     ----------     -----------     -----------     ----------------------- 
+                      0        0.0001000      0.8692460      0.0000000       0.0000000      Xreg  PTR_CANDEIAS 
+                      1        0.0001000      0.2235552      0.0000000       0.0000000      Equip EST._CATU 
+                      2        0.0001000      0.0098312      0.0000000       0.0000000      Equip EST._CAMAÇARI 
+                      3        0.0001000      0.0002135      0.0000000       0.0000000      Equip EST._CATU 
+                      4        0.0001000      0.0000044      0.0000686       0.0000000      TNODE NODE007 
+                                                     DPMX increased to 9764.8564 
+                      5        0.0001000      0.0174731      0.0000686       0.0000000      FLUX  NODE001 
+                      6        0.0001000      0.0074137      0.0000266       0.0000000      Xreg  PTR_POJUCA 
+                      7        0.0001000      0.0001145      0.0000266       0.0000000      Xreg  PTR_CANDEIAS 
+                      8        0.0001000      0.0000024      0.0000100       0.0000064      TNODE NODE007 
+                      9        0.0001000      0.0000022      0.0000006       0.0000001      Pipe  SANCAM18_PIPE02 
+ 
+ 
+                           ******************************************************************************* 
+                           *                                  SIMULACAO                                  * 
+                           ******************************************************************************* 
+ 
+ 
+                           ******************************************************************************* 
+                           *                         Reference Conditions Report                         * 
+                           ******************************************************************************* 
+ 
+ 
+                                              Reference Pressure        =     0.00  KG/CM2G 
+                                              Reference Temperature     =    20.00 (DEG C ) 
+ 
+ 
+                           ******************************************************************************* 
+                           * Leg Hydraulic Summary Report        -----        Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                 ================================================================================================== 
+                                          Pressure                   Flow                Line         Temperature 
+                                           KG/CM2G                 (KSM3/D)              Pack           (DEG C ) 
+                     Leg ID            Head      Tail          Head        Tail        ( KSM3 )       Head    Tail 
+                 ---------------     --------  --------     ----------  ----------     ---------     ------  ------ 
+                 CANCAM12_PIPE01        50.73     50.09        589.339     589.339       99.2415      29.97   29.95 
+                 CANCAM12_PIPE02        51.00     50.73        596.184     596.185       48.0851      30.00   29.97 
+                 CANCAM14_PIPE01        51.00     50.60        941.476     941.476       59.4228      30.00   29.94 
+                 CANCAM14_PIPE02        50.60     50.30        768.113     768.113       54.0832      29.94   29.92 
+                 CANCAM14_PIPE03        50.30     50.09        534.229     534.229       92.9047      29.92   29.98 
+                 SANCAM14_PIPE01        51.00     50.34        833.349     833.349      134.1233      30.00   29.96 
+                 SANCAM14_PIPE02        50.34     50.09        833.348     833.349       23.6373      29.96   29.85 
+                 SANCAM18_PIPE01        51.00     50.32       1609.853    1609.853      220.7209      30.00   29.95 
+                 SANCAM18_PIPE02        50.32     50.09       1609.853    1609.853       40.4928      29.95   29.83 
+ 
+ 
+                           ******************************************************************************* 
+                           * Equipment Hydraulic Report         -----         Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+                                             ::  Equipment Hydraulic Summary Report  :: 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+FOLHA
+
+REV.
+
+A 
+
+18  de
+
+21 
+
+- 
+- 
+
+           =============================================================================================================== 
+                                                   Pressure                          Temperature                  Heating 
+             Equipment         Mode of              KG/CM2G             Flow           (DEG C )         Spc        Value 
+                ID             Control           Up       Down        (KSM3/D)        Up     Down       Grv       ( MJ/M3) 
+           -------------     ------------     --------  --------     ----------     ------  ------     ------     -------- 
+           EST._CAMAÇARI     Block Valve         50.09     50.09         696.68      29.86   29.89     0.6130        38.32 
+           EST._CATU         Block Valve         51.00     51.00        1664.81      30.00   30.00     0.6164        38.98 
+           EST_CANDEIAS      Block Valve         51.00     51.00        2905.20      30.00   30.00     0.6037        36.54 
+ 
+ 
+                                    ============================================================= 
+                                                       Current       Accumulated         Timer 
+                                      Equipment       Flow Rate         Volume           Value 
+                                         ID            (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                    -------------     ----------     ------------     ----------- 
+                                    EST._CAMAÇARI         696.68             0.00           0.000 
+                                    EST._CATU            1664.81             0.00           0.000 
+                                    EST_CANDEIAS         2905.20             0.00           0.000 
+ 
+ 
+                           ******************************************************************************* 
+                           * External Regulator Hydraulic Report    -----     Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                           :::::::::::::::::::::::::::::::::::::::::::::: 
+                                           ::  External Regulator Flow Balance Report  :: 
+                                           :::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                      ========================================================= 
+                                                               Mass Units      Volumetric Units 
+                                                                (TONN/H)           (KSM3/D) 
+                                      --------------------     -----------     ---------------- 
+                                      Total input flow             183.838          6017.544 
+                                      Total output flow            183.838          6017.544 
+                                      Network flow balance           0.000             0.000 
+ 
+ 
+                                         ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                         ::  External Regulator Hydraulic Summary Report  :: 
+                                         ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+              ======================================================================================================== 
+                  External                                                                       Specific     Heating 
+                  Regulator           Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                     ID               Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+              -----------------     ------------     --------     ----------     -----------     --------     -------- 
+              ARATU_-_MANATI        Max Flow            50.30          0.000        29.92         0.6037         36.54 
+              CAMACARI_MANATI       Max Flow            50.09        495.582        29.86         0.6130         38.32 
+              CAMAÇARI              Max Flow            50.09        402.071        29.86         0.6130         38.32 
+              CANDEIAS_MANATI       Max Flow            51.00         56.000        30.00         0.6037         36.54 
+              CANDEIAS_RESIDUAL     Max Flow            51.00        199.839        30.00         0.6037         36.54 
+              CEXIS                 Max Flow            50.73          6.846        29.97         0.6037         36.54 
+              CIA_SALVADOR          Max Flow            50.30        233.884        29.92         0.6037         36.54 
+              DOW_QUÍMICA           Max Flow            50.60        173.363        29.94         0.6037         36.54 
+              EDG_CATU              Max Flow            51.00         54.961        30.00         0.6164         38.98 
+              FAFEN-BA              Max Flow            50.09          1.173        29.89         0.6120         38.13 
+              GNL_TRBA              Max Flow            51.00          0.000        30.00         0.5718         38.06 
+              MANATI                Max Flow            51.00          0.000        30.00         0.6037         36.54 
+              MANATI_EVF            Max Flow            51.00          0.000        30.00         0.6141         36.57 
+              PTR_CANDEIAS          Max Pres            51.00      -3519.382        30.00         0.6037         36.54 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+FOLHA
+
+REV.
+
+A 
+
+19  de
+
+21 
+
+- 
+- 
+
+              PTR_POJUCA            Max Pres            51.00      -2498.163        30.00         0.6164         38.98 
+              RLAM_14               Max Flow            51.00        569.222        30.00         0.6037         36.54 
+              RLAM_6                Max Flow            51.00         18.000        30.00         0.6037         36.54 
+              TERMOBAHIA            Max Flow            51.00       1138.660        30.00         0.6037         36.54 
+              UTE-FAFEN             Max Flow            50.09        604.857        29.86         0.6130         38.32 
+              UTE_CAMAÇARI          Max Flow            50.09       2063.086        29.89         0.6120         38.13 
+ 
+ 
+                                  ================================================================ 
+                                      External           Current      Accumulated         Timer 
+                                      Regulator         Flow Rate        Volume           Value 
+                                         ID             (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                  -----------------     ---------     ------------     ----------- 
+                                  ARATU_-_MANATI            0.000            0.000           0.000 
+                                  CAMACARI_MANATI         495.582            0.000           0.000 
+                                  CAMAÇARI                402.071            0.000           0.000 
+                                  CANDEIAS_MANATI          56.000            0.000           0.000 
+                                  CANDEIAS_RESIDUAL       199.839            0.000           0.000 
+                                  CEXIS                     6.846            0.000           0.000 
+                                  CIA_SALVADOR            233.884            0.000           0.000 
+                                  DOW_QUÍMICA             173.363            0.000           0.000 
+                                  EDG_CATU                 54.961            0.000           0.000 
+                                  FAFEN-BA                  1.173            0.000           0.000 
+                                  GNL_TRBA                  0.000            0.000           0.000 
+                                  MANATI                    0.000            0.000           0.000 
+                                  MANATI_EVF                0.000            0.000           0.000 
+                                  PTR_CANDEIAS          -3519.382            0.000           0.000 
+                                  PTR_POJUCA            -2498.163            0.000           0.000 
+                                  RLAM_14                 569.222            0.000           0.000 
+                                  RLAM_6                   18.000            0.000           0.000 
+                                  TERMOBAHIA             1138.660            0.000           0.000 
+                                  UTE-FAFEN               604.857            0.000           0.000 
+                                  UTE_CAMAÇARI           2063.086            0.000           0.000 
+ 
+ 
+                                     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                     ::  Supply External Regulator Hydraulic Summary Report  :: 
+                                     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                 =================================================================================================== 
+                    Supply                                                                     Specific     Heating 
+                     Xreg           Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                      ID            Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+                 ------------     ------------     --------     ----------     -----------     --------     -------- 
+                 GNL_TRBA         Max Flow            51.00          0.000        30.00         0.5718         38.06 
+                 MANATI_EVF       Max Flow            51.00          0.000        30.00         0.6141         36.57 
+                 PTR_CANDEIAS     Max Pres            51.00      -3519.382        30.00         0.6037         36.54 
+                 PTR_POJUCA       Max Pres            51.00      -2498.163        30.00         0.6164         38.98 
+ 
+ 
+                                    ============================================================ 
+                                       Supply         Current       Accumulated         Timer 
+                                        Xreg         Flow Rate         Volume           Value 
+                                         ID           (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                    ------------     ----------     ------------     ----------- 
+                                    GNL_TRBA              0.000            0.000           0.000 
+                                    MANATI_EVF            0.000            0.000           0.000 
+                                    PTR_CANDEIAS      -3519.382            0.000           0.000 
+                                    PTR_POJUCA        -2498.163            0.000           0.000 
+ 
+ 
+                                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+FOLHA
+
+REV.
+
+A 
+
+20  de
+
+21 
+
+- 
+- 
+
+                                    ::  Delivery External Regulator Hydraulic Summary Report  :: 
+                                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+              ======================================================================================================== 
+                  Delivery                                                                       Specific     Heating 
+                    Xreg              Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                     ID               Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+              -----------------     ------------     --------     ----------     -----------     --------     -------- 
+              ARATU_-_MANATI        Max Flow            50.30          0.000        29.92         0.6037         36.54 
+              CAMACARI_MANATI       Max Flow            50.09        495.582        29.86         0.6130         38.32 
+              CAMAÇARI              Max Flow            50.09        402.071        29.86         0.6130         38.32 
+              CANDEIAS_MANATI       Max Flow            51.00         56.000        30.00         0.6037         36.54 
+              CANDEIAS_RESIDUAL     Max Flow            51.00        199.839        30.00         0.6037         36.54 
+              CEXIS                 Max Flow            50.73          6.846        29.97         0.6037         36.54 
+              CIA_SALVADOR          Max Flow            50.30        233.884        29.92         0.6037         36.54 
+              DOW_QUÍMICA           Max Flow            50.60        173.363        29.94         0.6037         36.54 
+              EDG_CATU              Max Flow            51.00         54.961        30.00         0.6164         38.98 
+              FAFEN-BA              Max Flow            50.09          1.173        29.89         0.6120         38.13 
+              MANATI                Max Flow            51.00          0.000        30.00         0.6037         36.54 
+              RLAM_14               Max Flow            51.00        569.222        30.00         0.6037         36.54 
+              RLAM_6                Max Flow            51.00         18.000        30.00         0.6037         36.54 
+              TERMOBAHIA            Max Flow            51.00       1138.660        30.00         0.6037         36.54 
+              UTE-FAFEN             Max Flow            50.09        604.857        29.86         0.6130         38.32 
+              UTE_CAMAÇARI          Max Flow            50.09       2063.086        29.89         0.6120         38.13 
+ 
+ 
+                                  ================================================================= 
+                                      Delivery           Current       Accumulated         Timer 
+                                        Xreg            Flow Rate         Volume           Value 
+                                         ID              (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                  -----------------     ----------     ------------     ----------- 
+                                  ARATU_-_MANATI             0.000            0.000           0.000 
+                                  CAMACARI_MANATI          495.582            0.000           0.000 
+                                  CAMAÇARI                 402.071            0.000           0.000 
+                                  CANDEIAS_MANATI           56.000            0.000           0.000 
+                                  CANDEIAS_RESIDUAL        199.839            0.000           0.000 
+                                  CEXIS                      6.846            0.000           0.000 
+                                  CIA_SALVADOR             233.884            0.000           0.000 
+                                  DOW_QUÍMICA              173.363            0.000           0.000 
+                                  EDG_CATU                  54.961            0.000           0.000 
+                                  FAFEN-BA                   1.173            0.000           0.000 
+                                  MANATI                     0.000            0.000           0.000 
+                                  RLAM_14                  569.222            0.000           0.000 
+                                  RLAM_6                    18.000            0.000           0.000 
+                                  TERMOBAHIA              1138.660            0.000           0.000 
+                                  UTE-FAFEN                604.857            0.000           0.000 
+                                  UTE_CAMAÇARI            2063.086            0.000           0.000 
+ 
+ 
+                           ******************************************************************************* 
+                           * Node Mass Balance Error Report       -----       Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                                Threshold Level =     0.0100 (KSM3/D) 
+                                                No Mass Balance Errors above Threshold 
+ 
+ 
+                                               ::::::::::::::::::::::::::::::::::::::: 
+                                               ::  Pressure/Flow Violation Reports  :: 
+                                               ::::::::::::::::::::::::::::::::::::::: 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-041 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+FOLHA
+
+REV.
+
+A 
+
+21  de
+
+21 
+
+- 
+- 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de 
+Simulação da Malha Bahia 
+
+ 
+                                               ALL XREGS FALL WITHIN PRESSURE BOUNDS 
+                                             ALL EQUIPMENT FALL WITHIN PRESSURE BOUNDS 
+                                         ALL INTERNAL LEG KNOTS FALL WITHIN PRESSURE BOUNDS 
+ 
+ 
+                                            ::::::::::::::::::::::::::::::::::::::::::::: 
+                                            ::  Setpoint/Constraint Violation Reports  :: 
+                                            ::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                            ALL XREGS COMPLY WITH MONITORED CONSTRAINTS 
+                                          ALL EQUIPMENT COMPLY WITH MONITORED CONSTRAINTS 
+ 
+ 
+                      TRANSIENT GAS NETWORK MODEL (TGNET) 
+                       RELEASE 7.6  LEVEL 00  30-SEP-2008 
+ 
+                             STEADY-STATE MODULE 
+
+ 
+
+ 
+
+ 
+
+

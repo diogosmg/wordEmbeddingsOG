@@ -1,0 +1,2322 @@
+CLIENTE: 
+
+PROGRAMA: 
+
+TÍTULO: 
+
+ 
+
+RELATÓRIO  
+ANP – AGÊNCIA NACIONAL DO PETRÓLEO, GÁS NATURAL E 
+
+RL-ANP-FPL-022 
+1 
+
+FOLHA: 
+
+Nº: 
+
+BIOCOMBUSTÍVEIS 
+
+de
+
+26 
+
+Urucu-Manaus 
+
+Documentação do Modelo de Simulação do 
+
+Gasoduto Urucu-Manaus 
+
+- 
+- 
+- 
+
+Faculdades Católicas – PUC-Rio – SIMDUT 
+
+ÍNDICE DE REVISÕES 
+
+REV. 
+
+DESCRIÇÃO E/OU FOLHAS ATINGIDAS 
+
+0 
+A 
+B 
+C 
+
+EMISSÃO ORIGINAL 
+REVISÃO APÓS COMENTÁRIOS DA ANP/SCM 
+PADRONIZAÇÃO DOS RELATÓRIOS 
+ACERTO DE REFERÊNCIAS CRUZADAS DAS FIGURAS 
+
+ 
+
+REV. 0 
+
+REV. A 
+
+REV. B 
+
+REV. C 
+
+REV. D 
+
+REV. E 
+
+REV. F 
+
+REV. G 
+
+REV. H 
+
+ANP 
+
+ANP 
+
+ANP 
+
+16/04/2015 10/06/2015  04/08/2015 24/08/2015
+
+DATA 
+PROJETO 
+EXECUÇÃO 
+VERIFICAÇÃO 
+APROVAÇÃO 
+AS INFORMAÇÕES DESTE DOCUMENTO SÃO PROPRIEDADE DA ANP, SENDO PROIBIDA A UTILIZAÇÃO FORA DA SUA FINALIDADE. 
+ 
+
+P. Krause  P. Krause  P. Krause 
+I.Patrocinio I.Patrocinio 
+
+P. Krause 
+I.Patrocinio I.Patrocinio
+L. Pires 
+
+L. Pires 
+
+ANP 
+
+L. Pires 
+
+L. Pires 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+ÍNDICE 
+
+ 
+ 
+
+FOLHA
+
+REV. C 
+
+2  de
+
+26 
+
+- 
+- 
+
+ 
+
+1  OBJETIVO _______________________________________________________________ 4 
+2  DOCUMENTOS DE REFERÊNCIA ____________________________________________ 4 
+3  DESCRIÇÃO GERAL DO MODELO ___________________________________________ 5 
+4  PREMISSAS DE CÁLCULO  _________________________________________________ 6 
+CONDIÇÕES DE REFERÊNCIA ___________________________________________ 6 
+4.1 
+
+4.2 
+
+4.3 
+
+4.4 
+
+4.5 
+
+4.6 
+
+4.7 
+
+4.8 
+
+MODELO DE TRANSFERÊNCIA DE CALOR _________________________________ 7 
+
+TEMPERATURA DO SOLO _______________________________________________ 7 
+
+CORRELAÇÕES ADOTADAS _____________________________________________ 7 
+
+SOFTWARE UTILIZADO _________________________________________________ 7 
+
+CARACTERÍSTICAS DO GÁS _____________________________________________ 7 
+
+TEMPERATURA AMBIENTE ______________________________________________ 7 
+
+VISCOSIDADE _________________________________________________________ 8 
+
+5  CARACTERÍSTICAS DO SISTEMA DE GASODUTOS  ____________________________ 8 
+5.1 
+DIÂMETRO, ESPESSURA E PMOA ________________________________________ 8 
+
+5.2 
+
+5.3 
+
+5.4 
+
+5.5 
+
+5.6 
+
+5.7 
+
+PERFIL ALTIMÉTRICO __________________________________________________ 9 
+
+RUGOSIDADE _________________________________________________________ 9 
+
+ESTAÇÕES DE REDUÇÃO DE PRESSÃO (ERP) _____________________________ 9 
+
+PONTOS DE ENTREGA (PTE) ___________________________________________ 10 
+
+ESTAÇÕES DE COMPRESSÃO __________________________________________ 10 
+
+PONTOS DE RECEBIMENTO ____________________________________________ 11 
+
+6  CONDIÇÕES DE CONTORNO ______________________________________________ 11 
+6.1 
+PERFIL DE CONSUMO _________________________________________________ 11 
+
+6.2 
+
+6.3 
+
+6.4 
+
+MÁXIMA PRESSÃO ADMISSÍVEL DE OPERAÇÃO ___________________________ 12 
+
+CONDIÇÕES OPERACIONAIS DAS ESTAÇÕES DE COMPRESSÃO ____________ 12 
+
+PRESSÃO DE ENTREGA NOMINAL CONTRATUAL __________________________ 12 
+
+7  RESULTADOS DA SIMULAÇÃO _____________________________________________ 12 
+8  ANEXOS  _______________________________________________________________ 19 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+FOLHA
+
+REV. C 
+
+3  de
+
+26 
+
+- 
+- 
+
+TÍTULO: 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+ 
+“STEADY STATE REPORT” DO MODELO __________________________________ 19 
+
+do Gasoduto Urucu-Manaus 
+
+ 
+
+8.1 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+FOLHA
+
+REV. C 
+
+4  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+OBJETIVO 
+
+ 
+
+1 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+Documentar  as  informações  necessárias  para  a  criação  do  modelo  computacional  do 
+gasoduto Urucu-Manaus (GARSOL-GASCOM) e apresentar as características físicas e valores 
+limites de projeto dos diversos elementos que compõe o modelo de simulação termo-hidráulica. 
+Permitindo, assim, a reprodutibilidade do modelo por qualquer interessado. 
+
+O  modelo  foi  criado  para  o  programa  de  simulação  PipelineStudio  versão  3.4.1.0  da 
+
+Energy Solutions. 
+
+ 
+ 
+
+2 
+
+DOCUMENTOS DE REFERÊNCIA 
+
+Os  documentos  técnicos  codificados  utilizados  como  referência  para  elaboração  do 
+
+Relatório são: 
+
+ 
+
+2.1  RT-PSL-12.09_Rev.B  –  Relatório  de  Simulação  Termo-hidrálica  do  Sistema  Urucu-
+
+Coari-Manaus 
+
+2.2  MO-5TP-00151-0 – Manual de Operação do GARSOL 
+2.3  MO-5TP-00152-0 – Manual de Operação do GASCOM e Ramais 
+2.4  RL-ANP-FPL-006_Rev.B – Definição dos Requisitos para os Programas de Simulação 
+2.5  RL-ANP-FPL-007_Rev.A  –  Avaliação  de  variáveis  de  simulação  computacional  de 
+
+gasodutos 
+
+2.6  RL-ANP-FPL-009_Rev.E  –  Estudo  das  Condições  de  Contorno  para  o  Cálculo  de 
+
+Capacidade 
+
+2.7  DE-4450.81-6521-941-ICZ-001_Rev.0  –  GARSOL  18"  (Urucu-Coari)  Perfil,  Diagrama 
+
+de TH, Classe de Locação e Pressões Admissíveis 
+
+2.8  DE-4719.02-6521-948-AJJ-001 a 196 e DE-4719.02-6521-948-GCZ-001 a 178 – Perfil 
+
+do Gasoduto Coari-Manaus 
+
+2.9  DE-4719.03-6521-948-AJJ-001 a 027 – Perfil do Ramal de Coari 
+2.10  DE-4719.04-6521-948-AJJ-001 a 021 – Perfil do Ramal de Codajás 
+2.11  DE-4719.05-6521-948-AJJ-001 a 028 – Perfil do Ramal de Anori 
+2.12  DE-4719.06-6521-948-GCZ-001 a 024 – Perfil do Ramal de Anamã 
+2.13  DE-4719.07-6521-948-GCZ-001 a 007 – Perfil do Ramal de Caapiranga 
+2.14  DE-4719.08-6521-948-GCZ-001 a 008 – Perfil do Ramal de Manacapuru 
+2.15  DE-4719.09-6521-948-GCZ-001 a 008 – Perfil do Ramal de Iranduba 
+2.16  DE-4719.10-6521-948-RIX-001 a 018 – Perfil do Ramal de Aparecida 
+2.17  DE-4719.11-6521-948-RIX-001 a 004 – Perfil do Ramal de Mauá 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+5  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+ 
+
+2.18 
+I-DE-4451.07-6270-944-PEN-001 rev. A 
+2.19  DE-4451.26-6270-944-FRB-001 REV.G 
+2.20  Processo ANP n° 48610.010500/2012-40 
+2.21  RL-ANP-FPL-023_RC - Cálculo de Capacidade do Gasoduto Urucu-Manaus 
+
+ 
+ 
+
+3 
+
+DESCRIÇÃO GERAL DO MODELO 
+
+Segundo as referências 2.2 e 2.3, o sistema Urucu-Coari-Manaus é composto pelo trecho 
+Urucu-Coari, com 18 polegadas de diâmetro nominal e 278,8 km de extensão, e pelo trecho 
+Coari-Manaus, com diâmetro nominal de 20 polegadas e 382,5 km de extensão. Este sistema 
+interliga o Pólo de Processamento de Arara, onde é processado o gás da Província Petrolífera 
+de  Urucu,  ao  Pólo  Industrial  de  Manaus  e  possui  9  ramais  diretamente  interligados  à  linha 
+tronco, que totalizam 139,3 km de extensão, além das Estações de Compressão (ECOMPs) de 
+Juaruna e Coari. Uma visão geral do sistema está apresentada na Figura 1.  
+
+O  modelo  de  simulação  desenvolvido  compreende  o  trecho  desde  Urucu  (km  zero)  até 
+Manaus, incluindo todos os ramais existentes no sistema. Nesse documento, as localizações e 
+extensões,  expressas  em  km,  referem-se  ao  comprimento  desenvolvido  (real),  salvo  quando 
+disposto em contrário. 
+
+Para o desenvolvimento do modelo foi utilizado o programa comercial Pipeline Simulator 
+da EnergySolutions Inc, versão 3.4.1.0. A representação gráfica do modelo está apresentada 
+na Figura 2. 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+6  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+ 
+
+ 
+ 
+
+ 
+
+Figura 1 – Visão geral do gasoduto Urucu-Manaus (fonte: tag.petrobras.com.br) 
+
+Figura 2 - Fluxograma do modelo do gasoduto Urucu-Manaus 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+4 
+
+PREMISSAS DE CÁLCULO 
+
+4.1  Condições de Referência 
+
+As  vazões  volumétricas  apresentadas  neste  relatório  utilizam  os  seguintes  valores  de 
+
+pressão e temperatura como referência. 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+FOLHA
+
+REV. C 
+
+7  de
+
+26 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+TÍTULO: 
+
+ 
+
+ 
+
+  Pressão: 1 atm 
+  Temperatura: 20°C 
+
+ 
+
+4.2  Modelo de transferência de calor 
+
+  Coeficiente de transferência de calor global solo-tubo: 1,9 Kcal/hm2°C (valor arbitrado, 
+
+não disponível nos documentos de referência) 
+
+ 
+
+4.3  Temperatura do solo 
+
+  Valor médio baseado nos dados apresentados na referência 2.1: 31,5°C 
+
+ 
+
+4.4  Correlações Adotadas 
+
+De  forma  a  seguir  as  orientações  gerais  para  construção  de  modelos  de  simulação 
+computacional  de  gasodutos  apresentadas  na  referência  2.6,  as  seguintes  correlações 
+foram adotadas: 
+
+  Equação de Estado: BWRS 
+  Fator de Atrito: Colebrook 
+ 
+
+4.5  Software utilizado 
+
+  Pipeline Studio versão 3.4.1.0 
+
+ 
+
+4.6  Características do Gás 
+
+As composições apresentadas na Tabela 1 são referentes ao mês de janeiro de 2015 e 
+foram  obtidas  a  partir  dos  sumários  estatísticos  dos  Certificados  de  Qualidade  do  Gás  (Ref. 
+2.20). 
+ 
+
+Tabela 1 – Composição do Gás Natural 
+
+Fonte 
+C1 
+C2 
+C3 
+C4 
+N2 
+CO2 
+
+Urucu 
+74,29 
+10,46 
+0,42 
+0,00 
+14,67 
+0,16 
+
+ 
+
+4.7  Temperatura ambiente 
+
+  Valor médio baseado nos dados apresentados na referência 2.1: 31,5°C 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+FOLHA
+
+REV. C 
+
+8  de
+
+26 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+TÍTULO: 
+
+ 
+
+4.8  Viscosidade 
+
+ 
+
+ 
+
+Informação  não  disponível  nos  documentos  de  referência,  utilizou-se  a  equação  para 
+cálculo de viscosidade LGE (referência 2.6) 
+
+ 
+ 
+
+5 
+
+CARACTERÍSTICAS DO SISTEMA DE GASODUTOS 
+
+5.1  Diâmetro, Espessura e PMOA 
+
+Com 661 km de extensão, o gasoduto Urucu-Coari–Manaus, composto pelo GARSOL no 
+trecho  Urucu-Coari  com  278,8  km,  e  GASCOM,  no  trecho  Coari-Manaus  com  382,5  km, 
+permitirá levar ao mercado o gás natural produzido na Bacia do Solimões, no Amazonas. Com 
+reserva de 52,8 bilhões de metros cúbicos, o Amazonas detém a segunda maior reserva de 
+gás natural do país, atrás apenas do Rio de Janeiro. 
+
+A  operação  do  gasoduto  GARSOL  liga  o  Pólo  Arara  à  Coari,  passando  por  áreas 
+intermediárias,  como  Juaruna.  O  gasoduto,  que  possui  278,8  km  de  comprimento  e  18”  de 
+diâmetro,  é  responsável  pelo  transporte  do  gás  natural  e  permite  operar  apenas  no  sentido 
+Urucu – Coari. 
+
+A  operação  do  gasoduto  GASCOM  liga  Coari  à  REMAN,  em  Manaus,  passando  por 
+diversas  áreas  intermediárias,  como  Codajás,  Anori,  Anamã,  Caapiranga,  Manacapuru  e 
+Iranduba.  O  gasoduto,  que  possui  382,5  km  de  comprimento  e  possui  20”  de  diâmetro,  é 
+responsável  pelo  transporte  do  gás  natural  e  permite  operar  apenas  no  sentido  Coari  – 
+Manaus. 
+
+A  Tabela  2  apresenta  a  simplificação  dos  dutos  utilizada  no  modelo  de  simulação,  de 
+acordo  com  cada  trecho  dos  dutos.  Foram  ignoradas  as  variações  de  espessura  devido  a 
+trechos  alagados  e  passagens  de  rios  para  simplificar  a  elaboração  do  modelo,  sem  afetar 
+significativamente o resultado das simulações. As referências utilizadas para a modelagem dos 
+trechos de dutos foram as 2.2, 2.3, 2.7, 2.8, 2.9, 2.10, 2.11, 2.12, 2.13, 2.14, 2.15, 2.16 e 2.17. 
+
+ 
+
+Gasoduto 
+
+GARSOL 
+
+GASCOM 
+
+ 
+
+ 
+
+Tabela 2 - Dutos e Ramais do Sistema de Gasodutos 
+
+Duto 
+
+Duto1 
+Duto2 
+Duto3 
+Duto4 
+Duto5 
+Duto6 
+Duto7 
+Duto8 
+
+Comprimento 
+
+(km desenvolvido) 
+
+Diâmetro 
+
+Nominal (pol) 
+
+152,10 
+127,90 
+127,10 
+37,00 
+33,90 
+37,10 
+65,82 
+56,65 
+
+18 
+18 
+20 
+20 
+20 
+20 
+20 
+20 
+
+Espessura 
+
+(pol) 
+0,336 
+0,336 
+0,365 
+0,365 
+0,365 
+0,365 
+0,365 
+0,365 
+
+PMOA 
+(kgf/cm²)
+
+120 
+120 
+120 
+120 
+120 
+120 
+120 
+120 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+9  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+ 
+
+Gasoduto 
+
+Duto 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+Comprimento 
+Diâmetro 
+
+(km desenvolvido) 
+
+Nominal (pol) 
+
+Ramais 
+
+do 
+
+GASCOM 
+
+Duto9 
+Anamã 
+Anori 
+
+Aparecida 
+Caapiranga 
+
+Coari 
+Codajás 
+Iranduba 
+
+Manacapuru 
+
+Mauá 
+
+27,75 
+23,69 
+27,50 
+17,80 
+7,06 
+25,81 
+19,05 
+7,63 
+7,61 
+3,84 
+
+ 
+
+5.2  Perfil Altimétrico 
+
+20 
+3 
+3 
+14 
+3 
+4 
+3 
+3 
+3 
+14 
+
+- 
+- 
+PMOA 
+(kgf/cm²)
+
+120 
+80 
+72 
+80 
+80 
+80 
+72 
+80 
+80 
+62 
+
+Espessura 
+
+(pol) 
+0,365 
+0,216 
+0,216 
+0,375 
+0,216 
+0,237 
+0,216 
+0,216 
+0,216 
+0,250 
+
+Devido  ao  fato  das  variações  de  cota  no  sistema  serem  pequenas  (em  torno  de  30 
+metros), e seguindo as condições da referência 2.1, foi considerado um valor constante de 45 
+metros em relação ao nível do mar. Essas variações não afetam os resultados das simulações 
+devido ao nível de pressão do duto. 
+
+ 
+
+5.3  Rugosidade 
+
+A  rugosidade  dos  dutos  foi  retirada  da  referência  2.1  de  forma  a  facilitar  futuras 
+comparações de resultados entre o modelo desenvolvido e o utilizado pela TAG. A rugosidade 
+dos  ramais  foi  determinada  através  da  referência  2.5,  pois  estes  não  possuem  revestimento 
+interno, de acordo com a referência 2.3. 
+
+  Gasoduto GARSOL (Urucu-Coari): 0,025 mm 
+  Gasoduto GASCOM (Coari-Manaus): 0,009 mm 
+  Ramais (sem revestimento interno): 0,018 mm 
+
+ 
+ 
+5.4  Estações de Redução de Pressão (ERP) 
+
+A Tabela 3 apresenta as informações das ERPs dos ramais pertinentes a elaboração do 
+modelo. Como pressão de controle dos ramais, foi considerada a pressão máxima dos ramais 
+(PMOA)  como  pressão  de  controle,  para  maximizar  a  capacidade  de  cada  ramal.  As 
+informações foram retiradas das referências 2.3, 2.9, 2.10, 2.11, 2.12, 2.13, 2.14, 2.15, 2.16 e 
+2.17. 
+
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+FOLHA
+
+REV. C 
+
+10  de
+
+26 
+
+- 
+- 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+Tabela 3 - ERPs 
+
+ERP / Ramal
+
+Pressão de Controle 
+Considerada (kgf/cm²) 
+
+Coari 
+Codajás 
+Anori 
+Anamã 
+
+Caapiranga 
+Manacapuru
+Iranduba 
+Aparecida 
+
+Mauá 
+
+80 
+72 
+72 
+80 
+80 
+80 
+80 
+80 
+62 
+
+ 
+
+5.5  Pontos de Entrega (PTE) 
+
+A Tabela 4 apresenta os limites de projeto dos pontos de entrega do sistema, de acordo 
+
+com a referência 2.3, 2.18, 2.19 e 2.20.  
+
+ 
+
+ 
+
+Tabela 4 – Pontos de Entrega 
+
+Ponto de 
+Entrega 
+(PTE) 
+Coari 
+Codajás 
+Anori 
+Anamã 
+
+Caapiranga 
+Manacapuru 
+
+Iranduba 
+Aparecida 
+
+UTE Aparecida 
+
+Mauá 
+
+UTE Mauá 
+REMAN 
+
+Localização 
+
+Na linha tronco 
+
+(km desenvolvido) 
+
+280,00 
+407,10 
+444,10 
+478,00 
+515,10 
+580,92 
+637,57 
+637,57 
+637,57 
+665,32 
+665,32 
+665,32 
+
+Vazão 
+Máxima 
+(m3/d) 
+175.000 
+60.000 
+15.000 
+15.000 
+15.000 
+175.000 
+60.000 
+
+2.500.000 
+1.200.000 
+1.075.000 
+2.125.000 
+400.000 
+
+Pressão 
+Mínima 
+(kgf/cm²) 
+
+40 
+40 
+40 
+40 
+40 
+40 
+34 
+16 
+45,5 
+17 
+36 
+40 
+
+5.6  Estações de Compressão 
+
+As  estações  de  compressão  do  sistema  se  encontram  em  Juaruna  (km  152,10  do 
+GARSOL – Referência 2.2) e em Coari (km 0 do GASCOM – Referência 2.3). Não há dados 
+suficientes  para  a  elaboração  de  compressores  detalhados,  portanto  foram  utilizados 
+compressores  genéricos  no  modelo.  Foram  utilizados  como  limites  apenas  os  dados  de 
+pressão máxima de descarga (120kgf/cm² – referência 2.2 e 2.3), de vazão máxima (9.600.000 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+11  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+ 
+
+m³/d – referência 2.2 e 2.3) e de consumo dos compressores como um valor constante (60.000 
+m³/d – referência 2.1). 
+
+ 
+
+Tabela 5 - Dados dos Compressores 
+
+Dados 
+Tipo 
+
+Configuração 
+
+Turbina 
+
+Compressor 
+
+Juaruna 
+
+Coari 
+
+Turbocompressor 
+
+Turbocompressor 
+
+1 principal + 1 reserva 
+
+1 principal + 1 reserva 
+
+Siemens SGT 200 
+
+Siemens SGT 200 
+
+Siemens STC-SV (10-2)  Siemens STC-SV (10-2) 
+
+Vazão Máxima p/Máquina (x 106 m³/dia) 
+
+9,6 (1 atm @ 20°C) 
+
+9,6 (1 atm @ 20°C) 
+
+Pressão Máxima (kgf/cm²) 
+Potência p/Máquina (kW) 
+
+120 
+7680 
+
+120 
+7680 
+
+ 
+
+5.7  Pontos de recebimento 
+
+O sistema possui um único ponto de recebimento, localizado em Urucu. Para este caso, 
+foi utilizado como condição de contorno apenas a pressão máxima do gasoduto, 120 kgf/cm² - 
+referências 2.1, 2.2 e 2.7. 
+
+ 
+ 
+
+6 
+
+CONDIÇÕES DE CONTORNO 
+
+6.1  Perfil de Consumo 
+
+A  Tabela  6  apresenta  o  cenário  de  distribuição  de  demanda.  Os  valores  apresentados 
+representam  a  média  diária  do  mês  de  janeiro  de  2015,  conforme  apresentado  em 
+http://tag.petrobras.com.br/  >  Informações  a  ANP.  Os  valores  apresentados  no  site  foram 
+convertidos para um poder calorífico de 9.400 Kcal/m3. Como os limites de escoamento devem 
+levar em conta as vazões reais do gasoduto, estes foram convertidos para os valores de vazão 
+ao poder calorífico real do gás de Urucu, 8.318 Kcal/m³, como informado no item 4.6. 
+
+ 
+
+ 
+
+ 
+
+Tabela 6 - Perfil de Consumo 
+Vazão Média 
+Pontos de 
+Entrega 
+Jan/15 (m3/d)*
+Coari 
+Codajás 
+Anori 
+Anamã 
+
+0 
+
+17.121 
+12.092 
+7.512 
+7.049 
+
+0 
+0 
+
+Caapiranga 
+Manacapuru 
+
+Iranduba 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+FOLHA
+
+REV. C 
+
+12  de
+
+26 
+
+- 
+- 
+
+TÍTULO: 
+
+ 
+
+do Gasoduto Urucu-Manaus 
+Vazão Média 
+Pontos de 
+Entrega 
+Jan/15 (m3/d)*
+Aparecida 
+
+UTE Aparecida 
+
+Mauá 
+
+UTE Mauá 
+REMAN 
+
+1.493.803 
+1.080.580 
+477.361 
+1.017.061 
+188.157 
+
+*Poder calorífico de referência: 8318kcal/m³ 
+
+ 
+
+6.2  Máxima Pressão Admissível de Operação 
+
+A máxima pressão de operação na linha tronco (Urucu-Coari-Manaus) é de 120 kgf/cm². 
+
+As pressões máximas nos ramais se encontram no item 5.1, Tabela 2. 
+
+ 
+
+6.3  Condições operacionais das estações de compressão 
+
+Utilizando  os  dados  obtidos  nas  referências  e  explicitados  no  item  5.6,  e  visando 
+maximizar  a  capacidade  de  transporte  do  gasoduto,  adotou-se  como  hipótese  apenas  a 
+pressão  máxima  de  descarga  e  o  limite  de  vazão  da  ECOMP.  Considerou-se  também  um 
+consumo constante de GUS para toda a operação, como mencionado no item 5.6. 
+
+ 
+
+6.4  Pressão de Entrega Nominal Contratual 
+
+A Tabela 4, apresentada no item 5.5, apresenta as pressões mínimas de cada ponto de 
+entrega, de acordo com as referências 2.2, 2.3 e 2.20. Por questões relacionadas a operação 
+do programa utilizado para o desenvolvimento do modelo, quando ocorre mais de um ponto de 
+entrega  num  mesmo  local  (nó),  somente  é  possível  fixar  o  limite  de  pressão  mínima  em  um 
+deles.  Nesse  caso,  quando  diferentes,  o  limite  escolhido  foi  o  de  maior  pressão  mínima 
+contratual. 
+
+ 
+ 
+
+7 
+
+RESULTADOS DA SIMULAÇÃO 
+
+As  pressões  nos  diversos  pontos  de  entrega  estão  apresentadas  na  Tabela  7.  A 
+distribuição de pressão e vazão da linha tronco para a condição média de janeiro de 2015 é 
+apresentada para cada duto da Figura 3 a Figura 12. 
+
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+FOLHA
+
+REV. C 
+
+13  de
+
+26 
+
+- 
+- 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+Tabela 7 - Pressões nos PEs 
+
+Ponto de 
+Entrega 
+Coari 
+Codajás 
+Anori 
+Anamã 
+
+Caapiranga 
+Manacapuru 
+
+Iranduba 
+Aparecida 
+
+UTE Aparecida 
+
+Mauá 
+
+UTE Mauá 
+REMAN 
+
+Localização na 
+linha tronco (km) 
+
+280,00 
+407,10 
+444,10 
+478,00 
+515,10 
+580,92 
+637,57 
+637,57 
+637,57 
+665,32 
+665,32 
+665,32 
+
+Pressão 
+(kgf/cm²) 
+80,00 
+71,61 
+71,71 
+79,91 
+79,98 
+80,00 
+80,00 
+76,90 
+76,90 
+61,74 
+61,74 
+103,30 
+
+ 
+Deve-se  ressaltar  que  os  resultados  das  simulações  que  detalham  as  capacidades  de 
+
+transporte e disponível encontram-se na referência 2.21. 
+
+ 
+
+Figura 3 – Perfil de pressão e vazão na linha tronco 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+Figura 4 – Perfil de pressão e vazão - Ramal Coari 
+
+ 
+
+Figura 5 – Perfil de pressão e vazão - Ramal Codajás 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+FOLHA
+
+REV. C 
+
+14  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+Figura 6 – Perfil de pressão e vazão - Ramal Anori 
+
+ 
+
+Figura 7 – Perfil de pressão e vazão - Ramal Anamã 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+FOLHA
+
+REV. C 
+
+15  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+Figura 8 – Perfil de pressão e vazão - Ramal Caapiranga 
+
+ 
+
+Figura 9 – Perfil de pressão e vazão - Ramal Manacapuru 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+FOLHA
+
+REV. C 
+
+16  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+Figura 10 – Perfil de pressão e vazão - Ramal Iranduba 
+
+ 
+
+Figura 11 – Perfil de pressão e vazão - Ramal Aparecida 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+FOLHA
+
+REV. C 
+
+17  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+Figura 12 – Perfil de pressão e vazão - Ramal Mauá 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+FOLHA
+
+REV. C 
+
+18  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+FOLHA
+
+REV. C 
+
+19  de
+
+26 
+
+8  ANEXOS 
+8.1  “STEADY STATE REPORT” DO MODELO 
+ 
+                           ******************************************************************************* 
+                           *                               URUCU - MANAUS                                * 
+                           ******************************************************************************* 
+ 
+ 
+                                          * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                          *                                               * 
+                                          *      Default Initial Values Selected:         * 
+                                          *                                               * 
+                                          *      Pressure ................    87.167      * 
+                                          *      Flow ....................   401.885      * 
+                                          *      Temperature .............    31.500      * 
+                                          *      % Nitrogen ..............    14.670      * 
+                                          *      % Carbon Dioxide ........     0.160      * 
+                                          *      % Methane ...............    74.290      * 
+                                          *      % Ethane ................    10.460      * 
+                                          *      % Propane ...............     0.420      * 
+                                          *      % i-Butane ..............     0.000      * 
+                                          *      % n-Butane ..............     0.000      * 
+                                          *                                               * 
+                                          * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                       *                                                     * 
+                                       *                 Problem Size Report                 * 
+                                       *                                                     * 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                       *                                                     * 
+                                       *                                 Number   Maximum    * 
+                                       *                                  Used    Allowed    * 
+                                       *                                 ------   -------    * 
+                                       *                                                     * 
+                                       *     External Regulators            15      5000     * 
+                                       *     Equipment Devices              11      3000     * 
+                                       *     Drivers/Turbines                0       500     * 
+                                       *     Legs                           18     10000     * 
+                                       *     Nodes                          30     20000     * 
+                                       *     Knots                         850     30000     * 
+                                       *     Stations                        0       500     * 
+                                       *     Banks                           0      1000     * 
+                                       *     Groups                          0      1000     * 
+                                       *     Plants                          0        10     * 
+                                       *     Compressor Perf Types           0       500     * 
+                                       *     Driver/Turb Perf Types          0       500     * 
+                                       *     Cylinder Types                  0       500     * 
+                                       *     Fluids                          1       100     * 
+                                       *     Qualities                      13        26     * 
+                                       *                                                     * 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+                           ******************************************************************************* 
+                           *                      Steady State Convergence Summary                       * 
+                           ******************************************************************************* 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+20  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+do Gasoduto Urucu-Manaus 
+
+Documentação do Modelo de Simulação 
+
+- 
+- 
+                   =============================================================================================== 
+                                                Greatest       Greatest        Greatest                  
+                   Iteration     Tolerance     Hydraulic      Temperature     Composition          Associated 
+                    Number       Requested     Adjustment     Adjustment      Adjustment             Device 
+                   ---------     ---------     ----------     -----------     -----------     -------------------- 
+                        0        0.0001000     10.6938190      0.0000000       0.0000000      Pipe  RAMAL_ANORI 
+                        1        0.0001000      0.5368471      0.0000000       0.0000000      FLUX  7B 
+                        2        0.0001000      0.3763757      0.0000000       0.0000000      FLUX  4 
+                        3        0.0001000      0.3333333      0.0000000       0.0000000      Node  7B 
+                        4        0.0001000      0.3333333      0.0000000       0.0000000      Node  7B 
+                                                     DPMX increased to 9764.8564 
+                        5        0.0001000      0.3333333      0.0000000       0.0000000      Node  7B 
+                        6        0.0001000      0.2025602      0.0000000       0.0000000      Node  7B 
+                        7        0.0001000      0.0016416      0.0000000       0.0000000      Node  7B 
+                        8        0.0001000      0.0003832      0.0000000       0.0000000      Node  7B 
+                                                     DPMX increased to 19529.713 
+                        9        0.0001000      0.0000005      0.0000000       0.0000000      Node  12 
+                               ---------------------------  Mode Changes  ---------------------------- 
+                                10     Equip  ERP_COARI         FROM: Max PD          TO: Closed       
+                               ----------------------------------------------------------------------- 
+                               ---------------------------  Mode Rejects  ---------------------------- 
+                                10     Equip  ERP_COARI         FROM: Closed          TO: Max PD       
+                               ----------------------------------------------------------------------- 
+                       10        0.0001000      0.0000005      0.0000000       0.0000000      FLUX  4 
+                               ---------------------------  Mode Changes  ---------------------------- 
+                                11     Equip  ERP_COARI         FROM: Max PD          TO: Closed       
+                               ----------------------------------------------------------------------- 
+                               ---------------------------  Mode Rejects  ---------------------------- 
+                                11     Equip  ERP_COARI         FROM: Closed          TO: Max PD       
+                               ----------------------------------------------------------------------- 
+                       11        0.0001000      0.0000003      0.0000488       0.0000000      TNODE 12B 
+                                                     DPMX increased to 39059.426 
+                       12        0.0001000      0.1078269      0.0000488       0.0000000      FLUX  3 
+                       13        0.0001000      0.0001283      0.0000579       0.0000000      Node  11D 
+                       14        0.0001000      0.0016139      0.0000579       0.0000000      FLUX  5 
+                                                     DPMX increased to 48824.281 
+                       15        0.0001000      0.0000016      0.0000737       0.0000000      TNODE 11D 
+                       16        0.0001000      0.0000547      0.0000023       0.0000000      FLUX  4 
+ 
+ 
+                           ******************************************************************************* 
+                           *                               URUCU - MANAUS                                * 
+                           ******************************************************************************* 
+ 
+ 
+                           ******************************************************************************* 
+                           *                         Reference Conditions Report                         * 
+                           ******************************************************************************* 
+ 
+ 
+                                              Reference Pressure        =     0.00  KG/CM2G 
+                                              Reference Temperature     =    20.00 (DEG C ) 
+ 
+ 
+                           ******************************************************************************* 
+                           * Leg Hydraulic Summary Report        -----        Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+21  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+                 =================================================================================================== 
+                                           Pressure                   Flow                Line         Temperature 
+                                            KG/CM2G                 (KSM3/D)              Pack           (DEG C ) 
+                      Leg ID            Head      Tail          Head        Tail        ( KSM3 )       Head    Tail 
+                 ----------------     --------  --------     ----------  ----------     ---------     ------  ------ 
+                 DUTO1                  120.00    105.65       4420.739    4420.737     2894.0540      31.50   30.50 
+                 DUTO2                  120.00    108.24       4360.737    4360.737     2428.3401      38.30   30.95 
+                 DUTO3                  120.00    114.32       4300.737    4300.735     3069.5525      37.26   31.33 
+                 DUTO4                  114.32    112.65       4283.615    4283.614      872.6697      31.33   31.18 
+                 DUTO5                  112.65    111.10       4271.522    4271.522      788.0117      31.18   31.13 
+                 DUTO6                  111.10    109.38       4264.011    4264.010      849.2982      31.13   31.10 
+                 DUTO7                  109.38    106.28       4256.961    4256.960     1472.1427      31.10   31.07 
+                 DUTO8                  106.28    103.53       4256.960    4256.960     1230.5891      31.07   31.05 
+                 DUTO9                  103.53    103.30       1682.577    1682.576      592.8799      31.05   31.40 
+                 RAMAL_ANAMÃ             80.00     79.91          7.511       7.511        9.7322      20.30   31.50 
+                 RAMAL_ANORI             72.00     71.71         12.091      12.091       10.0742      16.35   31.50 
+                 RAMAL_APARECIDA         80.00     76.90       2574.383    2574.383      138.4377      22.82   25.99 
+                 RAMAL_CAAPIRANGA        80.00     79.98          7.049       7.049        2.9112      20.86   31.50 
+                 RAMAL_COARI             80.00     80.00          0.000       0.000       18.2291      31.50   31.50 
+                 RAMAL_CODAJÁS           72.00     71.61         17.121      17.121        6.9915      15.93   31.49 
+                 RAMAL_IRANDUBA          80.00     80.00          0.000       0.000        3.1294      31.50   31.50 
+                 RAMAL_MANACAPURU        80.00     80.00          0.000       0.000        3.1212      31.50   31.50 
+                 RAMAL_MAUÁ              62.00     61.74       1494.420    1494.420       24.8717      15.32   18.72 
+ 
+ 
+                           ******************************************************************************* 
+                           * Equipment Hydraulic Report         -----         Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+                                             ::  Equipment Hydraulic Summary Report  :: 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+          ================================================================================================================ 
+                                                   Pressure                          Temperature                  Heating 
+            Equipment          Mode of              KG/CM2G             Flow           (DEG C )         Spc        Value 
+                ID             Control           Up       Down        (KSM3/D)        Up     Down       Grv        KCAL/M³ 
+          --------------     ------------     --------  --------     ----------     ------  ------     ------     -------- 
+          ECOMP_COARI        Max PD             108.24    120.00        4300.74      30.95   37.26     0.6708      7487.47 
+          ECOMP_JUARUNA      Max PD             105.65    120.00        4360.74      30.50   38.30     0.6708      7487.47 
+          ERP_ANAMÃ          Max PD             111.10     80.00           7.51      31.13   20.30     0.6708      7487.47 
+          ERP_ANORI          Max PD             112.65     72.00          12.09      31.18   16.35     0.6708      7487.47 
+          ERP_APARECIDA      Max PD             103.53     80.00        2574.38      31.05   22.82     0.6708      7487.47 
+          ERP_CAAPIRANGA     Max PD             109.38     80.00           7.05      31.10   20.86     0.6708      7487.47 
+          ERP_COARI          Max PD             108.24     80.00           0.00      30.95   31.22     0.6708      7487.47 
+          ERP_CODAJÁS        Max PD             114.32     72.00          17.12      31.33   15.93     0.6708      7487.47 
+          ERP_IRANDUBA       Max PD             103.53     80.00           0.00      31.05   31.28     0.6708      7487.47 
+          ERP_MANACAPURU     Max PD             106.28     80.00           0.00      31.07   31.28     0.6708      7487.47 
+          ERP_MAUÁ           Max PD             103.30     62.00        1494.42      31.40   15.32     0.6708      7487.47 
+ 
+ 
+                                   ============================================================== 
+                                                       Current       Accumulated         Timer 
+                                     Equipment        Flow Rate         Volume           Value 
+                                         ID            (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                   --------------     ----------     ------------     ----------- 
+                                   ECOMP_COARI           4300.74             0.00           0.000 
+                                   ECOMP_JUARUNA         4360.74             0.00           0.000 
+                                   ERP_ANAMÃ                7.51             0.00           0.000 
+                                   ERP_ANORI               12.09             0.00           0.000 
+                                   ERP_APARECIDA         2574.38             0.00           0.000 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+22  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+                                   ERP_CAAPIRANGA           7.05             0.00           0.000 
+                                   ERP_COARI                0.00             0.00           0.000 
+                                   ERP_CODAJÁS             17.12             0.00           0.000 
+                                   ERP_IRANDUBA             0.00             0.00           0.000 
+                                   ERP_MANACAPURU           0.00             0.00           0.000 
+                                   ERP_MAUÁ              1494.42             0.00           0.000 
+ 
+ 
+             =========================================================================================================== 
+                                              Actual                    Adiab        Dschrg        Power         Power 
+              Compressor         Head          Flow        Speed        Effic         Temp       Required      Available 
+                  ID           (M)M3/D)      ( M3/H )     (  RPM )     (PERCNT)     (DEG C )     (  HP  )      (  HP  ) 
+             -------------     ---------     --------     --------     --------     --------     ---------     --------- 
+             ECOMP_COARI         1175.39      1500.35                   100.00        37.26         621.45        621.45 
+             ECOMP_JUARUNA       1454.66      1556.95                   100.00        38.30         779.84        779.84 
+ 
+ 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+                                             ::  Regulator Hydraulic Summary Report  :: 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+          ================================================================================================================ 
+                                                   Pressure                          Temperature                  Heating 
+            Regulator          Mode of              KG/CM2G             Flow           (DEG C )         Spc        Value 
+                ID             Control           Up       Down        (KSM3/D)        Up     Down       Grv        KCAL/M³ 
+          --------------     ------------     --------  --------     ----------     ------  ------     ------     -------- 
+          ERP_ANAMÃ          Max PD             111.10     80.00           7.51      31.13   20.30     0.6708      7487.47 
+          ERP_ANORI          Max PD             112.65     72.00          12.09      31.18   16.35     0.6708      7487.47 
+          ERP_APARECIDA      Max PD             103.53     80.00        2574.38      31.05   22.82     0.6708      7487.47 
+          ERP_CAAPIRANGA     Max PD             109.38     80.00           7.05      31.10   20.86     0.6708      7487.47 
+          ERP_COARI          Max PD             108.24     80.00           0.00      30.95   31.22     0.6708      7487.47 
+          ERP_CODAJÁS        Max PD             114.32     72.00          17.12      31.33   15.93     0.6708      7487.47 
+          ERP_IRANDUBA       Max PD             103.53     80.00           0.00      31.05   31.28     0.6708      7487.47 
+          ERP_MANACAPURU     Max PD             106.28     80.00           0.00      31.07   31.28     0.6708      7487.47 
+          ERP_MAUÁ           Max PD             103.30     62.00        1494.42      31.40   15.32     0.6708      7487.47 
+ 
+ 
+                                   ============================================================== 
+                                                       Current       Accumulated         Timer 
+                                     Regulator        Flow Rate         Volume           Value 
+                                         ID            (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                   --------------     ----------     ------------     ----------- 
+                                   ERP_ANAMÃ                7.51             0.00           0.000 
+                                   ERP_ANORI               12.09             0.00           0.000 
+                                   ERP_APARECIDA         2574.38             0.00           0.000 
+                                   ERP_CAAPIRANGA           7.05             0.00           0.000 
+                                   ERP_COARI                0.00             0.00           0.000 
+                                   ERP_CODAJÁS             17.12             0.00           0.000 
+                                   ERP_IRANDUBA             0.00             0.00           0.000 
+                                   ERP_MANACAPURU           0.00             0.00           0.000 
+                                   ERP_MAUÁ              1494.42             0.00           0.000 
+ 
+ 
+ 
+ 
+ 
+ 
+                                             ::::::::::::::::::::::::::::::::::::::::::: 
+                                             ::  Compressor Hydraulic Summary Report  :: 
+                                             ::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+23  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+           =============================================================================================================== 
+                                                   Pressure                          Temperature                  Heating 
+            Compressor         Mode of              KG/CM2G             Flow           (DEG C )         Spc        Value 
+                ID             Control           Up       Down        (KSM3/D)        Up     Down       Grv        KCAL/M³ 
+           -------------     ------------     --------  --------     ----------     ------  ------     ------     -------- 
+           ECOMP_COARI       Max PD             108.24    120.00        4300.74      30.95   37.26     0.6708      7487.47 
+           ECOMP_JUARUNA     Max PD             105.65    120.00        4360.74      30.50   38.30     0.6708      7487.47 
+ 
+ 
+                                    ============================================================= 
+                                                       Current       Accumulated         Timer 
+                                     Compressor       Flow Rate         Volume           Value 
+                                         ID            (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                    -------------     ----------     ------------     ----------- 
+                                    ECOMP_COARI          4300.74             0.00           0.000 
+                                    ECOMP_JUARUNA        4360.74             0.00           0.000 
+ 
+ 
+            ============================================================================================================= 
+                                              Actual                     Adiab        Dschrg        Power         Power 
+             Compressor         Head           Flow         Speed        Effic         Temp       Required      Available 
+                 ID           (M)M3/D)       ( M3/H )      (  RPM )     (PERCNT)     (DEG C )     (  HP  )      (  HP  ) 
+            -------------     ---------     ----------     --------     --------     --------     ---------     --------- 
+            ECOMP_COARI         1175.39        1500.35                   100.00        37.26         621.45        621.45 
+            ECOMP_JUARUNA       1454.66        1556.95                   100.00        38.30         779.84        779.84 
+ 
+ 
+                           ******************************************************************************* 
+                           * External Regulator Hydraulic Report    -----     Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                           :::::::::::::::::::::::::::::::::::::::::::::: 
+                                           ::  External Regulator Flow Balance Report  :: 
+                                           :::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                      ========================================================= 
+                                                               Mass Units      Volumetric Units 
+                                                                ( KG/H )           (KSM3/D) 
+                                      --------------------     -----------     ---------------- 
+                                      Total input flow          148772.422          4420.739 
+                                      Total output flow         148772.172          4420.731 
+                                      Network flow balance           0.250             0.008 
+ 
+ 
+                                         ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                         ::  External Regulator Hydraulic Summary Report  :: 
+                                         ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                ==================================================================================================== 
+                  External                                                                     Specific     Heating 
+                  Regulator         Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                     ID             Control         KG/CM2G      (KSM3/D)       (DEG C )                     KCAL/M³ 
+                -------------     ------------     --------     ----------     -----------     --------     -------- 
+                ANAMÃ             Max Flow            79.91          7.511        31.50         0.6708       7487.47 
+                ANORI             Max Flow            71.71         12.091        31.50         0.6708       7487.47 
+                APARECIDA         Max Flow            76.90       1493.803        25.99         0.6708       7487.47 
+                CAAPIRANGA        Max Flow            79.98          7.049        31.50         0.6708       7487.47 
+                COARI             Max Flow            80.00          0.000        31.50         0.6708       7487.47 
+                CODAJÁS           Max Flow            71.61         17.121        31.49         0.6708       7487.47 
+                GUS_COARI         Max Flow           108.24         60.000        30.95         0.6708       7487.47 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+24  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+                GUS_JUARUNA       Max Flow           105.65         60.000        30.50         0.6708       7487.47 
+                IRANDUBA          Max Flow            80.00          0.000        31.50         0.6708       7487.47 
+                MANACAPURU        Max Flow            80.00          0.000        31.50         0.6708       7487.47 
+                MAUÁ              Max Flow            61.74        477.360        18.72         0.6708       7487.47 
+                REMAN             Max Flow           103.30        188.156        31.40         0.6708       7487.47 
+                URUCU             Max Pres           120.00      -4420.739        31.50         0.6708       7487.47 
+                UTE_APARECIDA     Max Flow            76.90       1080.580        25.99         0.6708       7487.47 
+                UTE_MAUÁ          Max Flow            61.74       1017.060        18.72         0.6708       7487.47 
+ 
+ 
+                                    ============================================================ 
+                                      External         Current      Accumulated         Timer 
+                                      Regulator       Flow Rate        Volume           Value 
+                                         ID           (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                    -------------     ---------     ------------     ----------- 
+                                    ANAMÃ                 7.511            0.000           0.000 
+                                    ANORI                12.091            0.000           0.000 
+                                    APARECIDA          1493.803            0.000           0.000 
+                                    CAAPIRANGA            7.049            0.000           0.000 
+                                    COARI                 0.000            0.000           0.000 
+                                    CODAJÁS              17.121            0.000           0.000 
+                                    GUS_COARI            60.000            0.000           0.000 
+                                    GUS_JUARUNA          60.000            0.000           0.000 
+                                    IRANDUBA              0.000            0.000           0.000 
+                                    MANACAPURU            0.000            0.000           0.000 
+                                    MAUÁ                477.360            0.000           0.000 
+                                    REMAN               188.156            0.000           0.000 
+                                    URUCU             -4420.739            0.000           0.000 
+                                    UTE_APARECIDA      1080.580            0.000           0.000 
+                                    UTE_MAUÁ           1017.060            0.000           0.000 
+ 
+ 
+                                     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                     ::  Supply External Regulator Hydraulic Summary Report  :: 
+                                     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                    ============================================================================================= 
+                    Supply                                                                  Specific     Heating 
+                     Xreg        Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                      ID         Control         KG/CM2G      (KSM3/D)       (DEG C )                     KCAL/M³ 
+                    ------     ------------     --------     ----------     -----------     --------     -------- 
+                    URUCU      Max Pres           120.00      -4420.739        31.50         0.6708       7487.47 
+ 
+ 
+                                       ====================================================== 
+                                       Supply      Current       Accumulated         Timer 
+                                        Xreg      Flow Rate         Volume           Value 
+                                         ID        (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                       ------     ----------     ------------     ----------- 
+                                       URUCU       -4420.739            0.000           0.000 
+ 
+ 
+                                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                    ::  Delivery External Regulator Hydraulic Summary Report  :: 
+                                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                ==================================================================================================== 
+                  Delivery                                                                     Specific     Heating 
+                    Xreg            Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                     ID             Control         KG/CM2G      (KSM3/D)       (DEG C )                     KCAL/M³ 
+                -------------     ------------     --------     ----------     -----------     --------     -------- 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+25  de
+
+26 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+                ANAMÃ             Max Flow            79.91          7.511        31.50         0.6708       7487.47 
+                ANORI             Max Flow            71.71         12.091        31.50         0.6708       7487.47 
+                APARECIDA         Max Flow            76.90       1493.803        25.99         0.6708       7487.47 
+                CAAPIRANGA        Max Flow            79.98          7.049        31.50         0.6708       7487.47 
+                COARI             Max Flow            80.00          0.000        31.50         0.6708       7487.47 
+                CODAJÁS           Max Flow            71.61         17.121        31.49         0.6708       7487.47 
+                GUS_COARI         Max Flow           108.24         60.000        30.95         0.6708       7487.47 
+                GUS_JUARUNA       Max Flow           105.65         60.000        30.50         0.6708       7487.47 
+                IRANDUBA          Max Flow            80.00          0.000        31.50         0.6708       7487.47 
+                MANACAPURU        Max Flow            80.00          0.000        31.50         0.6708       7487.47 
+                MAUÁ              Max Flow            61.74        477.360        18.72         0.6708       7487.47 
+                REMAN             Max Flow           103.30        188.156        31.40         0.6708       7487.47 
+                UTE_APARECIDA     Max Flow            76.90       1080.580        25.99         0.6708       7487.47 
+                UTE_MAUÁ          Max Flow            61.74       1017.060        18.72         0.6708       7487.47 
+ 
+ 
+                                    ============================================================= 
+                                      Delivery         Current       Accumulated         Timer 
+                                        Xreg          Flow Rate         Volume           Value 
+                                         ID            (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                    -------------     ----------     ------------     ----------- 
+                                    ANAMÃ                  7.511            0.000           0.000 
+                                    ANORI                 12.091            0.000           0.000 
+                                    APARECIDA           1493.803            0.000           0.000 
+                                    CAAPIRANGA             7.049            0.000           0.000 
+                                    COARI                  0.000            0.000           0.000 
+                                    CODAJÁS               17.121            0.000           0.000 
+                                    GUS_COARI             60.000            0.000           0.000 
+                                    GUS_JUARUNA           60.000            0.000           0.000 
+                                    IRANDUBA               0.000            0.000           0.000 
+                                    MANACAPURU             0.000            0.000           0.000 
+                                    MAUÁ                 477.360            0.000           0.000 
+                                    REMAN                188.156            0.000           0.000 
+                                    UTE_APARECIDA       1080.580            0.000           0.000 
+                                    UTE_MAUÁ            1017.060            0.000           0.000 
+ 
+ 
+                           ******************************************************************************* 
+                           * Node Mass Balance Error Report       -----       Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                                Threshold Level =     0.0245 (KSM3/D) 
+                                                No Mass Balance Errors above Threshold 
+ 
+ 
+                                               ::::::::::::::::::::::::::::::::::::::: 
+                                               ::  Pressure/Flow Violation Reports  :: 
+                                               ::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                               ALL XREGS FALL WITHIN PRESSURE BOUNDS 
+                                             ALL EQUIPMENT FALL WITHIN PRESSURE BOUNDS 
+                                         ALL INTERNAL LEG KNOTS FALL WITHIN PRESSURE BOUNDS 
+ 
+ 
+                                            ::::::::::::::::::::::::::::::::::::::::::::: 
+                                            ::  Setpoint/Constraint Violation Reports  :: 
+                                            ::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                            ALL XREGS COMPLY WITH MONITORED CONSTRAINTS 
+                                          ALL EQUIPMENT COMPLY WITH MONITORED CONSTRAINTS 
+
+ 
+
+ 
+
+ 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+do Gasoduto Urucu-Manaus 
+
+- 
+- 
+
+FOLHA
+
+REV. C 
+
+26  de
+
+26 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-022 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+ 
+ 
+                      TRANSIENT GAS NETWORK MODEL (TGNET) 
+                       RELEASE 7.6  LEVEL 00  30-SEP-2008 
+ 
+                             STEADY-STATE MODULE 
+
+ 
+
+ 
+
+ 
+
+

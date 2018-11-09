@@ -1,0 +1,904 @@
+simulacao dinamica processo destilacao bioetanol simulador baseado equacoes emso jose izaquiel santos silva carlos sp julho universidade federal carlos centro ciencias exatas tecnologia departamento engenharia quimica programa posgraduacao engenharia quimica area pesquisa simulacao controle processos quimicos simulacao dinamica processo destilacao bioetanol simulador baseado equacoes emso quimica apresentada dissertacao programa posgraduacao engenharia universidade federal carlos parte requisitos obtencao titulo mestre engenharia quimica 
+ autor jose izaquiel santos silva orientador prof 
+ roberto campos giordano coorientador prof 
+ luiz fernando moura carlos sp julho pais jose virgovino memoria maria amavel 
+ edilailsa parceria amizade amor 
+ trabalho desenvolvido laboratorio desenvolvimento automacao bioprocessos ladabio kyatera departamento engenharia quimica deq universidade federal carlos ufscar 
+ contou apoio financeiro programa prhanp mct 
+ agradecimentos jeova deus tudo 
+ professores doutores roberto campos giordano luiz fernando moura orientacoes dedicacao ensinamentos amizade 
+ amigos felipe furlan gabriel fonseca valorosa ajuda simulador processos emso 
+ professor doutor argimiro resende secchi prestativos esclarecimentos uso simulador processos emso 
+ tecnico eudoro lemos inumeras ajudas prestadas solucao problemas hardwares softwares 
+ professor doutor marco giulietti amizade momentos descontracoes 
+ professor doutor wu hong kwong amizade descontracao 
+ secretarias ppgeq ufscar raquel renata catia disponibilidade atencao dada 
+ agencia nacional petroleo anp financiadora estudos projetos finep meio programa recursos humanos anp setor petroleo gas biocombustiveis prhanp mct financia prh formacao pessoal biocombustiveis 
+ fapesp financiamento projeto tematico 
+ deq ufscar oportunidade estar aqui 
+ fiques justo demais mostres excessivamente sabio 
+ resumo destilacao misturas hidroalcoolicas surgem processo producao etanol rota fermentativa sido bastante estudada 
+ contudo tres aspectos sido frequentemente relevados variabilidade inerente fermentacao principalmente ambiente industrial influencia sobre alimentacao colunas causada mistura vinhos primeira segunda geracao mesma biorrefinaria variacao nivel dorna volante longo operacao destilaria 
+ dois primeiros aspectos resultam variacoes concentracao etanol outros subprodutos fermentacao alcool isoamilico dorna volante 
+ terceiro aspecto promove alteracoes vazoes bombas alimentacao consequentes oscilacoes temperatura saida trocador alimentacao primeira coluna 
+ neste trabalho utilizando simulador emso environment modeling simulation optimization estudouse natureza transiente perturbacoes operacao colunas utilizando coluna modelo representar trem destilacao aad bem efeito composicao vinho dorna volante ser bombeado destilacao 
+ temperatura nivel refervedor condensador controlados malhas pid representacao dinamica inclui correlacoes implementadas emso prever acumulo liquido sobre vertedouro perda carga prato dentre outros aspectos 
+ equilibrio liquidovapor elv representado abordagem gammaphi usando correlacao unifacdortmund fase liquida modelo srk fase vapor 
+ primeiro momento estudado processo dinamico destilacao considerando vinho composto misturas etanolagua etanol aguaalcool isoamilico transcurso tempo suficiente atingido estado estacionario 
+ compararamse respostas simulador emso resultados estacionarios obtidos simulador processos aspen plus® versao 
+ aspen tech observandose bastante semelhanca resultados simulacoes duas plataformas 
+ posteriormente melhor representar complexidade situacao real inseriuse emso modelo bomba centrifuga tubulacao interligando dorna volante regenerador trocador calor responsavel preaquecer vinho torre pratos vinhaca efluente fundo coluna propria coluna 
+ principais conclusoes consideracao presenca alcool isoamilico alguma influencia perfis transientes composicao temperatura longo coluna composicao topo pouco afetada 
+ variacao nivel dorna durante operacao ciclos esvaziamento enchimento causou perturbacoes ciclicas variaveisresposta sistema vazoes temperaturas fracoes molares efluentes processo cuja amplitude pode ser absorvida sistema controle 
+ perturbacoes degrau dorna volante simuladas respostas consistentes simulacoes atestam balancos globais massa processo 
+ mistura dorna vinho menor teor alcoolico eventualmente provindo setor etanol absorvida apos ciclo recarga dorna 
+ longo prazo respostas modelo indicam mantidas razao refluxo condicoes topo fundo coluna sistema tende gradualmente pontos operacao estavel 
+ abstract distillation hydroalcoholic mixtures result fermentative route production ethanol widely studied 
+ nonetheless three points deserved special attention yet industrial fermentation intrinsic variability changes feed stream columns caused mixing st nd generation wines biorefinery alteration level buffer vat throughout operation industrial plant 
+ two first aspects result changes concentration ethanol fermentation byproducts isoamyl alcohol buffer tank 
+ third aspect alters flow impelled feed pumps consequently changes outlet temperature heat exchanger 
+ first column feed stream 
+ work emso simulator environment modeling simulation optimization used study transient perturbations columns operation effect wine composition buffer vat pumped distillation aid column model representing distillation train aad 
+ reboiler condenser temperatures levels controlled pid loops dynamic model tray column includes correlations already implemented emso liquid holdup pressure drop tray among aspects 
+ gammaphi approach using unifac dortmund equation liquid phase nonideality srk model vapour used represent vaporliquid equilibrium vle 
+ firstly dynamics distillation ethanolwater ethanolwaterisoamyl alcohol mixtures simulated steady state 
+ emso steadystate results similar aspenpus® 
+ following order closer represent complexity real situation model centrifugal pump plus tabulation inserted emso integrated heat exchanger regenerates energy vinasse preheating column feed column 
+ main conclusions presence isoamyl alcohol influenced somehow temperature molar fractions transient profiles column composition top stream sensibly affected 
+ changes liquid level buffer vat operation following load unload cycles caused periodic perturbations system output variables flows temperatures mol fractions process outflow whose amplitude could absorbed control system 
+ step perturbations buffer vat simulated consistent responses assessed system global mass balance 
+ mixing wines lower alcoholic contents ones coming process causes effects dumped one loadreload cycle vat 
+ long term model responses indicate kept reflux ratio top bottom conditions column system gradually achieves stable operation points 
+ lista figuras figura etapas processamento bioetanol primeira segunda geracao 
+ figura quadro geral biocombustiveis 
+ figura diferentes rotas producao bioetanol 
+ figura esquema processo melleboinot fermentacao 
+ figura esquema simplificado configuracao processo destilacao empregado industria producao aehc 
+ figura representacao esquematica estagio generico 
+ figura interface grafica simulador emso 
+ figura sistema bombeamento vinho 
+ figura movimentacao ponto operacao sistema alimentacao acordo nivel vinho dorna 
+ figura modelo esquematico bomba 
+ figura modelo esquematico splitter 
+ figura modelo esquematico refervedor 
+ figura modelo esquematico condensador dinamico 
+ figura representacao esquematica estagio generico 
+ figura fluxograma processo destilacao etanol 
+ figura esquema processo proposto sistema 
+ figura curvas sistema bomba 
+ figura elv mistura etanol agua atm comparacao previsoes emso unifacdortmund srk dados experimentais gmehling al 
+ figura elv mistura etanol alcool isoamilico atm comparacao previsoes emso unifacdortmund srk dados experimentais gmehling al 
+ figura elv mistura agua alcool isoamilico atm comparacao previsoes emso unifacdortmund srk dados experimentais gmehling onken 
+ figura fracoes molares etanol agua estado liquido longo coluna aspen plus estado estacionario emso apos horas operacao 
+ figura fracoes molares etanol agua alcool isoamilico estado liquido longo coluna aspen plus estado estacionario emso apos horas operacao 
+ figura fracoes molares etanol agua agua fase vapor longo coluna aspen plus estado estacionario emso apos horas operacao 
+ figura fracoes molares etanol agua alcool isoamilico fase vapor longo coluna aspen plus estado estacionario emso apos horas operacao 
+ figura perfis temperaturas longo coluna aspen plus estado estacionario emso apos horas operacao durante processo destilacao mistura etanol agua 
+ figura perfis temperaturas longo coluna aspen plus estado estacionario emso apos horas operacao durante processo destilacao mistura etanol agua alcool isoamilico 
+ figura perfis fracoes molares etanol funcao tempo estagio coluna obtidos simulacao processo destilacao misturas etanol agua etanol agua alcool isoamilico emso 
+ figura perfis temperaturas funcao tempo estagio coluna obtidos simulacao processo destilacao misturas etanol agua etanol agua alcool isoamilico emso 
+ figura perfis fracoes molares etanol fase vapor funcao tempo estagios obtidos simulacao processo destilacao mistura etanol agua alcool isoamilico emso 
+ figura perfis temperaturas funcao tempo estagios coluna obtidos simulacao processo destilacao mistura etanol agua alcool isoamilico emso 
+ figura perfis pressoes funcao tempo estagios obtidos simulacao processo destilacao misturas etanol agua etanol agua alcool isoamilico emso 
+ figura esvaziamento dorna volante primeiro ciclo operacao apos chaveamento segunda dorna vazao bomba 
+ considerando enchimento dorna vinho etanol fracao molar 
+ figura temperatura entrada coluna ts temperatura vinhaca fluido quente entrada trocador calor primeiro ciclo operacao apos chaveamento segunda dorna 
+ considerando enchimento dorna vinho etanol fracao molar 
+ figura vazao alimentacao coluna primeiro ciclo operacao apos chaveamento segunda dorna vinhaca destilado retirada lateral vapor 
+ considerando enchimento dorna vinho etanol fracao molar 
+ figura calor refervedor considerando enchimento dorna vinho etanol fracao molar primeiro ciclo operacao apos chaveamento segunda dorna 
+ figura fracao molar etanol destilado primeiro ciclo operacao apos chaveamento segunda dorna fracao molar etanol vinhaca 
+ considerando enchimento dorna vinho etanol fracao molar 
+ figura fracao molar etanol fase vapor primeiro ciclo operacao apos chaveamento segunda dorna estagios est 
+ considerando enchimento dorna vinho etanol fracao molar 
+ figura fracao molar etanol vapor retirada lateral primeiro ciclo operacao apos chaveamento segunda dorna 
+ considerando enchimento dorna vinho etanol fracao molar 
+ figura fracao molar etanol fase liquida estagios est primeiro ciclo operacao apos chaveamento segunda dorna 
+ considerando enchimento dorna vinho etanol fracao molar 
+ figura fracao molar etanol vinhaca primeiro ciclo operacao apos chaveamento segunda dorna enchimento dorna vinho etanol fracao molar 
+ figura fracao molar etanol fase vapor tempo estagios est 
+ considerando enchimento dorna vinho etanol fracao molar 
+ figura fracao molar etanol fase liquida tempo estagios est 
+ considerando enchimento dorna vinho etanol fracao molar 
+ figura perfis fracao molar etanol retirada lateral vapor 
+ considerando enchimento dorna vinho etanol fracao molar 
+ figura perfis fracao molar etanol destilado vinhaca 
+ considerando enchimento dorna vinho etanol fracao molar 
+ figura balanco massa bm coluna longo processo bm componente etanol bm global 
+ considerando alimentacao vinho etanol fracao molar 
+ figura bm componente etanol vinho fracao molar etanol verificacao tendencia perfil 
+ figura esvaziamento enchimento dorna vazao bomba temperatura entrada coluna ts temperatura vinhaca 
+ considerando enchimento dorna vinho mesma concentracao inicial fracao molar etanol 
+ figura calor refervedor qr considerando enchimento dorna vinho mesma concentracao inicial fracao molar etanol 
+ figura vazao alimentacao coluna vinhaca destilado retirada lateral vapor 
+ considerando enchimento dorna vinho mesma concentracao inicial fracao molar etanol 
+ figura esvaziamento enchimento dorna vazao bomba 
+ figura fracao molar etanol vinho saindo dorna volante detalhes momento mistura vinho existente dorna fracao molar etanol igual vinho segunda geracao fracao molar etanol igual alimentando dorna volante 
+ figura temperatura alimentacao coluna ts temperatura vinhaca ts 
+ figura fracao molar etanol vapor retirada lateral 
+ figura perfis fracao molar etanol destilado vinhaca 
+ figura vazoes alimentacao coluna vinhaca vazao destilado 
+ figura vazao retirada lateral vapor 
+ figura consumo calor refervedor 
+ figura balanco massa bm sistema longo processo bm componente etanol bm global 
+ figura versao emso utilizada nesta dissertacao 
+ figura interface emso exemplo modelos usados teste consistencia montagem flowsheet 
+ figura interface emso escolha modelos resolver sistemas equacoes 
+ lista tabelas tabela numero estagios colunas destilacao convencional etanol 
+ tabela configuracao sistema 
+ tabela fracoes molares principais componentes presentes carga considerada neste trabalho carga tipica industrial desconsiderando presenca eletrolitos 
+ tabela configuracao cada ponto marcado sistema 
+ tabela configuracao cada trecho sistema 
+ tabela configuracao coluna sistema 
+ tabela coeficiente global troca termica trocadores calor 
+ tabela percentual acumulo massa coluna 
+ area secao transversal area total furos prato area util prato sigla environment modeling simulation optimization fator atrito vazao molar corrente entra equipamento vazao molar corrente sai equipamento entalpia corrente entra equipamento entalpia corrente sai equipamento altura vertedouro altua manometrica total sistema nivel liquido prato acumulo molar liquido acumulo molar vapor acumulo molar componente pressao corrente sai equipamento pressao corrente entra equipamento carga termica refervedor numero reynolds temperatura temperatura corrente sai equipamento temperatura corrente entra equipamento lista abreviaturas siglas simbolos across ah ap emso fini fout hin hout hw hs level ml mv mi pout pin qr tout tin trocador trocador calor tipo kettle vl vv vref vtray  volume molar fase liquida volume molar fase vapor volume refervedor volume prato fracao vaporizada corrente fator compressibilidade componente fase vapor nivel vinho dorna volante altura alimentacao coluna destilacao fracao molar componente corrente entra equipamento fracao molar componente equipamento viscosidade absoluta fugacidade especie fase vapor corrente sai fugacidade especie fase liquida fugacidade especie pura fracao molar componente fase liquida fracao molar componente fase vapor coeficiente fugacidade componente fase vapor coeficiente fugacidade componente fase liquida coeficiente atividade componente fase liquida simbolo enfatizar etanol primeira geracao simbolo enfatizar etanol segunda geracao zin zout  ifˆ ifˆ ix iy iˆ iˆ i sumario introducao 
+ agroindustria canadeacucar brasil 
+ determinacao propriedades termodinamicas 
+ modelagem colunas destilacao regime estacionario 
+ modelagem colunas destilacao regime transiente 
+ simulador processos emso 
+ modelagem matematica equipamentos 
+ modelos termodinamicos usados 
+ sistemas estudados simulacao processo destilacao etanol 
+ validacao modelos termodinamicos adotados 
+ processo destilacao sistema 
+ processo destilacao sistema 
+ facilidades dificuldades simulador emso 
+ introducao uso petroleo gas natural derivados fonte condensada energia associado varios problemas mudancas climaticas seguranca abastecimento 
+ desafios assolam humanidade dias hoje banco nacional desenvolvimento economico social 
+ assim ultimamente corrida intensa fontes energia alternativas substituam petroleo matriz energetica mundial 
+ fosseis uso biomassa alternativa tecnologica substituir combustiveis banco nacional desenvolvimento economico social 
+ acordo goldemberg etanol excelente substituto gasolina 
+ brasil acordo banco nacional desenvolvimento economico social etanol produzido partir canadeacucar alem ter custo competitivo pode substituir grande parte gasolina consumida 
+ muitos estudos vem sendo realizados respeito caracteristicas biologicas canadeacucar planta tecnicas producao alcool coprodutos bioeletricidade avancando estado arte chamado tecnologia primeira geracao etanol produzido partir caldo cana 
+ ainda intensa discussao sobre tecnologias segunda geracao producao etanol atraves rotas bioquimicas processamento biomassa lignocelulosica inclusive bagaco canadeacucar bem tecnologias gaseificacao biomassa 
+ figura demonstradas principais etapas necessarias obtencao bioetanol primeira segunda geracao rota bioquimica 
+ percebese processo simples pois envolve muitas operacoes unitarias forma simultanea cuja otimizacao requer empregados conceitos engenharia bio processos bioquimica sempre luz questoes economicas producao 
+ figura etapas processamento bioetanol primeira segunda geracao 
+ fonte adaptado goldemberg 
+ operacao separacao componentes mistura destilacao antigos importantes processos utilizados industria quimica petroquimica 
+ entretanto operacoes demanda energia dentre processos lockett 
+ simulacao processos separacao especial colunas destilacao area importante simulacao processos dinamicos 
+ primeiros trabalhos metodologias propostas solucao sistemas separacao modelados prato prato surgiram decada 
+ porem partir decada advento computador digital desenvolvidos novos algoritmos simuladores aplicacao industrial inclusive 
+ posteriormente iniciouse modelagem dinamica processos destilacao prevendose inclusive comportamento hidrodinamico estagios staudt 
+ assim computadores eficientes algoritmos numericos robustos possivel resolver forma rapida modelos desenvolvidos finalidade 
+ simuladores processos quimicos podem ser classificados quanto modo resolvem equacoes modelos envolvidos 
+ podem ser resolvidas seguindo sequencia especifica geral coincidente sequencia fisica equipamentos conhecida abordagem modular sequencial 
+ outra abordagem agrupa todas equacoes envolvidas processo resolve forma simultanea 
+ sistemas empregam tal arquitetura denominados globais baseados equacoes staudt furlan al 
+ emso sigla environment modeling simulation optimization 
+ plataforma suporta simulacoes modo dinamico estacionario simplesmente selecionando conectando blocos modelos 
+ simulador emso pode ser utilizado forma generica variados ramos engenharia 
+ apresenta varias caracteristicas importantes auxiliam desenvolvimento modelos realizacao simulacoes analise consistencia unidades medida verificacao singularidade sistema consistencia condicoes iniciais 
+ aliado usuario pode ainda desenvolver proprios modelos utilizando linguagem modelagem propria vrtech 
+ trabalho faz parte programa recursos humanos agencia nacional petroleo prhanp programa ambito nacional objetivo formar pessoal especializado nivel superior atender demanda industria petroleo gas natural biocombustiveis area operacional realizacao pesquisas 
+ portanto dissertacao inserida prh enfase formacao pessoal biocombustiveis sede universidade federal carlos ufscar 
+ trabalho inserido projeto tematico programa bioen bioprocess systems engineering bse applied production bioethanol sugarcane bagasse financiado fapesp proc 
+ existem muitos desafios tange processos destilacao etanol 
+ desde modo feita operacao colunas problemas envolvendo demanda carga processo juntamente necessidade ambiente capaz simular processo obter respostas consistentes 
+ assim objetivo desta dissertacao simular processo dinamico destilacao bioetanol primeira segunda geracao incluindo sistema bombeamento tubulacoes interligando tanque pulmao dorna volante trecho destilacao bem regenerador calor vinhaca 
+ influencia terceiro componente alcool isoamilico sobre perfis etanolagua coluna analisada 
+ objetivase final estudar natureza transiente processo 
+ utilizouse simulador processos emso devido facilidades manuseio surge ferramenta capaz responder necessidades processo 
+ agroindustria canadeacucar brasil setor sucroalcooleiro bastante relevancia economia brasileira 
+ alem acucar usinas podem foco producao etanol bioeletricidade alcoolquimicos comercializacao creditos carbono 
+ tecnologias aumentam produtividade reduzem custos portanto grande interesse industria dessa area neves al 
+ ter acordo carvalho cultura cana alcanca quase todos estados brasileiros ocupa cerca superficie agricola pais 
+ usinas acucar alcool geram aproximadamente kg bagaco umidade tonelada canadeacucar 
+ deste total estimase apenas suficientes suprir energia necessaria planta baudel al 
+ excedente pode ser vendido outras industrias intuito geracao energia pode ser transformado racao animais empregado geracao energia eletrica transformado etanol segunda geracao 
+ producao bioetanol producao biocombustiveis base materiasprimas vegetais pode ser efetuada distintas rotas tecnologicas cada diferentes vantagens limitacoes 
+ bioetanol destaca ser alternativa maturidade industrial efetivamente inserido matrizes energeticas diversos paises bndes cgee 
+ algumas materiasprimas vantagens producao bioetanol mostradas figura 
+ mediante rotas biologicas bioetanol pode ser produzido base qualquer biomassa contenha quantidades significativas amido acucares 
+ figura quadro geral biocombustiveis 
+ fonte banco nacional desenvolvimento economico social 
+ considerando producao base acucares caso cana beterraba processo simples envolve etapa menos producao partir materiaprima amilacea molho acucares disponiveis biomassa necessidade hidrolisar amido 
+ figura sintetiza rotas tecnologicas producao bioetanol considerando diferentes materiasprimas interesse 
+ segundo banco nacional desenvolvimento economico social producao bioetanol utilizando celulose ainda impacto real contexto energetico atual contando ainda obstaculos tecnologicos economicos superar 
+ figura diferentes rotas producao bioetanol 
+ fonte banco nacional desenvolvimento economico social 
+ brasil producao bioetanol partir canadeacucar ocorre larga escala fazendo desenvolvimento novas fontes energia ligado ramo agroindustrial 
+ destilacao bioetanol sistema etanolagua termos equilibrio liquidovapor constitui mistura liquida ideal 
+ componentes formam azeotropo fracao molar aproximadamente etanol massa atm prausnitz al 
+ destilacao operacao unitaria separacao baseia diferencas volatilidade componentes mistura liquida 
+ destilacao etanol nivel industrial constituida serie colunas destilacao quais numero variado conforme tipo qualidade alcool deseja 
+ processo destilacao continuo difundido processo industrial fermentacao alcoolica levedura saccharomyces cerevisiae processo melleboinot descontinuo fazse necessario acoplamento 
+ ligacao ocorre chamada dorna volante onde vinho delevedurado armazenado figura 
+ figura esquema processo melleboinot fermentacao 
+ fonte adaptado fritzen al 
+ vinho vem fermentacao possui composicao gl volume etanol agua teores volume alem outros componentes glicerol alcoois homologos superiores furfural aldeido acetico acidos succinico acetico dentre outros quantidades bem menores 
+ ainda solidos representados bagacilhos leveduras bacterias outros solutos acucares naofermentesciveis sais minerais materias albuminoides outros gases dissolvidos principalmente co copersucar 
+ vinho resultante centrifugacao mosto fermentado enviado dorna volante alimenta destilaria onde produzido alcool etilico hidratado carburante aehc possui oinpm etanol massa 
+ unidades desidratacao obtido alcool etilico anidro aeac teor alcoolico minimo oinpm brasil apud batista 
+ usinas brasileiras costumase usar cinco colunas processo producao alcool hidratado mostrado figura 
+ diario oficial uniao brasilia 
+ figura esquema simplificado configuracao processo destilacao empregado industria producao aehc 
+ fonte adaptado dias 
+ coluna conhecida coluna esgotamento vinho depuracao vinho concentracao alcool segunda onde concentram componentes volateis quais poderiam contaminar alcool hidratado 
+ conjunto dessas tres colunas chamado chao fabrica coluna destilacao 
+ segundo conjunto colunas formado colunas chamado coluna retificacao 
+ nesse conjunto obtido etanol anidro 
+ oleo fusel composto alcoois cadeia longa pode ser retirado coluna perez al 
+ principal componente oleo fusel alcool isoamilico 
+ segundo batista retirada indispensavel bom funcionamento desta coluna obtencao alcool hidratado boa qualidade 
+ alcoois encontramse diluidos topo colunas concentrandose fase vapor sendo conduzidos coluna 
+ nesta coluna teor etanol aumenta rapidamente medida sobe fundo topo forma volatilidade desses alcoois superiores diminui tendem concentrar fase liquida 
+ assim concentracao alcoois compoem oleo fusel atinge maiores valores regiao proxima base coluna onde devem ser retirados 
+ retirada nessa regiao provoca acumulo interior coluna prejudicando operacao equipamento obtencao alcool hidratado teor alcoolico desejado 
+ devese atentar fato configuracao apresentada figura vem sendo utilizada muitos anos usinas brasileiras originalmente projetada processo adaptada producao alcool combustivel junqueira 
+ devido configuracoes adequadas otimizadas deste processo empregadas algumas destilarias 
+ tabela pode ser visualizado numero estagios cada coluna conjunto destilacao empregado processo convencional industria 
+ tabela numero estagios colunas destilacao convencional etanol 
+ coluna numero estagios equilibrio fonte batista 
+ alguns trabalhos encontrados literatura citam algumas mudancas adaptacoes realizadas processo destilacao convencional etanol hidratado alguns propondo unir colunas formando unica coluna aad diametros iguais alem coluna bb batista 
+ desidratacao bioetanol quer produzir alcool anidro processo alem destilacao desejado 
+ fazse necessaria concentracao alcool hidratado menos etanol massa 
+ entao processos adicionais requeridos complementar destilacao convencional destilacao azeotropica destilacao extrativa adsorcao peneiras moleculares 
+ destilacao azeotropica azeotropica heterogenea consiste adicao terceiro componente conhecido componente arraste finalidade formar novo azeotropo componentes presentes inicialmente mistura 
+ novo azeotropo retirado topo conhecido azeotropo minimo fundo azeotropo maximo coluna enquanto componentes mistura original obtido puro outra extremidade coluna brito 
+ fazse necessaria utilizacao outra coluna recuperar componente arraste 
+ destilacao extrativa azeotropica homogenea solvente terceiro componente adicionado mistura azeotropica original modo volatilidade relativa componentes alterada atraves mudanca coeficientes atividade componentes ito 
+ desidratacao etanol meio adsorcao peneiras moleculares feita utilizacao leito zeolitas adsorver agua presente etanol hidratado produzindo etanol anidro 
+ diametro nominal poros zeolitas empregadas processo desidratacao etanol onde adsorvem moleculas agua diametro van walls ordem separandose etanol diametro ordem huang al 
+ outra forma promover desidratacao etanol atraves destilacao extrativa salina onde agente separacao sal mistura sais solucoes salinas dias 
+ desidratacao etanol pode ser feita atraves pervaporacao permeacao vapor huang al 
+ separacao componentes atraves pervaporacao meio vaporizacao parcial mistura liquida atraves membrana 
+ determinacao propriedades termodinamicas modelagem classica processos destilacao baseia termodinamica equilibrio liquidovapor estagios considerando eventuais desvios meio eficiencia prato 
+ indispensavel caracterizacao termodinamica comportamento mistura 
+ acordo giordano levantamento dados experimentais equilibrio liquidovapor misturas compreende medicao propriedades termodinamicas caracterizam sistema estudo temperaturas pressoes composicoes fases 
+ contudo variaveis interrelacionadas equacoes termodinamicas torna tese desnecessaria medicao todas 
+ consideracao desvios tornase necessario conhecer parametros caracteristicos mistura questao 
+ idealidade calculo equilibrio liquidovapor 
+ equilibrio fases processos industria quimica comumente ocorrerem situacoes onde indispensavel aplicar conceitos relativos equilibrio termodinamico fases 
+ fase sistema definicao porcao homogenea materia 
+ saber termo homogeneo significa todas propriedades menos primeira aproximacao uniformes longo fase 
+ sistema constituido unica fase mesma composicao quimica propriedades intensivas iguais toda parte 
+ outro lado presentes duas fases π fases componentes obedecem criterios equilibrio μ μ 
+    μ        μ  μ  
+  μ   
+ μ  fases equilibrio ocorre transferencia massa igualdades equacao restabelecam 
+ logo sistema equilibrio mantem condicoes quais tendencias ocorrer modificacao estado 
+ devido fato pressao facilmente mensuraveis propriedade termodinamica energia livre gibbs utilizada calculos equilibrio fases 
+ processo reconducao sistema estado equilibrio ocorre diminuicao energia livre gibbs temperatura pressao constantes 
+ propriedade possui valor minimo condicao equilibrio sendo entao valida seguinte expressao temperatura variaveis dg pt assim condicao equilibrio minima energia livre gibbs condicao garantir estado equilibrio estabilidade sistema modell reid 
+ multiplas fases mesmas equilibrio fugacidade cada especie constituinte mesma todas fases 
+ criterio equilibrio normalmente utilizado engenheiros quimicos resolucao problemas envolvendo equilibrio fases substituicao igualdade potenciais quimicos pois fugacidade tende zero pressao vai zero enquanto potencial quimico vai menos infinito 
+ assim igualdade fugacidades criterio equilibrio liquido vapor elv equacao prausnitz al 
+ ˆ ˆ xptf ˆ ˆ   
+ onde ifˆ ifˆ fugacidade componente fase vapor saturado fugacidade componente fase liquida saturado fugacidade componente fase vapor dada equacao 
+ iˆ funcao onde coeficiente fugacidade componente fase vapor variaveis temperatura pressao composicao 
+ ˆ  ˆ onde iy fracao molar componente fase vapor iˆ coeficiente fugacidade componente mistura contida fase vapor obtido partir relacoes pvt pressao sistema 
+ calculo fugacidade fase liquida existem duas alternativas baseada conceito atividade mostrado equacao outra baseada fator compressibilidade apresentada equacao sandler 
+ ˆ ˆ  ˆ onde xi fracao molar componente fase liquida fi fugacidade especie pura i i xi coeficiente atividade fase liquida 
+ equacao fugacidade componente mistura contida fase liquida obtida partir respectivo coeficiente atividade fase liquida i respectiva fugacidade liquida referencia fi 
+ coeficiente atividade depende temperatura composicao fase liquida pode ser relacionado energia livre gibbs excesso atraves equacao 
+ rt          ln npt podese calcular elv utilizando condicao igualdade equacoes desta forma temse ˆ   xp  temse chamada abordagem  gammaphi equacao 
+ abordagem empregada processos ocorrem pressoes baixas moderadas 
+ sobrescritos equacao precisam ser utilizados nesta refere fase vapor expressao porque suposto i iˆ propriedades componentes fase liquida 
+ considerando referencia estado componente condicao liquido puro temperatura sistema calculo fugacidade liquida referencia efetuado equacao 
+  sat  sat  exp   ppv  rt sat    onde exponencial conhecida fator correcao poynting expressa desvios fase liquida devido efeito pressao 
+ assim substituindo temse ˆ  xp  sat  sat  exp   ppv  rt sat    fazendo simplificacao forma razao coeficientes fugacidade surge proxima expressao  ipxpy  sat sat     exp   rt ppv onde ˆ  sat  fator poynting pressoes baixas moderadas tipicas destilacao difere pouco unidade omissao introduz erro desprezivel logo equacao simplificacao     ˆ  sat onde i razao coeficientes fugacidade i coeficiente fugacidade componente estado saturacao sat iˆ coeficiente fugacidade especie solucao 
+ facilitar calculos algumas simplificacoes feitas usualmente 
+ sob baixas pressoes presenca acidos carboxilicos perry green supoese modelo gas ideal fase vapor implicando i considerase fator correcao poynting igual unidade devido comportamento fluido incompressivel fase liquida temse ipxpy  sat podese explicitar yi acordo equacao 
+  sat px  coeficiente fugacidade componente mistura contida fase iˆ pode ser calculado equacao dada seguir vapor equacao tipo 
+ nc ln ˆ     rt             nvt  rt     dv  ln onde fator compressibilidade componente fase vapor 
+ outra abordagem merece destaque calculo elv abordagem  phiphi onde seguintes fugacidades ˆ ˆ igualdade equacoes temse  ˆ  ˆ  xp ˆ  ˆ   ˆ  ˆ  coeficiente fugacidade pode ser calculado uso equacao pvt represente convenientemente fluidos reais questao 
+ iˆ portanto imediato desde equacao pvt calculo mistura valida desde sistema 
+ deseja calculo iˆ entretanto problema complica pois necessaria equacao pvt represente bem mistura desde fase liquida equacao deve ser integrada desde estado gas ideal passando vapor saturado transicao fases liquido saturado sistema 
+ poucas equacoes satisfazem condicao 
+ algumas correlacoes benedictwebbrubin hidrocarbonetos soave pengrobinson fornecem melhores resultados 
+ inconvenientes abordagem phiphi utilizada razoavel frequencia 
+ longo tempo muitas relacoes pvt sido propostas literatura 
+ maioria entanto totalmente parcialmente empiricas impossibilitando uso generalizado 
+ fase liquida expressao coeficiente atividade funcao temperatura fracao molar xi geralmente obtida partir modelo energia livre gibbs excesso conforme equacao 
+ nesses modelos energia interacao moleculas considerada forma parametros interacao binarios obtidos partir ajuste dados experimentais prausnitz al 
+ modelos distinguem dois tipos modelos contem parametros obtidos ajuste dados experimentais equilibrio sistema estudo 
+ exemplos destes modelos equacoes margules van laar wilson uniquac nrtl modelos contem parametros obtidos partir grupos presentes moleculas constituem cada componente sistema estudo 
+ exemplos destes modelos denominados metodos contribuicao grupos unifac asog 
+ modelagem colunas destilacao regime estacionario modelo matematico classico coluna destilacao inclui equacoes basicas balanco massa relacoes equilibrio somatorio fracoes molares balanco energia 
+ equacoes normalmente designadas equacoes mesh brito 
+ figura mostra representacao esquematica prato onde numero estagios numerado base topo coluna 
+ seguindo estrutura desenvolvida naphtali sandholm mostradas funcoes discrepancias aproximam zero metodo numerico converge obtidas partir balancos relacoes equilibrio figura representacao esquematica estagio generico 
+ fonte elaborado autor 
+ onde alimentacao vazao liquido vazao vapor vazao retirada lateral entalpia vapor entalpia liquido fracao molar componente liquido fracao molar componente vapor 
+ balanco massa componente estagio 
+ xl ji         ji  
+ xr   
+ hr         
+ hv balanco global energia prato 
+ hv relacoes equilibrio  
+ xk    ji brito pescarini trabalhos fizeram uso conceitos eficiencia prato murphree 
+ definicao murphree relaciona comportamento estagio real estagio ideal admitindose liquido completamente misturado prato 
+ eficiencia pode ser definida ambas fases sendo fase gasosa pode ser escrita η ji  ji ji   ji  ji  fase liquida sendo η    onde  eficiencia fracao molar seio fase liquida fracao molar liquido equilibrio fracao molar seio fase vapor fracao molar vapor equilibrio 
+ modelagem colunas destilacao regime transiente brito fez levantamento sobre dinamica colunas destilacao 
+ acordo relatos interesse dinamica colunas destilacao vem desde decada 
+ publicaram trabalhos nessa area 
+ artigos descrevem modelos tratam aspecto numerico estudam partidas paradas colunas destilacao 
+ choe luyben fizeram comunicacao onde comparavam efeito considerar holdup fase vapor desprezivel 
+ chegaram conclusao holdup fase vapor somente influencia densidade vapor torna significativa comparada liquido 
+ acontece normalmente pressoes atm 
+ objetivos estudo dinamica processo definir sistema controle 
+ skogestad morari avaliaram dinamica colunas destilacao abordando exclusivamente aspecto controle 
+ simuladores dinamicos colunas conjunto equacoes diferenciais algebricas deve resolvido 
+ avaliaram duas formas resolver sistema equacoes algebricodiferenciais dae differentialalgebraicequations primeira resolve dois tipos equacoes simultaneamente 
+ segunda estrategia sistema dae tranformado sistema equacoes diferenciais ordinarias ode ordinarydifferential equations convergencia parte equacoes algebricas 
+ staudt estudou partida colunas bem estrategias controle processo 
+ outras referencias recentes tratam tema lu al 
+ simuladores processos simuladores comerciais populares aplicativos aspen plus® aspen hysys® baseiamse arquitetura modular onde convergencia reciclos planta feita modo iterativo 
+ simuladores globais convergencia reciclos questao relevante vez todas equacoes resolvidas simultaneamente 
+ enquanto simuladores modulares podem incorporar rotinas convergencia especificas cada modulo simuladores baseados equacoes resolvelas todas simultaneamente devem necessariamente empregar algoritmos genericos 
+ processos destilacao existem tecnicas classicas auxiliar convergencia problema podem ser facilmente incorporadas simuladores modulares globais 
+ simulador processos emso simulador emso environment modeling simulation optimization todos modelos implementados linguagem modelagem simples podem ser inspecionados editados livremente usuario 
+ emso simulador processos enfoque global utiliza abordagem baseada equacoes 
+ modelos matematicos tanto internos ambiente desenvolvidos ad hoc acessiveis usuario soares 
+ caracteristicas importantes aplicacoes pesquisa desenvolvimento onde constantemente estudados equipamentos convencionais 
+ emso possui outras caracteristicas tornam flexivel aplicacoes possibilidade adicionarem plugins forma bibliotecas dinamicas dlls realizar calculos possiveis pouco praticos dentro linguagem modelagem emso rodrigues al 
+ outra possibilidade adicionar novos solvers rotinas otimizacao simulador 
+ plataforma pode ser usada simulacoes estacionarias dinamicas estimacao parametros reconciliacao dados otimizacao estacionaria dinamica dentre outros 
+ interface grafica facilita comunicacao usuario tornandose agil facil manuseio veja figura 
+ emso faz parte projeto alsoc ambiente livre simulacao otimizacao controle propoe desenvolver continuamente ambiente integrado sintese modelagem simulacao controle otimizacao processos caracteristicas modularidade reutilizacao interfaceamento padrao 
+ emso encontra disponivel alsoc livre http www 
+ br trac alsoc 
+ gratuita forma portal figura interface grafica simulador emso 
+ fonte secchi biscaia jr 
+ bombas centrifugas bombas centrifugas conhecidas fornecerem energia cinetica liquidos rotor transformarem energia elevacao pressao carcaca 
+ dessa forma podese aplicar balanco energia mecanica modelo generico mostrado figura onde liquido escoa ponto nivel dorna volante ponto entrada coluna aad 
+ figura sistema bombeamento vinho 
+ fonte elaborado autor 
+ energia mecanica expressa unidades carga energia peso qualquer ponto pode dada relacao     contexto figura anterior figura resulta altura manometrica total sistema funcao vazao hs   relacao pode ser levada pontos extremos equacao bernoulli onde lw lw respectivamente perdas carga succao trecho figura recalque bomba trecho figura 
+   lw   lw       equacao resulta sistema fica dependente nivel fluido dorna volante 
+ neste contexto energia cinetica ponto pode ser desconsiderada visto velocidade ali bem pequena relacao ponto 
+ figura mostra efeito vazao movimentacao ponto operacao sistema alimentacao 
+ figura movimentacao ponto operacao sistema alimentacao acordo nivel vinho dorna 
+ fonte elaborado autor 
+ controle processos plantas quimicas essencia operam forma atendam determinadas especificacoes impostas projeto condicoes tecnicas economicas sociais 
+ qualquer configuracao controle controlador atuador recebe informacoes medidas implementam acoes controle apropriadas ajustar valores variaveis manipuladas stephanopoulos kwong 
+ basicamente usamse tres tipos basicos controladores proporcional proporcionalintegrai pi proporcionalintegralderivativo pid 
+ controlador proporcional saida proporcional erro 
+ controlador proporcionalintegral pi sinal atuacao relacionado erro dado termo proporcional controlador termo integracao desse erro 
+ controladores proporcionalintegralderivativo pid consideramse termos usados controlador pi termo diferencial erro 
+ existem outras tecnicas controle exemplo mbc model based control entretanto fazem parte escopo desta dissertacao 
+ metodologia boa parte trabalho simulacao nesta dissertacao desenvolvida ambiente emso todos modelos preexistentes rigorosos pratoaprato baseiam consideracao equilibrio termodinamico fases liquida vapor incluindo eficiencias murphree permitem calculos referentes hidraulica pratos 
+ simulacoes realizadas duas situacoes estudo presenca oleo fusel carga coluna simulada apenas coluna aad estudo efeito queda nivel dorna volante variacao concentracao vinho adicao alternada solucoes diluidas concentradas dorna 
+ analise buscou identificar perturbacoes provocadas variacao vazao concentracao temperatura entrada si justifica uso simulador robusto analise regimes transientes 
+ segue descricao matematica alguns modelos equipamentos usados nesta dissertacao 
+ vale ressaltar modelos pratos refervedor condensador splitter bomba refluxo coluna controladores pid correntes processo disponiveis biblioteca modelos simulador emso eml emso model library quais podem ser acessados manipulados facilmente usuario 
+ modelagem matematica equipamentos bomba modelo bomba figura usado introduzir corrente destilado coluna destilacao 
+ modelo inclui acrescimo pressao corrente saida relacao corrente entrada 
+ figura modelo esquematico bomba 
+ fonte adaptado staudt 
+ equacoes regem modelo podem ser visualizadas seguem onde balanco massa equacoes entalpia equacao pressao equacao massa especifica equacao 
+ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid ∆ cid cid ∗ cid cid cid cid cid cid cid cid cid ∆ cid cid cid cid cid cid cid cid cid cid cid mw massa molar media mistura cid  fracao vaporizada corrente  onde massa especifica superscritos utilizados especificar caso liquido vapor respectivamente 
+ hout hin entalpias saida entrada respectivamente 
+ zin zout fracoes molares entrada saida componente 
+ temperatura fracao vaporizada corrente sai bomba calculadas pacote termodinamico pacote vrtherm biblioteca rotinas calculos termodinamicos fazendo uso funcoes externas simulador caso funcoes plugins 
+ splitter divisor correntes figura pode ser visualizado esquema simplificado splitter divisor correntes utilizado modelos colunas destilacao separar corrente topo destilado refluxo 
+ splitter corrente entrada separa duas correntes saida 
+ necessario especificar valor fracao frac quanto fin ira correntes saida 
+ figura modelo esquematico splitter 
+ fonte adaptado staudt 
+ seguir seguem equacoes relacionadas equipamento 
+ cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid refervedor modelo refervedor usado nesta dissertacao refervedor dinamico representando refervedor tipo kettle figura 
+ refervedor recebe corrente alimentacao vinda fundo coluna possui duas correntes saida liquida outra vapor alem receber calor 
+ refervedor considerado estagio equilibrio coluna condicoes mistura perfeita ambas fases 
+ modelo refervedor composto equacoes 
+ figura modelo esquematico refervedor 
+ fonte adaptado staudt 
+ balanco molar componente balanco energia acumulos restricoes fracoes molares cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid − cid cid cid cid cid 
+ cid cid cid cid cid − cid cid cid cid cid 
+ cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid 
+ cid cid cid − cid cid cid cid cid 
+ cid cid cid cid − cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid 
+ cid cid cid cid 
+ cid cid cid cid cid cid 
+ cid cid cid cid − cid cid cid cid cid 
+ cid cid cid cid ∑ cid cid cid cid cid cid ∑ cid cid cid cid cid ∑ cid cid cid cid cid cid cid ∅ cid cid cid 
+ cid cid cid cid cid ∅ cid cid cid 
+ cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid equilibrio quimico mecanico termico restricoes geometricas nivel liquido apesar disso necessario fazer calculos propriedades termodinamicas calculadas atraves rotinas externas usando vrtherm cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid ∅ cid cid cid ∅ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid ∅ cid cid cid ∅ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid condensador equacoes basicas expostas seguir modelo condensador dinamico figura usado figura modelo esquematico condensador dinamico 
+ fonte adaptado staudt 
+ balanco molar componente acumulos balanco energia restricoes fracoes molares cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid − cid cid cid cid cid 
+ cid cid cid cid cid − cid cid cid cid cid 
+ cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid 
+ cid cid cid − cid cid cid cid cid 
+ cid cid cid cid − cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid 
+ cid cid cid cid 
+ cid cid cid cid cid cid 
+ cid cid cid cid − cid cid cid cid cid 
+ cid cid cid cid cid ∑ cid cid cid cid cid cid ∑ cid cid cid cid cid ∑ cid cid cid cid cid cid cid ∅ cid cid cid 
+ cid cid cid cid cid ∅ cid cid cid 
+ cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid equilibrio quimico mecanico termico restricoes geometricas nivel liquido termodinamicas feitos atraves rotinas externas usando vrtherm refervedor calculos propriedades assim cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid ∅ cid cid cid ∅ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid ∅ cid cid cid ∅ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid estagio equilibrio prato modelo estagio usado nesta dissertacao utilizado base trabalho gani al 
+ figura encontra esquema prato 
+ figura representacao esquematica estagio generico 
+ fonte adaptado staudt 
+ restricoes fracoes molares balanco molar componente acumulos 
+ balanco energia cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid 
+ cid cid cid cid − cid cid cid cid cid 
+ cid cid cid cid cid − cid cid cid cid cid 
+ cid cid cid cid cid − cid cid 
+ cid cid cid cid cid − cid cid 
+ cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid 
+ cid cid cid − cid cid cid cid cid 
+ cid cid cid cid − cid cid cid cid cid 
+ cid cid cid cid − cid cid 
+ cid cid cid cid − cid cid 
+ cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid 
+ cid cid cid cid 
+ cid cid cid cid cid cid 
+ cid cid cid cid − cid cid cid cid cid 
+ cid cid cid cid cid ∑ cid cid cid cid cid cid ∑ cid cid cid cid cid ∑ cid cid cid cid cid cid cid ∅ cid cid cid 
+ cid cid cid cid cid ∅ cid cid cid 
+ cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid 
+ cid cid eficiencia murphree restricoes geometricas equilibrio quimico mecanico termico nivel liquido cid cid cid cid cid cid cid 
+ cid cid cid cid rotinas externas usando vrtherm calculos propriedades termodinamicas feitos atraves cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid ∅ cid cid cid ∅ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid ∅ cid cid cid ∅ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid modelo prato utilizado temse ap area util prato area total prato area downcomer vtray volume total prato level nivel liquido yeqi composicao vapor equilibrio liquido 
+ assim ainda fazem necessarias duas equacoes equacoes calculo vazoes liquido vapor prato funcoes propriedades fisicas fluidos geometria prato queda pressao acumulo liquido cada estagio 
+ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid ∆ cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ hidraulica pratos alguns modelos calculos referentes hidraulica pratos bem implementados emso quais podem ser encontrados staudt 
+ nesta dissertacao utilizaramse modelos pratos perfurados fazendo uso correlacoes reepmeyer al 
+ calculo queda pressao funcao vazao vapor fv saindo prato equacao 
+ cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid cid cid area total furos prato cid cid volume vapor prato cid coeficiente queda pressao prato seco utilizado parametro temse cid cid cid ajuste 
+ relacao vazao liquido nesta dissertacao usada equacao apresentada wang al 
+ altura liquido level prato calculada atraves equacao baseada locket 
+ cid cid cid cid 
+ cid cid cid cid cid cid cid cid 
+ cid cid cid cid cid cid cid cid cid cid cid 
+ cid cid cid 
+ cid cid cid cid cid onde cid cid cid parametros ajuste modelo cid cid cid cid cid nivel liquido prato cid cid comprimento vertedouro cid altura vertedouro cid cid fator superficial parametros geometricos cid cid cid vazao volumetrica liquido cid cid 
+ parametros equacao variam conforme tipo prato mistura ser destilada 
+ alguns valores podem ser encontrados lockett 
+ parametros modelos utilizados encontram disponiveis biblioteca emso 
+ modelos termodinamicos usados equipamentos destilacao operam pressoes baixas moderadas proximas atmosferica optouse formulacao gamafi equilibrio liquido vapor elv conforme descrito topico desta dissertacao 
+ execucao simulacoes processo destilacao emso utilizouse pacote termodinamico vrtherm vrtech 
+ considerando modelos disponiveis vrtherm prever elv mistura utilizado modelo termodinamico unifacdortmund srk usa unifac modificado calculos fase liquida equacao cubicas estado redlichkwong calculos fase vapor 
+ modelos descritos topico desta dissertacao 
+ testar modelos termodinamicos utilizados usados dados experimentais elv misturas binarias componentes presentes carga coluna comparados resultados calculo elv obtidos emso considerando misturas binarias etanolagua etanolalcool isoamilico aguaalcool isoamilico 
+ dados experimentais obtidos coletanea dechema gmehling 
+ sistemas estudados simulacao processo destilacao etanol 
+ sistema figura encontrase esquema sistema estudado primeira etapa dissertacao 
+ modelo coluna destilacao construido atraves conceito composicao derivado programacao orientada objetos oop funcionalidades emso 
+ todas unidades coluna estagios equilibrio trocador calor splitters etc 
+ assim gerado conjunto submodelos conectados si formam modelo todo sistema separacao analise 
+ utilizada eficiencia prato murphree fase vapor valor constante todos estagios igual 
+ implementadas seguintes estruturas controle pid controle nivel condensador manipulacao vazao produto topo controle nivel refervedor atraves manipulacao vazao produto fundo controle temperaturas condensador refervedor manipulando respectivas cargas termicas 
+ figura fluxograma processo destilacao etanol 
+ fonte elaborado autor 
+ feitas emso simulacoes dinamicas processo destilacao mistura etanolagua seguida adicionado terceiro componente alcool isoamilico verificar influencia respostas 
+ simulacoes realizadas regime estacionario simulador processos aspen plus® versao 
+ aspen tech utilizando modulo radfrac modelo rigoroso disponivel aspen plus pode ser usado varios tipos operacoes fracionamento liquidovapor 
+ modelo termodinamico utilizado emso unifacdortmund srk aspen plus dortmund modified unifacrks 
+ unifdmd configuracao colunas utilizadas ambos simuladores tabela 
+ composicoes vinho utilizadas neste estudo encontram tabela 
+ optouse aquecimento refervedor evitar efeito diluidor vinhaca borbotagem vapor dagua 
+ comprimento altura vertedouro prato tabela configuracao sistema 
+ pratos refervedor parcial qrefervedor kw condensador total prato alimentacao razao refluxo ef 
+ murphree vapor alimentacao oc atm kmol coluna aad emso aad aspen plus controlado fonte elaborado autor 
+ tabela fracoes molares principais componentes presentes carga considerada neste trabalho carga tipica industrial desconsiderando presenca eletrolitos 
+ componente fracao molar trabalho fracao molar junqueira etanol agua alcool isoamilico glicerol glicose fonte junqueira 
+ escolheuse trabalhar fracoes base molar pois modelos utilizados emso preexistiam base molar 
+ constantes controladores pid utiilzados simulacoes existentes emso valores default 
+ sistema outra parte desenvolvimento desta dissertacao diz respeito implementacao sistema bombeamento alimentacao coluna sistema 
+ modelado sistema incluindo dorna volante bomba centrifuga trocador calor trocador alem presenca retirada lateral vapor coluna pode ser visualizado figura 
+ aqui optouse aquecimento refervedor 
+ chaveamento dorna pode ser entendido abertura fechamento valvula corrente alimentacao dorna volante interessante opcao estudar efeitos oferta carga coluna 
+ alem acoplamento processo pode dizer semicontinuo batelada alimentada processo fermentativo continuo processo destilacao pode ser ajustado emprego dorna volante conhecida tanque pulmao 
+ figura esquema processo proposto sistema 
+ fonte elaborado autor 
+ feita modelagem dorna volante considerando balanco 
+ dorna volante tubulacao massa descrito seguir 
+ balanco global massa dorna cid cid cid cid cid cid cid cid − cid cid cid cid cid cid ∗ cid cid cid cid cid cid cid cid cid cid cid cid ∗ cid cid − cid cid balanco dorna componente cid cid cid cid cid cid cid cid cid ∗ cid ∗ cid cid cid ∗ cid cid onde vdorn volume vinho dorna volante fsa vazao saida vinho dorna volante fen vazao alimentacao vinho dorna volante kmol mm massa molar media mistura kg kmol cid densidade mistura kg cid cid fracao molar componente cid vinho dorna volante cid cid fracao molar componente cid vinho alimentacao dorna volante cid cid numero mols componente cid vinho cid numero total mols vinho cid cid nivel vinho dorna volante dimensoes dorna volante cilindrica altura diametro 
+ vazao molar vinho delevedurado recarga dorna fixada kmol 
+ ponto comprimentos trechos tubulacoes sistema 
+ tabelas encontram dados referentes nivel cada tabela configuracao cada ponto marcado sistema 
+ ponto ponto ponto ponto ponto ponto nivel variavel fonte elaborado autor 
+ tabela configuracao cada trecho sistema 
+ trecho → trecho → trecho → trecho → comprimento diametro fonte elaborado autor 
+ coluna tabela encontramse informacoes coluna usada nesta etapa trabalho 
+ comprimento altura vertedouro prato respectivamente metros 
+ tabela configuracao coluna sistema 
+ coluna pratos refervedor parcial qrefervedor kw condensador total prato alimentacao razao refluxo ef 
+ murphree vapor estagio retirada lateral calculado fonte elaborado autor 
+ bomba centrifuga altura manometrica sistema caracterizada atraves balanco energia mecanica pode ser verificado equacao 
+ percebese fica dependente energia pontos bem perda carga longo caminho coluna destilacao 
+  lw   ij onde hs altura manometrica sistema metros energia mecanica ponto metros energia mecanica ponto metros lw perda carga metros 
+ ij  lwij  lw  lw  lw  lw perdas carga lwij calculadas equacao equacao darcy 
+ lw  eq  vel onde fator atrito comprimento tubulacao metros leq comprimento equivalente metros devido perda carga localizadas neste trabalho comprimento equivalente diametro tubulacao metros neste trabalho diametro succao cm recalque cm vel velocidade escoamento fluido aceleracao gravidade fator atrito calculado funcao numero reynolds 
+ regimes escoamento turbulento utilizouse equacao equacao swameejain 
+       log          onde  rugosidade absoluta material tubulacao numero reynolds dado equacao   dvel 
+   densidade fluido kg  viscosidade fluido pa 
+ atraves equacao fator atrito darcy 
+ regimes escoamento laminar calculo fator atrito feito f regiao transicao regimes escoamento admitida expandindose equacao obtemse equacao parte modalidade escoamento turbulento 
+ equacao atualizada curva sistema 
+     vel vel     lw ij onde nivel liquido dorna volante metros altura alimentacao coluna destilacao metros pressao alimentacao atm pressao superficie nivel atm vel velocidade 
+ condicoes sistema satisfeitas escolheuse bomba schneider cv modelo 
+ equacao relaciona altura manometrica 
+ fornecida bomba funcao vazao volumetrica obtida atraves ajuste polinomial figura dados fornecidos fabricante 
+ mostrado item volume dorna varia vazao altera deslocando ponto operacao ver curva vermelho figura 
+ figura curvas sistema bomba 
+ fonte elaborado autor 
+ trocador trocador calor modelado forma recuperasse calor vinhaca preaquecendo vinho 
+ area troca termica considerada igual coeficiente troca termica extraido bspang conforme tabela 
+ escolheuse menor valor 
+ igual refere material tubular escoa liquido 
+ escolha feita possivel atuar area troca termica maior conforme equacao 
+ hipotese adotada maximizar troca termica dois fluidos 
+ equacao rege troca 
+ mltauq onde calor trocado fluidos quente frio kw coeficiente global troca termica kw 
+  media logaritmica temperaturas correntes entrada area troca termica mlt saida co trocador calor 
+ tabela coeficiente global troca termica trocadores calor 
+ tipo condicoes aplicacao aquecimento resfriamento tubular gases pressao atmosferica dentro tubos gases alta pressao dentro tubos liquidos lado gas pressao atmosferica outro lado tubos 
+ gas alta pressao dentro tubos liquido 
+ liquidos dentro tubos 
+ vapor liquido dentro tubos fonte bspang 
+ todas simulacoes sistema inicializadas resultados estacionarios simulacao feita dorna diametro grande diametro possibilitou variacao nivel dorna significativa vinho etanolagua contendo base molar etanol 
+ assim simulacoes sistema feitas duas situacoes primeira situacao iniciavamse simulacoes dorna volante cheia vinho etanol fracao molar 
+ atingido nivel minimo cm vinho interior alimentacao chaveada segunda dorna contendo etanol base molar 
+ seguida liquido interior dessa segunda dorna atingisse nivel minimo cm ligavase alimentacao novo vinho mesma composicao dorna molar etanol 
+ nivel vinho ligeiramente inferior fechavase alimentacao 
+ assim nestas simulacoes primeiro estagio esvaziamento distinto demais limite dorna exceto caso duas dornas etanol feito apenas verificar consistencia respostas 
+ todos casos vazao enchimento dorna kmol 
+ segunda situacao apenas dorna disponivel sistema sistema inicializado dados estacionarios incluindo dorna volante vinho fracao molar etanol 
+ chegar nivel minimo cm vinho dorna ligada vazao alimentacao dorna vinho fracao molar etanol 
+ balanco massa transiente dorna resolvido calculandose gradativa diluicao alimentacao coluna primeiro caso perturbacao degrau 
+ sistema implementadas estrategias controle pid topo fundo coluna 
+ nivel liquido refervedor condensador controlado manipulandose valvula corrente fundo destilado 
+ controladas manipulando respectivas cargas termicas 
+ temperaturas refervedor condensador resultados discussao simulacoes buscaram dois objetivos estudar efeitos presenca oleo fusel representado alcool isoamilico vinho estudar efeitos variacao nivel dorna volante concentracao etanol vinho delevedurado resposta transiente sistema utilizandose perturbacoes degrau correntes recarga dorna 
+ validacao modelos termodinamicos adotados opcao formulacao gammaphi equilibrio gerou necessidade adocao modelo calculo coeficiente fugacidade fase vapor outro coeficiente atividade 
+ primeiro optouse equacao cubica redlichkwongsoave srk segundo formulacao unifacdortmund ambas disponiveis modulo vrtherm 
+ avaliacao eventuais desvios relacao dados experimentais fezse analise comparativa fracoes molares tanto fase liquida quanto fase vapor 
+ figuras mostram diagramas xy misturas binarias etanolagua etanolalcool isoamilico aguaalcool isoamilico 
+ nelas pontos preto representam dados experimentais literatura pontos verde modelo srk gerados emso 
+ notase ligeiro afastamento regioes baixa concentracao fato pode ter sido causado fato implementacao unifac vrtherm utilizada neste trabalho faz uso formulacao unifac dortmund porem parametrizacao psrk equacao preditiva contribuicao grupo soaveredlichkwong doi 
+ entretanto percebeuse ajuste deste modelo dados experimentais ocorre discrepancia razoavel casos interesse deste trabalho 
+ levandose conta parametros interacao binaria unifac generalizados partir contribuicoes grupo pode considerar satisfatorio ajuste 
+ verificase modelo usado previu forma satisfatoria elv ambas misturas 
+ figura verificase regiao tracejada onde mistura aguaalcool isoamilico forma duas fases liquidas 
+ figura elv mistura etanol agua atm comparacao previsoes emso unifacdortmund srk dados experimentais gmehling al 
+ fonte elaborado autor 
+ figura elv mistura etanol alcool isoamilico atm comparacao previsoes emso unifacdortmund srk dados experimentais gmehling al 
+ fonte elaborado autor 
+ figura elv mistura agua alcool isoamilico atm comparacao previsoes emso unifacdortmund srk dados experimentais gmehling onken 
+ fonte elaborado autor 
+ processo destilacao sistema feitas simulacoes dinamicas processo destilacao misturas etanolagua etanolaguaalcool isoamilico simular influencia terceiro componente perfis etanolagua 
+ escolheuse alcool isoamilico ser principal componente oleo fusel 
+ figuras encontramse resultados simulacao estado estacionario processo destilacao mistura etanolagua presenca alcool isoamilico obtidas aspen plus comparados obtidos emso apos ser atingido regime 
+ percebese simulador emso respondeu forma semelhante aspen plus 
+ perfis estacionarios ambos simuladores qualitativamente mesma tendencia embora note desvio sistematico pode ser atribuido modelo termodinamico utilizado calculo coeficientes atividade ambos simuladores 
+ figura fracoes molares etanol agua estado liquido longo coluna aspen plus estado estacionario emso apos horas operacao 
+ fonte elaborado autor 
+ figura fracoes molares etanol agua agua fase vapor longo coluna aspen plus estado estacionario emso apos horas operacao 
+ fonte elaborado autor 
+ figura fracoes molares etanol agua alcool isoamilico estado liquido longo coluna aspen plus estado estacionario emso apos horas operacao 
+ fonte elaborado autor 
+ figura fracoes molares etanol agua alcool isoamilico fase vapor longo coluna aspen plus estado estacionario emso apos horas operacao 
+ fonte elaborado autor 
+ figura perfis temperaturas longo coluna aspen plus estado estacionario emso apos horas operacao durante processo destilacao mistura etanol agua 
+ figura perfis temperaturas longo coluna aspen plus estado estacionario emso apos horas operacao durante processo destilacao mistura etanol agua alcool isoamilico 
+ fonte elaborado autor 
+ fonte elaborado autor 
+ principais resultados referentes simulacoes dinamicas sistema mostrados figuras 
+ queda pressao coluna observada simulacoes ordem mbar 
+ estrategias controle implementadas fizeram sistema aproximasse estado estacionario final periodo simulado 
+ figura perfil fracao molar vapor etanol mistura ternaria alcanca estado estacionario partir horas simulacao computacional 
+ deve maior calor especifico fase liquida maior entalpia vaporizacao alcool isoamilico 
+ verificase figura presenca alcool isoamilico fez leve deslocamento temperatura valores maiores 
+ figura perfis fracoes molares etanol funcao tempo estagio coluna obtidos simulacao processo destilacao misturas etanol agua etanol agua alcool isoamilico emso 
+ mistura binaria mistura ternaria mistura binaria mistura ternaria tempo fonte elaborado autor 
+ figura perfis temperaturas funcao tempo estagio coluna obtidos simulacao processo destilacao misturas etanol agua etanol agua alcool isoamilico emso 
+ mistura binaria mistura ternaria tempo fonte elaborado autor 
+ figura verificados perfis fracao molar etanol fase vapor alguns estagios selecionados 
+ observase oscilacoes desaparecem atinge estado estacionario significa perturbacoes amortecidas acoes controladores 
+ figura perfis fracoes molares etanol fase vapor funcao tempo estagios obtidos simulacao processo destilacao mistura etanol agua alcool isoamilico emso 
+ estagio estagio estagio estagio estagio estagio tempo fonte elaborado autor 
+ verificase perfis temperaturas figura tempo horas simulacao computacional controladores empregados responderam perturbacoes forma estavel forcando perfis chegar estado estacionario 
+ figura perfis temperaturas funcao tempo estagios coluna obtidos simulacao processo destilacao mistura etanol agua alcool isoamilico emso 
+ estagio estagio estagio estagio estasio estagio tempo fonte elaborado autor 
+ perfis pressoes coluna podem ser visualizados figura 
+ alcancado regime estacionario pressoes cada estagio tendem valor proximo atm simulacoes mistura binaria sis bin atm simulacoes mistura ternaria sis ter 
+ entretanto percebeuse perda carga torno mbar atm coluna 
+ figura perfis pressoes funcao tempo estagios obtidos simulacao processo destilacao misturas etanol agua etanol agua alcool isoamilico emso 
+ estagio sis ter estagio sis ter estagio sis ter estagio sis ter estagio sis bin estagio sis bin estagio sis bin estagio sis bin sistema ternario sis tern sistema binario sis bin tempo fonte elaborado autor 
+ maneira geral concluise modelo respondeu forma consistente 
+ emso aspen plus mostraram comportamentos similares regime estacionario simulacoes dinamicas emso apontaram efeito sensivel presenca alcool isoamilico perfis dentro coluna tempo atingir estado estacionario 
+ perfis fracao molar etanol temperatura regime estacionario entretanto pouco influenciados presenca alcool isoamilico pode ver comparando figuras 
+ processo destilacao sistema figuras mostram resultados referentes simulacao processo destilacao etanol incluindo bombeamento vinho dorna volante 
+ dorna esvaziada atingir nivel cm 
+ vale ressaltar simulacoes sistema iniciadas valores estacionarios obtidos simulacoes processo utilizou dorna diametro grande vinho etanolagua fracao molar etanol 
+ figuras resultados referem primeiro ciclo esvaziamento dorna volante 
+ verificase nivel vinho dorna diminui tempo figura medida ocorre vazao bombeamento diminui figura causando leve oscilacao temperatura vinho saida trocador calor ts figura 
+ temperatura fluido quente vinhaca trocador sofreu rapida oscilacao primeiras horas entretanto tende valor constante todas fracoes molares etanol vinho figura 
+ figura esvaziamento dorna volante primeiro ciclo operacao apos chaveamento segunda dorna vazao bomba 
+ considerando enchimento dorna vinho etanol fracao molar 
+ fonte elaborado autor 
+ figura temperatura entrada coluna ts temperatura vinhaca fluido quente entrada trocador calor primeiro ciclo operacao apos chaveamento segunda dorna 
+ considerando enchimento dorna vinho etanol fracao molar 
+ fonte elaborado autor 
+ figura podem ser verificados perfis vazao alimentacao coluna figura vinhaca figura destilado figura 
+ vazao retirada lateral vapor mantida constante pode ser verificado figura valor kmol todas situacoes 
+ percebese perfis apresentados todos vinhos etanol base molar apresentam comportamento similar visto vazao bombeamento pouco influenciada fracao etanol vinho 
+ figura vazao alimentacao coluna primeiro ciclo operacao apos chaveamento segunda dorna vinhaca destilado retirada lateral vapor 
+ considerando enchimento dorna vinho etanol fracao molar 
+ fonte elaborado autor 
+ calor fornecido refervedor pode ser verificado figura 
+ percebe grande oscilacao inicio processo decorrente acao controladores quais tentam manter temperatura valor especificado 
+ diferenca observada perfis figura pode ser causada diferenca fracoes etanol vinho similaridade valores vazoes vinhaca quatro tipos vinho 
+ figura calor refervedor considerando enchimento dorna vinho etanol fracao molar primeiro ciclo operacao apos chaveamento segunda dorna 
+ fonte elaborado autor 
+ figura obsevado recuperacao etanol maior carga rica neste componente embora pouca diferenca vinhos analisados 
+ percebese perda significativa etanol vinhaca figura afetar conclusoes deste trabalho 
+ verifica vinho pobre etanol apresenta menor fracao molar deste vinhaca 
+ figura fracao molar etanol destilado primeiro ciclo operacao apos chaveamento segunda dorna fracao molar etanol vinhaca 
+ considerando enchimento dorna vinho etanol fracao molar 
+ fonte elaborado autor 
+ figura mostra perfis fracao molar etanol fase vapor alguns estagios equilibrio coluna estagios 
+ baixo teor etanol alimentado coluna acarreta menor quantidade deste alcool vapor saindo cada estagio comparado vinho maior teor 
+ figura fracao molar etanol fase vapor primeiro ciclo operacao apos chaveamento segunda dorna estagios est 
+ considerando enchimento dorna vinho etanol fracao molar 
+ fonte elaborado autor 
+ percebese caracteristicas vinho ser destilado impactam composicao vapor retirada lateral mostrando necessario vinho rico etanol retirada rica neste componente figura 
+ figura fracao molar etanol vapor retirada lateral primeiro ciclo operacao apos chaveamento segunda dorna 
+ considerando enchimento dorna vinho etanol fracao molar 
+ fonte elaborado autor 
+ figura mostra valores fracoes molares etanol liquido estagios 
+ fracoes etanol vinhaca mostradas figura 
+ figura fracao molar etanol fase liquida estagios est primeiro ciclo operacao apos chaveamento segunda dorna 
+ considerando enchimento dorna vinho etanol fracao molar 
+ fonte elaborado autor 
+ figura fracao molar etanol vinhaca primeiro ciclo operacao apos chaveamento segunda dorna enchimento dorna vinho etanol fracao molar 
+ fonte elaborado autor 
+ figuras mostrados resultados simulacoes sistema entretanto simulacoes feitas tempo bem maior horas simulacao computacional 
+ percebese valores variaveis mostradas sofrem oscilacoes devido enchimento esvaziamento dorna volante 
+ entretanto valores caminham valor medio constante seguem tendencia periodica 
+ figura pode ser observado balanco massa tende valor proximo zero devido variacao carga observase figura hora balanco positivo hora negativo entretanto area positiva tende ser igual area negativa limitada eixo abscissas 
+ verificase figura acumulo tende ser minimizado tempo vinho fracao molar etanol 
+ figura fracao molar etanol fase vapor tempo estagios est 
+ considerando enchimento dorna vinho etanol fracao molar 
+ fonte elaborado autor 
+ figura fracao molar etanol fase liquida tempo estagios est 
+ considerando enchimento dorna vinho etanol fracao molar 
+ fonte elaborado autor 
+ figura perfis fracao molar etanol retirada lateral vapor 
+ considerando enchimento dorna vinho etanol fracao molar 
+ fonte elaborado autor 
+ figura perfis fracao molar etanol destilado vinhaca 
+ considerando enchimento dorna vinho etanol fracao molar 
+ fonte elaborado autor 
+ figura balanco massa bm coluna longo processo bm componente etanol bm global 
+ considerando alimentacao vinho etanol fracao molar 
+ fonte elaborado autor 
+ figura bm componente etanol vinho fracao molar etanol verificacao tendencia perfil 
+ fonte elaborado autor 
+ perfis nivel vinho dorna volante vazao volumetrica bomba temperaturas saida trocador encontram figura 
+ pequenas oscilacoes podem ser observadas figuras quais atribuidas acao enchimento esvaziamento dorna volante bem acao controladores 
+ figura esvaziamento enchimento dorna vazao bomba temperatura entrada coluna ts temperatura vinhaca 
+ considerando enchimento dorna vinho mesma concentracao inicial fracao molar etanol 
+ fonte elaborado autor 
+ consumo energia refervedor pode ser observado figura 
+ verificase perfis tendem valor medio entretanto oscilacoes atribuidas variacao carga coluna 
+ figura podem ser observadas todas vazoes entrada saida coluna destilacao 
+ figura calor refervedor qr considerando enchimento dorna vinho mesma concentracao inicial fracao molar etanol 
+ fonte elaborado autor 
+ figura vazao alimentacao coluna vinhaca destilado retirada lateral vapor 
+ considerando enchimento dorna vinho mesma concentracao inicial fracao molar etanol 
+ fonte elaborado autor 
+ area abaixo curva vazao molar kmol carga coluna observada figura relaciona quanto massa entra coluna comparada acumulos globais vistos figura integrando curva longo tempo 
+ tabela pode ser verificado resultados calculados software origin mostraram acumulo massa coluna pequeno relacao entra coluna 
+ fato verificado todas simulacoes feitas tabela mostrados valores dorna vinho fracao molar etanol entretanto outros vinhos analisados valores similares 
+ tabela percentual acumulo massa coluna 
+ area kmol acumulado bm global figura carga coluna figura × fonte elaborado autor 
+ figuras mostram resultados simulacoes sistema incluindo alimentacao dorna esvazia vinho diluido atribuido segunda geracao considerando etanolagua contendo etanol molar inicializacao sistema valores estacionarios vinho fracao molar etanol 
+ outras palavras agora diluicao etanol dorna razao menor teor nova alimentacao 
+ nivel vinho vazao volumetrica bomba mostrados figura notase comportamento esvaziamento enchimento dorna volante 
+ figura percebese adicao vinho menor concentracao etanol fez mistura resultante quantidade etanol decresce estabilizar determinado tempo simulacao 
+ figura esvaziamento enchimento dorna vazao bomba 
+ fonte elaborado autor 
+ figura fracao molar etanol vinho saindo dorna volante detalhes momento mistura vinho existente dorna fracao molar etanol igual vinho segunda geracao fracao molar etanol igual alimentando dorna volante 
+ fonte elaborado autor 
+ temperaturas alimentacao vinhaca mostradas figura 
+ temperatura vinho sai trocador leve oscilacao instantes iniciais assim inicia mistura vinhos percebese aumento leve temperatura visto diluicao vinho 
+ entretanto aumento chega ser relevante visto ocorre casa decimos centesimos graus assim perfis tendem valor constante 
+ figura temperatura alimentacao coluna ts temperatura vinhaca ts 
+ fonte elaborado autor 
+ variacao fracao molar etanol carga vide figura acarreta oscilacoes longo coluna pode ser representado perfil etanol vapor retirada lateral figura 
+ diluicao vinho causa decrescimo recuperacao etanol coluna 
+ figura percebese diluicao ocasionou queda fracao etanol destilado bem diminuicao fracao vinhaca figura 
+ figura fracao molar etanol vapor retirada lateral 
+ fonte elaborado autor 
+ figura perfis fracao molar etanol destilado vinhaca 
+ fonte elaborado autor 
+ vazoes molares entrada saida coluna mostradas figuras 
+ vazao vapor retirada lateral mantida constante igual kmol figura 
+ variacao fracao molar etanol dorna iniciada instante misturam vinhos causa perturbacao sistema ocasionando oscilacoes carga termica requerida refervedor figura 
+ entretanto consumo energia diminui transcorrer processo 
+ figura vazoes alimentacao coluna vinhaca vazao destilado 
+ fonte elaborado autor 
+ figura vazao retirada lateral vapor 
+ fonte elaborado autor 
+ figura consumo calor refervedor 
+ fonte elaborado autor 
+ balanco massa sistema mostrado figura 
+ verificase processo dinamico ciclos enchimentoesvaziamento dorna acumulos negativos positivos medida tempo passa acumulo tende valor constante proximo zero ver tabela 
+ figura balanco massa bm sistema longo processo bm componente etanol bm global 
+ fonte elaborado autor 
+ area abaixo curva vazao molar kmol carga coluna observada figura reporta quanto massa entra coluna relacionada acumulos globais mostrados figura 
+ resultados calculados origin mostraram relacao minimo acumula quantidade carga permite observar quantidade acumula irrelevante vez percentual acumulo bem pequeno tabela 
+ tabela percentual acumulo massa coluna 
+ area kmol acumulado bm global figura carga coluna figura fonte elaborado autor 
+ facilidades dificuldades simulador emso versao emso utilizada neste trabalho 
+ pode ser visualizada figura 
+ emso surge ferramenta capaz responder forma robusta simulacoes diversos processos industrial quimica dentre outras aplicacoes gerais 
+ estrutura emso torna facil utilizacao alem ser boa comunicacao usuario 
+ simulador processos possui biblioteca modelos usuario pode usar modelos adaptar situacao interessse montando flowsheet ver figura 
+ figura versao emso utilizada nesta dissertacao 
+ fonte environment modeling simulation optimization emso 
+ solvers existentes emso tanto resolver edos quanto daes funcionam bem alem usuario pode escolher solver preferencia 
+ outra caracteristica positiva encontrada emso capacidade checar consistencia sistema analisando graus liberdade inclusive dinamicos 
+ apenas click local indicado analise feita forma imediata ver figuras 
+ enquanto grau liberdade zerado enquanto condicoes iniciais referentes equacoes diferenciais atendidas iniciam simulacoes 
+ emso alerta usuario sobre possiveis incompatibilidades unidades medidas indica exato local onde encontra discrepancia 
+ alem usuario pode visualizar numero variaveis numero equacoes sistema bem numero especificacoes feitas 
+ dentre outras vantagens facilidade utilizar heranca gerar submodelos faz emso simulador atrativo 
+ entretanto dificuldades uso emso principalmente usuario pouca familiaridade modelo utiliza 
+ maior inicializacao simulacoes visto faz necessario ter inicializacao consistente exigindo bom conhecimento sistema modelo usuario 
+ sistema aqui estudado complexo falta boa iniciaizacao dificultava inicio processo 
+ todavia dados consistentes inicializar simulacos fluem 
+ convergencia alcancada forma robusta rapida menos tempo simulacao computacional 
+ outra dificuldade vivida problema indice estrutural diferencial maior fato deixa sistema dificil ser resolvido 
+ rotinas calculos existentes pacote vrtherm conseguem resolver sistema equacoes indice maior exigindo feita reducao fato pode ser alcancado mudando algumas especificacoes dentre outros meios 
+ contudo tarefa facil mudar especificacao sistema grandes dimensoes estudado aqui 
+ todo modo dificuldade certamente superada conhece bem sistema questao 
+ comentario final ambiente emso vantagens facilidades ferramenta poderosa 
+ processo quimico industrial complexo pode ser seguramente estudado aqui respostas consistentes podem ser obtidas 
+ figura interface emso exemplo modelos usados teste consistencia montagem flowsheet 
+ fonte elaborado autor 
+ figura interface emso escolha modelos resolver sistemas equacoes 
+ fonte elaborado autor 
+ conclusoes modelo dinamico coluna emso respondeu forma consistente simulador global processos emso mostrouse robusto eficiente visto simulou varias situacoes processamento problemas divergencia numerica solucao sistema dae 
+ muita importancia dias atuais ferramenta capaz suportar simulacoes diversos processos industria quimica desafios atuais enormes nesse cotexto simulador processos emso torna opcao forte escolha desta ferramenta trabalho 
+ simulacoes processo dinamico destilacao etanol mostraram robustas qualitativamente consistentes 
+ presenca terceiro componente alcool isoamilico influenciou forma significativa perfis simulados transiente 
+ perturbacoes feitas carga 
+ controladores pid empregados neste trabalho mostraramse estaveis desempenho adequado 
+ oscilacoes observadas tempos iniciais simulacoes atribuidas atuacoes destes controladores consistentes esperado fisicamente 
+ apresentou desempenho aceitavel calculos termodinamicos misturas binarias previsoes comparadas dados experimentais literatura 
+ simulacoes feitas presenca dorna volante mostraramse qualitativamente satisfatorias 
+ inclusao dorna volante importante pois equipamento conexao setor processo maioria plantas industriais opera regime descontinuo semicontinuo fermentacao setor opera regime permanente destilacao 
+ dorna serve portanto manter processo global funcionando forma continua 
+ modelo termodinamico unifacdortmund srk perturbacoes causadas bombeamento vinho dorna volante bem qualidade vinho enchimento desta dorna influenciou diretamente respostas simulacoes feitas 
+ carga termica requerida refervedor mostrouse pouco menor vinho menor teor etanol 
+ entanto nesse caso menor quantidade produto recuperado tanto topo quanto retirada lateral vapor 
+ perda etanol vinhaca suma importancia visto indesejada 
+ efeito esvaziamento dorna volante bombeamento vinho sistema estudado mostrouse satisfatorio 
+ notese coluna utilizada neste trabalho projeto otimizado valores elevados etanol fundo ainda podem ser reduzidos forma importante 
+ leva maior enriquecimento produto topo mesma razao refluxo torre 
+ bomba correspondeu bem demandas processo 
+ chaveamento dorna abertura fechamento valvula corrente alimentacao dorna volante interessante opcao estudar efeitos oferta carga coluna 
+ assim acoplamento processo pode dizer semicontinuo batelada alimentada processo fermentativo continuo processo destilacao pode ser ajustado emprego dorna volante chamado tanque pulmao 
+ propriedade heranca permite facil utilizacao device simulacoes processos convencionais convencionais biorrefinarias etanol borbotagem vapor etc 
+ aplicacao emso simulacoes complexas biorrefinarias ira requerer modelos termodinamicos naopreditivos calculos desvios idealidade fase liquida 
+ calculo entalpias partir modelos propriedades excesso deve ser considerado alternativa uso equacoes cubicas fim trabalha substancias polares presentes tipicamente biorrefinaria 
+ propostas continuidade  ajustar configuracao coluna adequar situacoes  reais industria introduzir conjunto colunas producao etanol hidratado simular dinamica processo global  estudar efeito dorna volante processo convencional usando configuracoes industriais colunas aad bb referencias bibliograficas baudel 
+ improving value sugarcane bagasse wastes via integrated chemical production systems environmentally friendly approach 
+ industrial cropsand products 
+ estudo processo destilacao alcoolica continua simulacao plantas industriais producao alcool hidratado alcool neutro cachaca 
+ dissertacao mestrado engenharia quimica 
+ banco nacional desenvolvimento economico social bndes 
+ centro gestao estudos estrategicos cgee 
+ bioetanol canadeacucar energia desenvolvimento sustentavel 
+ organizacao bndes cgee 
+ rio janeiro bndes cgee 
+ processo destilacao extrativa modelagem dinamica simulacao avaliacao nova configuracao 
+ tese doutorado engenharia quimica 
+ chemical process engineering resources 
+ disponivel http www 
+ content articles heat transfer uinheatexchangers 
+ rigorous dynamic models distillation columns 
+ canadeacucar alimento energia limpa planeta 
+ simulacao processo producao etanol partir acucar bagaco visando integracao processo maximizacao producao energia excedentes bagaco 
+ dissertacao mestrado engenharia quimica 
+ universidade federal santa catarina centro tecnologico engenharia bioquimica 
+ disponivel http pt 
+ metodo robusto simulacao colunas destilacao simuladores baseados equacoes caso purificacao bioetanol 
+ cobeq foz iguacu uem 
+ generalized model distillation columns model description applications 
+ computers chemical engineering 
+ control extractive distillation process dehydrate ethanol using glycerol entrainer 
+ computers chemical engineering 
+ termodinamica equilibrio aplicada destilacao etanol agua 
+ dissertacao mestrado engenharia quimica 
+ vaporliquidequilibrium data collection organic hydroxy compounds alcohols 
+ vaporliquid equilibrium data collection aqueous systems suplement 
+ dechema chemistry data series vol 
+ quimica nova vol 
+ review separation technologies current future biorefineries 
+ separation purification technology 
+ otimizacao colunas destilacao complexas 
+ dissertacao mestrado engenharia quimica 
+ simulacao colunas destilacao convencional extrativa azeotropica processo producao bioetanol atraves modelagem equilibrio modelagem estagios equilibrio eficiencia 
+ dissertacao mestrado engenharia quimica 
+ introducao controle processos quimicos matlab 
+ carlos edufscar carlos 
+ distillation tray fundamentals 
+ new york press syndicate university cambridge 
+ dynamic control analysis manufacturing ethanol fuel via reactive distillation 
+ chemical engineering processing 
+ rigorous dynamic models distillation safety analysis 
+ computers chemical engineering 
+ multicomponent separation calculations linearization 
+ mapa sucroenergetico brasil 
+ capitulo livro etanol bioeletricidade canadeacucar futuro matriz energetica 
+ luc projetos comunicacao 
+ unica uniao industria canadeacucar 
+ analise alcoois esteres compostos carbonilicos amostras oleo fusel 
+ steady state dynamic simulation complex chemical processes 
+ perrys chemical engineers handbook 
+ new york mcgrawhill 
+ desenvolvimento algoritmo simulacao colunas destilacao multicomponente estado estacionario utilizando modelagem estagios equilibrio 
+ dissertacao mestrado engenharia quimica 
+ analysis startup process reactive distillation 
+ chemical engineering technology 
+ molecular thermodynamics fluid phase equilibria 
+ prenticehall englewood cliffs 
+ ensino cinetica calculo reatores quimicos utilizando simulador emso 
+ congresso brasileiro engenharia quimica santos 
+ chemical engineering thermodynamics 
+ john wiley sons 
+ wiley series chemical engineering 
+ simulador dinamico processos orientado equacoes instalacao 
+ escola piloto prof 
+ peq coppe ufrj 
+ rio janeiro rj 
+ understanding dynamic behavior distillation columns 
+ introducao termodinamica engenharia quimica 
+ rio janeiro ltc editora 
+ desenvolvimento simulador generico processos dinamicos 
+ dissertacao mestrado engenharia 
+ departamento engenharia quimica universidade federal rio grande sul porto alegre 
+ modelagem simulacao dinamica colunas destilacao 
+ dissertacao mestrado engenharia 
+ porto alegre rs 
+ chemical process control introduction theory practice 
+ new jersey prentice hall 
+ vrtherm software predict thermodynamics physical properties complex mixtures pure substances 
+ startup model simulation bath distillation cold state 
+ computers chemical engineering 

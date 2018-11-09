@@ -1,0 +1,6939 @@
+UNIVERSIDADE FEDERAL DE SANTA CATARINA
+
+CURSO DE GRADUAÇÃO EM ENGENHARIA MECÂNICA
+
+TAISA BEATRIZ PACHECO
+
+COMPARAÇÃO ENTRE AS FORMULAÇÕES IMPES, SEQUENCIAL E
+
+TOTALMENTE IMPLÍCITA NA SIMULAÇÃO DE ESCOAMENTO
+BIFÁSICO EM RESERVATÓRIOS APLICANDO O MÉTODO DOS
+
+VOLUMES FINITOS BASEADO EM ELEMENTOS
+
+Florianópolis
+
+2016
+
+UNIVERSIDADE FEDERAL DE SANTA CATARINA
+
+CURSO DE GRADUAÇÃO EM ENGENHARIA MECÂNICA
+
+TAISA BEATRIZ PACHECO
+
+COMPARAÇÃO ENTRE AS FORMULAÇÕES IMPES, SEQUENCIAL E
+
+TOTALMENTE IMPLÍCITA NA SIMULAÇÃO DE ESCOAMENTO
+BIFÁSICO EM RESERVATÓRIOS APLICANDO O MÉTODO DOS
+
+VOLUMES FINITOS BASEADO EM ELEMENTOS
+
+Trabalho apresentado ao Curso de Gradua-
+ção em Engenharia Mecânica da Universi-
+dade Federal de Santa Catarina como parte
+dos requisitos para a obtenção do título de
+Engenheiro Mecânico.
+
+Orientador: Prof.
+lho da Silva, Dr. Eng.
+
+António Fábio Carva-
+
+Florianópolis
+
+2016
+
+Ficha de identificação da obra elaborada pelo autor, através do Programa de Geração Automática da Biblioteca Universitária da UFSC.Pacheco, Taisa Beatriz   Comparação entre as formulações IMPES, sequencial etotalmente implícita na simulação de escoamento bifásico emreservatórios aplicando o método dos volumes finitosbaseado em elementos / Taisa Beatriz Pacheco ; orientador,António Fábio Carvalho da Silva - Florianópolis, SC, 2016.   120 p.   Trabalho de Conclusão de Curso (graduação) -Universidade Federal de Santa Catarina, Centro Tecnológico.Graduação em Engenharia Mecânica.   Inclui referências    1. Engenharia Mecânica. 2. Simulação numérica dereservatórios de petróleo. 3. Escoamento bifásico. 4. EbFVM.5. Método de Newton-Raphson. I. da Silva, António FábioCarvalho. II. Universidade Federal de Santa Catarina.Graduação em Engenharia Mecânica. III. Título.TAISA BEATRIZ PACHECO
+
+COMPARAÇÃO ENTRE AS FORMULAÇÕES IMPES, SEQUENCIAL E
+
+TOTALMENTE IMPLÍCITA NA SIMULAÇÃO DE ESCOAMENTO
+BIFÁSICO EM RESERVATÓRIOS APLICANDO O MÉTODO DOS
+
+VOLUMES FINITOS BASEADO EM ELEMENTOS
+
+Este Trabalho de Curso foi julgado adequado para a obtenção do título de Engenheiro
+Mecânico e aprovado em sua forma ﬁnal pela Comissão examinadora e pelo Curso de Gra-
+duação em Engenharia Mecânica da Universidade Federal de Santa Catarina.
+
+Prof. Carlos E. Niño Bohórquez, Dr.Eng.
+
+Prof. Jonny Carlos da Silva, Dr. Eng.
+
+Coordenador do Curso
+
+Professor da Disciplina
+
+Comissão Examinadora:
+
+Prof. António Fábio C. da Silva, Dr. Eng.
+
+Orientador
+
+Prof. Clovis R. Maliska, Ph.D.
+
+Prof. Sérgio Peters, Dr. Eng.
+
+Florianópolis
+
+2016
+
+Ao meu companheiro Ederson,
+
+aos meus pais Sérgio e Tânia
+
+e à minha irmã Carina.
+
+AGRADECIMENTOS
+
+Agradeço primeiramente ao meu companheiro Ederson por todo carinho e por todos
+
+os ensinamentos – tanto no âmbito pessoal, quanto no proﬁssional – sem os quais este tra-
+
+balho não seria possível. Agradeço profundamente aos meus pais Sérgio e Tânia, por todo
+
+incentivo à educação e por estarem sempre presentes não obstante a distância. Também à
+
+minha irmã Carina, a qual sempre foi um exemplo pra mim e ao Rodrigo, o qual considero
+
+um irmão.
+
+Agradeço especialmente ao professor António Fábio Carvalho da Silva, não apenas por
+
+realizar seus papeis de professsor e orientador com primazia, mas também por acreditar
+
+em mim no momento mais difícil, permitindo-me conﬁar em meu próprio potencial.
+
+Ao professor Clovis Maliska pela oportunidade de trabalhar no laboratório SINMEC.
+
+Aos amigos e colegas de trabalho Giovani e Gustavo, sempre presentes. Ao Fernando pela
+
+atenção e prestatividade. À Tatiane e ao Axel pelo auxílio quanto às atividades cotidianas
+
+do laboratório. Sobretudo à Tatiane, por sua amizade e por todas as risadas. A todos os in-
+
+tegrantes do SINMEC ainda não citados: Emílio, Conrado, Hermínio, Josiane, Rafael, Victor
+
+Wagner, Maria, Riciêri, Victor Antonio, Fernando Eckstein, Gabriel, Gustavo Trentini, Hen-
+
+rique, Jurandir, Lara, Lucas, Róger e Ruan. Também a todos os amigos da universidade que
+
+não foram citados.
+
+À Universidade Federal de Santa Catarina e ao Departamento de Engenharia Mecânica,
+
+pela excelência do curso oferecido. Sobretudo, ao Laboratório de Simulação Numérica em
+
+Mecânica dos Fluidos e Transferência de Calor – SINMEC – e ao Programa de Recursos
+
+Humanos da ANP pela estrutura disponibilizada, pelo apoio ﬁnanceiro e pelo excelente
+
+ambiente de trabalho.
+
+“If you change the way you look at things,
+
+the things you look at change.”
+
+Wayne Dyer
+
+RESUMO
+
+Este trabalho apresenta resultados comparativos das formulações IMPES (IMplicit Pres-
+sure, Explicit Saturation), sequencial e totalmente implícita ou FIM (Fully Implicit Method)
+na simulação numérica de escoamento bifásico, isotérmico, imiscível e incompressível em
+reservatórios de petróleo utilizando malhas não-estruturadas e o método dos volumes ﬁ-
+nitos baseado em elementos (EbFVM). A implementação do simulador foi realizada por
+meio de programação orientada a objetos aplicando a linguagem C ++. A metodologia IM-
+PES resolve de forma implícita a pressão e explícita, a saturação. Sua estabilidade está, pois,
+condicionada a uma restrição de passo de tempo, tendo em vista a aproximação explícita
+do cálculo do campo de saturação. Em decorrência de sua simplicidade, essa abordagem
+permite reduzir tanto o esforço computacional quanto a diﬁculdade relacionada à etapa
+de implementação. Já a formulação sequencial consiste em um IMPES modiﬁcado com o
+intuito de atingir uma maior estabilidade. Por ﬁm, no método totalmente implícito tem-
+se a solução simultânea das equações de conservação por meio do método de Newton-
+Raphson. Essa formulação acarreta um sistema de equações maior e atrelado a diversas
+não-linearidades. Não obstante as diﬁculdades numéricas e de implementação computa-
+cional desse esquema, trata-se de um método mais estável. Ademais, foi implementada
+uma estratégia de passo de tempo variável a ﬁm de reduzir o tempo computacional des-
+pendido na obtenção das soluções numéricas, a qual altera o passo de tempo de acordo
+com a variação do campo de saturação ao longo do transiente. Os resultados apresentam a
+comparação dos métodos IMPES sequencial e FIM em termos de estabilidade, custo com-
+putacional e precisão dos resultados.
+
+Palavras-chave: simulação de reservatórios, escoamento bifásico, EbFVM, malhas não-
+estruturadas, IMPES, método sequencial, método totalmente implícito, método de New-
+ton.
+
+ABSTRACT
+
+This study presents comparative results of IMPES (IMplicit Pressure, Explicit Satura-
+tion), sequential, and fully implicit solution schemes for isothermal, immiscible, incom-
+pressible two-phase ﬂow reservoir simulation using unstructured grids and the Element-
+based Finite Volume Method (EbFVM). The implementation of the simulator was done th-
+rough object-oriented programming (OOP) in C ++. The IMPES method solves pressure
+implicitly and saturation explicitly, as the acronym suggests. As a result of this explicit cal-
+culation its stability is subjected to a restriction of the time step. Nevertheless this approach
+reduces the computational effort and facilitates implementation. The sequential method
+is a modiﬁed IMPES with the aim of improving the stability of explicit formulations. The
+Fully Implicit Method (FIM) or simultaneous approach solves the system of equations that
+models the problem simultaneously employing the Newton-Raphson method. This formu-
+lation implies larger system of equations with many nonlinearities and thus higher com-
+putational cost. Regardless the difﬁculties related to the numerical scheme and its imple-
+mentation it is a more stable method. Furthermore, it is also presented a variable time step
+strategy in order to accelerate the performance of the methods. This strategy consists ba-
+sically in modifying the time step according to the current solution. In this paper, IMPES,
+sequential and fully implicit methods are compared in terms of stability, computational
+time and accuracy of its results.
+
+Keywords: Reservoir simulations, two-phase ﬂow, EbFVM, unstructured grids, IMPES, se-
+quential method, fully implicit method, Newton method.
+
+LISTA DE ILUSTRAÇÕES
+
+1.1 Etapas da simulação de reservatórios . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.2 Esquema ilustrativo de um reservatório sujeito à recuperação secundária .
+
+2.1 Volume de controle em um meio poroso . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.1 Potencial geométrico da malha não-estruturada . . . . . . . . . . . . . . . . . . .
+
+3.2 Principais entidades de um elemento triangular . . . . . . . . . . . . . . . . . . . .
+
+3.3 Construção do volume de controle . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.4 Mapeamento para um espaço transformado . . . . . . . . . . . . . . . . . . . . . .
+
+3.5 Estêncil associado ao nó P . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.6 Método de Newton para funções de uma variável . . . . . . . . . . . . . . . . . . .
+
+4.1 Classes responsáveis pela simulação pelo método IMPES . . . . . . . . . . . . .
+
+4.2 Exemplo de estrutura da matriz do sistema linear da pressão . . . . . . . . . .
+
+4.3 Classes responsáveis pela simulação pelo método FIM . . . . . . . . . . . . . . .
+
+4.4 Esquema de interpolação upwind em elemento triangular . . . . . . . . . . . .
+
+4.5 Volume de controle adjacente ao contorno . . . . . . . . . . . . . . . . . . . . . . .
+
+4.6 Exemplo de estrutura da matriz jacobiana . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.7 Exemplo de etapa de montagem da matriz jacobiana . . . . . . . . . . . . . . . .
+
+4.8 Fluxograma da estratégia de modiﬁcação do passo de tempo . . . . . . . . . .
+
+5.1 Conﬁguração do problema de deslocamento unidimensional . . . . . . . . . .
+
+5.2 Curvas de permeabilidade e ﬂuxo fracionário . . . . . . . . . . . . . . . . . . . . . .
+
+23
+
+24
+
+31
+
+37
+
+39
+
+39
+
+40
+
+43
+
+47
+
+51
+
+52
+
+54
+
+57
+
+60
+
+62
+
+67
+
+72
+
+74
+
+76
+
+5.3 Malhas não-estruturadas utilizadas na solução do problema de Buckley-
+
+Leverett . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+78
+
+5.4 Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com passo de tempo ﬁxo em
+
+uma malha de 430 nós . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+79
+
+5.5 Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com passo de tempo ﬁxo em
+
+uma malha de 1961 nós . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+79
+
+5.6 Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com passo de tempo ﬁxo em
+
+uma malha de 7392 nós . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.7 Tempo computacional para os três métodos com passo de tempo ﬁxo . . .
+
+80
+
+80
+
+5.8 Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com critério mais rígido de
+
+passo de tempo adaptativo em uma malha de 430 nós . . . . . . . . . . . . . . .
+
+81
+
+5.9 Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com critério mais rígido de
+
+passo de tempo adaptativo em uma malha de 1961 nós . . . . . . . . . . . . . .
+
+81
+
+5.10 Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com critério mais rígido de
+
+passo de tempo adaptativo em uma malha de 7392 nós . . . . . . . . . . . . . .
+
+82
+
+5.11 Tempo computacional para os três métodos com critério mais rígido de
+
+passo de tempo adaptativo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+82
+
+5.12 Evolução do passo de tempo para a malha de 430 nós com critério mais
+
+rígido de passo de tempo adaptativo . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+83
+
+5.13 Evolução do passo de tempo para a malha de 1961 nós com critério mais
+
+rígido de passo de tempo adaptativo . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+83
+
+5.14 Evolução do passo de tempo para a malha de 7392 nós com critério mais
+
+rígido de passo de tempo adaptativo . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+84
+
+5.15 Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com critério menos rígido de
+
+passo de tempo adaptativo em uma malha de 430 nós . . . . . . . . . . . . . . .
+
+84
+
+5.16 Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com critério menos rígido de
+
+passo de tempo adaptativo em uma malha de 1961 nós . . . . . . . . . . . . . .
+
+85
+
+5.17 Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com critério menos rígido de
+
+passo de tempo adaptativo em uma malha de 7392 nós . . . . . . . . . . . . . .
+
+85
+
+5.18 Tempo computacional para os três métodos com critério menos rígido de
+
+passo de tempo adaptativo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+86
+
+5.19 Evolução do passo de tempo para a malha de 430 nós com critério menos
+
+rígido de passo de tempo adaptativo . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+86
+
+5.20 Evolução do passo de tempo para a malha de 1961 nós com critério menos
+
+rígido de passo de tempo adaptativo . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+87
+
+5.21 Evolução do passo de tempo para a malha de 7392 nós com critério menos
+
+rígido de passo de tempo adaptativo . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+87
+
+5.22 Campos de saturação e pressão para os instantes de tempo 0,2, 0,3 0,4 e
+
+0,5 VPI . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.23 Conﬁguração do problema de deslocamento bidimensional . . . . . . . . . . .
+
+88
+
+90
+
+5.24 Malhas não-estruturadas utilizadas na solução do problema quarter ﬁve-
+
+spot . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+91
+
+5.25 Resultados obtidos para o deslocamento bidimensional com passo de tempo
+
+ﬁxo e uma malha de 425 nós . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+93
+
+5.26 Resultados obtidos para o deslocamento bidimensional com passo de tempo
+
+adaptativo e uma malha de 425 nós . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+94
+
+5.27 Resultados obtidos para o deslocamento bidimensional com passo de tempo
+
+ﬁxo e uma malha de 1483 nós . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+95
+
+5.28 Resultados obtidos para o deslocamento bidimensional com passo de tempo
+
+adaptativo e uma malha de 1483 nós . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+96
+
+5.29 Resultados obtidos para o deslocamento bidimensional com passo de tempo
+
+ﬁxo e uma malha de 5985 nós . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+97
+
+5.30 Resultados obtidos para o deslocamento bidimensional com passo de tempo
+
+adaptativo e uma malha de 5985 nós . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.31 Campos de pressão e saturação no instante de breakthrough . . . . . . . . . .
+
+98
+
+99
+
+5.32 Campos de saturação para os instantes de tempo de 500, 1500, 3000 e 5000
+
+dias . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+99
+
+5.33 Tempos computacionais despendidos no caso de deslocamento bidimen-
+
+sional . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+101
+
+5.34 Resultados obtidos para o deslocamento bidimensional com o método to-
+
+talmente implícito . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+102
+
+5.35 Conﬁguração do problema tridimensional . . . . . . . . . . . . . . . . . . . . . . . .
+
+104
+
+5.36 Ilustração da malha cilíndrica ao redor dos poços . . . . . . . . . . . . . . . . . .
+
+105
+
+5.37 Resultados obtidos para o deslocamento tridimensional em malha híbrida
+
+com os três métodos para 3000 dias de simulação . . . . . . . . . . . . . . . . . .
+
+107
+
+5.38 Resultados obtidos para o deslocamento tridimensional em malha híbrida
+
+com o método totalmente implícito para 10000 dias de simulação . . . . . .
+
+108
+
+5.39 Campo de saturação para quatro instantes de tempo . . . . . . . . . . . . . . . .
+
+109
+
+5.40 Campo de pressão para quatro instantes de tempo . . . . . . . . . . . . . . . . . .
+
+109
+
+5.41 Campos ﬁnais de pressão e saturação . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+110
+
+LISTA DE TABELAS
+
+4.1 Parâmetros correspondentes ao critérios mais rígido de passo de tempo
+
+adaptativo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+71
+
+4.2 Parâmetros correspondentes ao critérios menos rígido de passo de tempo
+
+adaptativo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.1 Dados do problema de deslocamento bifásico bidimensional . . . . . . . . . .
+
+5.2 Tempo computacional – passo de tempo ﬁxo e malha de 425 nós . . . . . . .
+
+5.3 Tempo computacional – passo de tempo adaptativo e malha de 425 nós . .
+
+5.4 Tempo computacional – passo de tempo ﬁxo e malha de 1483 nós . . . . . .
+
+5.5 Tempo computacional – passo de tempo adaptativo e malha de 1483 nós .
+
+5.6 Tempo computacional – passo de tempo ﬁxo e malha de 5985 nós . . . . . .
+
+5.7 Tempo computacional – passo de tempo adaptativo e malha de 5985 nós .
+
+71
+
+91
+
+93
+
+94
+
+95
+
+96
+
+97
+
+98
+
+5.8 Tempo computacional despendido com o método FIM . . . . . . . . . . . . . .
+
+102
+
+5.9 Dados do problema de deslocamento bifásico tridimensional . . . . . . . . . .
+
+105
+
+5.10 Tempo computacional despendido . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+107
+
+LISTA DE LISTAGENS
+
+4.1 Pseudocódigo da rotina que resolve o sistema linear da pressão . . . . . . . .
+
+4.2 Pseudocódigo da rotina que resolve o sistema não linear . . . . . . . . . . . . .
+
+4.3 Pseudocódigo da rotina que computa os resíduos . . . . . . . . . . . . . . . . . .
+
+4.4 Pseudocódigo da rotina que adiciona o termo difusivo nos resíduos . . . . .
+
+4.5 Pseudocódigo da rotina que adiciona o termo acumulativo nos resíduos . .
+
+4.6 Pseudocódigo da rotina que adiciona o termo fonte nos resíduos . . . . . . .
+
+4.7 Pseudocódigo da rotina que aplica as condições de contorno nos resíduos
+
+4.8 Pseudocódigo da rotina que monta a matriz jacobiana . . . . . . . . . . . . . . .
+
+4.9 Pseudocódigo da rotina que adiciona o termo difusivo na matriz jacobiana
+
+53
+
+55
+
+56
+
+56
+
+57
+
+59
+
+60
+
+63
+
+65
+
+4.10 Pseudocódigo da rotina que adiciona o termo acumulativo na matriz jaco-
+
+biana . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+68
+
+4.11 Pseudocódigo da rotina que aplica as condições de contorno na matriz ja-
+
+cobiana . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+69
+
+4.12 Pseudocódigo da rotina que aplica as condições de contorno na matriz ja-
+
+cobiana . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+70
+
+LISTA DE SÍMBOLOS
+
+SímbolosRomanos
+
+(x , y ) Coordenadas globais
+
+S
+
+Vetor área
+
+[m]
+
+[m2]
+
+∆Smax Diferença máxima de saturação especiﬁcada no critério de passo de tempo variável
+
+∆Smin Diferença mínima de saturação especiﬁcada no critério de passo de tempo variável
+
+∆t
+
+∆Af
+
+˙m f
+
+ˆS
+
+Ni
+
+K
+
+Passo de tempo
+
+Vetor área associado à face f
+
+Fluxo de massa que atravessa uma face f do volume de controle
+
+Saturação de água normalizada
+
+Função de forma associada ao i-ésimo vértice do elemento
+
+Tensor permeabilidade absoluta do meio
+
+Conjunto dos elementos que compartilham o nó P
+
+[s]
+
+[m2]
+
+[kg/s]
+
+[m2]
+
+[m/s2]
+
+[m/s]
+
+(cid:69) P
+(cid:77) Malha
+(cid:78) e
+(cid:83) P
+
+g
+
+Vp
+
+ξ
+
+ei
+
+F
+
+F p
+
+f p
+
+Conjunto dos nós associados ao elemento e
+
+Estêncil associado ao nó P
+
+Vetor gravidade
+
+Velocidade da fase p
+
+Razão adimensional entre espaço e tempo
+
+i-ésimo elemento de uma malha
+
+Termo fonte
+
+Taxa de geração ou extinção de massa fase p por unidade de volume
+
+Taxa de geração ou extinção de volume da fase p por unidade de volume
+
+[kg/(m3 s)]
+
+[1/s]
+
+[m2/s2]
+
+[Pa]
+
+[m/s]
+
+[m]
+
+[m3]
+
+Ff
+
+G
+
+Fluxo fracionário
+
+Função potencial gravitacional
+
+J
+
+J
+
+Matriz jacobiana
+
+−1D Operador gradiente discreto
+
+k p
+r
+
+n v
+
+P p
+
+R t
+
+R w
+
+R e
+
+S p
+
+Permeabilidade relativa da fase p
+
+Numero de vértices de um elemento
+
+Pressão da fase p
+
+Resíduo associado à conservação da massa total
+
+Resíduo associado à conservação da massa da fase água
+
+Número de Reynolds
+
+Saturação da fase p
+
+S w
+ma x Saturação máxima de água
+
+S w
+mi n
+
+v T
+
+X
+
+Saturação mínima de água
+
+Velocidade total na direção x
+
+Coordenada axial x normalizada
+
+WI
+
+well index
+
+Abreviações
+
+BT
+
+Breakthrough
+
+EbFVM Element-based Finite Volume Method
+
+EOR Enhanced Oil Recovery
+
+FIM Fully Implicit Method
+
+IMPES IMplicit Pressure, Explicit Saturation
+
+VPI
+
+Volume poroso injetado
+
+SímbolosGregos
+
+(ξ, η) Coordenadas locais
+
+αw
+ac
+
+Termo de acumulação associado à equação do resíduo R w
+
+αaum Constante utilizada para aumentar o passo de tempo
+
+αt
+
+dif
+
+αw
+dif
+
+αt
+
+fon
+
+αw
+fon
+
+αred
+
+Γ
+
+λp
+
+θ p
+f
+
+µp
+
+Ω
+
+Termo difusivo associado à equação do resíduo R t
+
+Termo difusivo associado à equação do resíduo R w
+
+Termo fonte associado à equação do resíduo R t
+
+Termo fonte associado à equação do resíduo R w
+
+Constante utilizada para reduzir o passo de tempo
+
+Coeﬁciente difusivo
+
+Mobilidade da fase p
+
+Pseudoﬂuxo da face p na face f
+
+Viscosidade da fase p
+
+Domínio fechado
+
+ψP Média do valor de ψ em P
+
+∂ Ω
+
+Fronteira do volume de controle
+
+φ
+
+Φp
+
+ψ
+
+Ψe
+
+τ
+
+
+
+Porosidade do meio
+
+Potencial da fase p
+
+Função deﬁnida nos nós de uma malha
+
+Vetor com os valores de ψ nos nós do elemento
+
+Tempo adimensional
+
+Tolerância especiﬁcada
+
+[m]
+
+[m3/s]
+
+[m3/s]
+
+[m3/s]
+
+[m3/s]
+
+[m3/s]
+
+[1/(Pas)]
+
+[m3/s]
+
+[Pa s]
+
+[Pa]
+
+SobrescritoseSubscritos
+
+P
+
+e
+
+f
+
+o
+
+p
+
+r
+
+t
+
+w
+
+ac
+
+Nó da malha
+
+Elemento
+
+Face
+
+Óleo
+
+Fase p
+
+Relativo
+
+Total
+
+Água
+
+Acumulativo
+
+dif
+
+Difusivo
+
+fon
+
+Fonte
+
+max Máximo
+
+min Mínimo
+
+old
+
+Antigo
+
+presc Prescrito
+
+SUMÁRIO
+
+1 Introdução
+
+1.1 Simulação de reservatórios . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.1.1 Etapas da simulação de reservatórios . . . . . . . . . . . . . . . . . . . . . .
+
+1.1.2 O fenômeno físico . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.2 O modelo bifásico imiscível . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.3 O Método dos Volumes Finitos baseado em Elementos . . . . . . . . . . . . . . .
+
+1.4 Revisão bibliográﬁca . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.4.1 Método IMPES . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.4.2 Método sequencial . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.4.3 Método totalmente implícito . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.5 Objetivos e contribuições . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.6 Organização do trabalho . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2 Modelo Matemático
+
+2.1 A Lei de Darcy na forma de potenciais . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.2 Equações fundamentais do modelo . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.3 Propriedades físicas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.3.1 Propriedades dos ﬂuidos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.3.2 Propriedades da rocha . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.3.3 Propriedades do conjunto rocha-ﬂuido . . . . . . . . . . . . . . . . . . . . .
+
+3 Método Numérico
+
+3.1 Método dos Volumes Finitos Baseado em Elementos . . . . . . . . . . . . . . . .
+
+3.1.1 Entidades geométricas da malha . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.1.2 Abordagem numérica . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+22
+
+22
+
+23
+
+23
+
+25
+
+25
+
+26
+
+26
+
+27
+
+27
+
+27
+
+28
+
+30
+
+30
+
+31
+
+33
+
+33
+
+34
+
+35
+
+36
+
+36
+
+38
+
+39
+
+3.1.3 Discretização de uma equação de conservação de uma variável ge-
+
+nérica . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.2 Equações discretizadas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.3 Formulações impes e sequencial . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.4 Formulação totalmente implícita . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.4.1 Método de Newton . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4 Implementação Computacional
+
+4.1 Métodos impes e sequencial . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.1.1 Estrutura geral do simulador . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.1.2 Cálculo implícito da pressão . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.1.3 Cálculo explícito da saturação . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.2 Método totalmente implícito . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.2.1 Estrutura geral do simulador . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.2.2 Cálculo dos resíduos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.2.3 Construção da matriz jacobiana . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.3 Passo de tempo adaptativo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.4 Especiﬁcação das tolerâncias . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5 Resultados
+
+5.1 Deslocamento unidimensional . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.1.1 Descrição do problema . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.1.2 Solução analítica . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.1.3 Resultados obtidos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.2 Deslocamento bidimensional em conﬁguração quarter ﬁve-spot . . . . . . .
+
+5.2.1 Descrição do problema . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.2.2 Resultados obtidos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+42
+
+44
+
+45
+
+46
+
+46
+
+50
+
+50
+
+51
+
+51
+
+53
+
+54
+
+54
+
+55
+
+61
+
+70
+
+73
+
+74
+
+74
+
+74
+
+76
+
+77
+
+90
+
+90
+
+91
+
+5.3 Deslocamento tridimensional em malha híbrida . . . . . . . . . . . . . . . . . . .
+
+104
+
+5.3.1 Descrição do problema . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+104
+
+5.3.2 Resultados obtidos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+106
+
+6 Conclusão
+
+111
+
+6.1 Sumário . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+111
+
+6.2 Conclusões . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+112
+
+6.3 Sugestões para trabalhos futuros . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+114
+
+Referências
+
+118
+
+22
+
+1
+
+INTRODUÇÃO
+
+1.1 SIMULAÇÃO DE RESERVATÓRIOS
+
+Atribui-se o desígnio reservatório de petróleo a um meio poroso que contém hidrocar-
+
+bonetos. Tendo em vista a concentração de investimentos no setor petrolífero e os gran-
+
+des efeitos da produção de petróleo na economia global, ascendeu a necessidade de pre-
+
+ver e otimizar a performance dos reservatórios. A decisão de implantar um complexo de
+
+explotação de petróleo envolve custos elevadíssimos e requer, por conseguinte, uma fun-
+
+damentação sólida de que será vantajosa. Isso envolve um estudo prévio de viabilidade
+
+econômica e operacional.
+
+A análise experimental completa do reservatório não é viável, porquanto ocasionaria
+
+além de altos investimentos, muitas diﬁculdades. Nesse contexto, a simulação de reser-
+
+vatórios desponta como uma potente ferramenta a ﬁm de prognosticar a performance do
+
+reservatório e encontrar meios para otimizar a recuperação de certos hidrocarbonetos sob
+
+diferentes condições operacionais. Essa área envolve física, matemática, engenharia de
+
+reservatórios e programação computacional.
+
+Ainda, a simulação de reservatórios é complexa devido, sobretudo, a dois fatores. O
+
+primeiro, é a falta de contato direto com o fenômeno físico o qual se deseja simular. Sendo
+
+assim, há diﬁculdades no processo de caracterização física e, por conseguinte, da seleção
+
+de modelos matemáticos adequados que o possam descrever com um grau satisfatório de
+
+acurácia. O segundo fator consiste na própria complexidade atrelada ao fenômeno físico,
+
+pois que envolve minúcias por vezes nem compreendidas ou extremamente enredado em
+
+outros fenômenos, de forma que a dependência mútua das variáveis acarreta uma simu-
+
+lação numérica complicada e custosa.
+
+A ﬁm de progredir na descrição dos fenômenos, a área de simulação de reservatórios
+
+tem caráter dinâmico, i.e., trata-se de uma área constantemente aprimorada e ampliada.
+
+Dada a quantidade de novos modelos propostos destinados à simulação de efeitos pro-
+
+gressivamente mais complexos, faz-se interessante dominar, primeiramente, aqueles mais
+
+básicos, os quais levam em conta os efeitos mais signiﬁcativos ao fenômeno físico. Aziz &
+
+Settari (1979) sugerem que, antes de partir à implementação de qualquer modelo mais so-
+
+ﬁsticado, é fundamental adquirir a compreensão do modelo bifásico. O presente trabalho
+
+almeja explorar esse modelo a ﬁm de analisar o desempenho de três esquemas de solução
+
+distintos – IMPES, sequencial e totalmente implícito. O conhecimento do modelo mais
+
+adequado ao objetivo da simulação numérica é imprescindível à correta interpretação dos
+
+resultados obtidos, de forma que essa comparação se faz valiosa quanto à escolha do mé-
+
+todo a ser utilizado.
+
+23
+
+1.1.1 ETAPAS DA SIMULAÇÃO DE RESERVATÓRIOS
+
+O processo de simulação de reservatórios envolve quatro etapas de modelagem for-
+
+temente atreladas, as quais estão esquematizadas na ﬁgura 1.1. Primeiramente, há de se
+
+desenvolver um modelo físico para o problema que incorpore os processos mais relevantes
+
+à caracterização do fenômeno. A seguir, o problema é modelado matematicamente através
+
+de um conjunto de equações diferenciais parciais acopladas e dependentes do tempo. É,
+
+então, desenvolvido um método numérico através do qual pode-se implementar compu-
+
+tacionalmente a resolução do sistema de equações associados ao fenômeno físico (Chen,
+
+1962).
+
+Figura 1.1: Etapas da simulação de reservatórios
+
+Fonte: do autor
+
+1.1.2 O FENÔMENO FÍSICO
+
+O fenômeno físico de interesse na simulação de reservatórios consiste no escoamento
+
+multifásico multicomponentes em um meio poroso. Usualmente, coexistem três fases:
+
+água, óleo e gás (da Cunha, 1996). Além disso, essas fases podem conter mais de um com-
+
+ponente e estão impregnadas em micro poros rochosos como o arenito (Ewing, 1983).
+
+Reservatórios de petróleo são, de fato, rochas-reservatório e, portanto, são considera-
+
+dos como um meio poroso no qual o escoamento pode ser modelado a partir da equações
+
+24
+
+de Darcy (Bejan, 2004). O petróleo é produzido na rocha geradora e migra, sobretudo por
+
+capilaridade e forças de empuxo, para a rocha reservatório. Não se desloca para as cama-
+
+das mais próximas à superfície em virtude da presença de uma rocha capeadora, a qual
+
+o envolve superiormente e apresenta baixa permeabilidade. Esses tipos de rochas estão
+
+ilustrados, esquematicamente, na ﬁgura 1.2.
+
+Figura 1.2: Esquema ilustrativo de um reservatório sujeito à recuperação secundária
+
+Fonte: do autor
+
+Na maioria das vezes, o petróleo só pode ser retirado do meio poroso através da impo-
+
+sição de elevados gradientes de pressão oriundos de mecanismos físicos denominados de
+
+processos de recuperação(Cordazzo, 2006). Esses processos são divididos em três catego-
+
+rias, a saber (Dake, 2001):
+
+• Recuperação primária: dá-se a perfuração dos poços e a produção sem nenhuma
+
+tentativa de elevar a produtividade por meio de injeção de ﬂuidos;
+
+• Recuperação secundária: adota-se uma estratégia de injeção de água ou gás no in-
+
+tuito de manter a pressão, parcialmente ou totalmente, e acelerar o deslocamento do
+
+óleo em direção aos poços produtores. A ﬁgura 1.2 ilustra esse processo;
+
+• Recuperação avançada (EOR – Enhanced Oil Recovery): utiliza técnicas mais soﬁsti-
+
+cadas a ﬁm de alterar as propriedades originais do óleo. As três principais variantes
+
+desse processo envolvem fenomenos químicos, de alteração de miscibilidade e tér-
+
+micos.
+
+Rocha capeadoraRocha reservatórioRocha geradoraPoço produtorde petróleoPoço injetorde águaMeio poroso1.2 O MODELO BIFÁSICO IMISCÍVEL
+
+25
+
+A simulação do processo de recuperação de hidrocarbonetos em reservatórios de pe-
+
+tróleo requer a modelagem numérica de escoamentos multifásicos de múltiplos compo-
+
+nentes. O modelo matemático pode levar em conta processos de transferência de calor e
+
+massa por advecção e difusão e, por vezes, reações químicas.
+
+Tendo em vista a complexidade dos fenômenos físicos associados ao processo de extra-
+
+ção, os modelos devem ser simpliﬁcados a ﬁm de que sua solução seja viável. Entretanto,
+
+a simpliﬁcação deve ser realizada de forma que os resultados obtidos sejam aceitáveis, i.e.,
+
+as hipóteses devem prover aproximações consistentes.
+
+O modelo utilizado no presente trabalho se destina à simulação de processos de deslo-
+
+camento de duas fases ﬂuidas imiscíveis. Um exemplo característico desse processo é a re-
+
+cuperação secundária de petróleo de reservatórios mediante a injeção de água. Trata-se da
+
+modelagem mais simples de escoamentos multifásicos. Em comparação ao escoamento
+
+monofásico, requer, pois, técnicas mais avançadas, dada a necessidade de lidar com um
+
+sistema acoplado de equações não lineares (Aziz, 1993).
+
+Ademais, usualmente novas técnicas numéricas para modelos mais complexos são im-
+
+plementadas e avaliadas, inicialmente, com o modelo bifásico, o qual apresenta diﬁculda-
+
+des semelhantes em relação às questões geométricas (Hurtado, 2005).
+
+1.3 O MÉTODO DOS VOLUMES FINITOS BASEADO EM ELEMEN-
+
+TOS
+
+Os primeiros simuladores utilizados na área de óleo e gás empregavam, inicialmente,
+
+apenas malhas cartesianas ortogonais. As diﬁculdades associadas à geometria complexa
+
+dos reservatórios motivaram a introdução de malhas cartesianas não-ortogonais, conhe-
+
+cidas como malhas corner-point. Esse tipo de malha estruturada ainda é largamente apli-
+
+cado em simuladores comerciais.
+
+O Método dos Volumes Finitos baseado em Elementos (EbFVM) emprega malhas não
+
+estruturadas para uma representação ainda mais ﬂexível e acurada do domínio. Isto é,
+
+permite solucionar o problema em geometrias mais complexas, de forma que representa
+
+o problema de forma mais ﬁdedigna. Trata-se de um método versátil e consistente, que
+
+26
+
+satisfaz a característica fundamental dos Métodos dos Volumes Finitos – conservação da
+
+propriedade em níveis elementares (Maliska, 2004).
+
+O EbFVM surgiu, inicialmente, para a solução das equações de Navier-Stokes em Ba-
+
+liga & Patankar (1983). Sua utilização na área de simulação de reservatórios de petróleo
+
+ocorreu posteriormente, muito embora ainda seja pouco utilizado em simuladores comer-
+
+ciais. Uma descrição detalhada e completa sobre o EbFVM pode ser encontrada em Hur-
+
+tado (2011).
+
+1.4 REVISÃO BIBLIOGRÁFICA
+
+As equações provenientes da modelagem matemática de escoamentos multifásicos
+
+compõem um sistema não linear acoplado. Dentre as metodologias utilizadas para resol-
+
+ver esse sistema, destacam-se os métodos IMPES e totalmente implícito (Chen, 1962). A
+
+seguir, far-se-á uma breve revisão bibliográﬁca de ambos os métodos.
+
+1.4.1 MÉTODO IMPES
+
+O método IMPES (IMplicit Pressure Explicit Saturation) foi originalmente desenvolvido
+
+por Sheldon et al. (1959) e Stone & Garder (1961). A ideia fundamental dessa formulação
+
+clássica é dividir o sistema de equações acoplado em sistemas de equações distintos para
+
+pressão e saturação, os quais são resolvidos de forma implícita e explícita, respectivamente.
+
+O cálculo explícito da saturação acarreta maior simplicidade quanto à implementação
+
+do método e menor custo computacional. Entretanto, sua estabilidade está atrelada à uti-
+
+lização de pequenos passos de tempo. (Chen, 1962) e Coats (1968) discutem a estabilidade
+
+dessa formulação.
+
+Desenvolvimentos posteriores foram realizadas em Coats (1982), Watts (1985) e Young
+
+& Stephenson (1983) e outras metodologias baseadas no IMPES foram propostas em Bu-
+
+chwalter & Miller (1993),Coats et al. (1995) e Cao & Aziz (2002). Posteriormente, Chen &
+
+Li (2004) e Hurtado (2005) discutiram um IMPES modiﬁcado em que diferentes passos de
+
+tempo para pressão e saturação foram aplicados.
+
+1.4.2 MÉTODO SEQUENCIAL
+
+27
+
+A ﬁm de melhorar a estabilidade da formulação IMPES, MacDonald & Coats (1970) pro-
+
+puseram uma modiﬁcação na metodologia IMPES na qual após resolver a pressão implici-
+
+tamente e a saturação explciitamente, os coeﬁcientes da matriz correspondente ao sistema
+
+linear da pressão são atualizados e os campos de pressão e saturação são calculados até que
+
+seus valores se alterem menos que uma tolerância especiﬁcada.
+
+1.4.3 MÉTODO TOTALMENTE IMPLÍCITO
+
+O método totalmente implícito ou FIM (Fully Implicit Method) resolve pressão e sa-
+
+turação implicitamente e simultaneamente, de forma que ascende a necessidade de re-
+
+solver um sistema não linear de equações. A formulação é incondicionalmente estável e
+
+apresenta boa solução para diversos problemas numéricos, conforme descrito em Aziz &
+
+Settari (1979), Farnstrom & Ertekin (1987), Peaceman (1977) e Watts (1985).
+
+1.5 OBJETIVOS E CONTRIBUIÇÕES
+
+Desde sua criação 1981, o SINMEC – Laboratório de Simulação Numérica em Mecâ-
+
+nica dos Fluidos e Transferência de Calor, do Departamento de Engenharia Mecânica da
+
+Universidade Federal de Santa Catarina – tem como objetivo o desenvolvimento de me-
+
+todologias numéricas utilizando, sobretudo, o método dos volumes ﬁnitos para resolver
+
+problemas que envolvem escoamento de ﬂuidos. A principal linha de pesquisa do labo-
+
+ratório consiste no desenvolvimento de algoritmos empregando malhas não estruturadas
+
+com o método dos volumes ﬁnitos baseado em elementos (EbFVM). Uma das aplicações
+
+de engenharia precípuas nessa área de trabalho é a simulação numérica de escoamentos
+
+em reservatórios de petróleo.
+
+Entre 2007 e 2010, o laboratório executou o projeto SIGER I, do qual resultou a biblio-
+
+teca EFVLib, dedicada ao gerenciamento da topologia e geometria de malhas não estrutu-
+
+radas para a discretização de equações diferenciais parciais pelo método de volumes ﬁnitos
+
+baseado em elementos.
+
+A principal contribuição deste trabalho consiste na implementação de um simulador
+
+bifásico totalmente implícito na biblioteca EFVLib, a qual, anteriormente, não dispunha
+
+28
+
+de um solver não linear. Almeja-se assim, não apenas introduzir uma nova metologia na
+
+biblioteca, mas também analisar seu desempenho na simulação de reservatórios de petró-
+
+leo. Ainda, tendo em vista o elevado custo computacional atrelado ao método totalmente
+
+implícito e ao emprego de malhas não-estruturadas, deseja-se implementar um esquema
+
+de passo de tempo adaptativo. Essa implementação tem como intuito veriﬁcar tanto a sen-
+
+sibilidade da solução numérica quanto a melhoria de desempenho.
+
+Os objetivos deste trabalho são:
+
+1. Incorporar à EFVlib um método para resolver um sistema não-linear de equações;
+
+2. Desenvolver um simulador bifásico imiscível, isotérmico e incompressível para ma-
+
+lhas não-estruturadas aplicando o método dos volumes ﬁnitos baseado em elemen-
+
+tos;
+
+3. Implementar um esquema de passo de tempo adaptativo e veriﬁcar sua inﬂuência
+
+nas soluções numéricas;
+
+4. Comparar o simulador totalmente implícito implementado aos métodos IMPES e se-
+
+quenciala;
+
+1.6 ORGANIZAÇÃO DO TRABALHO
+
+No capítulo 2 é apresentada a formulação matemática do problema. São expostos e
+
+descritos os conceitos fundamentais à caracterização do modelo, o conjunto de equações
+
+diferenciais que modelam o fenômeno físico e o tratamento das propriedades físicas, dos
+
+ﬂuidos, da rocha e da interação entre ﬂuidos e rocha.
+
+No capítulo 3 são realizadas as aproximações numéricas que permitem a obtenção da
+
+solução do problema por meio de rotinas computacionais. São apresentados o método dos
+
+volumes ﬁnitos baseado em elementos, as discretizações das equações conservativas e as
+
+formulações adotadas para resolver essas equações.
+
+A seguir, no capítulo 4 tem-se a descrição da etapa de implementação computacional
+
+do modelo matemático e numérico descrito até então. É descrita a maneira com a qual
+o código em C ++ é implementado a ﬁm de resolver o problema proposto satisfazendo to-
+
+aO IMPES disponível na biblioteca – implementado em (Grein, 2015) – foi modiﬁcado para se ajustar às
+
+comparações realizadas neste trabalho.
+
+29
+
+dos os requerimentos já elucidados. Expõe-se também uma visão geral do código, a qual
+
+facilita o entendimento do tratamento de dados e de suas relações hierárquicas.
+
+O capítulo 5 se destina à validação do simulador implementado e à apresentação dos
+
+resultados obtidos por meio das formulações propostas.
+
+Por ﬁm, no capítulo 6 estão dispostos um sumário, as conclusões e algumas sugestões
+
+para trabalhos futuros.
+
+30
+
+2 MODELO MATEMÁTICO
+
+A obtenção da solução numérica de qualquer problema físico requer sua prévia mode-
+
+lagem matemática(Maliska, 2004). Nessa etapa, aspectos físicos e matemáticos são inte-
+
+grados a ﬁm de que um fenômeno natural possa ser descrito com um certo grau de acurá-
+
+cia, por meio de equações diferenciais. Ressalta-se a importâncias das hipóteses realizadas
+
+ao longo da modelagem, pois que instituem o grau de proximidade entre a descrição e o
+
+fenômeno em si.
+
+Ao longo deste capítulo, apresentar-se-á a modelagem matemática do deslocamento
+
+bifásico imiscível. Considerando-se, sobretudo, o escoamento no reservatório, será apre-
+
+sentado o conjunto de equações diferenciais que modelam o problema e as variáveis en-
+
+volvidas em sua descrição.
+
+Para isso, será apresentada a lei de Darcy na forma de potenciais. A seguir, será de-
+
+duzida a equação de conservação da massa de um componente genérico em escoamento
+
+multifásico. Essa equação será, então, adequada às hipóteses e simpliﬁcações do modelo
+
+implementado. Por ﬁm, descrever-se-á o tratamento das propriedades físicas do ﬂuido e
+
+da rocha que apresentam dependência em relação às variáveis primárias do problema.
+
+2.1 A LEI DE DARCY NA FORMA DE POTENCIAIS
+
+Na mecânica dos ﬂuidos em meios porosos, as equações de Navier-Stokes dão lugar às
+
+observações experimentais expressas matematicamente por meio da Lei de Darcy (Bejan,
+
+2004). Essas observações foram relatadas em Darcy (1856), sugerindo que a velocidade
+
+média de um ﬂuido newtoniano escoando em um dado meio poroso sob regime laminar é
+
+proporcional ao gradiente de pressão e inversamente proporcional à viscosidade do ﬂuido.
+
+Assumindo-se que o escoamento da fase p no reservatório se dê na presença do campo
+
+gravitacional e em regime de Stokes (R e ≤ 1), i.e., em baixas velocidades, de forma que
+
+as forças viscosas sejam dominantes, a Lei de Darcy para a determinação do campo de
+velocidades up da fase p é dada por
+
+K·∇P p − ρp g,
+
+up =−k p
+
+r
+µp
+
+(2.1)
+
+em que K é o tensor permeabilidade absoluta do meio e µp , P p e k p
+
+r são, respectivamente
+
+31
+
+a viscosidade, a pressão e a permeabilidade relativa associadas à fase p (Kaviany, 1995).
+
+Para a formulação numérica, a qual será detalhada posteriormente, faz-se mais con-
+
+veniente o emprego da Lei de Darcy na forma de potenciais. Para isso, deﬁne-se a função
+
+potencial da fase p como
+
+Φp ≡ P p − ρpG ,
+
+em que G é a função potencial gravitacional, dada por
+
+G = x· g,
+
+(2.2)
+
+(2.3)
+
+sendo x o vetor posição e g, o vetor aceleração da gravidade. Dado isso, o gradiente do
+
+potencial da fase p é
+
+∇Φp =∇P p − ρp g.
+
+(2.4)
+
+Substituindo a equação (2.4) na equação (2.1), tem-se a Lei de Darcy modiﬁcada, es-
+
+crita na forma de potenciais:
+
+up =−k p
+
+r
+µp
+
+K·∇Φp .
+
+(2.5)
+
+2.2 EQUAÇÕES FUNDAMENTAIS DO MODELO
+
+A ﬁgura 2.1 representa um volume de controle Ω, de volume V , ﬁxo no espaço, extraído
+
+de um meio poroso. O vetor área é representado por dS e a fronteira do volume, por ∂ Ω.
+
+Figura 2.1: Volume de controle em um meio poroso
+
+Fonte: modiﬁcado de (Hurtado, 2005)
+
+Uma vez que o modelo é imiscível, o balanço de massa de um componente coincide
+
+com o balanço de massa da fase associada a esse componente. Sendo assim, pode-se efe-
+
+tuar o balanço de massa de uma fase p do escoamento multifásico através desse volume
+
+de controle, o qual é dado por
+
+∂ M p
+∂ t
+
++
+
+(cid:90)
+
+∂ Ω
+
+ρp u p · dS =
+
+(cid:90)
+
+V
+
+F p dV ,
+
+32
+
+(2.6)
+
+em que F p é a taxa de geração ou extinção de massa da fase p por unidade de volume.
+
+Tendo em vista que a porosidade φ é a razão entre o volume poroso e o volume total do
+meio e a saturação da fase p é a razão entre o volume ocupado pela fase p e volume poroso
+
+do meio, isto é,
+
+pode-se escrever
+
+sível, tem-se
+
+em que
+
+∂
+∂ t
+
+Aplicando-se o Teorema da Divergência de Gauss e a condição de escoamento incompres-
+
+∂
+∂ t
+
+(cid:90)
+
+φ = Vφ
+V
+
+ρpS p φdV +
+
+e
+
+(cid:90)
+
+∂ Ω
+
+(cid:90)
+
+V
+
+,
+
+S p = Vp
+Vφ
+
+(cid:90)
+ρp u p · dS =
+(cid:90)
+
+ρp∇· u p dV =
+
+(cid:90)
+
+ρpS p φdV +
+
+V
+
+V
+
+V
+
+f p = F p
+ρp .
+
+(2.7)
+
+(2.8)
+
+F p dV .
+
+V
+
+ρp f p dV ,
+
+(2.9)
+
+(2.10)
+
+Uma vez que o volume de controle é ﬁxo no espaço e o escoamento é incompressível, pode-
+
+se reescrever a equação na forma
+
+Já que a equação (2.11) deve ser válida para qualquer volume V , deve-se ter
+
+(2.11)
+
+(2.12)
+
+(2.13)
+
+(2.14)
+
+(cid:90)
+
+ ∂
+
+∂ t
+
+V
+
+∂
+∂ t
+
+
+S p φ +∇· u p − f p
+S p φ +∇· u p − f p = 0.
+
+dV = 0.
+
+S p φ +∇· (−λp K∇Φp ) − f p = 0,
+
+∂
+∂ t
+
+A velocidade da fase p pode ser substituída pela Lei de Darcy na forma de potenciais dada
+
+na equação (2.5). A equação da conservação da massa para a fase p é, então:
+
+em que λp é a mobilidade da fase p , dada por
+
+λp = k p
+µp .
+
+r
+
+Assim, as equações de conservação da massa das fase água e óleo são dadas, respectiva-
+
+mente, por
+
+S w φ +∇· (−λw K∇Φw ) − f w = 0,
+S o φ +∇· (−λo K∇Φo ) − f o = 0.
+
+∂
+∂ t
+∂
+∂ t
+
+O modelo bifásico é completado pela equação de restrição volumétrica
+
+S w + S o = 1.
+
+33
+
+(2.15)
+
+(2.16)
+
+(2.17)
+
+Ainda, assumindo-se que os efeitos de pressão capilar são poucos signiﬁcativos, considera-
+
+se uma única pressão P . Utilizando a equação
+
+∇Φp =∇P − ρp g,
+
+(2.18)
+
+a pressão pode ser obtida por meio de um pós processamento tendo em vista que assumiu-
+
+se escoamento incompressível. Tem-se, assim, três equações – (2.15), (2.16) e (2.17) – e três
+incógnitas – S w , S o e P .
+
+2.3 PROPRIEDADES FÍSICAS
+
+Nos estudos de um reservatório de petróleo, é de caráter essencial o conhecimento das
+
+propriedades básicas da rocha e dos ﬂuidos nela contidos. São essas propriedades que
+
+determinam as quantidades dos ﬂuidos existentes no meio poroso, sua distribuição, seu
+
+comportamento. É evidente que têm forte inﬂuência sobre a quantidade de ﬂuido que
+
+pode ser extraída e, portanto, se fazem muito importantes no contexto de exploração de
+
+petróleo (Thomas, 2001).
+
+Esta seção se destina à descrição da obtenção e tratamento das propriedades físicas
+
+abarcadas no modelo matemático apresentado. Primeiramente, serão descritas as propri-
+
+edades do ﬂuido; posteriormente, da rocha. Por ﬁm, as propriedades associadas ao con-
+
+junto rocha-ﬂuido.
+
+2.3.1 PROPRIEDADES DOS FLUIDOS
+
+• Viscosidades:
+
+A viscosidade é uma medida da resistência do ﬂuido em relação ao escoamento. Está
+
+relacionada diretamente ao tipo e ao tamanho de suas moléculas. Trata-se de um
+
+34
+
+parâmetro presente em qualquer equação que descreve movimentos de ﬂuidos (Mc-
+
+Cain Jr, 1990). A viscosidade é função da pressão e da temperatura. Sua variação em
+
+virtude da temperatura será desconsiderada, pois que o modelo matemático é desti-
+
+nado a um escoamento isotérmico. Quanto à pressão, a viscosidade é crescente com
+
+a pressão para um reservatório subsaturado; decrescente, para saturado (Trangens-
+
+tein & Bell, 1989). Neste trabalho, contudo, as viscosidades da água e do óleo foram
+
+consideradas constantes.
+
+• Densidades:
+
+A densidade é a relação entre a massa e o volume da fase. Uma vez que o modelo
+
+considerado é incompressível, as densidades da água e do óleo permanecem cons-
+
+tantes.
+
+2.3.2 PROPRIEDADES DA ROCHA
+
+• Porosidade:
+
+A porosidade é a razão entre o volume poroso e o volume total da rocha. Neste tra-
+
+balho, a rocha reservatório é considerada incompressível.
+
+• Permeabilidade absoluta:
+
+A propriedade permeabilidade absoluta da rocha, presente na Lei de Darcy –equação
+
+(2.5)–, é a medida de sua capacidade de permitir o ﬂuxo de ﬂuidos. Neste trabalho, a
+
+permeabilidade absoluta é representada na forma de um tensor de segunda ordem.
+
+Tal tensor é simétrico, contendo nove componentes Kaviany (1995). A representação
+
+é ortotrópica, considerando as direções principais de permeabilidade alinhadas com
+os eixos de coordenadas x , y , z . Dessa forma, o tensor K é uma matriz puramente
+diagonal dada por
+
+(2.19)
+
+ K x x
+
+0
+
+K =
+
+
+
+0
+
+K y y
+
+0
+
+0
+
+0
+
+Kz z
+
+0
+
+2.3.3 PROPRIEDADES DO CONJUNTO ROCHA-FLUIDO
+
+• Permabilidade relativa:
+
+35
+
+No escoamento multifásico em meio poroso, faz-se necessário introduzir a permea-
+
+bilidade relativa na Lei de Darcy no intuito de considerar as interações entre os ﬂui-
+
+dos (Peaceman, 1977). Permeabilidade relativa é um conceito utilizado para relaci-
+
+onar a permeabilidade absoluta (de um ﬂuido único e saturado) à permeabilidade
+
+efetiva do ﬂuido no escoamento multifásico, quando esse ocupa uma fração do vo-
+
+lume poroso. Foi observado, experimentalmente, que a permeabilidade relativa é
+
+função das saturações – seu valor decresce com a diminuição da saturação da fase
+
+(Archer & Wall, 1986). Ou seja, essa propriedade associada ao conjunto rocha-ﬂuido
+
+introduz a forma segundo a qual o escoamento é afetado em virtude da presença de
+
+outras fases e da matriz porosa. Trangenstein & Bell (1989) aﬁrmam que a permeabi-
+
+lidade relativa depende do volume ocupado por cada fase, da rocha, do histórico do
+
+escoamento e da tensão interfacial entre as fases. Essas interações complexas ainda
+
+não são totalmente entendidas e dominadas. Pode-se aﬁrmar, contudo, que a mo-
+
+vimentação de uma fase também tende à zero conforme sua saturação tende à zero.
+
+Ainda, sabe-se que a fase deve alcançar o estado imóvel antes que sua saturação seja
+
+nula (Trangenstein & Bell, 1989).
+
+Optou-se por calcular as permeabilidades relativas da água e do óleo por meio do
+modelo proposto em Corey et al. (1956). Para caracterizá-lo, deﬁnem-se S p
+mi n,
+as saturações máxima e mínima, respectivamente, da fase p . A permeabilidade rela-
+
+ma x e S p
+
+tiva desta fase é dada por
+
+em que o parâmetro αp e o expoente n p são constantes conhecidas dependentes da
+interação entre a fase e a rocha e a saturação ˆS normalizada é calculada por
+
+= αw ˆSn w
+= αo1− ˆSn o
+ S w − S w
+− S w
+
+S w
+ma x
+
+mi n
+
+mi n
+
+
+
+k w
+r
+
+k o
+r
+
+ˆS =
+
+,
+
+,
+
+(2.20)
+
+(2.21)
+
+.
+
+(2.22)
+
+36
+
+3 MÉTODO NUMÉRICO
+
+O conjunto de equações que constitui o modelo numérico associado à simulação de
+
+um reservatório é, quase sempre, demasiadamente complexo para que o problema físico
+
+possa ser solucionado analiticamente. Advém disso a necessidade de introduzir aproxi-
+
+mações à formulação numérica, as quais permitam escrever as equações em um formato
+
+possível de ser resolvido por rotinas computacionais (Aziz & Settari, 1979).
+
+Maliska (2004) aﬁrma que a tarefa do método numérico é resolver um conjunto de
+
+equações diferenciais, substituindo as derivadas por expressões algébricas que envolvam
+
+a função incógnita. Nesse procedimento, obtém-se a solução do problema para um nú-
+
+mero discreto de pontos, com um determinado erro. Se o método adotado for consistente,
+
+quanto maior o número de pontos, mais perto da solução exata estará a solução aproxi-
+
+mada.
+
+Este capítulo é dedicado à apresentação dos método numéricos adotados na solução
+
+do modelo bifásico implementado. Serão apresentados o método dos volumes ﬁnitos ba-
+
+seado em elementos, as discretizações das equações conservativas e as formulações ado-
+
+tadas para resolver o conjunto de equações.
+
+3.1 MÉTODO DOS VOLUMES FINITOS BASEADO EM ELEMENTOS
+
+Atribui-se o desígnio de Método dos Volumes Finitos (FVM) a qualquer método numé-
+
+rico que satisfaz a conservação da propriedade em níveis elementares no processo de ob-
+
+tenção das equações aproximadas (Maliska, 2004).
+
+A abordagem frequentemente adotada para deduzir as equações conservativas con-
+
+siste em realizar um balanço de uma determinada propriedade em um volume de controle
+
+pertencente ao domínio do problema. O procedimento de fazer esse volume tender a zero
+
+fornece as equações diferenciais. Ao invés de utilizá-las diretamente, o Método dos Volu-
+
+mes Finitos emprega as equações prévias de balanço. Isso assegura o caráter conservativo
+
+do método.
+
+Ressalta-se que muitos dos balanços não são facilmente deduzidos – e.g. para volumes
+
+de controle irregulares. Disso provém a preferência por obter as equações discretizadas
+
+através da integração das equações diferenciais, visto que integrar a forma conservativa ou
+
+37
+
+divergente da equação diferencial e fazer um balanço da propriedade são procedimentos
+
+equivalentes (Maliska, 2004).
+
+O Método dos Volumes Finitos baseado em Elementos (EbFVM) é um Método dos Volu-
+
+mes Finitos que explora alguns conceitos provenientes do Método dos Elementos Finitos
+
+(FEM) a ﬁm de prover maior ﬂexibilidade geométrica e possibilidade de reﬁnos localiza-
+
+dos de malha. Por conseguinte, consegue-se alcançar elevada acurácia de representação
+
+do domínio mantendo a característica fundamental do método dos volumes ﬁnitos – o ca-
+
+ráter conservativo (Hurtado, 2011). A formulação adotada permite empregar triângulos e
+
+quadriláteros em malhas bidimensionais; hexaedros, tetraedros, prismas e pirâmides, em
+
+malhas tridimensionais. Essas malhas são não-estruturadas, o que signiﬁca que não há um
+
+padrão que possa descrever a conﬁguração dos vizinhos de um dado elemento (Maliska,
+
+2004). O potencial de discretização geométrica de malhas não-estruradas está ilustrada na
+
+ﬁgura 3.1, a qual ilustra uma malha de 36950 elementos no formato aproximado do terri-
+
+tório brasileiro.
+
+Figura 3.1: Potencial geométrico da malha não-estruturada
+
+Fonte: do autor
+
+3.1.1 ENTIDADES GEOMÉTRICAS DA MALHA
+
+38
+
+A ﬁm de caracterizar completamente uma malha associada a um determinado domí-
+
+nio, deve-se deﬁnir o que é uma malha e descrever as entidades que a compõem. Uma
+
+malha(cid:77) é a coleção de elementos ei tais que para um domínio fechado Ω tem-se
+
+e∈(cid:77) e .
+
+Ω = (cid:91)
+ =(cid:11)
+Inte j
+
+Int(ei )(cid:92)
+
+(3.1)
+
+(3.2)
+
+Cada e deve possui um interior não vazio. Ainda, deve-se satisfazer
+
+∀ i (cid:54)= j.
+
+Isto é, a interseção dos interiores dos elementos deve ser um conjunto vazio (Hurtado,
+
+2011). De forma mais simples, pode-se aﬁrmar que os elementos devem cobrir comple-
+
+tamente o domínio sem que ocorra superposição ou espaços vazios.
+
+As superfícies que delimitam os elementos são chamadas de facetas. Tratam-se de
+
+arestas em elementos 2D e superfícies, em 3D. Cada faceta que não esteja no contorno
+
+do domínio é necessariamente compartilhada por dois elementos. Isso signiﬁca que não é
+
+possível contato parcial entre as facetas e por conseguinte, a malha é conforme (Hurtado,
+
+2011).
+
+As faces dos elementos bidimensionais são deﬁnidas como os segmentos que conec-
+
+tam os pontos médios das arestas ao centroide do elemento. A deﬁnição para o caso tri-
+
+dimensional é análoga. Essas faces subdividem o elemento em porções denominadas su-
+
+belementos, os quais estão associados a duas das faces do elemento – com exceção do ele-
+
+mento tridimensional pirâmide, no qual cada subelemento pode estar associado a quatro
+
+faces do elemento.
+
+O campo de uma variável do modelo diferencial é aproximado no EbFVM pelos valo-
+
+res discretos em locais coincidentes com os vértices dos elementos da malha, denomina-
+
+dos nós. A ﬁgura 3.2 ilustra as principais entidades de uma malha para o elemento mais
+
+simples: o triângulo. As deﬁnições para os demais elementos são similares e podem ser
+
+encontradas em (Hurtado, 2011).
+
+A construção do volume de controle se dá a partir dos elementos dispostos ao redor
+
+dos nós, conforme ilustrado na ﬁgura 3.3. Logo, a superfície de controle é composta por
+
+faces de elementos.
+
+Figura 3.2: Principais entidades de um elemento triangular
+
+39
+
+Fonte: do autor
+
+Em virtude da disposição geométrica, é conveniente que propriedades físicas tais como
+
+porosidade e permeabilidade sejam homogêneas no domínio de um elemento. Assim, não
+
+ascende necessidade de adotar qualquer esquema de interpolação a ﬁm de avaliá-los na
+
+superfície do volume de controle (Cordazzo, 2006).
+
+Figura 3.3: Construção do volume de controle
+
+Fonte: do autor
+
+3.1.2 ABORDAGEM NUMÉRICA
+
+A estratégia adotada a ﬁm de lidar com a distorção geométrica dos elementos contidos
+
+em uma malha não estruturada é uma transformação denominada mapeamento. Trata-se
+
+de uma função bijetora por meio da qual os pontos no espaço físico são representados na
+
+forma de elementos regulares em espaços transformados (Hurtado, 2011).
+
+40
+
+Nesse procedimento, um ponto deﬁnido em coordenadas globais – (x , y ) no caso bi-
+dimensional – passa a ser descrito em termos de coordenadas locais – (ξ, η). A ﬁgura 3.4
+ilustra o mapeamento de um elemento triangular para o espaço transformado. Conforme
+
+será veriﬁcado posteriormente, essa transformação facilita a discretizações das equações
+
+modelo.
+
+Figura 3.4: Mapeamento para um espaço transformado
+
+Fonte: do autor
+
+O mapeamento das coordenadas locais para as globais é realizado empregando fun-
+
+ções de forma de primeira ordem oriundas do Método dos Elementos Finitos. Para cada
+vértice i pertencente a um elemento, há uma função de forma Ni , a qual assume valor 1
+em i e 0 em todos os outros vértices. Sendo assim, cada ponto p = (x , y , z ) pode ser repre-
+sentado segundo a expressão
+
+p =
+
+Ni (ξ, η, ζ) pi ,
+
+(3.3)
+
+em que pi , i = 1,...,nv , representam os vértices dos elementos; nv , o número de vértices e
+(ξ, η, ζ), as coordenadas locais de P .
+
+As funções de forma devem ser contínuas, diferenciáveis e partições da unidade, de
+
+forma que sejam valores positivos e satisfaçam a equação
+
+Ni (ξ, η, ζ) = 1.
+
+(3.4)
+
+nv(cid:88)
+
+i =1
+
+nv(cid:88)
+
+i =1
+
+nv(cid:88)
+
+i =1
+
+para qualquer ponto (ξ, η, ζ) no sistema local de coordenadas Zienkiewicz & Taylor (2000).
+
+Seja ψ uma função deﬁnida nos nós de uma malha. O EbFVM propõe que o valor de ψ
+
+dentro do elemento seja dado pela relação
+
+ψ(x , y , z ) =
+
+Ni (ξ, η, ζ) ψi .
+
+(3.5)
+
+Portanto, o valor de ψ dentro do elemento é uma média ponderada de seus valores nos
+
+vértices do elemento e o peso dessa média é dado pela função de forma.
+
+41
+
+Uma vez que funções de forma são diferenciáveis, o gradiente de ψ no sistema de co-
+
+ordenadas global pode ser expresso conforme
+
+∇ψ =∇ nv(cid:88)
+
+⇒∇ψ =
+
+
+
+=
+
+i =1
+
+nv(cid:88)
+
+∂x Ni
+ ψi
+ Ψe ,
+
+∂y Ni
+∂z Ni
+··· ∂x Nnv
+··· ∂y Nnv
+··· ∂z Nnv
+T
+
+... ψnv
+
+Ni (ξ, η, ζ) ψi
+
+i =1
+
+∂x N1 ∂x N2
+Ψe =
+
+∂y N1 ∂y N2
+∂z N2
+∂z N1
+
+ψ1 ψ2
+
+em que
+
+é um vetor com os valores de ψ nos nós do elemento.
+
+As funções de forma, contudo, são usualmente dadas em termos das coordenadas lo-
+cais e, por conseguinte, utilizar as derivadas de Ni com respeito às coordenadas globais é
+inconveniente. Aplicando a regra da cadeia:
+
+(3.6)
+
+(3.7)
+
+(3.8)
+
+(3.9)
+
+(3.10)
+
+∂ξNi
+
+∂ηNi
+∂ζNi
+
+∂ξ y
+
+∂ζ y
+
+∂ηx ∂η y
+
+∂ζx
+
+ =
+
+∂ξx
+∂ξx
+∂ξN1 ∂ξN2
+
+∂ηN1 ∂ηN2
+∂ζN1 ∂ζN2
+
+J =
+
+∂ζx
+
+∂ξ y
+
+∂ηx ∂η y
+
+.
+
+∂y Ni
+∂z Ni
+
+
+∂x Ni
+
+
+∂ξz
+
+∂ηz
+
+∂ζz
+
+∂ξz
+
+∂ηz
+
+∂ζ y
+
+∂ζz
+
+,
+
+··· ∂ξNnv
+··· ∂ηNnv
+··· ∂ζNnv
+
+A matriz J dada por
+
+(2011). Deﬁnindo a matriz
+
+D ≡
+
+é a matriz Jacobiana. Seu cômputo pode ser realizado através da equação (3.3) Hurtado
+
+pode-se elucidar a equação (3.6) no formato
+
+42
+
+∇ψ = J
+
+−1D Ψe .
+
+(3.11)
+−1D pode ser considerada como um operador gradiente discreto (Grein, 2015).
+
+A matrix J
+
+3.1.3 DISCRETIZAÇÃO DE UMA EQUAÇÃO DE CONSERVAÇÃO DE UMA VARIÁ-
+
+VEL GENÉRICA
+
+Maliska (2004), propõe que a equação de conservação de uma propriedade genérica ψ
+
+associada a um escoamento seja escrita na forma
+
+ρψ +∇·ρuψ =∇·Γ∇ψ + F,
+
+∂
+∂ t
+
+(3.12)
+
+em que ρ é a massa especíﬁca, u é a velocidade do ﬂuido, Γ é um coeﬁciente difusivo e F ,
+um termo fonte associado à propriedade conservada. Na equação (3.12), o primeiro termo
+
+é o de acumulação; o segundo, advectivo; o terceiro, difusivo; o quarto, o termo fonte.
+
+A ﬁm de realizar discretização da equação (3.12), realiza-se uma integração dessa equa-
+
+ção para cada volume de controle. Almejando a clareza dos procedimentos, cada termo
+
+apresentado na equação (3.12) será discretizado separadamente. Considera-se um volume
+de controle arbitrário P – vide ﬁgura 3.3 – e uma malha ﬁxa.
+
+A discretização do termo de acumulação se dá utilizando a formulação totalmente im-
+
+plícita (Maliska, 2004):
+
+(cid:90)
+
+ρψ dV =
+
+∂
+∂ t
+
+(cid:90)
+
+∂
+∂ t
+
+MPψP
+
+≈ ∂
+
+∂ t
+
+MPψP
+
+,
+
+∂
+∂ t
+
+ρψ dV =
+
+(3.13)
+
+P
+
+P
+
+em que MP é massa contida no volume P e ψP é média do valor de ψ em P. Essa média é,
+no Método dos Volumes Finitos, aproximada pelo valor da propriedade no nó. Essa apro-
+
+ximação é razoável, pois que o nó se localiza, geralmente, próximo ao centro do volume de
+
+controle.
+
+A discretização do termo fonte é similar:
+
+(cid:90)
+
+F dV ≈ FPVP,
+
+(3.14)
+
+P
+
+O termo de transporte advectivo é discretizado por meio da aplicação do Teorema da
+
+Divergência de Gauss:
+
+∇·ρuψ dV =
+
+(cid:90)
+
+P
+
+43
+
+(cid:90)
+
+∂ P
+
+(ρu· ˆn)ψ dA ≈(cid:88)
+
+ρu· ∆Af
+
+ ψf =(cid:88)
+
+f
+
+f
+
+˙m f ψf ,
+
+(3.15)
+
+em que o índice f representa a face do volume de controle; ∂ P , seu contorno; ∆Af o vetor
+área associado à face f e ˙m f o ﬂuxo de massa que a atravessa. O valor da propriedade ψf
+na face no centro da face é calculado a partir de algum método de iterpolação, como CDS
+
+ou UDS.
+
+Por ﬁm, parte-se à discretização do termo difusivo – o último termo da equação (3.12).
+
+A discretização desse termo é similar àquela realizada para o termo advectivo. Novamente,
+
+lança-se mão do Teorema da Divergência de Gauss e da deﬁnição do operador gradiente
+
+discreto – equação (3.11) – para obter
+
+(cid:90)
+
+∇·Γ∇ψ dV =
+
+(cid:90)
+
+(Γ∇ψ)· ˆn dA ≈(cid:88)
+
+(Γ∇ψ)f · ∆Af =Γ J
+
+· ∆Af .
+
+−1D Ψe
+
+(3.16)
+
+P
+
+∂ P
+
+f
+
+Infere-se das equações discretizadas que as equações discretizadas envolvem, além do
+próprio nó associado a P, os nós que compartilham um elemento com o nó P. Sendo assim,
+esse é o estêncil associado ao EbFVM.
+
+Matematicamente, se(cid:69) P é o conjunto dos elementos que compartilham o nó P e(cid:78) e ,
+
+o conjunto dos nós associados ao elemento e , então o estêncil(cid:83) P é dado por
+
+(cid:83) P = (cid:91)
+
+e∈(cid:69) P
+
+(cid:78) e .
+
+(3.17)
+
+Graﬁcamente, a ﬁgura 3.5 exibe em preto os nós, os quais em conjunto, compõem o
+
+estêncil associado ao nó P.
+
+Figura 3.5: Estêncil associado ao nó P
+
+Fonte: adaptado de (Grein, 2015)
+
+3.2 EQUAÇÕES DISCRETIZADAS
+
+44
+
+Empregando o procedimento de discretização exposto anteriormente, obtém-se a equa-
+ção de conservação da massa das fases água e óleo para um dado volume de controle P da
+malha, as quais são
+
+
+
+S w
+P
+
+
+
+−S w
+−S o
+
+P
+
+P
+
+old +(cid:88)
+old +(cid:88)
+
+e∈(cid:69) P
+
+−λw KJ
+−λo KJ
+
+e∈(cid:69) P
+
+· ∆Af = q w
+· ∆Af = q o
+
+P
+
+P
+
+−1D Φe
+
+−1D Φe
+
+φP∆VP
+
+∆t
+
+φP∆VP
+
+∆t
+
+S o
+P
+
+∆VP,
+
+(3.18)
+
+∆VP,
+
+(3.19)
+
+em que o índice superior old indica o valor da propriedade no passo de tempo anterior, Φe
+é um vetor com os valores de Φ nos nós do elemento e e(cid:69) P é o conjunto de elementos que
+
+compartilham o nó P.
+
+Em conjunto com a equação de restrição volumétrica equação (2.17) tem-se três equa-
+
+ções para as três variáveis primárias: P , S w e S o .
+
+Esse conjunto de equações pode ser, ainda, manipulado algebricamente para que o
+
+sistema de equações seja resolvido de forma mais conveniente. Somando a equação (3.18)
+
+à equação (3.19) e substituindo a equação (2.17) chega-se à conservação da massa global,
+
+dada por
+
+em que
+
+−λt KJ
+
+(cid:88)
+
+e∈(cid:69) P
+
+−1D Φe
+
+λt = (λw + λo )
+
+e
+
+· ∆Af = q t
+q t =q w + q o
+
+∆VP,
+
+P
+
+(3.20)
+
+(3.21)
+
+são, respectivamente, mobilidade e termo fonte totais.
+
+As equações a serem resolvidas são as equações de conservação da massa da água –
+
+equação (3.18)– e a equação de conservação da massa global – equação (3.20). Assim, há
+duas equações para duas variáveis primárias – S w e P . A pressão pode ser obtida a partir
+do potencial por meio da expressão
+
+Φ = P − ρG .
+
+(3.22)
+
+Já a saturação do óleo pode ser calculada por meio da equação (2.17). Em virtude de sua re-
+
+lação estreita com a implementação computacional, a construção do sistema de equações
+
+será explicado apenas no capítulo subsequente.
+
+3.3 FORMULAÇÕES IMPES E SEQUENCIAL
+
+45
+
+O método IMPES (IMplicit Pressure Explicit Saturation), em sua formulação clássica,
+
+fundamenta-se na divisão do sistema acoplado de equações em sistemas de equações dis-
+
+tintos para pressão e saturação, os quais são resolvidos de forma implícita e explícita, res-
+
+pectivamente. O cálculo explícito da saturação acarreta menor custo computacional, e
+
+estabilidade condicionada a pequenos passos de tempo (Chen, 1962).
+
+As equações associadas ao cálculo implícito de P e explícito de S w são, respectiva-
+
+mente:
+
+=S w
+
+P
+
+S w
+P
+
+(cid:88)
+old +
+
+e∈(cid:69) P
+
+−λt KJ
+−1D Φe
+(cid:88)
+
+· ∆Af = q t
+−λw KJ
+
+−1D Φe
+
+∆t
+
+P
+
+φP∆VP
+
+e∈(cid:69) P
+
+∆VP,
+
+· ∆Af − ∆t q w
+
+P
+φP
+
+(3.23)
+
+.
+
+(3.24)
+
+O procedimento iterativo para determinar as variáveis primárias do problema através
+
+do IMPES clássico é:
+
+1. Especiﬁcar os valores inciais das variáveis primárias – P e S w – em todos os volumes
+
+de controle da malha;
+
+2. Calcular as mobilidades em todos os volumes de controle da malha;
+
+3. Interpolar as mobilidades nas faces dos elementos;
+
+4. Resolver o sistema linear da equação da pressão – equação (3.23);
+
+5. A partir da solução obtida para a pressão, calcular a saturação da água explicitamente
+
+– equação (3.24)
+
+6. Avançar a solução no tempo e retornar ao item 2 até atingir a simulação do tempo
+
+total desejado.
+
+O método sequencial calcula as variáveis primárias de modo similar. Neste caso, con-
+
+tudo, após o passo 5, retorna-se ao 2 até que os campos de pressão e saturação mudem
+
+menos que uma dada tolerância.
+
+3.4 FORMULAÇÃO TOTALMENTE IMPLÍCITA
+
+46
+
+No método totalmente implícito ou FIM (Fully Implicit Method) as váriaveis são re-
+
+solvidas de maneira concomitante. Trata-se da formulação mais estável e robusta para a
+
+simulação de reservatórios. Apresenta limitações de passo de tempo menos restritivas em
+
+relação aos esquemas que linearizam o acoplamento entre pressão e saturação, como é
+
+feito no método IMPES (IMplicit Pressure, Explicit Saturation). (Chen, 1962).
+
+3.4.1 MÉTODO DE Newton
+
+Quanto à aplicação do FIM, faz-se necessário o emprego de um solver não linear para
+
+a resolução do sistema de equações. No intuito de resolver esse sistema, foi adotado o
+
+método de Newton contido na biblioteca PETSc (Portable, Extensible Toolkit for Scientiﬁc
+
+Computation). As rotinas implementadas nessa biblioteca são eﬁcientes e têm suporte
+
+para a resolução dos problemas em paralelo (Balay et al., 2009). Antes de utilizar a PETSc,
+
+contudo, as equações devem ser preparadas à aplicação do método de Newton.
+
+A ideia fundamental desse método é mais simples de ser entendida no caso unidimen-
+
+sional, no qual deseja-se determinar, de forma iterativa, as raízes de uma função a partir de
+
+uma estimativa inicial. Calcula-se a reta tangente à função no ponto associado à estima-
+
+tiva. Determina-se, então, a interseção dessa reta tangente com o eixo das abcissas a ﬁm
+
+de encontrar uma melhor aproximação para a raiz. Repetindo esse procedimento, tem-se
+
+um método iterativo que pode ser utilizado para estimar a raíz de uma função. Matemati-
+
+camente, o método de Newton para funções de uma variável é representado por
+
+em que n indica a n-ésima iteração e f
+
+xn+1 = xn − f (xn)
+f (cid:48)(xn),
+
+(3.25)
+(cid:48)(xn) é a derivada da função f em xn. Esse procedi-
+
+mento iterativo está ilustrado e descrito na ﬁgura 3.6.
+
+Figura 3.6: Método de Newton para funções de uma variável
+
+47
+
+Fonte: do autor
+
+No caso de funções de múltiplas variáveis – caso deste trabalho –, o método de New-
+
+ton apresentado para uma única variável deve ser expandido a uma forma mais genérica.
+
+Nessa, são resolvidas, simultaneamente, raízes de várias funções, as quais são denomina-
+
+das resíduos. As equações resíduo associadas às equações de conservação discretizadas
+
+são
+
+R w =
+
+φP∆VP
+
+∆t
+
+S w
+P
+
+old +(cid:88)
+
+−S w
+R t =(cid:88)
+−λt KJ
+
+e∈(cid:69) P
+
+P
+
+e∈(cid:69) P
+
+−1D Φe
+
+−λw KJ
+· ∆Af − q t
+
+P
+
+−1D Φe
+
+· ∆Af − q w
+
+P
+
+∆VP,
+
+(3.26)
+
+∆VP,
+
+(3.27)
+
+uma vez que as raízes dessas funções consistem na solução do sistema de equações. Nas
+equações 3.26 e 3.27 o símbolo R w denota o resíduo associado à conservação da massa da
+água e R t , da conservação da massa total. Ambos os resíduos são funções da saturação da
+água S w e da pressão P , as quais constituem as variáveis primárias do problema.
+
+O procedimento iterativo utilizado no intuito de determinar essas variáveis primárias
+
+está listado a seguir:
+
+48
+
+1. Construir um vetor X com as estimativas das variáveis primárias – P e S w – em todos
+
+os volumes de controle da malha;
+
+2. Calcular as propriedades e as mobilidades em todos os volumes de controle da ma-
+
+lha;
+
+3. Interpolar as mobilidades nas faces dos elementos;
+
+4. Computar os resíduos de cada equação – R w e R t – em todos os volumes de controle
+
+da malha;
+
+5. Computar as derivadas parciais dos resíduos em cada nó através da expansão em
+
+série de Taylor truncadaa
+
+= R i (X + dX )− R i (X )
+
+dX
+
+;
+
+∂ R i
+∂ X
+
+6. Resolver o sistema linear
+
+J ∆X =−R;
+
+(3.28)
+
+(3.29)
+
+em que J é a matriz jacobiana, contendo todas as derivadas parciais dos resíduos em
+todos os volumes; ∆X, o vetor com as correções a serem aplicadas às estimativas e R,
+o vetor contendo os resíduos correspondentes às estimativas;
+
+7. Corrigir o valor das variáveis contidas em X por meio da equação
+
+Xk+1 = Xk + ∆X;
+
+(3.30)
+
+8. Retornar ao item 2 e iterar até que seja atingida a convergência;
+
+9. Retornar ao item 2 e avançar a solução no tempo até a simulação do tempo total
+
+desejado.
+
+Assim, todas as variáveis são resolvidas de forma implícita, e, portanto, podem ser uti-
+
+lizados passos de tempo signiﬁcativamente maiores àqueles utilizados em métodos que
+
+apresentam algum caráter explícito Aziz & Settari (1979).
+
+aRessalta-se que os resíduos são funções de S w e P , de forma que a derivada numérica em relação a X
+deve levar em conta a contribuição dessas duas variáveis. A forma por meio da qual essas contribuições são
+consideradas serão detalhadas posteriormente.
+
+No capitulo ulterior, destinado ao tema implementação computacional, procedimen-
+
+tos tais como a construção da matriz jacobiana serão mais bem detalhados.
+
+49
+
+4
+
+IMPLEMENTAÇÃO COMPUTACIONAL
+
+50
+
+Conquanto as fases de modelagem matemática e numérica detenham papeis funda-
+
+mentais à acurácia com a qual o fenômeno físico é representado, é por meio da implemen-
+
+tação computacional que se obtêm os resultados concretos através da simulação numérica
+
+do problema. Maliska (2004) aﬁrma que o desenvolvimento de um bom programa com-
+
+putacional requer a harmonia entre o uso das ferramentas computacionais disponíveis, a
+
+estratégia de depuração dos erros e a ulterior interpretação correta dos resultados.
+
+Este capítulo se destina à descrição de alguns aspectos relacionados à implementação
+
+computacional. Também proporciona uma visão geral do simulador do ponto de vista de
+
+programação. Isso facilita o entendimento da forma por meio da qual o conjunto de dados
+
+físicos foi tratado e da inter-relação entre cada módulo implementado. A possibilidade
+
+de adquirir essa visão é importante, pois que estreita o caminho entre a percepção de um
+
+fenômeno físico e a capacidade de obter algum resultado a partir das equações abstratas
+
+que o modelam.
+
+Primeiramente, as metodologias IMPES e totalmente implícita serão explicadas do ponto
+
+de vista de implementação. Posteriormente, será explicado um esquema de passo de tempo
+
+adaptativo implementado a ﬁm de reduzir o esforço computacional de ambas as formula-
+
+ções.
+
+4.1 MÉTODOS IMPES E SEQUENCIAL
+
+O método IMPES, conforme já discutido anteriormente, é mais simples e direto do
+
+ponto de vista de implementação, quando comparado ao método totalmente implícito.
+
+Esta seção de destina ao esclarecimento da abordagem computacional utilizada para ob-
+
+ter a solução do problema. Primeiramente, será exposta a estrutura geral do simulador.
+
+A seguir, serão brevemente descritos os procedimentos de cálculo implícito da pressão e
+
+explícito da saturação. Para mais detalhes quanto ao tratamento numérico do modelo por
+
+meio do método dos volumes ﬁnitos baseado em elementos, consultar Hurtado (2011).
+
+4.1.1 ESTRUTURA GERAL DO SIMULADOR
+
+51
+
+A simulação do escoamento bifásico por meio da formulação IMPES é fundamentado
+
+em uma classe denominada Simulator. Essa classe é responsável por administrar a reso-
+lução implícita da pressão por meio da classe TwoPhasePressureComputer e pelo cálculo
+explícito da saturação, por meio da classe WaterSaturationComputer. Ainda há classes
+derivadas das classes abstratas Event e Controller, as quais são, respectivamente, desti-
+nadas à execução de eventos – e.g. avanço no tempo e exportação de dados – e controle da
+
+simulação – e.g. veriﬁcar convergência e chegada ao tempo ﬁnal de simulação. A relação
+
+entre essas classes está ilustrada esquematicamente na ﬁgura 4.1.
+
+Figura 4.1: Classes responsáveis pela simulação pelo método IMPES
+
+Fonte: do autor
+
+4.1.2 CÁLCULO IMPLÍCITO DA PRESSÃO
+
+O cálculo implícito da pressão consiste em resolver o sistema linear constituído pelas
+equações de conservação da massa total para cada nó da malha. A equação para o nó P é
+dada por
+
+· ∆Af = q t
+
+P
+
+−1D Φe
+
+−λt KJ
+
+(cid:88)
+
+e∈(cid:69) P
+
+∆VP.
+
+(4.1)
+
+A ﬁm de adicionar os termos da equação (4.1) à matriz do sistema linear da pressão sem
+
+executar procedimentos duplicados, procede-se conforme o pseudocódigo representado
+
+na listagem 4.1. A estrutura ﬁnal da matriz do sistema linear está ilustrada, para uma malha
+
+bidimensional simples, na ﬁgura 4.2.
+
+TwoPhasePressureComputerWaterSaturationComputerEventsSimulatorControllersFigura 4.2: Exemplo de estrutura da matriz do sistema linear da pressão
+
+52
+
+Fonte: modiﬁcado de (Hurtado, 2011)
+
+01234567891011121312345678910111213012345678910111213053
+
+Listagem 4.1: Pseudocódigo da rotina que resolve o sistema linear da pressão
+
+1 PARA todos os elementos da malha
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+PARA todas as faces do elemento
+
+PARA todos os nós do elemento
+
+calcular contribuição do nó no ﬂuxo difusivo
+
+adicionar contribuição às equações referentes aos nós atrás ...
+
+... e à frente da face
+
+FIM PARA
+
+FIM PARA
+
+9 FIM PARA
+
+Já o termo do lado direito da equação (4.1) é adicionado diretamente ao termo inde-
+
+pendente, por meio de uma varredura dos nós do poço ou da fronteira com condição de
+
+contorno do tipo Neumann. Caso a condição de contorno seja do tipo Dirichlet as linhas
+
+da equação dos nós da fronteira são zeradas, exceto a entrada da diagonal principal, à qual
+
+é atribuído o valor 1. Ao termo independente é, então, atribuído o valor prescrito. Dadas
+
+as montagens da matriz e do termo independente, tem-se o sistema linear, do qual são
+
+calculadas as pressões para um determinado passo de tempo.
+
+4.1.3 CÁLCULO EXPLÍCITO DA SATURAÇÃO
+
+O cálculo explícito da saturação é dado a partir dos valores de pressão calculados im-
+
+plicitamente para o passo de tempo em questão. A equação resolvida explicitamente é
+
+.
+
+(4.2)
+
+=S w
+
+P
+
+old +
+
+S w
+P
+
+∆t
+
+φP∆VP
+
+e∈(cid:69) P
+
+(cid:88)
+
+−λw KJ
+
+−1D Φe
+
+· ∆Af − ∆t q w
+
+P
+φP
+
+A maneira de construir a equação explícita é análoga àquela relativa ao sistema linear.
+
+Nesse caso, contudo, não há necessidade de montar a matriz com essas contribuições, pois
+
+que os valores de pressão são conhecidos e pode-se efetuar o somatório presente na equa-
+
+ção (4.2) diretamente.
+
+4.2 MÉTODO TOTALMENTE IMPLÍCITO
+
+54
+
+O método totalmente implícito é mais laborioso tanto do ponto de vista de formulação
+
+quanto de implementação. Há de se atentar para diversos detalhes referentes não somente
+
+ao método numérico em si, mas também aos aspectos computacionais envolvidos em sua
+
+concepção. Esta seção se destina ao esclarecimento da abordagem computacional utili-
+
+zada para obter a solução do problema. Primeiramente, será exposta a estrutura geral do
+
+simulador. A seguir, serão detalhados os procedimentos de cálculo dos resíduos e contru-
+
+ção da matriz jacobiana.
+
+4.2.1 ESTRUTURA GERAL DO SIMULADOR
+
+A simulação do escoamento bifásico por meio da formulação totalmente implícita é
+
+fundamentado em uma classe denominada TwoPhaseFlowComputer. Essa classe é res-
+ponsável por administrar a resolução do sistema não linear, a qual é efetuada com o su-
+
+porte da biblioteca PETSc (Balay et al., 2013). Para isso, a TwoPhaseFlowComputer pos-
+sui classes responsáveis por calcular as mobilidades (MobilityCalculator); montar os
+resíduos (ResidualsAssembler); montar a matriz jacobiana (JacobianAssembler) e
+exportar a solução numérica de forma que essa possa ser visualizada convenientemente
+
+(TwoPhaseFlowExporter). A relação entre essas classes está ilustrada esquematicamente
+na ﬁgura 4.3.
+
+Figura 4.3: Classes responsáveis pela simulação pelo método FIM
+
+Fonte: do autor
+
+A classe TwoPhaseFlowComputer contém a função responsável pela resolução do sis-
+tema não linear, a qual está representada em pseudocódigo na listagem 4.2. As opera-
+
+MobilityCalculatorAssemblersTwoPhaseFlowExporterResidualsAssemblerTwoPhaseFlowComputerJacobianAssemblerções executadas nas linhas 2 e 3 da listagem são executadas, respectivamente, pelas classes
+
+ResidualsAssembler e JacobianAssembler. A linha 6, por sua vez, se refere ao passo
+de tempo adaptativo já explicado anteriormente.
+
+55
+
+Listagem 4.2: Pseudocódigo da rotina que resolve o sistema não linear
+
+1 Alocar memória para o vetor de resíduos
+
+2 Alocar memória para a matriz jacobiana
+
+3 REPETIR
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+11
+
+12
+
+Resolver o sistema não linear utilizando a PETSc ...
+
+...( informando à biblioteca a implementação própria das funções ...
+
+... de montagem do vetor de resíduos e da matriz jacobiana)
+
+SE convergência atingida e saturação consistente ENTÃO
+
+Ajustar passo de tempo
+
+Avançar a solução no tempo
+
+SE NÃO
+
+Ajustar passo de tempo
+
+FIM SE
+
+13 ENQUANTO tempo ﬁnal atingido
+
+4.2.2 CÁLCULO DOS RESÍDUOS
+
+A ﬁm de facilitar a indexação das variáveis, optou-se por dispô-las de forma que a sa-
+
+turação e a pressão de um dado volume de controle consistam em entradas adjacentes do
+
+vetor de resíduos. A classe ResidualsAssembler dispõe de uma função que calcula os
+resíduos R w e R t e já os adiciona nas posições corretas do vetor resíduo. Essa adição é feita
+por etapas nas quais são calculados os termos difusivo, acumulativo e fonte denotados,
+respectivamente, por αdif, αac e αfon nas equações a seguir:
+
+(cid:122)
+
+
+
+(cid:125)(cid:124)
+
+αw
+ac
+
+S w
+P
+
+(cid:123)
+old+
+
+−S w
+
+P
+
+R w =
+
+φP∆VP
+
+∆t
+
+(cid:125)(cid:124)
+−λw KJ
+−1D Φe
+
+αw
+dif
+
+(cid:123)
+(cid:122) (cid:125)(cid:124) (cid:123)
+· ∆Af − αw
+
+q w
+P
+
+∆VP .
+
+fon
+
+(cid:122)
+(cid:88)
+
+e∈(cid:69) P
+
+(4.3)
+
+(cid:122)
+(cid:88)
+
+e∈(cid:69) P
+
+R t =
+
+(cid:125)(cid:124)
+−λt KJ
+−1D Φe
+
+αt
+
+dif
+
+(cid:123)
+(cid:122) (cid:125)(cid:124) (cid:123)
+· ∆Af − αt
+
+q t
+P
+
+∆VP,
+
+fon
+
+56
+
+(4.4)
+
+A função responsável por esses cálculos está representada em pseudocódigo na listagem
+
+4.8. As quatro subrotinas chamadas na listagem 4.8 serão explicadas nos itens a seguir.
+
+Listagem 4.3: Pseudocódigo da rotina que computa os resíduos
+
+1 CHAMA função que adiciona o termo difusivo
+
+2 CHAMA função que adiciona o termo acumulativo
+
+3 CHAMA função que adiciona termo fonte
+
+4 CHAMA função que aplica condições de contorno
+
+ADIÇÃO DO TERMO DIFUSIVO A adição dos termo difusivos correspondentes às equações
+
+de conservação da massa da água e global,
+
+−λw KJ
+
+=(cid:88)
+
+e∈(cid:69) P
+
+αw
+dif
+
+· ∆Af
+
+−1D Φe
+
+−λw KJ
+
+=(cid:88)
+
+e∈(cid:69) P
+
+· ∆Af ,
+
+−1D Φe
+
+e
+
+αt
+
+dif
+
+(4.5)
+
+foi implementada de forma que não fossem realizados cálculos e procedimentos duplica-
+
+dos. A listagem 4.4 contém o pseudocódigo da função que executa essa operação.
+
+Listagem 4.4: Pseudocódigo da rotina que adiciona o termo difusivo nos resíduos
+
+1 PARA todos os elementos da malha
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+PARA todas as faces do elemento
+
+calcular ﬂuxo difusivo de água
+
+calcular ﬂuxo difusivo total
+
+adicionar ﬂuxos nas equações referentes aos volumes de controle ...
+
+... separados pela face
+
+FIM PARA
+
+8 FIM PARA
+
+Ressalta-se que as mobilidades λw e λt devem ser avaliadas nas faces. Tendo em vista
+que a mobilidade é função de variáveis primárias armazenadas nos nós, essas são primei-
+
+ramente avaliadas nos nós. Posteriormente, esses valores são interpolados a ﬁm de deter-
+
+minar as mobilidades na face do volume de controle. Essa interpolação foi realizada pelo
+
+esquema upwind, o qual tem relação direta com o termo parabólico da equação, i.e., o valor
+
+57
+
+da função na interface é igual ao valor do volume de controle a montante (Maliska, 2004).
+
+Matematicamente, tem-se
+
+=
+
+λp
+f
+
+ λp
+
+nB
+λp
+nF
+
+se Vp · ∆Af (cid:190) 0 ;
+se Vp · ∆Af < 0 ,
+
+(4.6)
+
+onde nB e nF indicam os nós atrás e a frente da face, conforme mostrado na ﬁgura 4.4.
+
+Figura 4.4: Esquema de interpolação upwind em elemento triangular
+
+Fonte: do autor
+
+ADIÇÃO DO TERMO ACUMULATIVO A função que adiciona o termo acumulativo da equa-
+
+ção da conservação da massa da água,
+
+=
+
+αw
+ac
+
+φP∆VP
+
+∆t
+
+
+
+S w
+P
+
+−S w
+
+P
+
+old
+
+,
+
+(4.7)
+
+por sua vez, é mais direta e está representada na listagem 4.5. Tendo em vista que esse
+
+termo não necessita interpolações e cálculos envolvendo outras entidades além dos nós,
+
+pode-se varrer os nós da malha diretamente. Ressalta-se, pois, que esse termo deve ser
+
+adicionado apenas à equação da conservação da massa da água, porquanto a equação de
+restrição volumétrica cancela esse termo na equação de conservação da massa totala.
+
+aEssa simpliﬁcação só se aplica em caso de escoamento incompressível.
+
+58
+
+Listagem 4.5: Pseudocódigo da rotina que adiciona o termo acumulativo nos resíduos
+
+1 PARA todos os nós da malha
+
+2
+
+3
+
+calcular termo acumulativo
+
+adicionar termo na equação de conservação da massa da água
+
+4 FIM PARA
+
+ADIÇÃO DO TERMO FONTE A função que adiciona os termos fontes correspondentes às
+
+equações de conservação da massa da água e global,
+
+αw
+fon
+
+= q w
+
+P
+
+e
+
+αt
+
+fon
+
+= q t
+P,
+
+(4.8)
+
+veriﬁca os poços localizados ao longo da malha, e, a partir da informação sobre sua ope-
+
+ração – pressão constante ou vazão constante – adiciona o valor adequado ao resíduo das
+
+equações associadas aos volumes de controle nos quais os poços se encontram. Tendo em
+
+vista que esse termo não necessita interpolações e cálculos envolvendo outras entidades
+
+além dos nós, pode-se varrer os nós da malha diretamente e adicionar os termos fonte. A
+
+função responsável por adicioná-los aos resíduos está representada em pseudocódigo na
+
+listagem 4.6.
+
+A vazão nos poços cuja condição de operação é pressão prescrita é calculada por meio
+
+da equação
+
+qpoço = λp WIPP− Ppoço
+
+,
+
+(4.9)
+
+em que qpoço é a vazão da fase p no sentido reservatório-poço, WI é o well index ou índice
+de poço, PP é a pressão no nó P do reservatório e Ppoço é a pressão de fundo de poço. Neste
+trabalho, o índice de poço foi calculado realizando uma adaptação do modelo de Peace-
+
+man (1978), utilizando a expressão
+
+WI = 2πKh
+
+ln
+
+ req
+
+rpoço
+
+,
+
+(4.10)
+
+em que h é o comprimento do poço, rpoço é o raio do poço e req é o raio equivalente, o qual
+nesse trabalho foi calculado como metade do diâmetro hidráulico do volume de controle
+
+associado ao poço por meio da equação
+
+req = Volume do volume de controle associado ao poço
+Área da superfície de controle associada ao poço
+
+.
+
+(4.11)
+
+59
+
+Listagem 4.6: Pseudocódigo da rotina que adiciona o termo fonte nos resíduos
+
+1 PARA todos os poços da malha
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+SE poço opera com pressão constante
+
+calcula vazão no poço a partir de sua pressão de operação
+
+adiciona vazão às equações dos volumes de controle do poço
+
+FIM SE
+
+SE poço opera com vazão constante
+
+adiciona vazão às equações dos volumes de controle do poço
+
+FIM SE
+
+9 FIM PARA
+
+APLICAÇÃO DAS CONDIÇÕES DE CONTORNO Quanto à imposição das condições de con-
+
+torno, optou-se por considerar condições de Neumann e Dirichlet. Quanto à imposição de
+
+ﬂuxo prescrito – condição de contorno de Neumann – preferiu-se prescrever velocidade, a
+
+ﬁm de que o problema a ser resolvido ﬁcasse independente da malha utilizada.
+
+Ressalta-se que em malhas não estruturadas tanto a face quanto o nó nos quais são
+
+prescritas condições de Neumann e Dirichlet, respectivamente, estão localizados sobre o
+
+contorno. Essa conﬁguração geométrica pode ser visualizada na ﬁgura 4.5, em que está
+
+ilustrado um volume de controle adjacente ao contorno. É importante ressaltar que o vo-
+lume de controle associado ao nó P é interior ao domínio, ao passo que o nó está sobre a
+fronteira.
+
+A condição de Neumann é imposta diretamente fazendo, nas equações (4.3) e (4.4),
+
+αw
+fon
+
+= q w
+
+P
+
+e
+
+αt
+
+fon
+
+= q t
+P,
+
+(4.12)
+
+em que q w
+
+P e q t
+
+P são as vazões volumétricas de água e total, obtidas através de
+
+q w
+P
+
+V w ∆Abf
+
+e
+
+q t
+P
+
+(V w + V o )∆Abf,
+
+(4.13)
+
+= (cid:88)
+
+bf∈ (cid:70)b
+
+P
+
+= (cid:88)
+
+bf∈ (cid:70)b
+
+P
+
+em que (cid:70)b
+P é o conjunto de faces que formam a parte da superfície de controle associada
+ao nó P que está localizada sobre a fronteira e bf são as faces contidas nesse conjunto. Já
+V w e V t são as velocidades de água e total prescritas, respectivamente.
+
+No caso de condição de contorno de Dirichlet, elimina-se a equação da variável co-
+
+Figura 4.5: Volume de controle adjacente ao contorno
+
+60
+
+Fonte: modiﬁcado de (Maliska et al., 2015)
+
+nhecida e, em seu lugar, insere-se apenas o valor unitário na diagonal principal da matriz
+
+jacobiana. O resíduo, por sua vez, recebe o valor zero.
+
+O pseudocódigo da função destinada à aplicação das condições de contorno está re-
+
+presentada por meio de pseudocódigo na listagem 4.7. A face de contorno mencionada
+
+no algoritmo é uma entidade da fronteira, a qual está ilustrada na ﬁgura 4.5 juntamente às
+
+outras entidades das fronteiras da malha.
+
+Listagem 4.7: Pseudocódigo da rotina que aplica as condições de contorno nos resíduos
+
+1 PARA todas as fronteiras com condição de contorno do tipo Neumann
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+PARA todos os elementos da fronteira
+
+PARA todas as faces do elemento
+
+adicionar ﬂuxo prescrito na equação do nó associado ...
+
+... à face de contorno
+
+FIM PARA
+
+FIM PARA
+
+8 FIM PARA
+
+9 PARA todas as fronteiras com condição de contorno do tipo Dirichlet
+
+10
+
+11
+
+12
+
+PARA todos os nós da fronteira
+
+adicionar zero nas equações do nó
+
+FIM PARA
+
+13 FIM PARA
+
+4.2.3 CONSTRUÇÃO DA MATRIZ JACOBIANA
+
+61
+
+O cálculo da matriz jacobiana é a parte mais custosa e complexa dos algoritmos de
+
+solução de sistemas não lineares. Ainda, sua construção é diferenciada em se tratando do
+
+método dos volumes ﬁnitos baseado em elementos, pois que esse método se fundamenta
+
+em varreduras nos elementos da malha computacional.
+
+Um aspecto relevante do processo de montagem da matriz jacobiana é sua estrutura,
+
+a qual deve ser compativel àquela associada ao vetor resíduo. Uma vez que a indexação de
+
+variáveis se deu de forma que as equações de conservação da massa da água e total de um
+
+determinado volume de controle fossem adjacentes, tem-se:
+
+
+
+∂ R w
+1
+∂ S1
+∂ R t
+1
+∂ S1
+...
+∂ R w
+n
+∂ S1
+∂ R t
+n
+∂ S1
+
+∂ R w
+1
+∂ P1
+∂ R t
+1
+∂ P1
+...
+∂ R w
+n
+∂ P1
+∂ R t
+n
+∂ P1
+
+...
+
+...
+
+...
+
+...
+
+...
+
+∂ R w
+1
+∂ Sn
+∂ R t
+1
+∂ Sn
+...
+∂ R w
+n
+∂ Sn
+∂ R t
+n
+∂ Sn
+
+∂ R w
+1
+∂ Pn
+∂ R t
+1
+∂ Pn
+...
+∂ R w
+n
+∂ Pn
+∂ R t
+n
+∂ Pn
+
+
+
+
+
+∆S1
+∆P1
+...
+
+∆Sn
+
+∆Pn
+
+
+
+
+
+R w
+1
+R t
+1
+
+...
+
+R w
+n
+
+R t
+n
+
+
+
+=−
+
+,
+
+(4.14)
+
+em que
+
+= RP(x j + ∆x j )− RP(x j )
+
+∆x j
+
+.
+
+∂ RP
+∂ x j
+
+(4.15)
+
+Na equação (4.15), P é o volume de controle em que se deseja calcular a derivada e RP
+é o resíduo, o qual pode ser associado à equação de conservação da massa da água ou total
+do nó P. Já x j é a variável em relação à qual a derivada é calculada. Ressalta-se que x j é
+um componente do vetor solução, o qual possui tanto S w quanto P em suas entradas, i.e.,
+a variável x j representada na equação (4.15) pode ser tanto saturação quanto pressão.
+
+Quanto à estrutura da matriz, pode-se veriﬁcar que cada linha é composta pelas deri-
+
+vadas de uma única equação do resíduo, ao passo que cada coluna contém as derivadas em
+
+relação a uma única variável. Ademais, a equação (4.14) consiste na equação (3.29) com os
+
+coeﬁcientes explicitados.
+
+Na ﬁgura 4.6 pode-se visualizar um exemplo de estrutura da matriz jacobiana. É inte-
+
+ressante notar que a estrutura da matriz do sistema linear da pressão no método IMPES,
+
+representada na ﬁgura 4.2 é semelhante àquela associada à matriz jacobiana e exposta na
+
+ﬁgura 4.6. Esta última, contudo, é composta por blocos – matrizes 2x2 nas quais estão
+
+dispostas as derivadas numéricas de R w e R t em relação à S w e P , conforme ilustrado na
+ﬁgura.
+
+Figura 4.6: Exemplo de estrutura da matriz jacobiana
+
+62
+
+Fonte: modiﬁcado de (Maliska et al., 2015)
+
+A ﬁm de efetuar o cálculo das derivadas numéricas que compõem a matriz jacobiana
+
+de forma mais conveniente e eﬁcaz, as equações resíduo podem ser escritas na forma
+
+R w = αw
+ac
+
++ αw
+dif
+
++ αw
+fon
+
+e
+
+R t = αt
+ac
+
++ αt
+dif
+
++ αt
+
+fon.
+
+(4.16)
+
+012345678910111213123456789101112130123456789101112130Assim, as derivadas numéricas associadas ao resíduo R w são dadas por
+
+αw
+αw
+
+ac
+
+ac
+
+∂ R w
+P
+∂ Sj
+
+∂ R w
+P
+∂ Pj
+
+=
+
+=
+
+∂
+∂ Sj
+
+∂
+∂ Pj
+
+∂ αw
+ac
+∂ Sj
+
+∂ αw
+ac
+∂ Pj
+
++
+
++
+
+∂ αw
+dif
+∂ Sj
+
+∂ αw
+dif
+∂ Pj
+
++
+
++
+
+∂ αw
+fon
+∂ Sj
+
+∂ αw
+fon
+∂ Pj
+
+,
+
+,
+
+e as derivadas numéricas associadas ao resíduo R t , por
+
+ =
+ =
+ =
+ =
+
++ αw
+dif
+
++ αw
+fon
+
++ αw
+dif
+
++ αw
+fon
+
+αt
+αt
+
++ αt
+
+dif
+
+fon
+
++ αt
+
+dif
+
+fon
+
+∂ R t
+P
+∂ Sj
+
+∂ R t
+P
+∂ Pj
+
+=
+
+=
+
+∂
+∂ Sj
+
+∂
+∂ Pj
+
+∂ αt
+dif
+∂ Sj
+
+∂ αt
+dif
+∂ Pj
+
++
+
++
+
+∂ αt
+fon
+∂ Sj
+
+∂ αt
+fon
+∂ Pj
+
+,
+
+.
+
+63
+
+(4.17)
+
+(4.18)
+
+(4.19)
+
+(4.20)
+
+Dado isso, infere-se que a montagem da matriz jacobiana pode ser realizada conside-
+
+rando separadamente as contribuições devidas aos termos difusivo, acumulativo e fonte.
+
+A classe JacobianAssembler dispõe de uma função responsável por calcular cada uma
+dessas contribuições e adicioná-las à matriz jacobiana. Essa função é semelhante àquela
+
+destinada a calcular os resíduos. Seu pseudocódigo está contido na listagem 4.8. As quatro
+
+subrotinas chamadas na listagem 4.8 serão explicadas nos itens a seguir.
+
+Listagem 4.8: Pseudocódigo da rotina que monta a matriz jacobiana
+
+1 CHAMA função que adiciona o termo difusivo
+
+2 CHAMA função que adiciona o termo acumulativo
+
+3 CHAMA função que adiciona termo fonte
+
+4 CHAMA função que aplica condições de contorno
+
+ADIÇÃO DO TERMO DIFUSIVO Quanto à função que adiciona a contribuição do termo di-
+
+fusivo à matriz jacobiana, procurou-se efetuar a implementação computacional de forma
+
+a tentar minimizar procedimentos repetidos. Essa preocupação se deu, sobretudo, em re-
+
+lação às varreduras das entidades da malha.
+
+Lembrando que termos difusivos são dados conforme a equação (4.5), as derivadas
+
+numéricas do termo difusivo podem ser calculadas por
+
+∆S w
+j
+
+j ,Pj )− αw
++ ∆S w
+(S w
+j
+j ,Pj + ∆Pj )− αt
+(S w
+∆Pj
+j ,Pj )− αw
+(S w
++ ∆S w
+j
+j ,Pj + ∆Pj )− αt
+(S w
+
+∆S w
+j
+
+dif
+
+αw
+dif
+
+=
+
+αw
+dif
+
+=
+
+αt
+
+dif
+
+=
+
+αt
+
+dif
+
+=
+
+(S w
+j ,Pj )
+
+,
+
+dif
+
+j ,Pj )
+(S w
+
+,
+
+(S w
+j ,Pj )
+
+,
+
+dif
+
+(S w
+j ,Pj )
+
+,
+
+dif
+
+∆Pj
+
+∂ αw
+dif
+∂ Sj
+∂ αw
+dif
+∂ Pj
+∂ αt
+dif
+∂ Sj
+∂ αt
+dif
+∂ Pj
+
+64
+
+(4.21)
+
+(4.22)
+
+(4.23)
+
+(4.24)
+
+j é uma perturbação na saturação e ∆Pj , na pressão do nó j . Isto é, as deriva-
+em que ∆S w
+das parciais dos resíduos calculadas numericamente consistem em subtrair o ﬂuxo difusivo
+
+perturbado do ﬂuxo difusivo não perturbado e dividir esse valor pela perturbação. Optou-
+
+se por armazenar o ﬂuxo não perturbado já na etapa da construção dos resíduos. Sendo
+
+assim, a função da classe JacobianAssembler, cujo intuito é adicionar os termos difu-
+sivos à matriz jacobiana, deve calcular o ﬂuxo perturbado, para então calcular a derivada
+
+numérica e adicioná-la à matriz.
+
+A ﬁm de realizar esse cálculo, dá-se primeiro a perturbação da saturação; depois, da
+
+pressão. Para o primeiro caso, faz-se a varredura dos elementos da malha e para cada nó
+
+do elemento, perturba-se a saturação, calcula-se os ﬂuxos nas faces e adiciona-se esse valor
+
+à matriz jacobiana.
+
+O mesmo procedimento é realizado para a perturbação da pressão. Contudo, neste
+
+caso pode-se ocasionar uma mudança no sentido dos ﬂuxos e, por conseguinte, nas mobi-
+
+lidades nas faces, interpoladas por upwind. Para simpliﬁcar o cálculo dessas mobilidades,
+
+deﬁne-se o pseudoﬂuxo na face f , dado por
+
+=−KJ
+
+θ p
+f
+
+· ∆Af.
+
+−1D Φe
+
+(4.25)
+
+Esse pseudoﬂuxo, apesar de não apresentar o valor correto do ﬂuxo difusivo, contém a in-
+
+formação referente a seu sentido, e pode, portanto, ser utilizado para determinar os valores
+
+corretos de mobilidade.
+
+Os procedimentos de perturbação da saturação e da pressão para a montagem da ma-
+
+triz jacobiana estão representados de forma mais detalhada na listagem 4.9.
+
+65
+
+Listagem 4.9: Pseudocódigo da rotina que adiciona o termo difusivo na matriz jacobiana
+
+{Perturbação da saturação}
+
+1
+
+2 PARA todos os elementos da malha
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+11
+
+12
+
+13
+
+14
+
+15
+
+16
+
+PARA todos os vértices do elemento
+
+perturbar saturação do vértice
+
+calcular mobilidade do vértice perturbado
+
+PARA todas as faces do elemento
+
+PARA todos os vértices do elemento
+
+calcular contribuição do nó no ﬂuxo perturbado da face
+
+adicionar contribuição ao ﬂuxo perturbado da face
+
+FIM PARA
+
+adicionar ﬂuxo perturbado dividido pela perturbação à matriz ...
+
+... nas equações dos nós nF e nB da face
+
+subtrair ﬂuxo perturbado dividido pela perturbação à matriz ...
+
+... nas equações dos nós nF e nB da face
+
+FIM PARA
+
+FIM PARA
+
+17 FIM PARA
+
+18
+
+19
+
+{Perturbação da pressão}
+
+20 PARA todos os elementos da malha
+
+21
+
+22
+
+23
+
+24
+
+25
+
+26
+
+27
+
+28
+
+29
+
+30
+
+31
+
+32
+
+33
+
+34
+
+35
+
+PARA todos os vértices do elemento
+
+perturbar pressão do vértice
+
+calcular pseudoﬂuxo
+
+calcular mobilidade do vértice perturbado
+
+PARA todas as faces do elemento
+
+PARA todos os vértices do elemento
+
+calcular contribuição do nó no ﬂuxo perturbado da face
+
+adicionar contribuição ao ﬂuxo perturbado da face
+
+FIM PARA
+
+adicionar ﬂuxo perturbado dividido pela perturbação à matriz ...
+
+... nas equações dos nós nF e nB da face
+
+subtrair ﬂuxo perturbado dividido pela perturbação à matriz ...
+
+... nas equações dos nós nF e nB da face
+
+FIM PARA
+
+FIM PARA
+
+36 FIM PARA
+
+66
+
+No intuito de prover uma visualização menos abstrata da função responsável por mon-
+
+tar a matriz jacobiana, ilustrou-se um exemplo na ﬁgura 4.7. Nela, considera-se uma malha
+
+composta por um único elemento triangular. Admite-se, também, que está sendo realizada
+
+a etapa de perturbação da saturação. Dá-se, então, a perturbação da saturação do nó cujo
+
+índice é 0.
+
+Uma vez que a perturbação é da variável correspondente à primeira equação do sis-
+
+tema, esse procedimento proverá as contribuições do termo difusivo à primeira coluna da
+
+matriz. Dada a perturbação da saturação e o cálculo das mobilidades perturbadas nas faces
+
+do elemento, parte-se à varredura das faces. Para cada face, varre-se os nós do elemento
+
+calculando a contribuição do nó aos ﬂuxos difusivos perturbados de água e total. Faz-se,
+
+então, o cálculo da derivada numérica a partir dos valores de ﬂuxos perturbado, não per-
+
+turbado e perturbação. Essa derivada é, pois, adicionada às equações dos nós associados a
+essa face. Por exemplo, à face f0, estão associados os nós 0 e 1. Sendo assim, são calculadas
+as seguintes derivadas:
+
+∂αw
+
+
+
+∂αt
+
+
+
+0
+
+,
+
+dif
+∂ S0
+
+0
+
+,
+
+dif
+∂ S0
+
+∂αw
+
+
+
+1
+
+,
+
+dif
+∂ S0
+
+∂αt
+
+
+
+dif
+∂ S0
+
+1
+
+.
+
+(4.26)
+
+Esses coeﬁcientes são relacionados às equações 0, 1, 2 e 3, respectivamente, i.e. conserva-
+
+ção da massa da água do nó 0, conservação da massa total do nó 0, conservação da massa
+
+da água do nó 1 e conservação da massa total do nó 1. Constituem, portanto, contribui-
+ções às entradas (0,0), (1,0), (2,0) e (3,0) da matriz jacobiana. A ﬁgura 4.7 ainda apresenta
+a sequência do processo de varredura das faces do elemento, ilustrando as contribuições
+dos ﬂuxos através das faces f1 e f2.
+
+Para continuar a montagem da matriz, ter-se-ia de realizar o mesmo procedimento
+
+incrementando as saturações dos nós 1 e 2, processo do qual seriam calculadas as colunas
+
+2 e 4 da matriz – referentes às equações de conservação da massa da água dos nós 1 e 2.
+
+Por ﬁm, o mesmo procedimento seria feito incrementando as pressões dos nós 0, 1 e
+
+2, procedimento do qual seriam determinadas as colunas 1, 3 e 5, referentes às equações
+
+de conservação da massa total dos nós 0, 1 e 2. Conforme já explicitado, a única diferença
+
+entre esse processo de perturbação de pressão é a necessidade de calcular o pseudoﬂuxo
+
+nas faces do elemento.
+
+67
+
+Figura 4.7: Exemplo de etapa de montagem da matriz jacobiana
+
+Fonte: do autor
+
+ADIÇÃO DO TERMO ACUMULATIVO Adicionar o termo acumulativo à matriz jacobiana é
+
+muito mais simples que adicionar o termo difusivo. Isso porque só há termo de acumula-
+
+68
+
+ção na equação da conservação da massa da água e, além disso, o resíduo desse termo é
+
+função exclusiva e linear da saturação:
+
+=
+
+αw
+ac
+
+φP∆VP
+
+∆t
+
+
+
+S w
+P
+
+−S w
+
+P
+
+old
+
+.
+
+(4.27)
+
+A derivada parcial, pois, consiste em um valor constante e que pode ser calculado direta-
+
+mente para cada nó da malha:
+
+∂ αw
+ac
+∂ S w
+
+=
+
+φP∆VP
+
+∆t
+
+.
+
+(4.28)
+
+A listagem 4.10 representa o pseudocódigo da função que adiciona esse termo à jacobiana.
+
+Listagem 4.10: Pseudocódigo da rotina que adiciona o termo acumulativo na matriz jacobiana
+
+1 PARA todos os nós da malha
+
+2
+
+3
+
+4
+
+calcular derivada do termo acumulativo
+
+adicionar derivada à matriz jacobiana na equação de conservação da ...
+
+... massa da água do nó
+
+5 FIM PARA
+
+ADIÇÃO DO TERMO FONTE A função que adiciona o termo fonte veriﬁca os poços locali-
+
+zados ao longo da malha, e, a partir da informação sobre sua operação – pressão constante
+
+ou vazão constante – adiciona o valor adequado à matriz jacobiana. Os termos fonte devi-
+
+dos aos poços são
+
+αw
+fon
+
+= q w
+
+P
+
+e
+
+αt
+
+fon
+
+= q t
+P.
+
+(4.29)
+
+Assim, se o poço opera com vazão constante, a derivada numérica é nula, logo não é
+
+preciso varrer os poços que operam sob essa condição. Já para os poços de pressão cons-
+
+tante tem-se
+
+αw
+fon
+
+= λp WIPP− Ppoço
+
+
+
+= λt WIPP− Ppoço
+
+.
+
+e
+
+αt
+
+fon
+
+(4.30)
+
+Portanto, os termos fonte correspondentes aos poços que operam sob a condição de
+pressão constante são funções de S w e P . São necessárias, então, as perturbações da satu-
+
+ração e da pressão de forma a calcular suas contribuições à matriz jacobiana. Essa função
+
+está representada em pseudocódigo na listagem 4.11
+
+69
+
+Listagem 4.11: Pseudocódigo da rotina que aplica as condições de contorno na matriz jacobiana
+
+{Perturbação da saturação}
+
+1
+
+2 PARA todos os poços da malha
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+11
+
+SE poço opera com pressão constante
+
+PARA cada vértice contido no poço
+
+perturbar saturação do nó
+
+calcular mobilidade perturbada
+
+calcular ﬂuxo perturbado
+
+calcular derivada e adicioná−la à matriz nas equações de ...
+
+... conservação do nó
+
+FIM PARA
+
+FIM SE
+
+12 FIM PARA
+
+{Perturbação da pressão}
+
+13
+
+14 PARA todos os poços da malha
+
+15
+
+16
+
+17
+
+18
+
+19
+
+20
+
+21
+
+22
+
+23
+
+SE poço opera com pressão constante
+
+PARA cada vértice contido no poço
+
+perturbar pressão do nó
+
+calcular mobilidade perturbada
+
+calcular ﬂuxo perturbado
+
+calcular derivada e adicioná−la à matriz nas equações de ...
+
+... conservação do nó
+
+FIM PARA
+
+FIM SE
+
+24 FIM PARA
+
+APLICAÇÃO DAS CONDIÇÕES DE CONTORNO
+
+Se a fronteira apresentar condição de con-
+
+torno do tipo Neumann, a derivada numérica de sua contribuição é nula. Apenas ascende,
+
+pois, a necessidade de varrer as fronteiras cuja condição de contorno é do tipo Dirichlet. A
+
+imposição dessa condição é bastante simples – basta zerar as linha referentes às equações
+
+dos nós da fronteira e atribuir o valor unitário às entradas da diagonal principal. A função
+
+responsável pela aplicação das condições de contorno à matriz jacobiana está represen-
+
+tada por meio de pseudocódigo na listagem 4.12.
+
+70
+
+Listagem 4.12: Pseudocódigo da rotina que aplica as condições de contorno na matriz jacobiana
+
+1 PARA todas as fronteiras com condição de contorno do tipo Dirichlet
+
+2
+
+3
+
+4
+
+5
+
+PARA todos os nós da fronteira
+
+zerar as entradas das linhas associadas às equações do nó
+
+setar valor unitário na diagonal principal dessas linhas
+
+FIM PARA
+
+6 FIM PARA
+
+4.3 PASSO DE TEMPO ADAPTATIVO
+
+Almejando poupar esforço computacional demasiado e, simultaneamente, prevenir a
+
+especiﬁcação de passos de tempo excessivamente altos, foi implementado um esquema
+
+de modiﬁcação do passo de tempo inicialmente especiﬁcado na simulação a partir da di-
+
+ferença do campo de saturação calculado em relação ao campo de saturação antigo, i.e.,
+
+associado ao passo de tempo anterior. O funcionamento desse esquema está esquemati-
+
+zado por meio de um ﬂuxograma na ﬁgura 4.8.
+
+Devem ser especiﬁcados pelo usuário cinco parâmetros de entrada: o passo de tempo
+inicial ∆t , a diferença máxima de saturação ∆Smax, a diferença mínima de saturação ∆Smin
+e as duas constantes αaum e αred. A ideia central do esquema de passo de tempo adaptativo
+é ajustar o passo de tempo de acordo com a magnitude da variação do campo de saturação
+a partir da especiﬁcação de um valor de αaum superior ao valor unitário e de αred, inferior.
+Dessa forma, caso a diferença entre a saturação atual e a saturação antiga exceda ∆Smax em
+algum volume de controle, o passo de tempo é reduzido por meio da expressão
+
+∆t = αred∆t .
+
+(4.31)
+
+e a solução no nível de tempo em questão é recalculada. Por outro lado, se essa diferença
+for inferior a ∆Smin em todos os volumes de controle, permite-se um aumento do passo de
+
+tempo calculando-o por meio de
+
+∆t = αaum∆t .
+
+71
+
+(4.32)
+
+Almejando dispor de mais indicativos quanto à adequação do valor do passo de tempo,
+
+também são efetuadas veriﬁcações quanto à convergência da solução. Se ocorrer diver-
+
+gência de algum sistema linear, ou até mesmo do sistema não-linear no caso do método
+
+totalmente implícito, o passo de tempo é reduzido utilizando a equação (4.31) e não se dá
+
+o avanço no tempo, mas sim calcula-se a solução novamente com um passo de tempo de
+
+valor mais baixo. Considera-se também como divergência o caso em que o método se-
+
+quencial efetua o número máximo de iterações em um mesmo passo de tempo sem atingir
+
+a tolerância requerida.
+
+Ademais, ainda é veriﬁcado se o campo de saturação é ﬁsicamente consistente iden-
+
+tiﬁcando se as saturações de todos os volumes de controle possuem valores entre 0 e 1
+−6. Se essa condição não ocorrer, procede-se como no caso da
+divergência, reduzindo o passo de tempo e resolvendo novamente os campos de pressão e
+
+com uma tolerância de 10
+
+saturação associados àquele mesmo nível temporal.
+
+Neste trabalho optou-se por utilizar dois conjuntos de parâmetros especiﬁcados ao es-
+
+quema de passo de tempo adaptativo. O primeiro, e mais rígido, tem os valores de seus
+
+parâmetros listados na tabela 4.1; O segundo, e menos rígido, na tabela 4.2.
+
+Tabela 4.1: Parâmetros correspondentes ao critérios mais rígido de passo de tempo adaptativo
+
+∆Smax ∆Smin αaum αred
+0,1
+0,5
+
+0,05
+
+1,01
+
+Tabela 4.2: Parâmetros correspondentes ao critérios menos rígido de passo de tempo adaptativo
+
+∆Smax ∆Smin αaum αred
+0,2
+0,5
+
+0,05
+
+1,1
+
+Figura 4.8: Fluxograma da estratégia de modiﬁcação do passo de tempo
+
+72
+
+Fonte: do autor
+
+4.4 ESPECIFICAÇÃO DAS TOLERÂNCIAS
+
+73
+
+O método totalmente implícito requer a especiﬁcação de duas tolerâncias. A primeira
+
+corresponde ao sistema linear composto pela matriz jacobiana e pelo vetor de resíduos.
+
+Tendo em vista que o termo independente é o resíduo, optou-se por utilizar a tolerância
+
+absoluta da biblioteca PETSc para esse caso a ﬁm de que não fosse especiﬁcado um critério
+
+excessivamente apertado. Assim, o critério de convergência do solver linear é
+
+(cid:107)R(cid:107) < ,
+
+(4.33)
+
+em que R é o vetor resíduo e  é a tolerância especiﬁcada. O valor de  atribuído para
+−5. Outra tolerância que necessita
+resolver os problemas apresentados neste trabalho foi 10
+ser especiﬁcada no método totalmente implícito corresponde ao sistema não linear. Nesse
+
+caso, optou-se por utilizar a norma da mudança da solução ao longo dos passos de tempo
+
+(cid:107)∆X(cid:107)
+(cid:107)X(cid:107) < ,
+
+(4.34)
+
+em que X é a solução e ∆X é a diferença entre a solução atual em relação à iteração anterior
+−8
+do solver não linear. Para resolver os problemas desta trabalho, especiﬁcou-se valor 10
+
+para essa tolerância.
+
+Quanto ao método IMPES, a única tolerância a ser especiﬁcada diz respeito ao sistema
+
+linear de cálculo da pressão. Atribuiu-se, nesse caso, o mesmo critério do solver não li-
+
+near do método totalmente implícito. Ao método sequencial também atribuiu-se o mesmo
+
+criério de convergência. Neste último, contudo, após resolver o sistema linear da pressão,
+
+segue-se a atualização das mobilidades e nova resolução do sistema linear até que a solu-
+
+ção mude menos que uma tolerância. Para isso, utilizou-se como critério a razão entre a
+
+norma inﬁnita do campo de pressão atual e a norma inﬁnita do campo de pressão obtido
+
+no passo na iteração anterior, i.e., utlizou-se a expressão
+
+(cid:107)Patual− Panterior(cid:107)∞
+
+(cid:107)Panterior(cid:107)∞
+
+< ,
+(4.35)
+−6. Também optou-se por determinar
+em que a tolerância  foi especiﬁcada com o valor 10
+50 como o número máximo de iterações em um mesmo passo de tempo. Esse limite se
+
+presta a impedir que o programa continue sendo executado indeﬁnidamente nos casos de
+
+divergência. Conforme explicado na seção anterior, caso isso ocorra a solução correspon-
+
+dente a esse mesmo nível de tempo é recalculada com um passo de tempo inferior.
+
+74
+
+5
+
+RESULTADOS
+
+Neste capítulo, serão apresentados os resultados provenientes da simulação numérica
+
+do modelo descrito. Primeiramente, será apresentada a validação do simulador implemen-
+
+tado lançando-se mão de um caso de deslocamento unidimensional em que há solução
+
+analítica disponível – o caso de Buckley-Leverett. A seguir, serão expostos os resultados ob-
+
+tidos para a simulação do deslocamento bidimensional em um reservatório que apresenta
+
+a conﬁguração conhecida como quarter ﬁve-spot. Por ﬁm, serão apresentados os resulta-
+
+dos provenientes da simulação do deslocamento tridimensional em uma malha híbrida.
+
+5.1 DESLOCAMENTO UNIDIMENSIONAL
+
+5.1.1 DESCRIÇÃO DO PROBLEMA
+
+Considera-se uma amostra de rocha homogênea inicialmente embebida em óleo na
+
+qual injeta-se água a uma vazão constante através de uma de suas fronteiras, conforme
+
+ilustrado na ﬁgura 5.1. Se a vazão de água for suﬁcientemente alta, a inﬂuência da pressão
+
+capilar diminui de tal forma que o problema pode ser modelado como um processo de
+
+deslocamento unidimensional do tipo que permite uma solução analítica (Hurtado, 2005).
+
+Figura 5.1: Conﬁguração do problema de deslocamento unidimensional
+
+Fonte: modiﬁcado de (Maliska et al., 2015)
+
+A equação que modela o escoamento na direção do eixo x é dada por (Maliska et al.,
+
+2015):
+
+φ
+
+∂ S
+∂ t
+
++ v T
+
+∂ Ff
+∂ x
+
+= 0,
+
+em que Ff é o ﬂuxo fracionário deﬁnido por
+
+Ff =
+
+k w
+r
+µw
++ k o
+r
+µo
+
+k w
+r
+µw
+
+.
+
+75
+
+(5.1)
+
+(5.2)
+
+É possível mostrar que a solução analítica para essa problema depende do ﬂuxo fracio-
+
+nário, o qual, por sua vez, é determinado pelas curvas de permeabilidade relativa e pela
+
+relação entre as viscosidades (Maliska et al., 2015).
+
+Para os exemplos apresentados nesta seção foram empregadas as curvas de permea-
+
+blidade descritas dadas pelo modelo de Corey – descrito no capítulo 2 – com coeﬁciente
+
+unitário e expoente 2, isto é,
+
+k o
+r
+
+k w
+r
+
+= ˆS2 ,
+=1− ˆS2.
+ S w − S w
+− S w
+
+S w
+ma x
+
+ˆS =
+
+mi n
+
+mi n
+
+
+
+,
+
+(5.3)
+
+(5.4)
+
+(5.5)
+
+A saturação ˆS normalizada é calculada por
+
+em que as saturações mínimas e máximas de água foram tomadas como 0 e 1, respectiva-
+
+mente. Já a relação entre as viscosidades é dada, neste problema, por
+
+µo
+µw
+
+= 4.
+
+(5.6)
+
+À porosidade foi atribuído o valor unitário. As curvas de permeabilidade relativa e ﬂuxo
+
+fracionário podem ser visualizadas na ﬁgura 5.2.
+
+Outro parâmetro presente na equação (5.1) é a velocidade total v T , que consiste na
+soma das velocidades das duas fases na direção x . Pois que nesse caso a equação de con-
+
+servação é simpliﬁcada para
+
+∇·vT = 0,
+
+e a velocidade prescrita na fronteira x = 0 é constante, pode-se aﬁrmar que essa velocidade
+é constante ao longo do domínio (Hurtado, 2005).
+
+(5.7)
+
+Figura 5.2: Curvas de permeabilidade e ﬂuxo fracionário
+
+(a) Curvas de permeabilidade relativa
+
+(b) Fluxo fracionário em função da saturação
+
+76
+
+Fonte: do autor
+
+5.1.2 SOLUÇÃO ANALÍTICA
+
+A ﬁm de obter a solução analítica, as variáveis do problema são adimensionalizadas. As
+
+versões adimensionais da coordenada axial do domínio e do tempo são, respectivemente
+
+X = x
+L
+
+e
+
+τ = v T t
+φL
+
+.
+
+Dado isso, a equação (5.1) pode ser escrita na forma
+
+∂ S
+∂ τ
+
++
+
+∂ Ff
+∂ X
+
+= 0.
+
+Deﬁnindo, ainda, o parâmetro
+
+a equação (5.9) se torna uma equação diferencial ordinária:
+
+A solução analítica dessa equação é (Dullien, 1979):
+
+ξ = X
+τ ,
+
+
+− ξ
+
+= 0
+
+dF
+
+dS
+
+dS
+dξ
+
+ ξ = F
+
+S = Si
+
+(cid:48)
+
+f
+
+(S)
+
+se 0≤ ξ≤ D ,
+se D ≤ ξ≤∞,
+(Sf ) = Ff (Sf )− Ff (Si )
+
+Sf − Si
+
+,
+
+em que
+
+(cid:48)
+
+D = F
+f
+
+(5.8)
+
+(5.9)
+
+(5.10)
+
+(5.11)
+
+(5.12)
+
+Si é a saturação inicial do domínio e Sf , a saturação da frente de água. Essa solução analítica
+é conhecida como solução de Buckley-Leverett.
+
+77
+
+5.1.3 RESULTADOS OBTIDOS
+
+A ﬁm de comparar resultados numéricos à solução analítica, especiﬁcou-se como con-
+
+dição inicial
+
+S(x ,0) = 0, para 0≤ x ≤ L,
+P (x ,0) = 0, para 0≤ x ≤ L,
+
+(5.13)
+
+(5.14)
+
+i.e., o domínio está, inicialmente, embebido com óleo. A condição de contorno para a
+fronteira x = 0 é de Neumann. A velocidade de água foi prescrita com valor unitário; do
+óleo, nulo. Já para a fronteira x = L prescreveu-se os mesmos valores de pressão e satu-
+ração iniciais. Devido ao caráter hiperbólico da equação e sabendo-se que o ﬂuido está
+
+deixando essa fronteira, nenhuma condição de saturação precisaria ser prescrita (Maliska
+
+et al., 2015). Por motivos computacionais, foi prescrito o mesmo valor das condições inici-
+ais e faz-se uma veriﬁcação para identiﬁcar se a frente de água ainda não chegou a x = L.
+
+Não obstante se trate de um problema unidimensional, utilizou-se um domínio bidi-
+
+mensional e exportou-se as soluções de todos os nós da malha. Os quatro perﬁs mostrados
+
+nos resultados são correspondentes aos instantes de tempo 0,2, 0,3, 0,4 e 0,5 VPI – equiva-
+
+lentes a 0,8, 1,2, 1,6 e 2,0 segundos. O VPI pode ser interpretado como um tempo adimen-
+
+sional em um problema de deslocamento é o volume poroso injetado e é dado por
+
+(cid:82) t
+(cid:82)
+
+0
+
+(Ql )entdt
+φdV
+
+V
+
+,
+
+(5.15)
+
+VPI = Volume de ﬂuido injetado
+volume poroso disponível
+
+=
+
+em que (Ql )ent é a vazão injetada no meio poroso.
+
+As soluções analíticas correspondentes a esses tempos foram comparadas às soluções
+
+numéricas advindas dos métodos IMplicit pressure, Explicit Saturation, sequencial e to-
+
+talmente implícito, identiﬁcados nos gráﬁcos, respectivamente, pelas siglas FIM, IMPES
+
+e SEQ. Os resultados numéricos foram obtidos empregando três malhas com diferentes
+
+graus de reﬁno, todas compostas por elementos triangulares. A mais grosseira possui 430
+
+nós; a mediana, 1961; a mais reﬁnada, 7392. Essas malhas podem ser visualizadas na ﬁ-
+
+gura 5.3. Os resultados numéricos apresentados a seguir foram obtidos considerando-se
+
+um passo de tempo inicial de 10
+
+−3 segundos.
+
+Figura 5.3: Malhas não-estruturadas utilizadas na solução do problema de Buckley-Leverett
+
+78
+
+Fonte: do autor
+
+Os resultados obtidos com passo de tempo ﬁxo estão dispostos nas ﬁguras 5.4, 5.5 e
+
+5.6 para malhas de 430, 1961 e 7392 nós, respectivamente. O tempo computacional des-
+
+pendido para 0,5 VPI por meio dos três métodos pode ser visualizado na ﬁgura 5.7. Nesses
+
+casos, o passo de tempo foi mantido em seu valor inicial de 10
+
+−3s.
+
+Já os resultados obtidos para o critério mais rígido de passo de tempo estão dispostos
+
+nas ﬁguras 5.8, 5.9 e 5.10 para malhas de 430, 1961 e 7392 nós, respectivamente. O tempo
+
+computacional despendido para 0,5 VPI por meio dos três métodos pode ser visualizado
+
+na ﬁgura 5.11. A evolução dos passos de tempo estão dispostas nas ﬁguras 5.12, 5.13 e 5.14.
+
+Por ﬁm, os resultados obtidos para o critério menos rígido de passo de tempo estão dis-
+
+postos nas ﬁguras 5.15, 5.16 e 5.17 para malhas de 430, 1961 e 7392 nós, respectivamente.
+
+O tempo computacional despendido para 0,5 VPI por meio dos três métodos pode ser vi-
+
+sualizado na ﬁgura 5.18. A evolução dos passos de tempo estão dispostas nas ﬁguras 5.19,
+
+5.20 e 5.21.
+
+Ainda, os campos de saturação e pressão obtidos por meio do método totalmente im-
+
+plícito com o critério mais rígido de passo de tempo adaptativo e na malha mais reﬁnada
+
+estão ilustrados na ﬁgura 5.22 para 0,2, 0,3, 0,4 e 0,5 VPI. Os resultados são associados às
+
+curvas correspondentes ao método FIM na ﬁgura 5.10.
+
+Figura 5.4: Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com passo de tempo ﬁxo em uma malha
+de 430 nós
+
+79
+
+Fonte: do autor
+
+Figura 5.5: Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com passo de tempo ﬁxo em uma malha
+de 1961 nós
+
+Fonte: do autor
+
+Figura 5.6: Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com passo de tempo ﬁxo em uma malha
+de 7392 nós
+
+80
+
+Fonte: do autor
+
+Figura 5.7: Tempo computacional para os três métodos com passo de tempo ﬁxo
+
+Fonte: do autor
+
+Número de nós da malha102103104Tempo Computacional (s)100101102103104IMPESFIMSEQFigura 5.8: Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com critério mais rígido de passo de tempo
+adaptativo em uma malha de 430 nós
+
+81
+
+Fonte: do autor
+
+Figura 5.9: Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com critério mais rígido de passo de tempo
+adaptativo em uma malha de 1961 nós
+
+Fonte: do autor
+
+Figura 5.10: Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com critério mais rígido de passo de tempo
+adaptativo em uma malha de 7392 nós
+
+82
+
+Fonte: do autor
+
+Figura 5.11: Tempo computacional para os três métodos com critério mais rígido de passo de tempo
+adaptativo
+
+Fonte: do autor
+
+Número de nós da malha102103104Tempo Computacional (s)100101102103104IMPESFIMSEQFigura 5.12: Evolução do passo de tempo para a malha de 430 nós com critério mais rígido de passo
+de tempo adaptativo
+
+83
+
+Fonte: do autor
+
+Figura 5.13: Evolução do passo de tempo para a malha de 1961 nós com critério mais rígido de passo
+de tempo adaptativo
+
+Fonte: do autor
+
+Tempo (s)00.20.40.60.811.21.41.61.82Paso de tempo (s)10-310-2IMPESFIMSEQTempo (s)00.20.40.60.811.21.41.61.82Paso de tempo (s)10-310-2IMPESFIMSEQFigura 5.14: Evolução do passo de tempo para a malha de 7392 nós com critério mais rígido de passo
+de tempo adaptativo
+
+84
+
+Fonte: do autor
+
+Figura 5.15: Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com critério menos rígido de passo de
+tempo adaptativo em uma malha de 430 nós
+
+Fonte: do autor
+
+Tempo (s)00.20.40.60.811.21.41.61.82Paso de tempo (s)10-310-2IMPESFIMSEQFigura 5.16: Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com critério menos rígido de passo de
+tempo adaptativo em uma malha de 1961 nós
+
+85
+
+Fonte: do autor
+
+Figura 5.17: Resultados obtidos para VPI 0,2, 0,3, 0,4 e 0,5 com critério menos rígido de passo de
+tempo adaptativo em uma malha de 7392 nós
+
+Fonte: do autor
+
+Figura 5.18: Tempo computacional para os três métodos com critério menos rígido de passo de
+tempo adaptativo
+
+86
+
+Fonte: do autor
+
+Figura 5.19: Evolução do passo de tempo para a malha de 430 nós com critério menos rígido de
+passo de tempo adaptativo
+
+Fonte: do autor
+
+Número de nós da malha102103104Tempo Computacional (s)100101102103104IMPESFIMSEQTempo (s)00.20.40.60.811.21.41.61.82Paso de tempo (s)10-310-2IMPESFIMSEQFigura 5.20: Evolução do passo de tempo para a malha de 1961 nós com critério menos rígido de
+passo de tempo adaptativo
+
+87
+
+Fonte: do autor
+
+Figura 5.21: Evolução do passo de tempo para a malha de 7392 nós com critério menos rígido de
+passo de tempo adaptativo
+
+Fonte: do autor
+
+Tempo (s)00.20.40.60.811.21.41.61.82Paso de tempo (s)10-310-2IMPESFIMSEQTempo (s)00.20.40.60.811.21.41.61.82Paso de tempo (s)10-310-2IMPESFIMSEQFigura 5.22: Campos de saturação e pressão para os instantes de tempo 0,2, 0,3 0,4 e 0,5 VPI
+
+88
+
+Fonte: do autor
+
+Para todos os critérios de passo de tempo adaptativo, as soluções numéricas apresen-
+
+tam o comportamento esperado, i.e., os perﬁs numéricos de saturação se aproximam ao
+
+perﬁl correspondente à solução analítica à medida que a malha é reﬁnada. Entretanto, até
+
+mesmo na malha mais reﬁnada há considerável presença de difusão numérica, a qual é res-
+
+ponsável pela suavização da discontinuidade dos perﬁs. Hurtado (2005) aﬁrma que esse
+
+é o preço que deve ser pago pela garantia de soluções ﬁsicamente coerentes e que, neste
+
+caso, a difusão numérica advém da interpolação de primeira ordem utilizada nos termos
+
+advectivos.
+
+Quanto à evolução do passo de tempo, infere-se que o esquema de passo de tempo
+
+adaptativo pode ser responsável por considerável redução do tempo computacional, pois
+
+que permite-se um acréscimo de seu valor até que isso não afete a obtenção de uma solução
+
+estável. Além disso, conforme esperado, o passo de tempo deve ser reduzido à medida que
+
+a malha é reﬁnada, conforme expõem as ﬁguras 5.12, 5.13, 5.14, 5.19, 5.20 e 5.21.
+
+89
+
+Entretanto, observa-se que a utilização de um esquema de passo de tempo adaptativo
+
+pode inﬂuenciar na qualidade da solução numérica obtida. Quando esse esquema não é
+
+aplicado as soluções determinadas pelos três métodos praticamente coincidem – 5.4, 5.5 e
+
+5.6. A solução obtida por meio do método totalmente implícito não é afetada signiﬁcativa-
+
+mente quando os criérios mais e menos rígido de passo de tempo adaptativo são emprega-
+
+dos. O método sequencial, contudo, apresenta alguns pontos distantes da curva quando
+
+o critério menos rígido de passo de tempo adaptativo é empregado – 5.15, e 5.17. Já o mé-
+
+todo IMPES apresenta uma solução mais próxima da analítica quando o critério de passo
+
+de tempo adaptativo é aplicado. Isso se deve, possivelmente, a uma condição mais próxima
+
+daquela na qual essse método fornece a solução analítica para o caso de Buckley-Leverett.
+
+Essa condição é apresentada no apêndice A para o caso de uma malha unidimensional.
+
+Também é explicado que o método FIM, não obstante a estabilidade incondicional, apre-
+
+senta difusão numérica para quaisquer combinações de malha e parâmetros do problema.
+
+Os resultados obtidos neste trabalho sugerem que esse comportamento se mantém no caso
+
+de uma malha não estruturada bidimensional. Nesse caso, entretanto, as condições que
+
+permitem ao IMPES apresentar a solução analítica não podem ser obtidas de forma direta.
+
+Mesmo se essas condições pudessem ser determinadas, ter-se-ia de especiﬁcar um passo
+
+de tempo ﬁxo, logo não seria possível satisfazê-la com o esquema de passo adaptativo.
+
+Quanto ao tempo computacional despendido em cada simulação, infere-se que o passo
+
+de tempo adaptativo é interessante sobretudo ao método totalmente implícito, o qual per-
+
+mite uma redução do custo computacional sem que a solução seja signiﬁcativamente al-
+
+terada. O método sequencial, muito embora tenha fornecido soluções mais rapidamente
+
+que o FIM para alguns casos, apresentou certa sensibilidade em relação ao uso de um passo
+
+de tempo adaptativo, de forma que deve-se ter cautela a aplicar essa condição para tal mé-
+
+todo. Já o método IMPES clássico se comportou bem quanto à utilização do passo de tempo
+
+adaptativo. Contudo, conforme já explicado, isso pode ser devido a um caráter particular
+
+do problema unidimensional de Buckley-Leverett.
+
+5.2 DESLOCAMENTO BIDIMENSIONAL EM CONFIGURAÇÃO QUAR-
+
+90
+
+TER FIVE-SPOT
+
+5.2.1 DESCRIÇÃO DO PROBLEMA
+
+Considera-se uma amostra de rocha quadrada, homogênea, inicialmente embebida
+
+em óleo e na qual injeta-se água a uma vazão constante através de um poço injetor e produz-
+
+se óleo a partir de um poço produtor que opera com pressão constante, conforme ilustrado
+
+na ﬁgura 5.23.
+
+Figura 5.23: Conﬁguração do problema de deslocamento bidimensional
+
+Fonte: modiﬁcado de (Maliska et al., 2015)
+
+A conﬁguração desse problema é conhecida como quarter ﬁve-spot, pois que repre-
+
+senta um quarto de um domínio quadrado em que há quatro poços produtores nos vérti-
+
+ces e um poço injetor no centro (Aziz & Settari, 1979). Os dados de entrada utilizados no
+
+problema estão listados na tabela 5.1. A injeção de água ao longo do tempo especiﬁcado
+
+corresponde a cerca de 48% do volume poroso injetado. O modelo de permeabilidade re-
+
+lativa considerado foi o modelo de Corey com coeﬁciente unitário e expoente quadrático,
+
+ou seja,
+
+= ˆS2 ,
+=1− ˆS2.
+
+k w
+r
+
+k o
+r
+
+(5.16)
+
+(5.17)
+
+As saturações mínima e máxima de água e óleo foram especiﬁcadas como 0 e 1, respecti-
+
+vamente e o campo de pressão inicial é nulo.
+
+Tabela 5.1: Dados do problema de deslocamento bifásico bidimensional
+
+91
+
+Atributo
+
+Área do reservatório
+Viscosidade da água
+Viscosidade do óleo
+Permeabilidade absoluta
+Porosidade
+Vazão de água injetada
+Dias de simulação
+
+Valor
+90000 m2
+−3 Pa.s
+10
+−2 Pa.s
+10
+−11 m2
+10
+0,2
+−5 m3/s
+5000
+
+2.10
+
+Fonte: do autor
+
+5.2.2 RESULTADOS OBTIDOS
+
+A seguir serão apresentados alguns resultados obtidos para o problema descrito. Os re-
+
+sultados numéricos advindos de cada método – IMPES, totalmente implícito e sequencial
+
+– serão apresentados e comparados entre si. Foram empregadas três malhas computacio-
+
+nais com diferentes graus de reﬁno – 425, 1483 e 5985 nós – compostas apenas de elemen-
+
+tos triangulares. Essas malhas podem ser visualizadas na ﬁgura 5.24. Os valores de índice
+−11 m3 para as
+
+de poço utilizados foram 2,85208.10
+
+−11 m3, 3,25968.10
+
+−11 m3 e 6,18471.10
+
+malhas de 425, 1483 e 5985 nós, respectivamente.
+
+Figura 5.24: Malhas não-estruturadas utilizadas na solução do problema quarter ﬁve-spot
+
+Fonte: do autor
+
+Os critérios de convergência e as tolerâncias utilizadas foram idênticos àqueles espe-
+
+ciﬁcados no caso de deslocamento unidimensional. Neste caso utilizou-se apenas o es-
+
+quema mais rídido de passo de tempo, o qual tem seus parâmetros listados na tabela 4.1.
+
+92
+
+Os resultados obtidos para a malha mais grossa – de 425 nós – sem e com a utilização
+
+do passo de tempo adaptativo podem ser visualizados, respectivamente, nas ﬁguras 5.25 e
+
+5.26. No caso de passo de tempo ﬁxo, seu valor foi mantido constante e igual a 1 dia. No
+
+caso em que é utilizado o esquema de passo de tempo adaptativo, esse valor corresponde
+
+ao passo de tempo inicial. As primeiras curvas expostas são a pressão média ao longo do
+
+tempo e a taxa de produção de óleo. A terceira curva corresponde ao corte de água – razão
+
+entre a vazão de água e a vazão total no poço. A quarta curva correlaciona o volume po-
+
+roso injetado à eﬁciência de varrido horizontal – razão entre o volume de óleo produzido e
+
+o volume injetável. Quando se dispõem de curvas de eﬁciência de varrido horizontal, para
+
+se obterem os valores reais para um determinado reservatório basta multiplicar os valores
+
+adimensionais que podem ser lidos na ﬁgura pelo volume deslocável do meio poroso em
+
+estudo (Rosa et al., 2006). Em decorrência de sua deﬁnição, essa curva é idêntica à de satu-
+
+ração média no domínio. Por ﬁm, a última curva apresenta a evolução do passo de tempo
+
+da simulação. Os tempos computacionais despendidos sem e com a utilização do passo
+
+de tempo adaptativo estão listados, respectivamente, nas tabelas 5.2 e 5.3.
+
+Os mesmos resultados também foram obtidos para uma malha de 1483 nós e estão dis-
+
+postos, sem e com a utilização do passo de tempo adaptativo, respectivamente, nas ﬁguras
+
+5.27 e 5.28. Para esse caso, o passo de tempo inicial especiﬁcado foi de 0,5 dia quando
+
+utilizado o esquema de passo de tempo adaptativo. Quando não utilizado, seu valor foi
+
+mantido em 0,5 dia. Os tempos computacionais despendidos sem e com a utilização do
+
+passo de tempo adaptativo estão listados, respectivamente, nas tabelas 5.4 e 5.5.
+
+Por ﬁm, também foram calculados os mesmos resultados para a malha mais reﬁnada
+
+– de 5985 nós. Esses resultados estão dispostos, sem e com a utilização do passo de tempo
+
+adaptativo, respectivamente, nas ﬁguras 5.29 e 5.30. Para essa conﬁguração, o passo de
+
+tempo foi mantido em 0,05 dia quando não utilizada a estratégia de passo de tempo adap-
+
+tativo. Quando utilizada, esse foi o valor especiﬁcado como passo de tempo inicial. Os
+
+tempos computacionais despendidos sem e com a utilização do passo de tempo adapta-
+
+tivo estão listados, respectivamente, nas tabelas 5.6 e 5.7.
+
+Ademais, os campos de saturação e pressão no instante de breakthrough estão ilustra-
+
+dos na ﬁgura 5.31. A partir desse instante, o poço produtor passa a produzir não apenas
+
+óleo, mas também água (Rosa et al., 2006). Já a ﬁgura 5.32 exibe os campos de saturação
+
+obtidos pelo método totalmente implícito, com passo de tempo ﬁxo e com a malha mais
+
+reﬁnada para os instantes de tempo de 500, 1500, 3000 e 5000 dias.
+
+Figura 5.25: Resultados obtidos para o deslocamento bidimensional com passo de tempo ﬁxo e uma
+malha de 425 nós
+
+93
+
+(a) Curva de pressão média
+
+(b) Curva de produção de óleo
+
+(c) Curva de corte de água
+
+(d) Curva de eﬁciência de varrido horizontal
+
+(e) Curva de passo de tempo
+
+Fonte: do autor
+
+Tabela 5.2: Tempo computacional – passo de tempo ﬁxo e malha de 425 nós
+
+FIM
+
+481,315 s
+
+IMPES
+46,7706 s
+
+SEQ
+
+206,893 s
+
+Fonte: do autor
+
+FIMIMPESSEQVPI00.10.20.30.40.5Pressão média no domínio (kPa)455055606570VPI00.10.20.30.40.5Produção de óleo (m³/dia)0.60.811.21.41.61.8VPI00.10.20.30.40.5Corte de água (%)0102030405060VPI00.10.20.30.40.5Eficiência de varrido horizontal00.10.20.30.40.5VPI00.10.20.30.40.5Passo de tempo (dias)10-1100101Figura 5.26: Resultados obtidos para o deslocamento bidimensional com passo de tempo adapta-
+tivo e uma malha de 425 nós
+
+94
+
+(a) Curva de pressão média
+
+(b) Curva de produção de óleo
+
+(c) Curva de corte de água
+
+(d) Curva de eﬁciência de varrido horizontal
+
+(e) Curva de passo de tempo
+
+Fonte: do autor
+
+Tabela 5.3: Tempo computacional – passo de tempo adaptativo e malha de 425 nós
+
+FIM
+
+49,8253 s
+
+IMPES
+13,8850 s
+
+SEQ
+
+57,2920 s
+
+Fonte: do autor
+
+FIMIMPESSEQVPI00.10.20.30.40.5Pressão média no domínio (kPa)455055606570VPI00.10.20.30.40.5Produção de óleo (m³/dia)00.511.52VPI00.10.20.30.40.5Corte de água (%)020406080VPI00.10.20.30.40.5Eficiência de varrido horizontal00.10.20.30.40.5VPI00.10.20.30.40.5Passo de tempo (dias)10-1100101102Figura 5.27: Resultados obtidos para o deslocamento bidimensional com passo de tempo ﬁxo e uma
+malha de 1483 nós
+
+95
+
+(a) Curva de pressão média
+
+(b) Curva de produção de óleo
+
+(c) Curva de corte de água
+
+(d) Curva de eﬁciência de varrido horizontal
+
+(e) Curva de passo de tempo
+
+Fonte: do autor
+
+Tabela 5.4: Tempo computacional – passo de tempo ﬁxo e malha de 1483 nós
+
+FIM
+
+4259,28 s
+
+IMPES
+453,339 s
+
+SEQ
+
+822,232 s
+
+Fonte: do autor
+
+FIMIMPESSEQVPI00.10.20.30.40.5Pressão média no domínio (kPa)505560657075VPI00.10.20.30.40.5Produção de óleo (m³/dia)0.60.811.21.41.61.8VPI00.10.20.30.40.5Corte de água (%)0102030405060VPI00.10.20.30.40.5Eficiência de varrido horizontal00.10.20.30.40.5VPI00.10.20.30.40.5Passo de tempo (dias)10-210-1100101Figura 5.28: Resultados obtidos para o deslocamento bidimensional com passo de tempo adapta-
+tivo e uma malha de 1483 nós
+
+96
+
+(a) Curva de pressão média
+
+(b) Curva de produção de óleo
+
+(c) Curva de corte de água
+
+(d) Curva de eﬁciência de varrido horizontal
+
+(e) Curva de passo de tempo
+
+Fonte: do autor
+
+Tabela 5.5: Tempo computacional – passo de tempo adaptativo e malha de 1483 nós
+
+FIM
+
+219,840 s
+
+IMPES
+108,822 s
+
+SEQ
+
+306,970 s
+
+Fonte: do autor
+
+FIMIMPESSEQVPI00.10.20.30.40.5Pressão média no domínio (kPa)505560657075VPI00.10.20.30.40.5Produção de óleo (m³/dia)0.511.52VPI00.10.20.30.40.5Corte de água (%)020406080VPI00.10.20.30.40.5Eficiência de varrido horizontal00.10.20.30.40.5VPI00.10.20.30.40.5Passo de tempo (dias)10-210-1100101102Figura 5.29: Resultados obtidos para o deslocamento bidimensional com passo de tempo ﬁxo e uma
+malha de 5985 nós
+
+97
+
+(a) Curva de pressão média
+
+(b) Curva de produção de óleo
+
+(c) Curva de corte de água
+
+(d) Curva de eﬁciência de varrido horizontal
+
+(e) Curva de passo de tempo
+
+Fonte: do autor
+
+Tabela 5.6: Tempo computacional – passo de tempo ﬁxo e malha de 5985 nós
+
+FIM
+
+IMPES
+
+SEQ
+
+115135 s
+
+13.097,2 s
+
+28.003,0 s
+
+Fonte: do autor
+
+FIMIMPESSEQVPI00.10.20.30.40.5Pressão média no domínio (kPa)556065707580VPI00.10.20.30.40.5Produção de óleo (m³/dia)0.60.811.21.41.61.8VPI00.10.20.30.40.5Corte de água (%)0102030405060VPI00.10.20.30.40.5Eficiência de varrido horizontal00.10.20.30.40.5VPI00.10.20.30.40.5Passo de tempo (dias)10-310-210-1100Figura 5.30: Resultados obtidos para o deslocamento bidimensional com passo de tempo adapta-
+tivo e uma malha de 5985 nós
+
+98
+
+(a) Curva de pressão média
+
+(b) Curva de produção de óleo
+
+(c) Curva de corte de água
+
+(d) Curva de eﬁciência de varrido horizontal
+
+(e) Curva de passo de tempo
+
+Fonte: do autor
+
+Tabela 5.7: Tempo computacional – passo de tempo adaptativo e malha de 5985 nós
+
+FIM
+
+IMPES
+
+SEQ
+
+1.315,89 s
+
+1.048,18 s
+
+4.625,63 s
+
+Fonte: do autor
+
+FIMIMPESSEQVPI00.10.20.30.40.5Pressão média no domínio (kPa)556065707580VPI00.10.20.30.40.5Produção de óleo (m³/dia)00.511.52VPI00.10.20.30.40.5Corte de água (%)020406080VPI00.10.20.30.40.5Eficiência de varrido horizontal00.10.20.30.40.5VPI00.10.20.30.40.5Passo de tempo (dias)10-210-1100101102Figura 5.31: Campos de pressão e saturação no instante de breakthrough
+
+99
+
+Fonte: do autor
+
+Figura 5.32: Campos de saturação para os instantes de tempo de 500, 1500, 3000 e 5000 dias
+
+Fonte: do autor
+
+100
+
+Observa-se que a curva de eﬁciência de varrido horizontal apresenta dois trechos dis-
+
+tintos – uma reta correspondente à função identidade e uma curva tendendo a se tornar
+
+horizontal. O tempo associado à transição entre esses dois trechos é o instante de breakth-
+
+rough (BT).
+
+Quanto à curva de pressão, veriﬁca-se que seu valor máximo não ocorre quando a ro-
+
+cha está saturada de óleo. Tem-se uma curva de pressão média crescente até atingir seu
+
+valor máximo e, a partir de então, a curva passa a ser decrescente. Esse comportamento
+
+decorre da utilização de um modelo de permeabilidade relativa quadrático, pois que com
+
+esse modelo o mínimo valor de mobilidade total ocorre quando a saturação de óleo é me-
+
+nor que a unidade.
+
+Pode-se inferir dos resultados que o métodos IMPES apresenta instabilidades na solu-
+
+ção numérica correspondente após o breakthrough. Essas instabilidades ocorrem porque
+
+esse esquema não itera na não linearidade existente entre pressão e saturação, de modo
+
+que o valor da saturação utilizada para calcular a vazão de ﬂuido produzida é o do tempo
+
+anterior. Isso pode levar a inconsistências físicas no instante de tempo em que se passa a
+
+produzir água. Nesse instante, os volumes de controle ao redor do poço produtor apresen-
+
+tam saturação de água relativamente elevada, levando a uma vazão de água entrando no
+
+volume de controle do poço também relativamente alta. Porém, a vazão de água produzida
+
+no poço ainda é baixa, pois a saturação de água nesse volume é a do instante anterior, que
+
+é pequena. Ou seja, a diferença entre as vazões entrando e saindo do volume de controle
+
+é alta. Caso passos de tempo grandes sejam utilizados, a variação da saturação será tam-
+
+bém relativamente alta (e possivelmente não física). No próximo passo de tempo ter-se-ia,
+
+pois, mobilidade da água com valor elevado, levando a uma produção de água excessiva,
+
+que leva a uma redução demasiada da saturação. Desse modo, a saturação de água no
+
+volume de controle do poço ﬁca instável, alternando entre valores altos e baixos. Essas
+
+instabilidades podem ser reduzidas substancialmente modiﬁcando o IMPES clássico para
+
+o método sequencial. Contudo, isso se dá às custas da necessidade um maior tempo de
+
+computação.
+
+Já o método totalmente implícito apresenta soluções estáveis não obstante a utilização
+
+do esquema de passo de tempo adaptativo. Ademais, essa estratégia permitiu uma redução
+
+signiﬁcativa do custo computacional correspondente ao método FIM, que com passo de
+
+tempo ﬁxo era o que mais demandava tempo computacional e com passo de tempo adap-
+
+tativo ﬁcou menos custoso que o método sequencial. Ressalta-se que embora o IMPES
+
+tenha sido o método menos custoso em todos os casos, sua solução só apresentou estabi-
+
+101
+
+lidade em casos de passo de tempo ﬁxo. Além disso, o custo computacional de utilizar o
+
+método totalmente implícito com passo de tempo adaptativo ﬁcou da mesma ordem do
+
+custo correspondente à utilização da formulação IMPES sem o passo de tempo adaptativo
+
+e ambos os métodos apresentaram soluções estáveis e consistentes. Portanto, foi possível
+
+tirar proveito da robustez do FIM no intuito de utilizar passos de tempo mais elevados e
+
+por conseguinte reduzir o tempo despendido na simulação numérica. Os tempos compu-
+
+tacionais despendidos estão sumarizados por meio de gráﬁcos na ﬁgura 5.33.
+
+Figura 5.33: Tempos computacionais despendidos no caso de deslocamento bidimensional
+
+(a) Malha de 425 nós
+
+(b) Malha de 1483 nós
+
+(c) Malha de 5985 nós
+
+Fonte: do autor
+
+Almejando analisar mais pormenorizadamente a inﬂuência do esquema de passo de
+
+tempo adaptativo na solução numérica obtida por meio do método totalmente implícito,
+
+foram comparados os resultados advindos de três tratamentos distintos do passo de tempo
+
+– passo de tempo ﬁxo, critério mais rígido e critério menos rígido. Os parâmetros associ-
+
+ados a esses critérios já foram explicados e podem ser encontrados nas tabelas 4.1 e 4.2.
+
+Para realizar essa comparação, optou-se por utilizar a malha mais grossa, a qual possui
+
+425 nós. Os resultados obtidos estão expostos na ﬁgura 5.34. Os tempos computacionais
+
+despendidos na obtenção de tais soluções estão listados na tabela 5.8.
+
+IMPESSEQFIMTempo Computacional (s)0100200300400500Passo de tempo fixoPasso de tempo adaptativoIMPESSEQFIMTempo Computacional (s)010002000300040005000Passo de tempo fixoPasso de tempo adaptativoIMPESSEQFIMTempo Computacional (s)#104051015Passo de tempo fixoPasso de tempo adaptativoFigura 5.34: Resultados obtidos para o deslocamento bidimensional com o método totalmente im-
+plícito
+
+102
+
+(a) Curva de pressão média
+
+(b) Curva de produção de óleo
+
+(c) Curva de corte de água
+
+(d) Curva de eﬁciência de varrido horizontal
+
+(e) Curva de passo de tempo
+
+Fonte: do autor
+
+Tabela 5.8: Tempo computacional despendido com o método FIM
+
+Fixo
+
+Mais rígido Menos rígido
+
+481,315 s
+
+49,825 s
+
+10,6337 s
+
+Fonte: do autor
+
+VPI00.10.20.30.40.5Pressão média no domínio (kPa)45505560657075FixoMais rígidoMenos rígidoVPI00.10.20.30.40.5Produção de óleo (m³/dia)0.60.811.21.41.61.8FixoMais rígidoMenos rígidoVPI00.10.20.30.40.5Corte de água (%)0102030405060FixoMais rígidoMenos rígidoVPI00.10.20.30.40.5Eficiência de varrido horizontal00.10.20.30.40.5FixoMais rígidoMenos rígidoVPI00.10.20.30.40.5Passo de tempo (dias)10-1100101102103FixoMais rígidoMenos rígido103
+
+Pode-se inferir dos resultados obtidos que o emprego do passo de tempo adaptativo
+
+reduziu o tempo computacional em uma ordem. Além disso, do critério mais rígido para o
+
+menos rígido veriﬁcou-se uma redução de cinco vezes nesse tempo despendido. Não obs-
+
+tante essa redução esteja inevitavelmente em conjunto com uma maior difusão numérica
+
+e por conseguinte menor capacidade de capturar gradientes elevados, todas as soluções
+
+apresentadas são ﬁsicamente consistentes. Logo, é evidente que a escolha do esquema de
+
+passo de tempo adaptativo a ser utilizado está fortemente relacionado com a precisão com
+
+a qual se deseja solucionar o problema.
+
+5.3 DESLOCAMENTO TRIDIMENSIONAL EM MALHA HÍBRIDA
+
+104
+
+5.3.1 DESCRIÇÃO DO PROBLEMA
+
+O problema de deslocamento bifásico tridimensional será simulado em uma malha
+
+não-estruturada híbrida com o formato aproximado do território brasileiro. Trata-se de
+
+um processo de recuperação secundária de óleo em um reservatório tridimensional no
+
+qual há três poços injetores e dois produtores, conforme esquematizado na ﬁgura 5.35.
+
+Figura 5.35: Conﬁguração do problema tridimensional
+
+Fonte: do autor
+
+Os três poços injetores são verticais e atravessam integralmente a espessura do reser-
+
+vatório. Os dois poços produtores, por sua vez, são direcionais. Em torno de cada um dos
+
+poços a malha tem formato cilíndrico acompanhando a trajetória da linha que representa
+
+o poço, conforme ilustrado na ﬁgura 5.36. Todas as fronteiras do reservatório são imper-
+
+meáveis. Tanto as informações relacionadas à malha quanto os dados de entrada estão
+
+listados na tabela 5.9.
+
+O modelo de permeabilidade relativa é o mesmo que aquele utilizado nos casos an-
+
+teriores, i.e., modelo de Corey com expoente quadrático e coeﬁciente unitário. Ainda, o
+
+problema foi resolvido em termos de potenciais. A ﬁm de obter o campo de pressão poder-
+
+Figura 5.36: Ilustração da malha cilíndrica ao redor dos poços
+
+105
+
+Fonte: modiﬁcado de Maliska et al. (2012)
+
+Tabela 5.9: Dados do problema de deslocamento bifásico tridimensional
+
+Atributo
+
+Comprimento máximo do reservatório
+Largura máxima do reservatório
+Espessura máxima do reservatório
+Volume do reservatório
+Número de nós
+Número de tetraetros
+Número de hexaedros
+Número de prismas
+Número de pirâmides
+Número de poços injetores
+Número de poços produtores
+Viscosidade da água
+Viscosidade do óleo
+Permeabilidade absoluta
+Porosidade
+Vazão de água injetada pelo poço injetor 1
+Vazão de água injetada pelo poço injetor 2
+Vazão de água injetada pelo poço injetor 3
+Dias de simulação
+
+Valor
+200 m
+200 m
+130 m
+
+1,02249.106 m3
+
+8073
+35286
+544
+544
+576
+3
+2
+−3 Pa.s
+10
+−2 Pa.s
+10
+−14 m2
+10
+0,1
+−4 m3/s
+−5 m3/s
+−5 m3/s
+3000
+
+1,1.10
+9.10
+8.10
+
+se-ia fazer um pós processamento a partir dos dados de densidades das fases e aceleração
+
+devida à gravidade. As saturações mínima e máxima de água e óleo foram especiﬁcadas
+
+como 0 e 1, respectivamente e os campos inciais de pressão e saturação são nulos. Os cri-
+
+térios de convergência e as tolerâncias especiﬁcadas para este problema também foram
+
+iguais àqueles utilizados nos problemas anteriores. Já os valores de índice de poço utiliza-
+
+dos para os poços 1 e 2 foram, respectivamente, 3,05816.10
+
+−13 m3 e 3,92357.10
+
+−13 m3.
+
+Poço5.3.2 RESULTADOS OBTIDOS
+
+106
+
+A seguir, os resultados numéricos advindos de cada método – IMPES, totalmente implí-
+
+cito e sequencial – serão apresentados e comparados entre si. Uma vez que foi observado,
+
+a partir dos resultados obtidos para o deslocamento bidimensional, que o método IMPES
+
+é signiﬁcativamente sensível ao esquema de passo de tempo adaptativo implementado,
+
+optou-se por utilizar passo de tempo ﬁxo quando este método for empregado. Quanto
+
+ao método sequencial, veriﬁcou-se que sua limitação quanto ao passo de tempo utilizado
+
+após o instante de breakthrough é severa a ponto de ser mais vantajoso especiﬁcar passo
+
+de tempo ﬁxo. Sendo assim, apenas para o método FIM foi empregado o esquema de passo
+
+de tempo variável mais rígido, cujos parâmetros estão listados na tabela 4.1.
+
+Os resultados obtidos para 3000 dias de simulação podem ser visualizados na ﬁgura
+
+5.37. As primeiras curvas expostas são a pressão e saturação média ao longo do tempo. As
+
+terceira e quarta curvas correspondem à produção de óleo e ao corte de água, respectiva-
+
+mente. A quinta curva correlaciona o volume injetado adimensional injetado à eﬁciência
+
+de varrido horizontal. Já a última curva apresenta a evolução do passo de tempo da simu-
+
+lação. Por ﬁm, os tempos computacionais despendidos estão listados na tabela 5.10.
+
+Quanto à solução numérica, infere-se que os três métodos apresentam soluções coe-
+
+rentes e quase coincidentes. O método FIM, contudo, apresenta expressiva vantagem em
+
+relação ao tempo computacional necessário à simulação do problema, tendo em vista que
+
+despendeu apenas 7,69% do tempo computacional gasto pelo método IMPES e 2,96%, do
+
+sequencial. É interessante veriﬁcar que em nenhum momento foi necessária uma redução
+
+do passo de tempo adaptativo quando se empregou a formulação totalmente implícita.
+
+A ﬁm de explorar ainda mais as potencialidades do método totalmente implícito, foram
+
+obtidos resultados para 10000 dias de simulação apenas com esse método, os quais podem
+
+ser visualizados na ﬁgura 5.38. As ﬁguras ﬁgura 5.39 e ﬁgura 5.40 ilustram, respectivamente,
+
+os campos de saturação e pressão para seis instantes de tempo – 496, 997, 3010 e 5000, 7013
+
+e 10000 dias. Em ambas as ﬁguras foi realizado um corte na malha a ﬁm de prover uma me-
+
+lhor visualização da região próxima aos poços injetores. Os campos ﬁnais de saturação e
+
+pressão – para 10000 dias – podem ser visualizados na ﬁgura 5.41. O tempo computaci-
+
+onal despendido nesse caso foi de 18909,8 segundos, apenas cerca de 12% a mais que o
+
+tempo necessário para simular 3000 dias. Percebe-se, assim, que lançando-se mão de um
+
+esquema de passo de tempo adaptativo foi possível utilizar-se da robustez da formulação
+
+totalmente implícita a ﬁm de prover uma simulação menos custosa.
+
+Figura 5.37: Resultados obtidos para o deslocamento tridimensional em malha híbrida com os três
+métodos para 3000 dias de simulação
+
+107
+
+(a) Curva de pressão média
+
+(b) Curva de produção de óleo acumulada
+
+(c) Curva de corte de água
+
+(d) Curva de eﬁciência de varrido horizontal
+
+(e) Curva de passo de tempo
+
+Fonte: do autor
+
+Tabela 5.10: Tempo computacional despendido
+
+FIM
+
+16.914,3 s
+
+IMPES
+219.877 s
+
+SEQ
+
+571.286 s
+
+Fonte: do autor
+
+FIMIMPESSEQVPI00.20.40.60.8Pressão média no domínio (kPa)200300400500600700VPI00.20.40.60.8Eficiência de varrido horizontal00.10.20.30.4VPI00.20.40.60.8Passo de tempo (dias)10-210-1100101102Figura 5.38: Resultados obtidos para o deslocamento tridimensional em malha híbrida com o mé-
+todo totalmente implícito para 10000 dias de simulação
+
+108
+
+(a) Curva de pressão média
+
+(b) Curva de produção de óleo acumulada
+
+(c) Curva de corte de água
+
+(d) Curva de eﬁciência de varrido horizontal
+
+(e) Curva de passo de tempo
+
+Fonte: do autor
+
+VPI00.511.522.5Pressão média no domínio (kPa)100200300400500600700VPI00.511.522.5Produção de óleo (m³/dia)051015Poço produtor 1Poço produtor 2VPI00.511.522.5Corte de água (%)020406080100Poço produtor 1Poço produtor 2VPI00.511.522.5Eficiência de varrido horizontal00.10.20.30.40.50.6VPI00.511.522.5Passo de tempo (dias)10-210-1100101102Figura 5.39: Campo de saturação para quatro instantes de tempo
+
+109
+
+Fonte: do autor
+
+Figura 5.40: Campo de pressão para quatro instantes de tempo
+
+Fonte: do autor
+
+Figura 5.41: Campos ﬁnais de pressão e saturação
+
+110
+
+Fonte: do autor
+
+111
+
+6
+
+CONCLUSÃO
+
+6.1 SUMÁRIO
+
+Neste trabalho foram expostos o estudo e a implementação de um simulador bifásico,
+
+imiscível, isotérmico e incompressível destinado à simulação numérica do deslocamento
+
+de ﬂuidos em reservatórios de petróleo. Foram apresentadas e comparadas três formu-
+
+lações distintas – método totalmente implícito, IMPES clássico e sequencial – em termos
+
+de estabilidade, acuracidade e tempo computacional. Utilizou-se o método dos volumes
+
+ﬁnitos baseado em elementos, o qual proporciona uma maior ﬂexibilidade para a repre-
+
+sentação geométrica de reservatórios. Ainda, foi implementado um esquema de passo de
+
+tempo adaptativo a ﬁm de veriﬁcar tanto a sensibilidade de cada método em relação a esse
+
+esquema quanto a capacidade de reduzir os tempos computacionais despendidos nas si-
+
+mulações.
+
+Os métodos IMPES clássico e sequencial foram adaptados a partir do código desen-
+
+volvido em (Grein, 2015) e disponibilizado na EFVLib. Nessas formulações, a pressão é
+
+resolvida de forma implícita; a saturação, explícita. A diferença entre ambos é que o mé-
+
+todo sequencial atualiza os coeﬁcientes do sistema linear da pressão e resolve novamente
+
+os campos de pressão e saturação até que a alteração de seus valores seja inferior a uma
+
+tolerância especiﬁcada.
+
+O método totalmente implícito ou FIM (Fully implicit method) foi implementado in-
+
+tegralmente. Nessa formulação, as variáveis são resolvidas simultaneamente. Para isso,
+
+fez-se necessária a integração de um método capaz de resolver um sistema não-linear de
+
+equações à EFVLib. A implementação desse solver não-linear na EFVLib consistiu em uma
+
+das grandes contribuições deste trabalho. Foi adotado o método de Newton-Raphson, o
+
+qual foi implementado com o suporte da biblioteca PETSc (Balay et al., 2013). A utilização
+
+do método disponível na biblioteca, contudo não foi direta. Foram construidos e infor-
+
+mados, manualmente, o vetor resíduo e a matriz jacobiana. O algoritmo de montagem
+
+da matriz jacobiana consiste na parte mais custosa e complexa do código computacional.
+
+Além disso, o procedimento realizado para calcular corretamente as derivadas numéricas
+
+que compõem essa matriz demandou um estudo especial em se tratando do método dos
+
+volumes ﬁnitos baseado em elementos, o qual se fundamenta em varreduras de elementos
+
+da malha computacional.
+
+112
+
+As três metodologias abordadas foram analisadas por meio de três exemplos de apli-
+
+cação. O primeiro foi destinado à validação do simulador. Trata-se de um caso de desloca-
+
+mento unidimensional em uma amostra de rocha no qual é possível calcular uma solução
+
+analítica – a solução de Buckley-Leverett. O segundo exemplo de aplicação foi o desloca-
+
+mento bidimensional em conﬁguração ﬁve-spot, a qual é amplamente empregada em es-
+
+tudos relacionados à simulação numérica de reservatórios de petróleo. Já o ultimo caso
+
+analisado foi o deslocamento tridimensional em uma malha híbrida.
+
+6.2 CONCLUSÕES
+
+O primeiro caso avaliado, de deslocamento unidimensional através de um meio po-
+
+roso, possibilitou a veriﬁcação das três metologias utilizadas. As soluções numéricas apre-
+
+sentaram o comportamento esperado quanto ao reﬁno de malha, i.e., os perﬁs numéricos
+
+de saturação se aproximaram do perﬁl correspondente à solução analítica à medida que
+
+a malha foi reﬁnada. Entretanto, até mesmo na malha mais reﬁnada há considerável pre-
+
+sença de difusão numérica, a qual é responsável pela suavização da discontinuidade dos
+
+perﬁs. Quanto à evolução do passo de tempo, inferiu-se que o esquema de passo de tempo
+
+adaptativo pode ser responsável por signiﬁcativa redução do tempo computacional. Além
+
+disso, conforme esperado, o passo de tempo deve ser reduzido à medida que a malha é
+
+reﬁnada. Veriﬁcou-se, também, que sua utilização pode inﬂuenciar demasiadamente a
+
+qualidade da solução numérica obtida. Quando esse esquema não foi adotado, as solu-
+
+ções determinadas por meio dos três métodos praticamente coincidiram. A solução ob-
+
+tida por meio do método totalmente implícito não foi afetada signiﬁcativamente quando
+
+os critérios de passo de tempo adaptativo foram empregados. O método sequencial, con-
+
+tudo, apresentou sensibilidade ao critério menos rígido. Já o método IMPES apresentou
+
+uma solução mais próxima da analítica quando o critério de passo de tempo adaptativo foi
+
+aplicado. Isso se deve, possivelmente, a uma condição mais próxima daquela na qual es-
+
+sse método fornece a solução analítica para o caso de Buckley-Leverett. Quanto ao tempo
+
+computacional despendido em cada simulação, infere-se que o passo de tempo adapta-
+
+tivo é interessante sobretudo ao método totalmente implícito, o qual é capaz de resolver o
+
+problema mais rapidamente sob essa condição sem que a solução seja demasiadamente
+
+alterada. O método sequencial, muito embora tenha fornecido soluções mais rapidamente
+
+que o FIM para alguns casos, apresentou certa sensibilidade em relação ao uso de um passo
+
+de tempo adaptativo, de forma que deve-se ter cautela a aplicar essa condição para tal mé-
+
+113
+
+todo. Já o método IMPES clássico se comportou bem quanto à utilização do passo de tempo
+
+adaptativo. Contudo, isso pode ser devido a um caráter particular do problema unidimen-
+
+sional de Buckley-Leverett.
+
+O segundo caso analisado, de deslocamento em conﬁguração quarter ﬁve-spot, foi uti-
+
+lizado a ﬁm de comparar os três métodos quanto ao desempenho e à sensibilidade em re-
+
+lação ao esquema de passo de tempo adaptativo em um problema bidimensional. Quando
+
+empregado o esquema de passo de tempo adaptativo, o método IMPES apresentou insta-
+
+bilidades na solução numérica após o instante de breakthrough. Essa instabilidade pode
+
+ser reduzida substancialmente modiﬁcando o IMPES clássico para o método sequencial.
+
+Contudo, isso se dá às custas da necessidade um maior tempo de computação. O método
+
+totalmente implícito, por sua vez, não apresentou tamanha sensibilidade em relação à esse
+
+esquema, provendo soluções consistentes tanto com passo de tempo ﬁxo, quanto variável.
+
+Ainda, o tempo computacional despendido por esse método foi aproximadamente dez ve-
+
+zes inferior quando utilizou-se o critétio de passo de tempo adaptativo proposto. Além
+
+disso, a utlização dessa estratégia permitiu que o método FIM, que demandava o maior
+
+custo computacional com passo de tempo ﬁxo, chegasse a um custo menor que aquele
+
+despendido pelo método sequencial quando foi utilizado o passo de tempo adaptativo.
+
+Ressalta-se ainda que os tempos de simulação correspondentes ao método totalmente im-
+
+plícito com passo de tempo adaptativo ﬁcaram da mesma ordem daqueles corresponden-
+
+tes à utilização da formulação IMPES com passo de tempo ﬁxo e ambos os métodos apre-
+
+sentaram soluções estáveis e consistentes. Portanto, conseguiu-se tirar proveito da robus-
+
+tez do FIM no intuito de utilizar passos de tempo mais elevados e, assim, reduzir o tempo
+
+demandado pela simulação numérica.
+
+O terceiro caso analisado, de deslocamento tridimensional em uma malha híbrida,
+
+possibilitou a veriﬁcação de que, no caso de um problema tridimensional, os métodos IM-
+
+PES e sequencial são severamente limitados quanto ao máximo passo de tempo que pode
+
+ser utilizado, sobretudo em decorrência de um maior grau de reﬁno nas regiões próximas
+
+aos poços. À luz dos resultados previamente obtidos, optou-se, nesse caso, por especiﬁcar
+
+um passo de tempo ﬁxo aos métodos IMPES e sequencial a ﬁm de evitar instabilidades nas
+
+soluções numéricas e utilizar o esquema de passo de tempo adaptativo no caso do mé-
+
+todo totalmente implícito no intuito de reduzir o tempo computacional consumido por
+
+essa formulação. Os resultados obtidos praticamente coincidiram para os três métodos. O
+
+FIM, contudo, foi capaz de prover as soluções com um custo computacional muito infe-
+
+rior em relação aos outros métodos – apenas 7,69% do tempo despendido pela formulação
+
+IMPES e 2,96%, do método sequencial. Certamente, esses resultados podem servir a enco-
+
+rajar futuros desenvolvimentos que utilizem o método totalmente implícito em conjunto
+
+com o método dos volumes ﬁnitos baseado em elementos.
+
+114
+
+6.3 SUGESTÕES PARA TRABALHOS FUTUROS
+
+Para estudo subsequentes quanto ao tema abordado neste trabalho recomenda-se:
+
+• Estudar esquemas de passo de tempo adaptativo a ﬁm de reduzir a sensibilidade dos
+
+métodos IMPES clássico e sequencial à sua utilização;
+
+• Paralelizar o simulador implementado a ﬁm de melhorar seu desempenho quanto
+
+ao tempo computacional empregado nas simulações;
+
+• Introduzir um modelo físico mais complexo no simulador;
+
+• Incluir a equação da energia no modelo proposto;
+
+• Acoplar modelos de geomecânica ao modelo proposto;
+
+REFERÊNCIAS
+
+115
+
+ARCHER, J. S., WALL, C. G. Petroleum Engineering – Principles and Practice. Springer,
+
+1986.
+
+AZIZ, K. Reservoir Simulation Grids: Opportunities and Problems. Jornal of Petroleum
+
+Technology, v. 45, n. 7, pp. 658–663, Julho, 1993.
+
+AZIZ, K., SETTARI, A. Petroleum Reservoir Simulation. Applied Science Publishers, 1979.
+
+BALAY, S., BUSCHELMAN, K., GROPP, W. D., KAUSHIK, D., KNEPLEY, M. G., MCINNES,
+L. C., SMITH, B. F., ZHANG, H., 2009. PETSc Web page. http://www.mcs.anl.gov/petsc.
+
+BALAY, S., BROWN, J., BUSCHELMAN, K., GROPP, W. D., KAUSHIK, D., KNEPLEY, M. G.,
+MCINNES, L. C., SMITH, B. F., ZHANG, H. PETSc (Portable, Extensible Toolkit for Scien-
+tiﬁc Computation). http://www.mcs.anl.gov/petsc, 2013.
+
+BALIGA, B. R., PATANKAR, S. V. A. A control-volume ﬁnite-element method for two-
+dimensional ﬂuid ﬂow and heat transfer. Numerical Heat Transfer, 1983.
+
+BEJAN, A. Convection Heat Transfer, 3ª. John Wiley & Sons, Durham, North Carolina,
+
+2004.
+
+BUCHWALTER, J. L., MILLER, C. A. Compositional and Black Oil Reservoir Simulation.
+SPE Rocky Mountain Regional/Low Permeability reservoir symposium, Abril, 1993.
+
+CAO, H., AZIZ, K. Performance of IMPSAT and IMPSAT-AIM models in compositional
+simulation. SPE Annual Technical conference and Exhibition, Setembro, 2002.
+
+CHEN, Z. Reservoir Simulation – Mathematical Techniques in Oil Recovery. SIAM, 1962.
+
+CHEN, Z., HUAN, G., MA, Y. Computational Methods for Multiphase Flows in Porous Me-
+dia. Computational Science and Engineering. Society for Industrial and Applied Mathe-
+
+matics (SIAM, 3600 Market Street, Floor 6, Philadelphia, PA 19104), 2006.
+
+CHEN, Z. H., LI, B. An improved IMPES method for two-phase ﬂow in porous media.
+
+Transport in Porous Media,, v. 54, pp. 361–376, 2004.
+
+COATS, K. H. IMPES stability: selection of stable time steps. SPE Reservoir Simulation
+
+Symposium, Fevereiro, 1968.
+
+116
+
+COATS, K. H. Reservoir simulation: State of art. SPE, Agosto, 1982.
+
+COATS, K. H., THOMAS, L. K., R.G., P. A new simpliﬁed compositional simulator. SPE -
+
+Society of Petroleum Engineers, 1995.
+
+CORDAZZO, J. Simulação de reservatórios de petróleo utilizando o método EbFVM e
+Multigrid algébrico. Master’s Thesis, Universidade Federal de Santa Catarina, 2006.
+
+COREY, A. T., RATHJENS, C. H., HENDERSON, J. H., WYLLIE, M. R. Three-phase relative
+permeability. SPE - AIME, 1956.
+
+DA CUNHA, A. R. Uma metodologia para simulação numérica tridimensional de re-
+servatórios de petróleo utilizando modelo black-oil e formulação em frações mássicas.
+
+Master’s Thesis, Universidade Federal de Santa Catarina - UFSC, 1996.
+
+DAKE, L. P. The Practice of Reservoir Engineering, revised edition. Eselvier, Netherlands,
+
+2001.
+
+DARCY, H. Les Fontaines Publiques de la Ville de Dijon. 1856.
+
+DULLIEN, F. A. L. Porous media. Fluid transport and pore structure. Academic Press,
+
+1979.
+
+EWING, R. The Mathematics of Reservoir Simulation. SIAM, 1983.
+
+FARNSTROM, K. L., ERTEKIN, T. A versatile, fully implicit, black oil simulator with vari-
+able bubble-point option. SPE California Regional Meeting, 1987.
+
+GREIN, E. A. Aplicação da computação paralela na simulação de reservatórios de petró-
+leo. Master’s Thesis, Universidade Federal de Santa Catarina, 2015.
+
+HURTADO, F. S. V. Uma formulação de volumes ﬁnitos baseada em elementos para a
+simulação do deslocamento bifásico imiscível em meios porosos. Master’s Thesis, Uni-
+
+versidade Federal de Santa Catarina, 2005.
+
+HURTADO, F. S. V. Formulação tridimensional de volumes ﬁnitos para simulação de re-
+servatórios de petróleo com malhas não-estruturadas híbridas. Tese de doutorado, De-
+
+partamento de Engenharia Mecânica, Universidade Federal de Santa Catarina, Florianó-
+
+polis, Brasil, 2011.
+
+KAVIANY, M. Principles of Heat Transfer in Porous Media. Springer, Ann Arbor, Michigan,
+
+117
+
+1995.
+
+MACDONALD, R. C., COATS, K. H. Methods for Numerical Simulation of Water and Gas
+Coning. SPE, n. 10, pp. 425–436, 1970.
+
+MALISKA, C. R. Transferência de Calor e Mecânica dos Fluidos Computacional. LTC Edi-
+
+tora, Rio de Janeiro, RJ, 2004.
+
+MALISKA, C. R., DA SILVA, A. F. C., HURTADO, F. S. V., RIBEIRO, G. G., JR, A. A. V. B. P.,
+GREIN, E. A., CERBATO, G. Introdução às malhas poliédricas e ao método baseado na re-
+construção explícita do gradiente, Relatório Técnico SINMEC/SiGeR 01. Technical report
+01, SINMEC/EMC/UFSC, Florianópolis, SC, 2012.
+
+MALISKA, C. R., DA SILVA, A. F. C., HURTADO, F. S. V., RIBEIRO, G. G., CERBATO, G. De-
+senvolvimento de um esquema para a aproximação dos ﬂuxos na interface entre malhas
+estruturadas e não estruturadas, Relatório Técnico SINMEC/SiGeR 03. Technical report
+01, SINMEC/EMC/UFSC, Florianópolis, SC, 2015.
+
+MCCAIN JR, W. The propreties of Petroleum Fluids. PennWell Publishing Company, Tulsa,
+
+Oklahoma, 1990.
+
+PEACEMAN, D. W. Fundamentals of numerical reservoir simulation. Elsevier Scientiﬁc
+
+Publishing Company, Houston, Texas, 1977.
+
+PEACEMAN, D. W. Interpretation of Well-Block Pressures in Numerical Reservoir Simu-
+lation. SPE journal, v. 18, n. 3, pp. 183–194, Junho, 1978.
+
+ROSA, A. J., CARVALHO, R. S., XAVIER, J. A. Engenharia de reservatórios de petróleo. Edi-
+
+tora Interciência, 2006.
+
+SHELDON, J. W., ZONDEK, B., CARDWELL, W. T. One Dimensional, Incompressible, Non-
+capillary, Two-Phase Fluid Flow in a Porous Medium. AIME, v. 216, pp. 290–296, 1959.
+
+STONE, H. L., GARDER, A. O. Analysis of gas-cap or dissolved-gas reservoir. SPE AIME, v.
+
+222, pp. 94–104, 1961.
+
+THOMAS, J. E. Fundamentos de Engenharia de Petróleo. Editora Interciência, Rio de
+
+Janeiro, RJ, 2001.
+
+TRANGENSTEIN, J. A., BELL, J. B. Mathematical Structure Of The Black-Oil Model For Pe-
+
+118
+
+troleum Reservoir Simulation. SIAM Journal on Applied Mathematics, v. Vol. 49, pp. 749–
+
+783, 1989.
+
+WATTS, J. W. A compositional formulation of the pressure and saturation equations. SPE,
+
+1985.
+
+YOUNG, L. C., STEPHENSON, E. R. A generalized compositional approach for reservoir
+simulation. SPEJ, 1983.
+
+ZIENKIEWICZ, O. C., TAYLOR, R. L. The Finite Element Method, ﬁfth, vol. 1. Butterworth-
+
+Heinemann, 2000.
+
+119
+
+APÊNDICE A – DIFUSÃO NUMÉRICA NO PROBLEMA DE
+
+BUCKLEY-LEVERETT
+
+Métodos explícitos requerem que a restrição de Courant-Friedrichs-Lewy (CFL) seja
+
+satisfeita, ao passo que métodos implícitos são incondicionalmente estáveis (Chen et al.,
+
+2006). Esses métodos aprentam não apenas estabilidades diferentes, mas também com-
+
+portamentos distintos quanto ao custo computacional e à difusão numérica.
+
+No caso especíﬁco do problema unidimensional de Buckley-Leverett, pode-se elucidar
+
+que há uma condição especíﬁca em que o método IMPES fornece a solução analítica e que
+
+não é possível obtê-la por meio do método totalmente implícito. A equação modelo do
+
+problema é
+
+∂ S
+∂ τ
+
++
+
+∂ F
+∂ X
+
+= 0.
+
+(A.1)
+
+Trata-se de uma equação hiperbólica na qual tem-se a propagação unidirecional de uma
+
+onda (Chen et al., 2006).
+
+A discretização dessa equação por meio do método dos volumes ﬁnitos e do esquema
+
+upwind para uma malha unidimensional é
+
+Si − S o
+
+i
+
+∆τ
+
+Si − Si−1
+
+(cid:48)
+
+∆X
+
+= 0.
+
+(A.2)
+
++ F
+i
+
+em que i é o índice do volume de controle da equação e o superíndice o representa uma
+
+variável associada ao passo de tempo anterior.
+
+Para o método explícito tem-se
+
+Si − S o
+
+i
+
++
+
+(cid:48)
+
+∆τF
+i
+∆X
+
+S o
+
+i
+
+ = 0.
+
+− S o
+i−1
+
+(A.3)
+
+Identiﬁcando o coeﬁciente que multiplica o termo entre parênteses como o CFL e denotando-
+o por α, pode-se escrever
+
+Si − (1− α)S o
+
+i
+
+− αS o
+i−1
+
+= 0.
+
+Pode-se observar que a equação (A.4) é numéricamente estável para α ≤ 1. Além disso,
+
+(A.4)
+
+para o caso extremo α = 1 tem-se
+
+Si = S o
+
+i−1,
+
+120
+
+(A.5)
+
+i.e., a frente de água avança um volume de controle a cada passo de tempo, reproduzindo
+
+o comportamento da solução analítica.
+
+Para o método implícito tem-se
+
+Si − S o
+
+i
+
++
+
+(cid:48)
+
+∆τF
+i
+∆X
+
+(Si − Si−1) = 0.
+
+(A.6)
+
+Identiﬁcando o coeﬁciente que multiplica o termo entre parênteses como o CFL e denotando-
+o por α, pode-se escrever
+
+= 0.
+
+(A.7)
+
+(1 + α)Si − αSi−1− S o
+
+i
+
+A equação (A.7) é numericamente estável para qualquer α, já que α é necessariamente po-
+sitivo (Chen et al., 2006). Contudo, não é possivel escolher um valor de α tal que a frente
+de água avance um volume de controle a cada passo de tempo. A frente avança sempre
+
+menos que o espaçamento entre os volumes de controle, de forma que há uma suavização
+
+da solução obtida pelo método implícito – a difusão numérica.
+
+

@@ -1,0 +1,1344 @@
+luan silveira sistema bioinspirado mapeamento localizacao robos moveis ambientes subaquaticos rio grande rs brasil mar luan silveira sistema bioinspirado mapeamento localizacao robos moveis ambientes subaquaticos dissertacao mestrado apresentada pro grama pos graduacao computacao universidade federal rio grande requisito parcial obtensao grau mestre engenharia computacao universidade federal rio grande furg centro ciencias computacionais programa pos graduacao computacao curso mestrado engenharia computacao orientadora prof 
+ silvia silva costa botelho rio grande rs brasil mar sistema bioinspirado mapeamento localizacao robos moveis ambientes subaquaticos luan silveira 
+ rio grande rs brasil mar luan silveira 
+ silvia silva costa botelho dissertacao mestrado universidade federal rio grande furg centro ciencias computacionais programa pos graduacao computacao curso mestrado engenharia computacao mar 
+ silvia silva costa botelho 
+ universidade federal rio grande 
+ centro ciencias computacionais 
+ sistema bioinspirado mapeamento localizacao robos moveis ambientes subaquaticos cdu 
+ luan silveira sistema bioinspirado mapeamento localizacao robos moveis ambientes subaquaticos dissertacao mestrado apresentada pro grama pos graduacao computacao universidade federal rio grande requisito parcial obtensao grau mestre engenharia computacao trabalho aprovada 
+ rio grande rs brasil marco prof 
+ silvia silva costa botelho orientadora furg prof 
+ edson prestes convidado ufrgs dr 
+ ney robinson salvi reis convidado cenpes petrobras rio grande rs brasil mar dedico trabalho pessoas sempre lado apoiandome decisoes mae elaine namorada iana irma leticia sobrinho cesar cachorro bob balotelli 
+ agradecimentos exatos sete anos atras entrava faculdade 
+ queria formar enge nheiro 
+ opcoes curso engenharia computacao area bastante desafiadora onde aparecia curriculo robotica 
+ naquela epoca muita ideia tratava imaginava construindo robo daqueles aparecem filmes 
+ poucos aprendendo grande area computacao tempo entristecendome utilizar cada vez menos aprendia disciplinas engenharia 
+ meados segundo ano faculdade entrei nautec laboratorio incrivel onde alunos realmente trabalhavam robotica 
+ imaginava robotica la comeco faculdade algo proximo mundo real 
+ longa caminhada final graduacao varios projetos iniciacao cientifica muitas noites dormir 
+ nessas horas damos conta importancia ter amigos pessoas podemos contar momentos dificeis 
+ agradeco familia eternos amigos constante apoio 
+ amigos faculdade irmaos escolhemos levarei toda vida 
+ acabando faculdade decido continuar universo academico fazer mestrado permanecendo robotica 
+ dois anos desofrimento inumeras frustracoes pesquisa proporciona 
+ cada dez passos tras conseguimos avancar passo 
+ pessoas crescimento enorme 
+ agradeco grande apoio recebido namorada iana durante grande parte caminhada desde final graduacao final mestrado 
+ agradeco apoio familia especialmente mae nada 
+ irma sobrinho companhia familiar 
+ agradeco colegas mestrado inicialmente estranhos viraram amigos 
+ cada formacao conhecimento diferente compartilhar 
+ agradeco felipe guth mestre parceria pesquisa 
+ agradeco felipe codevilla trabalhos experiencias compartilhados 
+ agradeco steffens discussoes sobre linguagens programacao 
+ agradeco telmo discussoes sobre diversos assuntos incluindo politica 
+ nessa steffens tava sempre junto 
+ agradeco machado parceria juntamente altimetro expedicoes subaquaticas 
+ alex unico colega sabe tenta jogar futebol 
+ ricardo segundo irmao apesar ser mestrado sempre laboratorio estudando 
+ agradeco colegas laboratorio 
+ especial ballester constante ajuda codigos artigos 
+ sidnei amigo longa data sempre disponivel discussoes acerca problemas encontrados 
+ toda galera nautec 
+ menos importante agradeco orientadora silvia botelho essencial durante toda caminhada academica 
+ sempre pouco tempo muita vontade revolucionar pesquisa 
+ fim agradeco apoio financeiro agencia nacional petroleo gas natural biocombustiveis anp financiadora estudos projetos finep ministerio ciencia tecnologia mct meio programa recursos humanos anp setor petroleo gas prhanp mct 
+ agradecimento especial professores responsaveis prh maria isabel gilberto griep 
+ sea calm ships alike showed mastership floating 
+ william shakespeare resumo exploracao ambientes subaquaticos cenario comum dias atuais princi palmente aplicacoes comerciais extracao petroleo mineracao 
+ ambientes apresentam novos desafios tecnologicos buscando robotica movel solucoes problemas encontrados criando demanda algoritmos possibilitem atuacao robos nesses ambientes 
+ aqui apresentado novo metodo localizacao mapeamento simultaneos robos ambientes subaquaticos inspirado neuronios existentes cerebro mamiferos 
+ metodo proposto baseiase algoritmos ratslam fabmap aplicando tecnicas ambiente subaquatico 
+ trabalho apresentara principais sensores utilizados robos subaquaticos metodos desenvolvidos ultimos anos relacionados problema mapeamento localizacao 
+ final apresentados tres estudos caso validacao proposta demonstrando vantagens limitacoes 
+ palavraschaves robotica subaquatica 
+ abstract exploitation underwater environments common scenario days especially commercial applications oil drilling mining 
+ environments present new technological challenges seeking mobile robotics solutions encountered problems 
+ scenario new algorithms developed mobile robots 
+ propose new method simultaneous localization mapping underwater environments inspired neurons found mammalian brain 
+ proposed method extends ratslam fabmap algorithms seeking apply techniques underwater environment 
+ also present sensors used underwater robots main methods developed solve slam problem 
+ end validate algorithm three different scenarios demonstrate advantages limitations 
+ keywords underwater robotics 
+ figura formulacao classica resolucao problema slam 
+ figura formulacao grafica problema slam online 
+ figura exemplo operacao ekf slam 
+ figura exemplo conjunto particulas aproximacao funcao gaussiana 
+ figura tipico ambiente subaquatico extracao petroleo 
+ figura sistema usbl 
+ figura sistema sbl 
+ figura sistema lbl 
+ figura imagem ilustrativa bussola digital eixo 
+ figura imu xsens opcao comercial unidade medicao inercial 
+ figura exemplos cameras empregadas robotica subaquatica 
+ figura laser subaquatico 
+ figura single beam sonar 
+ figura multi beam sonar 
+ figura funcionamento sonar tipo sidescan 
+ figura imagem adquirida sonar imageamento mecanico 
+ figura sonar tipo forward looking comercial exemplo imagem capturada figura celulas idealizadas encontradas cerebro mamiferos 
+ figura arquitetura sistema ratslam 
+ figura rede neural atracao continua representacao pose cells 
+ figura arquitetura dolphinslam 
+ figura sistema coordenadas 
+ figura etapas treinamento algoritmo bag words 
+ figura exemplos histogramas bag features 
+ figura diagrama visualizacao local view cells 
+ figura criacao novas local view cells partir histograma entrada 
+ figura ativacao local view cells partir histograma entrada 
+ figura rede neural modelagem place cells 
+ figura modelo integracao caminho 
+ figura diagrama visualizacao local view cells conexoes place cells 
+ figura ambiente utilzado testes primeiro cenario 
+ figura imagens capturadas ambiente simulado 
+ figura padrao local view cells ativas primeiro estudo caso 
+ figura histogramas bag words imagens cenario simulado 
+ figura resultado ambiente simulado 
+ figura erro localizacao primeiro estudo caso 
+ figura cenario utilizado segundo estudo caso 
+ figura padrao ativacao local view cells segundo estudo caso 
+ figura histogramas bag words imagens segundo estudo caso 
+ figura resultado segundo estudo caso 
+ figura cenario utilizado terceiro estudo caso 
+ figura imagem sonar capturada ambiente 
+ figura rov utilizado experimento 
+ figura imagens sonar apos etapa processamento 
+ figura padrao local view cells ativas terceiro estudo caso 
+ figura histogramas bag words imagens sonar 
+ figura resultado terceiro estudo caso 
+ figura erro localizacao terceiro estudo caso 
+ lista tabelas tabela parametros configuracao sistema primeiro estudo caso tabela parametros configuracao sistema segundo estudo caso 
+ tabela parametros configuracao sistema terceiro estudo caso 
+ lista abreviaturas siglas auv veiculo subaquatico autonomo cann rede neural atracao continua dgps sistema posicionamento global diferencial dvl doppler velocity log eif filtro informacao estendido ekfslam slam baseado filtro kalman extendido ekf filtro kalman estendido gps sistema posicionamento global imu unidade medicao inercial laser light amplification stimulated emission radiation lbl long baseline positioning system mit massachussets institute technology rov veiculo operado remotamente sbl short baseline positioning system slam localizacao mapeamento simultaneos surf speedup robust features usbl ultra short baseline positioning system uuv veiculo subaquatico naotripulado van visual augmented navigation sumario 
+ mapeamento localizacao simultaneos 
+ formulacao baseada trajetoria robo 
+ abordagens resolucao problema 
+ filtro kalman extendido 
+ filtro particulas abordagens bioinspiradas 
+ slam ambientes subaquaticos 
+ sensores localizacao som 
+ sensores profundidade altitude 
+ unidade medicao inercial doppler velocity log 
+ sensores exteroceptivos camera 
+ sonar estado arte slam subaquatico 
+ mecanismos cerebrais encontrados mamiferos 
+ neuronios espaciais integracao caminho 
+ dinamica pose cell 
+ registro imagens opticas 
+ registro imagens acusticas 
+ representacao bag words 
+ local view cells 
+ treinamento arvore probabilidades chow liu 
+ criacao local view cells 
+ ativacao local view cells 
+ implementacao open source 
+ estudo caso ambiente simulado extracao petroleo 
+ estudo caso piscina 
+ estudo caso marina 
+ introducao avanco tecnologico permitiu aplicacao robotica diversos ambientes desde fundo oceanos superficie outros planetas 
+ constante desenvolvi mento torna possivel utilizacao robos tarefas autonomas fabricacao produtos industriais limpeza residencias inspecao ambientes inospitos analise desmonte explosivos outros 
+ brasil industria petrolifera recebeu vultosos investimentos ultimos anos aumentando demanda tecnologias especificas aplicadas ambientes extracao distribuicao oleo gas 
+ dentre cenarios desafiadores industria instalacao inspecao equipamentos aguas ultraprofundas onde possivel presenca humana 
+ operacoes controle supervisao desses equipamentos realizada utilizacao computadores sensores robos brasilis 
+ custo aluguel robo subaquatico juntamente navio controle aproximadamente mil reais dia stauffer 
+ atualmente principais robos aplicados missoes subaquaticas veiculos operados remotamente rovs quais controlados remotamente estacao base instalada navio operacao 
+ navio deve acompanhar robo durante toda operacao 
+ rovs conectados estacao base meio cabo umbilical responsavel transmissao dados energia 
+ cabo pode conter alguns quilometros comprimento stauffer dificultando navegacao robo aumento arraste sofrido agua 
+ alem disso podem ocorrer entrelacamentos cabo umbilical acarretando ruptura fibra optica consequente interrupcao controle robo 
+ ainda casos extremos cabo pode romperse fazendo robo percase ambiente 
+ outra classe robos ainda pouco aplicada industria composta veiculos subaquaticos autonomos auvs 
+ robos realizam tarefas forma autonoma sendo necessario acompanhamento humano durante operacao reduzindo custos associados aluguel navio apoio 
+ entanto aplicacao ainda limitada inexistencia inteligencia artificial confiavel realizacao atividades complexas 
+ ainda baixa autonomia baterias reduz campo atuacao desses robos 
+ atualmente principais aplicacoes auvs relacionadas missoes monitoramento ambiental 
+ expansao uso auvs missoes subaquaticas complexas presenca inteligencia artificial bordo desses veiculos apresenta robotica serie novos desafios relacionados localizacao percepcao comunicacao mapeamento capitulo 
+ introducao controle navegacao 
+ meio fisico apresentase meio participativo apresentando restricoes utilizacao sensores limitacoes navegabilidade sistema robotico 
+ primeiramente existe sistema posicionamento global abaixo superficie agua devido atenuacao ondas radio meio liquido 
+ alternativas existentes localizacao sistema robotico limitam ambiente atuacao veiculo necessitam maior precisao instalacao equipamentos georreferenciados fundo oceanos 
+ relacao comunicacao fio fazse necessario envio dados ondas sonoras 
+ porem sistemas existentes atualmente capazes enviar dados alta frequencia limita velocidade envio 
+ devido perda sinal atrasos transmissao viavel utilizacao teleoperacao sistemas roboticos 
+ navegacao plataforma robotica agua sofre efeito correntes arraste meio pois necessario deslocamento fluido movimentacao veiculo 
+ dessa forma veiculos devem ter propulsao suficiente superar arraste tempo precisao modelagem tarefas complexas exemplo fechamento valvula controle poco extracao petroleo 
+ percepcao ambiente forma similar apresenta algumas peculiaridades referentes meio 
+ sensores baseados luz cameras lasers amplamente utilizados robotica terrestre sujeitos efeitos turbidez agua causada particulas suspensao fluido 
+ turbidez responsavel alta atenuacao ondas luminosas 
+ sensores aplicabilidade limitada operacoes curta distancia onde robo navega proximo objetos serem monitorados 
+ alem disso ambiente subaquatico inerentemente estruturado composto elementos naturais ambiguos dificeis serem percebidos rastreados havendo demanda algoritmos robustos deteccao pontos discriminantes cena 
+ virtude limitacao sensores baseados luz aplicacoes longa distancia requerem utilizacao sonares 
+ sensores caracterizados sensibilidade ruidos formacao ecos acusticos trazendo novos desafios relacionados tratamento sinal recebido 
+ todo exposto percebese existencia novo cenario robotica movel requer desenvolvimento algoritmos solucao problemas basicos localizacao ambiente criacao representacao computacional objetos encontrados robo 
+ dois problemas tratados forma concorrente conhecidos robotica localizacao mapeamento simultaneos slam 
+ considerado problema resolvido ambientes terrestres slam ainda aberto ambiente subaquatico principalmente mudanca sensorial existente caracteristica estruturada ambiente 
+ metodos classicos sensiveis deteccao pontos discriminativos robustos possuem alto custo computacional capitulo 
+ introducao mapeamento ambientes vastos 
+ dessa forma novas abordagens resolucao problema necessarias 
+ opcao buscase inspiracao natureza 
+ animais muitas vezes sensores precarios resolvem problema localizacao mapeamento forma eficaz 
+ mamiferos exemplo utilizam mecanismos cerebrais especiais criando sistema representacao ambiente capaz estimar melhor caminho dois pontos espaco ausencia informacoes perceptivas ambiente mcnaughton al 
+ pesquisas neurociencia animal culminaram descoberta classes neuronios relacionados tarefas navegacao cerebro mamiferos 
+ principais relacionadas localizacao mamifero place cells okeefe dostrovsky grid cells hafting al 
+ orientacao animais utilizam principalmente head direction cells taube muller jr 
+ conjunto celulas utilizado sistema navegacao mamiferos interconexoes objeto estudo neurociencia moderna 
+ objetivos presente trabalho objetivo geral propor solucao problema mapeamento localizacao robos moveis ambientes subaquaticos 
+ virtude diversidade encontrada ecossistemas marinhos presente proposta focada ambientes extracao distribuicao oleo gas offshore 
+ definicao escopo proposta seguir elencados objetivos especifi cos realizar estudo principais sensores utilizados robotica subaquatica diferenciam robotica terrestre 
+ elencar desafios encontrados necessidade algoritmica tratamento dados sensoriais 
+ desenvolver metodologia inspirada cerebro mamiferos realizando estudo modelos computacionais neuronios espaciais desses animais viabilidade robotica 
+ estender algoritmo ratslam inicialmente desenvolvido resolucao problema slam visual ambientes terrestres aplicacao ambientes subaquaticos 
+ buscarsea extrair principais vantagens algoritmo ratslam ligadas mapeamento ambientes amplos monotonos 
+ desenvolver metodo capaz mapear ambientes utilizacao multiplos sensores baseados imagens opticas acusticas tornando utilizacao possivel tarefas curta longa distancia robo cena 
+ introducao utilizar algoritmo fabmap estado arte criacao mapas espaco aparencias objetivo garantir maior robustez reconhecimento locais 
+ estrutura dissertacao presente dissertacao dividida sete capitulos organizados seguinte maneira capitulo apresentara definicao formal problema localizacao mapeamento simultaneos slam classico robotica apresentando principais classificacoes acordo tipo mapa criado metodo resolucao 
+ atualmente problema considerado resolvido ambientes terrestres estruturados 
+ ainda apresentadas diferentes abordagens utilizadas resolucao problema probabilistica bioinspirada 
+ principais metodos desenvolvidos cada abordagem detalhados final capitulo 
+ apos definicao problema capitulo focara principais aspectos ambientes subaquaticos importantes resolucao problema 
+ explicados principais sensores utilizados aquisicao informacoes ambiente estado proprio robo 
+ final apresentados algoritmos compoem estado arte slam subaquatico analise vantagens desvantagens cada metodo 
+ capitulo apresentara algoritmos utilizados base presente proposta 
+ inicialmente apresentado ratslam desenvolvido milford wyeth 
+ inspiracao detalhada subsecao 
+ explicacao principais mecanismos cerebrais encontrados mamiferos 
+ sequencia detalhes metodo ratslam definidos finalizando apresentacao principais trabalhos mapeamento utilizacao sistema 
+ capitulo apresentado metodo fabmap cummins new man estado arte slam baseado aparencias 
+ metodo utiliza representacao imagens conjunto palavras acordo algoritmo bag words sivic zisserman explicado subsecao 
+ sequencia apresentados principais trabalhos empregam metodo alem trabalhos integram ratslam fabmap ambientes terrestres 
+ vez capitulo apresentado metodo proposto presente trabalho fara integracao ratslam fabmap modificando algoritmos viabilizar aplicacao ambientes subaquaticos 
+ detalhadas integracao metodos modificacoes realizadas algoritmos 
+ capitulo capitulo apresentara tres estudos caso realizados metodo proposto 
+ primeiramente metodo testado ambiente simulado utilizando camera optica 
+ segundo utilizado dataset real piscina onde robo capitulo 
+ introducao equipado camera optica sensores movimentacao 
+ fim utilizouse cenario marina onde captura dados realizada sonar imageamento 
+ capitulo termina discussao sobre funcionamento metodo tres diferentes cenarios apresentando vantagens limitacoes abordagem 
+ final apresenta conclusoes obtidas desenvolvimento metodo 
+ definicao problema localizacao definida capacidade inferencia posicao ambiente base referencial fixo principais aptidoes necessarias sistema robotico movel autonomo 
+ primeiro cenario habilidade pode ser alcancada utilizacao sensores posicionamento sistema posicionamento global gps 
+ gps capaz retornar posicao robo sistema coordenadas georreferenciado juntamente incerteza medicao 
+ entanto sistemas sempre disponiveis precisao insuficiente aplicacao 
+ segundo cenario podese utilizar mapa representativo ambiente base algoritmo localizacao 
+ neste caso mapa conhecido priori objetivo passa ser localizacao robo mapa utilizando dados sensoriais deteccao landmarks ambiente 
+ terceiro cenario robo possui conhecimento sobre ambiente tampouco possui acesso sistemas medicao posicao absoluta ambiente 
+ mundo hipotetico podese pensar utilizacao sensores movimentacao proprioceptivos encoders estimar posicao robo desde inicio deslocamento 
+ problema nesse caso inexistencia sensores precisos 
+ sistemas baseados apenas leitura desses dispositivos chamados sensores odometria possuem caracteristica erro crescente localizacao agente tornando posicoes inferidas dessa forma cada vez longe posicao real 
+ devese acumulo erro cada leitura sensorial 
+ dessa forma fazse necessario desenvolvimento algoritmos utilizem sensores existentes tempo eliminem crescimento ilimitado erro localizacao 
+ passamos dessa forma definicao problema tratado presente trabalho conhecido mapeamento localizacao simultaneos problema classico robotica movel 
+ mapeamento localizacao simultaneos problema slam definido capacidade robo navegar ambiente desconhecido meio leituras sensoriais construir mapa representativo ambiente navegado 
+ forma simultanea algoritmo localiza robo mapa criado durrantwhyte bailey 
+ processo feito forma incremental aumentando certeza posicao robo tempo ocorre refinamento mapa representativo ambiente 
+ definicao problema posse algoritmo slam robo tornase capaz realizar tarefas ambiente desconhecido 
+ exemplo pode realizar expedicoes inspecao ambientes dificil acesso humano ambiente subaquatico 
+ ainda vez posse mapa ambiente pode ser utilizado analise posterior realizada operadores humanos sobre dados sensoriais adquiridos forma autonoma 
+ normalmente algoritmo slam utiliza dois tipos entradas entrada motora propria proprioceptiva representando deslocamento relativo robo entrada sensorial externa exteroceptiva ultima responsavel deteccao pontos caracteristicos ambiente 
+ principais sensores aplicados slam cameras opticas lasers sonares kinect outros 
+ algoritmo slam processo estimativa localizacao robo baseado observacao caracteristicas ambiente 
+ medida agente navega caracteristicas reobservadas posicao robo atualizada 
+ erro medicao landmarks ambiente deve ser levado consideracao minimizado sempre possivel 
+ formulacao classica formulacao classica problema slam definido criacao mapa metrico cada localizacao robo associada localizacao anterior vez posicao pistas sensoriais conectada posicao robo onde informacoes adquiridas mostrado figura 
+ figura formulacao classica resolucao problema slam nessa figura cada posicao colocada mapa relacionada instante capitulo 
+ definicao problema tempo 
+ dessa forma podemos definir seguintes variaveis envolvidas durrant whyte bailey xt vetor estados descrevendo posicao orientacao veiculo ut vetor controles aplicado tempo − levar veiculo estado xt instante mi vetor descrevendo localizacao iesimo ponto referencia landmark contendo posicao deste sendo invariante tempo ambiente estatico 
+ zt observacao tomada veiculo sobre localizacao iesimo ponto referencia tempo robos movimentam ambientes planos xt normalmente vetor tridimensional compreendendo coordenadas plano acrescido valor orientacao robo 
+ caso robos movimentam espaco tridimensional xt compreende tres variaveis espaco orientacao robo pode ser apenas sobre eixo tres orientacoes 
+ neste ultimo caso xt possui seis graus liberdade 
+ sequencia posicoes robo caminho percorrido definida xt 
+ onde tempo final podendo ser infinito dependendo aplicacao 
+ posicao inicial conhecida posicoes subsequentes sequer podem ser observadas devendo ser estimadas 
+ informacoes controle oriundas sensores movimentacao propria encoders motores robo sensores medicao inercial sensores conhecidos sensores odometria proprioceptivos pois proveem informacoes relativas duas posicoes consecutivas 
+ processo integrar informacoes oriundas sensores motores criacao mapa conhecido contexto slam dead reckoning 
+ sequencia movimentacao realizada robo definida 
+ encoder dispositivo optico conta reproduz pulsos eletricos partir movimento ut 
+ ut rotacional eixo 
+ unidade medicao inercial dispositivo eletronico medicao aceleracao orientacao forca gravitacional usando combinacao acelerometros giroscopios magnetometros 
+ definicao problema objetivo corrigir erros inerentes odometria robo observa ambiente onde navega 
+ considerando mapa real ambiente tipicamente estatico composto objetos superficies pontos referencia cada pista encontrada nesse ambiente possui posicao real representada mi onde representa iesimo landmark nesse ambiente 
+ considerando robo observa ambiente cada instante tempo perda generalizacao adquire apenas observacao cada instante sequencia todas medicoes tomadas robo pontos referencia encontrados ambiente dada zt 
+ partir dessa notacao literatura define duas formas principais resolucao problema slam offline slam online 
+ thrun slam offline resolucao problema offline conhecida slam completo calcula probabilidade estimativa posicao todos lugares percorridos robo juntamente mapa representada seguinte equacao xt mzt ut 
+ escrita dessa forma abordagem baseiase calcular probabilidade posterior conjunta sobre xt base todos dados adquiridos momento atual 
+ notase variaveis direita barra condicional diretamente observaveis robo 
+ algoritmos slam completo executados normalmente lote proces sando todos dados tempo 
+ vista disso possuem custo computacional maior comparado versao online 
+ slam online igualmente importante anterior procura descobrir apenas posicao atual robo inves todo caminho percorrido sendo definido seguinte equacao xt mzt ut 
+ definicao problema definicao online baseiase concepcao problema slam cadeia markov representado figura onde estado atual representa todas posicoes anteriores percorridas robo bem acoes executadas 
+ figura formulacao grafica problema slam online independente forma escolhida tratamento problema online offline partindo dessa formulacao classica necessaria definicao modelo observacao mapa modelo movimentacao robo 
+ modelo observacao relaciona leitura sensorial obtida posicao atual robo 
+ seguindo mesma notacao podemos definilo ztxt 
+ onde buscase calcular probabilidade medicao zt dado posicao atual mapa 
+ forma semelhante definese modelo movimentacao relaciona posicao atual robo posicao anterior dado robo executou determinada acao xtxt− ut 
+ onde buscase estimar posicao atual dada posicao anterior ultimo controle executado 
+ tipos mapa existem dois tipos mapas gerados sistema slam thrun mapa topologico mapa metrico 
+ definicao problema mapas topologicos armazenam apenas descricao qualitativa ambiente caracterizando relacoes vizinhanca locais mapa local adjacente local 
+ mapas metricos proveem informacao metrica ligacao locais local frente local 
+ abordagens probabilisticas resolucao problema slam normalmente descrevem ambiente mapa metrico 
+ outro lado evidencias humanos utilizamos informacoes topologicas navegacao 
+ formulacao baseada trajetoria robo diferentemente formulacao classica descrita anteriormente possivel formulacao alternativa problema onde resolucao baseiase construcao mapa trajetoria percorrida robo 
+ cada instante tempo armazenase leitura sensorial capturada ambiente juntamente posicao onde adquirida durrantwhyte bailey 
+ formulado dessa forma sistema fornece mapa ambiente diretamente sim estima todo caminho percorrido robo onde cada posicao registra representacao qualitativa ambiente formando mapa topologico 
+ exemplo cada posicao mapa relacionada imagem capturada tempo ligada posicao percorrida tempo − formando ligacoes topologicas mapa 
+ formulacao particularmente adequada ambientes onde identificacao pistas discretas tarefa complexa tornando alinhamento direto dados capturados simples robusto 
+ ambiente subaquatico bom exemplo onde deteccao landmarks robustos sempre possivel devido alta ambiguidade dados capturados ambiente 
+ alem disso formulacao torna viavel mapeamento ambientes extensos quilometros distancia percorrida robo 
+ abordagens resolucao problema historicamente problema slam tratado abordagens probabilisticas devido incertezas relacionadas movimentacao robo sensores exteroceptivos alem dificuldade associacao landmarks ambiente 
+ dentre abordagens pro babilisticas podese citar slam baseado filtro kalman extendido ekfslam fastslam outros 
+ classe algoritmos probabilisticos parte seguintes premissas proxima posicao robo depende posicao atual controle aplicado capitulo 
+ definicao problema robo thrun 
+ xtxt− ut leitura sensorial atual depende posicao robo mapa ztxt 
+ solucao problema transformase resolucao iterativa dessas equacoes motivo algoritmos dessa classe chamados filtros thrun alternativa abordagem classica surgiu abordagem bioinspirada foco presente trabalho 
+ nela buscase modelar capacidade localizacao mapeamento animais objetivo desenvolver algoritmos robustos resolucao problema slam 
+ proximas subsecoes apresentarao duas abordagens resolucao pro blema probabilistica bioinspirada juntamente principais algoritmos desenvolvidos cada area 
+ abordagens probabilisticas partindo definicao classica problema slam desenvolveuse varias classes algoritmos probabilisticos 
+ aqui detalhados dois algoritmos servem base grande parte variacoes surgiram desenvolvimento problema 
+ filtro kalman estendido filtro particulas 
+ filtro kalman extendido filtro kalman estendido ekf extensao filtro kalman desen volvido kalman 
+ historicamente algoritmo pioneiro aplicado resolucao problema slam 
+ introduzido smith cheeseman ekfslam primeiro algoritmo propor uso unico vetor estados estimar posicao robo conjunto features ambiente associado matriz covariancia relacionada incerteza estimativa incluindo correlacao dados vetor estados 
+ ekfslam representa vetor estados distribuicao gaussiana multi variada xt mzt ut ∼ μt σt 
+ onde vetor μt contem melhor estimativa posicao robo features ambiente 
+ matriz σt matriz covariancias relacionada estimativa μt 
+ definicao problema modelo movimentacao modo similar aproximado distribuicao gaussiana multivariada 
+ posicao robo tempo apos aplicacao acao controle ut sobre estado xt− calculada funcao xt− ut 
+ nova estimativa posicao entao aproximada xtxt− ut ∼ xt− ut rt 
+ incerteza movimentacao representada matriz covariancia rt 
+ vez modelo observacao estima posicao features mapa acordo posicao robo estimado ztxt ∼ xt qt 
+ onde funcao xt retorna posicao landmark ambiente matriz covariancia qt representa erro associado medicao 
+ medida novos landmarks observados novos estados adicionados vetor estados μt fazendo matriz covariancia cresca quadraticamente numero features existentes mapa 
+ geral abordagem probabilistica assume representacao metrica ambiente baseada features pontuais 
+ figura ilustra funcionamento algoritmo ekfslam ambiente composto oito landmarks pontuais representados estrelas 
+ robo inicia deslocamento ambiente linha tracejada figura 
+ simultaneamente observa features dispostas ambiente alocando posicoes vetor estados 
+ incerteza movimentacao robo responsavel estimativa cada vez longe realidade elipses cinzas figura 
+ mesma forma posicoes landmarks cada vez imprecisas elipses brancas figura 
+ final deslocamento figura 
+ robo reobserva landmarks conhecidos ocorrendo processo conhecido fechamento loop 
+ nesse instante algoritmo corrige erro estimativa posicao robo propagando correcao todas features previamente observadas robo 
+ confiabilidade mapa aumentada 
+ aplicacao filtro kalman resolucao problema slam bem definida literatura herda mesmos beneficios problemas solucoes ekf problemas localizacao 
+ problemas convergencia custo computacional associacao dados linearidade sistemas durrantwhyte bailey 
+ filtro kalman estendido aplica linearizacao modelos movimen tacao observacao quais inerentemente lineares 
+ quantidade incerteza deve ser consideravelmente pequena senao processo linearizacao tendera capitulo 
+ definicao problema figura exemplo operacao ekf slam 
+ elipses demonstram incerteza ligada localizacao robo pontos referencia 
+ robo encontra novamente marcador conhecido cuja posicao sabe grau aceitavel atualiza posicao atual posicao outros marcadores levando melhor estimativa posicao posicao todos pontos referencia previamente observados ambiente 
+ thrun introduzir erros intoleraveis sistema 
+ convergencia consistencia garantidas caso linear 
+ escalabilidade metodo precisa levar conta natureza quadratica matriz covariancia limitando normalmente numero landmarks criados 
+ alem disso metodo apresenta melhores resultados ambientes pouca ambiguidade landmarks 
+ caso associacao dados incorreta mapa pode chegar estado inconsistente 
+ filtro particulas filtro particulas tecnica utilizada aproximar distribuicoes probabilidade arbitrarias conjunto amostras 
+ reside abordagem parametrica implementacao filtro bayesiano metropolis ulam 
+ ideia principal filtro pode ser vista figura onde conjunto amostras capitulo 
+ definicao problema utilizado aproximacao funcao gaussiana 
+ figura exemplo conjunto particulas aproximacao funcao gaus siana principal vantagem filtro particulas frente ekf reside capacidade representacao estimativas multimodais 
+ contexto slam cada amostra fara estimativa todo caminho percorrido robo posicao landmarks ambiente 
+ limitacao filtro particulas padrao correta estimativa estado atual sistema necessario conjunto grande particulas 
+ dessa forma crescimento algoritmo tornase exponencial numero features armazenadas mapa 
+ aplicacao desse metodo resolucao problema slam possivel apos trabalhos doucet al 
+ tornando algoritmo computacionalmente possivel ser implementado 
+ implementacao ficou conhecida fastslam 
+ cada instante tempo algoritmo mantem amostras 
+ sendo indice amostra generica cada amostra composta 
+ μ μ σk 
+ dessa forma cada particula contera estimativa todo caminho percorrido robo capitulo 
+ definicao problema gaussianas representando posicao landmarks ambiente representadas sendo ≤ ≤ indice landmark 
+ variancia σk media μ partir dessa definicao podese notar particulas irao estimar possiveis caminhos alem kn gaussianas representando estimativas diferentes posicao landmarks ambiente 
+ tornar filtro computacionalmente viavel fastslam aplica tres tecnicas raoblackwellization independencia todo caminho estimativa posicao landmark reamostragem 
+ fastslam resolve slam completo onde cada particula estimativa todo caminho slam online pois cada atualizacao utiliza apenas posicao recente 
+ principal vantagem utilizacao fastslam possibilidade manter multiplas hipoteses associacao dados obtendo convergencia associacao dados desconhecida 
+ alem disso algoritmo pode ser implementado forma eficiente explorando metodos armazenamento estimativa mapa arvore 
+ atualizacao pode ser executada tempo logaritmico tamanho mapa linear numero particulas thrun 
+ pode notar tando ekfslam quanto fastslam possuem vantagens limitacoes havendo melhor opcao todo tipo ambiente ser mapeado 
+ filtro kalman possui limitacao custo computacional ser quadratico numero landmarks alocados ambiente dificultando escalabilidade grandes ambientes 
+ entanto varias implementacoes obtiveram sucesso aplicacao ekf slam dissanayake al 
+ ainda varias variacoes ekf slam focando principalmente escalabilidade criacao submapas locais interconectados es trada neira tardos ribas al 
+ tornando tempo atualizacao filtro dentro limite aceitavel 
+ fastslam outro lado naturalmente indicado solucoes onde associacao dados desconhecida montemerlo thrun 
+ possui atualizacao eficiente comparado ekf executando tempo linear logaritmico 
+ ponto negativo numero necessario particulas correta aproximacao mapa pode crescer especialmente trajetos multiplos loops entrelacados tornando inviavel utilizacao 
+ alternativa metodos probabilisticos busca solucoes limitacoes surgem algoritmos inspirados natureza explorados proxima secao 
+ abordagens bioinspiradas recentemente surgiram novas abordagens resolucao problema slam afastandose abordagens probabilisticas 
+ ganham destaque abordagens inspiradas natureza quais buscam aplicar modelos comportamentais animais criandose pode chamar animats mistura palavras inglesas animalscom robots 
+ aliados descobertas neurociencia surgem metodos inspirados comportamento cerebral mamiferos exemplo ratslam 
+ algoritmo ratslam busca aplicar modelos cerebrais cerebro ratos resolver problema slam 
+ criado milford wyeth algoritmo modela sistemas cerebrais relacionados tarefas localizacao descobertos neurocientistas 
+ neuronios podese citar place cells celulas cuja atividade sinaptica aumenta sempre rato passa determinada regiao ambiente 
+ algoritmo servira base metodo aqui proposto sendo melhor explicado capitulo principal vantagem ratslam podese citar escalabilidade 
+ etapa atualizacao estimativa posicao independente numero criados mapa dependendo apenas numero neuronios existentes rede neural 
+ alem disso rede capaz trabalhar multiplas estimativas posicao similar filtro particulas quais competem si acordo dinamica rede 
+ milford demonstrou capacidade utilizacao metodo criacao mapas longa duracao lifelong maps devido capacidade atualizacao nodos criados mapa 
+ metodo serve base presente trabalho explicado detalhes proximas secoes 
+ outro metodo bioinspirado resolucao problema slam proposto barrera weitzenfeld 
+ diferente ratslam foco trabalho desenvol vimento sistema cognitivo totalmente bioinspirado servindo base testes modelos neurosciencia 
+ resultados obtidos comparados experimentos classicos navegacao ratos ambientes simples obtendo resultados similares 
+ atualmente problema slam considerado problema resolvido ambi entes estruturados estaticos porem continua problema aberto ambientes complexos 
+ ambiente subaquatico apresentase cenario pouco estruturado onde aplicacao direta metodos existentes tornase inviavel 
+ problemas variam desde dificuldade detectar landmarks robustos necessidade novos algoritmos sensores diferentes 
+ proximo capitulo apresentara caracteristicas ambientes subaquaticos capitulo 
+ definicao problema analisando desafios encontrados nesses ambientes sensores utilizados robos navegacao 
+ slam ambientes subaquaticos proximas secoes apresentarao desafios encontrados ambiente subaquatico seguido principais sensores utilizados nesses ambientes 
+ figura tipico ambiente subaquatico extracao petroleo 
+ desafios encontrados ambiente subaquatico possui gama novos desafios robotica comecando sensores utilizados nesses ambientes 
+ devido caracteristicas meio aquatico grande parte sensores utilizados robotica terrestre aplicaveis dificil utilizacao nesse cenario 
+ principal motivo inviabilidade utilizacao sensores nesse ambiente diz respeito caracteristicas fisicas meio 
+ sensores baseados ondas radio gps masumoto sofrem atenuacao sinal corrente meio 
+ ainda aplicacao sensores baseados ondas luz cameras light amplification stimulated emission radiation laser possuem restricoes devido alta atenuacao luz meio 
+ sensores apropriados apenas aplica coes necessitem grande alcance 
+ alem disso dependendo profundidade operacao necessidade fonte iluminacao acoplada sistema robotico 
+ principal alternativa adotada nesses ambientes utilizacao sensores baseados ondas sonoras quais facilmente propagadas meio aquatico possuindo grande alcance baixa atenuacao 
+ slam ambientes subaquaticos presenca meio liquido implicacao caracteristicas perceptivas veiculo traz novos desafios robotica sendo necessario desenvolvimento algoritmos tratamento desses dados sensoriais explorando peculiaridades cada sensor 
+ problema questao principal desafio algoritmos devem enfrentar diz respeito deteccao pontos caracteristicos robustos ambiente 
+ dificuldade deteccao pistas salientes cena pontos caracteristicos possam ser identificados toda vez campo visao robo 
+ questao deve ser enfrentada criandose algoritmos eficientes deteccao desses pontos caracteristicos 
+ sensores utilizados aqui apresentados principais sensores utilizados ambiente subaquatico explicitando informacao adquirida utilizacao cada bem vantagens desvantagens 
+ informacao sobre sensores utilizados nesses ambientes pode ser encontrada paull al 
+ sensores divididos tres categorias sensores posicionamento sensores percepcao sensores movimentacao 
+ sensores posicionamento sensores posicionamento capazes prover robo pose sistema coordenadas fixo bem orientacao encontra 
+ subdividemse sensores localizacao som sensores profundidade altitude sensores orientacao 
+ sensores localizacao som subsecao 
+ buscam preencher lacuna existente robotica subaquatica devido inexistencia gps 
+ funcionamento baseiase triangulacao sinais sonoros enviados transponders quais podem ser instalados fundo mar superficie agua casco navios 
+ sensores profundidade altitude subsecao 
+ responsaveis localizacao robo eixo vertical 
+ nessa classificacao existem sensores medir distancia robo superficie distancia robo fundo mar 
+ sensores orientacao secao 
+ responsaveis estimativa orientacao robo ambiente podendo ser absoluta baseada eixo rotacao terra relativa caso giroscopios 
+ sensores localizacao som devido alta atenuacao ondas radio abaixo superficie agua sistemas posicionamento global gps podem ser utilizados 
+ alternativa existe capitulo 
+ slam ambientes subaquaticos possibilidade implantacao sistema posicionamento local operacao 
+ abaixo detalhadas principais tecnologias existentes estimar posicionamento subaquaticos 
+ usbl ultra short baseline positioning system usbl metodo posicionamento acustico subaquatico mostrado figura 
+ composto transciever normalmente montado casco navio transponder instalado plataforma robotica 
+ cada transciever possui quatro transducers captacao sinal resposta robo 
+ posicao robo entao calculada base tempo propagacao onda sonora robo navio 
+ figura sistema usbl 
+ transponder fixado navio envia sinal sonoro respondido robo captado transdutores navio 
+ localizacao calculada base tempo resposta 
+ configuracao normalmente utilizada rovs posicao deve ser conhecida unidade central controle localizada navio 
+ utilizacao desse sistema auvs equipamentos invertidos modo transciever acoplado robo permitindo descoberta localizacao 
+ nome usbl devese configuracao transdutores quais separados curta distancia baseline aproximadamente cm 
+ sistema possui precisao aproximadamente sendo indicado tarefas alto risco operacoes abaixo gelo instalacao pocos extracao petroleo 
+ slam ambientes subaquaticos sbl short baseline positioning system sbl outro metodo posicionamento acustico subaquatico mostrado figura 
+ metodo utilizada tres transponders distribuidos superficie agua presos casco navio 
+ posicao veiculo calculada base tempo resposta onda emitida cada transponder veiculo utilizando tecnica triangularizacao similar sistema gps 
+ figura sistema sbl 
+ varios transponders fixados casco navio quais enviam sinais sonoros respondidos robo captados transdutores navio 
+ localizacao calculada base tempo resposta 
+ baseline distancia transponders maior utilizada usbl limitandose normalmente algumas dezenas metros principalmente presas casco navio 
+ precisao localizacao calculada sistema fixa aumenta numero transponders utilizados distancia 
+ dependendo configuracao utilizada sistema pode ser utilizado tarefas exijam precisao 
+ lbl terceira tecnologia localizacao amplamente utilizada robotica su baquatica long baseline positioning system lbl mostrada figura 
+ consiste conjunto transponders espalhados fundo oceano cercando area onde sistema robotico realizara tarefas 
+ nesse sistema distancia transponders maior distancia robo cada transponders 
+ precisao maior comparado anteriores cerca cm ampla aplicacao industria instalacao equipamentos fundo oceano 
+ slam ambientes subaquaticos figura sistema lbl 
+ varios transponders colocados fundo mar quais respondem ondas sonoras enviadas robo permitindo robo calcule posicao base tempo resposta cada transdutores 
+ entanto sistema possui maior dificuldade instalacao pois necessita colocacao transponders fundo mar seguido etapa georreferenciamento cada transponder 
+ sensores profundidade altitude secao anterior listou principais tecnologias localizacao absoluta robos ambiente aquatico 
+ sistemas proveem localizacao tres eixos coordenados 
+ entanto existem solucoes custo menos elevado descoberta profundidade altitude robo encontrase 
+ solucoes listadas seguir 
+ altimetro altimetro sensor sonoro instalado robo modo enviar onda direcao fundo oceano figura 
+ equipamento mede tempo retorno onda fim estimar distancia robo fundo mar 
+ equipamento possui facil instrumentacao necessitando colocacao transponders ambiente 
+ slam ambientes subaquaticos figura exemplos altimetros comerciais utilizacao robotica subaquatica sensor pressao sensor pressao equipamento baixo custo medir profundidade robo quantidade coluna dagua acima 
+ tecnologias comuns leitura pressao coluna dagua medidores tensao cristais quartzo kinsey eustice whitcomb 
+ principais vantagens desse dispositivo baixo custo aumento linear pressao meio aquatico acordo profundidade robo 
+ sensores orientacao sensores orientacao responsaveis calcular orientacao absoluta robo 
+ chamados sensores atitude 
+ bussola bussola magnetometro equipamento magnetico capaz medir vetor campo magnetico terra 
+ equipamento possui precisao superior 
+ restricao sistema sofre interferencia forcas magneticas geradas proprio robo equipamentos operando proximidades acarreta erros medicao 
+ figura apresenta exemplo bussola 
+ giroscopio similar bussola dispositivo mede orientacao robo 
+ ori entacao pode ser medida relacao dois tres eixos coordenados 
+ existem tres tecnologias comerciais capazes fazer leitura orientacao cada vantagens desvantagens 
+ giroscopio rotacional utiliza disco alta rotacao rotacao terra estimar orientacao 
+ afetado forcas magneticas externas entanto capitulo 
+ slam ambientes subaquaticos figura imagem ilustrativa bussola digital eixo 
+ sujeito erro medicao crescente tempo havendo necessidade reset apos certo periodo operacao 
+ segundo giroscopio utiliza vibracao estruturas mecanicas modo obter leitura orientacao 
+ sistema facilmente encontrado comercialmente podendo ser produzido tamanho reduzido devido ausencia partes moveis porem ainda existencia erros devido tempo operacao 
+ terceiro tipo consiste giroscopio otico contem partes moveis sendo suscetivel erros tempo operacao 
+ precisao depende apenas constancia velocidade luz 
+ motivo dispositivo amplamente utilizado robotica estando presente maioria robos moveis subaquaticos 
+ sensores proprioceptivos citado anteriormente falta sistema posicionamento global meio subaquatico faz busquem solucoes alternativas 
+ sistemas localizacao som desenvolvidos limitam operacao robo pequenas areas curtas distancias navio acompanhamento 
+ alternativa existem dispositivos capazes adquirir informacoes sobre movimentacao robo aceleracao velocidade 
+ dispositivos detalhados abaixo 
+ unidade medicao inercial unidade medicao inercial fig 
+ conhecida unidade medicao inercial imu dispositivo capaz prover informacoes acerca aceleracao linear robo velocidade angular 
+ imu normalmente composta conjunto acelerometros giroscopios alguns casos magnetometros 
+ slam ambientes subaquaticos figura imu xsens opcao comercial unidade medicao inercial 
+ dispositivo pode ser utilizado localizar robo sistema fixo posicao inicial trajetoria integrando informacoes aceleracao acordo orientacao instantanea robo adquirida giroscopios magnetometros 
+ principal desvantagem desse sistema erro inerente integracao crescendo longo deslocamento robo 
+ doppler velocity log doppler velocity log dvl equipamento capaz medir velocidade veiculo deslocando meio propagacao ondas sonoras 
+ dispositivo emite ondas quatro direcoes mede retorno onda 
+ retorno pode ser provocado partir particulas agua utilizando fundo oceano 
+ ultima opcao possui maior precisao entanto necessita robo desloquese distancia maxima fundo oceano 
+ figura exemplo dvl comercial 
+ sensor possui precisao superior imu localizacao robo entanto possui erro crescente longo deslocamento 
+ dvl imu capitulo 
+ slam ambientes subaquaticos normalmente utilizadas conjunto criacao sistema navegacao auvs 
+ camera sensores utilizados aplicacoes roboticas inteligentes camera instrumento otico captura imagens formadas feixes fotons frequencia visivel ambiente observado 
+ ponto forte emprego desse sensor baixo custo aquisicao havendo varios modelos disponiveis comercialmente facilita utilizacao robotica subaquatica 
+ principal desvantagem utilizacao desses sensores baixo alcance meio subaquatico devido alta atenuacao ondas luz nesse meio fisico 
+ tornase possivel apenas utilizacao tarefas distancia objetos observados robo curta exemplo inspecoes equipamentos industria oleo gas captura vida marinha existente fundo oceanos 
+ entanto frisase utilizacao robos autonomos atrelada capacidade processar informacoes forma online pois simples envio video fio robo unidade controle superficie 
+ normalmente robos equipados cameras diferentes campos visao 
+ existencia apenas lente camera tratase camera monocular figura 
+ possui lente separadas distancia lateral tratase camera estereoscopica figura 
+ ultima capaz inferir distancia objetos existentes cena previamente calibrada 
+ camera estereoscopica pode ser formada duas cameras monoculares sincronia captura figura 
+ figura exemplos cameras empregadas robotica subaquatica 
+ slam ambientes subaquaticos 
+ laser laser equipamento capaz captar distancias objetos existentes redor robo 
+ apesar ser amplamente utilizado robotica terrestre aplicacao ambientes subaquaticos limitada devido uso ondas luz operacao 
+ caracteristica limita alcance deteccao sensores 
+ existem equipamentos especificos ambiente subaquatico quais fazem tratamento ruidos inerentes fenomeno backscaterring existente propagacao onda luz agua sendo capaz reduzir erro medicao causados meio 
+ entanto aplicacao desses sensores limitada tarefas cuja distancia objetos poucos metros 
+ utilizacao tao difundida devido alto custo aquisicao desses equipa mentos 
+ exemplo laser existente mercado mostrado fig 
+ figura laser subaquatico 
+ imagem extraida laser 
+ sonar inumeras tecnologias desenvolvidas aquisicao informacoes ambi ente subaquatico navegado uso ondas sonoras 
+ tecnologias variam desde descoberta obstaculos frente veiculo criacao mapas batimetricos completa definicao tipos sedimentos encontrados ambiente 
+ contexto robotica subaquatica criados equipamentos serem integrados veiculos desde sensores especificos navegacao sensores realizacao analises oceanograficas 
+ sensores subdividemse dois grupos sonares distancia sonares imageamento 
+ primeira categoria prove informacoes sobre distancia objetos partir leitura onda emitida 
+ segunda categoria capaz criar imagem ambiente escaneado partir envio multiplas ondas 
+ seguir apresentados principais tecnologias comerciais existentes 
+ slam ambientes subaquaticos single beam sonar tipo sonar emite apenas pulso sonoro vez 
+ partir tempo envio onda recebimento calculada distancia robo objetos 
+ figura apresenta funcionamento dispositivo 
+ altimetro apresentado subsecao 
+ utiliza tecnologia calcular distancia veiculo encontrase fundo oceano 
+ figura single beam sonar 
+ imagem extraida sonares 
+ multi beam sonar tipo sonar emite varios pulsos sonoros simultaneamente direcao fundo mar 
+ cada pulso emitido angulo inclinacao diferente possibilitando aquisicao todo relevo abaixo robo unica leitura 
+ dispositivo amplamente utilizado criacao perfil fundo mar pode ser visto figura 
+ side scan sonar tipo sonar emite duas ondas sonoras cada lado equipamento modo fazer leitura fundo oceano 
+ sonar possui caracteristica detectar tipo solo existente fundo oceano acordo intensidade onda retornada 
+ pode ser visto figura 
+ sonar amplamente utilizado analisar tipo solo objeto existente fundo oceano 
+ slam ambientes subaquaticos figura multi beam sonar 
+ imagem extraida sonares 
+ figura funcionamento sonar tipo sidescan 
+ sonar envia dois feixes sonoros laterais fazer varredura fundo mar 
+ imagem extraida sonar 
+ mechanically imaging sonar sonar capaz criar perfil objetos existentes redor veiculo 
+ cria imagem partir retorno pulsos emitidos dispositivo 
+ pulsos emitidos vez variando angulo envio onda sonora modo onda interferencias ondas 
+ varredura capturada sonar tipo mecanico pode ser visto figura 
+ tipo sonar sido bastante aplicado resolucao problema slam williams al 
+ slam ambientes subaquaticos figura imagem adquirida sonar imageamento mecanico 
+ forward looking imaging sonar sonar capaz criar imagem fundo mar mostrado figura 
+ imagem pode ser processada descoberta tipo solo existente fundo oceano bem deteccao objetos 
+ tecnologia sido utiliza metodos slam ultimos anos 
+ leonard carpenter feder walter hover leonard figura sonar tipo forward looking comercial exemplo imagem capturada 
+ slam ambientes subaquaticos 
+ estado arte slam subaquatico primeira solucao problema slam subaquatico validada dados reais apresentada pesquisadores universidade sydney australia ano 
+ apresentaram algoritmo detecta cilindros colocados ambiente partir leitura sonar mecanico imagem 
+ posicao dessas features mapeada juntamente posicao atual robo usando filtro kalman estendido ekf 
+ robo utilizado aquisicao dados auv oberon equipado sensor pressao giroscopio fibra otica tres eixos 
+ robo utiliza sensores conjunto sonar criacao mapa ambiente 
+ principal desvantagem custo computacional abordagem possuindo complexidade quadratica numero features ambiente limitando aplicacao ambientes poucas features 
+ ano leonard carpenter feder massachusetts institute technology usa apresentou algoritmo utilizando sonar imagem tipo forward looking onde extraidos features pontuais criacao mapa baseado filtro kalman extendido 
+ algoritmo testado dados reais expedicao sensores comuns robos subaquaticos montados estrutura lateral navio 
+ algoritmo utilizou dados dvl imu estimativa navegacao sistema posicionamento global diferencial dgps ground truth 
+ resultados comparados dead reckoning obtendo melhor estimativa posicionamento robo 
+ metodo possui mesmas restricoes escalabilidade encontradas williams al 
+ ano tena al 
+ desenvolveu metodo extracao features imagens sonar mecanico posterior associacao desses dados utilizando algoritmo multiple hypothesis tracking filter mhtf criacao mapa utilizando ekf 
+ algoritmo mhtf mostrouse inviavel devido custo exponencial numero hipoteses utilizadas possiveis associacoes 
+ paul newman colegas massachussets institute technology mit publicaram dois trabalhos slam subaquatico sobre dados capturados auv caribou expedicao aguas rasas costa italia 
+ primeiro trabalho newman leonard apresentaram metodo mapeamento localizacao utilizando apenas dados distancia transponders sistema lbl 
+ metodo possuia informacao priori sobre posicoes transponders posicao robo resolvendo problema tanto localizacao robo quanto localizacao transponders apresentando boa abordagem auto calibracao sistema lbl 
+ entanto apresentado autores metodo apresentava grande sensibilidade correta inicializacao posicoes transponders 
+ slam ambientes subaquaticos segundo trabalho newman leonard rikoski apresentaram proposta slam tempo constante utilizacao ekf limite features criacao submapas locais 
+ algoritmo extrai features pontuais sonar abertura sintetica entanto associacao dados feita forma manual 
+ resultados comparados ekf completo obtendo resultados similares vantagem execucao tempo constante 
+ ruiz petillot lane apresentaram metodo slam utilizando sidescan sonar ekf 
+ extracao features realizada forma manual bem associacao dados 
+ utilizacao desse tipo sonar viavel robo passa vez determinada trajetoria possibilitando ocorrencia fechamento loop 
+ ano williams mahon desenvolveram metodo capaz fazer fusao sensorial dados sonar imagens camera otica 
+ features detectadas sonar projetadas imagem camera sendo rastreadas frame frame algoritmo fluxo otico lucaskanade 
+ metodo trata fechamento loop grande distancias 
+ ainda eustice pizarro singh apresentam algoritmo slam visual capaz estimar posicao robo seis graus liberdade onde obtiveram excelentes resultados aplicando ekf todo historico posicoes percorridas robo 
+ algoritmo chamado visual augmented navigation van 
+ roman singh apresentam metodo baseado filtro kalman estendido estimativa todo percurso navegado robo 
+ plataforma utilizada rov jason mit equipado sonar tipo multibeam aquisicao dados batimetricos ambiente sensores navegacao dvl sensores atitude pressao 
+ algoritmo implementa criacao submapas batimetricos possuindo maior escalabilidade comparado apenas mapa global 
+ deteccao loops feita partir comparacao dados recebidos sonar 
+ dados validados comparandose resultados sistema lbl dead reckoning 
+ cooperacao espanha canada saez al 
+ publicaram trabalho explorando odometria visual robo aqua equipado camera stereo 
+ metodo cria mapa denso imagens aplicando algoritmo minimizacao entropia melhorar qualidade mapa 
+ apesar obter resultados favoraveis algoritmo possui alto custo computacional estando limitado execucoes offline devido processo otimizacao mapa 
+ periodo olson leonard teller estenderam metodo senvolvido newman leonard tratando limitacoes inicializacao posicionamento transponders lbl 
+ realizam filtragem ruido capitulo 
+ slam ambientes subaquaticos leitura distancia transponders removendo outliers fazendo votacao possivel posicao transponder 
+ posicao utilizada inicializacao posicio namento transponder ekf superando limitacao existente metodo anterior resolvendo problema localizacao tanto robo quanto transponders 
+ objetivo mapear formacao rochosa imersa agua mexico pesquisadores carnegie mellon university eua desenvolveram metodo baseado grades ocupacao utilizando octrees possibilitar execucao tempo real fairfield kantor wettergreen 
+ metodo estende algoritmo fastslam baseado grade ocupacao ambientes 
+ aquisicao dados feita sonar personalizado beams direcionais distribuidos longo cilindro modo varrer toda lateral robo 
+ entanto devido custo computacional aplicacao viavel navegacoes longas 
+ eustice pizarro singh publicaram extensao algoritmo desenvolvido eustice pizarro singh detalhando melhor metodo aplicandoo outros ambientes 
+ apresentam utilizacao algoritmo bag words deteccao loops sobre imagens odometria visual calculo deslocamento duas posicoes percorridas robo 
+ problema complexidade quadratica filtro kalman tratado trabalho mahon al 
+ onde ekf substituido filtro informacao estendido reduzindo complexidade computacional algoritmo 
+ ano espanha ribas al 
+ apresentaram metodo slam ambientes semiestruturados feitos homem utilizando sonar imagem mecanico explorando caracteristicas geometricas desses ambientes 
+ plataforma testes utilizado robo ictneu equipado dvl giroscopios dgps ultimo utilizado ground truth 
+ imagem sonar processada algoritmo hough deteccao linhas quais inseridas mapa 
+ algoritmo utilizado baseavase filtro kalman estendido criacao submapas reducao custo computacional 
+ resultados demonstraram vantagem metodo frente deadreckoning 
+ ainda walter hover leonard apresentaram metodo inspecao cascos embarcacoes utilizando algoritmo exactly sparse extended infor mation filter 
+ landmarks adicionados ambiente sendo capturados uso sonar imagem tipo forward looking associacao dados feita forma manual 
+ desenvolveram metodo baseado scan matching probabilistico sobre imagem sonar mecanico 
+ algoritmo testado dataset utilizado ribas al 
+ obtendo precisao superior nesse ambiente 
+ proximo ano burguera gonzalez oliver exploraram criacao capitulo 
+ slam ambientes subaquaticos ekf mapa centrado posicao atual robo objetivando diminuicao erro fechamento loops 
+ resultados apresentaram maior precisao comparado criacao mapas referenciados ponto ambiente 
+ exploram criacao tempo real mosaico fundo mar 
+ metodo utiliza algoritmo speedup robust features surf bay tuytelaars gool deteccao features imagens eliminando falsos positivos associacao dados 
+ alem disso alcancar execucao tempo real autores criam pequenos mosaicos locais unidos criacao mosaico global 
+ nesse ano barkby al 
+ desenvolveram slam batimetrico utilizando filtro particulas raoblackwellized regressao processos gaussianos 
+ vetor estados cada particula armazena toda trajetoria robo sendo resultados obtidos semelhantes aplicacao filtro particulas gride ocupacao porem menor custo computacional menor utilizacao memoria 
+ kim eustice apresentaram metodo interessante slam visual 
+ superar problemas baixa visibilidade features limitadas cenario comum ambiente subaquatico imagens capturadas processadas equalizacao contraste posteriormente calculado grau saliencia existente imagem relacao frame anterior armazenado 
+ metrica utilizase algoritmo bag words sivic zisserman responsavel identificacao keyframes registro algoritmo slam 
+ apos etapa calculada transformacao imagens selecionadas injetado algoritmo isam metodo slam grafico tempo real 
+ grande maioria trabalhos desenvolvidos area utiliza abordagem probabilistica resolucao problema utilizando filtros ekf filtro particulas filtro informacao estendido eif 
+ contornar limitacao escalabilidade maioria autores busca reducao numero landmarks armazenados mapa criacao varios submapas 
+ existem ainda algumas solucoes promissoras utilizando slam grafico baseados otimizacao eficiente trajetoria percorrida robo 
+ existem solucoes tempo real utilizado kim eustice 
+ sensores existe prevalencia utilizacao sonares principalmente capacidade capturar informacoes navegando longe fundo oceano 
+ entanto tarefas inspecao intervencao muitos pesquisadores optado utilizacao sensores oticos 
+ proximo capitulo apresentara metodos tomados base presente trabalho 
+ metodos presente capitulo abordara dois metodos serviram base senvolvimento presente trabalho 
+ primeiramente detalhado funcionamento algoritmo ratslam desenvolvido milford wyeth 
+ logo seguida explicado metodo fabmap desenvolvido cummins newman 
+ ratslam milford wyeth buscaram inspiracao natureza propor nova forma resolver problema slam robotica 
+ encontraram neurosciencia estudos mecanismos cerebrais mamiferos quais relacionados tarefas navegacao 
+ base estudos neuroscientistas criaram sistema capaz mapear ambientes desconhecidos localizar robo nesses ambientes 
+ mecanismos cerebrais encontrados mamiferos questoes relacionadas forma seres vivos percebem ambiente redor localizarse objeto estudo centenas anos mcnaughton al 
+ animais estudados ratos morcegos macacos outros 
+ resultado desses estudos descoberta neuronios especiais relacionados representacao espaco cerebro desses mamiferos 
+ neuronios espaciais primeiras descobertas remontam decada okeefe dostrovsky reportaram campos receptivos espaciais neuronios hippocampo ratos onde predominancia celulas tipo piramidal 
+ neuronios possuiam pecualiaridade aumentar taxa disparo acordo posicao rato ambiente 
+ virtude dessa relacao localizacao animal ambiente celulas denominadas place cells 
+ regiao ambiente onde ocorre aumento taxa disparo chamada campo disparo celula 
+ place cell possui apenas campo disparo ambiente 
+ entanto trafegar ambiente outro place cells remapeadas criando novos campos disparo 
+ celulas ancoradas ambiente meio pistas sensoriais landmarks 
+ movimentacao caracteristicas visuais ambiente exemplo rotacao paredes campos disparo place cells sofrem mesma rotacao moser kropff moser 
+ metodos outra caracteristica interessante diz respeito manutencao campos disparo ausencia informacoes sensorias externas 
+ rato navegando ambiente luz apagada campos disparo place cells mantidos alguns minutos implicando mamifero utiliza informacoes movimentacao propria entrada neuronios 
+ okeefe nadel propuseram place cells elementos basicos mapa topologico centrado distribuido 
+ gravacoes taxas disparo neuronios regiao postsubiculum roedores levaram descoberta celulas relacionadas orientacao cabeca mamifero taube muller jr 
+ motivo celulas chamadas head direction cells 
+ head direction cells forma similar place cells ancoradas ambiente meio landmarks visuais 
+ ainda cada head direction cell mantem campo disparo relativo outras head direction cells mcnaughton al 
+ celulas possuem nenhum comportamento relacionado posicao animal ambiente apenas orientacao 
+ algun anos tarde novos experimentos realizados ambiente maiores ≥ levaram descoberta neuronios multiplos campos espaciais disparo hafting al 
+ celulas encontradas principalmente entorhinal cortex mamiferos 
+ padrao disparo possui formato grade triangular cobre todo ambiente explorado animal motivo celulas chamadas grid cells 
+ grid cells aumentam campo disparo sempre mamifero cruza vertices grade triangular diminuindo disparo afastase vertices 
+ cada celula possui tres caracteristicas diferenciam orientacao grade espacamento grade fase moser kropff moser 
+ espacamento grade tende aumentar acordo posicao celula cerebro ratos formando grades menores regiao ventral maiores regiao dorsal mcnaughton al 
+ formacao grade sugere participacao desses neuronios sistema metrico representacao ambiente hafting al 
+ similar place cells encontradas hippocampo 
+ figura apresenta esquema representativo campo disparo celulas acordo posicao orientacao rato ambinete 
+ primeira celula representa comportamento ideal place cell apenas campo disparo ambiente nenhuma relacao orientacao cabeca animal 
+ segunda celula grid cell apresentando padrao disparos formato grade triangular qualquer relacao orientacao rato ambiente 
+ ultimo apresentada head direction cell cujo padrao disparo relacionado orientacao cabeca rato 
+ metodos figura celulas idealizadas encontradas cerebro mamiferos 
+ place cell grid cell head direction cell 
+ imagem modificada wyeth milford 
+ integracao caminho modelos atuais campos disparo grid cells sugerem celulas integram sinais velocidade direcao oriundos outras partes cerebro embora ainda clara origem desses sinais proprioceptivos moser kropff moser 
+ nesse contexto informacoes visuais capturadas ambiente utilizadas calibracao inicial correcao erro intrinseco acumulado associado integracao velocidade 
+ moser kropff moser 
+ sugestoes ratos integram velocidade angular surgiram descobrimento head direction cells 
+ apos descobrimento mecanismos integracao caminho existentes cerebro ratos tornouse claro mesmos apenas conseguem calcular vetor direcional determinado ponto arena sim manter tipo mapa representativo ambiente utilizando pistas visuais informacoes movimentacao propria mcnaughton al 
+ descobrertas ainda certeza acerca neuronios responsaveis integracao caminho evidencias sugerem grid cells capitulo 
+ metodos responsaveis tarefa 
+ decorre caracteristica manutencao campos disparo ocorre transicao novo ambinete verdade place cells moser kropff moser 
+ alem disso origem sinais movimentacao propria mecanismos integrar sinais landmarks ambinete determinados momento moser kropff moser 
+ arquitetura sistema inspirado descobertas place cells head direction cells grid cells milford wyeth desenvolveram metodo solucionar problema slam partir nova abordagem 
+ objetivo criacao algoritmo robusto aplicavel missoes longa duracao quais robo necessita manter represen tacao consistente ambiente durante toda navegacao 
+ partindo abordagem bioinspirada desenvolveram metodo capaz mapear ambientes ambiguos criando representacao semimetrica ambiente 
+ devido inspiracao cerebro ratos metodo chamado ratslam 
+ arquitetura sistema dividida tres modulos local view cells pose cells experience map mostrados figura 
+ figura arquitetura sistema ratslam modulo local view cells responsavel captura informacoes visuais ambiente subsequente processamento dados sensoriais sendo formado conjunto celulas tipo local view cada relacionada informacao visual ambiente 
+ cada nova informacao comparada anteriores busca correspondencia 
+ caso alta similaridade local view cell correspondente capitulo 
+ metodos figura rede neural atracao continua representacao pose cells ativada 
+ nenhuma informacao sensorial similar mapa nova local view cell criada 
+ cada instante tempo inumeras local view cells podem estar ativas sendo grau ativacao proporcional similaridade entrada 
+ ativacao local view cells utilizada entrada modulo pose cells forma conexoes sinapticas 
+ pesos sinapticos calculados aprendizado supervisionado associativo milford wyeth 
+ modulo pose cell centro sistema formado rede neuronios estimativa posicao orientacao robo 
+ seguindo principais trabalhos modelagem neuronios espaciais stringer al 
+ milford propos utilizacao rede neural atracao continua cann mostrado figura 
+ atualizacao rede feita etapas sequenciais sendo descritas detalhes seguir 
+ dinamica pose cell cada neuronio rede recebe conexoes sinapticas outros neuronios moduladas peso sinaptico proporcional distancia neuronios rede 
+ milford utilizou funcao gaussiana calculo pesos 
+ levando consideracao rede organizada forma neuronios borda rede ligados neuronios borda oposta ver figura 
+ − kp − θ kd ε 
+ considerando rxyθ taxa ativacao neuronio generico cada neuronio recebe excitacao lateral neuronios proximos rede acordo capitulo 
+ nxx nyx nθx ε 
+ rabc rxyθ distancia neuronios calculada dx min − nx − − dy min − ny − − dθ min θ − nθ − θ − 
+ apos exitacao cada neuronio rede recebe inibicao lateral outra global representada 
+ pesos inibicao local iguais excitacao porem sinal negativo 
+ sequencia realizada simular excitacao forma chapeu mexicano amplamente utilizado redes neurais recorrentes 
+ nxx nyx nθx rxyθ ω 
+ rabc − φ 
+ logo seguida realizada entrada movimentacao rede levar consideracao deslocamento realizado robo duas atualizacoess 
+ integracao caminho possui mecanismo aumento incerteza utilizado algoritmos probabilisticos 
+ ratslam atividade cada neuronio deslocada rede sentido movimentacao robo fazse copia atividade atual rede deslocase toda atividade direcao movimento veiculo 
+ fim ativase sinapses oriundas local view cells ativas 
+ ligacao local view cells pose cells aprendida associacao 
+ local view cell ativa reforcase ligacao sinaptica todas pose cells ativas proporcional taxa ativacao cada apresentado 
+ βixyθ max βixyθ λlirxyθ ∆rx θ βixyθ 
+ fim atividade rede neural normalizada modo atividade total rede unitaria 
+ processo permite tratar rede distribuicao probabilidades sobre todo espaco mapeado onde cada neuronio possui probabilidade robo estar posicao espacial mapeada celula 
+ metodos apos atualizacao pose cell possui estimativa posicao robo passada experience map 
+ recebe entrada pose cell local view cells ativas modo mapear todas experienciasvivencidadas robo 
+ cada experiencia representada tupla ei ver equacao 
+ formada uniao pose cells local view cells ativas localizada posicao espaco pi 
+ ei ri li pi 
+ mapa criado forma grafo unindo experiencias ordem criadas 
+ cada nova experiencia comparada todas anteriores acordo metrica similaridade 
+ metrica compara pose cells ativas duas experiencias local view cells ativas acordo αpri − αlli − 
+ variaveis αp αl definem contribuicao cada codigo comparacao 
+ metrica menor limiar smax nova experiencia adicionada mapa juntamente transicao relativa deslocamento robo calculado odometria tij ∆pij nova experiencia entao criada posicao indicada odometria ej rj lj pi ∆pij 
+ evento fechamento loop ocorre nova experiencia similar existente mapa acordo metrica 
+ fechamento loop importante reducao erro odometria acumulado sistema 
+ duas experiencias ditas iguais erro posicao acumulado distribuido sistema acordo seguinte equacao  nfx ∆pi α ntx  pj − pi − ∆pij pk − pi − ∆pki 
+ onde α constante correcao nf numero ligacoes saida experiencia ei nt numero ligacoes entrada experiencia ei 
+ aplicacoes metodo ratslam desenvolvido inicialmente pequenos ambientes mil ford wyeth prasser sendo posteriormente extendido ambientes capitulo 
+ metodos externos prasser milford wyeth 
+ alguns anos utilizado mapeamento bairro inteiro compreendendo km extensao milford wyeth 
+ unico sensor utilizado camera montada topo carro capturando imagens hz 
+ demonstrouse possibilidade algoritmo manter mapa atualizado longo periodo tempo wyeth milford 
+ utilizado robo pioneer equipado camera omnidirecional escritorio 
+ robo responsavel entrega equipamentos salas escritorio periodo semanas 
+ fabmap proposto cummins newman fabmap fast appearancebased mapping algoritmo reconhecimento locais baseado aparencia 
+ baseado principios probabilisticos estima duas imagens capturadas local ambiente 
+ ainda caso encontre correspondencias imagens previamente armazenadas algoritmo indica imagem pertence local ainda explorado 
+ abordagem basica fabmap inspirada sistemas reconhecimento imagens usando bagofwords sivic zisserman nister stewenius 
+ abordagem extendida aprendizado modelo gerador dados vocabulario levando conta algumas palavras words aparencia tendem ocorrer simultaneamente ambiente pois pertencem objeto 
+ representacao bagofwords representacao imagem conjunto palavras inspirada algoritmos recuperacao textos grandes bancos dados 
+ sivic zisserman propos utilizacao algoritmo recuperacao frames especificos sequencia videos obtendo alta taxa acertos baixo custo computacional 
+ primeira etapa algoritmo responsavel construcao vocabulario palavras visuais features 
+ utilizase conjunto imagens treinamento passando etapa extracao automatica descritores algoritmo deteccao features algoritmo sift lowe exemplo algoritmo ser empregado nessa etapa 
+ todo conjunto features passa processo clusterizacao ocorre formacao grupos palavras similares 
+ numero grupos pode ser escolhido previamente arthur vassilvitskii encontrado forma incremental teynor burkhardt 
+ apos treinamento vocabulario tornase possivel representacao imagem capitulo 
+ metodos descritor bagofwords 
+ representacao inicia extracao features nova imagem utilizando algoritmo empregado etapa treinamento 
+ cada feature encontrada relacionada palavra dicionario 
+ dessa forma criase vetor ocorrencias cada palavra imagem 
+ vetor entao normalizado representa frequencia aparicao palavras imagem 
+ algoritmo fabmap utiliza algoritmo pequena modificacao representacao imagem 
+ cada elemento vetor variavel binaria indicando existencia palavra 
+ dessa forma instante tempo cada entrada sensorial processada base vocabulario tamanho 
+ imagem representada vetor binario zk 
+ zv zi indicando presenca ausencia iesima palavra vocabulario 
+ algoritmo fabmap algoritmo fabmap considera mundo conjunto locais discretos onde cada local descrito distribuicao espaco aparencias 
+ citado anteriormente dados sensoriais convertidos representacao bagofwords 
+ cada novo local podese calcular grau similaridade nova percepcao distribuicao cada local existente mapa 
+ cada instante mapa ambiente colecao locais nk discretos independentes lk 
+ lnk algoritmo utiliza chow liu trees aproximar distribuicoes discretas representam locais 
+ chow liu trees estrutura aproxima distribuicao probabilidades sobre palavras dicionario forma cada variavel depende maximo outra variavel 
+ estrutura escolhida ser capaz aproximar distribuicao probabilidades custo computacional tratavel obtendo resultados melhores aproximacao bayes 
+ forma simples arvore captura informacao mutua existente vocabulario quais palavras tendem aparecer desaparecer tempo 
+ aprendizado distribuicao realizado conjunto treinamento alizado offline unica vez 
+ arvore construida fabmap estima duas aparencias capturadas local pertencem locais distintos 
+ desde criacao feitas diversas extensoes algoritmo visando principalmente aplica cao criacao mapas grande escala cummins newman cummins newman 
+ aplicacoes primeira versao fabmap validada dois datasets urbanos utilizando camera campo visao perpendicular trajetoria 
+ ambos datasets compreendiam aproximadamente km cada onde sistema capaz detectar fechamentos loop corretos falsos positivos 
+ cummins newman posteriormente sistema extendido aumentar performance onde ocorreu validacao ambiente km extensao 
+ sistema executado tempo real tornando algoritmo fabmap estado arte slam baseado aparencia 
+ cummins newman maddern al 
+ analisaram integracao algoritmo fabmap ratslam onde primeiro responsavel deteccao loops ultimo 
+ testes realizados sobre dataset suburbio st 
+ lucia australia ambiente utilizado validacao ratslam 
+ nesse ambiente devido alta quantidade loop entrelacados integracao dois sistemas obteve resultados inferiores relacao testes apenas algoritmo ratslam 
+ entanto autores afirmam integracao deve obter resultados melhores datasets alta variacao iluminacao navegacoes longos periodos tempo pois algoritmo scanline utilizado ratslam sensivel variacoes iluminacao 
+ realizou experimentos integracao dois algoritmos cenarios longa duracao capturados diferentes periodos dia 
+ resultados demonstraram melhor performance sistema aumentando precisao recall comparado dois sistemas independentes 
+ proximo capitulo apresentada proposta integracao algoritmo fabmap extesao algoritmo ratslam modificado mapeamento ambientes subaquaticos 
+ dolphinslam sistema bioinspirado localizacao mapeamento robos su baquaticos frente desafios encontrados ambiente subaquatico sistema lo calizacao mapeamento imprescindivel atuacao robo movel 
+ aqui apresentada proposta sistema resolver problema slam nesses ambientes baseada abordagem diferenciada inspirada cerebro mamiferos 
+ partindo desenvolvimento metodo ratslam resolve problema slam ambientes terrestres forma robusta eficiente presente trabalho estende algoritmo operacao ambientes subaquaticos 
+ contornar efeitos turbidez monotonicidade estruturacao ambiente subaquatico utilizase algoritmo fabmap deteccao locais estimando probabilisticamente duas leituras sensoriais capturadas local 
+ levando consideracao inspiracao cerebro mamiferos aliado foco ambientes subaquaticos metodo aqui proposto chamado dolphinslam 
+ entanto presente momento possivel provar existencia neuronios espaciais ver subsecao 
+ principais contribuicoes dolphinslam listadas seguir desenvolvimento algoritmo bioinspirado mapeamento ambientes su baquaticos custo computacional linear tamanho landmarks armazenados possivel ser utilizado diferentes sensores baseados imagens cameras sonares 
+ integracao algoritmo fabmap abordagem inspirada 
+ sistema apresentara robustez mudancas iluminacao devido efeito turbidez agua similar ocorre missoes terrestres longa duracao 
+ alem disso devido inexistencia conhecimento priori encontrado fundo oceano aplicacao metodo probabilistico reconhecimento locais baseado modelo generativo vocabulario palavras tende aumentar confiabilidade sistema percepcao 
+ desenvolvimento algoritmo codigo aberto posterior utilizacao pesquisas futuras 
+ dolphinslam citado anteriormente algoritmo estende ratslam modificando grande parte estrutura fim criar metodo aplicavel ambiente subaquatico 
+ modulo percepcao local view cells totalmente reescrito integrando fabmap reconhecimento locais previamente visitados modifica nivel excitacao neuronios tipo local view 
+ algoritmo capaz tratar informacoes cameras sonares possivel anteriormente 
+ rede neural centro algoritmo dinamica modificada 
+ excitacao passou ser funcao tipo chapeu mexicano sendo necessaria inibicao lateral apos excitacao 
+ modificacao torna algoritmo eficiente 
+ neuronios rede pose cells passaram mapear espaco tridimensional 
+ dessa forma neuronios apresentam comportamento similar place cells encontradas morcegos yartsev ulanovsky 
+ mecanismo integracao caminho forma alterados acordo modificacao espaco tridimensional 
+ ainda normalizacao rede modificada modo modelar ativacao cada neuronio intervalo zero proposto stringer al 
+ mapa experiencias totalmente remodelado acordo peculiaridades inerentes ambiente tridimensional bem mecanismo correcao erro acumulado 
+ sistema dolphinslam estruturado forma modular apresentado figura 
+ cada modulo explicado detalhes proximas secoes 
+ sistema coordenadas objetivo padronizacao antes entrar explicacao metodo necessario definirse sistema coordenadas adotado 
+ pode ser visualizado figura 
+ sistema coordenadas global segue seguinte convencao eixo acompanha sentido norte magnetico terra informacao disponivel 
+ caso contrario fixado primeira posicao robo concordancia sistema coordenadas 
+ eixo definido eixo crescente direcao leste 
+ mesma forma ausencia leitura magnetica terra fixado cima eixo robo primeira inicial 
+ eixo concordancia regra mao direita possui direcao crescente apontado baixo direcao fundo mar 
+ dolphinslam figura arquitetura dolphinslam 
+ modulo percepcao ambiente res ponsavel processamento dados oriundos sensores exteroceptivos 
+ modulo deteccao movimento responsavel integracao sinal velocidade aceleracao relacionando orientacao veiculo fim estimar deslocamento sistema referencia global 
+ modulo local view cells apresenta estimativa local onde robo navega baseado imagens capturadas ambiente 
+ modulo place cell responsavel estimativa posicao robo baseada deslocamento informacao oriunda modulo local view cells 
+ modulo mapa experiencias responsavel criacao manutencao mapa representativo ambiente estimativa posicao robo sistema coordenadas global 
+ rotacoes torno cada eixo coordenado representadas angulos euler definidas φ rotacao torno eixo chamada roll θ rotacao torno eixo chamada pitch ψ rotacao torno eixo chamada yaw sistema coordenadas robo convenientemente definido eixo definido sentido longitudinal robo apontado frente 
+ mapa experienciaslocal view cellspercepcao ambientedeteccao movimentodvlimuplace cellsmovimentacao relativaorientacaosonarcamera capitulo 
+ dolphinslam figura sistema coordenadas 
+ eixo definido perpendicularmente eixo apontado stardboard direita corpo robo 
+ eixo seguindo regra mao direita apontado baixo robo perpendicular eixos 
+ percepcao ambiente dados sensoriais oriundos sensores optico acustico processados modulo percepcao ambiente 
+ proposta atual utiliza sensores exteroceptivos camera monocular sonar imagem tipo forward looking 
+ sensor escolhido missao depende caracteristicas meio tipo exploracao 
+ camera indicada missoes aguas baixo nivel turbidez navegacao proxima objetos enquanto sonar indicado missoes campo visao amplo aguas alta turbidez 
+ registro imagens opticas captura imagens oticas ambiente subaquatico sensivel turbidez agua 
+ entanto aplicacao desses sensores necessaria tarefas inspecao justifica utilizacao metodo proposto 
+ exemplo podese citar campo xyzgxzyr capitulo 
+ dolphinslam extracao petroleo offshore composto dutos transmissao alguns quilometros extensao quais necessitam inspecao visual periodica 
+ primeiro passo processamento extracao pontos caracteristicos imagens 
+ baseado estudos robustez algoritmos deteccao features pontuais imagens subaquaticas garcia gracias utilizado detector hessian deteccao features 
+ descricao utilizouse algoritmo surf bay tuytelaars gool descritor posicoes 
+ registro imagens acusticas diferente imagens opticas quais ricas textura imagens acusticas simples sendo inviavel aplicacao detectores features pontuais 
+ alem disso algoritmos comuns utilizados descrever landmarks pontuais instaveis imagens sonar podendo ser utilizados 
+ outro lado imagens sonar ricas formas geometricas 
+ motivo optouse utilizacao features baseadas momento formas geometricas hu 
+ objetivo melhorar qualidade imagens reduzindo ruido inerente imagens acusticas aplicase filtro gaussiano seguido filtro mediano sobre imagens brutas 
+ logo apos imagens binarizadas facilitar deteccao contornos 
+ fim contornos obtidos regioes alta mudanca intensidade 
+ descricao formas geometricas realizada calculo sete momentos hu hu quais invariantes translacao rotacao escala 
+ representacao bag words independente sensor utilizado algoritmo empregado deteccao ca racteristicas imagem metodo dolphinslam utiliza algoritmo bag words representacao imagens 
+ decisao advem utilizacao metodo fabmap utiliza representacao bag words entrada algoritmo 
+ representacao utilizada cria histograma contendo frequencias palavras existentes imagem 
+ necessario criacao vocabulario palavras 
+ processo criacao vocabulario apresentado figura 
+ utilizase conjunto imagens treinamento quais descritas acordo sensor utilizado 
+ descritores passam processo clusterizacao onde elementos representativos cada grupo palavras dicionario 
+ utilizouse algoritmo kmeans clusterizacao arthur vassilvitskii 
+ cada imagem entao descrita histograma frequencias palavras capitulo 
+ dolphinslam figura etapas treinamento algoritmo bag words dicionario 
+ figura apresenta exemplos imagens representadas algoritmo bag words 
+ figura exemplos histogramas bag features 
+ deteccao movimento tratamento dados oriundos sensores proprioceptivos igualmente impor tante qualquer sistema navegacao robotico 
+ modulo deteccao movimento responsavel processamento sensorial relacionado movimentacao robo ambiente 
+ ambiente subaquatico requer utilizacao sensores diferenciados estima tiva movimentacao diferentes sensores empregados robotica movel 
+ exemplo contagem rotacao motores pode ser utilizada estimar velocidade robo pois sujeito alto arraste inerente meio fisico opera 
+ apresentado capitulo principal sensor utilizado medicao velocidade dvl estima movimentacao robo envio ondas sonoras direcao fundo mar 
+ entanto integracao sinal velocidade fazse necessario leitura orientacao atual robo pois dvl retorna informacoes velocidade sistema coordenadas fixo robo ver secao 
+ leitura orientacao robo podese empregar magnetometros giroscopios unidade medicao inercial imu 
+ independente sensor utilizado transfor macao sistemas coordenadas utilizada orientacao angulos euler φ θ capitulo 
+ dolphinslam ψ     φ θ ψ 
+ onde matriz rotacao transformar velocidade frame robo frame global 
+ deslocamento robo deve ser acumulado acordo tempo atualizacao sistema normalmente maior taxa amostragem sensor movimentacao 
+ captura imagens utilizada gatilho atualizacao sistema dolphins lam 
+ podem ser utilizados todos frames capturados apenas alguns keyframes 
+ deslocamento deve ser acumulado tempo dois keyframes capturados 
+ sendo ∆t tempo duas leituras sensor dvl deslocamento instantaneo calculado x  x    ∆t 
+ deslocamento acumulado reinicializado apos envio informacao movi mentacao modulos place cells mapa experiencias 
+ dead reckoning fins validacao metodo calculado soma todos deslocamentos relativos desde inicio navegacao 
+ local view cells local view cells neuronios representam impressao visual determi nado local 
+ celulas especiais utilizadas codificar informacao sensorial capturada ambiente 
+ medida robo deslocase ambiente adquirindo novas impressoes visuais ocorre criacao dinamica novas celulas tipo local view 
+ metodo dolphinslam representa informacoes sensoriais histograma palavras bag words 
+ histogramas avaliados algoritmo fabmap fim estimar probabilidade terem sido capturados local 
+ etapa treinamento fabmap responsavel aprendizado modelo geracao palavras existentes vocabulario 
+ figura apresenta conjunto local view cells responsaveis codifi cacao histograma imagem capturada 
+ conjunto todas local view cells capitulo 
+ dolphinslam representado armazena nivel ativacao neuronio li figura diagrama visualizacao local view cells 
+ cada local view cell relacionada histograma bag features 
+ onde numero local view cells existentes sistema 
+ treinamento arvore probabilidades chow liu algoritmo fabmap possui etapa treinamento aprendizado arvore probabilidades chow liu explicado secao 
+ utilizase conjunto imagens treinamento empregado geracao vocabulario bag words 
+ cada imagem descrita histograma bow 
+ conjunto todos histogramas utilizado treinamento onde encontrados padroes coocorrencia palavras codificado arvore probabilidades 
+ criacao local view cells algoritmo fabmap estima probabilidade imagem ter sido adquirida local previamente armazenado mapa pi pertencer novo local pnew 
+ probabilidade pertencer novo local superar probabilidades nova local view cell criada apresentado figura 
+ taxa ativacao lnew nova local view cell setada 
+ ativacao local view cells casos reconhecimento local probabilidades calculadas determinados locais fabmap maiores novo local ocorre ativacao neuronios existentes sistema 
+ cada instante tempo possibilidade capitulo 
+ dolphinslam figura criacao novas local view cells partir histograma entrada local possuir alta probabilidade 
+ local view cell dita ativa probabilidade calculada fabmap maior limiar ps 
+ figura exemplifica situacao onde local existente mapa reconhecido ativandose local view cell correspondente 
+ figura ativacao local view cells partir histograma entrada entradalocal view cells existenteslocal view cells existentesapos nova entradaentradalocal view cells existenteslocal views cells existentesapos nova entrada capitulo 
+ dolphinslam taxa ativacao local view cells dada  pi li pi ≥ ps caso contrario 
+ conjunto local view cells ativas determinado instante responsavel entrada externa place cells forma excitacoes sinapticas 
+ conexoes sinapticas calculadas subsecao 
+ place cells modulo principal sistema dolphinslam composto conjunto celulas neuronais tipo place cells 
+ acordo estudos neurosciencia ver subsecao 
+ place cells celulas aumentam taxa disparo mamifero aproximase determinada regiao ambiente 
+ yartsev ulanovsky comprovou existencia place cells tridimensionais cerebro morcegos 
+ embora possivel questoes eticas realizar experimentos golfinhos virtude semelhanca classe biologica aliado similaridade ambiente navegam tridimensional presumiuse existencia nesses animais 
+ dessa forma optouse utilizar modelo computacional neuronios tipo place cell 
+ modelagem neuronios utilizouse modelo aceito neuroci entistas rede neural atracao continua cann giocomo moser moser stringer al 
+ redes cann redes neurais artificiais utilizadas modelagem mecanismos neuronais capacidade memorizacao 
+ cada neuronio recebe ligacoes sinapticas externas rede ligacoes recorrentes oriundas outros neuronios rede 
+ dinamica interna caracterizase criacao atratores estados internos atividade neuronal converge grupo neuronios especificos atratores 
+ regiao rede alta atividade apos convergencia atrator chamada pacote ativacao 
+ representacao grafica rede apresentada figura 
+ cada circulo imagem representa neuronio tipo place cell intensidade circulo representa taxa ativacao neuronio 
+ neuronios organizados forma caixa cada eixo caixa representa eixo cartesiano mapeamento demonstrado sistema coordenadas xyz fixado imagem 
+ neuronios cada extremidade rede ligados extremidade oposta forma semelhante quaisquer dois neuronios vizinhos rede 
+ dessa forma capacidade espacial mapeamento limitada numero neuronios existentes rede 
+ cada neuronio responsavel mapear regioes periodicas ambiente 
+ dolphinslam figura rede neural modelagem place cells 
+ rede organizada topologia tridimensional onde cada neuronio ligado vizinhos conexoes sinapticas 
+ neuronios extremidade ligados extremidade oposta fim resolver problemas contorno aumentar capacidade mapeamento rede 
+ caracteristica baseiase outro tipo neuronio existente cerebro mamiferos grid cells 
+ dinamica atualizacao rede realizada conjunto etapas sequenciais excitacao lateral integracao caminhos excitacao externa normalizacao 
+ excitacao lateral neuronios proximos rede cooperam criacao pacote ativacao enquanto neuronios afastados competem manutencao pacote ativacao 
+ mecanismo competicao cooperacao possivel excitacao lateral recorrente rede 
+ todos neuronios rede possuem ligacoes sinapticas recorrentes cuja sinapse moderada distancia celulas rede 
+ dois neuronios proximos devem ter sinapses recorrentes positivas si possam cooperar geracao pacote ativacao 
+ entanto neuronios distantes devem ter sinapses negativas nulas habilitando competicao rede 
+ dolphinslam modelo proposto utiliza funcao tipo chapeu mexicano geracao pesos sinapticos rede 
+ dessa forma neuronios proximos ligacoes sinapticas positivas neuronios media distancia ligacoes sinapticas negativas neuronios longa distancia ligacoes sinapticas nulas 
+ peso sinaptico ε dois neuronios assim calculado 
+ − σ ε − σ 
+ onde σ desvio padrao funcao chapeu mexicano representada numero celulas distancia dois neuronios rede dx min − nx − − dy min − ny − − dz min − nz − − 
+ cada neuronio recebe excitacao lateral todos neuronios rede acordo proximidade 
+ quantidade excitacao neuronio recebera definida nxx nyx nzx ε 
+ integracao caminhos rede neural responsavel estimativa posicao robo ambiente 
+ tal deve levar consideracao movimentacao realizada robo desde ultima atualizacao rede 
+ deslocamento calculado modulo deteccao movimento explicado anteriormente 
+ forma similar integracao caminhos realizada algoritmo ratslam metodo proposto utiliza modelos biologicos nessa etapa rede devido alto custo computacional modelos bioinspirados desenvolvidos momento 
+ focase solucao eficiente resolucao problema 
+ integracao caminhos realizada deslocamento lateral atividade neuronal cada celula acordo deslocamento realizado robo 
+ figura apresenta representacao grafica solucao utilizada 
+ robo deslocase plano xy distancia equivalente espaco mapeamento cada neuronio 
+ logo atividade capitulo 
+ dolphinslam neuronal deve ser deslocada unidade direita sentido deslocamento 
+ funcionamento identico dimensao rede 
+ figura modelo integracao caminho 
+ pacote ativacao transladado sentido deslocamento 
+ crescimento incerteza resultante movimentacao 
+ vale ressaltar metodo empregado preve aumento incerteza estimativa devido deslocamento robo 
+ excitacao externa caracteristica importante place cells biologicas relacao landmarks visuais encontrados ambiente 
+ servem mecanismo correcao erro localizacao executando especie reinicializacao sobre estimativa posicao place cell 
+ importante mecanismo correcao erro inerente processo integracao caminho colocado modelo forma conexoes sinapticas entrada 
+ determinada place cell relacionada conjunto local view cells cada place cell ancorada minimo local view cell 
+ forma analoga local view cell pode estar relacionada place cell 
+ exemplo ligacoes sinapticas tipo local view cell place cell apresentado figura 
+ pesos sinapticos definidos aprendizado supervisionado associativo 
+ duas celulas local view place cell ativas instante xyxyvx capitulo 
+ dolphinslam figura diagrama visualizacao local view cells conexoes place cells 
+ tempo ligacao sinaptica reforcada 
+ apos ligacao ser reforcada esquecida 
+ comportamento esquecimento devese ancoragem biologica place cells landmarks visuais 
+ peso sinaptico β calculado 
+ sendo li taxa ativacao local view cell rxyz taxa ativacao neuronio xyz λ constante aprendizado 
+ βixyz max βixyz λ 
+ rxyz quantidade excitacao externa recebida neuronio place calculada βixyz 
+ normalizacao ∆rxyz mx ultima etapa atualizacao rede normalizacao atividade neuronal 
+ objetivo limitar atividade sinaptica rede evitando crescimento ilimitado pacote ativacao 
+ inspirada trabalhos stringer al 
+ excitacao maxima neuronio limitada unidade 
+ maior atividade rede passara ser unitaria 
+ neuronios atividade menor reduzidos mesma xylocal view cellsplace cells network capitulo 
+ dolphinslam proporcao proposto η max rxyz rxyz rxyz η 
+ mapa experiencias mapa experiencias modulo responsavel criacao mapa todas experiencias vivenciadas robo durante navegacao 
+ tratase mapa topologico semimetrico baseado trajetoria percorrida robo durante navegacao 
+ cada posicao armazenada mapa contera informacoes sobre atividade neuronal place cell conjunto local view cell ativas 
+ informacoes codificadas experiencia ei forma tupla ei ri li pi 
+ onde pi posicao espacial experiencia mapa 
+ primeira experiencia colocada posicao inicial 
+ demais calculadas deslocamento relativo robo 
+ criacao experiencias novas experiencias criadas dinamicamente acordo navegacao robo ambiente 
+ cada experiencia armazena informacao visual representada local view cell estimativa posicao representada lacecell 
+ nova experiencia criada duas informacoes modificada visual posicao 
+ novas informacoes fornecidas entrada modulo mapa experiencias onde comparadas todas experiencias armazenadas 
+ metrica similaridade entrada experiencia ei comparada limiar smin 
+ si αrri − αlli − 
+ onde entrada representativa place cell entrada representativa local view cell 
+ αr αl constantes ponderacao cada entrada metrica similaridade 
+ metrica excede limiar smin nenhuma experiencia criase nova experiencia mapa informacoes entrada 
+ dolphinslam experiencia mapa definida partir experiencia anterior deslocamento robo ∆p ej rj lj pi ∆pij 
+ nova experiencia ligada anterior forma topologica armazenando infor macao odometria 
+ fechamento loop apos determinado periodo navegacao esperase robo revisite locais antigos 
+ nesse momento ocorrera reconhecimento locais baseado informacoes localv iewcells quais responsaveis mudanca pacote ativacao rede lacecells 
+ informacoes entrada mapa experiencias similares metrica superior limiar determinada experiencia 
+ evento conhecido fechamento loop contexto slam res ponsavel reducao erro inerente integracao caminhos 
+ sendo ek experiencia reconhecida mapa atualizado seguinte maneira 
+ criase nova experiencia ej mapa representacoes local view cells place cells atuais posicionada partir experiencia anterior deslocamento realizado robo ej rj lj pi ∆pij 
+ criase ligacao experiencia anterior atual tij ∆pij 
+ criase ligacao experiencia atual experiencia reconhecida desloca mento baseado informacao visual extraida transformacao duas imagens tjk ∆pim 
+ criacao nova experiencia momento reconhecimento devese fato robo estar exatamente mesma posicao momento duas aquisicoes sensoriais 
+ ambiente subaquatico estruturado inexistindo vias transito 
+ logo duas posicoes proximas iguais 
+ dessa forma necessitase desenvolvimento algoritmos estimativa posicao robo base imagem 
+ devido amplo capitulo 
+ dolphinslam escopo trabalho desenvolvimento algoritmos resolucao desse problema colocado trabalhos futuros 
+ erro acumulado fechamento loop deve ser propagado sobre caminho percorrido robo 
+ calculase erro posicao p experiencia atual experiencia reconhecida descontandose deslocamento calculado base imagem ∆pim 
+  pj ∆pim − pk 
+ erro propagado todas experiencias 
+ dado numero experiencias existentes ek ej ligacoes atualizadas ∆t −  
+ todas experiencias posicoes recalculadas base peso arestas conectam 
+ implementacao open source metodo dolphinslam implementado utilizacao sistema operacional robotico ros quigley al 
+ amplamente utilizado pesquisadores area robotica 
+ processamento dados utilizouse biblioteca visao computacional opencv bradski 
+ utilizouse ainda algoritmos gerais biblioteca boost schaling 
+ codigo disponivel sob licenca gnu gpl 
+ endereco eletronico https github 
+ proximo capitulo apresentara experimentos realizados validacao metodo diferentes cenarios sensores 
+ experimentos presente capitulo apresentara experimentos utilizados validacao metodo proposto analise desempenho diferentes cenarios 
+ realizados tres estudos caso 
+ primeiro ambiente semisimulado obetiva correta parametrizacao algoritmo proposto 
+ segundo ambiente piscina objetiva validar sistema ambiente real 
+ terceiro estudo metodo alimentado imagens sonar marina 
+ metricas avaliacao primeira metrica avaliacao numero local view cells criadas reconhecidas 
+ explicado capitulo anterior local view cells ativadas retorno algoritmo fabmap estima probabilidade local ser conhecido ser novo 
+ segunda metrica apresentado mapa criado onde pode obterse analise qualitativa mapa 
+ fim existencia ground truth calculado erro localizacao longo tempo 
+ erro calculado distancia euclidiana posicao real posicao estimada mapa experiencias 
+ mesma forma comparacao calculado erro localizacao dead reckoning 
+ estudo caso ambiente simulado extracao petroleo primeiro experimento realizado simulador subaquatico uwsim prats al 
+ cenario composto dutos manifolds interconectados forma similar ambiente extracao petroleo 
+ abaixo dutos textura fundo oceano utilizado mosaico criado partir imagens ambiente real ribas al 
+ robo utilizado girona simulado equipado camera direcionada baixo objetivo capturar dutos textura fundo 
+ simular nivel incerteza retorno sensores utilizado ruido gaussiano 
+ frequencia amostragem dvl configurada hz metade frequencia imu hz 
+ ambiente simulado pode ser visto figura 
+ durante navegacao robo percorreu distancia aproximadamente metros 
+ experimentos figura ambiente utilzado testes primeiro cenario figura imagens capturadas ambiente simulado algumas imagens capturadas robo podem ser vistas figura 
+ parametros tabela apresenta parametros utilizados primeiro estudo caso 
+ parametros percepcao ambiente dizem respeito processamento imagens 
+ parametro hessian threshold parametro configuracao detector surf bay tuytelaars gool 
+ segundo parametro numero grupos bag words 
+ treinamento bag words fabmap utilizadas imagens nesse estudo caso 
+ algoritmo fabmap possui parametros 
+ dois relativos detector sistema 
+ primeiro representa probabilidade falsos positivos fp objeto estar cena ser detectado 
+ segundo diz respeito probabilidade falsos negativos objeto cena detectado 
+ terceiro parametro diz respeito probabilidade mapa levar novo local 
+ fim parametro suavizacao responsavel evitar reconhecimento errado devido capitulo 
+ experimentos baixo numero imagens treinamento determinadas objetos 
+ place cell possui alguns parametros configuracao 
+ numero neuronios deve ser estipulado priori bem espaco mapeado cada neuronio cada dimensao 
+ desvio padrao excitacao lateral configurada numero neuronios representada σ 
+ constante aprendizado sinapses local view cells place cells representada λ 
+ mapa experiencias possui tres parametros ligados fechamento loop 
+ parametros αr αl indicam importancia local view cells place cells respecti vamente fechamento loop 
+ constante smin representa limiar reconhecimento experiencias 
+ tabela parametros configuracao sistema primeiro estudo caso percepcao ambiente hessian threshold grupos bow imagens treinamento local view cells fabmap detector prob 
+ fp fabmap detector prob 
+ fn fabmap prob 
+ novo local fabmap suavizacao place cells nx × ny × nz distancia neuronios σ λ mapa experiencias αr αl smin fonte produzido autor 
+ resultados padrao criacao reconhecimento local view cells apresentado figura 
+ percebese partir instante local view cells criadas 
+ algoritmo fabmap capaz reconhecer locais corretamente nesse cenario 
+ figura apresenta histogramas representativos bag words seis imagens capturadas durante navegacao 
+ mapa experiencias criado pode ser visto figura 
+ trajetoria real percorrida robo apresentada verde 
+ mapa experiencias apresentado capitulo 
+ experimentos figura criacao reconhecimendo local view cells longo tempo 
+ figura histogramas bag words imagens cenario simulado 
+ azul enquanto dead reckoning apresentado vermelho 
+ trejetoria criada mapa experiencais aproximase trajetoria real apos eventos fechamento loop 
+ erro localizacao figura mapa experiencias azul inferior dead reckoning vermelho partir instante apos primeiro fechamento loop 
+ ocorre intervalo tempo reconhecimeno locais fabmap fechamento loop mapa experiencias 
+ tempo moderado place cell responsavel tratamento falsos positivos reconhecimento locais pode ocorrer devido monotonicidade ambiente 
+ local view cell ativatempo capitulo 
+ experimentos figura resultado ambiente simulado 
+ verde representada trajetoria real robo ground truth 
+ vermelho trajetoria gerada dead reckoning 
+ azul mapa experiencias gerado dolphinslam 
+ figura erro localizacao 
+ vermelho erro dead reckoning 
+ azul erro localizacao estimada mapa experiencias 
+ −−− mapa experienciasdead reckoningground truth 
+ mapa experienciasdead reckoning capitulo 
+ experimentos figura cenario utilizado segundo estudo caso podese visualizar piscina textura fundo robo girona 
+ imagem extraida ribas al 
+ discussao algoritmo dolphinslam comportamento excelente ambiente simulado sendo capaz reconhecer lugares previamente visitados devido fabmap reduzir erro localizacao 
+ estudo caso piscina segundo estudo caso realizado dataset piscina existente centro investigacao robotica submarina centre dinvestigacio en robotica submarina cirs universidade girona espanha ribas al 
+ robo girona utilizado geracao dados equipado sensores experimento anterior dvl imu 
+ objetivo validacao sistema dados sensoriais reais 
+ ambiente testes juntamente robo utilizado podem ser vistos figura 
+ parametros tabela apresenta parametros utilizados segundo estudo caso 
+ experimentos tabela parametros configuracao sistema segundo estudo caso percepcao ambiente hessian threshold grupos bow imagens treinamento local view cells fabmap detector prob 
+ fp fabmap detector prob 
+ fn fabmap prob 
+ novo local fabmap suavizacao place cells nx × ny × nz distancia neuronios σ λ mapa experiencias αr αl smin fonte produzido autor 
+ resultados figura apresenta local view cells ativas longo tempo 
+ podese notar algoritmo fabmap capaz detectar presenca loops 
+ dessa forma mapa experiencias figura criado sistema dolphinslam igual dead reckoning havendo reducao erro odometria 
+ figura local view cells ativas longo tempo 
+ figura apresenta histogramas representativos bag words seis imagens capturadas durante navegacao 
+ active local view celltime capitulo 
+ experimentos figura histogramas bag words imagens segundo estudo caso 
+ figura resultado segundo cenario 
+ azul mapa experiencias 
+ vermelho pode ser visto dead reckoning 
+ discussao algoritmo fabmap capaz realizar correto fechamento loop ambiente 
+ falha devese baixo conjunto treinamento disponivel imagens sendo possivel boa aproximacao distribuicao probabilidades modelo geracao palavras vocabulario 
+ alem disso diferente ambiente apresentado cummins newman features detectadas ambiente subaquatico caso corais similares si 
+ alem disso existencia formas geometricas ambiente tornando tarefa reconhecimento locais complexa 
+ −−−− experience mapdead reckoning capitulo 
+ estudo caso marina terceiro experimento objetiva fazer estudo viabilidade aplicacao sistema dados sonar 
+ criado dataset aracati robo seabotix lbv equipado sonar teledyne blueview 
+ robo fixado parte inferior prancha modo manterse superficie recebimento dados dgps utilizado ground truth 
+ devido ausencia sensores propioceptivos informacoes motoras geradas partir dados localizacao dgps 
+ gerado sinal velocidade partir derivacao sinais posicao sujeito ruido gaussiano 
+ sistema executado taxa amostragem frame segundo 
+ vista aerea ambiente testes apresentada figura juntamente robo utilizado 
+ figura cenario utilizado terceiro estudo caso visualizacao google earth area onde experimento realizado vista aproximada ambiente composto embarcacoes pedras postes 
+ caminho percorrido robo tendo inicio ponto verde terminando ponto azul 
+ algumas imagens capturadas robo apos etapa processamento podem ser visualizadas figura 
+ cada regiao branco imagem tratada objeto sendo descrito momentos hu hu 
+ parametros tabela apresenta parametros utilizados terceiro estudo caso 
+ resultados local view cells ativas longo tempo apresentadas figura 
+ experimentos figura imagem sonar capturada ambiente 
+ figura rov utilizado experimento figura imagens sonar apos etapa processamento 
+ figura apresenta histogramas representativos bag words seis imagens capturadas durante navegacao 
+ mapa gerado sistema apresentado figura 
+ erros localizacao sistema dead reckoning mostrado figura 
+ experimentos tabela parametros configuracao sistema terceiro estudo caso percepcao ambiente grupos bow imagens treinamento local view cells fabmap detector prob 
+ fp fabmap detector prob 
+ fn fabmap prob 
+ novo local fabmap suavizacao place cells nx × ny × nz distancia neuronios σ λ mapa experiencias αr αl smin fonte produzido autor 
+ figura local view cells ativas longo tempo notase devido incapacidade fabmap reconhecer lugares nesse ambiente erro localizacao igual duas trajetorias 
+ discussao algorimto fabmap apresentou bons resultados nesse cenario 
+ principal problema nesse ambiente devese alta similaridade cenas capturas abmiente estacas fileira pedras 
+ alem disso ruido inerente leitura sensorial faz descritores instaveis sendo representados diferentes palavras active local view celltime capitulo 
+ experimentos figura histogramas bag words imagens sonar 
+ figura azul pode ser visto mapa gerado dolphinslam 
+ vermelho podese visualizar dead reckoning 
+ ground truth apresentado verde imagens consecutivas 
+ −−−−−x experience mapdead reckoningground truth capitulo 
+ experimentos figura erro localizacao 
+ azul erro mapa experiencias 
+ vermelho erro localizacao dead reckoning 
+ experience map errordead reckoning error conclusao presente trabalho apresentou novo metodo resolucao problema slam ambientes subaquaticos partindo modelagem neuronios especiais encontrados cerebro mamiferos 
+ realizado estudo principais sensores utilizados robotica subaquatica desafios relacionados desenvolvimento algoritmos ambientes turbi dez agua estruturacao ambientes monotonicidade objetos encontrados inexistencia sistemas posicionamento global complexidade controle robotico devido arraste 
+ sistema desenvolvido baseouse metodologia bioinspirada cerebro mamiferos desenvolvendo modelo computacional place cells tridimensionais responsaveis estimativa posicao robo ambiente 
+ utilizouse algoritmo ratslam base integracao modelo sistema completo slam tornando dolphinslam apto mapeamento ambientes vastos 
+ utilizacao algoritmo fabmap possibilita maior robustez reconheci mento locais ambientes monotonos variacao iluminacao devido turbidez agua 
+ primeiro estudo caso demonstrou viabilidade proposta onde dolphins lam capaz mapear ambiente distribuicao petroleo composto dutos distribuicao textura real corais 
+ erro localizacao robo apos primeiro fechamento loop mantevese inferior metade erro localizacao dead reckoning 
+ complexidade sistema possui crescimento linear numero landmarks criados mapa sendo aplicavel mapeamento ambientes vastos 
+ segundo terceiro ambientes modulo percepcao capaz reco nhecer locais previamente visitados 
+ devese fato datasets serem pequenos impossibilitando fabmap bom conjunto testes treinamento modelo geracao palavas vocabulario 
+ trabalhos futuros vislumbrase aplicacao metodo cenarios reais similares simulados onde estruturas exploracao petroleo presentes 
+ buscase aprofundar estudos relacionados pistas sensoriais multimodais integrando informacoes acusticas opticas 
+ referencias ambiente subaquatico 
+ disponivel http www 
+ ca economy business maybeitsbetterdownwhereitswetter 
+ kmeans advantages careful seeding 
+ society industrial applied mathematics 
+ proceedings eighteenth annual acmsiam symposium discrete algorithms 
+ citado vezes paginas 
+ bathymetric particle filter slam using trajectory maps 
+ international journal robotics research sage publications 
+ biologicallyinspired robot spatial cognition based rat neurophysiological studies 
+ autonomous robots springer 
+ surf speeded robust features 
+ citado vezes paginas 
+ open computer vision 
+ dobbs journal software tools 
+ exploracao presal alavanca inovacao tecnologica 
+ underwater slam robocentric trajectory using mechanically scanned imaging sonar 
+ ieee rsj international conference intelligent robots systems iros 
+ fabmap probabilistic localization mapping space appearance 
+ international journal robotics research sage publications 
+ citado vezes paginas 
+ accelerating fabmap concentration inequalities 
+ ieee transactions robotics 
+ appearanceonly slam large scale fabmap 
+ international journal robotics research sage publications 
+ citado vezes paginas 
+ map management efficient simultaneous localization mapping slam 
+ robots kluwer academic publishers 
+ raoblackwellised particle filtering dynamic bayesian networks 
+ proceedings th conference uncertainty artificial intelligence 
+ morgan kaufmann publishers inc 
+ simultaneous localization mapping part 
+ ieee robotics automation magazine ieee 
+ citado vezes paginas 
+ simultaneous localization mapping slam part 
+ robotics automation magazine ieee 
+ disponivel http www 
+ hierarchical slam realtime accurate mapping large environments 
+ robotics ieee transactions ieee 
+ visually augmented navigation unstructured environment using delayed state history 
+ ieee international conference robotics automation icra 
+ citado vezes paginas 
+ visually augmented navigation autonomous underwater vehicles 
+ ieee journal oceanic engineering ieee 
+ realtime slam octree evidence grids exploration underwater tunnels 
+ journal field robotics wiley online library 
+ realtime optical slambased mosaicking unmanned underwater vehicles 
+ intelligent service robotics springerverlag 
+ detection interest points turbid underwater images 
+ computational models grid cells 
+ fabmap ratslam appearancebased slam multiple times day 
+ robotics automation icra ieee international conference 
+ disponivel http choosealicense 
+ microstructure spatial map entorhinal cortex 
+ nature nature publishing group 
+ citado vezes paginas 
+ visual pattern recognition moment invariants 
+ ire transactions information theory ieee 
+ citado vezes paginas 
+ new approach linear filtering prediction problems 
+ transactions asme–journal basic engineering 
+ realtime visual slam autonomous underwater hull inspection using visual saliency 
+ ieee rsj international conference intelligent robots systems iros 
+ survey underwater vehicle navigation recent advances new challenges 
+ ifac conference manoeuvering control marine craft 
+ proceedings ieee ieee 
+ disponivel http www 
+ solutions products underwaterlaserscanneruls 
+ stochastic mapping using forward look sonar 
+ robotica cambridge university press 
+ citado vezes paginas 
+ object recognition local scaleinvariant features 
+ proceedings seventh ieee international conference 
+ augmenting ratslam using fabmapbased visual data association 
+ australian robotics automation association inc 
+ proceedings australasian conference robotics automation 
+ efficient viewbased slam using visual loop closures 
+ ieee transactions robotics 
+ ekfslam auv navigation probabilistic sonar scanmatching 
+ ieee rsj international conference intelligent robots systems iros 
+ citado vezes paginas 
+ global positioning system gps 
+ path integration neural basis cognitive map 
+ nature reviews neuroscience 
+ disponivel http dx 
+ citado vezes paginas 
+ monte carlo method 
+ journal american statistical association taylor francis group 
+ mapping suburb single camera using biologically inspired slam system 
+ ieee transactions robotics ieee 
+ citado vezes paginas 
+ ratslam hippocampal model simultaneous localization mapping 
+ ieee international conference 
+ simultaneous localization mapping unknown data association using fastslam 
+ ieee international conference robotics automation icra 
+ fastslam factored solution simultaneous localization mapping problem 
+ place cells grid cells brains spatial representation system 
+ citado vezes paginas 
+ pure rangeonly subsea slam 
+ ieee international conference robotics automation icra 
+ citado vezes paginas 
+ towards constanttime slam autonomous underwater vehicle using synthetic aperture sonar 
+ eleventh international symposium robotics research 
+ scalable recognition vocabulary tree 
+ computer vision pattern recognition ieee computer society conference 
+ hippocampus spatial map preliminary evidence unit activity freelymoving rat 
+ brain research elsevier science 
+ citado vezes paginas 
+ hippocampus cognitive map 
+ behavioral brain sciences cambridge univ press 
+ robust rangeonly beacon localization 
+ ieee journal oceanic engineering 
+ auv navigation localization review 
+ ieee journal oceanic engineering 
+ outdoor simultaneous localisation mapping using ratslam 
+ field service robotics 
+ open source tool simulation supervision underwater intervention missions 
+ ieee rsj international conference intelligent robots systems iros 
+ ros opensource robot operating system 
+ ieee icra workshop open source software 
+ girona auv survey intervention 
+ ieee asme transactions mechatronics 
+ citado vezes paginas 
+ underwater slam manmade structured environments 
+ journal field robotics 
+ citado vezes paginas 
+ improved vehicle based multibeam bathymetry using submaps slam 
+ ieee rsj international conference intelligent robots systems iros 
+ concurrent mapping localization using sidescan sonar 
+ ieee journal oceanic engineering 
+ underwater slam entropy minimization 
+ ieee international conference robotics automation icra 
+ video google text retrieval approach object matching videos 
+ ninth ieee international conference 
+ citado vezes paginas 
+ representation estimation spatial uncertainty 
+ international journal robotics research sage publications 
+ sonar imageamento mecanico 
+ dispo nivel http www 
+ uk newsarticle tritechlaunchesseakinghammerheaddstsonaratoceanologyinternational 
+ sonar tipo sidescan 
+ disponivel http www 
+ nl support sidescansonar 
+ sonares multi beam single beam 
+ disponivel http oceanexplorer 
+ gov okeanos explorations ex media ex 
+ citado vezes paginas 
+ auvs idea implementation 
+ energy futures mit energy initiative 
+ deepsea oil gas recovery designing robots help 
+ energy futures mit energy initiative 
+ selforganizing continuous attractor networks path integration twodimensional models place cells 
+ network computation neural systems informa uk ltd uk 
+ citado vezes paginas 
+ selforganizing continuous attractor networks path integration onedimensional models head direction cells 
+ network computation neural systems informa uk ltd uk 
+ citado vezes paginas 
+ headdirection cells recorded postsubiculum freely moving rats 
+ description quantitative analysis 
+ journal neuroscience soc neuroscience 
+ citado vezes paginas 
+ disponivel http www 
+ equipmentrental geophysical multibeamsonars teledyneblueviewp 
+ feature extraction data association auv concurrent mapping localisation 
+ ieee international conference robotics automation icra 
+ citado vezes paginas 
+ fast codebook generation sequential data analysis object classification 
+ advances visual computing 
+ simultaneous localization mapping 
+ robotics cognitive approaches spatial mapping springer 
+ citado vezes paginas 
+ usbl sbl lbl acoustic positioning 
+ disponivel http www 
+ citado vezes paginas 
+ slam ship hull inspection using exactly sparse extended information filters 
+ ieee international conference robotics automation icra 
+ citado vezes paginas 
+ simultaneous localisation mapping great barrier reef 
+ ieee international conference robotics automation icra 
+ autonomous underwater simultaneous localisation map building 
+ ieee international conference robotics automation icra 
+ citado vezes paginas 
+ spatial cognition robots 
+ robotics automation magazine ieee ieee 
+ citado vezes paginas 
+ representation threedimensional space hippocampus flying bats 
+ science american association advancement science 
+ citado vezes paginas 

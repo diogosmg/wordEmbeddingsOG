@@ -1,0 +1,2955 @@
+ 
+
+PROGRAMA DE RECURSOS HUMANOS DA AGÊNCIA NACIONAL DO PETRÓLEO 
+
+Programa de Recursos Humanos em Engenharia de Petróleo 
+
+ 
+
+UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+                       RELATÓRIO FINAL 
+ 
+ 
+ 
+ 
+ 
+ 
+
+                           Modelagem das equações de fluxo,  
+
+                   bidimensional, para reservatórios de óleo leve 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+Aluno: Bruno Augusto Gomes 
+Orientadora:Prof. Dra. Jennys Lourdes Meneses Barillas 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+NATAL/RN 
+
+DEZEMBRO /2012 
+
+Sumário 
+
+1‐ Introdução ................................................................................................................................. 1 
+
+2‐ Revisão Bibliográfica ................................................................................................................. 4 
+
+2.1 Fluxo em meios porosos ...................................................................................................... 4 
+
+2.2 Equação da Continuidade ................................................................................................... 5 
+
+2.3 Equação de Darcy ................................................................................................................ 6 
+
+2.4 Equações de Estado ............................................................................................................. 6 
+
+2.5 Soluções da Equação da Difusividade ................................................................................. 7 
+
+2.5.1 Fluxo Linear .................................................................................................................. 8 
+
+2.5.2 Fluxo Radial .................................................................................................................. 9 
+
+2.6  Condições de contorno .................................................................................................... 10 
+
+2.7 Simulação numérica de reservatórios ............................................................................... 10 
+
+2.7.1 Etapas da Simulação Numérica de Reservatórios .......................................................... 12 
+
+2.8 Classificações do óleo .................................................................................................... 12 
+
+3‐ Discretização das variáveis .............................................................................................. 13 
+
+3.1 Discretização das equações de fluxo ............................................................................. 13 
+
+3.2  Discretização do Tempo ............................................................................................... 17 
+
+3.3  Formulação Explicita .................................................................................................... 18 
+
+3.4 Matriz de transmissibilidade ......................................................................................... 18 
+
+3.5 Resoluções das equações de transmissibilidade: .......................................................... 20 
+
+4‐ Estudo de Caso ‐ Montagem de um reservatório sintético e homogêneo ............................. 21 
+
+5‐ Análises de Resultados ............................................................................................................ 23 
+
+5.1 Analises e resultados do simulador BPrh‐43 ................................................................. 23 
+
+5.2 Validação de resultados do simulador BPRh – 43 ......................................................... 24 
+
+6‐ Conclusões .............................................................................................................................. 27 
+
+7‐ Bibliografias ............................................................................................................................. 28 
+
+8‐ Programa ................................................................................................................................. 30 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+1-Introdução: 
+ 
+     Na  última  década,  a  simulação  numérica  de  reservatórios  tornou-se  uma 
+ferramenta amplamente utilizada para realização de previsões de comportamento de 
+reservas  petrolíferas  sob  diferentes  aspectos  físicos  do  reservatório  (dimensões, 
+formas,  variações  de  propriedades),  podem  também  serem  obtidas  informações 
+quanto o comportamento atual e futuro da reserva, em termos de pressão, vazão de 
+produção,  ou  até  mesmo,  desenvolver  soluções  para  diversas  situações  em  que  os 
+reservatórios podem se encontrar. (Leitão, 1998) 
+ 
+     Além  disto,  tem  proporcionado  uma  melhoria  da  descrição  dos  reservatórios 
+através  do  ajuste  de  histórico  de  produção  e  um  entendimento  mais  apurado  dos 
+mecanismos de produção e padrões gerais de fluxo. 
+ 
+
+instrumento  de  extrema 
+
+     A  simulação  numérica  de  fluxo  de  fluidos  em  reservatórios  de  petróleo  já 
+demonstrou  ser  um 
+importância  na  avaliação  e 
+desenvolvimento  de  áreas  existentes  e  recém-descobertas.  Utilizando  modelos 
+matemáticos  e  computacionais  é  possível  aperfeiçoar  o  processo  de  produção  e 
+prever o comportamento do reservatório. Geralmente, isto é dificultado pelo tamanho 
+do reservatório, pelo número de poços, pela qualidade e quantidade dos dados que 
+garanta  a  confiabilidade  da  simulação  e  isso  freqüentemente  esbarra  nos  limites 
+impostos pelo equipamento computacional disponível.  
+ 
+Motivação para a realização deste trabalho:  
+ 
+- A crescente descoberta de jazidas com grande potencial de produção, 
+ 
+-  Demanda  de  modelos  computacionais  e  matemáticos  capazes  de  retratar 
+parâmetros dos reservatórios com qualidade e eficiência. 
+ 
+-  Gerar  uma  ferramenta  para  ajudar  na  tomada  de  decisão  da  escolha  da  melhor 
+maneira  de  recuperação  do  óleo,  quando  o  interesse  se  concentra  em  uma 
+determinada região do reservatório;  
+
+ 
+
+ 
+
+2- Revisão Bibliográfica 
+ 
+2.1 Fluxo em meios porosos 
+ 
+     O conhecimento das leis que regem os movimentos dos fluidos nos meios porosos 
+é  fundamental  para  a  obtenção  de  informação  a  respeito  de  uma  acumulação  de 
+petróleo após a sua descoberta. 
+ 
+     Desta  forma,  adicionalmente,  ao  descobrir  uma  acumulação  de  petróleo  deve-se 
+estimar a quantidade de hidrocarbonetos e o tempo de produção desta jazida, sendo 
+necessário  o  conhecimento  das  leis  que  regem  o  movimento  dos  fluidos  nos  meios 
+porosos.  Para  as  diversas  situações  em  que  os  reservatórios  se  encontram  são 
+desenvolvidas soluções que se baseiam em uma equação conhecida como equação 
+da  difusividade  hidráulica  ou  simplesmente  equação  da  difusividade.  Ela  é  obtida  a 
+partir  da  associação  de  três  equações:  da  equação  da  continuidade,  que  é  uma 
+equação  de  conservação  de  massa;  da  equação  de  Darcy,  que  é  uma  equação  de 
+transporte de massa; e, de uma equação de estado, que tanto pode ser uma lei dos 
+gases como a equação da compressibilidade para o caso dos líquidos.   
+ 
+      Para a obtenção da equação da difusividade hidráulica admitiu-se a hipótese de o 
+meio  poroso  ser  homogêneo  e  isotrópico.  Além  disso,  o  fluxo  deve  ser  estritamente 
+horizontal e isotérmico, o poço deve penetrar totalmente a formação, a permeabilidade 
+deve ser constante, deve haver pequenos gradientes de pressão, o fluido e a rocha 
+devem  ter  compressibilidade  pequena  e  constante,  a  viscosidade  do  fluido  deve  ser 
+constante,  as  forças  gravitacionais  desprezíveis  e,  por  fim,  fluidos  e  rochas  não 
+reagentes entre si. 
+
+ 
+
+     Para o desenvolvimento das equações será utilizado um elemento de meio poroso 
+através do qual está ocorrendo o fluxo de um fluido, cuja saturação é igual a 100%, ou 
+seja, é o único fluido presente no meio. O elemento em questão tem a forma de um 
+paralelepípedo  com  dimensões  Δx,    Δy  e    Δz,  e  o  fluxo  através  do  mesmo  será 
+estudado durante um intervalo de tempo Δt (ROSA et al., 2006). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 1- Elemento de um meio poroso. (Fonte: ROSA et al., 2006) 
+
+ 
+
+ 
+
+2.2 Equação da Continuidade 
+ 
+    A equação da continuidade afirma, basicamente, que a diferença entre a massa que 
+entra e a massa que sai nas três direções de fluxo é igual à variação de massa dentro 
+do meio poroso no Δt considerado.  
+ Ela é descrita por: 
+∂
+)
+ρ
+x
+∂
+ 
+onde νx , νy  , e νz  são as velocidades aparentes do fluido nas direções  x ,  y e  z 
+respectivamente,  ρ  é  a  massa  específica  e  φ  é  a  porosidade.  As  velocidades 
+aparentes do fluido são descritas por: 
+ 
+
+                                            (1) 
+
+(
+)ϕρ
+
+(
+Vx
+
+)
+ρ
+
+∂
+y
+∂
+
+(
+Vz
+
+)
+ρ
+
+−=
+
++
+
+∂
+z
+∂
+
++
+
+(
+Vy
+
+∂
+t
+∂
+
+   
+
+Vx
+
+=
+
+Vy
+
+=
+
+   
+
+Vz
+
+=
+
+qx
+zy
+ΔΔ
+qy
+zx
+ΔΔ
+qz
+yx
+ΔΔ
+
+                                                                                         (2) 
+
+                                                                                         (3) 
+
+                                                                                         (4)      
+
+ 
+onde qx, qy e qz são as vazões de entrada e de saída nas três direções. 
+ 
+ 
+ 
+
+2.3 Equação de Darcy 
+ 
+     Em 1856, em Dijon, França, Henry Darcy  a partir de uma das suas experiências 
+apresentou uma relação matemática que se  tornou a base para  a compreensão do 
+fenômeno  do  escoamento  de 
+fluidos  através  de  meios  porosos.  Em  seus 
+experimentos, Darcy estudou o fluxo de água através de um filtro de areia horizontal. A 
+formulação geral dessa lei é usualmente feita na forma diferencial, deste modo: 
+
+   
+
+V
+
+=
+
+dpk
+dl
+μ
+
+                                                                                                  (5) 
+
+onde ν  é a velocidade macroscópica do fluxo,  µ é a viscosidade do fluido,  k  é a 
+constante de permeabilidade do meio e dp/ dl  é o gradiente de pressão na direção do 
+fluxo.  
+     Para os casos em que os efeitos gravitacionais sobre o fluxo são desprezíveis, a 
+seguinte equação diferencial para o escoamento do fluido pode ser obtida: 
+ 
+
+  
+
+∂
+x
+∂
+
+⎛
+⎜⎜
+⎝
+
+ρ
+
+kx
+μ
+
+p
+∂
+x
+∂
+
+⎞
++⎟⎟
+⎠
+
+∂
+y
+∂
+
+⎛
+⎜⎜
+⎝
+
+ρ
+
+ky
+μ
+
+p
+∂
+y
+∂
+
+⎞
++⎟⎟
+⎠
+
+∂
+z
+∂
+
+⎛
+⎜⎜
+⎝
+
+ρ
+
+kz
+μ
+
+p
+∂
+z
+∂
+
+⎞
+=⎟⎟
+⎠
+
+∂
+t
+∂
+
+(
+)ϕρ
+
+                                    (6) 
+
+onde  kx  ,  ky ,  kz são as permeabilidades do meio poroso nas direções  x ,  y e  z  
+,respectivamente. 
+
+2.4 Equações de Estado 
+ 
+     As equações de estado são aquelas que representam as compressibilidades dos 
+fluidos e da rocha, para o caso dos líquidos.  
+ A compressibilidade dos fluidos é dada por: 
+
+  
+
+Cf
+
+=
+
+1
+ρ
+
+d
+ρ
+dp
+
+                                                                                                                   (7)           
+
+e a compressibilidade da rocha é dada por: 
+
+  
+
+Cr
+
+=
+
+1
+ϕ
+
+d
+ϕ
+dp
+
+                                                                                                                   (8) 
+
+Ct
+
+=
+
+Cf
+
++
+
+Cr
+
+total  do  meio  é  dada  pela  soma  dessas  duas 
+
+                                                                                                              (9) 
+
+Assim,  a  compressibilidade 
+compressibilidades: 
+  
+A introdução das equações (7), (8) e (9) na equação diferencial do escoamento (6) e a 
+consideração  de  que  a  compressibilidade  e  a  viscosidade  do  fluido  são  constantes, 
+permitem a conclusão: 
+p
+∂
+y
+∂
+
+                                              (10) 
+
+pKx
+∂
+x
+∂
+
+pCt
+∂
+t
+∂
+
+p
+∂
+z
+∂
+
+ϕμ
+
+ky
+
+kz
+
+⎞
++⎟
+⎠
+
+∂
+y
+∂
+
+⎛
+⎜⎜
+⎝
+
+  
+
+∂
+x
+∂
+
+⎛
+⎜
+⎝
+
+⎞
++⎟⎟
+⎠
+
+∂
+z
+∂
+
+⎛
+⎜
+⎝
+
+⎞
+=⎟
+⎠
+
+ 
+A equação (10) pode ser também escrita em termos da pressão do fluido no  
+reservatório: 
+ 
+
+  
+
+∂
+x
+∂
+
+pKx
+∂
+x
+∂
+
+⎛
+⎜
+⎝
+
+⎞
++⎟
+⎠
+
+∂
+y
+∂
+
+⎛
+⎜⎜
+⎝
+
+ky
+
+p
+∂
+y
+∂
+
+⎞
++⎟⎟
+⎠
+
+∂
+z
+∂
+
+⎛
+⎜
+⎝
+
+kz
+
+p
+∂
+z
+∂
+
+⎞
+=⎟
+⎠
+
+pCt
+∂
+ϕ
+t
+∂
+
+                                            (11) 
+
+ 
+      Para  um  meio  poroso  homogêneo  e  isotrópico,  as  permeabilidades  nas  três 
+direções  são  iguais,  ou  seja,  kx=ky=kz=k.  Além  disso,  tanto  a  compressibilidade  do 
+líquido  como  os  gradientes  de  elevação  são,  em  geral,  valores  muito  pequenos,  de 
+modo que, quando elevados ao quadrado, resultam em termos muito menores ainda. 
+Assim,  mostram-se  desprezíveis  quando  comparados  com  os  outros  termos  da 
+equação,  o  que  está  de  acordo  com  o  desenvolvimento  deste  trabalho,  onde  se 
+considera  o  fluido  incompressível.  Assim,  a  equação  da  difusividade  hidráulica pode 
+ser escrita de forma mais compacta como: 
+ 
+
+  
+
+p
+²
+∂
+x
+²
+∂
+
++
+
+p
+²
+∂
+y
+²
+∂
+
++
+
+²
+∂
+z
+∂
+
+p
+²
+
+=
+
+1
+η
+
+p
+∂
+t
+∂
+
+                                                                                   (12) 
+
+ 
+onde η é a constante de difusividade hidráulica e é dada por: 
+
+  
+η=
+
+k
+Ct
+ϕμ
+
+                                                                                                             (13) 
+
+ 
+2.5 Soluções da Equação da Difusividade 
+ 
+      As soluções da equação da difusividade podem ser dadas para sistemas lineares 
+e radiais. Nesse trabalho, o único regime de fluxo tratado é o permanente, assim só 
+serão apresentadas soluções nesse regime. Deve ser salientado que as soluções a 
+serem apresentadas foram todas obtidas considerando-se que a vazão no ponto de 
+coordenada x = 0 para o caso de fluxo linear, ou r = rw (raio do poço) no fluxo radial, é 
+constante. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2.5.1 Fluxo Linear 
+ 
+     Para um sistema de fluxo linear, ou seja, quando há apenas uma direção de fluxo, 
+a direção x, por exemplo, os termos referentes às direções y e z são iguais a zero e a 
+equação da difusividade se reduz a: 
+
+  
+
+p
+²
+∂
+x
+²
+∂
+
+=
+
+Ct
+ϕ
+k
+
+p
+∂
+t
+∂
+
+                                                                                                  (14) 
+
+As equações para fluxo linear permanente descrevem o movimento de um fluido em 
+um meio poroso linear limitado, de comprimento L e área aberta ao fluxo A.  
+ 
+                               
+
+                            
+          Figura 2- Fluxo linear em um reservatório com alimentação no limite externo. (Fonte: ROSA et al., 
+2006)       
+ 
+Nesse  regime  de  fluxo,  tanto  a  vazão  quanto  a  pressão  não  variam  com  o  tempo. 
+Assim, a equação da difusividade toma o aspecto:  
+ 
+
+ 
+
+ 
+
+p
+²
+∂
+x
+²
+∂
+
+=
+
+0
+
+                                                                                                         (15) 
+
+ 
+ Assim,  inserindo  as  condições  de  contorno  para  as  pressões  e  resolvendo  para 
+pressão e para a vazão, a solução da equação da difusividade para regime de fluxo 
+linear e permanente pode ser escrita, de forma reduzida, como: 
+ 
+
+    
+
+q
+
+=
+
+kA
+L
+μ
+
+P
+Δ
+
+                                                                                                    (16) 
+
+ 
+Onde: 
+ 
+     
+
+P
+=Δ
+
+Pe
+
+−
+
+Pw
+
+                                                                                              (17)      
+
+2.5.2 Fluxo Radial  
+ 
+Admitindo-se que não há fluxo no sentido vertical, a equação da difusividade pode ser 
+escrita, em coordenadas cilíndricas, como: 
+ 
+
+     
+
+1
+r
+
+∂
+r
+∂
+
+pr
+∂
+r
+∂
+
+⎛
+⎜
+⎝
+
+⎞
+=⎟
+⎠
+
+Ct
+ϕμ
+k
+
+p
+∂
+t
+∂
+
+                                                                             (18) 
+
+ 
+As equações para regime permanente descrevem o movimento do fluido em um meio 
+poroso cilíndrico, de raio da base igual a re e altura h, com um poço de raio  rw situado 
+no seu centro. 
+ 
+ 
+ 
+ 
+
+ 
+
+Figura 3 - Fluxo radial permanente. (Fonte: ROSA et al., 2006) 
+
+ 
+Novamente,  em  regime  de  fluxo  permanente,  tanto  a  vazão  quanto  a  pressão  não 
+variam com o tempo. Assim, a equação da difusividade toma o aspecto: 
+ 
+
+    
+
+1
+r
+
+∂
+r
+∂
+
+pr
+∂
+r
+∂
+
+⎛
+⎜
+⎝
+
+⎞
+=⎟
+⎠
+
+0                                                                                              (19) 
+
+ 
+Assim,  inserindo  as  condições  de  contorno  para  as  pressões  e  resolvendo  para 
+pressão e para a vazão, a solução da equação da difusividade para regime de fluxo 
+radial e permanente pode ser escrita, de forma reduzida, como: 
+ 
+
+    
+
+q
+
+=
+
+kh
+2
+Π
+(
+re
+ln
+μ
+
+rw
+
+Δ
+
+) P
+
+                                                                                       (20) 
+
+2.6  Condições de contorno 
+ 
+     Para que as equações de Darcy e da continuidade sejam utilizadas é necessário 
+estabelecer as condições de contorno inicias e de contorno. 
+Para modelar o reservatório, o estado inicial (condições iniciais) e a interação deste 
+com  a  sua  vizinhança  devem  ser  conhecidos  (Aziz  e  Settari,1979).  Em  muitas 
+situações  um  conhecimento  detalhado  destas  condições  é  requerido  para  obter 
+estimativas reais. As condições de contorno podem ser de dois tipos: 
+
+•  Condições de contorno Dirichlet: quando a pressão de fluido é especificada na 
+
+fronteira do reservatório ou no poço. 
+
+•  Condições  de  contorno  Neumann:  neste  caso  a  taxa  de  fluxo  na  fronteira  é 
+
+conhecida. 
+
+ 
+2.7 Simulação numérica de reservatórios 
+ 
+     O  principal  objetivo  de  um  estudo  de  engenharia  de  reservatório  é  prever  o 
+desempenho  futuro  da  jazida,  definindo  métodos  e  meios  para  aumentar,  da  forma 
+mais econômica possível, sua recuperação final.  
+ 
+    Os métodos clássicos, empregados desde os primórdios da Engenharia de Petróleo 
+e  ainda  importantes  nos  dias  de  hoje,  tratavam  o  reservatório  como  um  todo 
+homogêneo  através  da  utilização  de  propriedades  médias,  não 
+levando  em 
+consideração variações espaciais e temporais.  
+ 
+    O advento da simulação numérica proporcionou a possibilidade de detalhar-se esta 
+análise através da subdivisão do reservatório em blocos menores com propriedades 
+individualizadas. Este fato propiciou a incorporação do modelo geológico permitindo a 
+definição  de  regiões  com  propriedades  de  fluido  e  rocha  distintas.  Dentro  deste 
+enfoque a resposta do problema passou a ser obtida pela solução das equações de 
+fluxo para cada elemento. 
+ 
+     Esta  tecnologia  encontra-se  em  constante  evolução  de  modo  a  propiciar  uma 
+melhoria  da  caracterização  dos  reservatórios  estudados.  Este  ganho  de  qualidade  é 
+obtido  a  partir  do  desenvolvimento  de  simuladores  mais  completos,  técnicas 
+computacionais  otimizadas,  computadores  mais  rápidos,  facilidades  gráficas,  etc. 
+(Pizarro, 1992). 
+
+     Os simuladores de reservatórios são programas de computador para a resolução 
+de  equações  de  fluxo  de  massa  e  calor  em  meios  porosos,  que  obedecem  a 
+determinadas condições iniciais e de contorno.  
+ 
+     A  Simulação  de  Reservatórios  é  uma  ferramenta  muito  importante  para  modelar 
+fluxo em meios porosos, auxiliar na caracterização de reservatórios e identificação de 
+barreiras e de propriedades próximas aos poços. Deste modo, através do uso de um 
+simulador  pode-se  obter  um  ajuste  de  histórico  e  uma  previsão  de  produção  para  o 
+reservatório. A análise dos resultados de uma simulação permite definir um plano de 
+desenvolvimento  para  o  reservatório  que  aperfeiçoe  uma  função-objetivo  econômica 
+ou  técnica.  Possibilita  também  avaliar  o  comportamento  do  reservatório  com  maior 
+confiabilidade.  
+ 
+     O número e tipo de equações que serão resolvidas pelo simulador são função de: 
+características  geológicas  do  reservatório,  características  do  fluido,  processo  de 
+recuperação,  do  tempo  e  capacidade  computacional  disponíveis  e  dos  recursos 
+financeiros disponíveis.  
+ 
+     Ao construir o modelo de simulação devem ser considerados os seguintes fatores: 
+objetivos do estudo, complexidade do problema, qualidade desejada para a descrição, 
+quantidade e qualidade dos dados de produção, precisão requerida, tempo e custo. As 
+principais limitações impostas são: capacidade computacional (número e tamanho dos 
+blocos  e  número  de  componentes)  e  quantidade  e  qualidade  das  informações 
+disponíveis (dados geológicos e de produção).  
+ 
+     O modelo de simulação resulta da combinação de 4 modelos que serão descritos a 
+seguir. 
+·          Modelo  Físico:  engloba  as  características  do  reservatório  (rochas/fluidos),  o 
+processo  de  recuperação,  a  aplicação  da  conservação  de  massa,  energia  e 
+quantidade de movimento, o número de componentes presentes;  
+·  Modelo Matemático: representa através de equações os processos observados no 
+modelo físico;  
+·  Modelo Numérico: que será aplicado  para a discretização, solução aproximada, das 
+equações matemáticas;  
+·   Modelo Computacional: tradução do modelo numérico em linguagem de máquina. 
+(Schiozer, 1995). 
+ 
+
+2.7.1 Etapas da Simulação Numérica de Reservatórios 
+ 
+    Antes  de  qualquer  sistema  físico  ser  modelado  ele  deve  ser  adequadamente 
+definido. Os principais passos neste sentido são: 
+
+•  Caracterização  do  Modelo  Geológico:  Utilização  de  dados  sísmicos,  mapas, 
+perfis,  testemunhos,  conhecimento  dos  sistemas  posicionais,  estudo  de 
+afloramentos, etc. 
+
+•  Caracterização  do  Modelo  Hidráulico:  Investigação  da  continuidade  dos 
+reservatórios, existência de fraturas, direções preferenciais de fluxo, barreiras 
+de  transmissibilidade,  etc.  Grande  parte  destas  informações  pode  ser  obtida 
+pela análise dos dados de produção e pressão e através de testes de formação 
+planejados e interpretados. 
+
+•  Coleta e Tratamento dos dados de rocha e fluidos. 
+
+De posse destas informações pode-se passar para a etapa seguinte: 
+
+•  Escolha do simulador mais apropriado. 
+•  Definição  da  modelagem  a  ser  adotada:  Malha  de  simulação,  número  de 
+
+camadas, regiões de fluido e rocha, etc.  
+
+•  Ajuste do histórico de produção e pressões: São realizados ajustes no modelo 
+de  simulação,  de  modo  que  os  resultados  obtidos  por  meio  da  simulação  se 
+tornem bem próximos dos dados reais de produção do reservatório. 
+
+•  Previsão do comportamento futuro: Tem como principal objetivo determinar as 
+condições  de  operação  ótimas  que  serão  utilizadas  na  recuperação  de 
+hidrocarbonetos do reservatório. 
+
+em 
+
+graus 
+
+e 
+
+2.8 Classificações do óleo 
+ 
+    O  Grau  API  é  uma  escala  hidrométrica  criada  pelo  American  Petroleum  Institute 
+(API), ela é utilizada para medir a densidade relativa de óleos e derivados, e como o 
+petróleo se trata de um óleo viscoso, podemos usá-la para classificá-lo. A escala API é 
+medida 
+como:  
+ 
+• Petróleo leve: Possui ºAPI maior que 30, constituído basicamente por alcanos, e uma 
+porcentagem 
+cicloalcanos. 
+ 
+• Petróleo médio: Grau ºAPI de 22 a 30. Além de alcanos, contém de 25 a 30% de 
+hidrocarbonetos 
+aromáticos.  
+ 
+
+petróleo 
+
+permite 
+
+definir 
+
+de 
+
+o 
+
+15 
+
+a 
+
+25% 
+
+de 
+
+ado:  Possui
+
+i  ºAPI  men
+
+or  que  22 
+
+e  é  compo
+
+osto  só  de 
+
+hidrocarbo
+
+netos 
+
+tróleo  pesa
+máticos.  
+
+tróleo extra
+cad
+
+apesado: Po
+deia 
+
+ossui ºAPI 
+
+longa 
+
+menor que
+(su
+
+e 10, é cons
+perior 
+
+stituído de 
+
+hidrocarbo
+pent
+
+netos 
+tano).  
+
+ao 
+
+uanto  maio
+ndo o petról
+ais  caro  q
+ombustíveis
+
+or  o  grau  A
+leo é mais l
+ue  o  pesa
+s. Disponíve
+
+API,  maior  o
+leve, como 
+ado  (ANP. 
+el em: <http
+
+o  valor  do 
+por exemp
+Agência  N
+p://www.anp
+
+produto  no
+lo, o petróle
+Nacional  de
+p.gov.br> A
+
+o  mercado.
+eo classifica
+e  Petróleo, 
+Acesso em: 
+
+  O  API  é  m
+ado como m
+Gás  Natu
+13 junho 20
+
+maior 
+médio 
+ural  e 
+012). 
+
+ara este tra
+m para o óle
+
+balho foi ad
+eo leve, ou 
+
+dotado essa
+seja, possu
+
+a classificaç
+ui Grau ºAP
+
+ção, e toda
+PI ≥ 30. 
+
+as as simula
+
+ações realiz
+
+zadas 
+
+•  Pet
+arom
+ 
+• Pet
+de 
+ 
+    Qu
+quan
+é  ma
+Bioco
+ 
+    Pa
+foram
+ 
+
+3.1 D
+ 
+     A
+equa
+aprox
+(ROZ
+ 
+     A
+asce
+ 
+
+3­ D
+
+Discretiza
+
+ação das 
+
+ variávei
+
+s 
+
+Discretiza
+
+ação das e
+
+equações
+
+ de fluxo 
+ 
+
+Aproximaçõe
+ações de flu
+ximações 
+ZON, B. J., 
+
+es  de  dife
+uxo pode s
+por  todos 
+1989). 
+
+renças  finit
+er obtido a
+os  termos
+
+tas  das  de
+a partir de e
+s  necessá
+
+erivadas  pa
+expansões
+rios  na  si
+
+arciais  que
+série de Ta
+mulação  d
+
+e  aparecem
+aylor, para 
+de  reservat
+
+m  nas 
+obter 
+tórios 
+
+A aproximaç
+endente e de
+
+ção da segu
+escendente
+
+unda deriva
+e para a pre
+
+da de press
+essão: 
+
+são podem
+
+ ser obtidas
+
+s por expan
+
+nsões 
+
+ 
+
+ 
+para 
+ 
+ 
+
+obter: 
+
+ 
+
+ 
+
+ 
+ 
+que s
+ 
+ 
+
+se aplica ao
+
+o sistema d
+
+ 
+
+e malha se
+
+guir: 
+
+                   
+
+            
+
+m as expans
+
+ões Taylor 
+
+tornar-se:
+
+         
+ 
+Com
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+Para
+ 
+
+a obter: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+de erro é a
+
+apenas de 
+
+primeira or
+
+rdem, 
+
+a diferença 
+do à diferen
+
+importante 
+ntes tamanh
+
+é que ago
+ra o termo 
+hos de bloco
+o. 
+
+ 
+ 
+Uma
+devid
+ 
+     N
+
+o  entanto, 
+
+normalmen
+
+nte  os  term
+
+mos  de  flux
+
+xo  em  noss
+
+sa  equaçõe
+
+es  de  simu
+
+lação 
+
+serão
+
+o  do  tipo 
+
+,  aonde
+
+o.  Portanto,
+vada, e aplic
+
+,  em  vez 
+cá-lo duas v
+
+disso,  deri
+vezes para
+
+fluxo
+deriv
+ 
+
+  inclui  á
+
+área  de  mo
+
+obilidade,  p
+
+permeabilida
+
+ade  e 
+
+var  uma  a
+este termo
+
+aproximaçã
+de fluxo (R
+
+o  central  p
+ROZON, B. 
+
+para  a  prim
+J., 1989). 
+
+meira 
+
+ 
+E 
+ 
+
+ 
+ 
+Que 
+ 
+
+obtem: 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+Da m
+ 
+ 
+
+mesma form
+
+ma, podemo
+
+ 
+ 
+E 
+ 
+ 
+
+s obter as s
+
+seguintes e
+
+xpressões:
+
+ 
+
+ 
+
+Como  podem
+
+mos  ver,  d
+últimos  sã
+s  expressõe
+e fluxo: 
+
+os  dois 
+rindo  estas
+o termo de
+
+ 
+     C
+para 
+Inser
+para 
+ 
+
+ 
+ 
+Cond
+
+dição de co
+
+ntorno: 
+
+evido  às  d
+o  novamen
+es  na  equa
+
+iferentes  ta
+nte  aproxim
+ação  anteri
+
+amanhos  de
+mações  de
+or,  obtemo
+
+e  bloco,  os
+e  primeira 
+os  a  seguin
+
+s  termos  de
+ordem  ape
+nte  aproxim
+
+e  erro 
+enas. 
+mação 
+
+ 
+
+ 
+
+ 
+
+modificar a n
+a  tornar-se
+
+nossa apro
+uma  difer
+
+oximação da
+rença  para 
+
+a primeira d
+a  frente  e
+
+derivada na
+em  vez  de 
+
+a face 
+uma 
+
+Então vamo
+uerda,  i  = 
+ença centra
+
+s ter que m
+1  /  2,  para
+al: 
+
+     E
+esqu
+difere
+ 
+
+ 
+
+o do termo 
+
+fluxo torna
+
+-se assim: 
+
+ 
+ 
+E a a
+ 
+
+aproximaçã
+
+ 
+
+ 
+
+Com  uma 
+elhante par
+
+R  especific
+pressão  PR
+a o bloco N
+N: 
+
+     C
+seme
+ 
+
+cada  na  fa
+
+ce  direita, 
+
+temos  um
+
+ma  aproxim
+
+mação 
+
+ 
+ 
+     P
+
+Para uma ta
+
+xa de fluxo 
+
+especificad
+
+do no lado e
+
+esquerdo (i
+
+fazem
+
+mos uso da
+
+a equação d
+
+de Darcy: 
+
+ 
+Ou 
+ 
+
+ 
+
+ 
+
+o, substituin
+
+ndo na apro
+
+oximação, o
+
+obtemos: 
+
+ 
+Entã
+ 
+
+ 
+
+njeção / pro
+
+odução), 
+
+ 
+
+ 
+
+ 
+     C
+seme
+ 
+
+ 
+     P
+fluxo
+ 
+
+ 
+
+Com  uma  t
+elhante par
+
+R  especific
+taxa  de  Q
+a o bloco N
+N: 
+
+cado  na  fa
+
+ace  direita, 
+
+temos  um
+
+ma  aproxim
+
+mação 
+
+Para o caso
+o para os do
+
+o de um lim
+ois blocos fi
+
+ite de ausê
+cam: 
+
+ência de flux
+
+xo entre blo
+
+ocos e i i + 
+
+ 
+
+1, os termo
+
+os de 
+
+ 
+
+ 
+
+ Discretiz
+
+zação do T
+
+ Tempo 
+
+Como foi vis
+
+sto anteriorm
+
+mente que p
+
+pela expans
+
+são descen
+
+3.2  
+ 
+     C
+ 
+
+dênte: 
+
+ 
+
+ 
+à  ap
+obtid
+ 
+
+proximação 
+do: 
+
+seguinte  d
+
+iferença  pa
+
+ara  trás com
+
+m  termo  de
+
+e  primeira  o
+
+ordem  de  e
+
+erro  é 
+
+ 
+
+ascendente
+
+e no tempo
+
+: 
+
+a expansão 
+
+ 
+Uma
+ 
+
+  
+
+ 
+prod
+termo
+
+uz  uma  ap
+o do erro: 
+
+proximação 
+
+ascendent
+
+te,  novame
+
+ente  com  a
+
+a  primeira  o
+
+ordem  a  fi
+
+m  de   
+
+ 
+Final
+ 
+
+lmente, a ex
+
+xpansão em
+
+m ambos os
+
+s sentidos:
+
+ 
+
+ 
+Obte
+
+emos uma a
+
+aproximação
+
+o central, co
+
+om uma se
+
+gunda orde
+
+em a fim do 
+
+  
+
+  
+
+erro: 
+
+ 
+     A
+equa
+como
+caso
+
+A  aproximaç
+ações. Usan
+o  exemplo,
+os acima (PE
+
+ção  do  tem
+ndo o caso 
+,  podemos 
+EACEMAN
+
+mpo  usado 
+simples da
+escrever  a
+, 1977; YOS
+
+como  gran
+a equação d
+a  forma  da
+SHIAKI, 198
+
+nde  influênc
+de fluxo e ta
+a  diferença
+82; WOLCO
+
+cia  sobre  a
+amanho do 
+da  equaçã
+OTT et al., 1
+
+as  soluções
+bloco cons
+ão  para  os
+1996). 
+
+s  das 
+stante 
+s  três 
+
+ 
+
+ Formulaç
+
+ção Explic
+
+cita 
+
+3.3  
+ 
+     U
+esqu
+expli
+ 
+
+Usamos  a 
+uerdo  tamb
+citamente: 
+
+aproximaçã
+bém  está 
+
+ão  ascende
+em  função
+
+ente  da  d
+o  de  t,  e
+
+erivada  do
+e  podemos
+
+o  tempo  t. 
+s  resolver 
+
+Assim,  o 
+para  pres
+
+lado 
+ssões 
+
+ 
+
+formulação
+
+o tem uma e
+
+estabilidade
+
+e limitada. 
+
+ 
+Esta 
+ 
+ 
+
+Matriz de
+
+e transmis
+
+ssibilidad
+
+de  
+
+3.4 M
+ 
+
+F
+Figura 4: Vol
+
+lume de Con
+
+ntrole para o 
+
+escoamento
+
+o unidimensio
+
+ 
+onal (Ertekin
+n et al., 2001
+
+). 
+
+ 
+ 
+
+a o termo de
+
+e fluxo: 
+
+Para
+ 
+
+ 
+
+ 
+
+ 
+Para
+ 
+
+a o termo de
+
+e acumulaçã
+
+ão: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+A eq
+ 
+
+ 
+
+ 
+
+uação discr
+
+retizada ser
+
+rá: 
+
+ 
+ 
+Multi
+ 
+
+iplicando 
+
+ 
+
+          e    
+
+  
+
+  Tem
+
+mos: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Faze
+ 
+
+endo: 
+
+ 
+
+ 
+ 
+       
+ 
+       
+ 
+ 
+
+       
+
+    
+
+ 
+Ond
+ 
+
+e  
+
+ 
+Na fo
+ 
+
+orma matric
+
+cial temos: 
+
+     
+
+ 
+
+       
+
+ é
+ a matriz de
+é a matriz do
+ é
+
+e transmiss
+os termos d
+
+ibilidade (tr
+de acumula
+
+ridiagonal)
+ção (diagon
+
+nal) 
+
+ 
+
+  
+
+                 
+
+               
+
+      
+
+                
+
+                
+
+                
+
+                
+
+                  
+
+                
+
+               i
+
+i = 1,2, ..., 
+
+N 
+
+ 
+ 
+Form
+ 
+
+ma explicita
+
+a da equaç
+
+ção de Flu
+
+ 
+
+xo 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+           
+
+    i = 1,2, ..., 
+
+N 
+
+Resoluçõe
+
+es das equ
+
+uações de
+
+e transmi
+
+ssibilidad
+
+de: 
+
+3.5 R
+ 
+ Equ
+
+Toma
+ 
+As c
+ 
+
+ação da dif
+
+fusividade: 
+
+ 
+
+ando os se
+
+guintes asp
+
+pecto:  
+
+ 
+
+condições d
+
+de contorn
+
+no são dad
+
+as por: 
+
+ 
+
+ 
+
+o produto d
+
+da velocidad
+
+de aparente
+
+e Ux pela ár
+
+ea aberta aao fluxo 
+
+ 
+Vazã
+
+ão é igual a
+
+A ve
+
+locidade ap
+
+parente Ux é
+
+é dada pela
+
+a equação d
+
+de Darcy 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+D
+Denominand
+
+do 
+
+4­ Estudo de Caso ­ Montagem de um reservatório sintético e 
+homogêneo 
+
+ 
+     Este capítulo tem como objetivo a aplicação das equações de escoamento bifásico 
+em um reservatório de petróleo bidimensional e hipotético. 
+ 
+     Para reproduzir o fenômeno físico do escoamento de fluidos em meio poroso de 
+forma similar aos reservatórios reais, para avaliar a eficiência de simuladores e seus 
+resultados,  o  modelo  criado  para  este  projeto  leva  em  consideração  um  grande 
+número  de  homogeneidades  nos  seus  parâmetros,  como  espessura  das  camadas, 
+porosidade, permeabilidade, produtividade  entre outros. 
+ 
+
+4.1 Dados de entrada do modelo de simulação 
+ 
+     As  propriedades  do  fluido  e  da  rocha  utilizadas  neste  modelo  têm  como  objetivo 
+validar o simulador criado.  
+
+4.2 Propriedades da Rocha 
+ 
+     A tabela 1 abaixo representa as propriedades mais importantes relativas à rocha 
+reservatório que foram modelo utilizado pelo simulador: 
+ 
+
+Parâmetros 
+Porosidade 
+
+Permeabilidade 
+
+Dados 
+20% 
+90 mD 
+
+Compressibilidade da Rocha 
+
+3,5E-06 psi-1 
+
+Profundidade 
+
+2000 ft 
+
+Tabela 1 – Propriedades da rocha 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+4.3 Propriedades do Fluido 
+ 
+     A  tabela  abaixo  apresenta  as  propriedades  do  fluido  que  foram  utilizadas  para 
+inicializar o modelo, considerando que as mesmas variam com o tempo e a produção. 
+ 
+ 
+
+Parâmetros 
+
+Saturação de água 
+
+Saturação de óleo 
+
+Viscosidade da água 
+
+Grau API do óleo 
+
+Densidade da água 
+
+Densidade do óleo 
+
+Fator volume de formação da água 
+
+Dados 
+
+0.2 
+
+0.8 
+
+1.0 cP 
+
+41⁰ 
+
+1000 kg/m3 
+
+820 kg/m3 
+
+1.03 m3 std/m3 
+
+Fator Volume de formação do óleo 
+
+1.30 m3 std/m3 
+
+Tabela 2 – Propriedades dos fluidos 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5­ Análises de Resultados 
+ 
+
+5.1 Analises e resultados do simulador BPrh­43 
+ 
+ 
+     O histórico de produção apresentado na Figura 5 abaixo mostra que, após os 10 
+anos  de  produção,  a  vazão  de  óleo  cai  quase  que  100%  do  seu  valor  inicial, 
+declinando de 800 bbl/d para 4.37 bbl/d. Tal resultado já mostra certa coerência em 
+relação ao conhecimento teórico sobre declínio. 
+
+Vazão de óleo 
+
+l
+
+)
+d
+/
+l
+b
+b
+(
+ 
+o
+e
+ó
+e
+d
+o
+ã
+z
+a
+V
+
+ 
+
+ 
+
+900,00
+800,00
+700,00
+600,00
+500,00
+400,00
+300,00
+200,00
+100,00
+0,00
+
+0,00
+
+2,00
+
+4,00
+
+6,00
+
+8,00
+
+10,00
+
+12,00
+
+Tempo  (anos)
+
+Figura 5 – Vazão de óleo durante 10 anos 
+
+Produção acumulada de óleo
+
+)
+l
+b
+b
+(
+ 
+p
+N
+
+1,60E+06
+1,40E+06
+1,20E+06
+1,00E+06
+8,00E+05
+6,00E+05
+4,00E+05
+2,00E+05
+0,00E+00
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+Tempo (anos)
+
+Figura 6 – Produção acumulada óleo durante 10 anos 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5.2 Validação de resultados do simulador BPRh – 43 
+ 
+     Para verificar se o modelo matemático utilizado no simulador BPRh-43 é  coerente, 
+este    etapa  irá  comparar  alguns  resultados  do  simulador  criado  com  um  simulador 
+comercial  que  é    bastante    utilizado    pelas  companhias  de  petróleo. O  software  é  o 
+Petrel  2010.1  e  o  simulador  é  o  ECLIPSE  2010.1.  Ambos  pertencentes  à  empresa 
+Schlumberger. 
+ 
+Abaixo segue o as etapas de simulação por simuladores comercias: 
+ 
+ 
+
+Petrel (entrada de dados) 
+
+ 
+
+•  Modelo Geológico 
+•  Propriedades da rocha 
+•  Propriedades dos fluidos   
+
+Eclipse 
+
+ 
+
+•  Equações de fluxo 
+•  Aplicação do método das 
+
+diferenças finitas 
+ 
+
+Petrel (Visualizar resultados) 
+
+ 
+
+•  Vazão 
+•  Produção acumulada 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Figura 7 – Etapas realizadas 
+
+ 
+ 
+     No caso do  BPRh-43,  a  entrada  de  dados,  bem  como  a  simulação  é  feita  no 
+próprio    programa.  Vale  ressaltar  ainda  que,  o  ECLIPSE  simula  pelo  método  das 
+diferenças  finitas  o  mesmo  método  utilizado  na  programação  feita  no  BPRh-43. 
+Entretanto, a solução das diferenças finitas utilizada na programação do BPRh-43 foi a 
+solução explicita, já no simulador comercial, é utilizado o método das diferenças finitas 
+de solução implícita. 
+ 
+ 
+     As simulações realizadas em ambos simuladores foram baseadas na estrutura do 
+reservatório,  nas  propriedades  do  fluido,  da  rocha  e  nas  condições  iniciais  pré-
+estabelecidas. 
+ 
+
+     Todavia, a validação será feita comparando a coerência dos resultados em cinco 
+anos de simulação. Serão mostrados os resultados obtidos no BPRh-43 e  no  Eclipse, 
+respectivamente.  As comparações aqui feitas serão com base: 
+ 
+
+•  Vazão de produção Óleo;  
+•  Produção Acumulada de Óleo  
+
+ 
+      
+     Na figura 8 abaixo que representa a Vazão de óleo versus Tempo entre os dois 
+simuladores, podemos perceber que ocorre uma diferença numérica entre as vazões, 
+porém  as  curvas  simuladas  possuem  comportamentos  similares,  divergindo  apenas 
+por uma queda de vazão após o segundo ano de simulação do Eclipse que depois se 
+mantém em um patamar constante, assim como no BPRh-43. 
+ 
+
+Comparação Vazão x Tempo
+
+)
+d
+/
+l
+b
+b
+(
+ 
+o
+ã
+z
+a
+V
+
+900,00
+800,00
+700,00
+600,00
+500,00
+400,00
+300,00
+200,00
+100,00
+0,00
+
+Eclipse
+
+BPRh‐43
+
+ 
+
+0,00
+
+2,00
+
+4,00
+
+6,00
+
+8,00
+
+10,00
+
+12,00
+
+Tempo (anos)
+
+Figura 8 – Comparação de vazão óleo versus tempo 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Comparação Produção Acumulada Óleo
+1,40E+06
+
+)
+l
+b
+b
+(
+ 
+P
+N
+
+1,20E+06
+
+1,00E+06
+
+8,00E+05
+
+6,00E+05
+
+4,00E+05
+
+2,00E+05
+
+0,00E+00
+
+1
+
+2
+
+3
+
+4
+
+5
+
+Tempo (anos)
+
+BPRh ‐ 43
+
+Eclipse
+
+ 
+
+Figura 9 – Comparação de Produção acumulada de óleo 
+
+ 
+ 
+     A figura 9 acima compara a coerência dos resultados entre o simulados BPRh-43 e 
+o simulador comercial. A comparação entre as curvas geradas pelo ECLIPSE e pelo 
+BPRh-43  nos  mostra  uma    tendência  de  comportamento  similar,  levando-se    em 
+consideração a diferença no método de diferenças finitas empregado nos simuladores. 
+ 
+     Podemos  então  perceber  uma  coerência  relevante  nos  resultados  obtidos  no 
+programa  criado,  chamado  de  BPRh-43,  como  pudemos  ver  na  análise  de  vazão  e 
+produção acumulada de óleo. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+6­ Conclusões  
+ 
+     A simulação de reservatórios é sem duvida um importante passo para a exploração 
+de  campos  de  petróleo.  O  modelo  proposto  por  este  presente  projeto  mostrou 
+resultados  extremamente  positivos  no  que  diz  respeito  à  resultados  de  vazão  e 
+produção acumulada de óleo.  
+ 
+     Existem  muitos  desafios  para  a  continuação  deste  projeto,  como:  reservatório 
+anisotrópico, grid tridimensional. 
+ 
+     Este  é  o  início  de  um  trabalho.  O  modelo  matemático  (método  das  diferenças 
+finitas) é coerente como pode se verificar e agora as sofisticações podem começar a 
+ser  feitas,  já  que,  na  Engenharia  de  Petróleo  os  aperfeiçoamentos  devem  ser 
+contínuos,  tendo  em  vista  o  melhoramento  do  simulador  para  tornar  os  resultados 
+cada vez mais precisos e confiáveis.  
+ 
+     Após  comparar  dois  parâmetros  vazão  e  produção  acumulada  de  óleo,  podemos 
+concluir que o simulador denominado BPRh – 43 e válido, tendo poucas variações nos 
+resultados  quando  comparado  com  um  simulador  comercial.  Para  estudos  mais 
+precisos,  é  necessário  realizar  um  estudo  de  estabilidade  do  método  de  diferenças 
+finitas, com a solução explícita, para avaliar as limitações do simulador criado. 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+7­ Bibliografias  
+ 
+http://www.anp.gov.br, acessado pela ultima vez em 13 junho 2012, as 17:40; 
+ 
+Aziz,  K.  and  Settari,  A.,  1979,  “Petroleum  Reservoir  Simulation”,  Applied  Science 
+Publishers Ltd., London, 476 pp. 
+ 
+DAKE,  L.P.,  Fundamentals  of  Reservoir  Engineering.  1.    ed.    Amsterdam:    Editora 
+Elsevier, 1978; 
+ 
+ERTEKIN, T.; ABOU-KASSEM, J. H.; KING, G. R.  Basic Applied Reservoir Simulation. 
+1. ed. Rirchadson, Texas: Society of Petroleum Engineers, 2001. (Textbook, 7).H. T. 
+Banks,  The  Mathematics  of  Reservoir  Simulation.  Editora  Siam,  Estados  Unidos  da 
+America, 1983. 
+ 
+FEITOSA, G. S., 1987, “Um simulador analítico de reservatório”,   I Encontro Técnico 
+sobre Simulações Matemáticas de Reservatórios, Nova Friburgo, 8-13 November, 11 
+pp 
+ 
+ 
+LAKE, L. W., 1989,  “ Enhanced  oil recovery”. Prentice-Hall, Inc. A Division of Simon & 
+Schuster, Englewood Cliffs, New Jersey 07632, 550 pp. 
+ 
+LEITÃO,  H.  C.;  SCHIOZER,  D.  J..  Ajuste  de  Histórico  Automatizado  Através  de 
+Otimização Multivariada e Paralelização Externa,1998 
+ 
+PEACEMAN,  D.W.,  Fundamentals  of  Numerical  Reservoir  Simulation,  Amsterdam, 
+Elsevier Scientific Publishing Company, 1977; 
+ 
+PIZARRO,  J.  O.  S.,  1992,  Curso  Básico  de  Simulação,  DEPRO/DICOP/SEPRO-NS, 
+Petrobras, 27 pp. 
+ 
+ROSA, A. J. et al., Engenharia de Reservatórios de Petróleo. Editora Interciência, Rio 
+de Janeiro, 2006. 
+ 
+ROZON, B. J., 1989. A Generalized Finite Volume Discretization Method for Reservoir 
+Simulation,  SPE  paper  18414  presented  at  the  Reservoir  Simulation  Symposium, 
+Houston, Texas, February 6-8. 
+ 
+
+SCHIOZER,  D.  J.,  1995,  “Fundamentos  de  Simulação  Numérica  de  Reservatórios”. 
+56f.  Apostila  do  curso  de  Simulação  Numérica,  Departamento  de  Engenharia  de 
+Petróleo, Faculdade de Engenharia Mecânica, Unicamp, Campinas – SP. 
+ 
+ 
+THOMAS, J. E., Fundamentos de Engenharia de Petróleo, Editora Interciência, Rio de 
+Janeiro,200. 
+ 
+YOSHIAKI,  I.,  1982.  Evaluation    of  Interblock  Mobility    Using  a  Modified  Midpoint 
+Weighting  Scheme,  SPE  paper  10498    presented  at  the  6th  SPE  Symposium  on 
+Reservoir Simulation, New Orleans, LA, January 31-February 3. 
+ 
+WOLCOTT,  D.  S.,  KAZEMI,  H.  and  DEAN,  R.  H.,  1996.  A  Practical  Method  for 
+Minimizing  the  Grid  Orientation  Effect  in  Reservoir  Simulation,  SPE  paper  36723 
+presented at the SPE Annual Technical Conference and Exhibition, Denver, Colorado, 
+USA, 6-9 October. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+8­ Programa  
+ 
+C******************************************************************* 
+C****                                            NATAL 29.11.11 **** 
+C**** SIMULATION OF ONE-PHASE FLOW IN A HORIZONTAL              **** 
+C**** ONE-DIMENSIONAL                                           **** 
+C****                                                           **** 
+C**** BUILDER:BRUNO GOMES                                       **** 
+C**** ORIENTADORA:JENNYS BARRILHAS                              **** 
+C******************************************************************* 
+      PROGRAM BLACK OIL 
+ 
+C-----EXPLICIT PROGRAM 
+C 
+C-----DECLARATIONS 
+C       
+      REAL P(25),PNEW(25),X(25),A(25),B(25),C(25),D(25) 
+      REAL POR,PERM,VISC,COMPR,L,PL,PR,PINIT,DT,TMAX,PI,DX 
+C 
+C-----INITIALISATION OF PARAMETERS 
+C 
+      DATA POR/0.2/,PERM/1.0/,VISC/1.0/,COMPR/0.0001/,L/100./,PL/2.0/ 
+     *,PR/1.0/PINIT/1.0/,DT/0.0005/,N/10/,TMAX/0.01/,IPRINT/1/ 
+      INTEGER ISW,I,N,J 
+      DATA PI/3.14159/ 
+C 
+   31 DX=L/N 
+      T=0. 
+      CONST=DT/DX/DX*PERM/POR/VISC/COMPR 
+      ALPHA=1./CONST 
+      ISW=0 
+      DO 5 I=1,N 
+      P(I)=PINIT 
+      PNEW(I)=PINIT 
+    5 X(I)=L*I/N-L/N/2. 
+C 
+C-----OPEN OUTPUT FILE 
+C 
+      OPEN(10,FILE=OUT,STATUS='UNKNOWN') 
+C 
+C-----TIME LOOP 
+C 
+      DO 200 J=1,1000 
+      ISW=ISW+1 
+      T=T+DT 
+C-----------------------------------TRANSMISSIBILITIES 
+      IF(I.NE.1)THEN 
+        TXOM(I)=2.*LAMOM/(DX(I)/PERM(I)+DX(I-1)/PERM(I-1))/DX(I) 
+        TXWM(I)=2.*LAMWM/(DX(I)/PERM(I)+DX(I-1)/PERM(I-1))/DX(I) 
+      ELSE 
+        TXOM(I)=2.*LAMOM/DX(I)*PERM(I)/DX(I) 
+        TXWM(I)=2.*LAMWM/DX(I)*PERM(I)/DX(I) 
+C----------------------------INJECTION OF WATER AT LEFT SIDE  
+C----------------------------REQUIRES SUM OF TRANSMISSIBILITIES 
+        TXWM(I)=TXWM(I)+TXOM(I) 
+      ENDIF 
+C 
+      IF(I.NE.N)THEN 
+        TXWP(I)=2.*LAMWP/(DX(I+1)/PERM(I+1)+DX(I)/PERM(I))/DX(I) 
+        TXOP(I)=2.*LAMOP/(DX(I+1)/PERM(I+1)+DX(I)/PERM(I))/DX(I) 
+      ELSE 
+
+        TXOP(I)=2.*LAMOP/DX(I)*PERM(I)/DX(I) 
+        TXWP(I)=2.*LAMWP/DX(I)*PERM(I)/DX(I) 
+      ENDIF 
+C-----------------------------------STORAGE COEFFICIENTS 
+      CPOO(I)=(1.-SW(I))*PHI(I)*(CR*BO(I)+DBO(I))/DT 
+      CSWO(I)=-PHI(I)*BO(I)/DT 
+      CPOW(I)=SW(I)*PHI(I)*(CR*BW(I)+DBW(I))/DT 
+      CSWW(I)=PHI(I)*BW(I)/DT-CPOW(I)*DPCOW(I) 
+C-----------------------------------MATRIX COEFFICIENTS 
+      ALFA=-CSWO(I)/CSWW(I) 
+      A(I)=TXOM(I)+ALFA*TXWM(I) 
+      C(I)=TXOP(I)+ALFA*TXWP(I) 
+      IF(I.NE.1)THEN 
+ 
+        B(I)=-(TXOP(I)+TXOM(I)+CPOO(I)) 
+     *       -(TXWP(I)+TXWM(I)+CPOW(I))*ALFA 
+      ENDIF 
+      IF(I.NE.N.AND.I.NE.1)THEN 
+        D(I)=-(CPOO(I)+ALFA*CPOW(I))*PO(I) 
+     *       +ALFA*(TXWP(I)*(PCOW(I+1)-PCOW(I)) 
+     *       +TXWM(I)*(PCOW(I-1)-PCOW(I))) 
+      ENDIF 
+      IF(I.EQ.1.AND.IBC.EQ.2)THEN 
+        D(I)=-(CPOO(I)+ALFA*CPOW(I))*PO(I) 
+     *     +ALFA*(TXWP(I)*(PCOW(I+1)-PCOW(I))+QWI/DX(I)/AREA) 
+        B(I)=-(TXOP(I)+CPOO(I)) 
+     *       -(TXWP(I)+CPOW(I))*ALFA 
+      ENDIF 
+      IF(I.EQ.1.AND.IBC.EQ.1)THEN 
+        D(I)=-(CPOO(I)+ALFA*CPOW(I))*PO(I) 
+     *     +ALFA*(TXWP(I)*(PCOW(I+1)-PCOW(I))+TXWM(I)*(PL+PCOW(1))) 
+        B(I)=-(TXOP(I)+CPOO(I)) 
+     *               -(TXWP(I)+TXWM(I)+CPOW(I))*ALFA 
+      ENDIF 
+      IF(I.EQ.N)THEN 
+        D(I)=-(CPOO(I)+ALFA*CPOW(I))*PO(I) 
+     *       -(TXOP(I)+ALFA*TXWP(I))*PR 
+     *       +ALFA*TXWM(I)*(PCOW(I-1)-PCOW(I)) 
+      ENDIF 
+ 
+C 
+C-----EXPLICIT SOLUTION 
+C 
+      PNEW(1)=P(1)+CONST*(P(2)-3.0*P(1)+2.0*PL) 
+      PNEW(N)=P(N)+CONST*(2.0*PR-3.0*P(N)+P(N-1)) 
+      DO 7 I=2,N-1 
+    7 PNEW(I)=P(I)+CONST*(P(I+1)-2.0*P(I)+P(I-1)) 
+ 
+C 
+C-----PRINT (?) 
+C 
+      IF(ISW.NE.IPRINT)GO TO 99 
+      ISW=0 
+      WRITE(10,100)T,PL,(PNEW(I),I=1,N),PR 
+  100 FORMAT(50F10.4) 
+   99 CONTINUE       
+C 
+C-----END (?) 
+C 
+      IF(T.GE.TMAX)STOP 
+C 
+
+C-----UPDATING OF PRESSURES 
+C 
+   13 DO 14 I=1,N 
+   14 P(I)=PNEW(I) 
+  200 CONTINUE 
+      END 
+ 
+ 
+
+

@@ -1,0 +1,605 @@
+universidade federal espirito santo centro tecnologico departamento engenharia mecanica marcel pereira lima desenvolvimento equipamento misturador escoamento multifasico industria petroleo gas vitoria marco marcel pereira lima desenvolvimento equipamento misturador escoamento multifasico industria petroleo gas engenharia mecanica trabalho conclusao curso apresentado departamento universidade federal espirito santo requisito parcial obtencao titulo bacharel engenharia mecanica 
+ marcio ferreira martins 
+ vitoria marco agradecimentos agradeco todos colaboraram desenvolvimento deste trabalho 
+ especialmente orientador prof 
+ marcio ferreira martins programa recursos humanos anp prh universidade federal espirito santo ufes 
+ resumo utilizacao metodos secundarios recuperacao petroleo pocos tornado pratica comum industria objetivo aumentar producao garantir escoamento oleo superficie 
+ entretanto desafios tecnologicos encontrados principalmente offshore dificultam elevacao petroleo abrem leque oportunidades desenvolvimento tecnologias visam solucionar problemas 
+ metodos elevacao artificial comumente utilizados sistema bombeio centrifugo submersivel bcs apresentado problemas elevacao misturas oleo grandes fracoes gas devido flutuacoes corrente eletrica bomba ocorrencia gas lock comuns tais condicoes 
+ presente trabalho propoe desenvolvimento equipamento capaz reduzir impacto negativo grande quantidade gas misturado oleo sistemas bcs homogeneizacao fases montante bomba 
+ adicionalmente equipamento apresenta promissor medicao vazao escoamento multifasico dada capacidade reduzir influencia regimes escoamento medicao 
+ simulacoes numericas cfd monofasicas multifasicas realizadas software comercial objetivo estimar perda carga promovida equipamento bem avaliar desempenho misturas elevada concentracao gas 
+ resultados simulacoes sugerem coeficiente perda carga igual significativa reducao fracao gas saida equipamento superou admissao volume gas 
+ abstract use secondary recovery methods oil wells become common practice industry order increase production ensure oil flow surface 
+ however technological challenges faced especially offshore hamper oil rising open range opportunities development new technologies enhancement existing ones 
+ one main methods used artificial lift system electrical submersible pump esp presented problems gassy well due electric current fluctuations pump gas lock occurrence 
+ present work proposes development device capable reducing negative impact large amount gas mixed oil esp systems homogenizing phases upstream pump 
+ additionally equipment also seems promising multiphase flow measurement lies ability reducing influence flow regimes measurement 
+ cfd monophase multiphase flow simulation accomplished commercial software estimate pressure drop equipment evaluate performance mixtures high concentration gas 
+ simulations results suggest pressure drop coefficient equal 
+ significant reduction gas fraction downstream equipment less gas entry 
+ lista figuras figura sistema bcs 
+ figura componentes estagios bomba sistemas bcs 
+ figura instalacao poco falso 
+ figura funcionamento mobo 
+ figura ilustracao sbcs 
+ figura medidor homogeneizacao mistura 
+ figura principio funcionamento medidor raio gamma 
+ figura principio funcionamento medidor impedancia eletrica 
+ figura regimes escoamento liquidoliquido liquidogas liquidosolido figura diagramas regimes escoamento baseados vazao volumetrica tubos horizontal tubos vertical 
+ figura regimes escoamento tubos horizontais verticais 
+ figura interfaces simuladas fluent 
+ figura interfaces diferentes metodos interpolacao 
+ figura malha geometria joelho 
+ figura malha gerada validacao modelo vof 
+ figura mapa pressao geometria joelho 
+ figura mapa velocidade geometria joelho 
+ figura simulacao realizada vof resultado numerico experimental obtidos parvareh 
+ figura mapa fracao volumetrica liquido frente bolha tubo livre 
+ figura mapas fracao volumetrica liquido tubo livre saida equipamento 
+ figura grafico fracao volumetrica gas comprimento desde primeira secao 
+ figura representacao volume controle unidimensional 
+ figura arranjo celulas entorno volume 
+ figura algoritmos pressurebased pressurebased segregated pressurebased coupled fsm 
+ figura algoritmo densitybased 
+ lista tabelas tabela parametros metodos utilizados simulacao 
+ tabela parametros utilizados calculo perda carga 
+ tabela perda carga joelho 
+ tabela comparativo velocidades real obtidas simulacao 
+ tabela coeficientes perda carga 
+ tecnologias industria petroleo offshore 
+ bombeio centrifugo submerso 
+ modulo bombeio submarino mobo 
+ medicao vazao escoamentos multifasicos 
+ equacoes mistura gasliquido 
+ modelos escoamento gas liquido 
+ modelo computacional volume fluid vof 
+ equacao fracao volumetrica 
+ calculo perda carga 
+ misturador escoamento gasliquido desenvolvimento tecnologico 
+ procedimento simulacao perda carga 
+ procedimento simulacao modelo vof 
+ avaliacao perda carga 
+ estimativa perda carga equipamento 
+ avaliacao simulacao multifasica 
+ teste desempenho equipamento 
+ anexo tratamento numerico 
+ introducao crescimento demanda mundial energia associado relevancia petroleo matriz energetica global torna necessaria manutencao fornecimento dessa materia prima todo planeta 
+ visto descobertas novas reservas acompanhado crescente demanda vese necessaria intensificacao producao petroleo reservas existentes implementacao metodos recuperacao alternativos 
+ sabese inicialmente reservatorios petroleo submetidos elevadas pressoes auxiliam recuperacao fluidos ali contidos 
+ decorrer atividade produtiva tal pressao tende reduzir podendo atingir niveis baixos bastante extracao oleo naturalmente garantida 
+ nessa condicao utilizacao metodos artificiais recuperacao torna necessaria 
+ dentre varios metodos artificiais recuperacao utilizados onshore bombeio mecanico bm bombeio cavidades progressivas bcp 
+ ambos necessidade instalacao equipamentos robustos sobre poco produtor torna aplicacao pouco indicada pocos sob lamina dagua 
+ nesse caso bombeio centrifugo submersivel bcs gas lift continuo glc gas lift intermitente gli apresentam melhores alternativas 
+ bombeio centrifugo submersivel composto basicamente motor eletrico conectado bomba centrifuga ambos instalados poco produtor junto coluna producao 
+ eventuais manutencoes corretivas conjunto exigem paradas producao realizacao troca componentes gerando altos custos oportunidade 
+ minimizar tempo medio reparo novo sistema chamado modulo bombeio submarino mobo desenvolvido descrito patente pi petreobras 
+ novo sistema poco falso dummy instalado distancia segura poco produtor aloja bomba centrifuga 
+ dessa forma qualquer manutencao efetuada bcs pode ser realizada paralelo producao acionamento outro metodo artificial elevacao gas lift poco produtor 
+ identificados associados sabese porem utilizacao mobo pocos alta concentracao gas provocado problemas bombas reduzindo tempo medio falhas 
+ problemas lock caracterizado passagem grandes fracoes gas bombas convencionais passam operar condicoes ideais 
+ geometria sistema apontada silva importante fator colabora descarga gas bomba 
+ adicionalmente buson simulacao cfd observa mistura gasoleo gas observa separacao fases porem acumulo fase gasosa evidente mistura gas 
+ fenomeno gas tentativa solucionar problema apresentado realizados furos superficie separa entrada bomba poco falso 
+ acreditase tais furos atenuem descontinuidade fases reduzindo fenomeno gas lock 
+ solucao entretanto ainda garante bom funcionamento sistema petroleos grandes fracoes gas 
+ pretendese presente trabalho desenvolver avaliar ambiente virtual desempenho equipamento capaz homogeneizar misturas gasliquido deve ser instalado montante sistemas bcs objetivo prevenir problemas gas lock flutuacao corrente eletrica motor desses sistemas pocos elevada concentracao gas 
+ tanto realizadas simulacoes perda carga escoamento monofasico homogeneizacao escoamentos multifasicos gasliquido 
+ sugerese equipamento desenvolvido aplicado pre misturador fases medidores vazao outros processos industriais necessitem misturas multifasicas homogeneas 
+ tecnologias industria petroleo offshore definicao petroleo consiste mistura complexa hidrocarbonetos organicos porcoes compostos inorganicos contendo principalmente nitrogenio enxofre ions metalicos 
+ alguns derivados utilizados producao energetica queima outros materia prima producao plasticos borrachas sinteticas lubrificantes asfalto outros produtos importantes civilizacao moderna 
+ busca tecnicas producao compostos petroleo laboratorio associada reducao numero pocos produtores decada xx motivou elaboracao duas teorias buscam explicar compostos quimicos formados teoria abiogenica inorganica teoria biogenica organica 
+ primeira sustenta petroleo originado hidrocarbonetos estaveis altas pressoes temperaturas gerados manto terrestre posteriormente contaminados bacterias 
+ evidencias presenca hidrocarbonetos camadas profundas terra bem meteoritos apontam veracidade teoria 
+ adicionalmente geologo russo nikolai alexandrovitch kudryavtsev analisou arenitos betuminosos canada concluiu grande volume hidrocarbonetos ali presentes poderiam ser formados unicamente acao biologica 
+ outro lado fato acumulacoes hidrocarbonetos encontram rochas sedimentares possuem origem vulcanica geradas deposito acumulo sedimentos compostos organicos possibilitou maior aceitacao teoria biogenica atualidade 
+ tal teoria baseia reacoes quimicas anaerobicas origem organica capazes produzir hidrocarbonetos sob determinadas condicoes temperatura pressao encontradas reservatorios petroleo 
+ recentemente avancos tecnicas exploratorias descoberta novos reservatorios dificuldade tecnologicas encontradas geracao petroleo processamento materias primas laboratorio propiciou obtencao desses compostos meio extracao interior terra 
+ atualmente identificacao novas acumulacoes petroleo abrange gama tecnicas analisam geologia bacias sedimentares influencia acumulacoes campos gravitacional magnetico terra bem interferencia ondas sismicas emitidas fontes artificiais 
+ vez localizado processo perfuracao realizado petroleo extraido auxilio serie equipamentos visam garantir escoamento superficie 
+ longo anos reducao reservas onshore descobertas grandes reservatorios mar provocou forte migracao atividade produtiva petroleo pocos offshore 
+ nesse contexto novas tecnologias desenvolvidas sentido permitir producao rentavel oleo sob lamina dagua 
+ dentre tecnologias destacamse metodos elevacao artificial gas lift bombeio centrifugo submerso visam aumentar fluxo petroleo tubos risers interconectam plataformas pocos produtores elevar quantidade oleo recuperavel pocos 
+ bombeio centrifugo submerso metodo elevacao artificial bombeio centrifugo submersivel bcs consiste instalacao bomba centrifuga multiplos estagios interior poco alimentada cabos eletricos 
+ equipamento instalado objetiva fornecer energia mecanica adicional escoamento possa vencer coluna hidrostatica fluidos coluna producao perdas carga longo trajetoria separadores producao superficie 
+ tecnologias antigas bcs limitavam bombeio pocos alto teor agua oleos menos viscosos funcao restricoes escoamento impostas oleos pesados 
+ recentemente desenvolvimento tecnologico bombas possibilitou aplicacao elevacao misturas cada vez viscosas 
+ outro lado bombeio grandes fracoes gas ainda apresenta desafio industria instalacao equipamentos impecam entrada dessa fase bomba frequentemente utilizados 
+ segundo thomas al 
+ principais equipamentos instalados junto bomba interior poco admissao bomba selo motor eletrico cabo eletrico identificados figura 
+ bomba centrifuga possui varios estagios sendo cada composto impulsor difusor conforme figura 
+ enquanto impulsor fixado eixo bomba atua fornecimento energia cinetica escoamento difusor estatico promove redirecionamento fluxo proximo estagio converte energia cinetica fluido pressao 
+ quantidade estagios presentes bomba determinada incremento pressao deve ser imposto sobre escoamento forma garantir elevacao head desejada 
+ algumas bombas tal elevacao pode chegar 
+ figura sistema bcs fonte powers dunbar chilimgarian adaptada 
+ figura componentes estagios bomba sistemas bcs fonte powers dunbar chilimgarian adaptada 
+ impulsores bombas centrifugas convencionais possuem geometria permite elevacao grandes fracoes gas logo admissao quantidade elevada fase pode provocar fenomeno aprisionamento dessa fase impulsores chamado gas lock 
+ ocorrencia desse fenomeno acarreta reducao vida util bomba condicoes ideais operacao garantidas 
+ problemas aceleracao excessiva rotacao aquecimento pecas estresse eletrico motor umas consequencias aprisionamento gas impulsores pode ser evitado instalacao dispositivo admissao bomba especial capaz promover separacao previa gases 
+ admissao bomba intake componentes bcs pode atuar separador gas 
+ baixas vazoes separacao gas pode ser realizada meio separador estacionario provoca redirecionamento abrupto fluxo mistura promovendo eliminacao parte fase gasosa oleo 
+ outro lado vazoes elevadas possibilitam utilizacao separadores centrifugos capazes separar parte gas acao forca centrifuga 
+ rotacao impulsores bomba realizada motor eletrico conectados cabos eletricos responsaveis fornecimento energia bcs 
+ motores utilizados tipo trifasico funcionam rotacao entorno 
+ naturalmente condicoes severas alta pressao alta temperatura pocos obrigam elaboracao projetos especiais motor preenchido oleo especial capaz garantir isolamento termico lubrificacao mancais resfriamento 
+ conexao eixos carcacas motor bomba feita componente chamado selo 
+ principais funcoes evitar entrada fluido produzido poco motor alojar volume oleo motor expandido aquecimento equalizar pressoes oleo produzido motor aliviar esforcos axiais eixo bomba meio mancal 
+ modulo bombeio submarino mobo instalacao equipamentos interior poco produtor submarino embora necessaria apresenta certos inconvenientes principalmente manutencao corretiva equipamentos deve ser realizada 
+ altos custos associados operacoes manutencao longo tempo medio reparo motivaram busca solucoes alternativas visao garantia escoamento producao reducao intervencoes pocos produtores 
+ modulo bombeio submarino mobo descrito patente pi petreobras baseia instalacao sistema bcs poco falso dummy localizado distancia segura poco produtor conforme ilustrado figura 
+ segundo rodrigues pont total sistemas mobo sendo utilizado campos golfinho jubarte petrobras operando campos bc perdido shell 
+ figura instalacao poco falso fonte rodrigues pont 
+ conforme mostrado figura capsula tubular shroud dezenas metros comprimento aloja conjunto bcs inserida poco falso 
+ fluido produzido entra regiao anular compreendida capsula poco falso bombeado bcs apos escoar regiao inferior modulo contem entrada capsula 
+ figura funcionamento mobo fonte arquivo pessoal 
+ troca conjunto motor bomba realizada cada dois anos meio media leva torno dias ser concluida requer uso sondas maritima alto custo totalizando cerca r$ milhoes operacao 
+ principais vantagens oferecidas mobo facilidade operacao troca bcs interrupcao producao acionamento bypass conectado outro sistema elevacao 
+ outro lado utilizacao desse sistema recomendada bombeio fluido producao fracao gas devido risco ocorrencia gas lock bomba 
+ geometria caracteristica mobo provocado separacao fase gasosa inicialmente misturada oleo regiao anular sistema fluidos producao concentrados gas 
+ consequentemente interface oleogas formada tende descer entrada capsula 
+ interface atinge regiao inferior capsula grandes bolhas formadas interior provocando fenomeno gas lock bomba 
+ trabalho silva propoese elaboracao furos shroud pequenos bastante impedir passagem oleo grandes suficiente permitirem fluxo gas 
+ segundo autor tais furos evitariam ocorrencia gas lock porem problema ainda verificado alguns pocos 
+ configuracao alternativa modulo bombeio submarino recebe nome sbcs skid bcs descrita patente us petrobras 
+ nela conjunto bcs instalado duas capsulas levemente inclinadas integradas estrutura depositada sobre leito marinho conforme mostrado figura 
+ dessa forma elaboracao poco falso alojador dispensada 
+ segundo rodrigues pont equipamento sendo utilizado campos espadarte petrobras bem cascade chinook golfo mexico 
+ figura ilustracao sbcs fonte rodrigues pont 
+ ambas configuracoes mobo apresentam alturas elevacao fluido semelhantes historico comparativo capacidade suportar golfadas durabilidade bombas cada 
+ medicao vazao escoamentos multifasicos conforme apresentado item 
+ escoamentos multifasicos tendem apresentar diferentes regimes escoamento determinadas fracoes volumetricas fases presentes 
+ especificamente escoamentos gasliquido tais regimes recebem forte influencia aceleracao gravitacional bem distribuicao fases homogeneizacao concentracoes fluidos longo dominio escoamento 
+ sensibilidade regime escoamento multifasico diversas variaveis grande diferenca comportamento fases diferentes regimes provocam dificuldades medicao vazao multifasica metodos convencionais 
+ medidores vazao monofasicos relacao diferenca pressao elemento deprimogenio vazao volumetrica escrita forma kq    onde p  dk representam vazao volumetrica diferencial pressao massa especifica fluido coeficiente descarga depende apenas numero reynolds 
+ outro lado escoamentos multifasicos tal coeficiente depende outras variaveis escoamento fracao volumetrica fases velocidades relativas interacao interfacial dificulta elaboracao modelos universais escoamentos possuam fase 
+ embora resultados auferidos medidores vazao deprimogenios escoamentos multifasicos apresentem consideravel dependencia sobre variaveis inerentes misturas fases podese reduzir sensibilidade medicao condicoes escoamento instalacao elemento homogeneizador montante medidor 
+ nessas condicoes fracoes volumetricas fases tornam bem distribuidas longo dominio velocidades relativas tendem reduzir interacao interfacial torna uniforme 
+ sistema medicao realizado boyer lemonnier propoe utilizacao equipamento homogeneizador escoamento capaz gerar fases dispersas diametro especifico equalizam velocidade fases liquida gasosa possibilitando medicao vazao volumetrica mistura todo 
+ exemplo homogeneizador comercialmente utilizado mostrado figura 
+ mistura multifasica entra radialmente equipamento seta vermelha sai axialmente seta azul 
+ interior composto tubo vertical axial concentrico regiao anular 
+ nessa regiao ocorre separacao fases forma gas mistura migra parte superior anular interior tubo orificio presentes longo superficie 
+ mesma forma oleo localizado regiao inferior anular transferido interior tubo onde ocorre mistura fases 
+ figura medidor homogeneizacao mistura fonte allababidi mba addali adapatada 
+ diferentemente medicao realizada elementos deprimogenios medidores tipo raio gamma impedancia eletrica capazes determinar fracoes volumetricas cada fase 
+ primeiro utiliza principio atenuacao radiacao atravessa substancia fluida 
+ nele raios gamma emitidos fonte localizada lado oposto detector capaz determinar intensidade figura 
+ interpretacao atenuacao raios baseia diferentes capacidades absorcao radiacao cada substancia forma misturadas podemse determinar fracoes volumetricas cada 
+ figura principio funcionamento medidor raio gamma fonte allababidi mba addali adapatada 
+ medicao escoamentos multifasicos impedancia eletrica outro lado consiste medicao impedancia eletrica mistura circuito eletrico instalado redor secao tubulacao figura 
+ conhecendose valores impedancias cada fase podese calcular fracao volumetrica cada substancia mistura 
+ figura principio funcionamento medidor impedancia eletrica fonte allababidi mba addali 
+ escoamento multifasico segundo brennen escoamento multifasico pode ser definido qualquer fluxo contendo fase componente 
+ tal definicao engloba grande gama escoamentos duas fases componentes interagem si diversas maneiras 
+ paladino definese sistema multifasico regiao espaco onde coexistem dois fluidos imisciveis separados interface desconexa conexa ambas 
+ entendese interface desconexa porcoes fases separadas possuem grande disparidade dimensional exemplo bolhas dispersas liquidos 
+ dimensoes fases separadas semelhantes interface dita conexa 
+ variedade escoamentos multifasicos previsto definicao provoca dificuldade generalizacao equacionamento fenomenos transferencia massa momento energia fases 
+ transporte particulas solidas suspensas ar exemplo caracteriza regime escoamento diferente daquele envolvido mistura liquido grandes bolhas gas levando diferentes modelos 
+ segundo caso fenomenos cavitacao bolhas transferencia massa fases devido vaporizacao liquido podem influenciar fortemente escoamento mistura observado primeiro caso 
+ divisao tipos escoamento multifasico baseada apenas fases componentes colabora estudo diferentes fenomenos envolvidos porem suficiente diferenciar qualquer escoamento 
+ misturas contendo gas liquido exemplo podem apresentar comportamentos bem distintos diferentes fracoes fases influenciam geometria interface 
+ oliveira escoamentos multifasicos assumem diferentes regimes acordo tres fatores dimensoes sistema propriedades fisicas fases condicoes operacionais vazao pressao inclinacao etc 
+ baseandose influencia fases geometria interfaces kristof apresenta esquema separa diferentes regimes escoamento multifasico figura figura regimes escoamento liquidoliquido liquidogas liquidosolido fonte kristof adaptada 
+ elevacao oleo gas tubulacoes principalmente industria petroleo motivou realizacao estudos investigam influencia diferentes fatores listados oliveira escoamento bifasico gasliquido tubulacoes posicionadas horizontal verticalmente 
+ estudo weisman diagramas correlacionam regime escoamento predominante vazoes volumetricas fases tubos horizontais verticais gerados apresentados figura respectivamente 
+ figura mostra esbocos regimes identificados diferenciam principalmente geometrias interfaces separacao fases 
+ figura diagramas regimes escoamento baseados vazao volumetrica tubos horizontal tubos vertical fonte weisman adaptada 
+ figura regimes escoamento tubos horizontais verticais fonte weisman adaptada 
+ equacoes mistura gasliquido analise escoamentos multifasicos bem escoamentos compostos unica formas experimentalmente instrumentacao adequada modelos escala realizada laboratorio teoricamente uso equacoes matematicas modelos realizada essencialmente fase pode ser tres teoricos simplificados computacionalmente aplicacao modelos teoricos computadores associados alguns tratamentos numericos descritos anexo 
+ devido dificuldades reproducao fenomeno laboratorio custos experimento limitacoes instrumentacao procurase lancar mao equacoes matematicas resultados aproximados plausiveis 
+ ferramentas computacionais podem auferir duas abordagens utilizadas elaboracao modelos teoricos escoamentos lagrange euler 
+ primeira particulas acompanhadas individualmente equacoes algebricas utilizadas descricao interacao 
+ outro lado abordagem euler baseia conservacao massa momento energia volumes controle localizados dominio escoamento 
+ evidentemente abordagem lagrange apresenta dificuldades fenomenos envolvem grande numero particulas numero equacoes torna grande comparada obtidas analise volumes controle tamanhos definidos 
+ escoamentos multifasicos interacao diferentes fases traz necessidade acoplamento duas abordagens eulereuler eulerlagrange 
+ software ansys fluent ambas podem ser aplicadas regimes escoamento misturas contendo fases continuas descontinuas porem segunda deve ser utilizada misturas fases apenas continuas 
+ equacoes resolvidas euler euler desenvolvidas base conservacao massa momento energia incluindo termos interacao fases 
+ utilizada escoamentos contendo fases dispersas secundarias equacoes baseadas cinetica particulas inseridas sistema equacoes 
+ abordagem eulerlagrange equacoes continuidade fase continua primaria servem base determinacao campo velocidade utilizado equacoes individuais particulas dispersas 
+ adicao novas fases escoamento torna necessaria introducao conceito fracao volumetrica estabelecida razao volume ocupado fase volume ocupado mistura 
+ necessidade obtencao tal parametro introduz equacao conservacao sistema conhecida equacao fracao volumetrica derivada equacao continuidade 
+ equacao continuidade segundo fluent volume controle cartesiano equacao conservacao massa cada chamada equacao continuidade pode ser escrita forma fase      
+  onde q q absoluta fase fases fase 
+ qv fracao volumetrica massa especifica velocidade qm taxa liquida transferencia massa outras equacao continuidade mistura pode ser entao calculada somatorio termos equacao todas fases 
+ sabendose somatorio qm deve ser igual zero conservacao massa mistura somatorio fracoes volumetricas igual unidade obtemse equacao     
+   q q qv mesmos termos apresentados equacao 
+ termo onde  massa especifica mistura obtida equacao onde  q propriedade mistura deseja calcular meio fracao volumetrica propriedade q cada fase 
+   q alternativamente equacao pode ser escrita forma equacao base velocidade media massica mv equacao      mv       onde q q qv qm mesmos termos apresentados equacao e massa especifica mistura obtida equacao 
+ fenomenos envolvendo fases dispersas fase continua equacao continuidade fase secundaria pode ser escrita base velocidade equacao velocidade media massica mv equacao relativa arraste  qdrv       mq     qdr   qdr    onde q q qm mesmos termos apresentados equacao e massa especifica mistura equacao qv velocidade fase 
+ fracoes volumetricas fases portanto calculadas equacao equacao 
+ apresentado escolha equacao varia acordo modelo escoamento multifasico utilizado 
+ equacao momento escoamentos multifasicos cujo campo velocidade todas fases mistura equacao momento pode ser escrita forma equacao formulada escoamentos monofasicos fluido newtoniano incompressivel       vv     fg    onde e massa especifica mistura obtida equacao v g velocidade mistura pressao aceleracao gravidade respectivamente  representa forcas corpo superficie outras forcas interferem  dinamica escoamento tal tensao superficial termo tensoes fase descrito forma q tensor            iv 
+ onde q qv mesmos termos apresentados equacao 
+ q q viscosidades dinamica cinematica fase respectivamente tensor identidade 
+ caso velocidades fases diferentes ocorre escoamentos particulas dispersas fluido equacao momento pode ser escrita mv cada fase equacao conceito velocidade media massica velocidade relativa arraste  qdrv equacao   qq 
+    vv qqq  
+        vmvmr pq qp qp   pq pq          vv 
+   mm    fg  drbs          kdr   kdr        onde q q qm mesmos termos apresentados equacao pressao estatica  pqr forca exercida fase sobre fase pqm transferencia massa fase fase fase fase g aceleracao gravidade qpm forcas externas mv agem sobre particula velocidade media massica equaca e massa especifica mistura q tensor tensoes equacao transferencia massa  qf equacao  drbsf representa forcas corpo superficie outras forcas provenientes interacao fases dispersas fase continua  tensor tensoes mistura           iv 
+  onde esao viscosidades dinamica cinematica mistura obtidas mv velocidade media massica equacao tensor equacao identidade 
+ modelos escoamento gas liquido desenvolvimento capacidade processamento computadores ultimos anos estudos numericos passaram apresentar grandes vantagens sobre metodos experimentais visto geral analises computacionais apresentam menor custo tempo 
+ limitacoes reproducao fenomeno necessidade elaboracao prototipo laboratorio colaboram preferencia modelos numericos principalmente etapa projeto novo equipamento 
+ softwares comerciais possivel desenhar sistema simula lo consideravel precisao 
+ resultados obtidos porem excluem necessidade elaboracao experimentos posteriores toda analise computacional precisa ser validada pratica 
+ abordagens eulereuler eulerlagrange entao utilizadas elaboracao principais modelos escoamentos multifasicos encontrados softwares comerciais ansys fluent 
+ nele modelos mixture eulerian volume fluid vof apresentam opcoes analises baseadas abordagem eulereuler enquanto modelo lagrangian discrete phase dpm utiliza euler lagrange 
+ nesse ultimo fase continua modelada equacoes continuidade enquanto comportamento fase dispersa determinado equacoes dinamica cada particula associadas interacao fase continua si 
+ principal consideracao modelo fase dispersa ocupa pequena fracao volumetrica dominio escoamento menor possua grande fracao massica 
+ logo aplicacao apropriada simulacao fenomenos envolvendo particulas solidas goticulas dispersas ar bem pequenas bolhas liquidos 
+ modelos eulereuler excecao vof podem ser utilizados sistemas possuam fases continuas dispersas apenas continuas 
+ principal diferenca relacao modelo dpm impoem restricoes fracao volumetrica fase dispersa pode superar 
+ modelo eulerian utilizado modelar escoamentos envolvendo fases dispersas secundarias presentes fase continua primaria 
+ equacoes continuidade momento resolvidas cada fase acoplamento tais equacoes garantido termos interacao fases campo pressao comum dotas fases 
+ quantidade fases modeladas limitada capacidade memoria computacional convergencia simulacao 
+ equacoes adicionais comportamento particulas solidas escoamento podem ser incluidas modelo obtidos parametros fase dispersa tais coeficiente arraste temperatura granular associada energia cinetica especifica flutuacao velocidade 
+ aplicacoes tipicas sedimentacao separadores ciclonicos pequenas bolhas dispersas liquidos 
+ modelo mixture derivado modelo eulerian abordagem simples 
+ nele velocidades relativas fases secundarias relacao fase primaria consideradas pequenas comparadas velocidade absoluta mistura 
+ equacoes momento continuidade formuladas termos velocidade massa especifica viscosidade conjunto apresentados medias ponderadas baseadas fracoes volumetricas cada fase 
+ adicionalmente presenca fases dispersas mistura obriga inclusao expressoes algebricas velocidades relativas fases dispersas fase continua bem equacoes interface bolhas 
+ modelo pode ser aplicado regimes escoamento semelhantes utilizados modelo eulerian 
+ segundo fluent modelo mixture exige menor esforco computacional modelo eulerian porem apresenta menor precisao resultados principalmente equacoes arraste fase dispersa conhecidas 
+ ainda mesma abordagem modelo vof deve ser aplicado somente misturas fases continuas principalmente analise interface ambas grande interesse 
+ modelo computacional volume fluid vof modelo volume fluid vof escoamento diferentes fases continuas imisciveis simulado meio solucao unica equacao momento equacoes fracoes volumetricas cada fase 
+ adicionalmente equacao energia mistura pode ser incluida sistema fenomenos envolvendo fluxo termico 
+ aplicacoes tipicas envolvem jatos jet breakup movimento grandes bolhas liquidos movimento liquidos canais abertos qualquer fenomeno envolvendo separacao nitida liquido gas 
+ relacao analise temporal permanente mistura modelada vof devese avaliar dependencia escoamento condicoes iniciais problema 
+ simulacao canal aberto exemplo condicao contorno entrada liquido estabelece nivel interface gasliquido podese optar modelagem regime permanente 
+ outro lado simulacao liquido contido recipiente rotacao deve ser feita regime transiente formato interface fases fortemente dependente nivel liquido inicialmente contido sistema 
+ equacao fracao volumetrica sabendose modelo vof utilizado misturas fases continuas interpenetraveis obtencao fracao volumetrica cada fase torna necessidade apenas calculo parametros utilizados equacoes conservacao identificacao interface separacao mistura 
+ equacao fracao volumetrica utilizada modelo vof apresentada forma equacao 
+ vez identificada interface separacao mistura baseada fracao volumetrica tratamento especial interpolacao elementos malha feito esquemas geometric recostruction donoraccepto figurar 
+ todos outros elementos localizados interface fracoes volumetricas assumem valores iguais zero nesse caso abordagens convencionais interpolacao tais upwind quick utilizados 
+ esquema geometric recostruction considera interface fluidos formato linear dentro cada celula utiliza tal formato calcular adveccao fluidos fronteiras elementos 
+ primeiramente calculada posicao interface relativa centro cada celula preenchida fase base fracoes volumetricas 
+ seguida calculada adveccao cada face elemento distribuicao velocidades normal tangencial face 
+ finalmente fracoes volumetrica elementos interface recalculadas resultados obtidos passos anteriores 
+ esquema donoracceptor celula identificada emissora quantidade fluido fase vizinha assume papel receptora mesma quantidade fluido 
+ ambos esquemas essenciais prevenir difusao numerica interface 
+ utilizados interface produzida simulacao dissipa separacao fases identificada figura 
+ figura interfaces simuladas fluent fonte fluent 
+ figura interfaces diferentes metodos interpolacao fonte fluent software training adaptada 
+ equacao momento modelo vof estabelecimento interface separacao fases continuas impede interpenetracao maneira unico campo velocidade possa ser obtido toda mistura conceito fracao volumetrica fases possibilita obtencao propriedades mistura diferentes elementos malha 
+ unica equacao conservacao momento linear portanto resolvida descrita equacao 
+ tensao superficial conceitualmente tensao superficial ocorre necessidade garantia equilibrio forcas atuando moleculas superficie separa dois fluidos 
+ interior gota agua atmosfera exemplo resultante forcas atracao atuantes molecula devido presenca moleculas vizinhas zero 
+ outro lado superficie contato ar moleculas fortemente atraidas interior bolha aumentando pressao lado concavo interface atmosfera gerando chamada tensao superficial 
+ modelo forca superficial continua csf continuum surface force proposto brackbill al 
+ unico modelo disponivel ansys fluent 
+ inclusao tensao superficial calculos vof feita meio termo fonte equacao momento outras palavras adicao forca 
+ equacao mostra relacao forca presente interface fases tensao superficial 
+ tal forca expressa forca volume utilizando teorema divergencia 
+ vol   ij   ij        onde i j fracoes volumetricas fases respectivamente j massas especificas fases respectivamente raios curvatura fases superficial fases 
+ respectivamente i jk ij representa tensao ik caso apenas duas fases presentes elemento malha     
+ logo equacao pode ser rescrita forma equacao 
+ vol   ij     onde  massa especifica media mistura calculada equacao outros termos mesmos apresentados equacao 
+ calculo tensao superficial presente equacoes descrita equacao considera apenas acao forcas normais superficie           onde  tesao superficial convexa regiao concava interface superficie medidas direcoes ortogonais si 
+ diferenca pressao regiao representam curvaturas  curvatura definida divergente vetor unitario normal superficie ˆ onde ˆ  sendo definido gradiente fracao volumetrica fase superficie  segundo fluent tensao superficial precisamente calculada malhas elementos quadrilateros hexaedricos elementos triangulares tetraedricos 
+ presenca tensao superficial termo fonte equacao momento pode resultar problemas convergencia calculos realizados algoritmos acoplamento pressaovelocidade tendem divergir equilibrio parcial forcas pressao demais forcas alcancados 
+ convergencia facilitada podese adotar tratamento implicit body force promove equilibrio forcas correcoes termo fonte equacao contem tensao superficial 
+ calculo perda carga mecanica fluidos definese perda carga tubulacoes perda energia mecanica escoamento devida principalmente efeitos viscosos variacoes area secao transversal geracao vortices longo dominio escoamento regioes pontuais 
+ segundo fox mcdonald pritchard equacao conservacao energia podese definir perda carga         gz             gz     lth representam pressao estatica velocidade cota regiao onde escoamento respectivamente representam mesmos parametros regiao 
+ massa especifica aceleracao gravidade lth representa perda carga associada expressas forma  temo contempla conversao irreversivel energia mecanica energia termica 
+ termo  equacao utilizado correcao energia cinetica escoamentos laminares cujo perfil apresenta forma parabolica 
+ outro lado escoamentos turbulentos valor alpha pode ser aproximado unidade 
+ perda carga geralmente separada dois tipos perda carga distribuida perda carga localizada 
+ escoamentos laminares primeira apresenta funcao comprimento tubulacao diametro velocidade escoamento numero reynolds menor mostra equacao 
+ outro lado escoamentos turbulentos perda carga distribuida influenciada rugosidade parede tubulacao juntamente numero reynolds define valor fator atrito equacao 
+ hl       hl  lf fator atrito equacao perda carga distribuida escoamentos turbulentos pode ser calculado formulacoes empiricas faixas rugosidade tubulacao numeros reynolds simplesmente analise diagrama moody 
+ nesse diagrama rugosidade relativa representada razao rugosidade paredes internas tubulacao diametro fornece valor fator atrito diferentes numeros reynolds 
+ ambos regimes escoamento perda carga distribuida ocorre devido efeitos viscosos gerados diferenca velocidade particulas vizinhas funcao interacao fluido paredes tubulacao geracao perfil velocidade 
+ notase diagrama moody escoamentos turbulentos possuem menores fatores atrito escoamentos laminares visto perfil velocidade apresenta uniforme 
+ perdas carga localizadas contrario perdas distribuidas ocorrem apenas efeitos viscosos escoamento fortemente influenciadas perda energia geracao vortices variacoes secao transversal curvas abruptas 
+ tais perdas carga podem ser calculadas fracao energia pressao dinamica perdida local equacao equivalencia perdas carga distribuidas utilizacao comprimento tubulacao equivalente el mostrado equacao 
+ hlm  vk lm  ambos valores el podem ser facilmente encontrados literatura cada tipo acessorio responsavel perda carga local valvulas cotovelos curvas retorno etc 
+ estado arte utilizacao modelo vof apresenta bastante difundida analise escoamentos multifasicos gasliquido principalmente softwares comerciais devido relativa facilidade implementacao grande gama problemas comumente encontrados industria 
+ especificamente industria petroleo escoamento misturas bifasicas oleogas dutos origina diferentes regimes escoamento apresentam forte influencia medicoes vazao bombeio fases 
+ validacao modelo vof baseada resultados experimentais portanto objeto estudo diversos trabalhos tendem aumentar confiabilidade utilizacao modelo outros estudos 
+ parvareh avalia desempenho modelo vof laminar software fluent 
+ comparando diferentes regimes escoamento simulados tubos verticais horizontais experimentos realizados mesmas condicoes virtuais simuladas 
+ autor realiza mistura agua ar tubo transparente dotado sistema tomografia resistencia eletrica electrical resistance tomography ert identifica fracoes volumetricas cada fase determinada secao transversal tubulacao 
+ resultados experimentais comparados imagens geradas simulacoes boa semelhanca analitica identificada 
+ forma semelhante schepper heynderickx marin simularam diferentes regimes escoamento tubos horizontais software fluent compararam resultados extraidos dados experimentais obtendo boa concordancia ambiente virtual real 
+ ambos trabalhos realizados modelos escoamento laminar porem problemas envolvendo escoamento turbulento costumase utilizar modelos turbulencia auxiliam identificacao geracao vortices efeitos turbulentos 
+ outro lado esforco computacional necessario resolucao equacoes adicionais turbulencia geralmente maior portanto alguns estudos dedicam realizar comparacoes resultados obtidos modelos sentido evidenciar necessidade utilizacao 
+ trabalho dostal zelezny zacha escoamentos mistura pbbi vapor simulados tanque modelo laminar modelo turbulento tipo k 
+ resultados mostraram utilizacao modelo turbulento gerou melhores resultados modelo laminar embora esforco computacional ambos sido aproximadamente 
+ alem modelos adicionais utilizados juntamente modelo vof malha gerada geometria ser simulada apresenta forte influencia resultados simulacoes tempo processamento computadores 
+ dessa forma testes malha geralmente realizados identificar quantidade otima celulas necessaria fornecer resultados confiaveis menor esforco computacional possivel 
+ apresenta mapas fracao volumetrica fases obtidas malhas diferentes quantidades celulas identifica capaz gerar bom resultado menor numero celulas 
+ malha otima entao utilizada simulacoes visam identificar fronteira regimes wavy disperse diagrama apresentado figura 
+ validacao modelos multifasicos cfd busca correspondencia regime escoamento encontrado simulacao diagrama regimes escoamento comum porem distribuicao fracoes gas secao transversal tubulacao fortemente influenciada distancia injecao ar secao analisada 
+ fenomenos coalescencia quebra bolhas longo escoamento tendem alterar significativamente distribuicao fase gasosa mistura 
+ estudo lucas krepper prasser diferentes combinacoes vazao volumetrica gasliquido posicoes entrada ar testadas originando varios diagramas regimes escoamento 
+ misturador escoamento gasliquido desenvolvimento tecnologico idealizado meio forma solucionar problemas apresentados estado arte novo equipamento ferramentas computacionais laboratorio fenomenos transporte computacional universidade federal espirito santo ufes podese avaliar desempenho ambiente virtual 
+ utilizouse software comercial licenciado ansys fluent conta modelos escoamento multifasico amplamente utilizados 
+ simulacoes perda carga processo homogeneizacao mistura gas liquido realizadas utilizando respectivamente modelos escoamento monofasico modelo vof 
+ presente trabalho feitos experimentos validacao simulacoes 
+ entanto verificouse desempenho modelo vof meio reproducao simulacao escoamentos slug tubos verticais realizada parvareh 
+ validacao simulacoes perda carga simulado escoamento monofasico joelho resultados comparados valores perda carga calculados partir dados extraidos literatura equacoes 
+ todas simulacoes realizadas otimizacao teste malha forma calculos realizados ainda possam ser otimizados relacao esforco computacional 
+ embora malhas otimas sido estimadas utilizouse celulas bastante refinadas refinamento tipo inflation cinco elementos espessura bordas forma garantir precisao calculos 
+ simulacoes modelo vof particularmente malhas refinadas bastante fina interface fases gerada 
+ procedimento simulacao perda carga visto equipamento desenvolvido deva ser conectado tubulacoes especificamente montante bombas centrifugas outros equipamentos analise perda carga torna indispensavel quantificacao interferencia pressao sistema 
+ perdas carga localizadas distribuidas podem ser simuladas software ansys fluent meio condicoes contorno adequadas 
+ entretanto ambas devem ser validadas base experimentos 
+ tratando simulacao escoamento monofasico intransiente utilizou metodo simplec garante convergencia rapida metodo simple boa estabilidade 
+ busca menor esforco computacional optouse metodo interpolacao upwind primeira ordem utilizacao modelo laminar escoamento apresentou resultados semelhantes modelos turbulencia analises previas 
+ metodos parametros solucao utilizados simulacoes apresentados tabela 
+ tabela parametros metodos utilizados simulacao descricao metodo parametro acoplamento pv gradiente interpolacao espacial simplec least squares cell based upwind primeira ordem criterio convergencia absoluto criterio convergencia absoluto estabelecido continuidade velocidades tres dimensoes alcancado todas simulacoes 
+ simulacao validacao simulados escoamentos monofasicos agua joelho mostrado figura 
+ gerouse malha estruturada 
+ celulas tetraedricas apresentam bem refinada dadas dimensoes geometria 
+ figura malha geometria joelho fonte arquivo pessoal 
+ primeira analise impostas condicoes contorno velocidade pressao entrada outflow saida 
+ ultima considera gradiente velocidade normal superficie nulo pressao variavel dependente condicoes escoamento 
+ tal abordagem possibilita determinacao perda carga visto pressao saida calculada durante simulacao dada pressao entrada conhecida 
+ condicao contorno outflow segundo fluent porem consideravelmente sensivel valores iniciais fornecidos iteracoes inerentes cfd 
+ portanto aconselhase realizacao simulacao previa condicao contorno pressao saida resultado forneca valores iniciais simulacao condicao outflow 
+ entretanto valor pressao superficie saida simulacao previa puder ser estimado caso perda carga novo equipamento utilizacao outflow apresenta imprecisa 
+ adicionalmente tal condicao contorno deve ser fisicamente atingida apenas superficies livres alteracao linhas corrente provocadas dispositivo deprimogenio portanto superficies saida relativamente distantes regiao queda pressao 
+ embora precaucoes necessarias utilizacao condicao outflow sido tomadas grandes erros obtidos relacao calculos baseados dados literatura equacao 
+ contornar problema novo procedimento determinacao perda carga simulacao cfd realizado 
+ nele impostas condicoes contorno pressao entrada saida geometria obtevese distribuicao velocidade dominio escoamento 
+ velocidade media secao transversal regiao entrada obtida simulacao entao comparada valor velocidade utilizada equacao calculo perda carga dispositivo obtido literatura especializada 
+ simulacao equipamento procurouse comparar perda carga equipamento obtida simulacao perdas carga dispositivos conhecidos tes joelhos valvulas velocidade media regiao entrada igual utilizada etapa validacao 
+ tanto varios valores diferenca pressao simulados equipamento velocidade 
+ dessa forma determinou perda carga equipamento mesmas condicoes velocidade testadas validacao 
+ celulas gerada geometria resultando bom refino celulas longo dominio 
+ procedimento simulacao modelo vof tratando equipamento homogeneizador mistura gasliquido simulacao escoamento utilizando modelos multifasicos apresenta poderosa ferramenta compreensao processo interacao fases analise desempenho frente diferentes regimes escoamento 
+ entretanto ferramentas computacionais exigem validacao experimental forma aumentar confiabilidade resultados obtidos 
+ simulacao validacao embora experimento validacao simulacao multifasica equipamento modelo vof sido realizada avaliouse desempenho modelo reproducao artigo parvareh utilizandose mesma geometria mesmos parametros simulacao trabalho 
+ artigo simulados diferentes regimes escoamento mistura gasliquido tubulacao posicoes vertical horizontal modelo vof resultados comparados dados experimentais obtidos laboratorio 
+ desenhouse tubo comprimento cm diametro interconectado tubo diametro menor comprimento conforme ilustrado figura 
+ figura malha gerada validacao modelo vof fonte arquivo pessoal 
+ condicoes contorno simulacao regime slug vertical realizada considerandose paredes lisas deslizamento inicialmente preenchidas fase liquida agua 
+ condicao contorno adotouse pressao atmosferica saida velocidade entrada ar entrada agua 
+ tensao superficial fases considerada igual aceleracao gravidade igual 
+ parametros simulacao embora fluent sugira utilizacao malhas elementos hexaedricos simulacoes envolvendo modelo tensao superficial parvareh adota malha estruturada elementos tetraedricos utilizado presente trabalho visando manter correspondencia parametros adotados artigo reproduzido 
+ figura mostra malha gerada geometria estudada 
+ tratando simulacao envolvendo modelo multifasico vof adotase metodo solucao pressurebased conta algoritmos acoplamento pressaovelocidade simple simplec piso fsm coupled 
+ carater transiente simulacao sugere utilizacao tres ultimos algoritmos 
+ escolha modelo piso presente trabalho entretanto justificada fato fsm geralmente produz instabilidade calculos realizados modelos complexos vof 
+ adicionalmente necessidade malha fina pequeno time step visam boa identificacao interface gasliquido inviabiliza utilizacao modelo coupled 
+ sabendose utilizacao equacoes tensao superficial simulacao tende provocar divergencia calculos considerado evitar problema 
+ implicit body force tratamento boa visualizacao superficie separacao fases optouse esquema geometric recostruction impede dissipacao interface gasliquido promovida modelos discretizacao espacial convencionais 
+ visto esquema disponivel metodo discretizacao temporal implicit utilizase obrigatoriamente metodo explicit 
+ nele numero courant igual adotado interface gasliquido restante dominio adotouse valor primeiros time step forma garantia convergencia calculos restante tempo simulacao 
+ metodo discretizacao espacial optouse upwind segunda ordem equacoes momento fracao volumetrica visando elevar precisao calculos 
+ criterio convergencia absoluto adotado conforme especificado artigo 
+ simulacao equipamento resultado obtido simulacao perda carga equipamento realizou simulacao transiente escoamento multifasico modelo vof condicoes contorno pressao atmosferica saida pressao manometrica equivalente perda carga entrada 
+ analogamente simulacao realizada parvareh utilizouse tensao superficial igual fases aceleracao gravidade convenientemente direcionada simulou posicao vertical equipamento 
+ forma avaliar desempenho equipamento dissipacao bolhas homogeneizacao mistura gasliquido compararamse fracoes gas obtidas saida equipamento fracoes fase geometria tubular inicialmente preenchida liquido onde fez escoar grande bolha ar 
+ assim geometria tubular calculos iniciados dominio completamente preenchido fase liquida agua gas ar admitidos regiao entrada longo simulacao 
+ dessa forma verificou funcionamento equipamento condicao extrema admissao grande bolha 
+ embora malhas elementos hexaedricos indicadas simulacoes envolvendo tensao superficial optouse elementos tetraedricos devido dificuldades encontradas elaboracao malha complexa geometria simulada 
+ analises qualitativas desempenho malha construcao fina interface fases longo equipamento resultaram valor adequado 
+ relacao malha tubo liso utilizouse criterio determinacao numero celulas baseado construcao fina interface gasliquido resultando 
+ mesmos parametros simulacao validacao modelo vof utilizados avaliacao desempenho equipamento 
+ outro lado menor criterio convergencia utilizado devido limitacoes processamento computador utilizado 
+ avaliacao perda carga 
+ validacao simulacao geometria especificada figura joelho podese calcular diferenca pressao regioes entrada saida base coeficiente perda carga fator atrito comprimento tubulacao mostrados tabela 
+ assim simulacoes realizadas calculo perda carga realizado sob consideracao paredes lisas tubulacao 
+ tabela parametros utilizados calculo perda carga equacoes calcularamse perdas carga distribuida localizada respectivamente resultados utilizados calculo perda carga total 
+ comprimento tubulacao especificado considera toda extensao tubulacao alem limites geometria joelho inicio fim curva 
+ prolongamentos embora utilizados calculo perda carga localizada devem ser considerados calculo perda carga total visto perda carga longo tubulacao diametro representa parcela significativa sobre diferenca pressao total geometria mostra tabela 
+ notase perda carga distribuida representa cerca perda carga total 
+ perda carga localizada tabela perda carga joelho perda carga distribuida mca mca perda carga total mca prolongamento geometria joelho necessario reduzir interferencia condicao contorno distribuicao pressao constante longo superficies entrada saida sobre curva deve apresentar distribuicao uniforme pressao 
+ resultado perda carga total obtido calculos imposse pressao manometrica entrada igual mca equivale pa pressao manometrica saida igual zero mca geometria figura software fluent 
+ obtevese mapas pressao velocidade mostrados figuras respectivamente 
+ figura mapa pressao geometria joelho fonte arquivo pessoal 
+ figura mapa velocidade geometria joelho fonte arquivo pessoal 
+ figura notase regioes alta baixa pressao formadas longo faces externa interna curva joelho respectivamente 
+ surgimento regiao alta pressao esperado visto redirecionamento fluido direcao direcao –x realizado face externa curva 
+ mesma forma inercia presente moleculas escoamento tende mantelas movimento linear direcao provoca regiao baixa pressao regiao interna curva 
+ complemento distribuicao pressao longo geometria distribuicao velocidade apresentada figura mostra regioes maior velocidade escoamento localizadas zona baixa pressao passo regioes baixa velocidade encontram zona alta pressao 
+ tais relacoes velocidade pressao esperadas acordo equacao apresenta relacao inversa incremento dessas variaveis dado ponto escoamento 
+ adicionalmente figura percebese condicao deslizamento imposta condicao contorno paredes geometria satisfeita visto velocidades baixas encontradas contornos tubulacao joelho 
+ resultados gerados simulacao obtevese fluxo massa regiao entrada geometria utilizado calculo velocidade media fluido regiao 
+ tabela faz comparativo velocidade media obtida simulacao vs velocidade utilizada calculos perda carga joelho 
+ tabela comparativo velocidades real obtidas simulacao vs erro relativo diferenca valor teorico valor simulado velocidade media pode ser explicada fato condicao contorno velocidade imposta entrada geometria possui perfil reto velocidade constante longo secao transversal passo calculo teorico considere perfil desenvolvido 
+ embora numero reynolds escoamento simulado caracterizando regime turbulento consideracao perfil reto tende colaborar divergencia resultados 
+ outra hipotese simplificadora responsavel geracao erro resultado resulta aplicacao modelos turbulencia simulacao 
+ tais modelos ajudam identificacao geracao vortices perdas energia mecanica forma turbulencia devem alterar resultado obtido 
+ maneira gera modelos turbulencia devem ser necessariamente aplicados simulacoes envolvendo turbulencia malhas bastante refinadas pois fenomenos geracao dissipacao vortices podem ser identificados proprio campo velocidade 
+ presente trabalho embora nenhum estudo aprofundado sido elaborado utilizouse ferramenta refino inflation introduz celulas dimensoes reduzidas proximidades contornos geometria forma aumentar sensibilidade calculos campo velocidade fina camada limite turbulenta 
+ estimativa perda carga equipamento realizadas simulacoes geometria equipamento diferencas pressao regioes entrada saidas iguais pa 
+ valor velocidade media regiao entrada proximo erro relativo igual diferenca pressao pa 
+ valor perda carga encontrado processo iterativo verificacao velocidade media utilizado equacao obtencao coeficiente perda carga 
+ resultado equipamento apresentou igual 
+ tabela mostra comparativo coeficientes perda carga geometrias conhecidas obtido simulacao equipamento 
+ tabela coeficientes perda carga coeficiente perda carga equipamento joelho valvula globo notase equipamento apresenta perda carga relativamente elevada inferior gerada valvula globo padrao equivale cerca joelhos tes conectados serie 
+ instalacao equipamentos alta perda carga valvulas montante bombas normalmente recomendada visto reducao pressao colabora fenomeno cavitacao deve ser evitado 
+ pocos petroleo outro lado reducao pressao tende provocar mudanca fase hidrocarbonetos liquidos gas misturado oleo reduz eficiencia bombeio colabora ocorrencia gas lock 
+ elevada pressao pocos petroleo porem deve evitar tais problemas ocorram sistemas bcs instalacao equipamentos coeficientes perda carga relativamente elevados pode ser realizada maiores problemas 
+ relacao medicao vazao perda carga apresenta muitos prejuizos exceto sistemas onde perdas energeticas merecem especial atencao 
+ muitos medidores inclusive utilizam queda pressao determinacao vazao tais placas orificio 
+ caso medicao escoamentos multifasicos utilizacao premisturadores fases apresenta beneficios medicao relevantes bastante justificada utilizacao provoque perda carga sistema 
+ analogamente simulacao perda carga geometria joelho simulacao realizada equipamento desenvolvido presente faz uso simplificacoes produzem erros resultados 
+ utilizacao modelos turbulencia aplicacao condicao contorno velocidade uniforme entrada dominio escoamento consideradas principais fontes erro provocadas simplificacoes 
+ avaliacao simulacao multifasica 
+ validacao simulacao condicoes contorno velocidade entradas ar agua iguais respectivamente sugerem formacao regime slug interior tubulacao conforme mostrado diagrama figura obtido weisman 
+ desenho mostrado figura mostra geometria caracteristica interface formada fases liquido gas regime escoamento 
+ devido diferenca massas especificas fases gas tende mover contra aceleracao gravidade estabelecendo velocidade relativa fase liquida 
+ geometria convexa bolha resultante acao tensao superficial possui maior volume gas entorno regiao central eleva forca empuxo dessa regiao relacao extremidades laterais possuem menor volume gas 
+ adicionalmente reducao velocidade escoamento proximidades parede tubulacao favorece fluxo massa regiao central 
+ dessa forma formase interface liquidogas alongada frente bolha regiao alta pressao caracteristica regime slug 
+ passagem dessa frente portanto provoca regiao baixa pressao parte inferior bolha provocando recirculacao liquido reducao fracao gas 
+ comparacao resultados encontrados parvareh feita analise mapa cores fracao volumetrica gas secao longitudinal tubulacao obtido simulacao 
+ imagem gerada mostrada figura enquanto resultados numericos experimentais parvareh apresentados figura respectivamente 
+ notase equivalencia regimes escoamento slug formados tres imagens apresentam passagem unica bolha interior tubulacao preenchida liquido 
+ percebese formacao superficie alongada frente bolha bem regiao recirculacao liquido zona baixa pressao consequente reducao fracao gas 
+ resultados numericos mostram formacao nitida interface fases liquida gasosa previsto figura utilizacao esquema geometric reconstruction contrario interpolacao upwind promove dissipacao interface 
+ figura simulacao realizada vof resultado numerico experimental obtidos parvareh fonte arquivo pessoal 
+ teste desempenho equipamento resultados obtidos simulacao escoamento multifasico gasliquido realizada equipamento misturador aponta grande capacidade homogeneizacao mistura dissipacao bolhas 
+ misturador capaz reduzir fracao gas longo escoamento tornandoa bem distribuida todo dominio 
+ analise desempenho equipamento realizada comparandose fracoes gas bolha livre interior tubulacao fracao dessa mesma fase regiao saida misturador 
+ figura mostra interface gasliquido frente bolha escoa livremente tubo 
+ notase assim processo validacao modelo vof interface separacao dissipacao 
+ adicionalmente perfil bolha apresentado figura sugere escoamento mistura regime slug esperado 
+ fases nitida estavel ainda figura apresentadas secoes transversais nomeadas espacadas utilizadas comparacao fracoes gas bolha livre bolhas saida equipamento 
+ figura mapa fracao volumetrica liquido frente bolha tubo livre fonte arquivo pessoal 
+ figura apresenta secoes nomeadas figura secoes longo equipamento espacadas 
+ figura podese perceber grande bolha livre escoar tubulacao dissipada varias outras menores apos passagem equipamento promovendo maior homogeneizacao fracao gas longo dominio escoamento 
+ figura mapas fracao volumetrica liquido tubo livre saida equipamento fonte arquivo pessoal 
+ base resultados apresentados figura gerouse grafico figura mostra fracoes volumetricas gas cada secao tanto saida equipamento quanto tubulacao livre 
+ grafico secao posicionada comprimento zero todas outras mostradas incrementos longo eixo 
+ figura grafico fracao volumetrica gas comprimento desde primeira secao 
+ saida equipamento bolha livre 
+ fonte arquivo pessoal 
+ notase grandes fracoes volumetricas gas contidas unica bolha livre distribuidas equipamento longo escoamento forma maior homogeneizacao fases mistura garantida 
+ tal distribuicao extremamente vantajosa reducao ocorrencias gas lock sistemas bcs estabilizacao corrente eletrica alimenta 
+ base conservacao massa gas podese prever reducao quantidade fase secoes tubulacao presenca equipamento acarreta prolongamento fluxo fase gasosa longo tubo porem menor fracao volumetrica caso tubo equipamento 
+ outras palavras fracao volumetrica gas reduzida zero continuacao curva bolha livre grafico fracao dessa fase permanecera diferente zero curva saida equipamento maior comprimento tubulacao massa gas conservada 
+ conclusoes recomendacoes desenvolvimento novo equipamento capaz homogeneizar misturas gas liquido realizado meio simulacoes numericas monofasicas multifasicas previamente validadas base literatura 
+ resultados simulacoes perda carga sugerem coeficiente perda carga equipamento igual apresenta inferior coeficiente valvula globo padrao 
+ embora perda carga obtida relativamente alta queda pressao causada equipamento montante bcs interior pocos petroleo deve ser compensada elevada pressao interior reservatorio 
+ adicionalmente aplicacao montante medidores vazao escoamento multifasico deve ser realizada situacoes problemas causados perdas carga significativos comparados beneficios previa homogeneizacao mistura medicao 
+ desempenho equipamento testado simulacao multifasica mostra fracao volumetrica gas deve exceder saida equipamento admissao fase 
+ tal resultado mostra excelente capacidade reduzir quantidade gas escoamento distribuicao homogenea fases mistura 
+ trabalhos futuros poderao ser desenvolvidos validacao experimental simulacoes realizadas presente trabalho analise desempenho prototipo equipamento condicoes reais operacao 
+ adicionalmente simulacoes cfd envolvendo modelos turbulecia podem ser elaboradas forma avaliar influencia resultados 
+ upstream multiphase flow assurance monitoring using acoustic emission 
+ design flow metering process two hase dispersed flows international journal multiphase flows 
+ continuum method modeling surface tension 
+ fundamentals multiphase flow 
+ california california institute technology 
+ escoamento oleogas equipamento submarino influencia fracao volumetrica gas separacao fases modulo bombeio 
+ dissertacao mestrado engenharia mecanica centro tecnologico universidade federal espirito santo vitoria 
+ handbook fluids motion 
+ texas ann arbor science publ 
+ surfece operations petroleum production 
+ new york elsevier science publishers 
+ cfd simulation validation flow pattern transition boundaries moderately viscous oilwater twophase flow horizontal pipeline world academy science engineering technology 
+ simulations twophase flow fluent 
+ ansys konference luhacovice 
+ fluent ansys fluent theory guide canansburg ansys inc 
+ fluent software training modeling multiphase flows slides 
+ introducao mecanica fluidos 
+ rio janeiro ltc 
+ multiphase flow modeling 
+ development cocurrent air–water flow vertical pipe international journal multiphase flow 
+ caracterizacao experimental propriedades dinamicas escoamentos pistonados tubos verticais 
+ dissertacao mestrado engenharia mecanica coppe universidade federal rio janeiro rio janeiro 
+ estudo escoamento multifasico medidores vazao tipo pressao diferencial 
+ tese doutorado engenharia mecanica universidade federal santa catarina florianopolis 
+ cfd ert investigations twophase flow regimes vertical horizontal tubes 
+ international communications heat mass transfer kermanshah 
+ petrobras rio janeiro rj 
+ roberto rodrigues joao siqueira matos carlos alberto giacomim pereira jackson burjack farias robson soares junior 
+ sistema modulo bombeio submarino metodo instalacao 
+ petrobras rio janeiro rj 
+ mauro luiz lopes euphemio joao siqueira matos roberto rodrigues 
+ subsea petroleum production system method installation use 
+ electric submergible pumps 
+ surfece operations petroleum production 
+ new york elsevier science publishers 
+ desafio instalacao modulos bombeamento submarino preferencialmente sonda 
+ congresso nacional transporte aquaviario construcao naval offshore 
+ cfd modeling gas–liquid vapor–liquid flow regimes predicted baker chart chemical engineering journal 
+ simulacao numerica poco alojador bombeio 
+ dissertacao mestrado tecnologia processo quimicos bioquimicos universidade federal rio janeiro rio janeiro 
+ fundamentos engenharia petroleo 
+ rio janeiro interciencia 
+ introduction computational fluid dynamics finit volume method 
+ new york longman scientific technical 
+ twophase flow patterns 
+ handbook fluids motion 
+ ann arbor science publ 
+ anexo tratamento numerico metodos discretizacao metodo volumes finitos utilizado ansys fluent todo dominio escoamento dividido pequenos volumes controle quais equacoes diferenciais governantes mecanica fluidos integradas 
+ procedimento discretizacao dominio portanto converte equacoes diferenciais equacoes algebricas podem ser solucionadas numericamente 
+ escoamentos transientes alem discretizacao espacial tempo deve ser discretizado pequenos intervalos chamados timestep 
+ discretizacao espacial discretizacao espacial equacoes governantes pode ser ilustrada discretizacao equacao diferencial geral transporte propriedade  expressa forma 
+         onde  v velocidade local termo geracao termo difusao 
+ s  respectivamente tempo massa especifica segundo fluent integracao equacao cada volume controle celula malha resulta equacao geral transporte discretizada espaco     faces       faces       vs  onde variaveis indice representadas face celula 
+ embora equacao espacialmente discretizada manipulacao numerica ainda possivel devido presenca termos discretizados temporal funcao f 
+ f expresso forma gradiente escoamentos transientes incremento variavel  tempo termo pode ser obtido metodos discretizacao temporal apresentados 
+ outro lado discretizacoes espaciais necessarias obtencao valor f termo gradiente variavel f termo 
+ metodos determinacao gradiente ansys fluent tres metodos determinacao gradiente disponiveis greengauss cellbased greengauss nodebased least squares cellbased 
+ dois primeiros fundamentados teorema greengauss relaciona gradiente variavel  centro regiao limitada faces valores faces f       onde  fa representa area face volume celula 
+ metodo greengauss cellbased valor f equacao obtido equacao enquanto metodo greengauss nodebased valor determinado equacao 
+     onde c c valores variavel  centro celulas adjacentes    fn onde fn numero cada face indice representa 
+ fim utilizar metodo least squares cellbased considerase variavel  varia linearmente duas celulas logo    ci       onde ir representa distancia centros celulas adjacentes possuem  iguais ci c 
+ embora metodos determinacao gradiente termo equacao possibilitem manipulacao numerica propriedade  cada celula ainda pode ser obtida diretamente visto valores expressos faces celulas f 
+ portanto metodos interpolacao necessarios obtencao propriedade cada volume controle 
+ metodos interpolacao ansys fluent quatro tipos interpolacao podem ser executados termo convectivo equacao upwind primeira segunda ordem power law quick 
+ metodo upwind primeira ordem utilizado valor variavel  face celula igualado valor mesma variavel centro celula adjacente montante fluxo definido vetor velocidade 
+ exemplo figura e portanto igual e enquanto valor w assumiria valor valor p velocidade indicada 
+ figura representacao volume controle unidimensional 
+ fonte arquivo pessoal 
+ maior precisao desejada upwind segunda ordem valor  face obtido expansao serie taylor primeira derivada equacao 
+ nesse caso gradiente  deve ser obtido metodos obtencao gradiente anteriormente descritos greengauss cellbased green gauss nodebased least squares cellbased 
+   metodo upwind pode ser melhorado interpolacao quadratica valores variavel  centros celulas vizinhas face analisada metodo w e quick 
+ base figura podese obter equacoes versteeg malalasekera vetor velocidade sentido indicado  ww        figura arranjo celulas entorno volume fonte arquivo pessoal 
+ outro lado metodo powerlaw realizase interpolacao valor variavel  face solucao exata problema unidimensional difusao conveccao descrito equacao           onde   representam respectivamente eixo direcao unidimensional massa especifica velocidade direcao termo difusao 
+ equacao entao integrada obter forma discretizada      exp    exp xpe    pe  onde dimensao total unidimensional pe numero peclet definido ul pe    geral metodo quick apresenta maior precisao malhas estruturadas hexaedricas alinhadas direcao fluxo 
+ ansys fluent tal metodo pode ser aplicado malhas estruturadas hibridas porem software aplica interpolacao upwind segunda ordem automaticamente faces hexaedricas 
+ discretizacao temporal dois metodos discretizacao temporal podem ser adotados calculos termo equacao metodo implicito metodo explicito 
+ principal diferenca ambos calculo valor futuro variavel  depende apenas valor presente metodo explicito valores futuro presente metodo implicito 
+ equacao mostra expressao geral variacao temporal variavel  
+      onde qualquer discretizacao espacial associada 
+ pequenos intervalos tempo linearmente forma t equacao pode ser discretizada      meio discretizacao segunda ordem expressa          n onde  futuro tempo presente tempo passado 
+ n representam respectivamente variavel escalar tempo dada discretizacao temporal primeira segunda ordem devese ainda especificar tempo ocorre discretizacao espacial 
+ metodo implicito considerase variavel  encontra tempo futuro discretizacao primeira ordem temse n 
+ assim      tf   n onde  intervalo tempo time step 
+ parametros apresentados equacao t equacao implicita 
+ deve ser resolvida meio procedimentos iterativos visto variavel futura desejada funcao proprio resultado 
+ metodo explicito metodo explicito discretizacao espacial avaliada tempo presente 
+ logo equacao reescrita forma    tf  onde  n t parametros apresentados equacao 
+ contrario discretizacao temporal implicita metodo explicito realiza n sim calcula iteracoes tempo futuro obter resultado variavel valor diretamente meio time step 
+ tal procedimento pode apresentar certas instabilidades numericas valor t fornecido elevado 
+ condicao courantfriedrichslewy cfl deve ser portanto satisfeita forma garantir estabilidade calculos 
+ condicao courantfriedrichslewy cfl simulacoes escoamentos transientes relacao distancia percorrida onda perturbacao velocidade time step t tamanho local volumes malha x definida numero courant pode ser escrito forma co    fato distancia percorrida onda perturbacao menor tamanho local volumes malha fluxo informacao atravessa n volumes captado 
+ caso contrario valores variavel futura corretamente calculados 
+ numero courantfriedrichslewy fornece relacao time step t utilizado simulacao necessario tornar numero courant igual unidade  cot cfl   cot  caso numero cfl inferior valor t resultara estabilidade calculos garantia captacao fluxo informacao atravessa volumes locais malha 
+ logo condicao estabilidade metodo discretizacao temporal explicito conhecida condicao courantfriedrichslewy impoe valor limite time step estabelecimento cfl inferior unidade metodos solucao pressurebased density based utilizacao equacoes diferenciais acopladas naolineares descricao fenomenos envolvendo escoamentos torna necessario uso metodos iterativos resolucao 
+ entretanto tais metodos exigem realizacao grande quantidade calculos devem ser resolvidos tempo habil 
+ portanto capacidade processamento computadores atuais apresenta boa alternativa resolucao equacoes envolvidas problemas mecanica fluidos existencia softwares comerciais simulacao possibilita reproducao fenomenos envolvidos maneira flexivel pratica 
+ software ansys fluent dois metodos resolucao equacoes geradas modelos numericos disponiveis pressurebased densitybased 
+ ambos podem ser aplicados escoamentos compressiveis incompressiveis embora apresente melhor performance outro diferentes casos 
+ primeiro gera melhores resultados segundo modelos cavitacao volume fluid vof mixture eulerian combustao meios porosos 
+ outro lado simulacoes gas real vapor umido escoamento compressivel alta velocidade recomendadas metodo densitybased 
+ metodo pressurebased dois algoritmos baseados metodo pressurebased disponiveis ansys fluent pressurebased segregated pressurebased coupled 
+ diferenca ambos procedimento resolucao equacoes governantes 
+ primeiro equacoes resolvidas separadamente sequencia segregadas garante menor utilizacao memoria computador porem provoca convergencia lenta resultados 
+ segundo metodo equacoes governantes calculadas conjunto acopladas exigindo maior capacidade processamento computador gerando convergencia resultados rapida 
+ outro lado metodo pode apresentar instabilidade simulacoes complexas 
+ algoritmos acoplamento pressaovelocidade simple simplec piso fsm disponiveis metodo segregado sendo dois primeiros geralmente utilizados regime permanente dois ultimos escoamentos transientes 
+ metodo pressurebased coupled apenas algoritmo coupled pode ser utilizado 
+ figura mostra esquema algoritmos simple simplec seguem seguinte procedimento 
+ obtencao campo velocidade resolucao equacoes momento baseadas valores pressao velocidade massa especifica viscosidade obtidos iteracao anterior valores inicialmente estimados 
+ calculo termo correcao pressao utilizando equacoes continuidade campo velocidade recentemente calculado 
+ correcao velocidades fluxo massa pressao valores termo correcao pressao passo campo velocidade passo 
+ correcao parametros relacionados turbulencia energia necessario etc 
+ meio equacoes transporte base valores pressao velocidade proprios parametros obtidos iteracoes anteriores valores estimados 
+ atualizacao termos geracao provenientes interacao diferentes fases escoamentos multifasicos 
+ diferenca dois algoritmos equacao correcao velocidade utilizada passo 
+ algoritmo simplec geralmente garante convergencia rapida embora possa causar instabilidade solucao problemas envolvam turbulencia modelos fisicos adicionais 
+ nesses casos algoritmo simple indicado 
+ limitacoes algoritmos simple simplec novas velocidades passo embora satisfacam equacao continuidade correspondem campo velocidade adequado equacao momento resultando maior numero iteracoes balanco satisfeito 
+ intuito aumentar eficiencia calculos adicionados passos correcao tipos neighbor correction skewness correction algoritmo simplec resultando procedimento piso 
+ primeiro tipo adicionado calculo termo correcao pressao seguido correcao velocidades pressao passos algoritmo simple 
+ malhas celulas distorcidas faces ortogonais relacao diferenca correcao pressoes celulas adjacentes correcao fluxo massa face intermediaria grosseira atrasa convergencia calculos 
+ correcao tipo skewness entao utilizada contornar problema calculo termo correcao gradiente pressao face apos passo utilizado correcao fluxo massa passo 
+ procedimento pode ser adotado algoritmo simplec malhas distorcidas podem provocar instabilidades nesse algoritmo 
+ simulacoes escoamentos transientes interacoes algoritmos acoplamento pressaovelocidade apresentados realizadas cada timestep 
+ dessa forma criterio convergencia adotado passo deve ser atingido cada varios incrementos tempo simulacao aumentando bastante numero total iteracoes 
+ algoritmo fsm contrario apresentados anteriormente adota esquema noniterative timeadvancement nita promove iteracoes intermediarias processo acoplamento pressaovelocidade conforme mostrado figura 
+ tal procedimento unico processo efetuado cada timestep reduzindo bastante esforco computacional analise temporal fenomeno 
+ entretanto algoritmo fsm provoca instabilidades simulacoes transientes utilizam modelos complexos vof adocao procedimento piso indicado 
+ figura esquema algoritmo pressurebased coupled mostrado 
+ nele resolucao simultanea equacoes governantes exclui necessidade atualizacao pressao velocidade sequenciadas passos metodo anterior 
+ maior robustez desse algoritmo permite convergencia rapida pressurebased segregated escoamentos monofasicos regime permanente 
+ simulacoes transientes utilizacao algoritmo coupled encontra maior aplicacao malhas grosseiras maiores time step discretizacao temporal 
+ figura algoritmos pressurebased pressurebased segregated pressure based coupled fsm fonte fluent adaptada 
+ metodo densitybased utilizandose metodo densitybased ansys fluent equacoes governantes resolvidas simultaneamente assim metodo pressure based coupled 
+ campo velocidade obtido equacao momento porem distribuicao pressao resulta equacoes estado baseadas temperatura massa especifica obtida equacao continuidade 
+ figura mostra esquema algoritmo densitybased segue sequencia operacoes 
+ atualizacao propriedades fluido baseada solucao obtida valores iniciais determinados usuario 
+ resolucao equacoes continuidade momento energia necessario 
+ solucao equacoes escalares turbulencia necessario 
+ atualizacao termos geracao provenientes interacao diferentes fases escoamentos multifasicos 
+ figura algoritmo densitybased fonte fluent adaptada 
+ independentemente metodo solucao utilizado carater iterativo torna necessaria definicao criterio convergencia visa finalizar loop iteracoes 
+ criterio estabelecido deve ser baseado grau precisao desejado calculos fundamenta principalmente experiencia usuario software cfd 

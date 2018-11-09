@@ -1,0 +1,481 @@
+monografia deteccao falhas geologica dados sismico usando covariograma aprendizado maquina marcio sygeaks frazao barros luis ufma ccet dq lpqa av 
+ portugueses campus bacanga luis cep fone www 
+ br marcio sygeaks frazao barros deteccao falhas geologica dados sismico usando covariograma aprendizado maquina monografia apresentada curso ciencia computacao ufma requisito obtencao parcial grau bacharel ciencia computacao 
+ anselmo cardoso paiva luis marcio sygeaks frazao barros deteccao falhas geologica dados sismico usando covariograma aprendizado maquina monografia apresentada curso ciencia computacao universidade federal maranhao parte requisitos necessarios obtencao grau bacharel ciencia computacao 
+ aprovada banca examinadora orientador anselmo cardoso paiva prof 
+ informatica ufma universidade federal maranhao aristofanes correa silva prof 
+ informatica ufma universidade federal maranhao geraldo braz junior prof 
+ informatica ufma universidade federal maranhao agradecimentos primeiro lugar deus ter dado forcas iluminado caminho pudesse concluir etapa vida pai todo amor dedicacao sempre comigo homem maior orgulho chamar pai eterno agradecimento momentos lado apoiando fazendo acreditar nada impossivel pessoa sigo exemplo pai dedicado amigo batalhador mae ser tao dedicada amiga ser pessoa apoia acredita capacidade agradecimento horas ficou lado deixando desistir mostrando capaz chegar onde desejo duvida deu maior incentivo conseguir concluir trabalho irmaos carinho atencao sempre comigo especial irmao ivanildo barros sempre apoiando todos momentos enfim todos conselhos confianca mim depositada imenso agradecimento professores orientador dr 
+ anselmo cardoso paiva dr 
+ aristofanes correa silva geraldo braz junior joao dallyson sousa almeida orientacao dedicacao amizade incentivo conselhos apoio durante anos convivencia trabalho amigos fiz durante curso verdadeira amizade construimos particular sempre lado antonio gomes afonso lopes pablo fernandes jefferson sa valeria priscilla wellson nadson timbo wagner todos momentos passamos durante cinco anos especial agradecimento 
+ trajetoria tao prazerosa todos professores curso ciencia computacao paciencia dedicacao ensinamentos disponibilizados aulas cada forma especial contribuiu conclusao desse trabalho consequentemente formacao profissional programa recursos humanos anp prh bolsa iniciacao cientifica concedida fim gostaria agradecer todos amigos familiares cidade moncao carinho compreensao momentos dedicacao estudos exclusiva todos contribuiram direta indiretamente trabalho realizado eterno agradecimento 
+ resumo petroleo principal fonte energia utilizada mundo exige custo bastante elevado obtencao 
+ perfuracao poco petroleo pode atingir estimativa custo total exploracao 
+ portanto necessario ter maximo informacoes possiveis condicoes geologicas area antes iniciar perfuracao poco 
+ etapas obtencao dessa fonte energetica prospeccao inicia estudos geologicos observacao obtencao dados sismicos perfuracao poco pioneiro 
+ sismica hoje ferramentas importantes prospeccao petroleo dados sismicos coletados necessitam tratamentos atraves programas computacionais poderem ser interpretados geologos geofisicos 
+ objetivo desse trabalho desenvolver metodo usando funcao covariograma descritores caracteristica aprendizado maquina auxilie interprete geracao modelo melhor representa estrutura geologica deteccao falhas dados sismicos 
+ metodo obteve resultados sensibilidade igual 
+ palavraschave dados sismicos falhas geologicas aprendizado maquina svm funcao geoestatistica 
+ abstract oil main source energy used worldwide also requires high cost obtain 
+ drilling oil well achieve estimate total cost operation 
+ therefore need much information possible geological conditions area starting drilling well 
+ one steps obtain energy source prospect starts geological observation obtain seismic data drilling wildcat well 
+ seismic today one important tools exploration oil seismic data collected require treatment computer programs interpreted geologists geophysicists 
+ aim work develop method using function covariograma feature descriptors machine learning helps performer generate model best represents geological structure fault detection seismic data 
+ method results obtained sensitivity equal 
+ keywords seismic data geological faults machine learning svm function geostatistics 
+ importancia atributo sismico geofisica 
+ maquina vetor suporte 
+ consideracoes sobre escolha classificador 
+ aquisicao tratamento imagens sismicas 
+ calculo atributos sismico falha 
+ calculo similaridade vertical sv 
+ calculo atributo energia vertical ev 
+ calculo atributo covariograma descritores caracteristica 
+ classificacao usando mvs 
+ lista figuras figura 
+ etapas exploracao baseada sismica reflexao adaptada silva 
+ aquisicao sismica terrestre 
+ aquisicao sismica maritima 
+ traco sismico esquerda linha sismica centro volume sismico direita 
+ adaptada robison treitel 
+ atributos utilizados tingdahl tingdahl rooij 
+ definicao vetor distancia 
+ parametros utilizados calculo funcao geoestatisticas 
+ fatia gerado partir dados amplitude 
+ calculo similaridade vertical 
+ calculo energia vertical 
+ distancia direcoes lags 
+ fluxo atividade realizado durante etapa classificacao desde base caracteristicas originais estimacao parametros reconhecimento padrao 
+ adaptada braz junior 
+ resultados obtidos testes 
+ resultado acuracia amostras calculada cada atributo 
+ resultado acuracia amostras calculada associacao atributos 
+ melhores resultados obtidos classificacao 
+ introducao descoberta jazida petroleo nova area tarefa envolve longo dispendioso estudo analise dados geofisicos geologicos bacias sedimentares 
+ geologos geofisicos profissionais decidem propor perfuracao poco etapa investimentos exigem todo processo prospeccao 
+ programa prospeccao visa fundamentalmente dois objetivos localizar dentro bacia sedimentar situacoes geologicas condicoes acumulacao petroleo verificar dentre situacoes possui chance conter petroleo 
+ identificacao area favoravel acumulacao petroleo realizada atraves metodos geologicos geofisicos atuando conjunto conseguem indicar local propicio perfuracao 
+ programa desenvolvido durante fase prospeccao fornece quantidade grande informacoes tecnicas 
+ primeira etapa programa exploratorio realizacao estudo geologico proposito reconstituir condicoes formacao acumulacao hidrocarbonetos determinada regiao 
+ atraves mapeamento rochas afloram superficie possivel reconhecer delimitar bacias sedimentares identificar algumas estruturas capazes acumular hidrocarbonetos 
+ informacoes geologicas geofisicas obtidas partir poco exploratorios enorme importancia prospeccao pois permitem reconhecer rochas afloram superficie aferir calibrar processos indiretos pesquisas metodos sismicos 
+ metodo sismico reflexao metodo prospeccao utilizado atualmente industria petroleo pois fornece alta definicao feicoes geologicas subsuperficie propicias acumulacao hidrocarbonetos investimentos prospeccao aplicados sismica reflexao 
+ levantamento sismico iniciase geracao ondas elasticas atraves fontes artificiais propagam interior terra onde refletidas refratadas interfaces separam rochas diferentes constituicoes petrofisicas retornam superficie onde captada sofisticados equipamentos computacional 
+ som viaja velocidades diferentes atraves tipos diferentes rochas 
+ caso onda choque localize mudanca camadas rochosas retorna captada hidrofones navio pesquisa arrasta agua 
+ ajuda computadores sismologistas podem analisar informacao localizar possiveis armadilhas 
+ busca representacao adequada reservatorios petroleo atraves dados sismicos utilizacao tecnicas reconhecimento padroes sido alvo inumeras publicacoes cientificas johann ribet motivou utilizar tecnicas aprendizado maquina 
+ objetivo desse trabalho desenvolver metodo auxilie interprete deteccao falhas dados sismicos utilizando maquinas vetores suporte 
+ dessa forma trabalho estruturado capitulos 
+ capitulo apresenta fundamentacao teorica 
+ capitulo metodologia utilizada chegar solucao indo desde selecao preparacao dados calculo atributo geoestatistico covariograma descritores caracteristicas calculo atributo energia vertical similaridade vertical fim classificacao 
+ capitulo resultados obtidos 
+ capitulo fazemos consideracoes finais trabalho realizado 
+ fundamentos teoricos neste capitulo dada visao geral alguns conceitos fundamental importancia compreensao capitulos seguintes 
+ abordase conceito dados sismico sismica reflexao aquisicao processamento imagem atributos sismico metodo analise textura baseado medidas geoestatisticas covariograma metodo classificacao reconhecimento padrao utilizando maquinas vetores suporte 
+ dados sismicos sismica reflexao utilizada geofisicos grande objetivo descoberta reservatorios hidrocarbonetos 
+ segundo gehardt gerhardt grande maioria acumulos petroleo hidrocarbonetos oleo gas encontra rochas sedimentares 
+ existencia acumulacoes petroleo depende caracteristicas arranjo certos tipos rochas sedimentares subsolo 
+ basicamente preciso existam rochas geradoras contenham materiaprima transforma petroleo rochasreservatorio possuem espacos vazios chamados poros capazes armazenar petroleo 
+ rochas envolvidas armadilhas chamadas trapas compartilhamentos isolados subsolo onde condicoes escapar 
+ ausencia qualquer desses elementos impossibilita existencia acumulacao petrolifera 
+ logo existencia bacia sedimentar garante si presenca jazidas petroleo 
+ rochas geradoras assim chamadas tratarse mineral formado principalmente acumulo fragmentos outros minerais detritos organicos encontra ambiente pouca permeabilidade inibe acao agua circulante diminui quantidade oxigenio existente cria condicoes necessarias formacao petroleo 
+ apos processo formacao petroleo acumule formando posteriormente reservatorio necessario apos geracao ocorra migracao petroleo percurso desta migracao exista alguma armadilha geologica permita acumulacao oleo 
+ apresenta alguns tipos reservatorios 
+ estrutura capeadora petroleo migra rocha geradora outra rocha porosa permeavel chamada rocha reservatorio continua fluxo interior mesma ser contido armadilha estrutura geologica compreendida dentro rocha selante impermeavel permita oleo ali confine 
+ sismica reflexao sismica reflexao metodo prospeccao geofisica utiliza principios sismologia estimar propriedades subsuperficie terra base reflexao ondas sismicas 
+ metodo requer utilizacao fonte sismica energia controlada exemplo explosivo 
+ determinar tempo onda refletida demora atingir receptor possivel estimar profundidade estrutura gerou reflexao 
+ tratase metodo utilizado extensivamente prospeccao hidrocarbonetos petroleo gas natural outros recursos minerais carvao minerios metalicos energia geotermica 
+ ainda utilizado estudos basicos sobre natureza origem rochas compoem crosta terrestre 
+ metodo sismico reflexao metodo exploracao utilizado atualmente industria petroleo destacase alto grau eficiencia custo relativamente baixo 
+ investimentos prospeccao aplicados sismica reflexao 
+ metodo obtemse excelente definicao formacao geologica subsuperficie permitindo analise probabilidade acumulo hidrocarbonetos 
+ levantamento sismico iniciado geracao ondas elasticas atraves fontes artificiais propagam interior terra onde refletidas refratadas interfaces separam rochas diferentes constituicoes petrofisicas retornam superficie 
+ reflexoes captadas equipamentos especiais denominados geofones registros terra hidrofones registros mar quais convertem vibracoes mecanicas oscilacoes eletricas transmitidas registradas sismografos 
+ tipos ondas sismicas velocidade propagacao existem basicamente dois tipos ondas elasticas 
+ ondas compressionais quais deslocamento meio mesma direcao propagacao energia ondas cisalhamento onde deslocamento meio perpendicular direcao propagacao energia 
+ momento somente ondas vem sendo utilizadas comercialmente levantamentos sismicos 
+ velocidade propagacao ondas sismicas funcao densidade constantes elasticas meio 
+ consequentemente depende constituicao mineralogica rocha grau cimentacao estagios compactacao porosidade conteudo saturacao fluidos alem outros fatores temperatura presenca microfraturas 
+ todos fins praticos propagacao ondas elasticas regida mesmas leis otica geometrica 
+ frente onda incide sobre interface separando duas rochas velocidades densidades diferentes parte energia incidente refratada meio inferior parte energia reflete retorna superficie 
+ quantidade energia retorna superficie depende contraste impedancias acusticas produto densidade velocidade dois meios angulo incidencia 
+ fontes receptores sismicos fontes energia sismica utilizada dinamite vibrador terra canhoes ar comprimido levantamentos maritimos 
+ cada destas fontes emite pulso caracteristico conhecido assinatura fonte propaga todas direcoes 
+ pulsos elasticos detonacoes duracao comprimento pequeno ordem milissegundos refletem propagam cada camadas geologicas profundidade retornando superficie informacoes valiosas pesquisa petroleo 
+ receptores utilizados registrar reflexoes destes pulsos basicamente dois tipos eletromagneticos geofones registros terra pressao hidrofones levantamentos agua 
+ primeiro composto bobina suspensa dentro campo magnetico gerado potente ima acondicionado involucro impermeavel firmemente cravado superficie terra 
+ onda sismica atinge geofone movimento relativo bobina ima gera corrente eletrica induzida proporcional varios fatores inclusive amplitude onda incidente 
+ hidrofones utilizam cristais piezoeletricos geram corrente eletrica proporcional variacao pressao produzida ondas acusticas agua 
+ receptores exemplo geofones devem reproduzir fielmente possivel vibracoes mecanicas forma oscilacoes eletricas 
+ oscilacoes eletricas transmitidas sismografo onde digitalizadas multiplexadas registradas retransmitidas via satelite central computadores apos severo depuramento amplificacao eletronicos 
+ metodos sismicos metodo sismico objetivo principal formacao modelos dados processados organizados retenham informacoes relevantes respeito geologia regiao onde adquiridos 
+ dentre modelos existentes metodo direto identificacao reservatorios hidrocarbonetos superficies consiste perfuracao pocos chamados pocos exploratorios 
+ embora obviamente perfuracao necessaria extracao oleo gas fornece dados pontuais envolve elevado custo 
+ metodos indiretos investigacao baratos geram informacoes sobre grandes areas volumes subsuperficie 
+ dentre empregado sismica reflexao 
+ atualmente maioria levantamentos sismicos tridimensional coletam sinais referentes porcoes volumetricas subsuperficie 
+ dados adquiridos submetido chamado processamento sismico compreende conjunto tecnicas atuam sobre dados forma retirar minimizar eventos indesejaveis aumentando relacao sinalruido 
+ objetivo processamento sismico facilitar interpretacao dados sismicos 
+ interpretacao sismica comeca mapeamento estrutura larga escala dados 
+ interpretacao estrutural consiste principalmente criar horizontes determinar superficies falha 
+ horizontes superficies criadas interprete atraves selecao refletor interface camadas diferentes acompanhamento longo volume 
+ fratura rochas subsuperficie causada forcas tectonicas chamada falha 
+ falhas geram descontinuidades estrutura camadas tornam criacao horizontes dificil 
+ falhas podem ser extremamente importantes identificacao trapas origem estrutural 
+ deslocando camada impermeavel falha pode criar trapa estrutural onde oleo aprisionado pode romper capa selante trapa gerando vazamento lines al 
+ forma semelhante falhas importantes compreensao fluxo fluidos reservatorio 
+ podem agir sentido gerar selante bloqueando fluxo diferentes compartimentos reservatorio podem agir condutores permitindo comunicacao diferentes compartimentos pedersen 
+ segundo silva silva exploracao hidrocarbonetos oleo gas baseada sismica pode ser dividida tres etapas principais aquisicao processamento interpretacao 
+ etapas exploracao baseada sismica reflexao adaptada silva 
+ aquisicao etapa aquisicao utilizada fonte geradora ondas receptores captam ondas superficie 
+ fontes ondas sismicas utilizadas maior frequencia explosoes dinamite caso terrestre canhoes pneumaticos ar caso maritimo dallyson 
+ aquisicao dados geradas ondas elasticas artificiais impulsos duracao relativamente pequena torno milissegundos pontos especificos superficie area ser mapeada 
+ perturbacoes mecanicas geradas atraves utilizacao dinamite terra canhoes ar comprimido caso regioes marinhas 
+ perturbacao mecanica vibracoes elastica acustica propaga terra onda sismica alcanca camada duas rochas valores impedancia acustica diferente parte onde refratada continua propagando baixo outra parte refletida retorna superficie silva 
+ parte refletida retorna superficie captada receptores tanto tempo chegada quanto intensidade medida neste momento registrado sismografos armazena amplitudes ondas intervalos tempo regulares tipicamente milissegundos 
+ receptores podem ser geofones medem velocidade pulso sismico retorna superficie aquisicao dados terrestres hidrofones medem variacao pressao gerada agua machado 
+ ilustram esquema aquisicao sismica terrestre aquisicao sismica maritima 
+ aquisicao sismica terrestre 
+ aquisicao sismica maritima aquisicao maritima realizada partir embarcacoes equipadas canhoes ar comprimido rebocando cabos sismografos comprimentos podem variar km podemos ver figura 
+ cabos sismografos preenchidos fluidos baixa densidade facilitar flutuacao equipados detectores pressao hidrofones dispostos intervalos regulares 
+ durante periodo aquisicao area ocupada cabos esticados pode chegar km 
+ aquisicao sismica iniciada geracao energia diretamente agua partir disparos canhao ar comprimido 
+ energia criada propaga sob forma ondas acusticas atingir profundidade mar 
+ chegarem fundo mar ondas sofrem fenomeno fisico chamado particao energia parte energia refletida parte refratada 
+ energia refratada transmitida proximas camadas consequentemente irao sofre fenomeno particao energia sendo energia refletida capturada hidrofones chevron 
+ maxima profundidade ser mapeada processo aquisicao determinada tempo registro reflexoes sensores velocidade propagacao sinais sismicos atraves camadas rocha 
+ aquisicao terrestre tempo amostragem tipicamente segundos partir instante detonacao considerase instante detonacao sendo instante tempo ts thomas 
+ velocidade propagacao ondas rochas variavel segundo grande diversidade fatores tais densidade constantes elasticas meio vez dadas funcao caracteristicas intrinsecas rocha tais porosidade temperatura pressao outros 
+ entanto valor medio velocidade propagacao tipicamente considerado metros segundo 
+ podese considerar dessa forma profundidades mapeadas proximas metros dois segundos sinal propagar ida refletir ser registrado sensores 
+ imagem sismica obtida processo captacao sinais refletidos melhores quanto menor espacamento lateral sensores localizados superficie 
+ valores tipicos numero sensores situados equidistantes distancias variam metros thomas 
+ frequencia amostragem sinal cada sensores determina espacamento vertical medicao sinais sendo igualmente importante 
+ equipamentos modernos tipicamente realizam amostragem temporal ondas refletidas valores equidistantes milissegundos 
+ aquisicao maritima oilfield 
+ processamento vez equacionado problema aquisicao representacao dados fase seguinte consiste efetuar processamento dados forma obter resultados desejados 
+ sismica petroleo processamento dados visa produzir imagens interior possuam maior fidelidade possivel procurando avaliar distorcoes geradas processo aquisicao 
+ nessa etapa alguns erros proprios levantamento sismico corrigidos 
+ alem disso dados reorganizado formarem fatia relacao imagem grade tridimensional voxel relacao imagem volume sismico 
+ duas dimensoes conjunto dados direcoes espaciais relacionadas posicoes fontes receptores 
+ transformacoes realizadas dados durante processamento faz posicoes fonte receptor mesma 
+ virtude transformacao podemos considerar terceira dimensao conjunto dados temporal propagacao onda feita apenas direcao vertical 
+ podemos considerar fonte receptor mesma posicao superficie tempo cada amostra corresponde tempo onda leva propagar interface tempo volta superficie 
+ coluna amostra mesmas coordenadas espaciais variando apenas tempo chamada traco sismico 
+ maximos minimos funcao amplitude sismica traco chamados eventos sismicos silva 
+ organizacao amostras dado sismico mostrada figura 
+ lado esquerdo funcao amplitudes sismicas traco sismico unica dimensao temporal 
+ nesse caso traco amplitudes representado atraves sinal ondulante 
+ centro secao vertical conjunto dados formada conjunto tracos sismicos chamada linha sismica dimensao espacial outra temporal 
+ caso dados sismicos volume sismico formados varias linhas sismicas duas direcoes espaciais chamadas inline direcao linhas sismicas crossline direcao perpendicular linhas sismicas alem direcao temporal 
+ nesse contexto vale ressaltar mostrarmos dados forma representacao sinal cada tracos sismicos deixa ser feita partir sinal ondulante passando ser feita atraves escada cores onde cada cor representa amplitude onda cada ponto 
+ traco sismico esquerda linha sismica centro volume sismico direita 
+ tingdahl matthijs rooij 
+ interpretacao interpretacao sismica final decada feita auxilio mapas desenhados papel dessa forma especialistas apontavam areas interesse perfuracao 
+ especialistas precisavam ser capazes criar modelo tridimensional mental sobre espessura constituicao profundidade camadas rocha 
+ trabalho tornou simples vez especialistas precisam usar imaginacao desenharem modelos mentais 
+ mapeamento antes levaria meses ser realizada agora pode ser concluido poucas horas dallyson 
+ nesta etapa interpretacao interprete geral geologo geofisico analisa dados sismicos tenta criar modelo represente geologia contida area analisada 
+ mostra modelo geologico poderia ser resultante interpretacao linha sismica 
+ interpretacao sismica pode ser classificada acordo foco dois tipos estrutural estratigrafica 
+ interpretacao estrutural basicamente tenta identificar camadas geologicas forma equivalente interfaces camadas bem falhas geologicas recortam camadas 
+ interpretacao estratigrafica foco trabalho entender maneira camadas formando longo tempo 
+ adaptada robison treitel 
+ horizonte sismico pode ser definido serie reflexoes continuas intensidades similares encontradas atraves vizinhancas laterais longo dado sismico 
+ reflexoes indicam existencia interface duas camadas sedimentos 
+ sheriff sheriff define horizonte sismico sendo superficie separa duas camadas diferentes rocha onde tal superficie ter sido explicitamente identificada associada reflexao estende grande area 
+ horizonte sismico portanto manifesta dado sismico serie eventos picos vales amplitudes sismicas aparecem forma consistente traco traco 
+ mapeamento horizontes conjunto dados tarefas importantes interpretacao sismica 
+ horizonte sismico chamado refletor superficie separa duas camadas rocha propriedades distintas sendo limite visivel determinadas camadas sedimentos 
+ falhas sismicas fraturas discretas horizontes atraves quais medidos deslocamentos rocha 
+ facilmente identificados imagens podem ser percebidas atraves descontinuidades lateral horizonte mostrado figura 
+ visualizacao resultados interpretacao fornece evidencias presenca acumulo hidrocarbonetos 
+ confianca resultado interpretacao depende complexidade sistema geologico qualidade dado sismico experiencia interprete rankey mitchell 
+ atributo sismico descrevem dados sismicos popularizado taner final decada define atributo sismico qualquer informacao obtida parti dados sismico medida direta raciocinio logico baseado experienciataner 
+ atributo sismico surgiu transformar processo interpretacao subjetiva experiencia baseada algo menos tedioso objetivo 
+ tentam imitar experiencia interprete identificando automaticamente correlacionar eventos sismicos reais caracteristicas geologicas chopra marfurt 
+ hoje atributos sismicos adicionados valores analise estrutural estratigrafica textura facies reservatorio hidrocarbonetos predicao propriedades corretamente utilizado usuario experiente exemplo taner barnes sheline chopra marfurt 
+ atributos sismicos permitir obtencao informacoes detalhadas precisas sobre parametros estruturais estratigraficas litologicas perspectiva sismica taner solucao integrada cooper modelagem reservatorio hidrocarbonetos identificacao caracterizacao incerteza reduzida sheline 
+ limite questao principal atributos proprios aplicacao deve ser cuidadosamente escolhido 
+ caracteristicas desejadas geologicas devem ser reforcadas deve ser primeiro claramente definido interprete 
+ principal objetivo atributos sismicos ajudar interprete gerar modelo geologico determinada area sismica 
+ quanto detalhado modelo geologico feito interprete maior indice sucesso exploracao area questao 
+ analise caracteristicas sismicas realizada atraves emprego tecnicas reconhecimento padroes onde atraves combinacao adequada atributos sismicos buscase identificacao caracteristicas geologicas reservatorios 
+ neste trabalho usada tecnica maquinas suporte vetorial msv classificar imagens sismicas objetivando detectar falhas sismicas dado 
+ importancia atributo sismico geofisica 
+ crescente interesse atributos sismicos grande numero diversidade tornase agora necessario catalogalas classes diferentes 
+ muitas propostas apresentadas objetivo classificar atributos sismicos forma firme rigoroso intuitivo base tanto entrada quanto resultado esperado 
+ infelizmente novos atributos surgem cada dia algoritmos atributos bem conhecidos podem ser melhorados pois algumas vezes dao resultados inesperados 
+ classificacoes propostas constantemente mudar dependendo entendimento atributo sismico taner 
+ estudo atributos sismicos pode ser utilizado fazer inumeras interpretacoes geologicas geofisicas tornando extrema importancia geofisico etapa interpretacao 
+ dentre varios atributos existentes alguns podem ser usados indicadores hidrocarbonetos outros indicadores falhas geologicas dependendo tipo analise questao devese escolher tipo adequado atributo matos 
+ existe lista atributo sismico parametros figura 
+ utilizados tingdahl rooij tingdahl rooij trabalhos sobre deteccao semiautomatica falha dados sismicos definem diferentes caracteristicas falhas frequentemente incluidos esquema deteccao falha rede neural artificial 
+ contexto desse trabalho aplicados atributos similaridade energia descritos tingdahl tingdahl rooij possibilidade detectar falha 
+ atributos utilizados tingdahl tingdahl rooij 
+ similaridade similaridade calculada dois tracos sendo definido distancia hiperespaco vetores segmentos normalizados soma comprimentos vetores 
+ descrito tingdahl rooij sendo expresso onde 
+ intervalo tempo profundidade considerado dt intervalo amostral limites tempo janela xv yv xu yu duas posicoes traco comparadas valor amplitude cubo 
+ comparado coerencia tradicional bahorich farmer similaridade leva conta diferencas amplitude dois segmentos traco 
+ falhas descontinuidades dado baixa resposta similaridade 
+ energia energia definida segundo tingdahl rooij tingdahl rooij quadrado soma amplitude dentro janela gate redor amostra investigacao 
+ onde amplitude traco limite superior janela numero amostras janela dt intervalo amostral 
+ geoestatistica surgiu trabalhos krige dados concentracao ouro quais concluiu apenas informacao fornecida variancia insuficiente explicar fenomeno estudo 
+ preciso considerar distancia observacoes 
+ assim geoestatistica leva consideracao localizacao geografica dependencia espacial camargo 
+ segundo kourgli belhadjaissa analise textura primeira importante tarefa extrair caracteristicas textura expressem informacoes sobre distribuicao espacial variacoes intensidades imagem 
+ sendo assim aplicacao destas funcoes reconhecimento falhas imagem sismica alternativa pois imagem sismica possui estrutura interessante prove textura rica informacoes funcoes podem capturar 
+ metodos variograma covariograma semivariograma correlograma usados estimadores geoestatisticos autocorrelacao espacial ferramenta continuidade 
+ ferramentas usadas investigar magnitude correlacao amostra similaridade distancia 
+ estatistica textura pode ser descrita termos dois componentes principais associados valores variabilidade autocorrrelacao espacial 
+ medidas descrevem textura obtida determinada imagem atraves grau associacao espacial presente dentro elementos espaciais referentes imagem 
+ metodos analise textura baseado geoestatistca covariograma semivariograma correlograma sendo altualmente utilizado sucesso extrair informacoes diversas imagens silva al 
+ funcoes aplicadas diversas areas tais ciencias terra sensoriamento remoto processamento imagens etc 
+ segundo srivastava parker nessas areas aplicacao analisar continuidade espacial importante pois mesmas trabalham amostras apresentam grande soma informacoes geralmente apresentam forma irregular regularmente espacadas 
+ neste processo extracao caracteristica imagem satisfatoria necessario propriedade desses descrita maneira eficiente 
+ covariograma mede correlacao duas variaveis 
+ geoestatistica covariancia calculada variancia amostra menos valor variograma 
+ funcao covarianca tende aumentar proximas variaveis tende decrescer distantes proximo limite variaveis 
+ onde mo media valores origens vetores 
+ media valores extremidades vetores 
+ vetor distancia lag distance valores origens valores extremidade numero pares distancia 
+ vetor distancia exemplificado figura 
+ definicao vetor distancia 
+ outros parametros usados calcular covariograma incremento lag lag spacing tolerancia lag lag tolerancia direcao direction tolerancia angular angular tolerance ilustrados figura 
+ parametros utilizados calculo funcao geoestatisticas 
+ parametros necessarios pois dificilmente conjunto pares pontos amostra vao estar separados precisamente distancia logo utilizados erros menos funcao distancia incremento lag funcao direcao tolerancia angular objetivo alcancar conjunto adequado pares pontos relacionados distancia questao 
+ reconhecimento padroes rp area pesquisa objetivo classificacao objetos padroes numero categorias classes 
+ tecnicas rp classificam informacoes baseada conhecimento predefinido informacoes estatisticas extraidas padroes 
+ sistemas rp formados sensor captam observacoes ser classificado 
+ mecanismo extracao caracteristica discretiza observacoes captadas sensor formar vetor caracteristicas ultimo mecanismo classificacao amostras observadas depende caracteristicas extraidas 
+ classificacao pode ser dois tipos supervisionada naosupervisionado 
+ classificacao supervisionada sendo utilizada neste trabalho necessitase supervisor apresentar previamente conhecimento ambiente apresentacao dados entrada saida onde extraida representacao conhecimento objetivo saidas corretas dados conhecido anteriormente 
+ pontos cruciais sistema rp escolha caracteristicas 
+ caracteristicas devem conter maior parte informacao relevante possivel dimensao conjunto caracteristicas deve ser grande 
+ importante preprocessar vetores caracteristicas fim retirar todas caracteristicas desnecessarias 
+ duas caracteristicas extremamente correlatas redundantes 
+ tipo caracteristica pode sobrecarregar classificador induzir processo erro 
+ apos processo selecao caracteristicas cada objeto populacao proxima etapa atribuir rotulo cada vetor caracteristicas formando amostras 
+ objetos rotulados partir conhecimento humano 
+ classificador utiliza amostras treinamento 
+ fase treinamento classificador tenta gerar assinaturas melhor distinguem classes cada rotulo pertencente conjunto amostra 
+ processo importante fase conhecimento fara uso assinatura identificar novas amostras treinadas fazem parte populacao especifica 
+ trabalho usa maquina vetor suporte realizar reconhecimento imagens sismicas 
+ maquina vetor suporte maquinas vetores suporte mvs constituem tecnica aprendizado maquina sido amplamente usadas classificacao devido capacidade generalizacao robustez diante dados grande dimensao 
+ mvs embasadas teoria aprendizado estatistico tae desenvolvida vapnik 
+ teoria estabelece serie principios devem ser seguidos obtencao classificadores boa generalizacao definidos capacidade prever corretamente classe novos dados dominio aprendizado ocorreu 
+ neste trabalho utilizando algoritmo supervisionado 
+ entretanto assumese existe conjunto amostra padroes cujas classes conhecidas conforme onde xi representa iesima observacao padrao 
+ ki representa classe rotulo padrao acima representa amostras disponiveis 
+ devese produzir classificador denominado modelo preditor hipotese capaz predizer precisamente rotulo novos dados 
+ processo inducao classificador partir amostra denominado treinamento lorena carvalho 
+ requisito importante tecnicas capazes lidar dados imperfeitos denominados ruidos 
+ muitos conjuntos dados apresentam tipo caso sendo alguns erros comuns presenca dados rotulos atributos incorretos 
+ tecnica deve idealmente ser robusta ruidos presentes dados procurando fixar obtencao classificadores sobre tipo caso 
+ devese minimizar influencia outliers processo inducao 
+ outliers exemplos distintos demais presentes conjunto dados 
+ dados podem ser ruidos casos particulares raramente presentes dominio 
+ tarefa classificacao normalmente envolve treinamento teste dados consiste alguns exemplos dados 
+ cada exemplo conjunto treinamento contem valor objetivo rotulos classe varios atributos caracteristicas frequentemente variavel interesse definida seguinte forma 
+ onde principal interesse obter prob pratica sempre funcao desconhecida 
+ consideracoes sobre escolha classificador objetivo mvs produzir classificador apresente bom desempenho junto amostras naoobservadas durante treinamento consiga generalizar 
+ classificador maquina fornece classificacao 
+ observamos existencia varios classificadores lineares possiveis podem separar amostras disponiveis nenhum erro somente maximiza distancia classificador amostra proxima cada classe 
+ dessa forma classificador linear denominado hiperplano otimo pois esperase hiperplano generalize melhor demais amostras utilizadas durante fase treinamento devem ser classificadas lima 
+ mesma forma podemos observar figura 
+ hiperplano otimo criado outros hiperplanos suporte linhas tracejadas denominados vetoressuporte passam pontos classes 
+ mvs encontrar solucao otima utiliza principio minimizacao risco estrutural baseiase fato taxa erro dados teste taxa erro generalizacao limitada soma taxa erro treinamento termo depende dimensao vapnikchervonenkis dimensao exemplo dado conjunto treinamento pares rotulo onde 
+ classificacao margem separacao maximo finalidade separar duas classes hiperplano tal distancia vetores suporte maximizada 
+ cada ponto espaco entrada mapeado ponto alta dimensionalidade denominado espaco caracteristica onde dados linearmente separados hiperplano 
+ dados podem ser divididos tres categorias chamados linearmente separaveis linearmente separaveis separaveis 
+ dessa forma podemos escrever funcao decisao usando funcao kernel ser simples mapeamento φ definida funcao 
+ onde coeficientes solucoes equacoes 
+ onde vetor pontos perpendicular hiperplano separacao parametro escolhido usuario correspondendo penalidade erro ξis variaveis folga penalizam erros treinamento 
+ mvs possuem diferentes kernels utilizados resolver problemas espacos lineares sendo utilizados tipos linear polinomial manipula funcao polinomial cujo grau pode ser definido durante treinamentos sigmoidal permite svm comportamento rede mlp gaussiano corresponde espaco caracteristicas dimensao infinita utilizacao desse tipo funcao permite mvs comporte caracteristicas rede rbf 
+ quatro funcoes basicas kernel  linear  polinomial  sigmoidal  funcao basica radial rbf 
+ diferentes definicoes kernel respectivos parametros provocam alteracoes resultados fornecidos svm 
+ utilizamos nesse trabalho kernel rbf parametro definido usuario 
+ algoritmo supervisionado normalmente realizado meio analise desempenho preditor gerado classificacao novos dados apresentados previamente treinamento lorena carvalho 
+ utilizaremos nesse trabalho sensibilidade especificidade acuracia serem metricas utilizadas validar resultados 
+ sensibilidade probabilidade positivos verdadeiros medida capacidade metodo decisao predizer condicao falha casos realmente apresentam segundo definicao equacao 
+ onde vp pontos definidos imagem falha classificados tal fn numero falso negativo pontos definidos falha classificados naofalha classificado erroneamente 
+ especificidade probabilidade negativos verdadeiros medida capacidade metodo decisao apontar ausencia condicao casos realmente segundo definicao equacao 
+ onde vn numero verdadeiros negativos naofalha classificado falha fp numero falsos positivos naofalha classificado falha 
+ acuracia probabilidade predicoes corretas dada equacao abaixo 
+ valor preditivo positivo vpp probabilidade individuo avaliado resultado positivo ser realmente falha dado 
+ valor preditivo negativo vpn probabilidade individuo avaliado resultado negativo ser realmente naofalha dado 
+ materiais metodos trabalho visa estudar problema deteccao falhas volumes dados sismico aplicar tecnicas reconhecimento padroes aprendizado maquina visando assim auxiliar interprete etapa interpretacao imagem sismica 
+ fim seguimos alguns passos 
+ aquisicao tratamento imagens sismicas 
+ calculo atributos sismico falha energia vertical similaridade vertical 
+ calculo atributo covariograma descritores caracteristica 
+ classificacao usando svm 
+ aquisicao tratamento imagens sismicas nesse trabalho necessario fazer tratamento imagem 
+ sendo dados armazenados formato beginendian byte menos significativo maior endereco 
+ dados volume convertidos littleendian byte menos significativo menor endereco 
+ dai termo tratamento imagens sismicas 
+ nesse contexto fatias obtidos volume 
+ todas imagens resolucao pixels tons cinza bits 
+ dados amplitude valores 
+ quantizadas bits gerando imagens conforme figura 
+ calculo atributos sismico falha 
+ literatura existem varios atributos sismicos identificacao falhas atributos identificam caracteristicas especificas imagens 
+ existentes utilizamos proposito dois atributos energia similaridade 
+ cada atributo calculado longo traco sismico vertical imagem 
+ atributos calculados similaridade vertical sv energia vertical ev 
+ fatia gerada partir dados amplitude 
+ calculo similaridade vertical sv atributo sv calculado usando equacao 
+ atributos calculados fatia fatia sempre definindo vetor onde contida pixel referencia calculado atributo vetor adjacente ambos timegate ingles janela 
+ posteriormente calculo realizado resultado armazenado posicao equivalente pixel referencia 
+ nesse trabalho definimos timegates imagens 
+ ilustra calculo sv 
+ calcular sv exemplo selecionamos elemento valor pixel circulado vermelho onde calculado − fazendo − − − − − dividindo subtraindo 
+ valor calculado armazenado posicao elemento 
+ feito calculo atributo ev janela vai sempre percorrendo imagem vertical calculo sv 
+ exemplo imagem gerada partir calculo atributo sv 
+ calculo similaridade vertical 
+ calculo atributo energia vertical ev atributo ev calculado usando equacao 
+ calcular energia exemplo selecionamos elemento valor pixel circulado vermelho 
+ calculo efetuado pixel calculando quadrado soma amplitude dentro gate redor amostra investigacao dividimos representa quantidade elementos gate 
+ janela vai sempre percorrendo imagem vertical 
+ ilustra calculo ev 
+ exemplo imagem gerada partir calculo atributo ev 
+ calculo energia vertical 
+ calculo atributo covariograma 
+ trabalho utiliza funcao geoestatisticas covariograma extrair caracteristicas imagem sismica 
+ reconhecimento padroes imagens area grande interesse mundo cientifico 
+ chamados metodos extracao caracteristicas possuem habilidades extrair caracteristicas imagens reduzir dimensionalidade dados gerando assim chamado vetor caracteristicas 
+ extracao caracteristicas envolve simplificar conjunto dados requeridos descrever grande conjunto precisao 
+ executando analise dados complexos maiores problemas provem numero valores envolvidos 
+ analisar gama grande variacoes numericas requer grande quantidade memoria poder processamento algoritmo classificacao estatistica sobrecarrega amostra treinamento faz pouca generalizacao novas amostras gerando muitas classes classes desnecessarias 
+ extracao caracteristicas termo generico metodos construcao combinacoes valores contornar problemas continuar representando dados certa precisao 
+ parametros usados funcoes geoestatisticas extracao caracteristicas cada amostra direcoes tolerancia angular incremento lag distancia igual correspondendo lags tolerancia cada distancia lag igual respectivamente 
+ parametros escolhidos acaso 
+ direcoes adotadas utilizadas literatura analise imagens escolher tolerancia lag segundo isaacs srivastava escolha comum adotar metade incremento lag 
+ ilustracao maneira distancias direcoes lag utilizadas 
+ supondo imagem pixels tamanho janela utilizada maximo lags qualquer quatro direcoes justificado assim presenca desses valores parametros 
+ distancia direcoes lags 
+ vetor caracteristicas criacao vetor caracteristicas vc representa assinatura amostra forram extraidas caracteristicas amostra correspondentes direcoes lags funcao geoestatistica covariograma 
+ antes realizar selecao caracteristicas mesma passam processo normalizacao faixa valores comum 
+ mecanismo facilita classificador convergir maior facilidade etapa treinamento 
+ alem padronizar distribuicao valores variaveis quais podem assumir diferentes dominios 
+ vc criado funcao geoestatistica covariograma objetivo analisar eficiencia area interesse dado sismico 
+ testes resultados apresentados capitulo 
+ classificacao usando mvs 
+ etapa final consiste classificar cada objeto imagem sismica falhas naofalhas utilizando tecnicas reconhecimento padroes secao 
+ acordo analise textura obtida funcao geoestatistica covariograma secao 
+ ilustra fluxo atividades realizadas durante fase reconhecimento padroes 
+ fluxo atividade realizado durante etapa classificacao desde base caracteristicas originais estimacao parametros reconhecimento padrao 
+ adaptada braz junior 
+ nesta etapa fizemos utilizacao biblioteca libsvm chang lin finalidade ajudar usuarios usar svm fazer treinamento 
+ detalhe importante sobre libsvm tenta auxiliar pessoas nunca treinaram svm antes 
+ usar svm dois scripts python grid 
+ py diretorio ferramentas 
+ classificar dado sismico usando svm seguimos seguinte ordem  geracao arquivo entrada formato libsvm  utilizacao kernel  utilizamos base modelo transformamos intervalo usando svmscale 
+ exe  dividimos arquivo arquivo teste arquivo treino proporcao usamos finalidade script subset 
+ py  utilizamos script grid 
+ py implementa busca automatizada search grid encontrar melhor parametro  utilizacao melhor parametro todo conjunto treinamento  construcao modelo  classificacao arquivo teste  calculo metricas dados ev submetidos classificacao normalizados intervalo 
+ onde xnorm valor normalizado correspondente valor original valores minimo maximo todos valores 
+ sv necessario fazer normalizacao visto calculo sv valores intervalo 
+ definidas duas classes finalidade falha naofalha 
+ geramos arquivos atributo covariograma atributo sv atributo ev seguida gerado atributo ev sv associacao tres 
+ usamos kernel onde necessidade configurar dois parametros existentes 
+ sabe anteriormente melhor problema sendo assim algum tipo modelo selecao parametros busca deve ser feito finalidade identificar melhor forma classificador possa predizer dados desconhecidos precisao 
+ separamos dados treinamento duas partes 
+ considerada desconhecida treinamento classificador 
+ entao precisao predicao neste conjunto pode refletir precisamente desempenho classificacao dados desconhecidos 
+ nessa etapa encerramos treinamentos testes mvs configurada parametros cada conjunto amostras submetidas processo 
+ secao seguinte trataremos resultados alcancados uso desta metodologia 
+ resultados capitulo apresenta resultados obtidos metodologia proposta baseada metodo geoestatistico covariograma deteccao falhas dados sismica 
+ aplicamos atributos fatias dentro volume sismico numerosas falhas onde cada fatia extraido pontos falhas pontos naofalhas total amostras 
+ objetivo deteccao falhas eficiencia metodo classificacao uso svm 
+ seguindo fluxo metodologia proposta secao 
+ passo seguinte etapa classificacao validacao resultados 
+ resultados obtidos classificador svm relacionados tabela 
+ resultados acuracia amostra calculada cada atributos 
+ janela atributo treino teste treino teste ev sv 
+ resultados apresentado tabela 
+ observamos atributos isoladamente apresentaram bons resultados visto covariograma melhor obteve apenas acuracia 
+ percebemos geral melhores resultados testes alcancados janela time gate 
+ resultados acuracia amostra calculada associacao atributos 
+ janela atributo treino teste treino teste ev sv 
+ covariograma avaliando resultados tabela 
+ percebemos associacao tres atributos alcancou bons resultados 
+ janela tamanho amostra treinamento testes acuracia atingiu 
+ separamos melhores resultados calcular sensibilidade especialidade gerando tabela 
+ melhor resultado obtidos classificacao 
+ janela tamanho sensibilidade especialidade acuracia atributo amostras treino teste treino teste treino teste ev 
+ covariograma melhor resultado obtido alcanca sensibilidade 
+ configuracao funcao geoestatistica 
+ mostra resultados testes apresentados tabela 
+ comprovando eficiencia utilizacao atributos 
+ sensibilidade especialidade acuracia figura 
+ resultados obtidos testes 
+ conclusao presente trabalho apresentou viabilidade utilizacao tecnicas processamento imagens funcoes geoestatisticas maquina vetores suporte deteccao falhas dados volumetricos 
+ petroleo principal fonte energia utilizada mundo exige custo bastante elevado obtencao 
+ perfuracao poco petroleo pode atingir estimativa custo total exploracao 
+ portanto necessario ter maximo informacoes possiveis condicoes geologicas area antes iniciar perfuracao poco 
+ etapas obtencao dessa fonte energetica prospeccao inicia estudos geologicos observacao obtencao dados sismicos perfuracao poco pioneiro 
+ sismica hoje ferramentas importantes prospeccao petroleo dados sismicos coletados necessitam tratamentos atraves programas computacionais poderem ser interpretados geologos geofisicos 
+ ponto merece atencao configuracao janela 
+ janela grande regiao pequena viceversa pode dificultar deteccao falha resultar conclusoes inconsistentes pois calculados atributos regioes area interesse fazendo pixels dentro janela apresentem caracteristicas semelhantes pontos classificados falha pode assumir caracteristicas naofalha apos calculo atributos 
+ apresentado neste trabalho metodo sobre metodologia deteccao falhas dados sismicos 
+ visto escolha correta atributos objetivo deseja obter extrema importancia 
+ fundamentado resultados especificidade igual 
+ metodo apresentado aqui mostra falhas sismicas podem ser detectadas utilizando funcao geoestatistica covariograma aplicados maquina suporte vetorial 
+ contudo necessario realizar testes quantidade maior volumes sismicos dados reais diferentes caracteristicas falhas imagens complexas possivel comprovar eficiencia tecnica proposta 
+ industria petroleo interpretacao sismica visa identificar estruturas onde oleo possa estar aprisionado reservatorio logo necessita conjunto ferramentas suporte bastante precisao 
+ baseado nisso acreditamos apesar resultados obtidos terem sido bons possivel melhora los visto utilizada apenas funcao geoestatistica 
+ propomos entao trabalhos futuros  pesquisar outras funcoes geoestatisticas serem utilizadas extracao caracteristicas 
+ exemplos funcao semivariograma correlograma semiridrograma 
+ fazendo combinacoes todas 
+  classificador svm desempenhou papel fundamental classificacao podendo ser trocado algum outro classificador maneira avaliar desempenho desse novo classificador 
+ referencias bibliograficas dallyson dallyson 
+ deteccao falhas dados sismicos usando maquinas suporte vetorial 
+ braz junior classificacao regioes mamografias massa massa usando estatistica espacial maquina vetores suporte ano obtencao 
+ determinacao malhas falhas dados sismicos aprendizado competitivo 
+ gerhardt gerhardt andre 
+ aspectos visualizacao volumetrica dados sismicos 
+ dissertacao mestrado pontificia universidade catolica rio janeiro rio janeiro rj 
+ silva silva pedro mario crus 
+ visualizacao volumetrica horizontes dados sismico 
+ tese doutorado pontificia universidade catolica rio janeiro 
+ machado machado marcos 
+ segmentacao dados sismica via hyperstack visualizacao 
+ dissertacao mestrado pontificia universidade catolica rio janeiro rj 
+ fundamentals geophysical interpretation 
+ seg society exploration geophysicists 
+ schlumberger technology corporation 
+ image feature extraction 
+ united states patent april 
+ modern seismic interpretation 
+ chevron chevron corporation 
+ disponivel http ep 
+ br acessado julho 
+ mapeamento automatico horizontes falhas dados sismicos baseado algoritmo gas neural evolutivo 
+ disponivel http www 
+ br rankey mitchell rankey 
+ interpreters corner– thats called interpretation impact horizon uncertainty seismic attribute analysis 
+ canadian society exploration geophysicists 
+ matos matos marcılio castro 
+ reconhecimento padroes sismicos utilizando analises tempofrequencia 
+ tese doutorado pontificia universidade catolica rio janeiro rj 
+ tingdahl rooij tingdahl 
+ semiautomatic detection faults seismic data 
+ desenvolvimento implementacoa teste procedimentos geoestatistico krigeagem sistema processamento informacoes georeferenciadas apring 
+ kourgli assia aichouche belhadjaissa 
+ characterising textural primitives using variography 
+ imvip irish machine vision image processing conference belfast ireland pp 
+ robust measures spatial continuity 
+ geoestatistics proceedings third int 
+ geostatistics congress avigon france 
+ matos matos marcilio castro 
+ reconhecimento padroes sismicos utilizando analises tempofrequencia 
+ tese doutorado pontificia universidade catolica rio janeiro rj 
+ oilfield schlumberger glossary 
+ disponivel http www 

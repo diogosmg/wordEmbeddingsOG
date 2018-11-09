@@ -1,0 +1,12610 @@
+UNIVERSIDADE FEDERAL DO ESPÍRITO SANTO 
+
+CENTRO TECNOLÓGICO 
+
+DEPARTAMENTO DE ENGENHARIA MECÂNICA 
+
+ 
+
+ 
+
+ 
+
+ 
+
+JOÃO PAULO PINTO CUZZUOL 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+SISTEMA DE DETECÇÃO E DIAGNÓSTICO DE FALHA APLICADO A 
+
+INSTALAÇÕES DE REFRIGERAÇÃO POR COMPRESSÃO DE 
+
+VAPOR 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+VITÓRIA 
+
+2014 
+
+JOÃO PAULO PINTO CUZZUOL 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+SISTEMA DE DETECÇÃO E DIAGNÓSTICO DE FALHA APLICADO A 
+
+INSTALAÇÕES DE REFRIGERAÇÃO POR COMPRESSÃO DE 
+
+VAPOR 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Projeto  de  Graduação  apresentado  ao 
+
+Corpo  Docente  do  Departamento  de 
+
+Engenharia  Mecânica  da  Universidade 
+
+Federal  do  Espírito  Santo,  como  parte 
+
+dos  requisitos  para  obtenção  do  Título 
+
+de Engenheiro Mecânico. 
+
+Orientador:  Prof.  D.  Sc.  João  Luiz 
+
+Marcon Donatelli 
+
+VITÓRIA 
+
+2014 
+
+AGRADECIMENTOS 
+
+ 
+
+A Deus, por estar sempre comigo, por ter colocado as pessoas certas em meu 
+
+caminho e por me guiar para um futuro com desafios ainda maiores. 
+
+ 
+
+A minha mãe, Heidna Maria, por todo amor, carinho depositado, incondicional 
+
+dedicação e abdicações necessárias para a minha educação. 
+
+ 
+
+Ao meu pai e meu irmão por todo apoio prestado. 
+
+ 
+
+Ao Prof. Dr. João Luiz Marcon Donatelli pela orientação e confiança depositada 
+
+durante o desenvolvimento do projeto. 
+
+ 
+
+Ao Programa PRH-29 e pessoas envolvidas no mesmo. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RESUMO 
+
+ 
+
+ 
+
+Atrelado  ao  crescente  desenvolvimento  da  economia  brasileira  bem  como  ao 
+
+aumento da qualidade de vida da população está um consumo de energia cada vez 
+
+maior incidindo sobre a matriz energética do país. Isso explica, em parte, a mudança 
+
+que  esta  matriz  tem  sofrido  nos  últimos  anos  e  justifica  a  necessidade  de  se  fazer 
+
+um  uso  mais  racional  do  recurso  energético.  Quanto  ao  consumo  em  grandes 
+
+centros  tem-se,  definitivamente,  o  ar-condicionado  como  um  dos  equipamentos 
+
+responsáveis pelo maior consumo. Com isso em mente, o presente trabalho consiste 
+
+na  aplicação  dos  princípios  de  um  sistema  de  Detecção  e  Diagnóstico  de  Falha 
+
+(Fault Detection and Diagnosis – FDD) a uma bancada experimental de refrigeração 
+
+formada  por  partes  de  um  Ar  Condicionado  de  Janela  (ACJ)  à  qual  foi  adaptada 
+
+instrumentação  de  leitura  local  para  aquisição  de  dados.  O  presente  trabalho 
+
+objetiva  a  criação  das  ferramentas  necessárias  para  o  desenvolvimento  de  um 
+
+sistema  integrado  de  FDD.  Para  tanto,  é  criado  um  modelo  matemático  que 
+
+representa  o  equipamento  em  sua  operação  no  estado  de  referência,  ferramenta 
+
+esta, essencial para o desenvolvimento de um sistema FDD baseado em modelo. É 
+
+desenvolvido  também  um  modelo  matemático  para  aplicação  do  tratamento  de 
+
+Reconciliação  de  Dados,  técnica  que  submete  os  dados  medidos  às  restrições 
+
+físicas  do  modelo  (balanços  de  massa  e  energia)  visando  que  a  menor  alteração 
+
+possível seja imposta, fornecendo assim, dados de melhor qualidade e condizentes 
+
+com o modelo físico do problema. Por fim, com o intuito de facilitar melhorias futuras, 
+
+é  especificado  um  sistema  de  aquisição  automática  de  dados,  incluindo  sensores, 
+
+transmissores, hardwares e softwares mais adequados para o conjunto. 
+
+ 
+
+ 
+
+Palavras-chave: Detecção e diagnóstico de falha.  Monitoramento. Reconciliação de 
+
+dados.  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ABSTRACT 
+
+ 
+
+ 
+
+Linked  to  a  crescent  development  of  the  Brazilian  economy  as  well  as  to  the  life 
+
+quality  of  the  population  there  is  greater  energy  consumption  hitting  the  energetic 
+
+matrix of the country. This explains the change this matrix has been facing during the 
+
+last  few  years  and  justifies  the  need  for  a  more  rational  use  of  energy  resources 
+
+inside the country. When the concern is the consumption of energy in the big centers, 
+
+air-conditioners  are  among  the  equipments  of  greatest  consumption.  With  this  in 
+
+mind, the present  work  rely  on  the  application  of  the  principles  of  a  Fault  Detection 
+
+and Diagnosis – FDD to a experimental air-conditioner workbench composed of parts 
+
+of  a  residential  system  to  which  it  was  installed  the  required  instruments  to  acquire 
+
+the  data.  The  present  work  focused  on  the  creation  of  the  necessary  tools  for 
+
+implementing a FDD system. For this purpose, it is created a mathematical model for 
+
+representing 
+
+the  reference  operational  condition,  which 
+
+is  essential 
+
+for 
+
+the 
+
+development of a model based FDD.  It is also developed a mathematical model  to 
+
+apply Data Reconciliation treatment, technique that submit the measured data to the 
+
+physical  model  of  the  system  modeled  imposing  the  smallest  modification  as 
+
+possible,  and  supply,  them,  a  better  data  that  fits  the  conditions  of  the  physical 
+
+model.  Finally,  aiming  future  improvements,  it  is  specified  an  automatic  data 
+
+acquisition system, including sensors, transmitters, hardware and software that fit the 
+
+equipment. 
+
+ 
+
+ 
+
+Keywords: Fault detection and diagnosis. Monitoring system. Data reconciliation.  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura  
+
+Título   
+
+ 
+
+ 
+
+ 
+
+ 
+
+            
+
+ 
+
+        Página 
+
+LISTA DE FIGURAS 
+
+3.1 
+
+3.2 
+
+3.3 
+
+3.4 
+
+3.5 
+
+3.6 
+
+3.7 
+
+4.1 
+
+4.2 
+
+4.3 
+
+5.1 
+
+5.2 
+
+5.3 
+
+5.4 
+
+5.5 
+
+6.1 
+
+6.2 
+
+6.3 
+
+6.4 
+
+6.5 
+
+6.6 
+
+6.7 
+
+6.8 
+
+6.9 
+
+6.10 
+
+7.1 
+
+7.2 
+
+7.3 
+
+7.4 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ciclo de Refrigeração de Carnot.................................................. 
+
+Ciclo Teórico simples no plano p-h.............................................. 
+
+Centre o ciclo real e teórico......................................................... 
+
+Volume de controle aplicado sobre o compressor....................... 
+
+Volume de controle aplicado sobre o condensador..................... 
+
+Volume de controle aplicado sobre o evaporador........................ 
+
+Volume de controle aplicado sobre o dispositivo de     expansão 
+
+Compressor hermético Bristol...................................................... 
+
+Condensador da bancada experimental do LabRAC –UFES...... 
+
+Tubo capilar de expansão............................................................ 
+
+Representação esquemática da bancada e os dados medidos... 
+
+Comutador de sinais utilizado da FULL GAUGE.......................... 
+
+Aquisição de velocidade na entrada do evaporador.................... 
+
+Aquisição de velocidade na saída do condensador..................... 
+
+ Representação esquemática de um sistema de aquisição 
+
+ 
+
+automática de dados.................................................................... 
+
+Comportamento típico de parâmetros do ciclo de refrigeração.... 
+
+Curva genérica de rendimento volumétrico x relação de 
+
+pressão........................................................................................ 
+
+Curva de rendimento isentrópico típico........................................ 
+
+Calor removido no condensador.................................................. 
+
+Relação de rejeição de calor........................................................ 
+
+Equilíbrio entre tubo capilar e compressor................................... 
+
+Curva de capacidade de evaporadores........................................ 
+
+Representação esquemática da modelagem desenvolvida......... 
+
+Variação do Coeficiente de calibração com T1............................ 
+
+Relação entre Tcond e T8............................................................ 
+
+Classificação dos métodos de FDD............................................. 
+
+Esquema de um FDD baseado em modelo................................. 
+
+Representação esquemática das etapas de um FDD.................. 
+
+Representação das sub etapas de identificação.......................... 
+
+32 
+
+32 
+
+34 
+
+35 
+
+36 
+
+37 
+
+38 
+
+40 
+
+41 
+
+42 
+
+45 
+
+46 
+
+48 
+
+48 
+
+51 
+
+56 
+
+ 
+
+58 
+
+58 
+
+62 
+
+63 
+
+65 
+
+67 
+
+69 
+
+73 
+
+78 
+
+83 
+
+84 
+
+87 
+
+88 
+
+ 
+
+Figura  
+
+Título   
+
+ 
+
+ 
+
+ 
+
+ 
+
+            
+
+ 
+
+         
+
+Página 
+
+7.5 
+
+8.1 
+
+ 
+
+ 
+
+Métodos de detecção de falha..................................................... 
+
+Distribuição normal multivariável.................................................. 
+
+8.2                 Representação esquemática do problema.................................. 
+
+9.1 
+
+Conjunto 1 de resíduos calculados para ensaio com baixa 
+
+91 
+
+98 
+
+99 
+
+ 
+
+carga de refrigerante.................................................................... 
+
+111 
+
+9.2 
+
+Conjunto 2 de resíduos calculados para ensaio com baixa 
+
+ 
+
+carga de refrigerante ...................................................................    
+
+112 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+LISTA DE TABELAS 
+
+ 
+
+Tabela 
+
+Título 
+
+Página 
+
+5.1 
+
+5.2 
+
+6.1 
+
+6.2 
+
+6.3 
+
+6.4 
+
+6.5 
+
+6.6 
+
+6.7 
+
+6.8 
+
+6.9 
+
+6.10 
+
+6.11 
+
+8.1 
+
+9.1 
+
+Condições do fluído refrigerante nos pontos do ciclo.................... 
+
+Condições do ar nos ponto do sistema......................................... 
+
+Cálculo do Coeficiente Politrópico do processo de compressão... 
+
+Cálculo do Coeficiente de ajuste................................................... 
+
+Queda de pressão em percentagem no condensador.................. 
+
+Queda de pressão em percentagem no evaporador..................... 
+
+Dados  escolhidos  para  a  correlação  da 
+
+temperatura  de 
+
+condensação................................................................................. 
+
+Cálculo  de         com  o  uso  da  expressão  proposta  em  Zhao 
+
+ 
+
+(2012)............................................................................................ 
+
+Cálculo  de         com  o  uso  da  expressão  proposta  em  Zhao 
+
+(2012)............................................................................................ 
+
+Cálculo de   ................................................................................. 
+
+Cálculo de T7 e o respectivo erro.................................................. 
+
+Cálculo de   ................................................................................. 
+
+Cálculo de T9 e o respectivo erro.................................................. 
+
+51 
+
+52 
+
+72 
+
+72 
+
+77 
+
+77 
+
+ 
+
+78 
+
+79 
+
+ 
+
+80 
+
+81 
+
+81 
+
+82 
+
+82 
+
+Analise do sistema de equações e otimização.............................. 
+
+101 
+
+Percentual  de  ajuste  realizado  na  reconciliação  dos  dados  do 
+
+ 
+
+conjunto 1, 2, 3 e 4........................................................................ 
+
+105 
+
+9.2 
+
+Percentual  de  ajuste  realizado  na  reconciliação  dos  dados  do 
+
+ 
+
+conjunto 5, 6, 7 e 8........................................................................ 
+
+105 
+
+9.3 
+
+Média  do  percentual  absoluto  do  ajuste  realizado  sobre  cada 
+
+ 
+
+variável.......................................................................................... 
+
+106 
+
+9.4 
+
+Percentual  de  ajuste  realizado  na  reconciliação  dos  dados  do 
+
+ 
+
+conjunto 5, 6, 7 e 8........................................................................ 
+
+107 
+
+9.5 
+
+Diferença  percentual  entre  o  valor  medido  e  o  valor  calculado 
+
+pela modelagem de referência...................................................... 
+
+Diferença entre o previsto no modelo e o valor medido................ 
+
+Conjunto 1 de resíduos calculados para o caso [°C] 
+
+9.6 
+
+9.7 
+
+ 
+
+108 
+
+109 
+
+111 
+
+ 
+
+Tabela 
+
+Título 
+
+Página 
+
+Conjunto 1 de resíduos calculados para o caso [°C] 
+
+Conjunto de dados em operação sem falha.................................. 
+
+Conjunto  de  dados  em  operação  com  baixa  carga  de 
+
+refrigerante.................................................................................... 
+
+Conjunto de dados em operação normal para cálculo de      .... 
+
+Resultado da reconciliação para os conjuntos 1, 2 e 3................. 
+
+Resultado da reconciliação para os conjuntos 4, 5 e 6................. 
+
+Resultado da reconciliação para os conjuntos 7  e 8.................... 
+
+Estado  de  referência  previsto  para  dados  com  baixa  carga  de 
+
+refrigerante.................................................................................... 
+
+Estado de referência previsto para dados em operação normal... 
+
+112 
+
+126 
+
+ 
+
+126 
+
+127 
+
+128 
+
+128 
+
+129 
+
+ 
+
+130 
+
+130 
+
+ 
+
+9.8 
+
+C.1 
+
+C.2 
+
+C.3 
+
+D.1 
+
+D.2 
+
+D.3 
+
+E.1 
+
+E.2 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+   
+
+   
+
+  
+
+   
+
+   
+
+   
+
+   
+
+A  
+
+    
+
+   
+
+   
+
+    
+
+   
+
+  
+
+  
+
+   
+
+     
+
+     
+
+     
+
+   
+
+     
+
+     
+
+      
+
+      
+
+NOMENCLATURA 
+
+ 
+
+Área da superfície externa de um serpentina 
+
+Área da superfície interna de um serpentina 
+
+Área da multiplicação AU 
+
+Área interna da secção do tubo capilar 
+
+Constante 
+
+Área corrigida do evaporador 
+
+Área corrigida do condensador 
+
+Matriz das restrições 
+
+Ar condicionado de janela 
+
+Constante 
+
+Constante  
+
+Coeficiente de Performance 
+
+Constante 
+
+Constante 
+
+Diâmetro interno do cilindro de um compressor 
+
+Diâmetro interno do tubo capilar 
+
+Superaquecimento 
+
+Diferença Média Logarítmica 
+
+Sub-resfriamento  
+
+Diferença de pressão no tubo capilar 
+
+Variação da temperatura do ar no evaporador 
+
+Variação da temperatura na linha de líquido 
+
+Perda de carga no evaporador, lado ar 
+
+Perda de carga no condensador, lado ar 
+
+              Razão entre pressão de saída e entrada do evaporador 
+
+    
+
+    
+
+      
+
+    
+
+   
+
+  
+
+  
+
+Variável discreta 
+
+Engineering Equation Solver 
+
+Fator de troca térmica por diferença de temperatura unitária no condensador 
+
+Fault Detection and Diagnosis (Detecção e diagnóstico de falhas) 
+
+Entalpia específica 
+
+Variável correspondente a simples ou duplo efeito 
+
+Constante de proporcionalidade 
+
+  
+
+   
+
+   
+
+     
+
+       
+
+        
+
+         
+
+   
+
+  
+
+Curso do cilindro do compressor 
+
+Vazão mássica em 5 
+
+Vazão mássica em 9 
+
+Vazão mássica de refrigerante 
+
+Rendimento volumétrico 
+
+Rendimento isentrópico 
+
+Rendimento combinado 
+
+Número de cilindros do compressor 
+
+Coeficiente politrópico 
+
+            
+
+Qualquer variável medida ou parâmetro calculado 
+
+                 Qualquer variável ou parâmetro calculados como referência 
+
+   
+
+      
+
+      
+
+     
+
+      
+
+  
+
+          
+
+         
+
+      
+
+      
+
+         
+
+          
+
+    
+
+    
+
+      
+
+    
+
+      
+
+   
+
+      
+
+      
+
+   
+
+   
+
+   
+
+    
+
+Pressão 
+
+Potência elétrica de acionamento 
+
+Pressão de evaporação 
+
+Pressão de saturação 
+
+Pressão de condensação 
+
+Massa específica do ar 
+
+Calor trocado no condensador, lado refrigerante 
+
+Calor trocado no condensador, lado ar 
+
+Calor trocado no condensador 
+
+Calor trocado no evaporador 
+
+Calor trocado no evaporador, lado ar 
+
+Calor trocado no evaporador, lado refrigerante 
+
+Refrigeração e Ar Condicionado 
+
+Rotação do compressor 
+
+Razão entre calor trocado no condensador e no evaporador 
+
+Relação de rejeição de calor 
+
+Resíduo calculado de algum parâmetro ou variável 
+
+Entropia específica 
+
+Temperatura de condensação 
+
+Temperatura de evaporação 
+
+Temperatura 
+
+Temperatura de condensação 
+
+Temperatura de evaporação 
+
+Temperatura de saturação na saída do evaporador 
+
+    
+
+    
+
+    
+
+       
+
+       
+
+   
+
+   
+
+  
+
+Temperatura na saída do compressor 
+
+Temperatura de saturação na entrada do evaporador 
+
+Variação de temperatura do ar no condensador 
+
+Temperatura de bulbo úmido do recinto 
+
+Temperatura de bulbo seco do recinto 
+
+Coeficiente global de transferência de calor, lado externo 
+
+Coeficiente global de transferência de calor, lado interno 
+
+Coeficiente global de transferência de calor 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+SUMÁRIO 
+
+ 
+
+CAPÍTULO 1 – INTRODUÇÃO.......................................................................  17 
+
+1.1.  MOTIVAÇÃO...................................................................................  17 
+
+1.2.  OBJETIVO.......................................................................................  18 
+
+1.3.  METODOLOGIA..............................................................................  19 
+
+CAPÍTULO 2 – REVISÃO BIBLIOGRÁFICA..................................................  20 
+
+2.1.  RECONCILIAÇÃO DE DADOS.......................................................  20 
+
+2.2.  DETECÇÃO E DIAGNÓSTICO DE FALHA....................................  21 
+
+2.3.  SIMULAÇÃO EM RAC....................................................................  26 
+
+2.3.1   Técnicas de Simulação em Regime Permanente....................  26 
+
+2.3.2   Modelagem dos Componentes................................................  28 
+
+CAPÍTULO 3 – DESCRIÇÃO DO CICLO........................................................  31 
+
+3.1.  CICLO DE CARNOT.......................................................................  31 
+
+3.2.  CICLO IDEAL OU TEÓRICO..........................................................  32 
+
+3.3.  CICLO REAL...................................................................................  33 
+
+3.4.  ABORDDAGEM ADOTADA............................................................  34 
+
+3.5.  BALANÇOS DE MASSA E ENERGIA NOS COMPONENTES.......  35 
+
+3.5.1   Compressor..............................................................................  35 
+
+3.5.2   Condensador............................................................................  36 
+
+3.5.3   Evaporador...............................................................................  37 
+
+3.5.4   Dispositivo de Expansão..........................................................  38 
+
+CAPÍTULO 4 – DESCRIÇÃO DO EQUIPAMENTO........................................  39 
+
+4.1.  COMPRESSOR...............................................................................  39 
+
+4.2.  CONDENSADOR............................................................................  41 
+
+4.3.  DISPOSITIVO DE EXPANSÃO.......................................................  42 
+
+4.4.  EVAPORADOR...............................................................................  43 
+
+CAPÍTULO 5 – DESCRIÇÃO DA INSTRUMENTAÇÃO.................................  44 
+
+5.1.  SISTEMA ATUAL............................................................................  44 
+
+5.1.1   Dados Aquisitados...................................................................  44 
+
+5.1.2   Instrumentação Utilizada..........................................................  45 
+
+5.2.  AQUISIÇÃO AUTOMÁTICA............................................................  51 
+
+5.2.1   Sensores..................................................................................  51 
+
+5.2.2   Hardware..................................................................................  54 
+
+5.2.3   Software...................................................................................  55 
+
+CAPÍTULO 6 – MODELAGEM DE REFERÊNCIA..........................................  56 
+
+6.1.  COMPORTAMENTO TÍPICO E MODELO DISPONÍVEIS..............  56 
+
+6.1.1   Compressor..............................................................................  56 
+
+6.1.2   Condensador............................................................................  62 
+
+6.1.3   Dispositivo de Expansão..........................................................  65 
+
+6.1.4   Evaporador...............................................................................  67 
+
+6.2   DESENVOLVIMENTO DA MODELAGEM E CALIBRAÇÃO...........  68 
+
+6.2.1   Compressor..............................................................................  70 
+
+6.2.2   Evaporador e Condensador.....................................................  74 
+
+CAPÍTULO 7 – DETECÇÃO E DIAGNÓSTICO DE FALHA...........................  83 
+
+7.1.  TIPOS DE DETECÇÃO E DIAGNÓSTICO DE FALHA...................  83 
+
+7.1.1   Detecção baseada em modelo.................................................  84 
+
+7.1.2   Detecção baseado na história do processo.............................  86 
+
+7.2   ETAPAS..........................................................................................  86 
+
+7.2.1   Etapa de identificação ou detecção.........................................  88 
+
+7.2.2   Etapa de diagnóstico................................................................  89 
+
+7.2.3   Etapa de avaliação...................................................................  90 
+
+7.2.4   Etapa de reação.......................................................................  90 
+
+7.3.  MÉTODOS DE DETECÇÃO...........................................................  91 
+
+7.3.1   Estimativa das variáveis de estado..........................................  91 
+
+7.3.2   Identificação e estimativa de parâmetros.................................  92 
+
+7.3.3   Julgamento da falha.................................................................  92 
+
+7.4.  MÉTODOS DE DIAGNÓSTICO......................................................  93 
+
+7.4.1   Métodos de classificação.........................................................  93 
+
+7.4.2   Métodos de Inferência..............................................................  94 
+
+CAPÍTULO 8 – RECONCILIAÇÃO DE DADOS.............................................  95 
+
+8.1.  INTRODUÇÃO................................................................................  95 
+
+8.2.  FUNCIONAMENTO.........................................................................  95 
+
+8.3.  FUNDAMENTO ESTATÍSTICO.......................................................  97 
+
+8.4.  EXEMPLO DE APLICAÇÃO LINEAR..............................................  99 
+
+8.5.  ESTUDO DE CASO........................................................................  101 
+
+CAPÍTULO 9 – RESULTADOS.......................................................................  104 
+
+9.1.  RECONCILIAÇÃO DE DADOS.......................................................  104 
+
+9.2.  MODELAGEM DE REFERÊNCIA...................................................  107 
+
+9.3.  DETECÇÃO E DIAGNÓSTICO DE FALHA....................................  108 
+
+9.3.1   Método utilizado.......................................................................  108 
+
+9.3.2   Metodologia para detecção de falha........................................  108 
+
+9.3.3   Metodologia para diagnóstico da falha.....................................  110 
+
+CAPÍTULO 10 – CONSIDERAÇÕES FINAIS E SUGESTÕES......................  114 
+
+10.1.  MODELAGEM...............................................................................  114 
+
+10.2.  RECONCILIAÇÃO DE DADOS.....................................................  115 
+
+10.3.  FDD E INTEGRAÇÃO...................................................................  116 
+
+CAPÍTULO 11 – REFERÊNCIAS....................................................................  117 
+
+APÊNDICE......................................................................................................  122 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+17 
+
+ 
+
+1.  INTRODUÇÃO 
+
+ 
+
+1.1.  MOTIVAÇÃO 
+
+ 
+
+Nos  últimos  anos  está  sendo  testemunhado  um  grande  avanço  de  restrições 
+
+ambientais  em  diversos  setores  da  economia,  seja  pela  restrição  do  consumo 
+
+energético primário ou secundário e redução de emissões. 
+
+ 
+
+Para  a  indústria  de  ar  condicionado  e  demais  equipamento  de  refrigeração  não  é 
+
+diferente,  desde  restrições  quanto  ao  tipo  de  refrigerante  utilizado  até  o  consumo 
+
+energético  de  cada  equipamento,  todos  os  quesitos  recebem  elevado  nível  de 
+
+atenção na atualidade. 
+
+ 
+
+Além  disso,  outro  aspecto,  que  acaba  ligado  ao  fator  ambiental  é  o  fator  custo 
+
+operacional  destes  equipamentos,  pois  não  só  um  equipamento  em  condições 
+
+inadequadas  representa  um  dano  ambiental  não  necessário  para  atividade,  mas 
+
+também um aumento no custo operacional destes equipamentos ao ponto de poder 
+
+justificar a utilização de sistemas capazes de aperfeiçoar ao máximo uma operação 
+
+sob condições ótimas. 
+
+ 
+
+Equipamentos  de  ar  condicionado  nos  grandes  centros  comerciais  nos  Estados 
+
+Unidos podem chegar a representar em torno de 30% de todo o consumo de energia 
+
+elétrica conforme Keir e Alleyne (2006). Uma  operação sob falha, mesmo que esta 
+
+não  seja  motivo  de  intervenção  no  equipamento  para  reparo,  pode  levar  este 
+
+número para patamares ainda mais elevados. 
+
+ 
+
+Outro  aspecto  que  também  pode  ser  levado  em  conta  quanto  à  utilização  de  ar-
+
+condicionado na atualidade é o fato de que uma operação sob falha pode acarretar à 
+
+insatisfação de ocupantes devido a condições não confortáveis, levando insatisfação 
+
+de clientes no comércio, baixa produtividade de funcionários e assim por diante. 
+
+ 
+
+É  neste  cenário  que  se  insere  o  investimento  em  técnicas,  métodos  e  práticas 
+
+capazes  de  manter  a  operação  da  máquina  em  uma  condição  economicamente 
+
+ 
+
+18 
+
+viável,  fornecendo  melhor  embasamento  para  a  tomada  de  decisão  quanto  à 
+
+necessidade ou não de intervenções no equipamento, tal que, a informação sobre as 
+
+perdas  com  a  continuidade  da  falha  e  o  ganho  esperado  caso  esta  seja  corrigida 
+
+será uma informação a mais para a tomada de decisão quanto à intervenção. 
+
+ 
+
+A técnica proposta neste trabalho é a de Diagnóstico e Detecção de Falha  à qual é 
+
+creditado  enorme  potencial  quanto  à  capacidade  de  aumento  de  eficiência  de 
+
+equipamentos de ar-condicionado e equipamentos de refrigeração. 
+
+ 
+
+1.2. OBJETIVO 
+
+ 
+
+O  objetivo  desde 
+
+trabalho  é  a  aplicação  dos  princípios  envolvidos  no 
+
+desenvolvimento  de  um ferramental  capaz  de  identificar um  comportamento  faltoso 
+
+do  equipamento,  um  sistema  de  Diagnóstico  e  Detecção  de  Falha  para  a  bancada 
+
+de  refrigeração  por  compressão  de  vapor  do  laboratório  de  refrigeração  e  ar 
+
+condicionado da UFES – LabRAC, note que não é objetivo desenvolver a integração 
+
+destas ferramentas no desenvolvimento de um sistema FDD automático através de 
+
+um código computacional. 
+
+ 
+
+Objetiva-se a criação de um modelo que representa o comportamento de referência 
+
+do  equipamento  analisado,  ou  seja,  um  comportamento  em  uma  condição  ausente 
+
+de falhas. 
+
+ 
+
+A metodologia para detecção de falha será escolhida dentre aquelas disponíveis na 
+
+literatura e será feita ao comparar o comportamento real do sistema com a resposta 
+
+obtida com o modelo de referência que representa um comportamento sem falhas. A 
+
+metodologia  para  diagnóstico  da  falha  também  será  escolhida  dentre  aquelas 
+
+descritas neste trabalho.  
+
+ 
+
+É  desenvolver,  também,  um  tratamento  de  dados  por  meio  da  técnica  de 
+
+Reconciliação de Dados. 
+
+ 
+
+ 
+
+ 
+
+19 
+
+ 
+
+1.3. METODOLOGIA 
+
+ 
+
+Para atingir tal objetivo é desenvolvido um modelo de referência para representar o 
+
+comportamento do equipamento na ausência de falha no software EES (Engineering 
+
+Equation Solver), o qual terá como entrada dados operacionais do equipamento. 
+
+ 
+
+A  reconciliação  de  dados  será  realizada  para  todo  o  conjunto  de dados  obtidos  no 
+
+sistema.  O  modelo  de  reconciliação  por  sua  vez,  será  desenvolvido  sem  uso  de 
+
+linearizações e soluções analíticas ou semi-analíticas, será realizada a minimização 
+
+de  uma  função  objetivo  que  representa  o  problema  matemático  para  obtenção 
+
+destes resultados. 
+
+ 
+
+O desempenho real do equipamento será, então, comparado com aquele obtido por 
+
+meio  do  uso  da  modelagem  de  referência  utilizando-se  os  dados  operacionais  do 
+
+sistema. 
+
+   
+
+A comparação será feita por técnicas de diagnóstico e detecção de falhas que serão 
+
+descritas e explicadas e selecionadas no decorrer deste trabalho. 
+
+  
+
+O modelo de referência será desenvolvido por meio de análise de dados obtidos ao 
+
+exercitar a bancada para diferentes pontos operacionais, tornando, assim, o modelo 
+
+capaz  de  representar  o  comportamento  do  equipamento  mesmo  em  situações  fora 
+
+do ponto de projeto, o chamado de off-design. 
+
+ 
+
+A  validação  da  modelagem  de  referência  desenvolvida  será  baseada  na 
+
+reprodutibilidade do comportamento do equipamento. 
+
+ 
+
+O conjunto de dados utilizados para o desenvolvimento da modelagem de referência 
+
+e  demais  dados  necessário  para  os  desenvolvimentos  feitos  neste  trabalho  estão 
+
+relacionados no Apêndice C. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+20 
+
+ 
+
+2.  REVISÃO BIBLIOGRÁFICA 
+
+ 
+
+2.1. RECONCILIAÇÃO DE DADOS 
+
+ 
+
+Segundo  Narasimhan  e  Jordache  (2000),  o  problema  da  reconciliação 
+
+foi 
+
+inicialmente  proposto  por  Kuehn  e  Davidson  (1961),  que  na  época  trabalhavam  no 
+
+departamento  de  engenharia  de  sistemas  da  IBM  Corporation.  Foram  eles  que 
+
+fizeram  a  derivação  analítica  da  solução  do  problema  de  reconciliação  de  dados 
+
+para um caso linear de balanço de massa em que todas as variáveis eram medidas. 
+
+A partir deste passo inicial, diversas foram as publicações envolvendo reconciliação 
+
+de dados e detecção de erros grosseiros, somando, hoje, mais que 200 publicações 
+
+de pesquisas acerca do assunto ainda segundo Narasimhan e Jordache (2000). 
+
+ 
+
+Ainda  sobre  o  problema  inicialmente  proposto  por  Kuehn  e  Davidson  (1961),  a 
+
+evolução  prosseguiu  com  a  adição  de  melhorias  no  tratamento  de  problemas 
+
+lineares,  como,  a  otimização  da  escolha  das  variáveis  medidas,  tratamento  de 
+
+variáveis  não  medidas  e  uso  de  teoria  dos  gráficos.  Diversas  foram  as  melhorias 
+
+inseridas quanto ao tratamento e aplicação da técnica para sistemas lineares. 
+
+ 
+
+Quanto  aos  sistemas  não  lineares,  que  são  obtidos  quando  algum  balanço  de 
+
+energia, por exemplo, está envolvido, foram levantados primeiramente por  Knepper 
+
+e  Gorman  (1980),  que  solucionaram  o  problema  através  da  aplicação  de  técnicas 
+
+iterativas para estimação de parâmetros em regressão não linear. 
+
+ 
+
+Foi observado, no entanto, que tais métodos, oferecem limitações mais abrangentes 
+
+quando comparado ao método de linearização  sucessiva proposta por Pai e Fisher 
+
+(1988).  Além  desses  autores,  outros  também  propuseram  novas  soluções,  como 
+
+Tjoa  e  Biegler  (1991),  que,  pelo  uso  de  programação  quadrática  sucessiva 
+
+(successive quadratic programming – SQP) resolveram o problema de reconciliação 
+
+de dados para sistemas não lineares. 
+
+ 
+
+Embora  o  problema  inicial  tenha  surgido  para  a  indústria  química  de  processos, 
+
+desenvolvimentos  paralelos  foram  feitos  por  outros  autores  para  aplicação  na 
+
+ 
+
+21 
+
+indústria  de  mineração,  tendo  alguns  autores  como  Hodouin  e  Everell  (1980), 
+
+Simpson  et  al  (1991)  e  Heraud  et  al  (1991).  Nesses  estudos  o  problema  de 
+
+reconciliação  de  dados  havia  sido  solucionado  e  melhorias  sido  propostas  apenas 
+
+para  a  solução  de  problemas  em  regime  permanente,  sendo  que,  apenas 
+
+recentemente,  desenvolvimentos  para  aplicação  da  técnica  em  sistemas  dinâmicos 
+
+foi proposta e desenvolvida. 
+
+ 
+
+A  solução  desses  sistemas  é  feito  pelo  uso  da  técnica  de  filtros  de  Kalman,  que 
+
+possuem,  no  entanto,  a  limitação  de  aplicação  apenas  para  sistemas  lineares  em 
+
+reconciliação  de  dados.  A  aplicação  da  reconciliação  de  dados  para  sistemas 
+
+dinâmicos, e ainda, não-lineares foi feita por Liebman et al (1992) que fizeram uma 
+
+transformação  sobre  o  sistema  tornando  um  sistema  não  linear  passível  de 
+
+aplicação  de  técnicas  já  utilizadas  para  solução  e  problemas  não  lineares  na 
+
+reconciliação de dados. 
+
+ 
+
+É  necessário  observar  que  as  soluções  desenvolvidas  e  propostas  pelos  autores 
+
+acima  são  geralmente  soluções  consagradas  e  de,  geralmente,  baixo  custo 
+
+computacional,  isso  porque,  na  época  a  capacidade  de  processamento  era  muito 
+
+inferior  a  aquela  que  é  observada  em  dias  atuais.  Vale  lembrar,  no  entanto,  que 
+
+mesmo  hoje,  solução  de  problemas  com  não  linearidades  severas  requer  grande 
+
+esforço  computacional,  tal  que,  o  uso  de  soluções  consagradas  como  as 
+
+apresentadas acima reduzem bastante o tempo demandado para a solução para um 
+
+grupo de variáveis. 
+
+ 
+
+2.2. DETECÇÃO E DIAGNÓSTICO DE FALHA 
+
+ 
+
+A quantidade de publicações acerca do tema não é muito extensa e ainda assim, a 
+
+maior  parte  dor  esforços  foi  concentrada  sobre  as  etapas  de  identificação  e 
+
+diagnóstico  da  falha,  sendo  a  etapa  de  avaliação  um  pouco  reprimida  diante  das 
+
+demais. 
+
+ 
+
+Dentre  as  contribuições,  de forma  cronológica,  destaca-se  McKellar  (1987)  que  fez 
+
+um  levantamento  das  falhas  observadas  em  refrigeradores  domésticos  e  as 
+
+relacionou  a  propriedades  termodinâmicas  especificas  do  ciclo.  O  autor  foi  então 
+
+ 
+
+22 
+
+capaz  de  correlacionar  as  falhas  observadas  à  mudanças  registradas  em  três 
+
+medidas especificas do ciclo, são elas: pressão de sucção, pressão de descarga e 
+
+razão  de  pressão  de  descarga  e  sucção.  O  procedimento  foi  aplicado  para 
+
+identificação  das  seguintes 
+
+falhas:  vazamento  na  válvula  de  descarga  do 
+
+compressor, falha dos ventiladores do evaporador e do condensador, congelamento 
+
+do  evaporador,  baixa  quantidade  de  refrigerante  e  bloqueio  parcial  dos  tubos 
+
+capilares. 
+
+ 
+
+Gertler  (1988)  publicou  o  seu  trabalho  acerca  da  discussão  dos  métodos  para 
+
+alcançar a detecção e diagnostico de falha podendo ser pelos  métodos estatísticos 
+
+ou baseados em modelo, sendo que ambos foram analisados quanto à sua robustez 
+
+em diversas estratégias. 
+
+ 
+
+Um  desenvolvimento  posterior  foi  a  aplicação  dos  conhecimentos  levantados  por 
+
+McKellar feita por Stallard  (1989) que desenvolveu  um sistema  automático de FDD 
+
+para  refrigeradores  em  que  se  fez  uso  dos  seguintes  parâmetros  para  o 
+
+funcionamento: 
+
+temperatura  de  condensação, 
+
+temperatura  de  evaporação, 
+
+temperatura de entrada do ar no condensador, e relação de pressão no compressor. 
+
+A análise feita não foi baseada em modelo e consistia em basicamente comparar os 
+
+dados  registrados  na  máquina  com  os  dados  armazenados  tidos  como  esperado 
+
+para  o  equipamento.  O  diagnóstico  era  feito,  então,  através  da  identificação  do 
+
+comportamento de certas variáveis, sendo que ao passar de um limite, o diagnóstico 
+
+era proferido. 
+
+ 
+
+Yoshimura  e  Ito  (1989)  que  utilizaram  o  registro  de  sete  temperaturas  e  pressões 
+
+para  desenvolver  o  FDD  de  ar  condicionados  de  janela.  O  método  utilizado  era 
+
+apenas  baseado  em  regras  para  realizar  a  detecção  e  diagnóstico,  não  havendo, 
+
+portanto, uma etapa em que os dados eram submetidos a um modelo, seja ele físico 
+
+ou caixa preta. 
+
+ 
+
+Venkatasubramanian  e  Chan  (1990)  fizeram  uso  da  método  de  redes  neurais  para 
+
+implementação de um sistema FDD. Tal método permitia que o sistema aprendesse 
+
+com o tempo de acordo com entradas e saídas observadas no sistema em análise. 
+
+É de se esperar que esta metodologia facilite o trabalho quando observada grande 
+
+ 
+
+23 
+
+complexidade entre a relação entre entrada e saída do sistema, outra vantagem é o 
+
+de  se  adaptar  a  modificações  na  planta  de  forma  rápida,  necessitando  apenas  de 
+
+um novo treinamento. Como desvantagem, foi observado que a mesma não sugere 
+
+pistas para que seja identificado a exata razão de uma falha, justamente pelo fato de 
+
+não possuir um modelo físico por trás do mesmo. 
+
+ 
+
+Inatsu  et  al.  (1992)  desenvolveram  um  método  capaz  de  detectar  vazamento  de 
+
+refrigerante  em  um  ciclo  de  refrigeração  por  compressor  aplicado  a  um  automóvel. 
+
+Como  o  FDD  desenvolvido  não  fazia  uso  de  um  modelo  físico  nem  mesmo  um 
+
+modelo caixa preta para prever o comportamento do equipamento em uma situação 
+
+em que a temperatura externa do ar variava, o mesmo só era capaz de identificar a 
+
+falha quando a perda chegava a representar 40% do total. 
+
+ 
+
+Afgan  et  al.  (1994)  demonstraram  a aplicação  de  um  sistema  especialista  baseado 
+
+em  regras  desenvolvido  para  uso  em  equipamentos  de  refrigeração  capaz  de 
+
+diagnosticar  os  mals  funcionamentos  mais  frequentes,  o  SRMES.  O  sistema  se 
+
+baseia  em  uma  abordagem  do  tipo  “perguntas  e  respostas”  tal  que  os  valores 
+
+medidos  no  equipamento  são  submetidos  a  uma  árvore  de  decisão,  sendo  que  o 
+
+diagnóstico  do  problema  é  aquele  que  apresentar  um  caminho  mais  curto  entre  a 
+
+entrada inicial e o diagnóstico final. 
+
+ 
+
+Rossi  (1995)  desenvolveu  uma  metodologia  para  FDD  baseada  em  regras 
+
+estatísticas para aplicação em sistemas de ar condicionado utilizando nove medidas 
+
+de temperatura e uma de umidade. Como resultado, o método foi capaz de detectar 
+
+e  diagnosticar  incrustações  no  evaporador  e  condensador,  vazamento  de  fluido 
+
+refrigerante,  perda  de  eficiência  volumétrica  do  compressor  e  restrição  da  linha  de 
+
+líquido. 
+
+ 
+
+Grimmelius  et  al  (1995)  faz  uso  de  uma  matriz  de  falha  criada  por  meio  de 
+
+experimentos  sobre  o  equipamento  alvo  do  diagnóstico.  O  sistema  desenvolvido 
+
+compara  os  resíduos  gerados  pelas  diferenças  entre  os  valores  medidos  e  os 
+
+valores obtidos por meio de dados de entrada para o modelo de regressão linear do 
+
+equipamento  que  são,  por  fim,  comparados  com  valores  esperados  da  matriz  de 
+
+ 
+
+24 
+
+falha levantada. Com o uso da técnica de lógica fuzzy, o reconhecimento das falhas 
+
+foi possível. 
+
+ 
+
+Outro a lançar mão da lógica fuzzy no desenvolvimento de um FDD foi Dexter (1995) 
+
+aplicando-o sobre uma unidade de tratamento de ar. No trabalho, a técnica de fuzzy 
+
+logic  foi  utilizada  para  a  geração  de  um  comportamento  de  referência  e  um 
+
+comportamento  faltoso  levando  o  sistema  a  um  diagnóstico  quando  submetidas  a 
+
+uma série de regras que descrevem o sistema. 
+
+ 
+
+Trabalhos  similares  a  este  foram  desenvolvidos  por  Stylianou  e  Nikampour  (1996) 
+
+que  utilizaram  a  mesma  técnica  abordada  em  Grimmeliu  et  al  (1995)  para 
+
+diagnóstico da falha, onde os resíduos são comparados com a matriz de falha mas, 
+
+além disso, aplicaram  sobre  o  sistema, na etapa  de  identificação,  uma  modelagem 
+
+termodinâmica  para  os  valores  de  COP  e  capacidade  de  chillers  desenvolvida  por 
+
+Gordon e Ng (1995). 
+
+ 
+
+Rossi  e  Braun  (1997)  apresentaram  um  método  de  FDD  para  aplicação  em  ar 
+
+condicionado  utilizando-se  de  nove  medições  de  temperatura  e  uma  de  umidade 
+
+para  detecção  e  diagnóstico  de  cinco  falhas.  São  elas:  vazamento  de  refrigerante, 
+
+restrição  na  linha  de  refrigerante,  válvulas  do  compressor  com  vazamento,  filtro  do 
+
+evaporador  com  sujeira  e  incrustação  no  condensador.  O  método  baseou-se  no 
+
+desenvolvimento de modelagem no estado de regime permanente capaz de informar 
+
+o  estado  de  referência,  que  ao  ser  comparado  os  dados  obtidos  nas  medições  e 
+
+direcionados com uma matriz de falha, tal como aquela desenvolvida por Grimmelius 
+
+et  al.  (1995)  e  acrescida  de  regras  estatísticas  permitiu  o  sucesso  do  diagnóstico 
+
+realizado. 
+
+ 
+
+Rossi e Braun (1997) estenderam a aplicação do método desenvolvido outros tipos 
+
+construtivos  de  ar  condicionado  tendo  sua  performance  avaliada  por  Braun  e 
+
+Breuker  (1998)  que  procederam  diversos  testes  sobre  o  método.  É  interessante 
+
+mencionar  a  variação  da  performance  do  método  de  detecção  quando  utilizadas 
+
+quantidades diferentes de variáveis de entrada para o modelo físico utilizado sendo 
+
+que a sensibilidade foi quase dobrada quando utilizadas três variáveis de entrada ao 
+
+invés de duas. 
+
+25 
+
+ 
+
+ 
+
+Até 1996 os autores Rossi e Braun (1996) eram os únicos a ter realizado e aplicado 
+
+a  etapa  de  avaliação  da  falha  proposto  por  Isermann  (1984)  para  sistemas 
+
+supervisórios  de  equipamentos  de  ar  condicionado.  No  trabalho,  foi  desenvolvida 
+
+abordagem  que  levou  em  consideração  os  aspectos  de  conforto,  segurança 
+
+operacional  e  risco  à  segurança,  impacto  ambiental  e  impacto  econômico.  Os 
+
+critérios foram relacionados com períodos de manutenção para desenvolvimento de 
+
+previsão de serviços que viessem a minimizar o custo operacional do equipamento.  
+
+ 
+
+Braun (1999) justifica em seu trabalho a implementação de um FDD automático para 
+
+redução  de  custo  operacional  de  equipamentos  de  refrigeração  e  ar  condicionado 
+
+comparando-a  com  um    serviço  de  manutenção  periódica.  As  vantagens  levantada 
+
+são o monitoramento contínuo, a emissão de recomendações e o trabalho de forma 
+
+integrada com o sistema em observação. Para tanto, o modelo proposto de FDD é 
+
+composto de dois módulos, um para detecção e diagnóstico (baseado em medidas 
+
+termodinâmicas)  e  outro  para  avaliação  que  determina  se  uma  intervenção  é 
+
+necessária e demais medidas a serem tomadas. 
+
+ 
+
+Bailey  e  Kreider  (2003)  lançaram  mão  da  técnica  de  rede  neural  para  o 
+
+desenvolvimento  de  um  sistema  FDD  aplicado  a  um  equipamento  de  refrigeração. 
+
+Como  as  demais  aplicações  de  redes  neurais  para  problemas  desta  natureza,  a 
+
+aplicação  dependeu  do  treinamento  do  sistema  de  FDD  tendo  como  entrada  os 
+
+dados  operacionais  observados.  O  sistema  desenvolve 
+
+tendências  para  o 
+
+comportamento do sistema em funcionamento normal. Quando operando sobre falha 
+
+o  sistema  FDD  atribui  possibilidades  para  a  ocorrência  de  um  comportamento 
+
+normal ou anormal. 
+
+ 
+
+Em Cui e Wang (2005) é apresentada uma FDD para aplicação online em sistemas 
+
+de  refrigeração  (chiller).  No  trabalho,  os  dados  operacionais  são  submetidos  a  um 
+
+modelo  físico  desenvolvido  para  o  equipamento  para  o  levantamento  de  índices 
+
+operacionais que caracterizem o comportamento do sistema. 
+
+ 
+
+A  estratégia  utilizada  baseou-se  no  registro  da  assinatura  de  cada  uma  das  falhas 
+
+que o sistema FDD seria capaz de detectar sobre alguns índices de desempenho: 
+
+26 
+
+ 
+
+  COP; 
+
+  Eficiência Isentrópica; 
+
+  Eficiência do motor de acionamento do compressor; 
+
+  Vazão mássica de fluido refrigerante; 
+
+  Diferença média logarítmica no condensador e evaporador. 
+
+ 
+
+Com base na matriz de falha levantada e na implementação de limites aceitáveis de 
+
+desvio de cada um dos índices foi implementado o FDD. 
+
+ 
+
+2.3. SIMULAÇÃO EM RAC 
+
+ 
+
+Conforme  Winkler  (2009),  a  simulação  de  sistemas  de  ar-condicionado  ou 
+
+refrigeração por compressão de vapor pode ser situada em dois diferentes contextos 
+
+quanto  ao  domínio  do  tempo  considerado:  em  regime  permanente  ou  em  regime 
+
+transiente sendo de aplicações e objetivos distintos uma da outra. 
+
+ 
+
+2.3.1. Técnicas de Simulação em Regime Permanente 
+
+ 
+
+Os códigos desenvolvidos para simulação de sistemas de RAC por compressão de 
+
+vapor  existentes  na  literatura  são  baseados  no  fornecimento  de  um  conjunto  de 
+
+variáveis  com  as  quais  o  código  é  capaz  de  resolver  um  sistema  de  equações  e 
+
+prover o resultado, determinando todos os demais estados no equipamento.  
+
+ 
+
+Segundo Winkler (2009), quanto à natureza da abordagem feita, pode-se dividir em 
+
+duas  possibilidades:  a  primeira  delas  é  a  de  solução  não  simultânea  baseada  no 
+
+ajuste  sucessivo  de  determinada  variável  até  que  a  mesma  convirja  para  um 
+
+resultado,  feito  isso,  o  mesmo  procedimento  é  então  realizado  para  uma  nova 
+
+variável até que mesma convirja e assim sucessivamente. 
+
+ 
+
+Neste tipo de abordagem, não simultânea, a solução leva em consideração o arranjo 
+
+utilizado  e  as  características  de  interação  entre  eles,  sendo  que  o  código 
+
+desenvolvido será particular para a representação de um sistema específico apenas, 
+
+sendo  que,  a  adição  de  novos  componentes,  que  necessariamente  irá  mudar  a 
+
+ 
+
+27 
+
+iteração entre  os componentes do ciclo leva à necessidade de alteração do código 
+
+desenvolvido para a convergência do sistema. 
+
+ 
+
+A  segunda  técnica  utilizada  para  solução  do  sistema  de  equações  baseia-se  na 
+
+solução simultânea de um sistema de equações não linear para que sejam obtidas 
+
+as  variáveis  desconhecidas,  que  determinarão  o  ponto  operacional  do  ciclo.  Para 
+
+este tipo de técnica a adição de novos componentes no ciclo não requer mudanças 
+
+no código que sejam tão trabalhosas como as descritas para o sistema de solução 
+
+não  simultânea.  Isto  porque,  no  caso  da  solução  simultânea  cara  componente  é 
+
+inserido como se fosse uma Black-box, interessando apenas a relação entre entrada 
+
+e saída deste componente e a forma com que o mesmo se comunica com o ciclo.  
+
+ 
+
+Dito  isto,  é  possível  notar  que  os  sistemas  de  simulação  que  adotam  a  técnica  de 
+
+solução  simultânea  são  mais  flexíveis  que  aqueles  que  adotam  a  solução  não 
+
+simultânea  do  problema.  No  entanto,  esta  flexibilidade  da  solução  simultânea  é 
+
+acompanhada  pela  desvantagem  de  que  nestes  sistemas  é  observada  uma  menor 
+
+robustez do código implementado. 
+
+ 
+
+Neste contexto foi desenvolvido por Grossman e Michelson, (1985) um código para 
+
+simulação de um sistema de refrigeração por absorção capaz de lidar com a adição 
+
+de  diversos  componentes,  no  trabalho  o  autor  ainda  discute  os  requisitos  para  um 
+
+sistema ser capaz de simular tais equipamentos. 
+
+ 
+
+Já  em  Stoecker  (1971,  1989)  o  autor  define  a  simulação  de  componente  a 
+
+componente e discute as vantagens e desvantagens de uma abordagem de solução 
+
+simultânea  e  não  simultânea.  No  trabalho,  o  autor  apresenta  uma  ferramenta  de 
+
+simulação  capaz  de  receber  do  usuário  subrotinas  que  representem  cada 
+
+equipamento do ciclo e que seriam simuladas pela ferramenta do autor. 
+
+ 
+
+Em  Parise  (1986)  é  descrito  um  algoritmo  para  simulação  como  o  uso  de  modelos 
+
+simples para  cada um  dos  componentes  do ciclo,  no  trabalho,  é  utilizada  a  técnica 
+
+de determinação sucessiva de variáveis, resultados estes que eram propagados ao 
+
+redor  do  ciclo  para  determinação  das  demais  variáveis.  O  código  desenvolvido  foi 
+
+ 
+
+28 
+
+futuramente  adaptado  por  Herbas  et  al  (1993)  para  implementação  de  solução 
+
+simultânea pelo uso do método Newton-Raphson. 
+
+ 
+
+Já  Rossi  (1995)  desenvolveu  um  código  de  simulação,  que,  de  forma  similar  ao 
+
+desenvolvido  por  Parise  (1985)  produz  soluções  para  cada  equipamento  no  ciclo 
+
+sucessivamente. Neste caso, a modelagem desenvolvida foi utilizada com o mesmo 
+
+propósito fim deste trabalho, o de desenvolvimento de uma ferramenta de detecção 
+
+de falha e diagnóstico para sistemas de refrigeração por compressão de vapor. 
+
+ 
+
+2.3.2.  Modelagem dos Componentes 
+
+ 
+
+Compressor 
+
+ 
+
+Segundo  Winkler  (2009),  para  a  modelagem  de  compressores  existem  duas 
+
+estratégias  geralmente  utilizadas  na  literatura,  a  primeira  delas  é  a  descrição 
+
+detalhada do modelo mecânico do compressor e a sua interação com o fluido sendo 
+
+comprimido  tal  que  objetiva-se  identificar  a  relação  de  pequenos  detalhes  nesses 
+
+mecanismos  que  ofereçam  mudanças  no  desempenho  do  compressor  como  feito 
+
+em Pérez-Segarra et al.(1994) em que o fenômeno de compressão é estudada em 
+
+pequenos volumes definidos na câmara de compressão. 
+
+ 
+
+Uma  segunda  abordagem  refere-se  à  equações  semi-empríricas  capazes  de 
+
+descrever  o  comportamento  do  mesmo  quando  ponderado  por  determinadas 
+
+variáveis  a  serem  calibrada.  Neste  tipo  de  abordagem  é  objetivado  identificar  as 
+
+variáveis que tem influência sobre o comportamento de um determinado parâmetro 
+
+do  compressor,  podendo  ser  a  eficiência  isentrópica,  eficiência  volumétrica,  vazão 
+
+mássica  através  do  compressor,  potência  de  acionamento,  coeficiente  politrópico, 
+
+enfim. Parâmetros que permitam a descrição do comportamento do compressor  em 
+
+diversas  condições  de  operação  de  forma  satisfatória.  Tal  abordagem  é  feita  por 
+
+Mendes (2012), Zhao et al. (2012), por exemplo. 
+
+ 
+
+Um  trabalho  a  ser  ressaltado  quanto  à  qualidade  dos  desenvolvimentos  acerca  de 
+
+modelagem  semi-empirica  de  compressores  é  Jahnig  (1999)  em  que  são  descritos 
+
+os desenvolvimentos acerca do tema bem como é proposta uma abordagem para a 
+
+ 
+
+29 
+
+modelagem da vazão de refrigerante e eficiência combinada baseado na análise de 
+
+dados experimentais do mesmo. 
+
+ 
+
+Trocadores de Calor 
+
+ 
+
+A  previsão  de  forma  precisa  do  calor  trocado  através  de  um  trocador  de  calor  é 
+
+fundamental  para  a  previsão  do  comportamento  de  um  sistema  térmica  como  um 
+
+todo. Para tanto, existem diversas estratégias utilizadas para alcançar tal objetivo. 
+
+ 
+
+A primeira delas é a abordagem em que o trocador de calor é modelado como sendo 
+
+um  tubo,  ou  um  conjunto  de  tubos  paralelos  submetidos  ao  fluxo  de  outro  fluido 
+
+externamente  sem  que  isso  represente  a  forma  do  trocador  de  calor  propriamente 
+
+dito sendo analisado. Neste caso, como feito em Rahman et La. (2003) o modelo é 
+
+calibrado  empiricamente  levando-se  em  consideração  fatores  para  o  comprimento, 
+
+área e formato verdadeiro.  
+
+ 
+
+A  outra  abordagem  segue  como  uma  derivação  desta  primeira,  sendo  que,  desta 
+
+vez,  a  estrutura  geométrica  do  trocador  de  calor  é  levada  em  consideração.  Neste 
+
+caso,  os  estudos  geralmente  desenvolvem  um  modelo  de  resistência  térmica  entre 
+
+os  fluidos  que  (abordagem  UA)  que  é  depois  corrigida  na  relação  ε-NTU  para 
+
+calcular a saída dos fluidos prevista, como feito em Schwentker et al (2006). 
+
+ 
+
+De acordo com Winkler (2009), essa ultima abordagem geralmente sofre variações 
+
+quanto à quantidade de nós utilizados para a criação do modelo, sendo que quando 
+
+não  a  troca  de  fases,  um  modelo  com  apenas  um  nó  é  geralmente  razoável  para 
+
+representação  do  fenômeno.  No  entanto,  como  no  caso  de  evaporadores,  ao 
+
+verificar  a  mudança  de  fases  modelos  com  três  nós  são  os  mais  utilizados  para 
+
+descrever o comportamento destes equipamentos. 
+
+ 
+
+Seguindo a tendência de refinamento, um outro modelo aplicado é o que divide cada 
+
+uma  das  três  áreas  esperadas  em  pequenos  volumes  de  controle,  sendo  que  ao 
+
+prever  o  local  da  mudança  de  fase  dentro  dos  trocadores  de  calor  este  modelo 
+
+ganha  em  precisão  já  que  as  propriedades  são  avaliadas  em  diversos  pontos  e 
+
+ 
+
+30 
+
+também  pelo  fato  de  o  local  de  mudança  de  fase  não  ser  um  previsão  e  sim  um 
+
+resultado calculado, conforme Winkler (2009). 
+
+ 
+
+Dispositivo de Expansão 
+
+ 
+
+Quanto  à  modelagem  de  dispositivos  de  expansão  será  abordado  aqui  apenas 
+
+aquelas  referentes  a  tubos  capilares  que  são  justamente  aqueles  presentes  no 
+
+equipamento alvo deste trabalho. 
+
+ 
+
+A  modelagem  da  expansão  através  destes  tubos  pode  tomar  diversos  caminhos 
+
+distintos sendo que a primeira diferença observada é quanto à consideração de que 
+
+o processo é adiabático ou não.  
+
+ 
+
+Como  é  de  se  esperar,  os  modelos  que  levam  em  conta  a  expansão  adiabática 
+
+através do mesmo é muito mais simples do que os que não levam tal hipótese em 
+
+consideração. A modelagem adiabática pode ser vista em Choi e Kim (2003).  
+
+ 
+
+Outra  classificação  importante  quanto  à  metodologia  utilizada  é  a  dos  modelos 
+
+empíricos  e  os  modelos  analíticos  ou  semi  analíticos.  Os  modelos  empíricos 
+
+apresentam a característica de serem aplicados para condições restritas, sendo que 
+
+grandes  variações  nos  parâmetros  podem  levar  à  imprecisão  do  método.  Outra 
+
+característica é que a qualidade do modelo desenvolvido certamente dependerá da 
+
+qualidade dos dados disponíveis. Esse tipo de abordagem é vista em Zhao (2012). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+31 
+
+ 
+
+3.  DESCRIÇÃO DO CICLO 
+
+ 
+
+Segundo Stoecker e Jones (1995), o ciclo de refrigeração por compressão de vapor 
+
+é  o  ciclo  mais  utilizado  na  prática  para  refrigeração.  Seu  funcionamento  em  linhas 
+
+gerais  consiste  no  aumento  de  pressão  de  um  gás,  que,  devido  à  lei  dos  gases, 
+
+sofre aumento de sua temperatura a ponto de ser capaz de rejeitar calor para uma 
+
+fonte  quente  quando  passa  pelo  condensador  e  seguindo  pelo  dispositivo  de 
+
+expansão,  responsável  por  uma  redução  brusca  de  pressão,  o  que  leva  à  redução 
+
+da  temperatura,  tornando  o  fluido  refrigerante  mais  frio  que  o  ambiente  a  ser 
+
+resfriado, permitindo-o absorver calor da fonte fria.  
+
+ 
+
+3.1. CICLO DE CARNOT  
+
+ 
+
+O  ciclo  de  Carnot  é  aquele  cuja  eficiência  é  máxima  entre  temperaturas  de  uma 
+
+fonte  quente  e  uma  fonte  fria.  Na  verdade,  o  ciclo  de  refrigeração  de  Carnot  é  a 
+
+aplicação do conceito de motor térmico proposto por ele para o ciclo de refrigeração 
+
+conforme Stoecker e Jones (1995). 
+
+ 
+
+Para o motor térmico de Carnot, este recebe energia de uma fonte quente converte-
+
+o  em  trabalho  e  rejeita  o  restante  para  o  ambiente  à  baixa  temperatura. 
+
+Apresentando a maior eficiência possível entre estas duas temperaturas. 
+
+ 
+
+O  ciclo  de  refrigeração  é  o  completo  oposto,  é  provido  o  trabalho  (energia  elétrica 
+
+para o compressor) tal que o ciclo rejeita calor para a fonte quente e absorve calor 
+
+na fonte fria. 
+
+ 
+
+Para tanto as seguintes hipóteses são estabelecidas: 
+
+1)  Compressão adiabática; 
+2)  Rejeição isotérmica de calor; 
+3)  Expansão adiabática; 
+4)  Recebimento isotérmico de calor. 
+
+ 
+
+ 
+
+32 
+
+ 
+
+Figura 3.1 – Ciclo de Refrigeração de Carnot 
+
+Modificado de Venturini e Pirani (2005). 
+
+ 
+
+3.2. CICLO IDEAL OU TEÓRICO 
+
+ 
+
+Devido  às  peculiaridades  do  ciclo  de  refrigeração  por  compressão  de  vapor,  surge 
+
+um  ciclo  representativo  de  suas  condições  operacionais,  chamado  de  teórico  ou 
+
+ideal,  ao  qual  o  ciclo  real  mais  se  aproxima  que  funciona  como  uma  base  para 
+
+comparação do desempenho de ciclos reais, umas vez que o ciclo ideal será aquele 
+
+que apresenta a maior eficiência para as condições previamente determinadas.  
+
+Figura 3.2 – Ciclo Teórico simples no plano p-h 
+
+Modificado de Venturini e Pirani (2005). 
+
+ 
+
+ 
+
+ 
+
+33 
+
+O processo de 1-2 trata de um processo adiabático reversível, ou seja, neste caso, 
+
+consiste em uma compressão com entropia constante (s1=s2).  
+
+ 
+
+A  rejeição  de  calor  que  ocorre  no  processo  2-3  no  condensador,  como  é  possível 
+
+observar,  não  trata  de  uma  rejeição  isotérmica  como  aquela  proposta  em  Carnot, 
+
+sendo  que,  até  a  temperatura  de  saturação  é  feita  troca  térmica  para  redução  do 
+
+superaquecimento do vapor até a temperatura de condensação (Tc). 
+
+ 
+
+O  processo  3-4  ocorre  no  dispositivo  de  expansão  e  trata-se  de  um  processo 
+
+irreversível já que mesmo considerando um processo adiabático a entropia no ponto 
+
+4 (s4) será maior que aquela no ponto 3 (s3). 
+
+ 
+
+Por fim, no evaporador ocorre o processo 4-1 em que o vapor gerado no dispositivo 
+
+de expansão é levado até a condição de saturação no ponto 1 (x=1). 
+
+ 
+
+Logo, as hipóteses adotadas são: 
+
+1)  Compressão adiabática reversível (isentrópica); 
+2)  Rejeição isobária de calor (a uma temperatura maior que a do ambiente com 
+
+o qual é feita a troca); 
+
+3)  Expansão irreversível isentálpica; 
+4)  Ganho isobárico de calor (também a uma temperatura menor que o ambiente 
+
+sendo resfriado). 
+
+ 
+
+3.3. CICLO REAL 
+
+ 
+
+Uma  das  principais  diferenças  entre  os  ciclos  de  refrigeração  real  e  o  ideal  é  a 
+
+queda de pressão observada nos trocadores de calor.  
+
+ 
+
+Outro aspecto importante do ciclo real é o fato de considerar o sub-resfriamento do 
+
+refrigerante na saída do condensador e a existência de superaquecimento na saída 
+
+do  evaporador  que  visa  garantir  na  prática  que  haja  apenas  vapor  na  entrada  do 
+
+compressor. 
+
+ 
+
+ 
+
+34 
+
+É levado em consideração também o processo de compressão que passa a ser um 
+
+processo  politrópico  em  que  há  aumento  da  entropia  do  estado  1  para  o  estado  2 
+
+(s2>s1). 
+
+ 
+
+A  condição  de  presença  de  líquido  em  1,  na  sucção  do  compressor,  é  um  fato 
+
+extremamente  danoso  para  este  tipo  de  equipamento  uma  vez  que  haverá 
+
+ocorrência de uma golpe hidráulico.  
+
+ 
+
+Figura 3.3 – Comparação entre o ciclo real e teórico 
+
+Modificado de Venturini e Pirani (2005). 
+
+ 
+
+ 
+
+3.4. ABORDAGEM ADOTADA 
+
+ 
+
+Para a aplicação da ferramenta de diagnóstico e detecção de falha será utilizado o 
+
+ciclo  real,  que,  como  é  de  se  esperar,  será  a  representação  mais  fiel  do  sistema 
+
+quando comparado aos outros. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+35 
+
+3.5. BALANÇOS DE MASSA E ENERGIA NOS COMPONENTES 
+
+ 
+
+Segue descrita nesta seção  a aplicação de balanços  de massa e energia  sobre  os 
+
+volumes de controle de cada componente do ciclo de forma independente. Assume-
+
+se regime permanente para a análise. 
+
+ 
+
+3.5.1 Compressor 
+
+ 
+
+ 
+
+Figura 3.4 – Volume de controle aplicado sobre o compressor 
+
+Modificado de Venturini e Pirani (2005). 
+
+ 
+
+A potência consumida no compressor é, portanto: 
+
+ 
+
+                         
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(3.1) 
+
+ 
+
+Onde: 
+
+ 
+
+       Consumo de potência [W] 
+
+             Entalpia específica [J/kg] 
+
+         Fluxo de massa [kg/s] 
+
+ 
+
+ 
+
+ 
+
+3.5.2 Condensador 
+
+36 
+
+ 
+
+Figura 3.5 – Volume de controle aplicado sobre o condensador 
+
+Modificado de Venturini e Pirani (2005). 
+
+ 
+
+O calor trocado no condensador é, portanto: 
+
+ 
+
+                          
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(3.2) 
+
+ 
+
+Onde: 
+
+ 
+
+         Calor trocado no condensador [W] 
+
+             Entalpia específica [J/kg] 
+
+          Fluxo de massa [kg/s] 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3.5.3 Evaporador 
+
+37 
+
+Figura 3.6 – Volume de controle aplicado sobre o evaporador 
+
+Modificado de Venturini e Pirani (2005). 
+
+ 
+
+ 
+
+O calor trocado no evaporador é, portanto: 
+
+ 
+
+                          
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(3.3) 
+
+ 
+
+Onde: 
+
+ 
+
+          Calor trocado no evaporador [W] 
+
+              Entalpia específica [J/kg] 
+
+           Fluxo de massa [kg/s] 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3.5.4 Dispositivo de Expansão 
+
+38 
+
+Figura 3.7 – Volume de controle aplicado sobre o dispositivo de expansão 
+
+Modificado de Venturini e Pirani (2005). 
+
+ 
+
+ 
+
+Processo isentálpico: 
+
+ 
+
+        
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(3.4) 
+
+ 
+
+Pode-se definir, portanto, um índice de desempenho para um ciclo de refrigeração:  
+
+ 
+
+     
+
+     
+     
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(3.5) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+39 
+
+ 
+
+4.  DESCRIÇÃO DO EQUIPAMENTO 
+
+ 
+
+O  equipamento  foco  deste  trabalho,  equipamento  para  o  qual  se  objetivou 
+
+desenvolver  o  sistema  de  diagnóstico  é  um  sistema  de  ar-condicionado  do  tipo 
+
+janela  que  faz  uso  do  fluido  refrigerante  R-22  adaptado  em  uma  bancada 
+
+experimental. 
+
+ 
+
+O  sistema  de  ar-condicionado  em  questão  pode  ser  divido  em  4  componentes 
+
+básicos,  são  eles:    compressor,  condensador,  dispositivo  de  expansão  e  o 
+
+evaporador. Associado ao evaporador e condensador encontram-se os ventiladores. 
+
+ 
+
+ 
+
+4.1. COMPRESSOR 
+
+ 
+
+Segundo Stoecker e Jones (1995), o compressor é um dos quatro componentes de 
+
+um  sistema  básico  de  refrigeração  ou  ar-condicionado,  sendo  os  demais, 
+
+evaporador,  condensador  e  dispositivo  de  expansão,  que  serão  tratados  adiante. 
+
+Trata-se do elemento fundamental da indústria de refrigeração. 
+
+ 
+
+Existem dois grandes grupos nos quais podemos dividir os compressores são eles: 
+
+os que deslocamento positivo e os dinâmicos. 
+
+ 
+
+Os  de  deslocamento  positivo  são  aqueles  que  aumentam  a  pressão  do  fluido  ao 
+
+reduzir  o  volume  da  câmara  de  compressão  através  de  uma  potência  aplicada  no 
+
+mecanismo  de  compressão.  Dentro  deste  grupo  se  encontram  os  compressores 
+
+parafuso, pistão, de engrenagem dentre outros. 
+
+ 
+
+Já  no  grande  grupo  dos  dinâmicos  os  compressores  alcançam  o  objetivo  de 
+
+aumento  de  pressão  através  de  uma  transferência  contínua  de  energia  cinética  do 
+
+elemento rotativo do compressor para o fluido que sofre um aumento de velocidade 
+
+que  é  depois  sacrificada  com  o  intuito  de  aumento  de  pressão.    Neste  grupo 
+
+encontram-se os compressores centrífugos. 
+
+ 
+
+ 
+
+40 
+
+Concentrando  a  atenção  no  grande  grupo  de  compressores  de  deslocamento 
+
+positivo estes podem ser classificados como aberto, semi-herméticos e herméticos.  
+
+ 
+
+Os  abertos  são  aqueles  em  que  o  motor  de  acionamento  do  compressor  não  se 
+
+encontra no mesmo invólucro que o mecanismo de compressão em si, a câmara de 
+
+compressão  e  demais  peças.  Já  o  hermético  são  aqueles  que  possuem  tanto  o 
+
+motor  quanto  o  mecanismo  de  compressão  no  mesmo  invólucro.  Por  fim,  o  
+
+intermediário  entre  estas  duas  classificações  é  o  semi-hermético,  que  ao  contrário 
+
+do hermético eles são selados mas possíveis de abrir para rotinas de manutenção, 
+
+geralmente formar umas câmara selada por junta, e presa por parafusos. 
+
+ 
+
+Para  aplicações  residências  em  ar-condicionado  como  aquela  prevista  para  a 
+
+bancada  experimental,  os  compressores  alternativos  herméticos  são  os  mais 
+
+comuns na atualidade, sendo produzidos nos mais diversos níveis de capacidade. 
+
+ 
+
+O compressor da bancada de teste alvo deste trabalho é um compressor da marca 
+
+ELGIN  Bristol  modelo  H24B19QABC,  alternativo,  hermeticamente  fechado  de 
+
+deslocamento positivo e apenas um cilindro de compressão com potência de 2.2 kW 
+
+para as condições geralmente estabelecidas para sua operação.  
+
+ 
+
+Figura 4.1 – Compressor hermético Bristol 
+
+Disponível em http://www.bristolcompressors.com  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+41 
+
+ 
+
+4.2. CONDENSADOR 
+
+ 
+
+O  condensador  nada  mais  é  do  que  um  trocador  de  calor,  sendo  que,  no  ciclo  de 
+
+refrigeração por compressão de vapor este será o responsável por expulsar o  calor 
+
+para a fonte quente. 
+
+ 
+
+Este equipamento pode apresentar diversas configurações distintas, de acordo com 
+
+sua aplicação desejada e com a capacidade de troca térmica necessária para eles 
+
+sendo  que  uma  das  classificações  possíveis  é  quanto  ao  fluido  refrigerante  e  o 
+
+fenômeno  envolvido.  Podem  ser,  portanto,  resfriados  a  ar,  resfriados  a  água  ou 
+
+evaporativo. 
+
+ 
+
+Uma  das  configurações  usuais  deste  equipamento,  principalmente  quando  se 
+
+tratando  de  sistemas  ACJ,  é  o  resfriado  a  ar  com  o  tipo  construtivo  de  serpentina 
+
+aletada,  sendo  a  serpentina  de  cobre  e  as  aletas  geralmente  de  alumínio  para 
+
+transferência de calor entre corrente de fluido e o ar externo. 
+
+ 
+
+Na  bancada  experimental  montada  não  foi  possível  identificar  qual  o  fabricante  do 
+
+mesmo  tampouco  o  modelo  ou  algum  tipo  de  referência  que  pudesse  levar  a  uma 
+
+folha  de  dados  do  mesmo  com  informações  acerca  de  seu  desempenho.  Diante 
+
+disso,  suas  características  foram  levantadas  por  observação  e  comparação  com 
+
+catálogos de fabricantes tendo em vista a capacidade instalada do equipamento.  
+
+ 
+
+Figura 4.2 – Condensador da bancada experimental do LabRAC –UFES 
+
+ 
+
+ 
+
+42 
+
+ 
+
+4.3. DISPOSITIVO DE EXPANSÃO 
+
+ 
+
+O dispositivo de expansão tem por função no ciclo de refrigeração por compressão 
+
+de  vapor  impor  uma  queda  de  pressão  de  forma  acelerada  tal  que  pouca  troca 
+
+térmica  aconteça,  levando  o  fluido  refrigerante  a  uma  temperatura  abaixo  da 
+
+temperatura ambiente para que seja possível a absorção de calor na fonte quente, e 
+
+ainda, regular a quantidade de fluido refrigerante que entra no evaporador. 
+
+ 
+
+Além  disso,  o  dispositivo  de  expansão  atua 
+
+junto  ao  compressor  para  a 
+
+determinação da vazão de fluido refrigerante. 
+
+ 
+
+Os  dispositivos  podem  ser  de  diversos  tipos,  dentre  eles  a  válvula  de  expansão 
+
+termostática, o tubo capilar, cujo nome não representa o fenômeno físico observado 
+
+neste tipo de equipamento de vido o seu diâmetro, a válvula de boia e a válvula de 
+
+expansão de pressão constante. 
+
+ 
+
+O  dispositivo  de  expansão  presente  na  bancada  de  ar-condicionado  alvo  deste 
+
+trabalho é do tipo capilar. Estão instalados no equipamento dois tubos capilares de 
+
+igual diâmetro interno, 0.8 mm, diâmetro externo de 2.7 mm e com comprimentos de 
+
+900 mm e outro de 940 mm, ambos em cobre.  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 4.3 – Tubo capilar de expansão 
+
+Disponível em http://www.scandinavia.com.br  
+
+ 
+
+43 
+
+ 
+
+4.4. EVAPORADOR 
+
+ 
+
+O  evaporado,  assim  como  o  condensador,  nada  mais  é  que  um  trocador  de  calor, 
+
+responsável no ciclo de refrigeração pela absorção de calor da fonte fria, sendo que, 
+
+para  tanto,  faz-se  necessário  que  o  fluido  escoando  através  deste  esteja  a  uma 
+
+temperatura menor que a do ambiente. 
+
+ 
+
+Os evaporadores podem ser classificados quanto a sua forma construtiva e também 
+
+quanto  a  sua  própria  concepção.  Na  primeira,  podem  ser  de  casco  e  tubo 
+
+geralmente  utilizados  para  refrigerar  líquidos  ou  do  tipo  tubo  aletado  que  são 
+
+comumente utilizados para resfriar o ar.  
+
+ 
+
+Já  quanto  a  sua  concepção  existem  basicamente  duas  possibilidades,  a  primeira 
+
+delas é o evaporador de expansão direta em que ocorre mudança de fase dentro do 
+
+mesmo.  A  outra  concepção  é  o  de  recirculação  de  líquido  em  que  uma  sobre 
+
+alimentação com líquido garante um maior coeficiente de troca térmica entre o fluido 
+
+e a parede do tubo.  
+
+ 
+
+O  evaporador  da  bancada  de  teste  é  do  tipo  tubo  aletado  e  de  expansão  direta  e 
+
+assim  como  no  caso  do  condensador,  não  é  possível  identificar  o  fabricante  do 
+
+mesmo  nem  mesmo  algumas  demais  características  do  mesmo  se  tornar  bastante 
+
+difícil  de  levantar  dado  o  fato  de  que  este  já  se  encontra  instalado  no  ciclo  de 
+
+refrigeração.  Na  pesquisa  acerca  do  comportamento  do  mesmo  foi  levada  em 
+
+consideração do padrão construtivo e a capacidade de refrigeração instalada. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+44 
+
+ 
+
+5.  DESCRIÇÃO DA INSTRUMENTAÇÃO 
+
+ 
+
+O  sistema  de  aquisição  de  dados  atualmente  instalado  sobre  a  bancada  de 
+
+refrigeração por compressão de vapor alvo deste trabalho é constituído de diversos 
+
+instrumentos  de  medição  de  registro  local,  tal  que  nenhum  sistema  de  aquisição 
+
+automático está previsto. 
+
+ 
+
+Serão  descritos  neste  capítulo  os 
+
+instrumentos  atualmente 
+
+instalados  para 
+
+desempenho desta função e, ainda, proposto um sistema de medição, contemplando 
+
+instrumentos e demais equipamentos necessários para implantação de um sistema 
+
+de aquisição automática. 
+
+ 
+
+5.1. SISTEMA ATUAL 
+
+ 
+
+O  sistema  atual,  baseado  em  aquisições  locais,  foi  o  utilizado  para  aquisição  de 
+
+todos os dados manipulados durante este trabalho.  
+
+ 
+
+5.1.1 Dados Aquisitados  
+
+  Lado Fluido refrigerante: 
+
+  Ponto 1: Temperatura e pressão ( T1, P1); 
+  Ponto 2: Temperatura e pressão ( T2, P2); 
+  Ponto 3: Temperatura e pressão ( T3, P3); 
+  Ponto 4: Temperatura e pressão ( T4, P4). 
+
+ 
+
+ 
+
+ 
+
+  Lado ar: 
+
+  Ponto 5: Temperatura ,umidade relativa, delta de pressão no 
+
+evaporador  e velocidade (T5, UR5,       , V5); 
+
+  Ponto 7: Temperatura e umidade relativa (T7, UR7); 
+  Ponto 8: Temperatura e delta de pressão no condensador (T8,       ); 
+  Ponto 9: Temperatura e velocidade (T9, V9). 
+
+ 
+ 
+ 
+
+45 
+
+  Equipamento: 
+
+  Compressor/ Ventilador: Corrente, voltagem e potência elétrica (i, V, 
+
+Welet); 
+
+  Evaporador: volume de água condensada no evaporador (mH2O). 
+
+Figura 5.1 – Representação esquemática da bancada e os dados medidos 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5.1.2 Instrumentação Utilizada 
+
+ 
+
+ 
+
+ 
+
+  Lado Fluido refrigerante 
+
+Pressão 
+
+A  aquisição  de  pressão  nos  pontos  1,  2,  3  e  4  é  feita  por  Manomêtros  do  tipo  de 
+
+Bourdon conectados aos respectivos pontos. São, portanto, dois manômetros de alta 
+
+pressão e dois de baixa pressão.  
+
+ 
+
+46 
+
+ 
+
+ 
+
+Pontos 1 e 4 (baixa pressão) 
+
+  Escala: (0 a 8.5)kgf./cm² manométrica; 
+  Precisão: +-2%. 
+
+Pontos 2 e 3 (alta pressão) 
+
+  Escala: (0 a 35)kgf./cm² manométrica; 
+  Precisão:+-2%. 
+
+Como  foi  possível  observar  nos  ensaios  realizados  na  bancada  as  pressões 
+
+medidas  em  4  pelo  manômetro  não  demonstraram  ser  de  boa  qualidade.  Isso 
+
+porque nas medições feitas, a pressão em 4 é indicado como menor que a pressão 
+
+em 1, o que é um contrassenso. 
+
+ 
+
+A  invalidez  de  tal  medição  pode  ser  devido  ao  fato  de  o  tubing  para  medição  de 
+
+pressão  estar  situado  em  uma  curva,  podendo,  portanto,  sofrer  de  influência  de 
+
+vórtices  gerados  devido  a  turbulência  que  acaba  por  derrubar  a  pressão  aferida 
+
+naquele ponto.  
+
+ 
+
+Visto isso, a pressão em 4 é avaliada como sendo a pressão de saturação do R22 à 
+
+temperatura registrada naquele ponto, T4.  
+
+ 
+
+ 
+
+Temperatura 
+
+A  temperatura  nos  pontos  1,  2,  3  e  4  é  feita  com  o  uso  de  termopares  to  tipo  K 
+
+conectados a um comutador de sinais da FULL GAUGE de 5 canais, PENTA. 
+
+ 
+
+Figura 5.2 Comutador de sinais utilizado da FULL GAUGE 
+
+ 
+
+ 
+
+ 
+
+47 
+
+É observado que os termopares são instalados sobre a tubulação, em contato com 
+
+ela, e não em meio ao fluido refrigerante, cuja temperatura é o objetivo da medição. 
+
+Tal fato pode ocasionar um desvio na medição devido à resistência térmica do tubo 
+
+e a resistência térmica do contato entre o tubo e o termopar, no entanto, este efeito 
+
+será desprezado, como na maioria dos trabalhos disponíveis. 
+
+  Range: -200°C a 1200°C; 
+  Precisão: 0.75% . 
+
+ 
+
+ 
+
+ 
+
+  Lado ar 
+
+Pressão diferencial 
+
+É  feita  a  leitura  de  pressão  diferencial  através  do  evaporador  e  do  condensador, 
+
+para tanto, é utilizado o equipamento MP-120 da Instrutemp. 
+
+  Escala: (0 a 1000) Pa 
+  Precisão: +-2% da leitura 
+
+ 
+
+Temperatura 
+
+ 
+
+É feita aquisição de temperatura nos pontos 5, 7, 8 e 9.  
+
+Pontos 5 e 7: 
+
+Utilização  do  termo-higrômetro  digital  do  fabricante  Minipa,  modelo  MTH 
+
+1361. 
+
+  Escala: (-20 a 60)°C 
+  Precisão: +-0.8°C 
+
+Ponto 8: 
+
+É utilizado um termômetro de mercúrio. 
+
+  Escala (-10 a 60)°C 
+  Precisão: 0.5°C 
+
+Ponto 9:  
+
+Utiliza-se um termopar tipo K, conectado ao mesmo comutador utilizado para 
+
+aquisição das temperaturas do circuito de fluido refrigerante.  
+
+  Escala: (-200 a 1200)°C 
+  Precisão: 0.75% 
+
+ 
+
+ 
+
+Umidade relativa 
+
+Esta propriedade é registrada apenas para os ponto 5 e 7. 
+
+É utilizado o termo-higrômetro do fabricante Minipa modelo MTH 1361. 
+
+48 
+
+  Escala: (0 a 100%) UR 
+  Precisão: 5% da leitura 
+
+ 
+
+ 
+
+Velocidade 
+
+A  aquisição  de  velocidade  é  feita  para  os  pontos  5  e  9  é  utilizado  um  termo 
+
+anemômetro digital com ventoinha do fabricante Minipa, modelo MDA-11. 
+
+  Escala: (0 a 30)m/s 
+  Precisão: +-3%  
+
+A forma como é feita a aquisição da velocidade no evaporador e condensador são 
+mostradas nas figuras 5.3 e 5.4. 
+
+Figura 5.3 – Aquisição de velocidade na entrada do evaporador 
+
+ 
+
+ 
+
+Figura 5.4 – Aquisição de velocidade na saída do condensador 
+
+ 
+
+ 
+
+ 
+
+49 
+
+É de se esperar que perfil de velocidade tanto no ponto 5, quanto no ponto 9 não se 
+
+comportem  de forma fácil  de  se  predizer  com  um  equacionamento  dos  regimes  de 
+
+escoamento nos mesmos. 
+
+ 
+
+Com isso em mente, partiu-se para uma análise experimental do fenômeno, tal que, 
+
+objetivava-se  identificar  qual  a  relação  entre  a  velocidade  medida  no  centro  das 
+
+secções do evaporador e do condensador com a vazão de ar passante.  
+
+ 
+
+As  secções  foram  divididas  em  12  espaços  iguais  e  registradas  as  velocidades  no 
+
+centro  de  cada  um  desses  espaços,  sendo  que  a  média  dessas  representaria  a 
+
+velocidade  pela  qual  multiplicada  a  área  da  secção  dos  dutos  seria  a  vazão  de  ar 
+
+observada.  
+
+ 
+
+Foi  concluído  que  a  vazão  medida  no  centro  da  secção  do  evaporador  representa 
+
+uma  excelente  aproximação  para  a  vazão  que  é  realmente  medida  (aquela 
+
+registrada quando as secções foram divididas cada uma em 12 partes), não sendo 
+
+necessário nenhum tipo de compensação nesse ponto de vista. 
+
+ 
+
+No  entanto,  conforme  será  visto  no  capítulo  que  aborda  a  modelagem  e  sua 
+
+calibração,  será  necessário  compensar  a  medida  devido  ao  fato  de  a  temperatura 
+
+medida  em  um  ponto  não  ser  aplicada  para  todos  os  demais  na  entrada  do 
+
+evaporador.  O  mesmo  é  feito  para  o  condensador,  sendo  que,  neste  caso,  a 
+
+compensação  pondera  também  o  fato  de  a  velocidade  no  centro  da  secção  não 
+
+representar a média das demais. 
+
+ 
+
+ 
+
+  Equipamento 
+
+ 
+
+Corrente 
+
+ 
+
+A  aquisição  da  corrente  é feita  pelo  voltímetro  e  amperímetro  digital  do  tipo  alicate 
+
+do fabricante Minipa ET-3200A. 
+
+  Escala: (0 a 1000) A 
+  Precisão: 2% 
+
+ 
+
+ 
+
+ 
+
+Tensão 
+
+A aquisição da tensão é feita pelo voltímetro e amperímetro digital do tipo alicate do 
+
+50 
+
+fabricante Minipa ET-3200A. 
+
+  Escala: (0 a 750)V 
+  Precisão: 2% 
+
+ 
+
+ 
+
+Potência Elétrica 
+
+A potência elétrica é registrada com o uso do wattímetro do fabricante POLITERM, 
+
+modelo POL-64. 
+
+  Escala: (0 a 6000)W 
+  Precisão: 1.5%  
+
+ 
+
+A  potência  elétrica  registrada  corresponde  à  soma  da  potência  consumida  pelo 
+
+compressor  e  pelo  ventilador  ao  mesmo  tempo.  Para  fim  de  registro  apenas  da 
+
+potência do compressor é preciso subtrair a potência do ventilador dependendo do 
+
+regime  de  operação  (alta  ou  baixa  velocidade).  Para  tanto,  foi  feita  a  medição  da 
+
+potência  consumida  pelo  ventilador  quando  o  compressor  estava  desligado 
+
+permitindo, assim, fazer a compensação referida. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5.2. AQUISIÇÃO AUTOMÁTICA DE DADOS 
+
+ 
+
+Esquema de aquisição automática de dados:  
+
+51 
+
+Figura 5.5 – Representação esquemática de um sistema de aquisição automática de dados 
+
+ 
+
+ 
+
+Deseja-se  especificar  todo  o  aparato  necessário  para  que  o  esquema  proposto 
+
+acima seja capaz de operar de forma satisfatória nas condições que são observadas 
+
+no equipamento. 
+
+ 
+
+5.2.1 Sensores 
+
+ 
+
+Este  conjunto  contempla  os  elementos  sensores  e  seus  respectivos  transmissores, 
+
+que, muitas das vezes vêm acoplados ao elemento sensor. 
+
+ 
+
+ 
+
+  Lado Fluido refrigerante 
+
+Será especificado aqui um range de temperatura e pressão que atende cada um dos 
+
+pontos nos quais as medidas são realizadas – 1,2,3, e 4. 
+
+ 
+
+Tabela 5.1 – Condições do fluído refrigerante nos pontos do ciclo. 
+
+Ponto 
+
+Estado 
+
+Temperatura (°C) 
+
+Pressão (kPa) 
+
+1 
+
+2 
+
+3 
+
+4 
+
+Superaquecido 
+
+Superaquecido 
+
+Sub-resfriado 
+
+Líquido-vapor 
+
+(10 a 30) 
+
+(90 a 140) 
+
+(25 a 45) 
+
+(-20 a 10) 
+
+ 
+
+(200 a 600) 
+
+(1800 a 3500) 
+
+(1800 a 3500) 
+
+(200 a 600) 
+
+ 
+
+ 
+
+Temperatura 
+
+Dadas  as  condições  acima  bem  como  aquelas  observadas  durante  os  ensaios 
+
+realizados sobre o equipamento pode-se propor a utilização de um termopar tipo K, 
+
+isso pois, além de atender o range de temperatura necessário este é de comum uso 
+
+52 
+
+para diversas aplicações e de baixo custo. 
+
+  Escala: -200°C a 1200°C 
+  Precisão: 0.75% 
+
+ 
+
+ 
+
+Pressão 
+
+É proposto o uso de transdutores de pressão do tipo extensométricos devido ao fato 
+
+de  possuírem  maior  resistência  à  variação  de 
+
+temperatura, 
+
+linearidade  e 
+
+confiabilidade  além  de  serem  dotados  de  arranjo  eletrônico  simples  (pontes  de 
+
+Wheatstone).  
+
+ 
+
+Dentre os possíveis candidatos se encontra o modelo AKS 33 com sinal de saída 4-
+
+20mA fabricado pela Danfoss. 
+
+  Escala: (0 a 40) bar 
+  Precisão: +-0.8% 
+
+ 
+
+ 
+
+ 
+
+  Lado ar 
+
+Tabela 5.2 – Condições do ar nos ponto do sistema. 
+
+Ponto 
+
+Temperatura (°C) 
+
+Pressão (kPa) 
+
+(15-30) 
+
+(10-25) 
+
+(25 a 45) 
+
+(30 a 60) 
+
+(200 a 600) 
+
+(1800 a 3500) 
+
+(1800 a 3500) 
+
+(200 a 600) 
+
+5 
+
+7 
+
+8 
+
+9 
+
+ 
+
+ 
+
+ 
+
+ 
+
+UR (%) 
+
+(20 a 90) 
+
+(20 a 90) 
+
+- 
+
+- 
+
+53 
+
+ 
+
+Temperaturas e umidade relativa 
+
+ 
+
+Pontos 5 e 7: 
+
+Para as temperaturas 5 e 6 é previsto o uso de um instrumento capaz de aquisitar 
+
+tanto temperatura quanto a umidade relativa, isso reduz a quantidade de instrumento 
+
+instalado e portanto simplifica a estrutura do sistema. 
+
+ 
+
+Para tanto é especificado um instrumento capaz de fazê-lo chamado multi-sensor do 
+
+fabricante Sensirion modelo SHT71 que possui saída digital. 
+
+  Escala: (-40 a 123.8)°C e (0 a 100)% UR 
+  Precisão: +-0.4°C e +-3%UR 
+
+ 
+
+Pontos 8 e 9: 
+
+Para  estes  pontos  é  previsto  o  uso  de  termopares  tipo  K,  devido  à  facilidade  de 
+
+encontrá-los no mercado e para manter todo o equipamento com uso de apenas um 
+
+tipo de termopar, possibilitando intercambialidade. 
+
+ 
+
+ 
+
+Pressão diferencial 
+
+Entre os pontos 5 e 7,       ,e para posicionar entre os pontos 8 e 9,      . 
+
+ 
+
+Para  tanto,  foi  escolhido  o  instrumento  do  fabricante  SENSIRION,  modelo  SDP 
+
+1000-L que funciona com tecnologia patenteada pelo próprio fabricante e é capaz de 
+
+fazer correções dada variações na temperatura do fluido. 
+
+  Escala: (0 a 500) kPa 
+  Precisão: 0.1% 
+
+ 
+
+ 
+
+Velocidade 
+
+Este parâmetro é medido tendo em vista a intenção de avaliar a vazão de entrada de 
+
+ar no evaporador e também saída de ar do condensador. 
+
+ 
+
+ 
+
+54 
+
+Para tanto, é especificado um instrumento capaz de trabalhar com o range esperado 
+
+para estes pontos, entre 1m/s e 3m/s. 
+
+ 
+
+Um possível candidato é o anemômetro analógico do fabricante Technovip, modelo 
+
+TEC-CTV200 que atende a estes ranges. 
+
+  Escala: (0 a 20)m/s 
+  Precisão: +-3% 
+
+  Equipamentos 
+
+ 
+
+ 
+
+Devido  ao  fato  de  na  modelagem,  o  único  parâmetro  de  interesse  de  natureza 
+
+elétrica  ser  a  potência  de  acionamento  do  compressor,  este  será  o  único 
+
+especificado aqui. 
+
+ 
+
+O  uso  de  transdutores  de  tensão  e  corrente  para  fim  de  monitoramento  do 
+
+equipamento  ou  de  aplicação  para  diagnóstico  não  é  justificável  devido  ao  fato 
+
+destes  instrumentos  não  fornecerem  entrada  para  nenhum  dos  procedimentos 
+
+realizados. Tornado, pois, a medição dispensável. 
+
+ 
+
+ 
+
+Potência 
+
+Um  possível  transdutor  de  potência  para  a  aplicação  de  destino  é  o  transdutor  de 
+
+potência elétrica do fabricante Hartmann & Braun modelo ETP 30. 
+
+ 
+
+5.2.2. Hardware 
+
+ 
+
+O hardware a ser aplicado no sistema de aquisição de dados em questão deverá ser 
+
+capaz  de  receber  todos  os  sinais  dos  elementos  sensores  e  transmiti-los  ao 
+
+computador ao qual estará conectado. 
+
+ 
+
+Alguns  são  os  pontos  que  precisam  ser  garantidos  pelo  equipamento,  são  eles,  a 
+
+taca  de  transmissão  de  dados  compatível  com  a  aplicação  desejada,  que,  nesse 
+
+caso,  não precisará  ser  alta,  sendo  que  os limitadores  dessa  velocidades  serão os 
+
+próprios instrumentos em si. 
+
+55 
+
+ 
+
+ 
+
+Outra  característica  fundamental  é  a  quantidade  de  entradas  e  saídas  digitais  e 
+
+analógicas  do  mesmo.  Para  esta  aplicação, no  entanto, devido  à ausência  de  uma 
+
+malha de controle associada, a quantidade de saídas não é importante. 
+
+ 
+
+Para  as  entradas,  será  necessário  existência  de  2  entradas  digitais,  para  os 
+
+sensores  de  temperatura  e  umidade  dos  pontos  5  e  7,  sendo  os  demais  sensores 
+
+analógico e portanto necessitam da presença de respectivas entradas analógicas  – 
+
+sendo  estas  16.  O  hardware  escolhido  foi,  portanto,  o  do  fabricante  National 
+
+Instruements modelo USB-6210. 
+
+ 
+
+5.2.3. Software 
+
+ 
+
+O  software  de  aquisição  de  dados  deve  ser  capaz  de  fazer  as  leituras  junto  ao 
+
+hardware e disponibiliza-la ao usuário de maneira que simplifique o seu uso. Outro 
+
+aspecto,  importante,  é  a  disponibilidade  de  desenvolvimento  de  interface  gráfica, 
+
+que em muito pode ser útil quando do desenvolvimento de um software cujo objetivo 
+
+é auxiliar decisões humanas, sendo necessária facilidade em seu uso. 
+
+ 
+
+Muitos são os softwares de aquisição de dados disponíveis no mercado, no entanto, 
+
+poucos  são  tão  difundidos  e  de  extensa  aplicação  quanto  o  LabVIEW  o  que  o 
+
+favorece  do  ponto  de  vista  da  disponibilidade  de  material  de  referencia  para  o 
+
+desenvolvimento  de  uma  aplicação.  Outro  aspecto  é  o  fato  do  LabVIEW  oferecer 
+
+vantagens quando da aplicação junto à hardwares do fabricante escolhido National 
+
+Instruments. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+56 
+
+ 
+
+6.  MODELAGEM DE REFERÊNCIA 
+
+ 
+
+Neste  capítulo  será  descrito  separadamente  para  cada  componente  do  ciclo  de 
+
+refrigeração,  o  comportamento  típico  e  as  modelagens  utilizadas  na  literatura.  O 
+
+desenvolvimento  da  modelagem  será  abordado  considerando  o  conjunto  de 
+
+equipamentos, bem como a sua calibração. 
+
+ 
+
+6.1. COMPORTAMENTO TÍPICO E MODELOS DISPONÍVEIS 
+
+ 
+
+6.1.1 Compressor 
+
+ 
+
+ 
+
+  Comportamento típico 
+
+O  comportamento 
+
+típico  deste  equipamento  em  conjunto  com  os  demais 
+
+componentes do sistema é ilustrado na imagem abaixo. 
+
+ 
+
+ 
+
+Figura 6.1 – Comportamento típico de parâmetros do ciclo de refrigeração. 
+
+Adaptado de ASHRAE (2012). 
+
+ 
+
+Baseado nisso, é possível prever que o COP do equipamento tende a aumentar na 
+
+mesma direção que a capacidade aumenta devido ao fato de esta ser a razão entre 
+
+ 
+
+57 
+
+as duas e ser nítido o fato de que a curva de capacidade é mais inclinada do que a 
+
+de potência de compressão. 
+
+ 
+
+ 
+
+  Modelagem 
+
+Diversas  são  as  abordagens  possíveis  para  que  determinação  de  um  modelo  que 
+
+represente  o  comportamento  de  um  compressor  alternativo  como  aquele  presente 
+
+na  bancada  de  teste,  são  elas:  mapeamento  de  desempenho  (ARI  540);  eficiência 
+
+isentrópica e eficiência volumétrica; coeficiente politrópico. 
+
+ 
+
+ 
+
+Isentrópico e Politrópico 
+
+Em  Mendes  (2012)  a  modelagem  do  compressor  com  o  uso  das  curvas  eficiência 
+
+isentrópica e eficiência volumétrica demonstrou ser possível e apresentando ótimos 
+
+resultados.  No  entanto,  como  é de  se  esperar,  este  tipo  de abordagem  requer  que 
+
+as curvas desse rendimentos em função da relação de pressão sejam levantadas. 
+
+ 
+
+       
+
+        
+
+     
+
+   
+
+ 
+
+ 
+
+                                                             
+
+ 
+
+(6.1) 
+
+                                                                                                          (6.2) 
+
+            
+
+  
+ 
+
+ 
+
+Onde: 
+
+           Rendimento volumétrico [%] 
+
+          Volume deslocado [m³/s] 
+
+          Diâmetro do cilindro [m] 
+
+          Curso do cilindro [m] 
+
+           Simples (1) ou duplo efeito (2) 
+
+          Número de cilindros  
+
+         Rotações [RPS] 
+
+        Fluxo de refrigerante [kg/s] 
+
+         Volume específico [m³/kg] 
+
+ 
+
+ 
+
+58 
+
+Figura 6.2 – Curva genérica de rendimento volumétrico x relação de pressão. 
+
+ 
+
+Adaptado de Mendes (2012). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(6.3) 
+
+        
+
+      
+     
+
+   
+
+ 
+
+Onde: 
+
+ 
+
+           Rendimento isentrópico 
+
+             Entalpia específica [J/kg] 
+
+ 
+
+Figura 6.3 – Curva de rendimento isentrópico típico. 
+
+ 
+
+Adaptado de Mendes (2012). 
+
+ 
+
+ 
+
+59 
+
+Logo,  é  possível  verificar  que  em  posse  da  curva  de      ,           e  da  relação  de 
+
+pressão  no  compressor  e  da  temperatura  de  entrada  do  compressor  é  possível 
+
+calcular a vazão de refrigerante e a temperatura de saída do compressor. 
+
+ 
+
+Uma  variação  desta  abordagem  seria  o  uso  do  coeficiente  politrópico  ao  invés  de 
+
+usar a curva de      , no entanto, assim como a alternativa anterior, esta requer que 
+
+seja observada a variação do coeficiente politrópico ao variar as condições às quais 
+
+o fluido refrigerante está submetido no compressor. 
+
+ 
+
+             
+
+     
+
+   
+   
+
+ 
+
+Onde: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(6.4) 
+
+T     Temperatura [K] 
+
+P     Pressão [kPa] 
+
+       Coeficiente politrópico 
+
+ 
+
+ 
+
+ARI-540 
+
+Outra  abordagem  possível  é  a  do  uso  de  mapas  de  desempenho  fornecidos  pelos 
+
+fabricantes  do  compressor.  Este  mapeamento  baseia-se  na  norma  ARI-540  da  Air-
+
+Conditioning  and  Refrigeration  Institute  (ARI),  hoje  chamada  de  Air-Conditioning, 
+
+Heating and Refrigeration Institute (AHRI). 
+
+ 
+
+Conforme  a  norma,  o  fabricante  deve  disponibilizar  um  mapa  de  performance  do 
+
+equipamento.  Este  mapa,  nada  mais  é  que  uma  expressão  polinomial  de  10 
+
+coeficientes  utilizados  para  descrever  o  desempenho  do  compressor  dada  uma 
+
+condição de entrada e saída específica. 
+
+  
+
+Dentre os parâmetros de performance possíveis de serem calculados com o uso do 
+
+equacionamento  estão  a  massa  de  fluido  refrigerante,  potência  consumida, 
+
+capacidade  e  corrente,  sendo  que  para  cada  uma  desses  parâmetros  diferentes 
+
+coeficientes são fornecidos. 
+
+ 
+
+ 
+
+A equação fornecida pelo fabricante tem o formato abaixo: 
+
+ 
+
+                                                                                       (6.5) 
+
+60 
+
+ 
+
+Onde: 
+
+ 
+
+        Poderá ser      ,      ,      , etc. 
+
+        Temperatura de evaporação ou       [°C] 
+
+        Temperatura de condensação ou       [°C] 
+
+ 
+
+A  principal  vantagem  deste  tipo  de  abordagem  é  que  a  mesma  retrata  o 
+
+comportamento  do  equipamento  em  perfeitas  condições  sem  necessidade  de 
+
+grandes  ajustes  e  é  claro  de  exercitar  o  equipamento  para  o  levantamento 
+
+experimental das curvas necessárias na abordagem anterior. 
+
+ 
+
+No  entanto,  como  é  de  se  esperar,  com  o  tempo  o  comportamento  real  do 
+
+compressor  pode  desviar  um  pouco  do  previsto  nessas  equações  devido  a 
+
+degradação devido ao uso e o desgaste natural de seus componentes.  
+
+ 
+
+Além disso, outro aspecto muito importante que não é levado em consideração é o 
+
+fato  de  que  as  condições  em  que  são  feitos  os  levantamentos  do  teste  segundo  a 
+
+ARI-540  não  levam  em  consideração  a  variação  da  temperatura  ambiente,  sendo 
+
+esta fixada em 32°C.  
+
+ 
+
+ 
+
+Método semi-empírico 
+
+Outro  método  disponível  na  literatura  é  o  proposto  por  Jahnig  (1999)  em  que  um 
+
+método  alternativo,  que  não  o  descrito  na  norma  ARI-540  é  apresentado  para  a 
+
+modelagem do compressor em condições fora daquelas em que o testes são feitos. 
+
+ 
+
+                       
+
+     
+
+ 
+      
+
+   
+
+  
+
+       
+
+ 
+
+ 
+
+ 
+
+            
+
+(6.6) 
+
+ 
+
+61 
+
+                       
+
+ 
+
+   
+
+                
+
+     
+
+   
+       
+
+ 
+
+ 
+
+ 
+
+           (6.7) 
+
+ 
+
+Onde: 
+
+ 
+
+            Rendimento combinado [%] 
+
+           Fluxo de refrigerante [kg/s] 
+
+             Constante 
+
+            Pressão [kPa] 
+
+            Coeficiente Politrópico   
+
+            Volume deslocado [m³/s] 
+
+         Rotações [RPS] 
+
+            Volume específico [m³/kg] 
+
+ 
+
+Segundo  o  autor,  o  modelo  final  possui  cinco  variáveis  de  ajuste  as  quais  são 
+
+calculadas com a técnica de regressão não linear sendo que o modelo depende de 
+
+um  mínimo  de  quatro  medidas  de  vazão  mássica  e  potência  de  acionamento  para 
+
+avaliação dos parâmetros.  
+
+ 
+
+O modelo demonstrou erro máximo de 5% ao calcular vazões com extrapolações de 
+
+10°C abaixo ou acima das temperaturas de evaporação e condensação medidas. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+6.1.2 Condensador 
+
+62 
+
+ 
+
+ 
+
+  Comportamento típico 
+
+Figura 6.4 – Calor removido no condensador. 
+
+Adaptado de ASHRAE (2012). 
+
+ 
+
+Como  é  possível  observar  na  figura  6.4,  com  o  aumento  da  temperatura  de 
+
+evaporação a razão 
+
+     
+
+     
+
+ diminui. 
+
+ 
+
+Tendo  em  mente  o  desempenho  apresentado  para  o  compressor  e  evaporador 
+
+mostra acima, isso já era esperado, uma vez que, aumentando-se a temperatura de 
+
+evaporação o       aumenta mais rapidamente que o      , logo:  
+
+ 
+
+       
+
+     
+
+     
+
+ 
+
+           
+
+     
+
+     
+
+     
+
+     
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.8) 
+
+ 
+
+Ou  seja,  como         aumenta  mais  rapidamente  que       ,  o        tenderá  a 
+
+diminuir.  
+
+ 
+
+O mesmo é válido para explicar o comportamento verificado na figura 6.5: 
+
+ 
+
+ 
+
+63 
+
+Figura 6.5 – Relação de rejeição de calor. 
+
+Adaptado de Stoecker e Jones (1995). 
+
+ 
+
+Onde a variável no eixo vertical do gráfico é: 
+
+ 
+
+                              
+
+     
+
+     
+
+      
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.9) 
+
+ 
+
+ 
+
+  Modelagem 
+
+Conforme Winkler (2009), a modelagem desse equipamento pode ser feita partindo-
+
+se  de  diferentes  abordagens,  são  elas:  modelo  de  um  único  nó;  modelo  multi-nós; 
+
+modelos  de  zonas.  Na  primeira  abordagem  tem-se  o  exemplo  do  uso  da  média 
+
+logarítmica,  que  é  simples  mas  acaba  perdendo  precisão  quando  há  várias  fases 
+
+envolvidas.  
+
+ 
+
+No segundo caso, o equipamento é dividido em diversos volumes de controles e as 
+
+propriedades  são  avaliadas  à  medida  que  se  avança  em  cada  novo  volume  de 
+
+controle. 
+
+ 
+
+Por  fim,  no  modelo  de  zonas  o  equipamento  é  dividido  em  três  regiões  bem 
+
+determinadas,  são  elas:  a  de  mudança  de  fase,  vapor  superaquecido  e  líquido 
+
+super-resfriado. Neste caso, o modelo acaba sendo menos preciso que o de multi-
+
+nós, no entanto apresenta melhor desempenho computacional.  
+
+ 
+
+ 
+
+64 
+
+Quanto  ao  modelo  físico  utilizado  em  cada  uma  dessas  técnicas,  existem 
+
+basicamente  três  modelos  disponíveis  salvo  as  pequenas  variações  de  cada  um 
+
+deles. 
+
+ 
+
+Em  Mendes  (2012)  foi  feito  uso  do  método  do  fator  de  troca  térmica  por  diferença 
+
+unitária  de  temperatura  em  que  foi  suposto  que  este  variava  apenas  com  a 
+
+velocidade de face no condensador. 
+
+ 
+
+Neste modelo o calor trocado no condensador é calculado como: 
+
+ 
+
+                                                     
+
+ 
+
+ 
+
+Sendo,       estimado pela seguinte expressão: 
+
+ 
+
+       
+
+       
+
+  
+
+          
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.10) 
+
+         (6.11) 
+
+Tal que os dados de entrada poderiam ser obtidos do catálogo do fabricante destes 
+
+equipamentos. 
+
+ 
+
+Outro  modelo  de  transferência  de  calor  comunmente  utilizado  para  representação 
+
+deste  equipamento  é  o  coeficiente  global  de  transferência  de  calor  entre  o  fluido, 
+
+sendo  considerada  a  interação  ar-serpentina,  condução  no  tubo  e  a  interação  do 
+
+fluido  refrigerante  e  a  parte 
+
+interna  da  serpentina.  Levando  ao  seguinte 
+
+equacionamento para o coeficiente global de troca térmica: 
+
+ 
+
+ 
+
+      
+
+ 
+
+ 
+
+ 
+
+     
+
+ 
+
+ 
+
+   
+
+        
+
+Assim, 
+
+ 
+
+                           
+
+ 
+
+Onde: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+      
+
+ 
+
+ 
+
+ 
+
+ 
+
+     
+
+         (6.12) 
+
+                               (6.13) 
+
+65 
+
+ 
+
+ 
+
+       Coeficiente Global de transferência de calor 
+
+       Diferença de temperatura média logarítmica 
+
+ 
+
+Como  é  de  se  esperar, 
+
+torna-se  bastante  complicado 
+
+fazer  com  que  o 
+
+equacionamento  acima  represente  de  forma  satisfatória  o  comportamento  do 
+
+equipamento  devido  a  sua  complexidade  de  obtenção  já  que  os  resultados 
+
+dependem  em  muito  de  algumas  características  que  são  demasiadamente 
+
+complicadas  para  estimar  quando  o  equipamento  já  se  encontra  instalado.  Essa 
+
+abordagem é feita por Winkler (2009) dentre muitos outros. 
+
+ 
+
+Outra  abordagem  possível  é  o  uso  do  modelo  de  ε  -NUT  em  que  a  troca  térmica 
+
+máxima entre  as correntes é ponderada por fatores dependentes das propriedades 
+
+do fluido observado para aqueles estados. 
+
+ 
+
+6.1.3 Dispositivo de Expansão 
+
+  Comportamento típico 
+
+ 
+
+Figura 6.6 – Equilíbrio entre tubo capilar e compressor. 
+
+Adaptado de Stoecker e Jones (1995). 
+
+ 
+
+ 
+
+As  curvas  plotadas  indicam o  comportamento  de um tubo  capilar de  acordo  com  a 
+
+diferença  de  pressão  à  qual  ele  está  submetido  e  sua  interação  com  a  curva  de 
+
+vazão de refrigerante para o compressor. 
+
+ 
+
+ 
+
+66 
+
+Como  é  possível  observar,  para  uma  temperatura  estabelecida  de  condensação 
+
+existirá apenas um ponto de equilíbrio entre o compressor e o tubo capilar. 
+
+ 
+
+Sendo  assim,  em  caso  de  as  pressões  já  estiverem  estabelecidas  a  vazão  de 
+
+refrigerante poderá ser obtida tanto do modelo do comportamento do dispositivo de 
+
+expansão ou pelo modelo do compressor.  
+
+ 
+
+ 
+
+  Modelagem 
+
+Existem  alguns  modelos  para  descrever  o  comportamento  típico  observado  destes 
+
+equipamentos, sendo dois deles os principais. 
+
+ 
+
+O primeiro deles é o proposto por  Stoecker e Jones (1995) que fornece a seguinte 
+
+relação para escoamento através de um determinado diâmetro fixado. 
+
+ 
+
+                           
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.14) 
+
+ 
+
+Onde: 
+
+ 
+
+      Fluxo de refrigerante [kg/s] 
+
+    Constante 
+
+     Diâmetro do tubo [m] 
+
+     Massa específica do fluido refrigerante [kg/m³] 
+
+    Diferença de pressão através do tubo capilar [kPa] 
+
+ 
+
+Um segundo modelo é aquele proposto com Kim et al. (1994) e Kim e O’Neal(1994) 
+
+que chegaram basicamente ao mesmo resultado para o escoamento através de um 
+
+tubo de pequena espessura.  
+
+ 
+
+No  modelo  foi  considerado  o  escoamento  bifásico  através  do  tubo,  chegando-se  à 
+
+seguinte relação: 
+
+ 
+
+                                 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.15) 
+
+67 
+
+ 
+
+ 
+
+Onde: 
+
+ 
+
+   Constante 
+
+   Aceleração da gravidade [m/s²] 
+
+ 
+
+6.1.4 Evaporador 
+
+ 
+
+ 
+
+ 
+
+  Comportamento típico 
+
+Figura 6.7 – Curva de capacidade de evaporadores 
+
+Adaptado de http://www.mcquay.com 
+
+ 
+
+Como  observado  no  comportamento  da  capacidade  de  refrigeração  estimada  pelo 
+
+fabricante  eis  que  a  curva  de         em  função  da  temperatura  de  evaporação  de 
+
+fato possui o mesmo tipo de comportamento.  
+
+ 
+
+ 
+
+  Modelagem 
+
+Para  a  simulação  do  comportamento  do  evaporador  são  utilizadas  as  mesmas 
+
+abordagens utilizadas para o condensador.  
+
+ 
+
+ 
+
+ 
+
+ 
+
+68 
+
+6.2. DESENVOLVIMENTO DA MODELAGEM E CALIBRAÇÃO 
+
+ 
+
+O  desenvolvimento  de  uma  modelagem  satisfatória  requer  a  avaliação  de  diversos 
+
+fatores.  O  primeiro  deles  é  o  quão  bem  os  experimentos  realizados  e  os  dados 
+
+coletados  representam  o  verdadeiro  estado  de  operação  da  máquina.  O  segundo 
+
+deles  é  considerar  a  complexidade  de  determinadas  alternativas  de  modelagem 
+
+levando-se em conta a capacidade de obter os dados necessários para tal fim. Por 
+
+fim, o esforço computacional necessário para cada uma das possíveis alternativas. 
+
+ 
+
+É  fácil  perceber  que  para  este  trabalho  em  específico,  devido  ao  fato  de  não  se 
+
+objetivar o desenvolvimento de uma ferramenta de  detecção e diagnóstico de falha 
+
+on-line  o  esforço  computacional  envolvido  não  será  ponderado  na  escolha  do 
+
+método  escolhido  para  a  simulação  de  cada  equipamento,  mesmo  sabendo  que  a 
+
+simulação  de  um  sistema  de  ar-condicionado  leva  a  um  sistema  de  equações 
+
+bastante não linear devido às características do balanço energético no mesmo. 
+
+ 
+
+Com  isso  em  mente,  é  apresentada  na  figura  6.8  a  forma  como  foi  feita  a 
+
+modelagem  do  equipamento  em  termo  de  funções  ao  invés  de  expressões 
+
+completas como poderá ser observado no Apêndice A deste trabalho.  
+
+ 
+
+69 
+
+Figura 6.8 – Representação esquemática da modelagem desenvolvida. 
+
+ 
+
+Como é possível observar na figura 6.8, a abordagem escolhida para modelagem do 
+
+equipamento possui os seguintes aspectos a serem observados. 
+
+ 
+
+ 
+
+Entradas: 
+
+T5, UR5, UR7, T8, T1 e T3 
+
+ 
+
+Abordagens: 
+
+  Compressor: Compressão politrópica com variação do coeficiente e vazão de 
+
+refrigerante conforme ARI-540. 
+
+  Evaporador: Apenas balanço de energia 
+  Condensador: Apenas balanço de energia 
+  DXP: Apenas balanço de energia 
+
+70 
+
+ 
+
+6.2.1 Compressor 
+
+ 
+
+ 
+
+  Modelo 
+
+Primeiramente,  para  escolha  do  método  para  avaliação  da  vazão  de  refrigerante 
+
+preciso notar que o aparato experimental descrito nos capítulos anteriores, aliado à 
+
+forma como são feitas as medições bem como a ausência de um medidor de  vazão 
+
+na  linha  de  fluido  refrigerante  leva  a  análise  do  comportamento  da  máquina  a  um 
+
+impasse. Tal impasse é baseado no fato de que com a ausência deste instrumento 
+
+na linha de fluido tampouco de um aparato, como seria o uso de um calorímetro, a 
+
+validação de qualquer uma das propostas de medição dessa vazão seriam falhas. 
+
+  
+
+Observado  este  aspecto,  optou-se  por  utilizar  o  método  proposto  na  ARI-540,  que 
+
+mesmo  restringindo  a  sua  validade  oficial  para  intervalos  restritos  e  situações 
+
+específicas  apresentada  na  norma  este  método  continua  eficiente  em  representar 
+
+um comportamento típico e foi, portanto, a escolha para o cálculo realizado. 
+
+ 
+
+Já para o modelo da compressão em si, foi feita a consideração de uma compressão 
+
+politrópica,  como  considerada  por  diversos  autores.  No  entanto,  isso  levou  à 
+
+necessidade  de  desenvolvimento  de  uma  abordagem  capaz  de  considerar  a 
+
+variação do coeficiente de expansão politrópica. 
+
+ 
+
+No caso do coeficiente, este foi considerado linear, embora, a literatura sugira uma 
+
+variação  do  coeficiente  politrópico  em  si,  neste 
+
+trabalho  o  coeficiente  é 
+
+simplesmente  uma  variável  de  compensação  da  temperatura  T2  alcançada,  sendo 
+
+que, mesmo que está na seja a forma mais correta de representar, reduz em muito a 
+
+não linearidade do problema analisado. 
+
+ 
+
+ 
+
+  Calibração 
+
+As  calibrações  descritas  a  seguir  baseiam-se  na  capacidade  do  modelo  utilizado 
+
+atingir  a  melhor  reprodução  dos  dados  medidos  possível  ao  atribuir  um  coeficiente 
+
+de  multiplicação  para  compensar  o  desvio  médio  observado  entre  o  previsto  e  o 
+
+medido. 
+
+ 
+
+ 
+
+                                          
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.16) 
+
+71 
+
+ 
+
+Onde: 
+
+ 
+
+                  Alguma propriedade medida 
+
+                  Valor calculado para uma determinada propriedade 
+
+                    Constante de calibração 
+
+ 
+
+Para um determinado equipamento o valor assumido para a constante de calibração 
+
+ , será a média dos valores obtidos para os 8 conjuntos de dados utilizados. 
+
+ 
+
+ 
+
+Vazão de refrigerante 
+
+O  calculo  de        mostrou  ser  de  satisfatória  precisão  quando  comparado  com  o 
+
+cálculo feito através do balanço de massa no evaporador e no condensador, sendo 
+
+que este foi então adotado como a referência sem que fosse necessaria a calibração 
+
+da equação. 
+
+ 
+
+Logo,   =1 para o modelo utilizado para      
+
+ 
+
+Mesmo que o valor atingido não tenha sido o mesmo, o fator   foi considerado igual 
+
+a 1 já que, como descrito anteriormente, a confiabilidade do sistema de medição da 
+
+troca de calor do lado ar não permitiria tal calibração. 
+
+ 
+
+ 
+
+Compressão politrópica 
+
+Para  o  cálculo  do  coeficiente  de  ajuste  aplicado  ao  calculo  de  T2  com  o  uso  da 
+
+expressão descrita abaixo foi utilizado a mesma abordagem de calibração linear.  
+
+Para  tanto,  foram  feitos  os  calculos  dos  valores  esperados  para  o  coleficiente 
+
+politrópico tal que, dadas as entradas, relação de pressão e temperatura na sucção 
+
+o calculo da temperatura na descarga fosse o mesmo que o medido. 
+
+ 
+
+ 
+
+             
+
+     
+
+   
+    
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.17) 
+
+72 
+
+ 
+
+ 
+
+ 
+
+Tabela 6.1 – Cálculo do Coeficiente Politrópico do processo de compressão. 
+
+T1 (°C) 
+
+P1 (kPa) 
+
+T2 (°C) 
+
+P2 (kPa) 
+
+19.2 
+
+17.7 
+
+19.7 
+
+20.1 
+
+17 
+
+12.2 
+
+24.1 
+
+24 
+
+463.7 
+
+463.7 
+
+483.5 
+
+518 
+
+523 
+
+493.4 
+
+483.5 
+
+493.4 
+
+106.8 
+
+107.6 
+
+99.7 
+
+107.6 
+
+109.8 
+
+110.9 
+
+97 
+
+101.9 
+
+2299 
+
+2289 
+
+2477 
+
+2664 
+
+2674 
+
+2516 
+
+2477 
+
+2516 
+
+n 
+
+1.188 
+
+1.19 
+
+1.188 
+
+1.195 
+
+1.2 
+
+1.199 
+
+1.183 
+
+1.185 
+
+O valor médio destes foi selecionado e a variação do coeficiente politrópico devido 
+
+às  condições  na  sucção  do  fluido,  conforme  previsto  em  Zhao  (2012),  foi 
+
+compensado por um coeficiente que varia com a tempratura na sucção uma vez que 
+
+este resultado foi melhor que o alcançado utilizando-se a temperatura e pressão de 
+
+entrada. 
+
+ 
+
+                    
+
+     
+
+   
+     
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.18) 
+
+ 
+
+Onde: 
+
+ 
+
+     Coeficiente de ajuste 
+
+ 
+
+ 
+
+Tabela 6.2 – Cálculo do Coeficiente de ajuste. 
+
+T1 (°C) 
+
+19.2 
+17.7 
+19.7 
+20.1 
+17 
+12.2 
+24.1 
+24 
+
+T2 (°C) 
+106.8 
+107.6 
+99.7 
+107.6 
+109.8 
+110.9 
+
+97 
+
+101.9 
+
+P1 (kPa) 
+
+P2 (kPa) 
+
+463.7 
+463.7 
+483.5 
+518 
+523 
+493.4 
+483.5 
+493.4 
+
+2299 
+2289 
+2477 
+2664 
+2674 
+2516 
+2477 
+2516 
+
+Coef 
+1.005 
+1.013 
+0.9797 
+0.9985 
+1.016 
+1.036 
+0.9582 
+0.9719 
+
+ 
+
+73 
+
+É  importante  notar  que  a  variação  do  coeficiente  politrópico  foi  compensado  pelo 
+
+    , ao invés de avaliar a variação de   com T1, pois foi verificado que isso reduzia 
+
+a não linearidade do sistema de equações e  ainda permitiu uma boa aproximação, 
+
+como pode ser verificado na Figura 6.9. 
+
+ 
+
+Coef x T1 
+
+y = -0.0063x + 1.1187 
+
+R² = 0.8928 
+
+Coef x T1 
+
+Linear (Coef x T1) 
+
+1.06 
+
+1.04 
+
+1.02 
+
+1 
+
+0.98 
+
+0.96 
+
+0.94 
+
+10°C 
+
+15°C 
+
+20°C 
+
+25°C 
+
+ 
+
+Figura 6.9 – Variação do Coeficiente de calibração com T1. 
+
+Logo, 
+
+ 
+
+                            
+
+ 
+
+                                                               (6.19) 
+
+ 
+
+Onde, 
+
+ 
+
+R²         Parâmetro de avaliação da qualidade do ajuste 
+
+ 
+
+ 
+
+6.2.2 Evaporador e Condensador 
+
+ 
+
+ 
+
+ 
+
+  Modelo 
+
+ Perda de carga 
+
+Como  verificado  no  esquema  do  modelo  desenvolvido  para  o  ciclo  nestes 
+
+equipamentos,  evaporador  e  condensador,  a  única  consideração  feita  acerca  é  a 
+
+perda de carga ao longo dos mesmos no lado fluido refrigerante.  
+
+74 
+
+ 
+
+ 
+
+Para  tanto,  o  modelo  utilizado  é  bastante  simplista,  mas  conforme  Jahnig  (1999) 
+
+dentre  as  três  possíveis  abordagens  a  perda  de  carga  em  porcentagem  (2) 
+
+apresenta  bons  resultados  e  ainda  poupa  da  necessidade  de  um  desenvolvimento 
+
+matemático mais complexo que não traz melhorias que justifiquem tal esforço. 
+
+ 
+
+ 
+
+1.                              
+ 
+2.                                       
+
+3.                
+
+ 
+
+       
+     
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.20) 
+
+         (6.21) 
+
+         (6.22) 
+
+Onde: 
+
+ 
+
+        Pressão de evaporação 
+
+           Constante 
+
+ 
+
+ 
+
+ Correlações para pressão de condensação e pressão de evaporação 
+
+Para  calculo  da  relação  entre  as  condições  ambientes  às  quais  o  ciclo  está 
+
+submetido,  ou  seja,  temperatura  e  umidade  do  ar  de  retorno  e  temperatura  do 
+
+ambiente externo foi utilizado o modelo proposto em Zhao (2012). 
+
+ 
+
+Segundo  o  autor,  admitindo-se  a  presença  apenas  de  troca  de  calor  sensível  no 
+
+condensador,  a  temperatura  de  condensação  pode  ser  diretamente  relacionada  à 
+
+temperatura externa de bulbo seco.  
+
+ 
+
+                        
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.23) 
+
+ 
+
+Onde:  
+
+ 
+
+         Temperatura de condensação [°C] 
+
+           Temperatura do ar na entrada do condensador [°C] 
+
+  ,       Constantes 
+
+ 
+
+ 
+
+75 
+
+Já  para  o  evaporador  faz-se  necessário  considerar  o  fato  de  a  serpentina  poder 
+
+operar  seca  ou  úmida  dependendo  das  condições  do  recinto  e  é  claro  da  própria 
+
+serpentina. Neste caso, será assumido o comportamento úmido da serpentina, que é 
+
+aquele observado quando o sistema encontra-se em operação normal. No entanto, 
+
+para  uma  análise  detalhada  seria  necessário  avaliar  a  existência  de  um  ou  outro 
+
+caso e selecionar o tipo de abordagem. 
+
+ 
+
+                                                                                     (6.24) 
+
+ 
+
+Onde: 
+
+     
+
+ é  1  quando  considerada  serpentina  seca  e  0  quando 
+
+considerada    serpentina úmida. 
+
+  ,   ,   ,   ,         Constantes de ajuste de curva 
+
+                             Temperatura de bulbo úmido do recinto 
+
+                              Temperatura de bulbo seco do recinto          
+
+ 
+
+ 
+
+Calor trocado 
+
+Como  é  sabido,  as  entradas  do  programa  não  contemplam  o  calor  trocado  no 
+
+condensador  e  no  evaporador,  caso  uma  delas  fosse  especificada  não  seria 
+
+necessário  especificar  T1  ou  T3,  no  entanto,  o  melhor  desempenho  do  modelo  do 
+
+ciclo  foi  observado  com  T1  e  T3  como  variáveis  de  entrada  junto  com  as  demais, 
+
+claro. 
+
+ 
+
+No  entanto,  mesmo  estes  valores  não  sendo  entradas,  estes  são  utilizados  para  o 
+
+calculo  das  temperaturas  de  saída  do  evaporador  e  do  condensador,  podendo 
+
+fornecer  informações  valiosas  acerca  de  assinatura  de  falhas  caso  essas  fossem 
+
+implementadas. 
+
+ 
+
+Para  tanto,  foi  feita  a  calibração  dos  valores  de  calor  trocado  no  lado  ar  e  no  lado 
+
+fluido  tendo  em  vista  que  a  principal  incerteza  a  ser  reduzida  era  justamente  o 
+
+calculo da vazão de ar no evaporador e condensador, já que o método utilizado não 
+
+ 
+
+76 
+
+pode  ser  calibrado  devido  ao  fato  do  equipamento  não  dispor  de  um  medidor  de 
+
+vazão na linha de refrigerante. 
+
+ 
+
+Logo,  foi  considerado  o  valor  de        calculado  segundo  o  ARI-540  como  sendo 
+
+uma  referencia  e,  portanto,  correta,  mesmo  sabendo  que  esta  possui  algum  erro 
+
+devido a falta de compensação já mencionada.  
+
+ 
+
+ 
+
+ 
+
+  Calibração 
+
+ Perda de carga 
+
+A  calibração  deste  modelo  é  baseada  na  avaliação  da  perda  de  carga  média 
+
+observada  no  lado  refrigerante  medida  por  meio  dos  manômetros  instalados  nas 
+
+entradas e saídas do evaporador e condensador. 
+
+ 
+
+Para  o  condensador  os  valores  medidos  são  considerados  verdadeiros  e  de  boa 
+
+representatividade tanto que o resultado da calibração é mostrado a seguir. Já para 
+
+o evaporador, foi verificado que a medição no ponto 4 parece ser afetada por algum 
+
+tipo de vórtice já que este está posicionado próximo a uma curva. A baixa qualidade 
+
+da  medição  é  inferida  também  pelo  fato  de  que  as  medições  em  4  sugerem 
+
+pressões menores que em 1, o que seria um contrassenso. 
+
+ 
+
+Para  contornar  o  problema,  é  utilizada  a  redundância  de  medição  realizada  neste 
+
+ponto, é  sabido  que  o  fluido naquele  ponto  já  se encontra  em  regime bifásico e foi 
+
+considerado para calculo da pressão em 4, a temperatura em 4. Conforme a seguir: 
+
+ 
+
+                 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.25) 
+
+ 
+
+Feito  isso,  foi  feita  avaliação  da  perda  de  carga  em  termos  percentuais  que  é 
+
+mostrada abaixo para o compressor e evaporador. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+77 
+
+Tabela 6.3 – Queda de pressão em percentagem no condensador. 
+
+P2 (kPa) 
+
+P3 (kPa) 
+
+P3 / P2 (%) 
+
+2299 
+2289 
+2476 
+2664 
+2673 
+2516 
+2476 
+2516 
+
+2200 
+2190 
+2407 
+2575 
+2614 
+2437 
+2417 
+2456 
+
+95,7 
+95,6 
+97,2 
+96,6 
+97,7 
+96,8 
+97,6 
+97,6 
+
+ 
+
+ 
+
+Logo, 
+
+ 
+
+                          
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.26) 
+
+ 
+
+Já para o evaporador, foi inicialmente feito o calculo das pressões correspondentes 
+
+a uma condição de saturação em 4 e depois prosseguida a análise. 
+
+Tabela 6.4 – Queda de pressão em percentagem no evaporador 
+
+P1 (kPa) 
+
+T4 (°C) 
+
+P4 (kPa) 
+
+P1 / P4 (%) 
+
+463 
+463 
+483 
+518 
+523 
+493 
+483 
+493 
+
+5.1 
+4.5 
+5.8 
+7.2 
+7.7 
+6.6 
+6.8 
+6.3 
+
+486 
+475 
+499 
+525 
+535 
+514 
+517 
+508 
+
+95,4 
+97,5 
+96,8 
+98,5 
+97,7 
+95,9 
+93,3 
+97,0 
+
+ 
+
+ 
+
+Logo, 
+
+                   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.27) 
+
+ 
+
+ 
+
+ 
+
+ Correlação para pressão de condensação 
+
+O  método  descrito  para  a  calibração  da  relação  entre  a  temperatura  externa 
+
+(ambiente)  e  a  temperatura  de  condensação,  faz-se  necessária  a  existência  de 
+
+apenas  dois  pontos  operacionais  em  que  o  sistema  está  submetido  às  mesmas 
+
+condições internas, mas diferentes condições externas.  
+
+78 
+
+ 
+
+ 
+
+Para tanto, foi levantado junto ao conjunto de dados levantado do equipamento um 
+
+par  de dados  que  satisfaça  a  condição  proposta.  A  linearização  é  então feita  entre 
+
+os dois pontos. 
+
+ 
+
+Os dados operacionais e os resultados obtidos são apresentados na tabela 6.5: 
+
+ 
+
+ 
+
+Tabela 6.5 – Dados escolhidos para a correlação da temperatura de condensação 
+
+P2 (kPa) 
+
+2674 
+2510 
+
+Tcond (°C) 
+
+66.28 
+63.4 
+
+ 
+
+T5 (°C) 
+
+29.4 
+29.3 
+
+T8 (°C) 
+30.75 
+28.8 
+
+Tcond vs T8 
+
+y = 1.4769x + 20.865 
+
+Tcond vs T8 
+
+Linear (Tcond vs T8) 
+
+67°C 
+
+66°C 
+
+66°C 
+
+65°C 
+
+65°C 
+
+64°C 
+
+64°C 
+
+63°C 
+
+28.5°C  29.0°C  29.5°C  30.0°C  30.5°C  31.0°C 
+
+ 
+
+Figura 6.10 – Relação entre Tcond e T8 
+
+ 
+
+Como  é  possível  verificar  na  tabela  6.5,  a  condição  interna  não  é  exatamente  a 
+
+mesma (T5) mas é de fato muito semelhante.  
+
+ 
+
+                              
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.28) 
+
+ 
+
+O  uso  da  expressão  acima  para  cálculo  da  temperatura  de  condensação  é  feita  e 
+
+comparada com o valor medido sendo que: 
+
+ 
+
+                
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.29) 
+
+ 
+
+ 
+
+79 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Tabela 6.6 – Cálculo de       com o uso da expressão proposta em Zhao (2012). 
+
+P2 (kPa) 
+
+Tcond (°C) 
+
+Tcond calculado (°C) 
+
+2299 
+
+2289 
+
+2477 
+
+2664 
+
+2674 
+
+2516 
+
+2477 
+
+2516 
+
+59.47 
+
+59.28 
+
+62.79 
+
+66.11 
+
+66.28 
+
+63.5 
+
+62.79 
+
+63.5 
+
+59.26 
+
+57.79 
+
+62.96 
+
+65.91 
+
+66.28 
+
+60.74 
+
+64.43 
+
+64.43 
+
+Erro 
+
+-0.35% 
+
+-2.52% 
+
+0.27% 
+
+-0.30% 
+
+0.00% 
+
+-4.34% 
+
+2.62% 
+
+1.47% 
+
+ Correlação para pressão de evaporação 
+
+Para  o  evaporador,  a  relação  é,  conforme  já  mencionado,  dependente  do  fato  da 
+
+serpentina encontrar-se úmida ou seca. No entanto, devido ao fato de uma operação 
+
+em  condições  normais  (de  referência)  corresponder  à  operação  úmida,  será 
+
+analisado apenas o uso da expressão para esta situação. 
+
+ 
+
+Para o evaporador foi feita uma regressão linear da temperatura de evaporação em 
+
+relação às variáveis: temperatura ambiente e temperatura de bulbo úmido do recinto. 
+
+Os valores medidos, bem como o resultado obtido com uso da expressão obtida por 
+
+regressão linear são descritos na tabela: 
+
+ 
+
+                                                                                                         (6.30) 
+
+ 
+
+Onde, 
+
+ 
+
+R²=0.82 
+
+ 
+
+O  ajuste foi, então,  considerado  adequado  e  pode  ser  observada sua  aplicação na 
+
+tabela  6.7  em  que  foi  feito  uso  da  equação  6.30  para  calculo  da        
+
+correspondente.  O  erro  associado  ao  uso  desta  expressão  segue  exposto  também 
+
+em porcentagem. 
+
+ 
+
+ 
+
+Tabela 6.7 – Cálculo de       com o uso da expressão proposta em Zhao (2012). 
+
+T5 (°C) 
+
+UR5 
+
+Tevap (°C) 
+
+T8 (°C)  T5wb (°C) 
+
+Tevap calculado (°C) 
+
+Erro 
+
+80 
+
+ 
+
+ 
+
+5.2021358 
+
+4.7319002 
+
+6.4349351 
+
+7.2537209 
+
+7.5060926 
+
+5.6905334 
+
+6.6000491 
+
+6.5800709 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2.00% 
+
+5.15% 
+
+10.95% 
+
+0.75% 
+
+-2.52% 
+
+-13.78% 
+
+-2.94% 
+
+4.45% 
+
+         (6.31) 
+
+         (6.32) 
+
+         (6.33) 
+
+         (6.34) 
+
+24.3 
+
+23.8 
+
+25.4 
+
+29.3 
+
+29.4 
+
+25.8 
+
+30.6 
+
+30.8 
+
+0.475 
+
+0.477 
+
+0.458 
+
+0.37 
+
+0.371 
+
+0.42 
+
+0.354 
+
+0.352 
+
+5.1 
+
+4.5 
+
+5.8 
+
+7.2 
+
+7.7 
+
+6.6 
+
+6.8 
+
+6.3 
+
+26 
+
+25 
+
+28.5 
+
+30.5 
+
+31 
+
+27 
+
+29.5 
+
+29.5 
+
+16.91 
+
+16.54 
+
+17.52 
+
+18.93 
+
+19.02 
+
+17.18 
+
+19.57 
+
+19.68 
+
+                
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ Calor trocado no evaporador 
+
+                                   
+
+                                  
+
+                      
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Onde: 
+
+ 
+
+    Fluxo de ar no evaporador [kg/s] 
+
+     Área corrigida de entrada de ar no evaporador [m²] 
+
+      Massa específica do ar [kg/m³] 
+
+      Entalpia específica [J/kg] 
+
+ 
+
+Como  já  foi  mencionado  anteriormente,  o  cálculo  de        será  adotado  como 
+
+desprovido  de  desvio  em  relação  ao  valor  medido.  Logo,  este  servirá  como  base 
+
+para a calibração da quantidade de calor trocado no lado ar         . 
+
+ 
+
+Para  calibração  desse  valor,  a  variável  escolhida  é  a    ,  que  passa  a  representar 
+
+uma área ajustada à troca térmica medida no lado refrigerante. 
+
+ 
+
+ 
+
+ 
+
+81 
+
+ 
+
+ 
+
+Tabela 6.8 – Cálculo de   . 
+
+Conjunto de dados 
+
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+
+A5 (m²) 
+0.1519 
+0.1494 
+0.1346 
+0.1232 
+0.1183 
+0.1337 
+0.1306 
+0.1228 
+
+        = 0.1331 m²    
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.35) 
+
+ 
+
+Este valor médio de   ,foi utilizado para o cálculo da temperatura do ar na saída do 
+
+evaporador, T7. Segue na Tabela 6.13 o resultado obtido e os respectivos erros. 
+
+ 
+
+ 
+
+ 
+
+Tabela 6.9 – Cálculo de T7 e o respectivo erro. 
+
+Conjunto de dados 
+
+T7 (°C) 
+
+T7 calculado (°C) 
+
+1 
+
+2 
+
+3 
+
+4 
+
+5 
+
+6 
+
+7 
+
+8 
+
+15 
+
+14.4 
+
+15.3 
+
+16.7 
+
+16.7 
+
+15 
+
+18.7 
+
+18.4 
+
+14.29 
+
+13.76 
+
+15.24 
+
+17.14 
+
+17.37 
+
+14.97 
+
+18.8 
+
+18.86 
+
+ Calor trocado no condensador 
+
+Erro 
+
+-4.73% 
+
+-4.44% 
+
+-0.39% 
+
+2.63% 
+
+4.01% 
+
+-0.20% 
+
+0.53% 
+
+2.50% 
+
+                             
+
+                              
+
+                    
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.36) 
+
+         (6.37) 
+
+         (6.38) 
+
+ 
+
+Onde:  
+
+    Fluxo de ar no evaporador [kg/s] 
+
+     Área corrigida de entrada de ar no condensador [m²] 
+
+      Massa específica do ar [kg/m³] 
+
+      Entalpia específica [J/kg] 
+
+ 
+
+ 
+
+82 
+
+Fazendo uso da mesma abordagem utilizada para a calibração do calor trocado no 
+
+evaporador,  só  que,  agora,  aplicada  ao  condensador,  segue  na  tabela  6.10  o 
+
+resultado obtido: 
+
+ 
+
+Tabela 6.10 – Cálculo de   . 
+
+Conjunto de dados 
+
+1 
+
+2 
+
+3 
+
+4 
+
+5 
+
+6 
+
+7 
+
+8 
+
+A9 (m²) 
+
+0.1514 
+
+0.1558 
+
+0.1386 
+
+0.1474 
+
+0.1435 
+
+0.1382 
+
+0.1481 
+
+0.1474 
+
+ 
+
+        =0.1463 m²      
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (6.39) 
+
+ 
+
+Este valor médio de    foi utilizado para o cálculo da temperatura do ar na saída do 
+
+condensador, T9. Segue na Tabela 6.15 o resultado obtido e os respectivos erros. 
+
+Tabela 6.11 – Cálculo de T9 e o respectivo erro. 
+
+Conjunto de dados 
+
+T9 (°C) 
+
+T9 calculado (°C) 
+
+1 
+
+2 
+
+3 
+
+4 
+
+5 
+
+6 
+
+7 
+
+8 
+
+45.1 
+
+43.7 
+
+48.2 
+
+50.1 
+
+51.2 
+
+47.9 
+
+47.5 
+
+48.2 
+
+45.8 
+
+44.99 
+
+47.11 
+
+50.26 
+
+50.8 
+
+46.67 
+
+47.74 
+
+48.34 
+
+Erro 
+
+1.55% 
+
+2.95% 
+
+-2.26% 
+
+0.32% 
+
+-0.78% 
+
+-2.57% 
+
+0.51% 
+
+0.29% 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+83 
+
+ 
+
+7.  DETECÇÃO E DIAGNÓSTICO DE FALHA 
+
+ 
+
+Segundo Pimenta e Mendoza (1999), falha pode ser definida de diversas formas. A 
+
+primeira  delas  é  a  consideração  de  que  uma  falha  é  qualquer  evento  que  faz  com 
+
+que o sistema não seja capaz de desenvolver a sua função. Outra definição é a de 
+
+que  a  falha  é  um  mal  funcionamento  com  consequências  catastróficas.  Por  fim,  a 
+
+falha pode ser considerada como sendo um desvio na performance de um sistema 
+
+acima  do  limite  aceitável,  onde  falha  pode  ser  interpretada  também  como  um  mal 
+
+funcionamento. 
+
+ 
+
+Assim,  um  sistema  de  detecção  e  diagnóstico  de  falha  (Fault  Detection  and 
+
+Diagnosis  –  FDD)  é  um  campo  de  estudo  da  engenharia  de  controle  destinado  à 
+
+supervisão  de  processos  e  equipamentos  e  tem  como  objetivo  identificar  falhas  ou 
+
+mal funcionamentos. 
+
+ 
+
+No campo da engenharia mecânica, especificamente no monitoramento de sistemas 
+
+de  refrigeração,  a  aplicação  deste  tipo  de  sistema  pode  fornecer  informações 
+
+valiosas  acerca  do  equipamento,  avaliando  o  desempenho  do  equipamento, 
+
+identificando  perdas  nesse  desempenho,  detectando  e  diagnosticando  falhas, 
+
+avaliando o impacto destas falhas sobre o equipamento, etc. 
+
+ 
+
+7.1. TIPOS DE DETECÇÃO E DIAGNÓSTICO DE FALHA 
+
+ 
+
+Figura 7.1 – Classificação dos métodos de FDD 
+
+Modificado de Katipamulas e Brambley (2005). 
+
+ 
+
+84 
+
+ 
+
+ 
+
+Serão descritos aqui os métodos utilizados na etapas de detecção de falha, ou seja, 
+
+na identificação de que há alguma falha no sistema, e na etapa de diagnóstico, em 
+
+que é identificado qual o componente que sofreu a falha e suas causas. 
+
+ 
+
+Segundo  Keir  e  Alleyne  (2006)  para  ambas  as  etapas  existem  três  métodos 
+
+geralmente  empregados  para  o  desenvolvimento  algoritmo  de  detecção  e 
+
+diagnóstico,  são  elas:  método  quantitativo  baseado  em  modelo,  método  qualitativo 
+
+baseado em modelo e métodos baseados no histórico do processo. 
+
+ 
+
+ 
+
+7.1.1 Detecção baseada em modelo 
+
+ 
+
+ 
+
+Figura 7.2 – Esquema de um FDD baseado em modelo. 
+
+ 
+
+Adaptado de Simani (2000). 
+
+ 
+
+  Quantitativo 
+
+Os  métodos  quantitativos  baseados  em  modelo  aplicado  a  FDD  fazem  uso  de 
+
+redundâncias  analíticas  presentes  no  sistema  quando  considerado  o  modelo 
+
+matemático  e  físico  dos  seus  componentes.  Essa  redundância  analítica  permite  a 
+
+geração  de  resíduos  do  processo  sendo  analisado,  quantificando  a  diferença  entre 
+
+ 
+
+85 
+
+os  valores  medidos  na  planta  e  os  valores  simulados  segundo  o  modelo  dos 
+
+componentes. 
+
+ 
+
+Considerando  esta  característica  de  se  basear  no  comportamento  físico  dos 
+
+componentes  da  planta,  este  tipo  de  abordagem  é  bastante  eficaz  no  que  tange  à 
+
+caracterização do impacto de falhas sobre o sistema.  
+
+ 
+
+Outro  ponto  interessante  acerca  deste  método  é  que  precisão  e  complexidade  do 
+
+modelos  caminham  juntas  e  o  mesmo  vale  para  a  exigência  de  processamento 
+
+sendo  assim,  quando  aplicados  a  sistemas  on-line  de  FDD  a  precisão  do  modelo 
+
+acaba  tendo  que  ser  sacrificada  para  garantir  a  velocidade  de  processamento  do 
+
+código. 
+
+ 
+
+ 
+
+  Qualitativo 
+
+Os métodos qualitativos baseados em modelo, por sua vez, pautam a sua aplicação 
+
+no  conhecimento  prévio  do  processo  sendo  analisado  para  então  tirar  conclusões 
+
+acerca  das  condições  operacionais  em  que  o  sistema  se  encontra.  Dentro  deste 
+
+método se encontram aqueles FDD baseados em regras, como são os de árvore de 
+
+falha  e  os  que  aplicam  física  qualitativa.  De  maneira  geral,  métodos  qualitativos 
+
+empregam enorme quantidade de regras para inferir as condições de um processo, 
+
+ciclo,  planta  dado  um  conjunto  de  dados  que  possam  representar  um  possível 
+
+comportamento. 
+
+ 
+
+A  sua  aplicação,  como  é  de  se  esperar,  é  simples  de  desenvolver  tratando-se 
+
+apenas  de  um algoritmo  capaz  de  sintetizar  os  conhecimentos  acerca  do processo 
+
+analisado. Este mesmo aspecto justifica também uma de suas desvantagens que é 
+
+justamente  o  fato  de  que,  para  processos  muito  complexos,  o  uso  deste  tipo  de 
+
+abordagem  torna-se  difícil  pois  existe  muito  conhecimento  embarcado  para  ser 
+
+destrinchado em regras binárias. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+86 
+
+7.1.2. Detecção baseada no histórico do processo 
+
+ 
+
+Dentre  as  publicações  na  literatura,  estes  são  os  mais  frequentes  para  o 
+
+desenvolvimento  dos  algoritmos  de  FDD.  De  maneira  geral,  este  método  pode  ser 
+
+subdividido em duas subcategorias, são elas: aqueles que fazem uso de um modelo 
+
+Black Box, e os que fazem uso de um modelo Gray-box. 
+
+ 
+
+Para  o  primeiro,  Black  Box,  não  é  conhecido  a  tendência  física  de  comportamento 
+
+de  uma  variável,  sendo  que  a  relação  entre  entrada  e  saída  de  um  determinado 
+
+componente é baseada apenas em estimativas baseadas em um treinamento prévio 
+
+ao  qual  o  algoritmo  foi  submetidos.  Vale  lembrar  aqui  que  é  dentro  deste  tipo  de 
+
+abordagem que se encontram aqueles que fazem uso de redes neurais para estimar 
+
+os parâmetros. 
+
+ 
+
+Já para aqueles que fazem uso de modelos Gray Box as estimativas realizadas pelo 
+
+modelos são, por sua vez, baseadas em um tendência física para tal acontecimento, 
+
+no  entanto,  assim  como  os  Black  Box  essa  abordagem  também  necessita  de 
+
+treinamento. 
+
+ 
+
+Tanto  com  modelos  Black    Box  e  Gray  Box,  a  necessidade  de  treinamento  do 
+
+sistema acarreta o fato de que ao mudar a configuração do sistema alvo do FDD, um 
+
+novo conjunto de dados de treinamento deverá ser levantado.  
+
+ 
+
+Sendo  assim,  a  aplicação  típica  deste método  é  quando  o  desenvolvimento  de  um 
+
+modelo físico para o fenômeno demonstra ser complicado ou pouco desenvolvido na 
+
+literatura para explicar os comportamentos observados.  
+
+ 
+
+7.2 ETAPAS 
+
+ 
+
+Inicialmente, é preciso ter em mente a estrutura lógica utilizada para identificação de 
+
+ocorrência de falha e localização do equipamento que sofreu a falha, bem como, das 
+
+consequências para o equipamento e decisões a serem tomadas.  
+
+ 
+
+87 
+
+Figura 7.3 – Representação esquemática das etapas de um FDD. 
+
+Modificado de Braun e Comstock (1999). 
+
+ 
+
+ 
+
+ 
+
+Um  sistema  de  detecção  de  falha,  com  o  auxilio  de  adequado  sistema  de 
+
+diagnóstico é capaz de prever os custos operacionais e de manutenção  envolvidos 
+
+em um reparo e desta forma auxiliar na tomada de decisão acerca de intervenções 
+
+na  planta,  processo  ou  sistema.  O  tema  de  diagnóstico  será  tratado  em  um  tópico 
+
+específico. 
+
+ 
+
+O procedimento de detecção de falha foi descrito por Isermann (1984) e consiste em 
+
+uma  técnica  com  quatro  passos  para  proceder  a  análise  e  consiste  em  uma  boa 
+
+referência  para  descrever  os  diversos  métodos  de  FDD  desenvolvidos  até  então 
+
+para equipamentos de refrigeração. 
+
+ 
+
+O primeiro passo é descrito como a detecção de ocorrência de alguma falha que é 
+
+por  vezes  realizada  por  meio  de  comparação  entre  o  desempenho  esperado  pelo 
+
+equipamento  e  o  desempenho  medido  do  mesmo.  O  segundo  passo  é  o  de 
+
+diagnóstico,  que  consiste  em  identificar  qual  componente  está  causando  o  desvio 
+
+identificado  e  qual  a  causa.  O  terceiro  passo  é  quantificar  o  impacto  da  falha 
+
+identificada no desempenho do sistema. Por fim, a etapa de tomada de decisão que 
+
+consiste na forma como o sistema supervisório deverá reagir diante das informações 
+
+fornecidas  pelas  etapas  anteriores,  podendo  ser: 
+
+indicar  necessidade  de 
+
+manutenção, tolerar a falha ou parar o equipamento. 
+
+ 
+
+88 
+
+ 
+
+7.2.1 Etapa de identificação ou detecção 
+
+ 
+
+A  identificação  de  ocorrência  de  falha  é  feita  por  meio  de  comparação  entre  o 
+
+desempenho indicado pelas medidas de variáveis realizadas no equipamento e um 
+
+desempenho esperado para o sistema.  
+
+ 
+
+Tal  etapa  pode  ser  subdividida  em  outras  duas  etapas,  sendo  que  a  primeira 
+
+consiste em um  processamento  dos dados para  gerar  indicadores  que  possam  ser 
+
+utilizados  pela  próxima  sub  etapa,  a  de  classificação,  que,  com  base  nestes 
+
+indicadores fornecerá um resultado de comportamento faltoso ou não. 
+
+ 
+
+ 
+
+ 
+
+Figura 7.4 – Representação das sub etapas de identificação. 
+
+Modificado de Simani (2000). 
+
+ 
+
+  Processamento 
+
+A  subetapa  de  processamento  é  responsável  por  gerar  resíduos  ou  demais 
+
+informações que serão processadas na etapa de classificação 
+
+ 
+
+ 
+
+  Classificação 
+
+É  nessa  etapa,  que  se  comparam  os  dados  medidos  no  equipamento  e  os  dados 
+
+provenientes  da  subetapa  de  processamento,  submetendo-os  a  um  procedimento 
+
+comparativo capaz de decidir se o sistema experimenta ou não um comportamento 
+
+ 
+
+89 
+
+faltoso.  Em  outras  palavras,  pode-se  considerar  essa  subetapa  como  parte  de  um 
+
+sistema  expert,  que  possui  o  conhecimento  necessário  para  proceder 
+
+tal 
+
+comparação.  
+
+ 
+
+Um  fato  interessante  é  o  de  que,  devido  ao  fato  de  se  basear  em  regras  e  outros 
+
+procedimentos  estatísticos  para  comparação  dos  dois  resultados  esta  subetapa 
+
+possui  a  característica  intrínseca  de  que  quanto  maior  a  sua  sensibilidade  para 
+
+identificação de uma falha maior será a quantidade de alarmes falsos proferidos pelo 
+
+sistema. 
+
+ 
+
+É  possível  pontuar  aqui,  que  sem  o  processamento  dos  dados,  a  subetapa  de 
+
+classificação  seria  baseada  apenas  em  comparações  dos  dados  medidos  com 
+
+dados esperados, contidos em um banco de dados, para aquele ponto operacional. 
+
+Isso  requer  que  o  banco  de  dados  contemple  saídas  para  diversos  pontos 
+
+operacionais  e  ainda,  dificilmente  proporcionará  a  possibilidade  de  identificar 
+
+múltiplas falhas, já que a combinação de efeitos leva a uma gama muito extensa de 
+
+possíveis pontos operacionais a serem comparados. 
+
+ 
+
+7.2.2. Etapa de Diagnóstico 
+
+ 
+
+Pode-se  dizer  que  a  etapa  de  diagnóstico  compartilha  das  mesmas  subetapas 
+
+definidas  para  a  etapa  de  detecção  da  falha,  sendo  que  estas  etapas  diferem-se 
+
+quanto ao seu objetivo. 
+
+ 
+
+A etapa de diagnóstico possui dois objetivos distintos, são eles: 
+
+ 
+ 
+
+Isolamento da falha; 
+Identificação da falha.  
+
+ 
+
+No contexto de um equipamento de refrigeração e ar condicionado, o isolamento da 
+
+falha  consiste  em  localizar  qual  o  equipamento  do  ciclo  responsável  pela  falha 
+
+acusada previamente na etapa de detecção da falha. 
+
+ 
+
+Já  a  identificação  da  falha  consiste  em  identificar  qual  a  falha  existente  no 
+
+equipamento já isolado. Ou seja, na etapa de diagnóstico é isolado o equipamento 
+
+ 
+
+90 
+
+evaporador como sendo o responsável pelo desvio observado no COP da máquina e 
+
+na identificação da falha é identificado que a falha que acometeu este equipamento 
+
+foi incrustação.  
+
+ 
+
+Esta  etapa  possui  uma  interface  muito  intima  com  a  subetapa  de  classificação  na 
+
+etapa de detecção, onde é feito, por meio de regras comparativas a identificação de 
+
+uma falha. Essa relação é por vezes suprimida quando um equipamento é isolado e 
+
+a detecção de falha é feita sobre o mesmo.  
+
+ 
+
+Isso significa, portanto, que um problema de diagnóstico de falha pode ser resumido 
+
+a  um  problema  de  detecção  de  falha  quando  é  feito  o  isolamento  de  um 
+
+equipamento e avaliado o seu comportamento. Salvo o fato de que a causa da falha 
+
+deverá ser posteriormente determinada. 
+
+ 
+
+7.2.3. Etapa de avaliação 
+
+ 
+
+Nesta  etapa  é  feita  a  quantificação  do  impacto  causado  pela  falha  identificada  em 
+
+um  componente  específico  no  rendimento  do  ciclo  como  um  todo.  Dependendo  do 
+
+tipo  de  abordagem  feita  nesta  etapa  é  possível  atingir  valores  monetários  capazes 
+
+de justificar ou não uma intervenção sobre o equipamento tendo em vista o objetivo 
+
+de  redução  de  custo  operacional.  É  proposto,  ainda  por  Isermann  (1984)  que  tal 
+
+etapa pode levar em consideração aspectos como impacto ambiental e risco a vida 
+
+humana  e  integridade  do  equipamento.  Valores  mais  difíceis  de  quantificar,  mas 
+
+também de suma importância. 
+
+ 
+
+7.2.4. Etapa de reação 
+
+ 
+
+Nesta  etapa  é  definido  o  que  será  feito  a  respeito  da  falha  identificada  e 
+
+diagnosticada,  de  forma  que,  dependendo  do  impacto  da  mesma  sobre  o 
+
+equipamento  diferentes  decisões  poderão  ser  tomadas.    Esta,  no  caso,  é  a 
+
+conclusão de todo o processo, sendo que, em muitas aplicações de FDD esta está 
+
+reservada  a  um  elemento  humano,  no  caso,  o  operador  do  processo,  quando  esta 
+
+função  é  atribuída  a  um  código  computacional,  este  irá  dispor  de  uma  série  de 
+
+regras e limites pré-estabelecidos para a tomada de decisão. As reações podem ser: 
+
+ 
+
+91 
+
+alarmes, parada da planta, alerta de falha, ignorar a falha, parada imediata da planta 
+
+dentre outras ações e recomendações possíveis. 
+
+ 
+
+7.3 MÉTODOS DE DETECÇÃO 
+
+ 
+
+O  problema  de  diagnóstico  consiste  nas  etapas  descritas  na  Figura  7.4,  tal  que, 
+
+primeiro é necessário o levantamento de resíduos ou variações de parâmetros para 
+
+posterior  análise  de  um  sistema,  um  código  computacional,  capaz  de  avaliar  a 
+
+existência ou não de uma falha. 
+
+ 
+
+ 
+
+Figura 7.5 – Métodos de detecção de falha. 
+
+Modificado de Pimenta e Mendoza (1999). 
+
+ 
+
+Para detecção da falha, dois métodos baseados em modelo se destacam dentre os 
+
+demais. São eles: 
+
+ 
+
+ 
+
+  Estimativa das variáveis de estado; 
+ 
+
+Identificação e estimativa de parâmetros. 
+
+7.3.1 Estimativa das variáveis de estado 
+
+ 
+
+Para  o  primeiro  método  faz-se  necessário  conhecer  as  entradas  de  um  processo, 
+
+desde  que  isso  permita  determinar  (baseado  no modelo),  tanto  a  entrada  quanto a 
+
+saída  do  mesmo.  Satisfeito  isso,  fixando-se  o  modelo  existente  que  relaciona  as 
+
+variáveis de saída medidas daquele processo com as variáveis medidas na entrada, 
+
+ou seja, supondo que os parâmetros daquele processo são conhecidos em um caso 
+
+ 
+
+92 
+
+sem  existência  de  falha,  é  gerado  um  resíduo  que  poderá  indicar  que  alguma 
+
+propriedade medida desvia-se do valor esperado para aquela variável. 
+
+ 
+
+Identificado tal desvio está feita a detecção da existência de uma falha, a depender, 
+
+é claro, de um limite estabelecido para desvio da mesmo que por sua vez depende 
+
+da precisão do modelo desenvolvido. 
+
+ 
+
+Um  exemplo  de  aplicação  seria  a  identificação  de  resíduos  nas  pressões  e 
+
+temperaturas calculadas para o ciclo de refrigeração sendo estudado. Sendo que a 
+
+diferença entre os valores medidos e os valores estimados é atribuída à presença de 
+
+uma falha no ciclo. 
+
+ 
+
+7.3.2 Identificação e estimativa de parâmetros 
+
+ 
+
+Já a identificação e estimativa de parâmetro tratam da avaliação do comportamento 
+
+de  parâmetro  possíveis  de  serem  monitorados  em  uma  planta.  Neste  caso  é 
+
+registrada  a  entrada e  saída  de  um  processo,  permitindo,  assim, avaliar  o  valor  de 
+
+um  determinado  parâmetro,  sendo  que  um  desvio  em  relação  a  um  valor 
+
+previamente conhecido e esperado para operação no estado de referência indicará a 
+
+presença de uma falha.  
+
+ 
+
+Um exemplo de aplicação seria a avaliação do COP do ciclo de refrigeração, sendo 
+
+que,  dadas  as  entradas  do  modelo  o  COP  calculado  como  sendo  o  de  um 
+
+comportamento de referência desvia-se daquele medido no ciclo, COP operacional. 
+
+ 
+
+7.3.3 Julgamento da falha 
+
+ 
+
+Conforme em Rossi e Braun (1992), o processo de decisão a respeito da existência 
+
+ou não de uma falha pode ser feito de três maneiras distintas: 
+
+ 
+
+  Verificação de um limite; 
+
+  Previsão de sinais; 
+
+  Analise de sinais. 
+
+ 
+
+ 
+
+93 
+
+A verificação de limite consiste em avaliar as tendências e limites propriamente ditos 
+
+de  variáveis  medidas do  processo.  Já  a  previsão  de  sinais  consiste  na  geração  do 
+
+resíduo  com  uso  de  um  modelo  matemático  do  processo  em  questão  e  posterior 
+
+avaliação de limites e tendências. Por fim, a análise de sinais que trata da avaliação 
+
+da  frequência  da  variação  observada  dentre  outros  métodos  de  analise  de 
+
+vibrações. 
+
+ 
+
+7.4. MÉTODOS DE DIAGNÓSTICO 
+
+ 
+
+Assim  como  o  problema  detecção  da falha,  o  problema  de  diagnóstico  compartilha 
+
+das  mesmas  etapas.  Isso  já  era  previsto  na  descrição  de  um  FDD  já  que  um 
+
+problema de diagnóstico passa a ser um problema de detecção de falha quando um 
+
+equipamento  é  isolado  para  análise.  Segundo  Simani  (2000),  seguem  os  métodos 
+
+para diagnóstico. 
+
+ 
+
+7.4.1. Métodos de classificação 
+
+ 
+
+  Redes neurais; 
+
+  Lógica fuzzy; 
+
+  Distância geométrica; 
+
+  Métodos probabilísticos. 
+
+Esses métodos fazem uso de um conhecimento previamente estabelecido acerca do 
+
+equipamento  em  estudo  em  que  modelos  de  falha  podem  ser  desenvolvidos  para 
+
+formar  um  banco  de dados  a  respeitos  dos sintomas  observados. Outra  opção é  o 
+
+ensaio  propriamente  dito  de  falhas  sobre  o  sistema  e  registro  dos  mesmos  para 
+
+formação do banco de dados. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+7.4.2. Métodos de inferência 
+
+ 
+
+  Árvore de falha 
+
+ 
+
+94 
+
+Quando se dispõe de mais informação sobre a relação destes parâmetros é possível 
+
+submetê-los  ao  conhecimento  prévio  do  equipamento  em  condição  de  falha.  Tais 
+
+modelos  de  diagnóstico  são  construídos  utilizando-se  uma  árvore  de  falha 
+
+programada  em  regras  do  tipo  IF-THEN-ELSE  em  que  se  busca  direcionar  os 
+
+sintomas observados a uma causa previamente definida. Este método é observado 
+
+em Afgan et al. (1994). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+95 
+
+ 
+
+8.  RECONCILIAÇÃO DE DADOS 
+
+ 
+
+8.1. INTRODUÇÃO 
+
+ 
+
+A  reconciliação  de  dados  consiste  em  uma  técnica  de  ajuste  de  variáveis  medidas 
+
+em  uma  determinada  planta  ou  processo  sendo  monitorado,  de  modo  a  satisfazer 
+
+um  modelo  matemático  que  descreva  o  processo  em  questão,  como  por  exemplo: 
+
+balanços de massa e energia, Narasimhan e Jordan (2000). 
+
+ 
+
+O  problema  matemático  a  ser  solucionado  para  que  a  reconciliação  de  dados  seja 
+
+alcançada  reside  na  minimização  de  uma  função  objetivo  tal  que  desta  forma  é 
+
+garantido que seja imposto a menor modificação possível sobre as variáveis a serem 
+
+reconciliadas,  tal  que,  quando  modificadas,  estas  serão,  além  de  mais  acuradas, 
+
+coerentes com o modelo a que estão submetidas. 
+
+ 
+
+8.2. FUNCIONAMENTO 
+
+ 
+
+O princípio fundamental no qual se baseia a reconciliação de dados é a inexistência 
+
+de  erros  de  tendências,  como  desvios  sistemáticos  em  alguma  medida.  Para  uma 
+
+aplicação  satisfatória,  é  necessário  que  apenas  erros  aleatórios  estejam  presentes 
+
+nessas  medidas.  Escrevendo  o  problema  da  reconciliação  de  dados  em  forma 
+
+matricial temos que o vetor y é o vetor das variáveis medidas. Logo, 
+
+ 
+
+y=
+
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   
+ 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (8.1) 
+
+ 
+
+ Onde, 
+
+     Quantidade de variáveis medidas no problema 
+
+ 
+
+ 
+
+96 
+
+O  vetor  x  representa  os  valores  reais  de  uma  medida  contendo  apenas  erros 
+
+aleatórios, ou seja: yi=xi+  , logo, segue a representação de x: 
+
+ 
+
+x=
+
+ 
+
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+      
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (8.2) 
+
+As  restrições  do  modelo,  sejam  elas  balanço  de  massa  ou  energia,  ou  qualquer 
+
+outra restrição física imposta pelo modelo, é representada pela matriz A, geralmente 
+
+feita igual a zero; A=0. 
+
+ 
+
+Logo, o problema de reconciliação de dados consiste na minimização do ajuste feito 
+
+sobre o vetor y, tal que, seja alcançado o valor real de uma variável, sendo que, esta 
+
+variável  só  poderá  conter  erros  aleatórios  de  medida.  Esse  objetivo  pode  ser 
+
+representado pelo seguinte equacionamento: 
+
+ 
+
+Min             
+
+ 
+ 
+
+ 
+
+ , submetido a A=0         
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (8.3) 
+
+Quando  o  problema  acima  é  solucionado,  têm-se  os  valores  reconciliados  para  o 
+
+problema,  tal  que,  estes  terão  sofrido  o  menor  ajuste  possível  de  tal  forma  a 
+
+obedecerem ao modelo físico ao qual estão submetidos.  
+
+ 
+
+A  formulação  acima  pode  ser  melhorada  considerando  os  diferente  pesos  que  os 
+
+ajustes devem ter, sendo que o peso, é inversamente proporcional ao quadrado do 
+
+desvio  padrão  daquela  medida.  Desta  forma,  ao  realizar  a  minimização  da  função 
+
+objetivo,  é  garantido  que  medidas  com  maior  peso  sofrerão  menor  ajuste,  ou  seja, 
+
+as  medidas  com  menor  desvio  padrão  serão  as  menos  modificadas,  o  que  condiz 
+
+com o fato de eles serem, provavelmente mais precisas do que as outras. Segue a 
+
+representação. 
+
+ 
+
+              
+
+ 
+ 
+
+    
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ (8.4) 
+
+97 
+
+ 
+
+Onde, 
+
+       Pesos de cada ajuste realizado 
+
+ 
+
+A  solução  dos  problemas  acima  poderá  ser  analítica,  ou,  por  intermédio  de 
+
+algoritmos  de  otimização  de  funções,  sendo  que,  conforme  já  mencionado,  a 
+
+solução com uso de algoritmos de otimização poderá demandar bastante tempo de 
+
+processamento, comparado à solução analítica. 
+
+ 
+
+8.3. FUNDAMENTO ESTATÍSTICO 
+
+ 
+
+Ainda  segundo  Narasimhan  e  Jordache  (2000),  apresentado  desta  forma,  a 
+
+proposição do problema se mostra bastante intuitiva, no entanto, vale demonstrar o 
+
+fundamento estatístico no qual a formulação se baseia. 
+
+  
+
+Considere  a  matriz     como  sendo  aquela  que  contém  a  informação  a  respeito  da 
+
+precisão  dos  valores  medidos  e  a  correlação  entre  estes  valores  medidos,  enfim, 
+
+uma  matriz  de  covariâncias.  Sendo  assim,  a  diagonal  desta  matriz  conterá 
+
+justamente os pesos que foram explicitados na formulação acima. 
+
+ 
+
+Dado  os  valores  medidos  y,  o  valor  mais  provável  para  x  serão  obtidos  pela 
+
+maximização da função de probabilidade da distribuição normal multivariável. Como 
+
+observado na imagem abaixo, em uma distribuição normal bidimensional, o valor do 
+
+vetor  x  se  encontraria  justamente  no  valor  mais  provável  da  composição  das  duas 
+
+funções.  Ou  seja,  a  solução  do  problema  de  Reconciliação  reside  na  maximização 
+
+deste valor. 
+
+ 
+
+  
+
+ 
+
+98 
+
+Figura 8.1 – Distribuição normal multivariável 
+
+Adaptado de http://www.galileu.esalq.usp.br/ 
+
+ 
+
+ 
+
+A  função  que  determina  a  curva  apresentada  acima  e,  portanto,  a  curva  de 
+
+distribuição  normal  multivariável  é  determinada  pelo  seguinte  equacionamento, 
+
+representado aqui em forma matricial: 
+
+ 
+
+  Max 
+
+ 
+
+                                                                                             (8.5) 
+
+ 
+
+Onde: 
+
+ 
+
+       é a inversa da matriz de covariância 
+
+ 
+
+É fácil notar que para a sua maximização é preciso obter: 
+
+ 
+
+Min               
+
+ 
+ 
+
+ ou matricialmente Min                       
+
+ 
+
+ 
+
+(8.6) 
+
+ 
+
+Onde: 
+
+ 
+
+       Matriz de covariância 
+
+ 
+
+Logo,  está  exposto  o  fundamento  estatístico  que  rege  o  problema  de  reconciliação 
+
+de dados. 
+
+ 
+
+ 
+
+99 
+
+Os  autores  mencionados  no  histórico  do  desenvolvimento  da 
+
+técnica  de 
+
+reconciliação  de  dados  desenvolveram  métodos  analíticos  para  solução  deste 
+
+problema, seja pelo uso de multiplicadores de Lagrange ou outros métodos. 
+
+ 
+
+Vale lembrar que apenas o equacionamento exposto não garante a solução de todo 
+
+o  problema  de  reconciliação,  é  preciso  que  além  disso,  os  valores  obtidos  para  o 
+
+vetor  x  sejam  coerentes  com  o  modelo  físico  do  sistema  sendo  medido,  ou  seja, 
+
+satisfazer a igualdade da matriz A=0, descrita acima. 
+
+ 
+
+8.4. EXEMPLO DE APLICAÇÃO – LINEAR 
+
+ 
+
+Vamos  ilustrar  aqui  a  aplicação  da  técnica  de  reconciliação  de  dados  para  um 
+
+sistema linear. Neste caso, o de uma junção de linhas em que todas as cinco vazões 
+
+(m1,m2,m3,m4,m5) estão sendo medidas, conforme o esquema abaixo: 
+
+ 
+
+ 
+
+Figura 8.2 – Representação esquemática do problema. 
+
+ 
+
+Para  este  caso,  será  considerado  que  os  instrumentos  de  medição  possuem  o 
+
+mesmo  desvio  padrão,  e,  além  disso,  que  as  medidas  destas  variáveis  não 
+
+interferem umas nas outras. É possível, pois, simplificar a equação 8.6 para: 
+
+ 
+
+Min             
+
+ 
+ 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (8.7) 
+
+ 
+
+ 
+
+A  matriz  de  restrições  A  para  o  problema  acima  é  composta  apenas  do  seguinte 
+
+equacionamento: 
+
+ 
+
+M1 – M2 – M3 = 0   
+
+M3 – M4 = 0    
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+           (8.8) 
+
+           (8.9) 
+
+ 
+
+100 
+
+M2 + M4 – M5 = 0   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (8.10) 
+
+A solução analítica para a solução de um problema linear é representada por: 
+
+ 
+
+  =                       
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (8.11) 
+
+ 
+
+ 
+
+ 
+
+Onde: 
+
+ 
+
+      É o valor reconciliado do valor medido 
+
+ 
+
+Tal  solução  advém  do  uso  de  multiplicadores  de  Lagrange  para  a  minimização  da 
+
+equação 8.6. Neste caso, a matriz   poderá ser substituída pela matriz Identidade, 
+
+já  que,  ao  considerar  desvios  padrões  iguais  para  os  valores  medidos  pelos 
+
+instrumentos em 1, 2 e 3. O equacionamento pode ser simplificado. 
+
+ 
+
+Sendo assim, atribuindo os seguintes valores numéricos para as correntes medidas: 
+
+M1=3.02,  M2=2.10,  M3=1.06,  M4=  1.02,  M5  =  2.98.  Observado  que  estas  são 
+
+variações  aleatórias  em  relação  ao  valor  real  de  M1real=3,  M2real=2,  M3real=1, 
+
+M4real=1, M5real=3. 
+
+ 
+
+y=
+
+ 
+
+    
+ 
+ 
+    
+ 
+ 
+    
+ 
+ 
+ 
+ 
+    
+ 
+     
+
+,     = 
+
+     
+ 
+ 
+     
+
+ 
+
+ e x=
+
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+   
+
+ 
+ 
+ 
+ 
+ 
+
+                                              (8.12), (8.13), (8.14) 
+
+Com  a  aplicação  destes  valores  sobre  a  equação  8.11  são  obtidos  os  seguintes 
+
+resultados: 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (8.15) 
+
+ 
+
+     
+ 
+ 
+    
+ 
+ 
+  =
+     
+ 
+ 
+ 
+ 
+     
+      
+ 
+
+ 
+
+ 
+
+Com  estes  resultados  da  aplicação  de  reconciliação  de  dados  para  um  sistema 
+
+linear,  é  observado  que,  de  fato,  a  sua  aplicação  leva  a  variáveis  mais  precisas  e, 
+
+ 
+
+101 
+
+ainda,  coerentes  em  relação  à  ao  modelo  físico  ao  qual  estão  submetidas.  Isso 
+
+garante o benefício de não termos que excluir variável para a futura aplicação destas 
+
+variáveis tratadas. 
+
+ 
+
+Este resultado por solução analítica pode ser comparado com aquele atingido com o 
+
+uso de um algoritmo de otimização como o do software EES, para o qual, a entrada 
+
+do modelo e a função objetivo garantem o seguinte resultado: 
+
+      
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (8.16)         
+
+ 
+
+     
+ 
+ 
+    
+ 
+ 
+  =
+     
+ 
+ 
+ 
+ 
+     
+      
+ 
+
+ 
+
+ 
+
+No  entanto,  conforme  previsto,  o  tempo  demandado  para  a  solução  é  muito  mais 
+
+elevado  devido  ao esforço  computacional  necessário para a  otimização  do  sistema 
+
+não  linear  de  equações  (balanço  de  energia).  Sendo  que,  para  este  caso,  foram 
+
+utilizadas  2  variáveis  para  otimização,  isso  porque,  existem  5  variáveis  no  total  e 
+
+possuímos  3  equações,  logo,  o  solver  se  utiliza  desse  2  graus  de  liberdade,  ou  3 
+
+medidas redundantes, para atingir o valor mínimo da função objetivo FO. 
+
+ 
+
+8.5. ESTUDO DE CASO 
+
+ 
+
+A  aplicação  da  reconciliação  para  o  equipamento  em  questão,  bancada  de  ar 
+
+condicionado do Laboratório de RAC da UFES, já descrita no Capítulo 4 é possível, 
+
+uma vez que, como pode ser demonstrado na contagem mostrada abaixo, o número 
+
+de  equações  é  inferior  ao  número  de  variáveis  disponíveis  para  a  solução  do 
+
+sistema não linear dos balanços de massa e energia. 
+
+ 
+
+ 
+
+Tabela 8.1 – Analise do sistema de equações e otimização. 
+
+Var. Medidas 
+
+Equações 
+
+Variáveis para otimização EES 
+
+18 
+
+4 
+
+14 
+
+Como é de se esperar, portanto, devido às redundâncias de medição, a técnica de 
+
+reconciliação  de  dados  poderá  ser  aplicada  desde  que  as  redundâncias  certas 
+
+ 
+
+102 
+
+sejam  utilizadas,  tal  que,  nenhum  equacionamento  fique  subdeterminado  enquanto 
+
+que outros superdeterminados.  
+
+ 
+
+Para a realização da aplicação, inicialmente deve ser levantado o modelo físico do 
+
+equipamento  em  questão.  No  presente  estudo  de  caso,  o  modelo  físico  e  também 
+
+matemático  são  os  balanços  de  massa  e  energia.  Que  levam  ao  equacionamento 
+
+descrito no Apêndice B. 
+
+ 
+
+Observe que todas as variáveis medidas serão tratadas pela técnica, uma vez que, 
+
+todas  possuem  uma  correspondente  com  índice  “r”,  que  representa,  ao  fim  da 
+
+minimização da função objetivo, o valor reconciliado. 
+
+ 
+
+Neste caso, são utilizadas 14 variáveis para serem observadas, tal que, as demais 
+
+são  consequência  da  variação  destas,  ou  seja,  são  variáveis  observáveis,  mesmo 
+
+que, no sistema real elas são de fato medidas.  
+
+ 
+
+O  valor  14  vem  do  fato  de  que  a  otimização  fará  uso  dos  graus  de  liberdade  do 
+
+sistema  para  realizar  a  minimização  da  função  objetivo,  isto  é,  como  existem  18 
+
+variáveis  medidas  e,  portanto,  sendo  reconciliados,  mas  apenas  4  equações  que 
+
+garantem a existência de 4 redundâncias, o solver de otimização fará uso de 14 das 
+
+variáveis medidas, sendo que, as demais 4 são determinadas através das relações 
+
+matemáticas entre elas presente no modelo físico. 
+
+ 
+
+Um ponto interessante a ser destacado em relação ao programa feito para solução 
+
+do problema de reconciliação é a escolha das variáveis a serem escolhidas para uso 
+
+pelo  solver  de  otimização.  O  processo  de  escolha  foi  tal  que,  ao  isolar  cada 
+
+componente do ciclo, obtinha-se uma dependência especifica com os componentes 
+
+adjacentes sendo que esta dependência seria suprida ao se fechar o ciclo. 
+
+Portanto, foram utilizadas as seguintes variáveis: 
+
+ 
+
+ 
+
+  mH2O, P1, P2, P3, P4, T1, T2, T3,T5, T7, T8, T9, UR5, V5 
+
+As  equações  que  comporiam  a  matriz  A  caso  esta  estivesse  sendo  utilizada  no 
+
+desenvolvimento da solução seriam: 
+
+103 
+
+ 
+
+ 
+
+                       
+
+     
+
+                          
+
+                 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                                      
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (8.17) 
+
+         (8.18) 
+
+                    (8.19) 
+
+                    (8.20) 
+
+ 
+
+ 
+
+Onde: 
+
+ 
+
+             Calor trocado no condensador pelo lado refrigerante [kW] 
+
+             Calor trocado no condensador pelo lado refrigerante [kW] 
+
+             Calor trocado no condensador pelo lado refrigerante [kW] 
+
+             Calor trocado no condensador pelo lado refrigerante [kW] 
+
+                Entalpia específica [kJ/kg] 
+
+              Potência elétrica total  [kW] 
+
+             Fluxo de refrigerante [kg/s] 
+
+            Potência elétrica do ventilador [kW] 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+104 
+
+ 
+
+9.  RESULTADOS 
+
+ 
+
+Embora  o  sistema  proposto  como  sendo  um  dos  objetivos  deste  trabalho,  sistema 
+
+FDD  integrado  com  uma  ferramenta  de  Reconciliação  de  dados  e  aquisição 
+
+automática  de  dados  não  tenha  sido  desenvolvido,  as  ferramentas  que  compõem 
+
+este  sistema  foram,  bem  como  o  levantamento  de  equipamentos  necessários  para 
+
+implantação de um sistema de aquisição automática de dados. 
+
+ 
+
+As  contribuições  deste  trabalho  para  tal  fim  foram  as  descritas  ao  longo  deste 
+
+trabalho  sendo  que  o  resultado  da  aplicação  isolada  de  cada  uma  delas,  quando 
+
+possível, está exposto neste Capítulo. São elas: 
+
+ 
+
+ 
+
+  Modelagem de referência; 
+
+  Reconciliação de dados; 
+
+  Aplicação de metodologia de detecção; 
+
+  Aplicação de metodologia de diagnóstico. 
+
+9.1. RECONCILIAÇÃO DE DADOS 
+
+ 
+
+Os  resultados  obtidos  com  o  uso  do  método  de  Reconciliação  de  Dados,  para  os 
+
+dados  coletados  seguem  expostos  no  Apêndice  D,  já  nas  Tabelas  9.1  e  9.2  são 
+
+mostradas  a  porcentagem  de  ajuste  sobre  cada  variável  efetuado  e  as  médias 
+
+desses ajustes sobre cada variável e sobre cada um dos oito conjuntos de dados. 
+
+ 
+
+É possível notar que embora o percentual de ajuste de cada variável tenha variado 
+
+bastante  entre  cada  conjunto  de  dados  tratados  e  entre  as  próprias  variáveis,  o 
+
+ajuste  médio  percentual  realizado  sobre  cada  conjunto  de  dados  foi  bastante 
+
+semelhante para cada um dos conjuntos. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+105 
+
+ 
+
+ 
+
+  
+
+ 
+
+Tabela 9.1 – Percentual de ajuste realizado na reconciliação dos dados do conjunto 1, 2, 3 e 4. 
+
+  
+
+Conjunto de dados 1  Conjunto de dados 2  Conjunto de dados 3  Conjunto de dados 4 
+
+T1 
+
+T2 
+T3 
+
+T4 
+
+T5 
+T7 
+
+T8 
+
+T9 
+P1 
+
+P2 
+
+P3 
+P4 
+
+UR5 
+
+UR7 
+V5 
+
+V9 
+
+Welet 
+
+ 
+
+0.83% 
+
+4.49% 
+
+-5.63% 
+1.08% 
+
+6.21% 
+
+-3.67% 
+-6.19% 
+
+-7.78% 
+
+-1.90% 
+-2.87% 
+
+7.05% 
+
+-0.02% 
+-4.27% 
+
+6.99% 
+
+13.96% 
+-3.66% 
+
+-11.83% 
+
+-5.20% 
+
+7.99% 
+
+3.38% 
+-0.33% 
+
+6.60% 
+
+-2.78% 
+-0.76% 
+
+3.36% 
+
+-2.50% 
+-4.06% 
+
+-2.24% 
+
+-0.29% 
+-4.05% 
+
+7.30% 
+
+7.76% 
+-19.61% 
+
+-3.09% 
+
+3.40% 
+
+16.35% 
+
+-0.74% 
+0.67% 
+
+3.43% 
+
+-6.80% 
+-0.46% 
+
+-5.75% 
+
+-5.13% 
+2.87% 
+
+-1.33% 
+
+-0.08% 
+-2.16% 
+
+10.76% 
+
+3.60% 
+-6.78% 
+
+-16.25% 
+
+-3.13% 
+
+10.78% 
+
+-2.11% 
+-21.10% 
+
+8.05% 
+
+6.71% 
+-4.33% 
+
+0.00% 
+
+0.14% 
+0.00% 
+
+0.00% 
+
+-5.67% 
+0.00% 
+
+3.63% 
+
+0.00% 
+-15.32% 
+
+-7.44% 
+
+Tabela 9.2 – Percentual de ajuste realizado na reconciliação dos dados do conjunto 5, 6, 7 e 8. 
+
+  
+
+Conjunto de dados 5  Conjunto de dados 6  Conjunto de dados 7  Conjunto de dados 8 
+
+-5.71% 
+
+0.73% 
+
+-0.06% 
+
+-23.36% 
+
+3.47% 
+
+-5.57% 
+
+0.23% 
+
+-3.59% 
+
+0.98% 
+
+-5.24% 
+
+0.50% 
+
+0.00% 
+
+-3.91% 
+
+5.39% 
+
+1.60% 
+
+1.17% 
+
+-7.20% 
+
+T1 
+
+T2 
+
+T3 
+
+T4 
+
+T5 
+
+T7 
+
+T8 
+
+T9 
+
+P1 
+
+P2 
+
+P3 
+
+P4 
+
+UR5 
+
+UR7 
+
+V5 
+
+V9 
+
+Welet 
+
+ 
+
+ 
+
+5.41% 
+
+3.88% 
+
+7.26% 
+
+-14.73% 
+
+0.70% 
+
+0.33% 
+
+2.81% 
+
+-2.92% 
+
+5.29% 
+
+3.78% 
+
+6.98% 
+
+-3.77% 
+
+4.38% 
+
+0.00% 
+
+9.40% 
+
+-13.32% 
+
+-5.06% 
+
+-12.95% 
+
+13.92% 
+
+7.68% 
+
+-16.12% 
+
+-3.33% 
+
+-14.81% 
+
+1.08% 
+
+0.38% 
+
+11.87% 
+
+1.45% 
+
+6.87% 
+
+-4.21% 
+
+5.06% 
+
+12.85% 
+
+4.64% 
+
+-1.61% 
+
+-10.83% 
+
+4.67% 
+
+8.80% 
+
+3.75% 
+
+11.14% 
+
+4.46% 
+
+6.94% 
+
+2.84% 
+
+3.70% 
+
+4.52% 
+
+2.99% 
+
+3.62% 
+
+2.12% 
+
+3.28% 
+
+6.56% 
+
+5.62% 
+
+7.98% 
+
+9.02% 
+
+106 
+
+Tabela 9.3 – Média do percentual absoluto do ajuste realizado sobre cada variável. 
+
+Variável 
+
+Média absoluta dos ajustes 
+
+ 
+
+T1 
+T2 
+T3 
+T4 
+T5 
+T7 
+T8 
+T9 
+P1 
+P2 
+P3 
+P4 
+UR5 
+UR7 
+V5 
+V9 
+
+Welet 
+
+4.67% 
+8.80% 
+3.75% 
+11.14% 
+4.46% 
+6.94% 
+2.84% 
+3.70% 
+4.52% 
+2.99% 
+3.62% 
+2.12% 
+3.28% 
+6.56% 
+5.62% 
+7.98% 
+9.02% 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Na Tabela 9.3, o fato do ajuste realizado sobre as variáveis Welet e T4 terem sido os 
+
+mais  elevados  para  o  conjunto  analisado  significa  que  os  valores  medidos  para 
+
+essas variáveis foram os mais modificados para que se adequasse ao modelo físico 
+
+do problema.  
+
+ 
+
+Para a variável T4, tal fato pode ser decorrente do fato de estar modelada como a 
+
+temperatura  de  saturação  para  P4,  logo,  considerando  que  o  valor  medido  em  P4 
+
+definitivamente apresenta um erro, esta foi a variável que mais sofreu ajuste. 
+
+ 
+
+Outra  variável  cujo  modelo  utilizado  não  parece  ter  refletido  bem  a  realidade 
+
+observada foi Welet, nesse caso, a hipótese de que toda a potência elétrica medida 
+
+foi distribuída em trabalho de compressão e potência elétrica para o ventilador pode 
+
+ser falha. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+107 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Tabela 9.4 – Média do percentual absoluto do ajuste realizado sobre cada conjunto de dados. 
+
+Conjunto de dados 
+
+Média absoluta dos ajustes 
+
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+
+5.20% 
+4.78% 
+5.09% 
+5.20% 
+4.04% 
+5.29% 
+7.63% 
+6.06% 
+
+Por  fim,  os  resultados  expostos  na  Tabela  9.4  demonstram  que  o  ajuste  médio 
+
+imposto sobre cada conjunto de dados não varia tanto entre si o que sugere que a 
+
+variação de cada uma das propriedades medidas em relação ao valor real pode ser 
+
+aleatória, ou seja, a hipótese de ausência de um erro grosseiro pode ser razoável. 
+
+ 
+
+9.2. MODELAGEM DE REFERÊNCIA 
+
+ 
+
+Alguns  comportamentos  são  conhecidos  como  sendo  típicos  em  sistemas  de 
+
+refrigeração  e  ar-condicionado  a  medida  que  possuem  embasamento  na  literatura, 
+
+com  dados  experimentais  já  analisados.  Dentre  estes  comportamentos,  os  do    , 
+
+       e         estão  expostos  no  Capítulo  6,  no  entanto,  como  é  possível  verificar 
+
+devido  às  características  da  modelagem  desenvolvida,  não  é  possível  realizar  a 
+
+simulação destes comportamentos mantendo-se as mesmas entradas do modelo já 
+
+definidas, também naquele capítulo. 
+
+ 
+
+Visto  isso,  a  validação  da  modelagem  é  proposta  como  sendo  fruto  da  fidelidade 
+
+com  que  o  modelo  é  capaz  de  reproduzir  os  dados  operacionais  do  equipamento. 
+
+Para  tanto,  segue  exposto  abaixo  a  tabela  com  os  erros  calculados  com  o  uso  do 
+
+modelo em relação aos dados operacionais sem a presença de falhas. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+108 
+
+Tabela  9.5  –  Diferença  percentual  entre  o  valor  medido  e  o  valor  calculado  pela  modelagem  de 
+
+referência. 
+
+Conjunto 
+
+1 
+
+2 
+
+3 
+
+4 
+
+5 
+
+6 
+
+7 
+
+8 
+
+T2 (°C) 
+
+T7 (°C) 
+
+T4(°C) 
+
+P1 (kPa) 
+
+P2 (kPa)  P3 (kPa) 
+
+COP 
+
+-1.03% 
+
+-6.07% 
+
+2.00% 
+
+1.36% 
+
+-0.48% 
+
+0.68% 
+
+1.63% 
+
+-1.21% 
+
+-5.76% 
+
+5.16% 
+
+-0.43% 
+
+-3.32% 
+
+-2.19% 
+
+0.77% 
+
+7.72% 
+
+1.30% 
+
+2.82% 
+
+2.71% 
+
+7.11% 
+
+2.16% 
+
+-1.90% 
+
+10.95% 
+
+1.80% 
+
+0.36% 
+
+-0.08% 
+
+-15.73% 
+
+2.93% 
+
+0.75% 
+
+-2.07% 
+
+-0.41% 
+
+-0.27% 
+
+-2.70% 
+
+4.37% 
+
+-2.52% 
+
+-2.10% 
+
+0.79% 
+
+-0.23% 
+
+-4.64% 
+
+-1.33% 
+
+-13.77% 
+
+-2.98% 
+
+-5.96% 
+
+-6.03% 
+
+-6.60% 
+
+-0.11% 
+
+-2.94% 
+
+2.42% 
+
+2.17% 
+
+4.46% 
+
+0.28% 
+
+3.67% 
+
+2.07% 
+
+2.85% 
+
+-14.72% 
+
+1.18% 
+
+-3.76% 
+
+  
+
+9.3. DETECÇÃO E DIAGNÓSTICO 
+
+ 
+
+Para  a  detecção  e  diagnóstico  de  falhas  não  foram  desenvolvidos  em  linguagem 
+
+computacional  para 
+
+implantação  em  conjunto  com  as  demais 
+
+ferramentas 
+
+desenvolvidas  e  demais  informações  para  se  conceber  um  FDD.  No  entanto,  a 
+
+aptidão  da  modelagem  de  referência  desenvolvida  para  aplicação  neste  tipo  de 
+
+sistema foi posta à prova na aplicação de uma metodologia de detecção de falhas e 
+
+diagnóstico selecionada. 
+
+ 
+
+9.3.1 Método utilizado 
+
+ 
+
+  Detecção: Estimativa de parâmetros; 
+  Diagnóstico: Classificação por distância geométrica. 
+
+ 
+
+9.3.2 Metodologia para detecção de falha 
+
+ 
+
+O parâmetro escolhido para monitoramento é o COP do ciclo de refrigeração sendo 
+
+estudado.  Para  tanto,  foi  conduzido  um  ensaio  em  que  a  máquina  estava  em 
+
+condições normais de operação, isto é, sem falta. 
+
+ 
+
+Como  evidenciado  na  tabela  9.5,  os  pontos  operacionais  em  ausência  de  falha 
+
+quando  submetidos  à  modelagem  de  referência  demonstraram  valores  de  desvio 
+
+máximo do COP de 15.73%.  
+
+ 
+
+ 
+
+109 
+
+Com  base  nisso,  será  atribuído  um  limite  de  30%,  aproximadamente  o  dobro  do 
+
+maior  erro  observado  da  modelagem  de  referência,  como  sendo  o  desvio  máximo 
+
+admitido como não faltoso para o sistema de detecção de falha. Ou seja, o COP de 
+
+operação  poderá  desviar  no  máximo  30%  em  relação  ao  COP  de  referência 
+
+calculado para o ponto operacional determinado pelas variáveis: T5, UR5, UR7, T8, 
+
+T1 e T3. 
+
+ 
+
+Visto  isso,  o  sistema em estudo foi ensaiado  com uma  quantidade  menor  de fluido 
+
+refrigerante em vista a simular uma carga de refrigerante inadequada ou vazamento 
+
+de  refrigerante  que  pode  acometer  este  tipo  de  equipamento,  ou  seja,  trata-se  da 
+
+aquisição de dados operacionais em situação de falha. 
+
+ 
+
+Os resultados obtidos da comparação dos resultados obtidos com a modelagem de 
+
+referência  e  os  valores  medidos  no  equipamento  quando  acometido  pela  falta 
+
+seguem expostos abaixo. 
+
+ 
+
+ 
+
+Tabela 9.6 – Diferença entre o previsto no modelo e o valor medido 
+
+Conjunto 
+
+T2 (°C) 
+
+T7 (°C) 
+
+T4(°C) 
+
+P1 (kPa)  P2 (kPa) 
+
+P3 (kPa) 
+
+COP 
+
+1 
+
+2 
+
+3 
+
+4 
+
+-10.07% 
+
+14.83% 
+
+-140.91%  152.68% 
+
+7.55% 
+
+9.05% 
+
+18.64% 
+
+-14.78% 
+
+14.74% 
+
+-144.71%  157.79% 
+
+10.41% 
+
+14.73% 
+
+36.43% 
+
+-2.25% 
+
+-6.80% 
+
+25.32% 
+
+-122.90%  203.07% 
+
+56.34% 
+
+60.01% 
+
+11.37% 
+
+35.08% 
+
+-122.32%  201.07% 
+
+60.07% 
+
+62.96% 
+
+23.40% 
+
+Como é possível verificar, o COP operacional desviou 37% do valor estabelecido na 
+
+modelagem de referência. Logo, admitindo-se o limite de 30% de variação, está feita 
+
+a detecção de uma falha para o conjunto de dados 2. 
+
+ 
+
+Como  é  de  se  esperar,  a  sensibilidade  desse  tipo  de  abordagem  depende  dos 
+
+limites  estabelecidos para  a  variação  dos  parâmetros  observados,  sendo  que,  uma 
+
+maior  sensibilidade  acarreta  a  detecção  de  menores  mal-funcionamentos,  no 
+
+entanto,  desvios  devido  à  imprecisão  do  modelo  de  referência  utilizado  podem 
+
+acarretar um alarme falso em algumas situações. 
+
+ 
+
+ 
+
+ 
+
+110 
+
+ 
+
+9.3.3 Metodologia para diagnóstico da falha 
+
+ 
+
+O diagnóstico será realizado pela aplicação do método de classificação via distância 
+
+geométrica.  Este  método  consiste  basicamente  da  geração  de  resíduos  entre 
+
+parâmetros estimados pela modelagem de referência o os parâmetros calculados ou 
+
+medidos que representam o estado operacional do equipamento. 
+
+ 
+
+Neste caso em específico, já foi identificada a existência de  falha do ciclo devido o 
+
+desvio  identificado  do  parâmetro  COP,  resta  agora  localizar  o  equipamento  que 
+
+ocasionou a falha ou, como neste caso, um desvio do sistema como um todo e qual 
+
+o motivo desse desvio. 
+
+ 
+
+Para tanto, segue nas figuras 9.1 e 9.2 a relação da variação de alguns parâmetros 
+
+de  um  ciclo  de  refrigeração  por  compressão  de  vapor  devido  à  baixa  carga  de 
+
+refrigerante, que no presente trabalho, será a falha a ser diagnosticada. 
+
+ 
+
+Cálculo dos resíduos: 
+
+ 
+
+                                            
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (9.1) 
+
+ 
+
+ 
+
+Onde: 
+
+ 
+
+                Corresponde a alguma propriedade medida 
+
+               Corresponde a alguma propriedade calculada  
+
+                   Temperatura de saturação na saída do evaporador 
+
+                 Superaquecimento no evaporador 
+
+                  Temperatura na saída do compressor 
+
+                   Temperatura de saturação na entrada do evaporador 
+
+                  Sub-resfriamento na linha de líquido 
+
+                   Aumento da temperatura do ar no condensador 
+
+                 Queda de temperatura no evaporador 
+
+                  Queda de temperatura na linha de líquido 
+
+111 
+
+ 
+
+Figura 9.1 – Conjunto 1 de resíduos calculados para ensaio com baixa carga de refrigerante. 
+
+Adaptado de Kim et al (2006). 
+
+ 
+
+Tabela 9.7 – Conjunto 1 de resíduos calculados para o caso [°C] 
+
+    
+-25.3  
+
+-25.9  
+
+-29.3  
+-29.1  
+
+     
+19.9  
+
+20.4  
+
+23.2  
+22.8  
+
+    
+11.00  
+
+17.06  
+
+2.30  
+7.40  
+
+ 
+
+    
+
+-19.87  
+
+-20.40  
+
+-23.23  
+-22.75  
+
+ 
+
+ 
+
+ 
+
+ 
+
+Nas figura 9.1 e 9.2, adaptadas de Kim et al. (2006), é possível observar a presença 
+
+de  quatro  linhas  para  cada  um  dos  comportamentos  observados.  As  linhas  são 
+
+referentes a diferentes condições de temperatura externa e interna. 
+
+ 
+
+Embora  o  sistema  ensaiado  para  levantamento  das  tendências  levantadas  acima 
+
+não  possua  a  mesma  magnitude  daquele  que  é  foco  dos  desenvolvimentos  do 
+
+presente  trabalho,  as  tendências  de  comportamento  serão  adotadas  como  as 
+
+mesmas, já que a forma como os equipamentos interagem no ciclo é a mesma para 
+
+os dois casos. 
+
+ 
+
+ 
+
+112 
+
+Está  exposto  na  tabela  9.7  o  comportamento  dos  resíduos  da  figura  9.1  em  que 
+
+foram calculados com uso da equação 9.1  para o caso em estudo.  O mesmo vale 
+
+para  a  tabela  9.8  que  trás  os  valores  calculados  para  os  parâmetros  expostos  na 
+
+figura 9.2. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 9.2 – Conjunto 2 de resíduos calculados para ensaio com baixa carga de refrigerante. 
+
+Adaptado de Kim et al (2006). 
+
+ 
+
+Tabela 9.8 – Conjunto 2 de resíduos calculados para o caso [°C] 
+
+     
+
+-3.89 
+-6.19 
+-19.81 
+-20.65 
+
+    
+-11.42 
+-12.64 
+-14.46 
+-13.87 
+
+     
+-2.09 
+
+-2 
+-3.8 
+-6.03 
+
+     
+11 
+
+17.06 
+
+2.3 
+7.4 
+
+É  possível  notar  que  as  tendências  de  comportamento  dos  resíduos  de  todos  os 
+
+parâmetros  observados  nas  figuras  9.1  e  9.2  foram  as  mesmas  que  aquelas 
+
+calculadas  com  o  uso  da  modelagem  de  referência  desenvolvida  neste  trabalho 
+
+quando o equipamento sofria de baixa carga de refrigerante. 
+
+ 
+
+ 
+
+ 
+
+113 
+
+Observa-se  que  alguns  dos  resíduos  calculados  para  o  caso em estudo desviaram 
+
+muito  além  daquilo  esperado  nas  tendências  expostas  nas  figuras  9.1  e  9.2  como, 
+
+por exemplo,    que é previsto ter variações da ordem de -4°C apresentou variações 
+
+da ordem de 20°C no caso estudado.  
+
+ 
+
+Tal fato é  explicado pelo fato  da  modelagem  desenvolvida  depender  dos dados  de 
+
+entrada  T1  e  T3  que  deveriam  ser  calculados,  isso  pode  implicar  uma  restrição 
+
+quanto à aplicação da modelagem para detecção e diagnóstico de outras falhas, que 
+
+não foram abordadas neste trabalho. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+114 
+
+10.  CONSIDERAÇÕES FINAIS E SUGESTÕES 
+
+ 
+
+O 
+
+trabalho  aqui  proposto  atingiu  os  objetivos 
+
+traçados,  visto  que 
+
+foram 
+
+desenvolvidas as ferramentas que compõem um sistema de detecção e diagnóstico 
+
+de falha que ao serem aplicada em conjunto nas metodologias utilizadas no capítulo 
+
+9, demonstraram ter aptidão para futuro desenvolvimento de uma integração dessas 
+
+ferramentas em um código computacional. 
+
+ 
+
+Dentre  os  componentes  fundamentais  de  um  sistema  FDD  está  a  modelagem  de 
+
+referência que foi desenvolvida no ambiente EES para a qual foi validada por meio 
+
+da reprodutibilidade de valores medidos na bancada experimental. 
+
+ 
+
+A  aptidão  supracitada  refere-se  ao  fato  de  que  ao  aplicar  métodos  de  detecção  e 
+
+diagnóstico disponíveis na literatura a modelagem de referência foi capaz de acusar 
+
+os desvios necessários para que fosse identificada e  diagnosticada a falha, que no 
+
+caso, foi a de baixa carga de fluido refrigerante no equipamento. 
+
+ 
+
+Por  fim,  foi  desenvolvida  a  aplicação  da  técnica  de  Reconciliação  de  dados  para 
+
+tratamento  dos  dados  medidos  do  equipamento,  que,  devido  ao  fato  de  ainda 
+
+necessitar  de  ajustes  para  melhor  reprodução  das  restrições  do  sistema,  não  foi 
+
+aplicada  em  conjunto  com  as  demais  ferramentas  desenvolvidas  sendo  que  sua 
+
+aplicação e análise foram feitas separadamente. 
+
+ 
+
+Com o propósito de aprimorar o trabalho desenvolvido segue um detalhamento dos 
+
+objetivos alcançados e sugestões para futuros trabalhos. 
+
+ 
+
+10.1.  MODELAGEM  
+
+ 
+
+A  modelagem  de  referência  foi  capaz  de  reproduzir  o  comportamento  do 
+
+equipamento com uma variação máxima de parâmetro de 15,37% (COP) e variação 
+
+máxima de variável de 13,77% (T4). 
+
+ 
+
+ 
+
+115 
+
+Tal resultado impossibilita uma detecção de falha com uma boa precisão, isto é, não 
+
+se  pode  estabelecer  limites  pequenos  para  a  variação  de  parâmetros  e  variáveis 
+
+sobre falha já que a própria modelagem de referência já impõe um erro considerável 
+
+sobre o seu valor, logo, reduz a sensibilidade da detecção de falhas. 
+
+ 
+
+Outro  aspecto  é  o  fato  de  que  a  modelagem  de  referência  depende  de  duas 
+
+variáveis  do  ciclo,  T1  e  T3,  o  que  impossibilitou  a  validação  dessa  modelagem 
+
+através  da  comparação  com  curvas  típicas  de  desempenho  dos  equipamentos  no 
+
+ciclo.  
+
+ 
+
+  Sugestões 
+
+  Testar abordagens matemáticas para       e       dado as entradas T5, UR5, 
+
+T4, P4, V5 e T8, T2, P2, V9 respectivamente; 
+
+  Testar  calcular  a  vazão  de        calibrando  a  equação  de  rendimento 
+
+volumétrico; 
+
+  Testar  calcular  a  vazão  de        pelo  dispositivo  de  expansão  calibrando  a 
+
+equação que representa o fenômeno; 
+
+  Tornar  o  modelo  completamente  independente  de  entradas  de  propriedades 
+
+do lado refrigerante, como por exemplo, T1 e T3, conforme foi utilizado. 
+
+ 
+
+10.2.  RECONCILIAÇÃO DE DADOS 
+
+ 
+
+Os resultados obtidos na aplicação da técnica foram coerentes, uma vez que, como 
+
+discutido, os resultados que foram mais modificados foram justamente aqueles que 
+
+sofriam de maior imprecisão no modelo físico para representar o que de fato ocorre.  
+
+ 
+
+  Sugestões 
+
+  Ajustar  os  pesos  utilizados  no  equacionamento  através  da  calibração  dos 
+
+instrumentos de medição; 
+
+ 
+
+Implantar detecção de erro grosseiro; 
+
+  Utilizar abordagem de solução analítica da otimização (Lagrange); 
+
+  Propor um método para avaliar a melhora da qualidade dos dados obtida com 
+
+o uso da ferramenta. 
+
+116 
+
+ 
+
+ 
+
+10.3.  FDD E INTEGRAÇÃO 
+
+ 
+
+A metodologia escolhida foi capaz de identificar a presença de falha para o conjunto 
+
+de dados 2 quando atribuído um limite de variação do COP de 30%. 
+
+ 
+
+Já a metodologia escolhida para diagnóstico foi capaz de atribuir o comportamento 
+
+faltoso  à  baixa  carga  de  refrigerante.  O  resultado  foi  obtido  por  comparação  dos 
+
+resíduos  obtidos  com  aqueles  obtidos  na  literatura  para  o  mesmo  caso,  dentre  os 
+
+oito resíduos comparados, sete apresentaram o mesmo comportamento previsto na 
+
+literatura.  
+
+ 
+
+Logo, embora a modelagem e metodologias escolhidas possuam um potencial para 
+
+detecção  e  diagnóstico  de  falhas  é  preciso  aprimorar  a  modelagem  para  que  este 
+
+potencial seja expandido. 
+
+ 
+
+  Sugestões 
+
+ 
+
+  Desenvolver  integração  entre  todas  as  ferramentas  desenvolvidas  por  meio 
+
+do EXCEL; 
+
+ 
+
+Implantar um código com o uso de um dos métodos descritos cada detecção 
+
+e diagnóstico; 
+
+  Avaliar a utilização da técnica de diagnóstico termodinâmico; 
+
+  Propor detecção e diagnóstico de mais falhas. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+11.  REFERÊNCIAS 
+
+117 
+
+AFGAN  N.  H.,  RADANOVIC  L.  M.,  TIKHONOV  A.  I.,  1994,  An  expert  System  for 
+performance  analysis  of  small  refrigerating  machines,  International  Journal  of 
+Refrigeration Vol. 17, No. 8. 
+
+ASHRAE,  Handbook,  2012,  HVAC  Systems  and  Equipment,  American  Society  of 
+Heating, Refrigeration and Air Conditioning Engineers. 
+
+BAILEY  M.  B.,  KREIDER  J.  F.,  2003,  Creating  an  automated  chiller  fault 
+detection  and  diagnostics  tool  using  a  data  fault  library,  ISA  Transactions,  vol. 
+42, P. 485-95. 
+
+BRAUN E. J., BREUKER S. M., 1998, Demonstration of a Statistical Rule-Based 
+Fault Detection and Diagnostic Method on a Rooftop  Air  Conditioning Unit, IN 
+47907-1077, Purdue University, EUA. 
+
+BRAUN E. J., COMSTOCK C. M., 1999, Literature Review for Application of Fault 
+Detection and Diagnostic Methods to Vapor Compression Cooling Equipment, 
+Research Project 1043-RP Sponsored by ASHRAE. 
+
+BRAUN J.E., 1999,  Automated fault detection and diagnostics for the HVAC&R 
+industry, HVAC&R Research, Vol. 5, No. 2, P. 85-86. 
+
+BREUKER  M.  S.,  BRAUN  J.  E.,  1998,  Evaluating  the  Performance  of  a  Fault 
+Detection  and  Diagnostic  System 
+for  Vapor  Compression  Equipment, 
+International  Journal  of  Heating,  Ventilating,  and  Air  Conditioning  and  Refrigerating 
+Research, Vol.4, No.4, P.401-425. 
+
+BRISTOL  COMPRESSORS,  Coefficients  for  compressor  model  H24B19QABC, 
+Disponível  em:  <>.http://www.bristolcompressors.com>. Acessado  em:  10  de 
+Dezembro de 2013. 
+
+CHOI, J. M.; KIM, Y. C. , 2003,  Capacity modulation of an inverter-driven multi-
+air  conditioner  using  electronic  expansion  valve,  ENERGY,  2003-Vol.  28:  141-
+155.  
+ 
+
+CUI  J.,  WANG  S.,  2005,  A  Model-based  Online  Fault  Detection  and  Diagnosis 
+Strategy  for  Centrifugal  Chiller  Systems,  International  Journal  of  Thermal 
+Sciences, Vol.44, P.986-999. 
+
+DEXTER  A.  L.,  1995,  Fuzzy  Model  Based  Fault  Diagnosis,  IEE  Proceedings-
+Control Theory Apply, Vol.142, No.6, P.545-550. 
+
+GALILEU 
+http://www.galileu.esalq.usp.br/, Acessado em: 15 de Janeiro de 2014. 
+
+multivariável 
+
+USP, 
+
+Distribuição 
+
+normal 
+
+em: 
+
+<> 
+
+GERTLER  J.,  1998,  Fault  Detection  and  Diagnosis  in  Engineering  Systems, 
+Marcel Dexxer, EUA. 
+
+ 
+
+118 
+
+GORDON J. M., NG K. C., 1995, Predictive and diagnostic aspects of a universal 
+thermodynamic model for chillers, International Journal of Heat and Mass Transfer 
+No.38,  P.807-18. 
+
+GRIMMELIU  H.  T.,  WOUD  J.  K.,  BEEN  G.,  1995,  On-line  Failure  Diagnosis  for 
+Compression  Refrigeration  Plants,  International  Journal  of  Refrigeration  Vol.18, 
+No. 1, P.31-41. 
+
+GROSSMAN  G.,  MICHELSON  E.,  1985,  A  Modular  Computer  Simulation  of 
+Absorption Systems, ASHRAE Transactions, Vol. 91, Part 2B, P. 1808-1827. 
+
+HERAUD N., MAQUIN D., 1991, Multilinear Balance Equilibration: Application to 
+a Complex Metallurgical Process, Min. Metall. Proc. 11 P.197-204. 
+
+HERBAS  T.  B.,  BERLINCK  E.  C.,  URIU  C.  A.,  MARQUES  R.  P.,  PARISE,  J.  A., 
+1993, 
+  Steady-State  Simulation  of  Vapour-Compression  Heat  Pumps, 
+International Journal of Energy Research, Vol. 17, P. 801-816. 
+
+HODOUIN  D.,  EVERELL  M.  D.,  1980,  A  Hierarchical  Procedure  for  Adjustment 
+and Material Balancing of Mineral Processes Data, Int. J. Miner. Proc. 7 P.91-116. 
+
+INATSU  H.,  MATSUO  H.  K.,  FUJIWARE  K.,  YAMADA  Y.,  NISHIZAWA,  1992, 
+Development  of  Refrigerant  Monitoring  Systems 
+for  Automotive  Air-
+Conditioning Systems, Society of Automotive Engineers, SAE Paper No. 920212. 
+
+ISERMAN R., 1984, Process Fault Detection Based no Modeling and Estimation 
+Method – A survey, Automatica , Vol.20, P.387-404, EUA. 
+
+JAHNIG  D.,  1999,  A  Semi-Empirical  Method  for  Modeling  Reciprocating 
+Compressors 
+in  Residential  Refrigerators  and  Freezers,  Dissertação  de 
+Mestrado na University of Wisconsin, EUA. 
+
+KATIPAMULA  S.,  BRAMBLEY  R.  M.,  2005,  Methods  for  Fault  Detection, 
+Diagnostic,  and  Prognostics  for  Building  Systems  –  A  Review,  International 
+Journal of HVAC&R Research, Vol 11, No. 1, Pacific Northwest National Laboratory, 
+EUA. 
+
+KEIR  M.  C.,  ALLEYNE  A.  G.,  2006,  Dynamic  Modeling,  Control,  and  Fault 
+Detection in Vapor Compression Systems, University of Illinois, EUA. 
+
+KIM M., PAYNE V. W., DOMANSKI A. P., HERMES L. J. C., 2006, Performance of 
+a  Residential  Heat  Pimp  Operating  in  the  Cooling  Mode  with  Single  Faults 
+Imposed, National Institute of Standards and Technology, EUA. 
+
+KIM,  Y.,  O'NEAL,  D.  L.  ,  1994,  Two-Phase  Flow  of  R-22  through  Short-Tube 
+Orifices, ASHRAE Transactions: Research, Vol. 100, P. 323-334.  
+
+KIM, Y., O'NEAL, D. L., AND YUAN, X., 1994, Two-Phase Flow of HFC-R134a and 
+CFC-12 through Short-Tube Orifices, ASHRAE Transactions: Symposia, OR-94-2-
+2, P. 582-591. 
+
+ 
+
+119 
+
+KNEPPER J. C., GORMAN. J. W., 1980, Statistical Analysis of Constrained Data 
+Sets, AIChE Journal 26. P. 260-264. 
+
+KUEHN  D.  R.,  DAVIDSON  H.,  1961,  Computer  Control.  II.  Mathematics  of 
+Control, Chemical Engineering Progress 57. P. 44-47. 
+
+LIEBMAN M. J., EDGAR T. F., 1992, Efficient Data Reconciliation and Estimation 
+for  Dynamic  Processes  Using  Nonlinear Programming  Techniques,  Computers 
+Chem. Engng. 16 P.963-986. 
+
+MCKELLAR  M.  G.,1987,  Failure  Diagnosis  for  a  Household  Refrigerator, 
+Dissertação de Mestrado na Purdue University, EUA. 
+
+MCQUAY 
+<>.http://www.mcquay.com>. Acessado em: 10 de Dezembro de 2013. 
+
+EVAPORADORES, 
+
+Performance 
+
+plot, 
+
+Disponível 
+
+em: 
+
+MENDES  T.,  2012,  Diagnóstico  Termodinâmico  Aplicado  a  um  Sistema  de 
+Refrigeração  por  Compressão  de  Vapor,  Dissertação  de  Mestrado  na 
+Universidade Federal de Itajubá.  
+
+NARASIMHAN  S.,  JORDACHE  C.,2000,  Data  Reconciliation  &  Gross  Error 
+Detection, Gulf Publishing Company. 
+
+PAI  C.  C.  D.,  FISHER  G.  D.,  1988,  Application  of  Broyden’s  Method  to 
+Reconciliation of Nonlinearly Constrained Data,  AIChE Journal 34. P. 873-876. 
+
+PARISE 
+Simulation, Vol. 46, P. 71-76. 
+
+  J.  A.,  1986,  Simulation  of  Vapour-Compression  Heat  Pumps, 
+
+PÉREZ-SEGARRA  C.D.,  ESCANES  F.,  OLIVA  A.,  1994,  Numerical  Study  of  the 
+Thermal  and  Fluid-dynamic  Behaviour  of  Reciprocating  Compressors, 
+Proceedings  of  the  1994  International  Compressor  Conference,  Purdue  University, 
+P.145-150. 
+
+PIMENTA  M.  D.,  MENDOZA  S.  H.,  1999,  Overview  of  fault  detection  and 
+diagnosis  methods  applied  to  HVAC  systems,  15th  Brazilian  Congress  of 
+Mechanical Engineering. 
+
+RAHMAN S., RAGAZZI F., SUN R., BATHLA P., 2003, Modeling of an Automotive 
+Air  Conditioning  System  and  Validation  with  Experimental  Data,  SAE  World 
+Conference, Society of Automotive Engineers. SP-1733: P. 35-40. 
+
+ROSSI  T.  M.,  1995,  Detection,  diagnosis  and  evaluation  of  faults  in  vapor 
+compression cycle equipment, Tese de Doutorado na Purdue University, EUA. 
+
+ROSSI  T.  M.,  BRAUN  J.  E.,  1996,  Minimazing  operating  costs  of  vapor 
+compression equipment with optimal service scheduling, International Journal of 
+Heating, Ventilating, Air Conditioning and Refrigerating Research Vol2. P.3-26. 
+
+ROSSI  T.  M.,  BRAUN  J.  E.,  1997,  A  statistical,  rule-based  fault  detection  and 
+diagnostic method for vapor compression air conditioners, International Journal 
+of Heating, Ventilating, Air Conditioning and Refrigerating Research 3, P. 19-37. 
+
+ 
+
+120 
+
+ROSSI T.M., BRAUN J.E.,1992, Classification of Fault Detection and Diagnostics 
+Methods, IEA - Annex 25, Liège Meeting, Belgium. 
+
+SCANDINAVIA, 
+.http://www.scandinavia.com.br>.  Acessado em: 10 de Dezembro de 2013. 
+
+Disponível 
+
+komeco, 
+
+Tubo 
+
+capilar 
+
+em: 
+
+<> 
+
+ 
+
+SCHWENTKER  R.  A.,  WINKLER  J.  M.,  AUTE  V.  C.  AND  RADERMACHER,  R., 
+2006,  A  Simulation  and  Design  Tool  for  Flat  Tube,  Louvered-Fin  Heat 
+Exchangers. SAE  World Congress. P. 01-1451. 
+
+SIMANI  S.,  2000,  Model-Based  Fault  Diagnosis  in  Dynamic  Systems  Using 
+Identification Techniques, Tese de Doutorado na Unisersità degli Studi di Modena 
+e Reggio Emilia, Itália. 
+
+SIMPSON D. E., VOLLER V. R., EVERETT M. G., 1991, An Efficient Algorithm for 
+Mineral Processing Data Adjustment, Int. J. Miner. Proc. 31 P.73-96. 
+
+STALLARD  L.  A.,  1989,  Model  Based  Expert  System  for  Failure  Detection  and 
+Identification  of  Household  Refrigerators,  Dissertação  de  Mestrado  na  Purdue 
+University, EUA. 
+
+STOECKER  W.  F.,  1971,  A  Generalized  Program  for  Steady-State  System 
+Simulation, ASHRAE Transactions, Vol. 77, Part 1, P. 140-147. 
+
+STOECKER W. F., 1989, Design of Thermal Systems. 3rd ed. McGraw-Hill. 
+
+STOECKER W. F., JONES J. W., 1995,Refrigeração e Ar Condicionado, McGraw-
+Hill. 
+
+STYLIANOU M., NIKANPOUR D., 1996, Performance Monitoring, Fault Detection 
+and Diagnosis of Reciprocating Chillers, ASHRAE Transactions, Vol.102, P.615-
+627. 
+
+I.  B.,  BIEGLER  L.  T.,  1991,  Simultaneous  Strategies 
+
+TJOA 
+for  Data 
+Reconciliation  and  Gross  Error  Detection  of  Nonlinear  Systems,  Computers 
+Chem. Engng. 15 P.579-690. 
+
+VENKATASUBRAMANIAN V., CHAN K., 1989,  A neural network methodology for 
+process fault diagnosis," AIChE J., No. 35, P. 1993-2002. 
+
+VENTURINI  O.  J.,  PIRANI  M.  J.,  2005,  Eficiência  Energética  em  Sistemas  de 
+Refrigeração  Industrial  e  Comercial,  Ed  Eletrobrás,  Centrais  Elétricas  Brasileira, 
+FUPAI, RJ. 
+
+WINKLER M. J., 2009, Development of a Component Based Simulation Tool for 
+the Steady State and Transient Analysis of Vapor Compression Systems, Tese 
+de Doutorado na University of Maryland, EUA. 
+
+ 
+
+121 
+
+YOSHIMURA M., ITO N., 1989, Effective Diagnosis Methods for Air-Conditioning 
+Equipment 
+International 
+Telecommunications Energy Conference Vol2 P. 1-7. 
+
+in  Telecommunications  Buildings,  The  Eleventh 
+
+ZHAO  Z.,  HORTON  T.  W.,2012,  Semi-Empirical  Inverse  Model  for  DX  Unit  – 
+Performance 
+International  Refrigeration  and  Air 
+Conditioning Conference. Paper 1229. 
+
+in  Residential  Buildings, 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+122 
+
+APÊNDICE 
+
+A.  MODELAGEM DE REFÊNCIA 
+
+ 
+
+"MODELAGEM DE REFERÊNCIA" 
+
+h5=enthalpy(AirH2O,T=T5,P=Patm,w=w5) 
+w5=humrat(AirH2O,T=T5,P=Patm,R=UR5) 
+ 
+w7=humrat(AirH2O,T=T7,P=Patm,R=UR7) 
+h7=enthalpy(AirH2O,T=T7,P=Patm,w=w7) 
+ 
+h8=enthalpy(Air,T=T8) 
+h9=enthalpy(Air,T=T9) 
+ 
+A5=0.1330625 
+V5=2.5 
+Rho_ar5=DENSITY(AirH2O,T=T5,P=Patm,w=w5) 
+m5=A5*V5*Rho_ar5 
+ 
+Rho_ar9=density(Air,T=T9,P=Patm) 
+m9=A9*V9*Rho_ar9 
+A9=0.1463 
+V9=2.05 
+ 
+Qevap=m5*(h5-h7) 
+Qcond=m9*(h9-h8) 
+ 
+ 
+ 
+Patm=101.3 
+ 
+h1=enthalpy(R22,T=T1,P=P1+Patm) 
+h2=enthalpy(R22,T=T2,P=P2+Patm) 
+h3=enthalpy(R22,T=T3,P=P3+Patm) 
+h4=enthalpy(R22,T=T4,x=x4) 
+P4a=P_sat(R22,T=T4) 
+P4=P4a-Patm 
+ 
+Qevap=m_ref1*(h1-h4) 
+Qcond=m_ref1*(h2-h3) 
+h3=h4 
+Wcomp=m_ref1*(h2-h1) 
+ 
+ 
+ 
+P3=P2*0.968 
+P1=P4*0.9657 
+ 
+R=0.09614895339 
+n=1.191 
+Coef=(-0.0063*T1+1.1187) 
+ 
+T2k=1.00757575*Coef*T1k*((P2/P1)^((n-1)/n)) 
+ 
+
+ 
+
+123 
+
+T2k=T2+273.15 
+T1k=T1+273.15 
+ 
+T5wb=WetBulb(AirH2O,T=T5,r=UR5,P=Patm) 
+Tcond=(1.4769*T8)+20.865  
+Tevap=-5.6999793+(0.53743539*T8)-(0.1816168*T5wb) 
+ 
+Tcond=T_sat(R22,P=P2+Patm) 
+Tevap=T_sat(R22,P=P4+Patm) 
+ 
+TC=Tcond 
+TE=Tevap 
+ 
+C1=484.537 
+C2=6.6764922 
+C3=-10.15855 
+C4=0.050789430 
+C5=-0.051625820 
+C6=0.0915899 
+C7=0.000052522 
+C8=-0.000142387 
+C9=0.000194443 
+C10=-0.000297785 
+ 
+m_refx= 0.4536*(C1 + C2*(TE*1.8+32) + C3*(TC*1.8+32) + C4*((TE*1.8+32)^2) + 
+C5*(TE*1.8+32)*(TC*1.8+32) + C6*(TC*1.8+32)^2 + C7*(TE*1.8+32)^3 + 
+(C8*(TE*1.8+32)^2)*(TC*1.8+32) + C9*(TE*1.8+32)*((TC*1.8+32)^2) + C10*(TC*1.8+32)^3) 
+ 
+m_ref1=m_refx/3600 
+ 
+ 
+COP=Qevap/Wcomp 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+124 
+
+ 
+
+B.  MODELO PARA RECONCILIAÇÃO DE DADOS 
+
+ 
+
+"RECONCILIAÇÃO DE DADOS" 
+ 
+"As 14 variáveis mencionadas como objeto da otimização para realizar a reconciliação de dados são: 
+ 
+mH2Or  ; P1r ; P2r ; P3r ; P4r ; T1r ; T2r ; T3r ; T5r ; T7r ; T8r ; T9r ; UR5r ; V5r 
+" 
+ 
+"Constantes" 
+ 
+patm=101.135 
+P5=patm 
+P7=patm 
+A5=0.1443 
+welet_vent=0.374 
+P8=patm 
+P9=patm 
+A9=0.2294 
+ 
+"Variáveis medidas" 
+ 
+"Evaporador" 
+T5=27.9 
+UR5=0.513 
+V5=2.02 
+T7=17.1 
+UR7=0.784 
+mH2O=0.0004444444 
+T1=22.5 
+P1=490 
+ 
+"DXP" 
+T3=31.2 
+P3=3120 
+T4=4.8 
+P4=630 
+ 
+"Compressor" 
+T2=130 
+P2=3200 
+Welet=2.7 
+ 
+"Condensador" 
+T9=48.7 
+V9=1.41 
+T8=26 
+ 
+"Modelo" 
+ 
+Rho_ar5=density(AirH2O,T=T5r,P=P5,w=w5) 
+ 
+w5=humrat(AirH2O,T=T5r,P=P5,R=UR5r) 
+h5=enthalpy(AirH2O,T=T5r,P=P5,w=w5) 
+ 
+w7=humrat(AirH2O,T=T7r,P=P7,R=UR7r) 
+h7=enthalpy(AirH2O,T=T7r,P=P7,w=w7) 
+ 
+
+ 
+
+125 
+
+h1=enthalpy(R22,T=T1r,P=P1r+patm) 
+ 
+m5=A5*V5r*Rho_ar5 
+mH2Or=m5*(w5-w7) 
+ 
+hH2O=enthalpy(Water,T=T4,P=Patm) 
+ 
+Qevap_ref=m_ref*(h1-h4) 
+Qevap_ar=(m5*(h5-h7))-(mH2Or*hH2O) 
+Qevap_ref=Qevap_ar 
+ 
+ 
+h4=h3 
+x4p=Quality(R22,P=P4+patm,h=h4) 
+x4pr=Quality(R22,P=P4r+patm,h=h4) 
+tsatp4r=T_sat(R22,P=P4r+patm) 
+x4t=Quality(R22,T=T4,h=h4) 
+x4tr=Quality(R22,T=T4r,h=h4) 
+psatt4r=P_sat(R22,T=T4r) 
+x4pr-x4tr=0 
+ 
+Weletr=m_ref*(h2-h1)+Welet_vent 
+h2=enthalpy(R22,T=T2r,P=P2r+patm) 
+ 
+Rho_ar9=density(Air,T=T9r,P=P9) 
+m9=A9*V9r*Rho_ar9 
+ 
+h3=enthalpy(R22,T=T3r,P=P3r+Patm) 
+h8=enthalpy(Air,T=T8r) 
+h9=enthalpy(Air,T=T9r) 
+ 
+Qcond_ref=m_ref*(h2-h3) 
+Qcond_ar=m9*(h9-h8) 
+ 
+Qcond_ref=Qcond_ar 
+ 
+ 
+"Função Objetivo" 
+ 
+FO= ((T5-T5r)/T5)^2+ ((T7-T7r)/T7)^2+ ((V5-V5r)/V5)^2+ ((UR5-UR5r)/UR5)^2+ ((UR7-
+UR7r)/UR7)^2+ ((mH2O-mH2Or)/mH2O)^2+ ((T1-T1r)/T1)^2+ ((P1-P1r)/P1)^2+((P4-P4r)/P4)^2+((T4-
+T4r)/T4)^2+((P2-P2r)/P2)^2+((Welet-Weletr)/Welet)^2+(2*(((T2-T2r)/T2)^2))+((P3-P3r)/P3)^2+((T3-
+T3r)/T3)^2+((T8-T8r)/T8)^2+((T9-T9r)/T9)^2+((V9-V9r)/V9)^2 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+C.  CONJUNTO DE DADOS UTILIZADOS 
+
+ 
+
+C.1. Dados em operação sem falha 
+
+126 
+
+Tabela C.1 – Conjunto de dados em operação sem falha. 
+
+CONJUNTOS DE DADOS 
+
+  
+
+Variável 
+
+1 
+
+19.2 
+
+106.8 
+
+28.8 
+
+5.1 
+
+24.3 
+
+15 
+
+26 
+
+45.1 
+
+463.7 
+
+2299 
+
+2200 
+
+2 
+
+17.7 
+
+107.6 
+
+27.8 
+
+4.5 
+
+23.8 
+
+14.4 
+
+25 
+
+43.7 
+
+3 
+
+19.7 
+
+99.7 
+
+30.9 
+
+5.8 
+
+25.4 
+
+15.3 
+
+28.5 
+
+48.2 
+
+463.7 
+
+483.5 
+
+2289 
+
+2190 
+
+4 
+
+20.1 
+
+107.6 
+
+31.8 
+
+7.2 
+
+29.3 
+
+16.7 
+
+30.5 
+
+50.1 
+
+518 
+
+2664 
+
+2575 
+
+5 
+
+17 
+
+109.8 
+
+32.7 
+
+7.7 
+
+29.4 
+
+16.7 
+
+31 
+
+51.2 
+
+523 
+
+2674 
+
+2615 
+
+6 
+
+12.2 
+
+110.9 
+
+31.7 
+
+6.6 
+
+25.8 
+
+15 
+
+27 
+
+47.9 
+
+7 
+
+24.1 
+
+97 
+
+31.9 
+
+6.8 
+
+30.6 
+
+18.7 
+
+29.5 
+
+47.5 
+
+8 
+
+24 
+
+101.9 
+
+32.1 
+
+6.3 
+
+30.8 
+
+18.4 
+
+29.5 
+
+48.2 
+
+493.4 
+
+483.5 
+
+493.4 
+
+2516 
+
+2437 
+
+2477 
+
+2417 
+
+T1(°C) 
+
+T2(°C) 
+
+T3(°C) 
+
+T4(°C) 
+
+T5(°C) 
+
+T7(°C) 
+
+T8(°C) 
+
+T9(°C) 
+
+P1(kPa) 
+
+P2(kPa) 
+
+P3(kPa) 
+
+P4(kPa) 
+
+UR5(%) 
+
+UR7(%) 
+
+V5(m/s) 
+
+V9(m/s) 
+
+Wcomp(kW) 
+ 
+
+486.1 
+
+475.2 
+
+47.5 
+
+76.4 
+
+2.5 
+
+2.05 
+
+2630 
+
+47.7 
+
+76.7 
+
+2.5 
+
+2.05 
+
+2560 
+
+2477 
+
+2408 
+
+499 
+
+45.8 
+
+76.1 
+
+2.5 
+
+2.05 
+
+2690 
+
+525.5 
+
+535.2 
+
+514.1 
+
+517.9 
+
+37 
+
+73.6 
+
+2.5 
+
+2.05 
+
+2770 
+
+37.1 
+
+73.7 
+
+2.5 
+
+2.05 
+
+2790 
+
+42 
+
+75.6 
+
+2.5 
+
+2.05 
+
+2670 
+
+35.4 
+
+67.8 
+
+2.5 
+
+2.05 
+
+2660 
+
+2516 
+
+2457 
+
+508.4 
+
+35.2 
+
+68 
+
+2.5 
+
+2.05 
+
+2660 
+
+C.2. Dados em operação com baixo refrigerante 
+
+Tabela C.2 – Conjunto de dados em operação com baixa carga de refrigerante. 
+
+CONJUNTOS DE DADOS 
+
+Variável 
+
+1 
+
+T1(°C) 
+
+T2(°C) 
+
+T3(°C) 
+
+T4(°C) 
+
+P1(kPa) 
+
+P2(kPa) 
+
+P3(kPa) 
+
+P4(kPa) 
+
+T5(°C) 
+
+T7(°C) 
+
+T8(°C) 
+
+T9(°C) 
+
+UR5 
+
+UR7 
+
+V5(m/s) 
+
+V9(m/s) 
+
+Wcomp(kW) 
+
+ 
+
+26.3 
+
+109.2 
+
+29.2 
+
+-15.46 
+
+190 
+
+2169 
+
+2100 
+
+190 
+
+27.4 
+
+22.2 
+
+27 
+
+35.3 
+
+0.465 
+
+0.566 
+
+2.5 
+
+2.05 
+
+1596 
+
+2 
+
+26.5 
+
+115.4 
+
+29.7 
+
+-15.46 
+
+190 
+
+2118 
+
+2050 
+
+190 
+
+27.9 
+
+22.5 
+
+27.8 
+
+34.9 
+
+0.454 
+
+0.55 
+
+2.5 
+
+2.05 
+
+1580 
+
+3 
+
+24.3 
+
+102.3 
+
+26.5 
+
+-19.38 
+
+150 
+
+1387 
+
+1343 
+
+150 
+
+25.4 
+
+22.3 
+
+25.1 
+
+30.4 
+
+0.552 
+
+0.612 
+
+2.5 
+
+2.05 
+
+1588 
+
+4 
+
+24.7 
+
+108.8 
+
+27.2 
+
+-19.38 
+
+150 
+
+1395 
+
+1350 
+
+150 
+
+26.1 
+
+22.4 
+
+25.8 
+
+31.2 
+
+0.537 
+
+0.601 
+
+2.5 
+
+2.05 
+
+2180 
+
+ 
+
+127 
+
+C.3. Dados utilizados para correlação de Tcond 
+
+Tabela C.3 – Conjunto de dados em operação normal para cálculo de Tcond. 
+
+CONJUNTO DE DADOS 
+
+Variável 
+T1(°C) 
+T2(°C) 
+T3(°C) 
+T4(°C) 
+T5(°C) 
+T7(°C) 
+T8(°C) 
+T9(°C) 
+P1(kPa) 
+P2(Kpa) 
+P3(bar) 
+P4(bar) 
+UR5(%) 
+UR7(%) 
+V5(m/s) 
+V9(m/s) 
+
+Wcomp(Kw) 
+
+9 
+17 
+
+109.8 
+32.7 
+7.7 
+29.4 
+16.7 
+31 
+51.2 
+523 
+2674 
+2615 
+535.2 
+37.1 
+73.7 
+2.5 
+2.05 
+2790 
+
+5 
+
+24.4 
+118 
+31.7 
+5.8 
+29.3 
+18.9 
+28.8 
+47.8 
+495 
+2510 
+2450 
+500 
+41.2 
+68.5 
+2.5 
+2.05 
+2690 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+128 
+
+D.  RESULTADOS DA RECONCILIAÇÃO DE DADOS 
+
+ 
+
+Tabela D.1 – Resultado da reconciliação para os conjuntos 1, 2 e 3. 
+
+  
+
+Conjunto de dados 1 
+
+Conjunto de dados 2 
+
+Conjunto de dados 3 
+
+Variável 
+
+Medido 
+
+Reconciliado 
+
+Medido 
+
+Reconciliado 
+
+Medido 
+
+Reconciliado 
+
+T1(°C) 
+
+T2(°C) 
+
+T3(°C) 
+
+T4(°C) 
+
+T5(°C) 
+
+T7(°C) 
+
+T8(°C) 
+
+T9(°C) 
+
+P1(kPa) 
+
+P2(kPa) 
+
+P3(kPa) 
+
+P4(kPa) 
+
+UR5(%) 
+
+UR7(%) 
+
+V5(m/s) 
+
+V9(m/s) 
+
+Wcomp(kW) 
+ 
+
+19.2 
+
+106.8 
+
+28.8 
+
+5.1 
+
+24.3 
+
+15 
+
+26 
+
+45.1 
+
+463.7 
+
+2299 
+
+2200 
+
+486.1 
+
+47.5 
+
+76.4 
+
+2.5 
+
+2.05 
+
+2630 
+
+19.36 
+
+111.6 
+
+27.18 
+
+5.155 
+
+25.81 
+
+14.45 
+
+24.39 
+
+41.59 
+
+454.9 
+
+2233 
+
+2355 
+
+486 
+
+45.47 
+
+81.74 
+
+2.849 
+
+1.975 
+
+2319 
+
+17.7 
+
+107.6 
+
+27.8 
+
+4.5 
+
+23.8 
+
+14.4 
+
+25 
+
+43.7 
+
+463.7 
+
+2289 
+
+2190 
+
+475.2 
+
+47.7 
+
+76.7 
+
+2.5 
+
+2.05 
+
+2560 
+
+16.78 
+
+116.2 
+
+28.74 
+
+4.485 
+
+25.37 
+
+14 
+
+24.81 
+
+45.17 
+
+452.1 
+
+2196 
+
+2141 
+
+473.8 
+
+45.77 
+
+82.3 
+
+2.694 
+
+1.648 
+
+2481 
+
+19.7 
+
+99.7 
+
+30.9 
+
+5.8 
+
+25.4 
+
+15.3 
+
+28.5 
+
+48.2 
+
+483.5 
+
+2477 
+
+2408 
+
+499 
+
+45.8 
+
+76.1 
+
+2.5 
+
+2.05 
+
+2690 
+
+20.37 
+
+116 
+
+30.67 
+
+5.839 
+
+26.27 
+
+14.26 
+
+28.37 
+
+45.43 
+
+458.7 
+
+2548 
+
+2376 
+
+498.6 
+
+44.81 
+
+84.29 
+
+2.59 
+
+1.911 
+
+2253 
+
+Tabela D.2 – Resultado da reconciliação para os conjuntos 4, 5 e 6. 
+
+ 
+
+Conjunto de dados 4 
+
+Conjunto de dados 5 
+
+Conjunto de dados 6 
+
+Variável 
+
+Medido 
+
+Reconciliado 
+
+Medido 
+
+Reconciliado 
+
+Medido 
+
+Reconciliado 
+
+20.1 
+
+107.6 
+
+31.8 
+
+7.2 
+
+29.3 
+
+16.7 
+
+30.5 
+
+50.1 
+
+518 
+
+2664 
+
+2575 
+
+525.5 
+
+37 
+
+73.6 
+
+2.5 
+
+2.05 
+
+2770 
+
+T1(°C) 
+
+T2(°C) 
+
+T3(°C) 
+
+T4(°C) 
+
+T5(°C) 
+
+T7(°C) 
+
+T8(°C) 
+
+T9(°C) 
+
+P1(kPa) 
+
+P2(kPa) 
+
+P3(kPa) 
+
+P4(kPa) 
+
+UR5(%) 
+
+UR7(%) 
+
+V5(m/s) 
+
+V9(m/s) 
+
+Wcomp(kW) 
+ 
+
+ 
+
+19.47 
+
+119.2 
+
+31.13 
+
+5.681 
+
+31.66 
+
+17.82 
+
+29.18 
+
+50.1 
+
+518.7 
+
+2664 
+
+2575 
+
+495.7 
+
+37 
+
+76.27 
+
+2.5 
+
+1.736 
+
+2564 
+
+17 
+
+109.8 
+
+32.7 
+
+7.7 
+
+29.4 
+
+16.7 
+
+31 
+
+51.2 
+
+523 
+
+2674 
+
+2615 
+
+535.2 
+
+37.1 
+
+73.7 
+
+2.5 
+
+2.05 
+
+2790 
+
+16.03 
+
+110.6 
+
+32.68 
+
+5.901 
+
+30.42 
+
+15.77 
+
+31.07 
+
+49.36 
+
+528.1 
+
+2534 
+
+2628 
+
+535.2 
+
+35.65 
+
+77.67 
+
+2.54 
+
+2.074 
+
+2589 
+
+12.2 
+
+110.9 
+
+31.7 
+
+6.6 
+
+25.8 
+
+15 
+
+27 
+
+47.9 
+
+493.4 
+
+2516 
+
+2437 
+
+514.1 
+
+42 
+
+75.6 
+
+2.5 
+
+2.05 
+
+2670 
+
+12.86 
+
+115.2 
+
+34 
+
+5.628 
+
+25.98 
+
+15.05 
+
+27.76 
+
+46.5 
+
+519.5 
+
+2611 
+
+2607 
+
+494.7 
+
+43.84 
+
+75.6 
+
+2.735 
+
+1.777 
+
+2535 
+
+129 
+
+Tabela D.3 – Resultado da reconciliação para os conjuntos 7  e 8. 
+
+  
+
+Conjunto de dados 7 
+
+Conjunto de dados 8 
+
+Variável 
+
+Medido 
+
+Reconciliado 
+
+T1(°C) 
+
+T2(°C) 
+
+T3(°C) 
+
+T4(°C) 
+
+T5(°C) 
+
+T7(°C) 
+
+T8(°C) 
+
+T9(°C) 
+
+P1(kPa) 
+
+P2(kPa) 
+
+P3(kPa) 
+
+P4(kPa) 
+
+UR5(%) 
+
+UR7(%) 
+
+V5(m/s) 
+
+V9(m/s) 
+
+Wcomp(kW) 
+
+24.1 
+
+97 
+
+31.9 
+
+6.8 
+
+30.6 
+
+18.7 
+
+29.5 
+
+47.5 
+
+483.5 
+
+2477 
+
+2417 
+
+517.9 
+
+35.4 
+
+67.8 
+
+2.5 
+
+2.05 
+
+2660 
+
+20.98 
+
+110.5 
+
+34.35 
+
+5.704 
+
+29.58 
+
+15.93 
+
+29.82 
+
+47.68 
+
+540.9 
+
+2513 
+
+2583 
+
+496.1 
+
+37.19 
+
+76.51 
+
+2.616 
+
+2.017 
+
+2372 
+
+Medido 
+
+24 
+
+101.9 
+
+32.1 
+
+6.3 
+
+30.8 
+
+18.4 
+
+29.5 
+
+48.2 
+
+493.4 
+
+2516 
+
+2457 
+
+508.4 
+
+35.2 
+
+68 
+
+2.5 
+
+2.05 
+
+2660 
+
+Reconciliado 
+
+24.17 
+
+114.4 
+
+31.1 
+
+5.562 
+
+29.6 
+
+15.67 
+
+27.48 
+
+45.39 
+
+534.7 
+
+2424 
+
+2359 
+
+493.5 
+
+34.36 
+
+71.81 
+
+2.599 
+
+2.002 
+
+2381 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+130 
+
+E.  RESULTADOS DA MODELAGEM DE REFERÊNCIA 
+
+Tabela E.1 – Estado de referência previsto para dados com baixa carga de refrigerante. 
+
+  
+
+Conjunto 1 
+
+Conjunto 2 
+
+Conjunto 3 
+
+Conjunto 4 
+
+Variável  Medido  Referência  Medido  Referência  Medido  Referência  Medido  Referência 
+T5(°C) 
+UR5 
+T7(°C) 
+UR7 
+T8(°C) 
+
+24.3 
+0.465 
+14.09 
+0.566 
+
+24.3 
+0.465 
+16.18 
+0.566 
+
+27 
+
+23.8 
+0.454 
+13.57 
+0.55 
+27.8 
+34.9 
+26.5 
+115.4 
+29.7 
+-14.1 
+190 
+2200 
+2050 
+180 
+
+23.8 
+0.454 
+15.57 
+0.55 
+27.8 
+47.54 
+26.5 
+98.34 
+29.7 
+6.304 
+489.8 
+2429 
+2352 
+507.2 
+
+25.4 
+0.552 
+15.01 
+0.612 
+25.1 
+30.4 
+24.3 
+102.3 
+26.5 
+-18.9 
+150 
+1420 
+1343 
+150 
+
+25.4 
+0.552 
+18.81 
+0.612 
+25.1 
+44.86 
+24.3 
+100 
+26.5 
+4.328 
+454.6 
+2220 
+2149 
+470.8 
+
+29.3 
+0.537 
+17.19 
+0.601 
+25.8 
+31.2 
+24.7 
+108.8 
+27.2 
+-18.6 
+150 
+1420 
+1350 
+150 
+
+29.3 
+0.537 
+23.22 
+0.601 
+25.8 
+45.07 
+24.7 
+101.4 
+27.2 
+4.152 
+451.6 
+2273 
+2200 
+467.6 
+
+ 
+
+ 
+
+ 
+
+ 
+
+T9(°C) 
+
+T1(°C) 
+
+T2(°C) 
+
+T3(°C) 
+
+T4(°C) 
+
+P1(kPa) 
+
+P2(kPa) 
+
+P3(kPa) 
+
+P4(kPa) 
+
+27 
+35.3 
+26.3 
+109.2 
+29.2 
+-14.1 
+190 
+2200 
+2100 
+180 
+
+46.72 
+26.3 
+98.2 
+29.2 
+5.768 
+480.1 
+2366 
+2290 
+497.2 
+
+Tabela E.2 – Estado de referência previsto para dados em operação normal. 
+
+1 
+
+19.2 
+105.7 
+28.8 
+5.202 
+24.3 
+14.09 
+
+26 
+
+46.39 
+470 
+2288 
+2215 
+486.7 
+0.475 
+0.764 
+3.867 
+
+2 
+
+17.7 
+106.3 
+27.8 
+4.732 
+23.8 
+13.57 
+
+25 
+45.6 
+461.7 
+2213 
+2142 
+478.1 
+0.477 
+0.767 
+3.688 
+
+Conjuntos 
+
+3 
+
+19.7 
+107.4 
+30.9 
+6.435 
+25.4 
+15.01 
+28.5 
+48.62 
+492.2 
+2486 
+2406 
+509.7 
+0.458 
+0.761 
+3.857 
+
+4 
+
+20.1 
+109 
+31.8 
+7.254 
+29.3 
+17.19 
+30.5 
+50.18 
+507.3 
+2653 
+2568 
+525.3 
+0.37 
+0.736 
+3.857 
+
+5 
+17 
+
+112.9 
+32.7 
+7.506 
+29.4 
+17.43 
+
+31 
+
+50.81 
+512 
+2695 
+2609 
+530.1 
+0.371 
+0.737 
+3.373 
+
+6 
+
+12.2 
+113.9 
+31.7 
+5.691 
+25.8 
+14.8 
+27 
+
+47.72 
+478.7 
+2366 
+2290 
+495.7 
+0.42 
+0.756 
+2.927 
+
+7 
+
+24.1 
+103.9 
+31.9 
+6.6 
+30.6 
+18.68 
+29.5 
+48.73 
+495.2 
+2568 
+2486 
+512.8 
+0.354 
+0.678 
+4.636 
+
+8 
+24 
+
+104.1 
+32.1 
+6.581 
+30.8 
+18.8 
+29.5 
+48.7 
+494.8 
+2568 
+2486 
+512.4 
+0.352 
+0.68 
+4.602 
+
+ 
+ Variável 
+T1(°C) 
+T2(°C) 
+T3(°C) 
+T4(°C) 
+T5(°C) 
+T7(°C) 
+T8(°C) 
+T9(°C) 
+P1(kPa) 
+P2(kPa) 
+P3(kPa) 
+P4(kPa) 
+UR5(%) 
+UR7(%) 
+
+COP 
+
+ 
+
+ 
+
+ 
+
+

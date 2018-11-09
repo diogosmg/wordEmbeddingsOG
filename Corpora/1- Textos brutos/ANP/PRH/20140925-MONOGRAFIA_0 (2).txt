@@ -1,0 +1,4888 @@
+ 
+
+FLAMBAGEM TERMOMECÂNICA DE DUTOS SUBMARINOS COM 
+
+MÓDULOS DE BÓIAS 
+
+ 
+
+ 
+
+Igor Gabriel Teixeira Gómez 
+
+ 
+
+ 
+
+Projeto  Final  de  Graduação  apresentado  ao 
+
+Departamento  de  Engenharia  Naval  e  Oceânica, 
+
+Escola de Engenharia, da Universidade Federal do 
+
+Rio  de  Janeiro,  como  parte  dos 
+
+requisitos 
+
+necessários  à  obtenção do  diploma  de  Engenheiro 
+
+Naval e Oceânico. 
+
+ 
+
+Orientador: Murilo Augusto Vaz 
+
+   
+
+     
+
+ 
+
+ 
+
+ 
+
+ 
+
+Rio de Janeiro 
+
+Agosto de 2014 
+
+ FLAMBAGEM TERMOMECÂNICA DE DUTOS SUBMARINOS COM 
+
+MÓDULOS DE BÓIAS 
+
+ 
+
+Igor Gabriel Teixeira Gómez 
+
+ 
+
+PROJETO  SUBMETIDO  AO  CORPO  DOCENTE  DO  DEPARTAMENTO  DE 
+
+ENGENHARIA  NAVAL  E  OCEÂNICA  DA  ESCOLA  POLITÉCNICA  DA 
+
+UNIVERSIDADE FEDERAL DO RIO DE JANEIRO COMO PARTE DOS REQUISITOS 
+
+NECESSÁRIOS  PARA  A  OBTENÇÃO  DO  GRAU  DE  ENGENHEIRO  NAVAL  E 
+
+OCEÂNICO. 
+
+ 
+
+Aprovado por: 
+
+_____________________________________________ 
+
+Murilo Augusto Vaz, Ph.D. 
+
+ 
+
+_____________________________________________ 
+
+Marcelo Igor Lourenço de Souza, D.Sc. 
+
+ 
+
+_____________________________________________ 
+
+Bruno Reis Antunes, M.Sc. 
+
+ 
+
+ 
+
+RIO DE JANEIRO, RJ – BRASIL 
+
+AGOSTO DE 2014 
+
+ 
+ 
+ 
+
+ii 
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ 
+
+Gómez, Igor Gabriel Teixeira. 
+
+ 
+
+Flambagem Termomecânica de Dutos Submarinos com 
+
+Módulos de Bóias/ Igor Gabriel Teixeira Gómez. – Rio de 
+
+Janeiro: UFRJ/ Escola Politécnica, 2014. 
+
+72 p.: il.; 29,7 cm 
+
+Orientador: Murilo Augusto Vaz 
+
+Projeto de Graduação – UFRJ/ Escola Politécnica/ Curso 
+
+de Engenharia Naval e Oceânica, 2014. 
+
+Referências Bibliográficas: p. 38-40. 
+
+1. Modos de Flambagem. 2. Formulação Analítica. 3. 
+
+Modelagem em Elementos Finitos via ABAQUS. 4. Linguagem 
+
+de Programação MAPLE e MATLAB. 
+
+I. Augusto Vaz, Murilo. II. Universidade Federal do 
+
+Rio de Janeiro, Escola Politécnica, Curso de Engenharia Naval 
+
+e Oceânica. III. Titulo. 
+
+ 
+
+iii 
+
+AGRADECIMENTOS 
+
+ 
+
+ 
+
+Agradeço a Deus pela sabedoria que me deu para poder completar esta obra, 
+
+além da saúde e da paz de espírito. 
+
+Ao  meu  orientador  Murilo  e  à  Escola  Politécnica  da  UFRJ  pelo  ensino  de 
+
+grande  valor  que  me  fez  enxergar  o  cultivo  do  conhecimento  em  sua  forma  mais 
+
+apropriada para o aprendizado. 
+
+ 
+
+Ao Programa de Recursos Humanos da Agência Nacional do Petróleo, Gás e 
+
+Biocombustíveis, ANP PRH 35, bela bolsa de estudos concedida no biênio 2010-2012, 
+
+ao  ex-coordenador,  professor  Célio  Albano  e  ao  atual  coordenador  do  PRH  35, 
+
+professor Carlos Magluta pelo incentivo através dos programas de palestras e visitas 
+
+da ANP. 
+
+Aos  pesquisadores  Marcos  Queija,  Bianca  Pinheiro  e  à  Sra.  Cássia  Monteiro 
+
+pela atenção e cuidados aos bolsistas, assim como à equipe de alunos do Núcleo de 
+
+Estruturas Oceânicas e à Sra.  Eliene Barreto que  sempre promoveram um excelente 
+
+ambiente de estudo e pesquisa. 
+
+À minha esposa Heloisa e à minha família, pelo constante incentivo ao estudo 
+
+e pela credibilidade que me conferiram. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+iv 
+
+Resumo do Projeto apresentado à POLI/UFRJ como parte dos requisitos necessários 
+
+para a obtenção do grau de Engenheiro 
+
+ 
+
+FLAMBAGEM TERMOMECÂNICA DE DUTOS SUBMARINOS COM 
+
+MÓDULOS DE BÓIAS 
+
+Igor Gabriel Teixeira Gómez 
+
+Agosto/2014 
+
+ 
+
+Orientador: Murilo Augusto Vaz 
+
+ 
+
+ 
+
+ 
+
+Curso: Engenharia Naval e Oceânica 
+
+ 
+
+O trabalho em questão procura estudar a flambagem de dutos submarinos com 
+
+o  objetivo  de  compreender  o  fenômeno  e  buscar  soluções  para  os  problemas 
+
+relacionados à operação de linhas de escoamento de óleo e gás. 
+
+No tocante aos problemas relacionados à flambagem desses dutos por meio de 
+
+efeitos  térmicos  e  mecânicos,  iremos  explorar  o  uso  de  módulos  de  bóias  como 
+
+ferramenta  de  controle dos  efeitos  de  deslocamento  lateral.  Certos  parâmetros  como 
+
+temperatura e pressão na linha de transporte, bem como a natureza do fluido escoado, 
+
+lâmina d'água e efeitos friccionais causados pela interação com o leito marinho serão 
+
+considerados na formulação analítica do fenômeno, desenvolvida  numericamente em 
+
+linguagens MAPLE e MATLAB. 
+
+Dessa  forma,  iremos  comparar  os  resultados  provenientes  dos  métodos 
+
+elaborados e definir alguns dos aspectos mais relevantes do problema de controle da 
+
+flambagem. 
+
+Palavras-chave:  Flambagem  termomecânica,  pipeline,  força  axial  efetiva,  região  de 
+
+feed-in, módulos de bóias, interação duto-solo. 
+
+ 
+
+ 
+
+v 
+
+Abstract of the Project presented to POLI/UFRJ as a partial fulfillment of the 
+
+requirements for the Engineering Course 
+
+ 
+
+THERMOMECHANICAL BUCKLING IN SUBSEA PIPELINES WITH 
+
+BUOYANCY MODULES 
+
+ 
+
+Igor Gabriel Teixeira Gómez 
+
+August/2014 
+
+ 
+
+Advisor: Murilo Augusto Vaz 
+
+ 
+
+      
+
+Course: Naval and Ocean Engineering 
+
+ 
+
+This  work  presents  a  study  concerning  the  thermo-mechanical  buckling  of 
+
+subsea  pipelines  in  order  to  understand  the  phenomenon  and  seek  solutions  to 
+
+problems related to the operation of pipelines employed in the oil and gas industry. 
+
+Concerning the problems related to global buckling of pipelines by thermal and 
+
+mechanical  effects,  we  will  explore  the  use  of  buoyancy  modules  as  a  way  of 
+
+controlling the effects of lateral displacement. Certain parameters such as temperature 
+
+and  pressure  in  the  flowline,  and  the  nature  of  the  fluid  transported,  water  depth  and 
+
+frictional  effects  caused  by  pipe-soil  interaction  will  be  considered  in  the  analytical 
+
+formulation  of  the  phenomenon,  developed  numerically  in  MAPLE  and  MATLAB 
+
+languages. 
+
+We  will  then  compare  the  results from  those  methods  and  define  some  of the 
+
+most relevant aspects to control the global buckling problem. 
+
+Keywords: Thermo-mechanical  buckling,  pipeline,  effective  axial  force,  feed-in  region, 
+buoyancy modules, pipe-soil interaction. 
+
+ 
+
+ 
+
+ 
+
+vi 
+
+SUMÁRIO 
+
+1. 
+
+2. 
+
+INTRODUÇÃO. .............................................................................................................................................. 1 
+
+FLAMBAGEM LATERAL. ................................................................................................................................. 4 
+
+2.1 
+
+2.2 
+
+2.3 
+
+2.4 
+
+2.5 
+
+MODOS DE FLAMBAGEM ......................................................................................................... 4 
+
+FORÇA AXIAL EFETIVA ANCORADA, NA ALÇA DE FLAMBAGEM E REGIÃO DE FEED-IN . 5 
+
+MODELO DE HOBBS ................................................................................................................. 9 
+
+MODELO DE HOBBS COM RESTRIÇÃO DE FEED-IN ........................................................... 11 
+
+LIMITAÇÕES DOS MODELOS DE HOBBS .............................................................................. 12 
+
+3.  MÉTODOS DE CONTROLE DA FLAMBAGEM. ................................................................................................ 13 
+
+3.1 
+
+3.2 
+
+3.3 
+
+CONCEITO E NECESSIDADE DE CONTROLE ....................................................................... 13 
+
+SNAKE-LAY E SLEEPER ......................................................................................................... 13 
+
+MÓDULOS DE BÓIA ................................................................................................................. 15 
+
+4. 
+
+FORMULAÇÃO ANALÍTICA PARA FLAMBAGEM LATERAL COM MÓDULOS DE BÓIAS. ................................... 16 
+
+4.1 
+
+4.2 
+
+DEFINIÇÃO DOS PARÂMETROS PARA O 3º MODO DE FLAMBAGEM COM BÓIAS ........... 16 
+
+OBTENÇÃO DAS EQUAÇÕES DE DESLOCAMENTO LATERAL ........................................... 17 
+
+4.3 
+OBTENÇÃO  DAS  EQUAÇÕES  DE  DESLOCAMENTO  AXIAL  ATRAVÉS  DA  FORÇA  AXIAL 
+EFETIVA NAS ALÇAS DE FLAMBAGEM .............................................................................................. 20 
+
+4.4 
+OBTENÇÃO  DA  EQUAÇÃO  DE  DESLOCAMENTO  AXIAL  NA  REGIÃO  DE  FEED-IN  E 
+CÁLCULO DA EQUAÇÃO DE GOVERNO............................................................................................. 22 
+
+4.5 
+
+EQUAÇÕES DE GOVERNO PARA OS DEMAIS MODOS DE FLAMBAGEM ......................... 27 
+
+5. 
+
+RESULTADOS OBTIDOS DO MODELO ANALÍTICO COM BÓIAS. ..................................................................... 28 
+
+5.1 
+
+5.2 
+
+5.3 
+
+5.4 
+
+5.5 
+
+5.6 
+
+INTRODUÇÃO AO MATLAB E MAPLE .................................................................................... 28 
+
+COMPARAÇÃO ENTRE O MODELO DE HOBBS E O MODELO ANALÍTICO COM BÓIAS ... 31 
+
+INFLUÊNCIA DO COMPRIMENTO DE BOIA NA FLAMBAGEM .............................................. 33 
+
+INFLUÊNCIA DA FLUTUABILIDADE DO MÓDULO DE BÓIA ................................................. 34 
+
+VARIAÇÃO DA DEFLEXÃO LATERAL COM A TEMPERATURA ............................................ 35 
+
+INFLUÊNCIA DO ATRITO LATERAL NAS ALÇAS DE FLAMBAGEM ..................................... 36 
+
+CONCLUSÕES E TRABALHOS FUTUROS. ....................................................................................................... 37 
+
+BIBLIOGRAFIA. ............................................................................................................................................ 38 
+
+ANEXOS ...................................................................................................................................................... 40 
+
+8.1 
+PROGRAMA  PARA  O  CÁLCULO DO  COMPRIMENTO  DAS  ALÇAS DE FLAMBAGEM  E  DA 
+FORÇA AXIAL EFETIVA ........................................................................................................................ 40 
+
+8.2 
+
+8.3 
+
+PROGRAMA PARA O CÁLCULO DA DEFLEXÃO LATERAL .................................................. 44 
+
+DESENVOLVIMENTO DO MODELO ANALÍTICO COM MÓDULOS DE BÓIA ........................ 49 
+
+vii 
+
+6. 
+
+7. 
+
+8. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ÍNDICE DE FIGURAS 
+ 
+
+Figura 01. – Duto Submarino (PIPELINE [1]) 
+
+Figura 02. – Leito marinho na costa brasileira (ZONA COSTEIRA [2]) 
+
+Figura 03. – Vãos Livres (SEABED IMPERFECTION [3]) 
+
+Figura 04. – Imperfeições na flambagem lateral (GUAN e NYSTROM [4]) 
+
+Figura 05. – Modos de flambagem (HOBBS e ROGER [5a]) 
+
+Figura 06. – Ilustração da Força Axial em cada trecho do duto 
+
+Figura 07. – Imagem esquemática método de flambagem por Snake-Lay 
+
+Figura 08. – Esquema do método de flambagem por Sleepers 
+
+Figura 09. – Esquema de flambagem módulos de bóias (BRUTON [18]) 
+
+Figura 10. – Esquema do 3º modo de flambagem 
+
+Figura 11. – Elemento infinitesimal de duto 
+
+Figura 12. – Interface gráfica – perfil de deslocamento lateral 
+
+Figura 13. – Interface gráfica – critérios de escoamento 
+
+ 
+
+ÍNDICE DE TABELAS E GRÁFICOS 
+ 
+
+Gráfico 2.2.f – Força Axial Ancorada 
+
+Tabela 2.3.b – Constantes de HOBBS de k1 a k5 
+
+Tabela 4.2.i – Condições de Continuidade e de Contorno 
+
+Tabela 5.1.a – Especificações do Duto Submarino 
+
+Tabela 5.1.b – Condições de Trabalho 
+
+Gráfico 5.2.a – Modelo de HOBBS vs Analítico com Bóias 
+
+Gráfico 5.2.b – Temperatura Mínima para Flambagem 
+
+Gráfico 5.3.a – Influência do Comprimento de Bóia 
+
+Gráfico 5.3.b – Temperatura Mínima vs Comprimento de Boia 
+
+Gráfico 5.4.a – Variação da Flutuabilidade 
+
+Gráfico 5.5.a – Influência da Temperatura nas Alças de Flambagem 
+
+Gráfico 5.6.a – Influência do Atrito Lateral na Deflexão Lateral 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+1 
+
+2 
+
+3 
+
+3 
+
+5 
+
+8 
+
+14 
+
+15 
+
+15 
+
+17 
+
+18 
+
+30 
+
+30 
+
+7 
+
+9 
+
+20 
+
+29 
+
+29 
+
+31 
+
+32 
+
+33 
+
+34 
+
+35 
+
+36 
+
+36 
+
+viii 
+
+INTRODUÇÃO. 
+
+1. 
+ 
+
+A  crescente  demanda  por  inovações  ligadas  à  indústria  de  óleo  e  gás  tem 
+
+promovido  o  aumento  do  número  de  propostas  e  soluções  tecnológicas.  Cada  vez 
+
+mais  tem  havido  a  necessidade  de  buscar  soluções  mais  eficientes  e  que 
+
+proporcionem facilidades na logística de exploração e produção de petróleo e afins em 
+
+alto mar. 
+
+Os  custos  de  logística  de  operação  de  navios  de  alívio  e  de  unidades  de 
+
+exploração são os mais altos depois dos custos dos próprios equipamentos utilizados. 
+
+Além  disso,  o  processo  de  alívio  de  plataformas  e  Floating  Production  Storage  and 
+
+Offloading  vessels  (FPSOs)  não  influenciam  somente  os  custos  operacionais,  mas 
+
+também  demandam  tempo  e  recursos  humanos  para  fazê-los,  além  de  implicar  uma 
+
+série de riscos ambientais ligados aos procedimentos. 
+
+Um duto submarino é um elemento cilíndrico vazado cuja relação entre a área da 
+
+seção transversal e o comprimento (A/L²) é muito pequena, o que remete ao fato das 
+
+tensões  locais  devido  à  geometria  cilíndrica  serem  ínfimas  em  relação  às  tensões 
+
+globais  referentes  aos  esforços  relacionados  à  viga-duto.  Portanto,  a  natureza  do 
+
+problema  traz  consigo  uma  facilidade  geométrica  suficiente  para  considerá-lo  como 
+
+uma viga. 
+
+Os  dutos  submarinos  são  utilizados  como  meio  de  transporte  para  materiais  de 
+
+natureza fluida ou semifluida, como água, gás, óleo, lama entre outras misturas. Uma 
+
+primeira visão é apresentada na Figura 01. 
+
+Figura 01. – Duto Submarino (PIPELINE [1]). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+1 
+
+A solução de transporte de óleo e gás através da utilização de dutos submarinos, 
+
+quando  viável,  mostra-se  relativamente  mais  eficiente  e  de  menor  custo  do  ponto  de 
+
+vista  logístico  e  operacional,  com menos riscos  ambientais  pelo fato  de  constituir  um 
+
+sistema  estático  de  transporte.  Em  contra  partida,  a  fabricação  e  instalação  desses 
+
+dutos  ainda  tem  um  alto  custo  por  quilômetro  de  lançamento  e  também  demandam 
+
+procedimentos  de  manutenção  diferenciados,  apesar  de  mais  baratos,  como 
+
+monitoramento da linha de transporte e inspeções internas e externas. 
+
+A temperatura mais alta no duto em relação à sua periferia fluida causa um campo 
+
+de  calor  agradável  para  certas  espécies  marinhas.  Elas,  por  sua  vez,  acabam 
+
+colonizando  locais  de  passagem  do  duto.  Outras  espécies  ainda  se  alimentam  dos 
+
+resíduos  acumulados  na  superfície.  Portanto,  existe  ainda  a  questão  ambiental 
+
+envolvida na operação do duto, que vale ser ressaltada. 
+
+Apesar  dessas  dificuldades,  ainda  assim  o transporte por  dutos  é  muito  atraente, 
+
+principalmente para campos de exploração que possuem alto nível de produção e um 
+
+intenso  tráfego  de  embarcações  de  apoio  e  alívio.  Entretanto,  certos  problemas 
+
+operacionais na utilização de dutos submarinos devem ser levados em consideração. 
+
+O leito marinho na costa brasileira,  como em muitos outros lugares, é constituído 
+
+pela  coleção  sequencial  geográfica  composta  pela  plataforma  continental,  seguido 
+
+pela  região  de  declive  conhecida  como  talude,  e  termina  na  região  oceânica,  como 
+
+pode ser visto na Figura 02. 
+
+Figura 02. – Leito marinho na costa brasileira (ZONA COSTEIRA [2]). 
+
+ 
+
+2 
+
+ 
+
+ 
+
+ 
+
+Além  da  diferença  de  profundidades  de  cada  ambiente,  o  solo  marinho 
+
+apresenta uma série de imperfeições. Algumas dessas imperfeições, ao longo da vida 
+
+útil  da  tubulação  mantêm  seu  formato  original,  porém  em  regiões  com  certa 
+
+configuração  de  correntezas,  há  a  modificação  do  leito  marinho,  causando  novas 
+
+imperfeições. Esses desníveis produzem um sistema irregular de sustentação ao duto, 
+
+ou  seja,  o  duto  pode  ficar  apoiado  apenas  em  certos  pontos  do  seu  comprimento,  o 
+
+que pode ser visto na Figura 03. 
+
+Figura 03. – Vãos Livres (SEABED IMPERFECTION [3]). 
+
+ 
+
+ 
+
+Uma simulação feita por GUAN e NYSTROM. [4]  em elementos finitos para a 
+
+comparação  entre  o  deslocamento  lateral  do  duto  e  sua  resistência  denotam  a 
+
+percepção das imperfeições no leito marinho e sua relação com o efeito de flambagem 
+
+lateral.  As  imperfeições  podem  gerar  deformações  verticais,  podendo  ser  devido  à 
+
+flexão  da  viga  duto  em razão  de  seu  próprio  peso,  ou  pela flambagem vertical  como 
+
+forma  de  alívio  para forças  de  compressão  axial,  surgidas  a  partir  da  expansão  axial 
+
+térmica do duto e pela pressão interna do sistema. 
+
+Vista Lateral 
+
+Vista Superior 
+
+ 
+
+Figura 04. – Imperfeições na flambagem lateral (GUAN e NYSTROM [4]). 
+
+ 
+
+3 
+
+ 
+
+A flambagem lateral, que é o nosso foco de estudo, também é uma ocorrência 
+
+comum para este cenário. Tanto a pressão interna quanto a temperatura do fluido que 
+
+está sendo transportado contribuem para o surgimento de uma força residual axial. A 
+
+resistência  friccional  gerada  pela  interação  do  duto  com  o  solo  é  a  responsável  pela 
+
+força de compressão gerada, restringindo a expansão do duto e causando o acúmulo 
+
+de  esforços  axiais.  Essa  carga,  em  menores  níveis,  provoca  a  simples  deformação 
+
+axial  do  material.  Entretanto,  se  a  força  residual  axial  for  muito  grande,  o  duto  pode 
+
+não comportar a magnitude de sua deformação, e, portanto, ocorre a flambagem. Esse 
+
+fenômeno  é  a  configuração  que  o  duto  assume  por  meio  de  uma  deflexão  lateral 
+
+devido ao desequilíbrio causado pela expansão termomecânica. Com isso, os esforços 
+
+axiais diminuem, voltando ao equilíbrio em termos de força e de momento. 
+
+Os dutos submarinos podem ser utilizados de duas formas; como risers ou como 
+
+flowlines.  Os  risers  são  trechos  suspensos  de  um  duto  submarino  cuja  função  é 
+
+conduzir os fluidos oriundos dos poços e  manifolds até as unidades estacionárias de 
+
+produção, estando submetidos a esforços de tração e fadiga, seja devido a seu próprio 
+
+peso,  como  à  ação  da  correnteza,  e  aos  efeitos  das  ondas  e  as  próprias 
+
+movimentações das unidades de produção. 
+
+Já os flowlines são elementos que permanecem na posição horizontal junto ao leito 
+
+marinho,  e  que  transportam  fluidos  oriundos  dos  sistemas  offshore.  Estão  sujeitos  à 
+
+resistência  friccional  do  solo  e  gradientes  de  temperatura  e  pressão,  que  podem 
+
+resultar  em  problemas  de  flambagem.  Adicionalmente,  consideraremos  também  que 
+
+os pipelines utilizados são de característica rígida, por serem mais baratos em relação 
+
+aos flexíveis. 
+
+2.  FLAMBAGEM LATERAL. 
+ 
+
+2.1  MODOS DE FLAMBAGEM 
+ 
+
+A  flambagem  pode  ser  local  ou  global,  podendo  ainda  ser  causada  por  cargas 
+
+estáticas  ou  dinâmicas.  Como  estamos  analisando  o  efeito  da  temperatura  e  da 
+
+pressão,  iremos  considerar  uma  análise  estática  do  problema.  Para  o  estudo  de 
+
+flambagem termomecânica de dutos submarinos, iremos considerar os efeitos globais 
+
+deste  processo.  A  flambagem  vertical,  importante  para  situações  onde  o  duto 
+
+encontra-se enterrado, não será tratada neste estudo. 
+
+ 
+
+4 
+
+Existem,  no  entanto,  certos  modos  nos quais  o duto  acomoda-se quando  sofre  o 
+
+fenômeno  de  flambagem  lateral,  sendo  os  quatro  primeiros,  que  ocorrem  com  mais 
+
+frequência, apresentados na figura 05. 
+
+ 
+
+Figura 05. – Modos de flambagem (HOBBS e ROGER [5a]). 
+
+Esses  modos  são  os  que  ocorrem  na  flambagem  lateral,  cujo  comprimento  L 
+
+denotado corresponde ao comprimento da alça de flambagem principal. Já a alça  de 
+
+flambagem secundária, presentes nos modos 3 e 4 é aquela de menor deslocamento 
+
+e  é  subsequente  à  alça  principal.  Os  modos  de  flambagem  ímpares  e  pares  são 
+
+aqueles que apresentam condições de simetria e antissimetria, respectivamente. 
+
+Os  modos  em  que  a  flambagem  ocorrem  na  verdade  são  infinitos,  mas  os 
+
+primeiros 4 modos, que são caracterizados por alças principais (maior deslocamento) 
+
+e  alças  secundárias  (menor  deslocamento)  acontecem  com  maior  frequência,  em 
+
+especial o 3º modo de flambagem, segundo ANTUNES [6], que será o nosso foco de 
+
+estudo. 
+
+ FORÇA  AXIAL  EFETIVA  ANCORADA,  NA  ALÇA  DE  FLAMBAGEM  E 
+REGIÃO DE FEED-IN 
+
+2.2 
+
+ 
+
+Para compor a força axial efetiva ancorada, consideramos a soma dos esforços 
+
+de  compressão  devido  à  pressão  do  óleo  e  à  dilatação  linear  térmica  do  material. 
+
+Através  do  estudo  feito  por  ANTUNES  [6],  podemos  escrever  as  equações  2.2.a  e 
+
+2.2.b  referentes  à  força  axial  produzida  pela  ação  da  pressão  e  da  temperatura 
+
+respectivamente. 
+
+N𝑝 = 𝑃𝑖 ∙ 𝐴 ∙ (1 − 2 ∙ 𝜈) 
+
+(2.2.a) 
+
+ 
+
+5 
+
+ 
+
+𝑁𝑇 = E ∙ 𝐴 ∙ 𝛼 ∙ Δ𝑇         
+
+(2.2.b) 
+
+ 
+
+ 
+
+Cujas variáveis são definidas como: 
+
+N𝑝 – Força Axial devido a Pressão 
+
+𝑁𝑇 – Força Axial devido a Temperatura 
+
+E – Módulo de Elasticidade 
+
+𝛼 – Coeficiente de Dilatação Linear 
+
+𝐴 – Área de Aço da Seção Transversal 
+
+Δ𝑇 – Variação de Temperatura 
+
+𝜈 – Coeficiente de Poisson 
+
+𝑃𝑖 – Pressão Interna 
+
+A força axial efetiva ancorada será dada pela soma das componentes devido à 
+
+pressão  e  devido  à  expansão  térmica.  Nessas  equações,  as  forças  de  compressão 
+
+recebem sinal positivo, e as de tração recebem sinal negativo. 
+
+N0 = N𝑝 +  𝑁𝑇 
+
+N0 = 𝑃𝑖 ∙ 𝐴 ∙ (1 − 2 ∙ ν) + E ∙ A ∙ α ∙ (Top − Tamb) 
+
+(2.2.c) 
+
+ 
+
+(2.2.d) 
+
+ 
+
+Em que Top é a temperatura de operação do sistema e Tamb é a temperatura 
+
+marinha ambiente. 
+
+Adicionalmente ao esforço axial na região efetiva ancorada, acrescenta-se um 
+
+termo R devido ao esforço residual gerado pelo procedimento de lançamento do duto, 
+
+que é de caráter expansivo, e, portanto, aparece com sinal negativo. 
+
+N0 = 𝑃𝑖 ∙ 𝐴 ∙ (1 − 2 ∙ ν) + E ∙ A ∙ α ∙ (Top − Tamb) − 𝑅𝑙𝑎𝑛ç𝑎𝑚𝑒𝑛𝑡𝑜 
+
+(2.2.e) 
+
+ 
+
+  De acordo com BAI e BAI [10], para o método de lançamento S-Lay, que pode 
+
+ser  compreendido  através  do  texto  apresentado  por  QUEIROZ  [11],  existe  uma 
+
+relação entre o esforço residual devido ao lançamento e a profundidade em que se é 
+
+lançado, isto em função do diâmetro do duto. 
+
+  Assumindo  os  valores  apresentados  pelas  tabelas  5.1.a  e  5.1.b,  dentre  elas, 
+
+diâmetro  externo  de  12,75  polegadas  e  profundidade  de  instalação  de  1200  metros, 
+
+temos que a tensão residual é de aproximadamente 100 toneladas-força. 
+
+ 
+
+6 
+
+  Desse  modo,  podemos  representar  à  força  axial  ancorada  𝑁0,  como  a  soma 
+
+gráfica das parcelas NT, NP e R, como mostra o gráfico 2.2.f. 
+
+Gráfico 2.2.f – Força Axial Ancorada. 
+
+ 
+
+Devido ao baixo percentual de 𝑁𝑃 e R na composição de 𝑁0, iremos desprezar 
+
+o  valor  do  esforço  residual  e  considerar  o  valor  de  𝑁𝑃  constante  e  igual  a  20,7MPa. 
+
+Sendo  𝑁𝑇  a  maior  parcela,  iremos  estudar  o  comportamento  de  No  em  função  da 
+
+variação de temperatura. 
+
+Determinadas  as  características  da  força  axial  ancorada,  que  é  a  força  axial 
+
+total existente no duto, iremos definir a força axial efetiva 𝑁𝑎𝑓 na região de flambagem, 
+
+ou seja, a carga axial no comprimento da alça de flambagem. Sendo assim, é possível 
+
+determinar a diferença entre 𝑁0 e 𝑁𝑎𝑓. Porém, a diferença entre o esforço axial na alça 
+
+de flambagem e no restante do duto não ocorre de maneira abrupta, mas sim através 
+
+de  uma  região  de  transição  de  força  axial,  denominada  de  região  de  feed-in, 
+
+correspondente ao comprimento do duto que não sofreu flambagem, mas que alimenta 
+
+a alça de flambagem, apresentando uma carga axial 𝑁𝑓 dada pela diferença entre 𝑁0 e 
+
+𝑁𝑎𝑓, como descrito por HOBBS et al. [5b]. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+7 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ponto de 
+
+Ancoragem A 
+
+Força Axial Efetiva 
+
+Ancorada 
+
+Ponto de 
+
+Ancoragem B 
+
+No  
+
+Força Axial Efetiva na 
+
+Região de Feed-In 
+
+Naf  
+
+ 
+
+ 
+
+ 
+
+No  
+
+Força Axial 
+
+Efetiva na Alça 
+de Flambagem 
+
+Referência para Esforço Nulo 
+
+ 
+
+Figura 06. – Ilustração da Força Axial em cada trecho do duto. 
+
+Desse  modo,  na  figura  6,  podemos  observar  que  as  retas  inclinadas, 
+
+correspondentes à força axial efetiva na região de feed-in, decrescem e crescem antes 
+
+e  depois  da  região  de  flambagem,  respectivamente,  caracterizando  a  região  de 
+
+transição entre 𝑁0 e 𝑁𝑎𝑓. Já a reta horizontal, correspondente à força axial efetiva na 
+
+alça  de  flambagem,  apresenta  a  mesma  força  axial  ao  longo  de  todo  o  seu 
+
+comprimento,  já  que  podemos  considerar  seu  nível  aproximadamente  constante, 
+
+conforme explicitado por HOBBS et al. [5b]. É na região de flambagem que, apesar de 
+
+apresentar o menor esforço axial, apresenta o maior nível de tensão, ocasionada pela 
+
+flambagem  e  flexão  do  duto,  sendo  este  um  ponto  crítico  com  relação  à  sua 
+
+integridade estrutural. 
+
+Por  fim,  a  reta  de  maior  carga  axial,  correspondente  à  força  axial  efetiva 
+
+ancorada, apresenta uma inclinação entre os pontos representativos A e B por conta 
+
+da perda gradual de temperatura e pressão ao longo do flowline. Apesar da proteção 
+
+térmica do duto, existe uma perda de calor através do comprimento do duto, além de 
+
+uma perda de pressão por conta da viscosidade do óleo. Portanto, ao representarmos 
+
+graficamente  𝑁0,  é  necessário  ilustrar  tal  inclinação.  Contudo,  para  nossa  análise, 
+
+consideraremos  a  temperatura  e  pressão  constantes  ao  longo  do  comprimento  do 
+
+duto. 
+
+Pela  análise  da  ilustração,  e  considerando  𝑁0  constante  ao  longo  do 
+
+comprimento do duto, podemos escrever a seguinte equação. 
+
+𝑁0 = 𝑁𝑎𝑓 + 𝑁𝑓 
+
+(2.2.g) 
+
+8 
+
+ 
+
+2.3  MODELO DE HOBBS 
+ 
+
+Um  dos  primeiros  trabalhos  a  respeito  da  flambagem  de  dutos  submarinos  é 
+
+mostrado  em  HOBBS  e  ROGER  [5a].  Neste  trabalho,  são  descritos  os  fatores  que 
+
+influenciam a flambagem. Dentre eles, podemos citar o peso do revestimento do duto, 
+
+a  tração  de  lançamento,  a  topologia  do  leito  marinho  e  as  diferenças  de  pressão  e 
+
+temperatura  internas  e  externas  ao  duto,  devido  à  passagem  do  óleo.  Por  conta 
+
+desses  diversos  fatores,  fica  extremamente  difícil  dizer  em  qual  ponto  e  em  que 
+
+momento ocorrerá a flambagem.  
+
+ 
+
+Para que fosse possível obter uma relação entre as forças axiais presentes nos 
+
+dutos  submarinos  dentro  e  fora  da  alça  de  flambagem,  HOBBS  et  al.  [5b] 
+
+desenvolveram um modelo analítico. 
+
+𝑁𝑎𝑓 = N0 − k3 ∙ μa ∙ ws ∙ L ∙ {[1 + k2 ∙
+
+E∙A∙μL
+
+2∙ws∙L5
+
+μa∙(E∙I)2
+
+1
+2
+
+]
+
+− 1}  
+
+ 
+
+(2.3.a) 
+
+ 
+
+ 
+
+Onde o valor de 𝑁𝑎𝑓 é apresentado na seção 2.2. Nesta expressão, o valor do 
+
+comprimento da alça principal L ainda não é conhecido. E é o módulo de Young, A a 
+
+área  da  seção  transversal  do  duto,  μa  o  atrito  axial,  μL  o  atrito  lateral,  ws  o  peso 
+
+submerso do duto por unidade de comprimento e I a inércia da seção transversal. 
+
+Já  os  valores  K2  e  K3  são  constantes  descritas  por  HOBBS  et  al.  [5b],  cujos 
+
+valores são obtidos analiticamente. 
+
+Tabela 2.3.b – Constantes de HOBBS de k1 a k5. 
+
+Modo de Flambagem 
+
+1 
+2 
+3 
+4 
+
+ 
+
+k1 
+
+80,76 
+39,48 
+34,06 
+28,20 
+
+k2 
+
+6,391E-05 
+1,743E-04 
+1,668E-04 
+2,144E-04 
+
+k3 
+0,5 
+1 
+
+1,294 
+1,608 
+
+k4 
+
+2,407E-03 
+5,532E-03 
+1,032E-02 
+1,047E-02 
+
+k5 
+
+0,0694 
+0,1088 
+0,1434 
+0,1483 
+
+As constantes K1, K4 e K5 estão presentes, respectivamente, nas expressões a 
+
+seguir, descritas por HOBBS et  al. [5b], sendo elas a força  axial efetiva na região de 
+
+flambagem  𝑁𝑎𝑓,  o  deslocamento  lateral  máximo  𝑌𝑚𝑎𝑥  e  o  momento  fletor  máximo 
+
+𝑀𝑚𝑎𝑥. 
+
+ 
+
+𝑁𝑎𝑓 =   𝑘1 ∙
+
+𝐸∙𝐼
+𝐿2   
+
+(2.3.c) 
+
+9 
+
+𝑦𝑚𝑎𝑥 = 𝑘4 ∙ 𝜇𝐿 ∙ 𝑤𝑠 ∙
+
+𝐿4
+𝐸 ∙ 𝐼
+𝑀𝑚𝑎𝑥 = 𝑘5 ∙ 𝜇𝐿 ∙ 𝑤𝑠 ∙ 𝐿2 
+
+ 
+
+ 
+
+(2.3.d) 
+
+ 
+
+(2.3.e) 
+
+ 
+
+Já em outra expressão, é possível relacionar o valor do comprimento da região 
+
+de feed-in 𝐿𝑓 com 𝑁𝑎𝑓 e 𝑁0. 
+
+N0 = 𝑁𝑎𝑓 + 𝑄𝑎 ∙ Lf = 𝑁𝑎𝑓 + μa ∙ ws ∙ Lf  
+
+(2.3.f) 
+
+ 
+
+Em que Qa é a força de atrito axial por unidade de comprimento. Por outro lado, 
+
+substituindo as equações 2.2.d e 2.3.c em 2.3.a, teremos: 
+
+Pi ∙ A ∙ (1 − 2 ∙ ν) + E ∙ A ∙ α ∙ (Top − Tamb)
+
+= 𝑘1 ∙
+
+𝐸 ∙ 𝐼
+𝐿2 + k3 ∙ μa ∙ ws ∙ L
+
+∙ {[1 + k2 ∙
+
+E ∙ A ∙ μL
+
+2 ∙ ws ∙ L5
+
+μa ∙ (E ∙ I)2
+
+1
+2
+
+]
+
+− 1} 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(2.3.g) 
+
+ 
+
+Através  da  equação  2.3.g,  podemos  calcular  o  valor  do  comprimento  da  alça 
+
+principal de flambagem para os quatro modos propostos por HOBBS e ROGER [5a], e 
+
+depois,  utilizando  a  equação  2.3.f  determinar  o  comprimento  da  região  de  feed-in, 
+
+além  de  determinar  os  valores  do  deslocamento  lateral  máximo  e  do  momento  fletor 
+
+máximo através das equações 2.3.d e 2.3.e, respectivamente.  
+
+Vale  ressaltar  que  existem  certas  simplificações  no  modelo  analítico 
+
+apresentado.  Uma  delas  seria  de  que  a  expansão  axial  do  duto,  por  meio  de 
+
+temperatura  e  pressão,  não  é  impedida  por  nenhum  tipo  de  ancoragem  ou 
+
+enterramento do duto, o que na prática acaba ocorrendo. 
+
+Outro  ponto  a  considerar  é  que  o  valor  de  𝐿𝑓  é  calculado  sem  nenhuma 
+
+preocupação em relação ao real comprimento disponível do duto para alimentar a alça 
+
+de flambagem. 
+
+A  força  axial  concentrada  situada  ao  final  da  região  de  feed-in  devido  a 
+
+ancoragem,  denominada  por  ANTUNES [6]  como  𝑁𝑒,  será  considerada  na  seção  2.4 
+
+para aperfeiçoar a formulação analítica apresentada nesta seção. 
+
+ 
+
+10 
+
+2.4  MODELO DE HOBBS COM RESTRIÇÃO DE FEED-IN 
+ 
+
+Outra formulação apresentada por HOBBS et al. [5b], descreve a situação em 
+
+que  considera-se,  segundo  observações  de  casos  estudados,  uma  expansão  axial 
+
+restrita. Para transpor esse problema, consideramos a hipótese de um comprimento Di 
+
+entre dois pontos de restrição quaisquer, ocasionados por uma ancoragem virtual. 
+
+Dessa forma, limitou-se a expansão axial em um comprimento Di, redefine-se o 
+
+valor de 𝐿𝑓 para a nova distribuição de esforços axiais entre a alça de flambagem e a 
+
+região  de  feed-in.  Segundo  ANTUNES  [6],  este  comprimento  é  denominado  (VAS), 
+
+que significa “Virtual Anchor Spacing”, ou Di. A equação para a força axial efetiva com 
+
+restrição  para  um  duto finito  é  dada  pela  expressão  2.4.a,  e  a  equação 2.4.b mostra 
+
+suas componentes. 
+
+𝑁𝑎𝑓 = N0 − k3
+
+2 ∙ 𝑘2 ∙
+
+E ∙ A ∙ μL
+
+2 ∙ ws
+𝐷𝑖 ∙ (𝐸 ∙ 𝐼)2
+
+2 ∙ L7
+
++
+
+𝜇𝑎 ∙ ws ∙ (𝐷𝑖 − 2 ∙ 𝑘3 ∙ 𝐿)2
+
+4 ∙ 𝐷𝑖
+
+ 
+
+ 
+
+𝑁𝑎𝑓 = 𝑁0 − 𝑁𝑓 − 𝑁𝑒 
+
+ 
+
+ 
+
+(2.4.a) 
+
+ 
+
+(2.4.b) 
+
+ 
+
+Analogamente à seção 2.3, iremos combinar as equações 2.4.a,  2.2.d e 2.3.c 
+
+para obter a equação 2.4.c, para o cálculo de L para os quatro modos de flambagem, 
+
+e utilizar as expressões 2.3.d, 2.3.e e 2.3.f para determinar os valores de 𝑌𝑚𝑎𝑥, 𝑀𝑚𝑎𝑥 e 
+
+𝐿𝑓 respectivamente. 
+
+Pi ∙ A ∙ (1 − 2 ∙ ν) + E ∙ A ∙ α ∙ (Top − Tamb)
+
+= 𝑘1 ∙
+
+𝐸 ∙ 𝐼
+𝐿2 + k3
+
+2 ∙ 𝑘2 ∙
+
+E ∙ A ∙ μL
+
+2 ∙ ws
+𝐷𝑖 ∙ (𝐸 ∙ 𝐼)2
+
+2 ∙ L7
+
++
+
+𝜇𝑎 ∙ ws ∙ (𝐷𝑖 − 2 ∙ 𝑘3 ∙ 𝐿)2
+
+4 ∙ 𝐷𝑖
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(2.4.c) 
+
+ 
+
+O  valor  de  𝐷𝑖  que  consideraremos  em  todas  as  nossas  análises  será  de  20 
+
+11 
+
+km. 
+
+ 
+
+Conforme  apresentado  por  ANTUNES  [6],  o  3º  modo  de  flambagem  é  o  de 
+
+maior ocorrência registrada.  Entende-se que as condições de temperatura e atrito do 
+
+solo marinho contribuem para que esta forma ocorra com maior frequência.  
+
+Dessa  maneira  vale  apresentar  as  comparações,  para  o  3º  modo,  entre  o 
+
+modelo com restrição de feed-in e o modelo analítico que será descrito neste trabalho, 
+
+como será visto nas próximas seções. 
+
+2.5  LIMITAÇÕES DOS MODELOS DE HOBBS 
+ 
+
+Iremos  destacar  agora  certas  preocupações,  apresentadas  também  por 
+
+ANTUNES [6], que devem ser levadas em consideração. 
+
+A  primeira  e  mais  importante  delas  está  relacionada  ao  fato  do  modelo  de 
+
+HOBBS contemplar exclusivamente o comprimento da alça principal de flambagem. 
+
+Entretanto, a alça secundária de flambagem é conceitualmente uma forma de 
+
+alívio  para  o  esforço  axial  na  linha,  e  dependendo  de  sua  amplitude,  a  força  axial 
+
+efetiva  na  alça  de  flambagem  na  prática  pode  ter  valores  bem  diferentes  em  relação 
+
+ao  modelo  analítico.  Rigorosamente,  o  deslocamento  lateral  produzido  ao  longo  de 
+
+toda  a  região  de  flambagem  deveria  ser  considerado  no  cálculo,  mas  iremos  nos 
+
+concentrar naquelas representadas pelos modos de flambagem. 
+
+O  segundo  aspecto  tem  a  ver  com  a  limitação  do  modelo  para  pequenos 
+
+deslocamentos  na  linha.  Outras  considerações  são  que  as  equações  propostas  são 
+
+válidas apenas para o regime elástico e os valores dos coeficientes de atrito lateral e 
+
+axial são constantes ao longo do processo de flambagem. 
+
+Na  seção  3  iremos  discutir  os  diferentes  modos  de  controle  da  flambagem, 
+
+existentes  no  mercado  e  que  estão  em  uso.  Com  isso,  iremos  propor  na  seção  4  a 
+
+utilização do modelo com bóias. Para isso, iremos utilizar as seguintes considerações: 
+
+  Regime elástico e atritos lateral e axial constantes 
+
+  Esforço axial efetivo 𝑁𝑎𝑓 constante ao longo da região de flambagem 
+
+  Duto e solo desprovidos de imperfeições 
+
+As equações diferenciais obtidas por ANTUNES [6] são válidas para pequenos 
+
+deslocamentos, mas quando integradas, representam o perfil de deslocamento lateral 
+
+ao longo de todo o duto. 
+
+ 
+
+12 
+
+Por  essa  razão,  iremos  utilizar  o  modelo  do  autor  citado,  já  que  o  modelo  de 
+
+HOBBS não se aplica ao uso de módulos de bóias. Com o modelo analítico proposto, 
+
+iremos adicionar os comprimentos de bóias por meio do ganho de flutuabilidade. 
+
+3.  MÉTODOS DE CONTROLE DA FLAMBAGEM. 
+
+3.1  CONCEITO E NECESSIDADE DE CONTROLE 
+ 
+
+O  emprego  de  dutos  e  cabos  submarinos  já  é  bastante  consolidado  para  o 
+
+transporte de informações, de energia elétrica, e de fluidos em geral, sobretudo para a 
+
+indústria  de  óleo  e  gás.  Uma  das  modalidades  de  dutos  submarinos  é  o  flowline, 
+
+responsável  pelo  transporte  de  óleo  e  gás.  Tais  dutos  podem  se  estender  por 
+
+centenas de quilômetros. 
+
+Como já explicitado, a flambagem lateral é um fenômeno que pode ocorrer nos 
+
+dutos  submarinos.  Não  se  pode  estabelecer,  a  priori,  em  que  ponto  a  flambagem 
+
+lateral  pode  ocorrer.  Dessa  forma,  a  indústria  desenvolveu  uma  série  de  técnicas  de 
+
+controle aos fenômenos de flambagem lateral. 
+
+ 
+
+Essas  técnicas  são  usualmente  classificadas  como  métodos  de  iniciação  à 
+
+flambagem,  pois  se  trata  de  ferramentas  capazes  de  criar  regiões  suscetíveis  à 
+
+ocorrência  do  fenômeno  em  locais  previamente  estabelecidos.  Dessa  forma,  os 
+
+esforços  axiais  presentes  no  duto  são  aliviados  e  a  probabilidade  de  ocorrência  de 
+
+uma  nova  flambagem  é  drasticamente  reduzida.  Isso  é  feito  para  que  a  flambagem 
+
+não  ocorra  em  locais  de  alto  risco  ou  de  maneira  descontrolada,  podendo  ocasionar 
+
+danos aos dutos, promovendo sua ruptura. 
+
+3.2  SNAKE-LAY E SLEEPER 
+ 
+
+O método Snake-Lay é realizado através do lançamento do duto em um perfil 
+
+composto por comprimentos curvos e retos, dando-lhe a forma sinuosa como pode ser 
+
+vista na figura 07, retirada de BRUTON [18]. 
+
+ 
+
+13 
+
+ 
+
+Figura 07. – Imagem esquemática método de flambagem por Snake-Lay. 
+
+ 
+
+Basicamente  o formato sinuoso  do  duto  denota a formação  de  uma  curvatura 
+
+em relação em um determinado ponto. Com isso, a carga crítica no duto é reduzida, o 
+
+que facilita a ocorrência da formação da alça de flambagem. O perfil sinuoso formado, 
+
+ou  seja,  o  raio  de  curvatura  depende  de  certos  fatores  como  o  tipo  de  navio  em 
+
+operação,  a  lâmina  d’água  e  as  condições  ambientais  no  local.  Tanto  a  amplitude 
+
+dessas curvas quanto a distância entre elas influenciam na ocorrência da flambagem. 
+
+Em geral quanto menor o raio de curvatura, menor a carga crítica, e, portanto, maior a 
+
+probabilidade de ocorrência da flambagem. Esse processo é descrito por NYSTROM 
+
+et al. [14]. 
+
+ 
+
+Entretanto,  com  a  diminuição  da  curvatura,  a  probabilidade  de  haver 
+
+flambagem  em  todas  as  curvas  é  menor,  o  que  prejudica  sua  confiabilidade  como 
+
+técnica  de  flambagem,  pois  fica  difícil  saber  em  qual  curva  ocorrerá  o  fenômeno, 
+
+conforme descrito por ANTUNES [6]. 
+
+ 
+
+Já a técnica de flambagem por sleepers tem como base a introdução de pontos 
+
+de  imperfeições  ao  longo  do  duto,  com  o  objetivo  de  facilitar  a  flambagem  nesses 
+
+locais. Essas imperfeições são criadas através de sleepers, que como o próprio nome 
+
+diz,  repousam  entre  o  duto  e  o  leito  marinho,  causando  um  pequeno  deslocamento 
+
+vertical.  
+
+Esses  sleepers  são  estruturas  cilíndricas,  dispostos  perpendicularmente  em 
+
+relação ao comprimento do duto, representado por BRUTON [18] (figura 08). 
+
+ 
+
+14 
+
+ 
+
+ 
+
+Figura 08. – Esquema do método de flambagem por sleepers. 
+
+ 
+
+Como a imperfeição gerada se dá na direção vertical, a flambagem deveria ser 
+
+facilitada  nessa  direção.  Porém,  a  configuração  do  duto  imediatamente  acima  do 
+
+sleepers se torna extremamente instável, por conta da perda repentina de atrito com o 
+
+solo. Desse modo, o duto defasa ou “escorrega” lateralmente, causando a flambagem. 
+
+ 
+
+Basicamente, quanto maior o diâmetro do sleepers, mais facilmente ocorrerá a 
+
+flambagem,  e  menor  será  a  sua  carga  crítica.  Porém  seu  comprimento  também  é 
+
+importante, uma vez que o deslocamento lateral produzido não pode ser maior do que 
+
+o comprimento do próprio sleepers. 
+
+3.3  MÓDULOS DE BÓIA 
+ 
+
+Essa técnica consiste em introduzir módulos de bóia em certas regiões do duto 
+
+de modo a reduzir o peso por unidade de comprimento e assim reduzir a resistência 
+
+ao deslocamento lateral, que depende do coeficiente de atrito e da reação normal do 
+
+solo (igual ao peso molhado), reduzindo-se as cargas axial e lateral efetivas no duto.  
+
+Esses módulos de bóias possuem o formato cilíndrico e são todos vazados em 
+
+seu  centro,  de modo  a serem  introduzidos  no  momento  da  instalação do  duto,  como 
+
+pode ser visto na figura 09. 
+
+Figura 09. – Esquema de flambagem módulos de bóias (BRUTON [18]). 
+
+ 
+
+ 
+
+15 
+
+ 
+
+As  bóias  são  projetadas  para  reduzir  o  peso  de  80%  a  90%  da  região 
+
+contemplada.  Além  do  empuxo  gerado  pelas  bóias,  a  geometria  também  gera 
+
+imperfeições que contribuem para a ocorrência da flambagem. 
+
+ 
+
+Em geral, o comprimento da região com bóias varia entre 60 e 200m, e a alça 
+
+de flambagem formada é de até 20m. Esse layout reduz o momento gerado pelo ápice 
+
+da alça de flambagem. Entretanto, o custo de instalação acaba sendo maior. Fica claro 
+
+que o aumento da flutuabilidade depende exclusivamente da eficiência da bóia. Após a 
+
+ocorrência  da  flambagem,  esses  dutos  não  podem  sofrer  novos  danos,  nem  podem 
+
+perder flutuabilidade por meio de vazamentos, sendo necessários rigorosos testes de 
+
+qualidade, que são explorados por HJELMSTAD e KIEFFER [15]. 
+
+ 
+
+Este  método  de  flambagem,  por  conta  de  suas  facilidades  de  instalação, 
+
+apesar do alto custo relacionado aos módulos de bóias, será estudado nesta obra. 
+
+4.  FORMULAÇÃO  ANALÍTICA  PARA  FLAMBAGEM  LATERAL  COM 
+
+MÓDULOS DE BÓIAS. 
+
+4.1  DEFINIÇÃO  DOS  PARÂMETROS  PARA  O  3º MODO  DE  FLAMBAGEM  COM 
+
+BÓIAS 
+
+ 
+
+Antes  de  apresentar  as  equações  relacionadas  ao  modelo  analítico  de 
+
+ANTUNES [6], iremos destacar uma nomenclatura padrão para as equações a serem 
+
+utilizadas,  baseadas  na  figura  10.  Essa  nomenclatura  será  válida  para  os  demais 
+
+modos,  além  do  3º  modo,  assumindo  condições  de  contorno  diferenciadas  para  os 
+
+modos  assimétricos  e  assumindo  também que o  comprimento  L2  será  suprimido  nos 
+
+casos em que a alça secundária não é formada.  
+
+ 
+
+16 
+
+Y 
+
+Z 
+
+X 
+
+Figura 10. – Esquema do 3º modo de flambagem. 
+
+ 
+
+ 
+
+Para  entendermos  cada  uma  das  equações  de  flambagem  obtidas,  iremos 
+
+dividir em 3 parcelas, a saber, a região com bóia vb(x), a alça principal de flambagem 
+
+v1(x),  e  a  alça  secundária  de  flambagem  v2(x),  de  modo  a  obter  as  equações  de 
+
+deslocamento lateral de cada região. 
+
+ 
+
+Em  seguida,  iremos  apresentar  as  equações  de  deslocamento  axial  para  a 
+
+região de flambagem e para a região de feed-in. 
+
+Através  das  condições  de  continuidade  entre  cada  região,  e  também  das 
+
+condições  de  contorno  relativas  à  natureza  de  cada  modo  de  flambagem,  iremos 
+
+resolver  as  equações  diferenciais  obtidas  e  produzir  uma  única  equação  para  o 
+
+esforço axial efetivo nas alças de flambagem. 
+
+ 
+
+É Importante ressaltar que se pode completar o estudo com o desenvolvimento 
+
+de um modelo em elementos finitos, construído a partir do software ABAQUS [16]. Tal 
+
+procedimento  foi  realizado,  porém  o  modelo  não  será  apresentado  nesta  versão  da 
+
+obra. 
+
+4.2  OBTENÇÃO DAS EQUAÇÕES DE DESLOCAMENTO LATERAL 
+ 
+
+Ao  tomar  um  elemento  infinitesimal  de  duto  da  região  da  alça  principal  de 
+
+flambagem, podemos destacar as seguintes características. 
+
+ 
+
+17 
+
+Figura 11. – Elemento infinitesimal de duto. 
+
+ 
+
+ 
+
+Para a alça principal de flambagem, a carga Q𝐿, resultante da multiplicação de 
+
+P𝑠𝑢𝑏  (peso  submerso  do  duto  por  unidade  de  comprimento)  com  μL,  tem  seu  sentido 
+
+apontado para o duto porque a alça principal desloca-se contra o efeito do atrito lateral 
+
+no solo. Já na alça secundária, em relação à alça principal, a carga lateral terá sentido 
+
+contrário,  pois  a  alça  forma-se  oposta  à  principal,  como  pode  ser  visto  na  figura  10. 
+
+Por  fim,  a  região  com  bóias  terá  sua  carga  lateral  multiplicada  por  um  fator  de 
+
+flutuabilidade,  e  permanecerá  com  o  mesmo  sinal  em  relação  à  carga  da  alça 
+
+principal, visto que sua formação detém-se do mesmo lado referenciado. 
+
+Fazendo o somatório de forças verticais no diagrama do corpo livre formado na 
+
+figura 11, bem como o somatório de momentos no ponto A, teremos: 
+
+−
+
+𝑑𝑀
+𝑑𝑥
+
+− 𝑉 + 𝑁𝑎𝑓 ∙
+
+𝑑𝑣
+𝑑𝑥
+
+= 0 
+
+ 
+
+(4.2.a) 
+
+ 
+
+ 
+
+Onde  M  e  V  são  respectivamente  o  momento  fletor  e  o  esforço  cortante. 
+
+Segundo  BEER  et  al.  [9],  a  expressão  da  linha  elástica,  segundo  a  teoria  de  vigas, 
+
+para o regime elástico, desprezando o termo quadrático referente à curvatura, é dado 
+
+pela seguinte equação 4.2.b. 
+
+𝑀(𝑥) =   −𝐸 ∙ 𝐼 ∙
+
+𝑑2𝑣
+𝑑𝑥2 (𝑥) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(4.2.b) 
+
+ 
+
+18 
+
+Das equações 4.2.a e 4.2.b obtemos a equação de governo dada em 4.2.c. 
+
+𝑑4𝑣
+𝑑𝑥4 (𝑥) + 𝜆2 ∙
+
+𝑑²𝑣
+𝑑𝑥²
+
+(𝑥) + 𝑤 = 0 
+
+ 
+
+(4.2.c) 
+
+ 
+
+ 
+
+Onde 𝜆2 = 𝑁𝑎𝑓/𝐸 ∙ 𝐼. Analogamente à região da alça principal, as equações 
+
+para  a  alça  secundária  e  para  região  com  bóias  são  dadas  em  4.2.d  e  4.2.e, 
+
+respectivamente. 
+
+𝑑4𝑣
+𝑑𝑥4 (𝑥) + 𝜆2 ∙
+
+𝑑2𝑣
+𝑑𝑥2 (𝑥) − 𝑤 = 0 
+
+𝑑4𝑣
+𝑑𝑥4 (𝑥) + 𝜆2 ∙
+
+ 
+𝑑2𝑣
+𝑑𝑥2 (𝑥) + 𝑘 ∙ 𝑤 = 0 
+
+ 
+
+(4.2.d) 
+
+ 
+
+(4.2.e) 
+
+ 
+
+Em  que  k  é  o  fator  de  flutuabilidade  da  bóia.  Adotaremos  o  valor  de  0,2,  ou 
+
+seja, o peso da região contemplada pela boia será reduzido a 20% do peso do duto. A 
+
+solução  analítica  dessas  equações  diferenciais  é  dada  em  4.2.f,  4.2.g  e  4.2.h 
+
+respectivamente. 
+
+𝑣1 = −
+
+𝑐2 ∙ 𝑠𝑒𝑛(𝜆 ∙ 𝑥)
+
+𝜆2
+
+𝑣2 = −
+
+𝑐6 ∙ 𝑠𝑒𝑛(𝜆 ∙ 𝑥)
+
+𝜆2
+
+−
+
+−
+
+𝑐1 ∙ cos(𝜆 ∙ 𝑥)
+
+𝜆2
+
+ 
+
+−
+
+1
+2
+
+∙
+
+𝑤 ∙ 𝑥2
+𝜆2 + 𝑐3 ∙ 𝑥 + 𝑐4 
+
+(4.2.f) 
+
+ 
+
+𝑐5 ∙ cos(𝜆 ∙ 𝑥)
+
+𝜆2
+ 
+
++
+
+1
+2
+
+∙
+
+𝑤 ∙ 𝑥2
+𝜆2 + 𝑐7 ∙ 𝑥 + 𝑐8 
+
+(4.2.g) 
+
+ 
+
+ 
+
+(4.2.h) 
+
+ 
+
+𝑣𝑏 = −
+
+𝑐10 ∙ 𝑠𝑒𝑛(𝜆 ∙ 𝑥)
+
+𝜆2
+
++ 𝑐12 
+
+−
+
+𝑐9 ∙ cos(𝜆 ∙ 𝑥)
+
+𝜆2
+
+ 
+
+−
+
+1
+2
+
+∙
+
+𝑘 ∙ 𝑤 ∙ 𝑥2
+
+𝜆2
+
++ 𝑐11 ∙ 𝑥
+
+ 
+
+Analisando a figura 10, podemos chegar à conclusão que as propriedades dos 
+
+perfis vb(x) e v1(x) devem ser iguais no ponto em que (x=Lb), já que para um mesmo 
+
+ponto,  o  deslocamento  lateral,  o  ângulo  de  inclinação  do  duto,  o  momento  fletor  no 
+
+local  e  o  esforço  cortante  deveram  ser  os  mesmos.  Para  os  Perfis  v1(x)  e  v2(x)  a 
+
+lógica é a mesma. 
+
+ 
+
+Adicionalmente, sabemos que o ângulo de inclinação para os modos simétricos 
+
+de flambagem no ponto (x=0) deverá ser nulo, bem como o esforço cortante.  
+
+ 
+
+19 
+
+Para  o  perfil  v2(x)  em (x=L2)  o  deslocamento  lateral  e  o  ângulo  de  inclinação 
+
+também serão nulos, já que este ponto simboliza o término da alça de flambagem. A 
+
+tabela 4.2.i mostra quais as condições de contorno que devem ser consideradas para 
+
+cada modo de flambagem. 
+
+Tabela 4.2.i – Condições de Continuidade e de Contorno. 
+
+ 
+
+ 
+
+Dessa  forma,  obtemos  12  equações  que  servirão  para  encontrarmos  as  12 
+
+constantes  das  equações  4.2.f,  4.2.g  e  4.2.h.  Tais  constantes  estão  presentes  na 
+
+seção 8. 
+
+4.3  OBTENÇÃO  DAS  EQUAÇÕES  DE  DESLOCAMENTO  AXIAL  ATRAVÉS  DA 
+
+FORÇA AXIAL EFETIVA NAS ALÇAS DE FLAMBAGEM 
+
+ 
+
+Em  nosso  modelo,  iremos  considerar  𝑁𝑎𝑓  igualmente  constante  ao  longo  das 
+
+alças de flambagem, entretanto, iremos utilizar a seguinte definição para obtê-la: 
+
+𝑁𝑎𝑓 = 𝐹𝑜𝑟ç𝑎𝑠 𝑑𝑒 𝐶𝑜𝑚𝑝𝑟𝑒𝑠𝑠ã𝑜 − 𝐹𝑜𝑟ç𝑎𝑠 𝑑𝑒 𝐸𝑥𝑝𝑎𝑛𝑠ã𝑜 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(4.3.a) 
+
+ 
+
+20 
+
+Assumindo  a  força  compressiva  𝑁𝑎𝑓  como  a  resultante  entre  as  forças  de 
+
+compressão  e  expansão,  iremos  considerar  que  a  deformação  mecânica  que  ocorre 
+
+no  duto  devido  à  flambagem,  de  caráter  expansivo,  é  dada  pela  subtração  entre  os 
+
+esforços  de  temperatura  e  pressão  que  causam  a  flambagem  e  a  força  residual  que 
+
+permanece nas alças após a ocorrência do fenômeno, a saber, o próprio 𝑁𝑎𝑓. 
+
+𝑁𝑛 = 𝐹𝑜𝑟ç𝑎𝑠 𝑑𝑒 𝐶𝑜𝑚𝑝𝑟𝑒𝑠𝑠ã𝑜 − 𝑁𝑎𝑓 
+
+ 
+
+(4.3.b) 
+
+ 
+
+ 
+
+Sendo 𝑁𝑛 a força relacionada à deformação mecânica axial sofrida pelo duto. 
+
+Substituindo a equação 2.2.i na equação 4.3.b teremos: 
+
+𝑁𝑛 = Pi ∙ Ai ∙ (1 − 2 ∙ ν) + E ∙ A ∙ α ∙ (Top − Tamb) − 𝑁𝑎𝑓 
+
+A expressão de 𝑁𝑛 pode ser escrita como: 
+
+ 
+
+𝑁𝑛 = 𝐸 ∙ 𝐴 ∙ 𝜀𝑛  
+
+(4.3.c) 
+
+ 
+
+(4.3.d) 
+
+ 
+
+Com as equações 4.3.d e 4.3.c temos uma única equação que relaciona o valor 
+
+ 
+
+ 
+
+ 
+
+de  𝑁𝑎𝑓,  exceto  pelo  parâmetro  de  deformação  mecânica  axial  𝜀𝑛.  Para  obtê-lo, 
+
+utilizamos o texto introdutório sobre elasticidade de VILLAÇA et al. [17], e obtivemos a 
+
+seguinte expressão. 
+
+𝜀𝑛  =
+
+𝑑𝑢
+𝑑𝑥
+
++
+
+1
+2
+
+∙
+
+𝑑²𝑣
+𝑑𝑥²
+
+ 
+
+(4.3.e) 
+
+ 
+
+ 
+
+ 
+
+Sendo u(x) o deslocamento axial e v(x) o deslocamento lateral. Substituindo a 
+
+equação 4.3.e em 4.3.d, e o resultado em 4.3.c, teremos: 
+
+𝑑𝑢
+𝑑𝑥
+
+= (𝜙1 + 𝛼 ∙ ∆𝑇) − (𝜙2 ∙ 𝜆2 +
+
+1
+2
+
+∙
+
+𝑑2𝑣
+𝑑𝑥2) 
+
+(4.3.f) 
+
+ 
+
+𝐼
+ 
+𝐴
+
+ 
+
+ 
+
+𝐸𝑚 𝑞𝑢𝑒 𝜙1 𝑒 𝜙2 𝑠ã𝑜 𝑐𝑜𝑛𝑠𝑡𝑎𝑛𝑡𝑒𝑠: 𝜙1 =
+
+𝑃𝑖
+𝐸
+
+∙ (1 − 2 ∙ 𝜐) 𝑒 𝜙2 =
+
+Integrando a equação (4.3.f) para a alça principal, alça secundária e módulo de 
+
+boias em função de (x), teremos: 
+
+ 
+
+21 
+
+𝑥
+
+𝑢𝑏(𝑥) =   ∫ [(𝜙1 + 𝛼 ∙ ∆𝑇) − (𝜙2 ∙ 𝜆2 +
+
+0
+
+𝑥
+
+𝑢1(𝑥) =   ∫ [(𝜙1 + 𝛼 ∙ ∆𝑇) − (𝜙2 ∙ 𝜆2 +
+
+𝐿𝑏
+
+𝑥
+
+𝑢2(𝑥) =   ∫ [(𝜙1 + 𝛼 ∙ ∆𝑇) − (𝜙2 ∙ 𝜆2 +
+
+𝐿1
+
+1
+2
+
+∙
+
+𝑑2𝑣𝑏
+𝑑𝑥2 )]
+
+𝑑𝑥 
+
+1
+2
+
+∙
+
+𝑑2𝑣1
+𝑑𝑥2 )]
+
+𝑑𝑥 
+
+1
+2
+
+∙
+
+𝑑2𝑣2
+𝑑𝑥2 )]
+
+𝑑𝑥 
+
+Integrando as equações 4.3.g, 4.3.h e 4.3.i, teremos: 
+
+𝑢𝑏(𝑥) =  𝑢𝑏(0) +   (𝜙1 + 𝛼 ∙ ∆𝑇) ∙ 𝑥 − 𝜙2 ∙ 𝜆2 ∙ 𝑥
+
+𝑥
+− ∫
+0
+
+1
+2
+
+𝑑2𝑣𝑏
+𝑑𝑥2
+
+∙
+
+𝑑𝑥 
+
+𝑢1(𝑥) =  𝑢1(𝐿𝑏) +   (𝜙1 + 𝛼 ∙ ∆𝑇) ∙ (𝑥 − 𝐿𝑏) − 𝜙2 ∙ 𝜆2
+
+𝑥
+∙ (𝑥 − 𝐿𝑏) − ∫
+𝐿𝑏
+
+1
+2
+
+𝑑2𝑣1
+𝑑𝑥2
+
+∙
+
+𝑑𝑥 
+
+𝑢2(𝑥) =  𝑢2(𝐿1) +   (𝜙1 + 𝛼 ∙ ∆𝑇) ∙ (𝑥 − 𝐿1) − 𝜙2 ∙ 𝜆2
+
+𝑥
+∙ (𝑥 − 𝐿1) − ∫
+𝐿1
+
+1
+2
+
+𝑑2𝑣2
+𝑑𝑥2
+
+∙
+
+𝑑𝑥 
+
+(4.3.g) 
+
+ 
+
+(4.3.h) 
+
+ 
+
+(4.3.i) 
+
+ 
+
+ 
+
+(4.3.j) 
+
+ 
+
+ 
+
+(4.3.k) 
+
+ 
+
+(4.3.l) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+4.4  OBTENÇÃO  DA  EQUAÇÃO  DE  DESLOCAMENTO  AXIAL  NA  REGIÃO  DE 
+
+FEED-IN E CÁLCULO DA EQUAÇÃO DE GOVERNO 
+
+ 
+
+Segundo  BEER  et  al.  [9],  a  carga  axial  por  unidade  de  comprimento 𝑄𝑎  pode 
+
+ser dada pela expressão 4.4.a.  Vale ressaltar que esta expressão só é  válida para a 
+
+região  de  feed-in,  visto  que  não  há  contribuição  do  deslocamento  lateral  no 
+
+comportamento deste trecho. Integrando duas vezes 4.4.a, obtemos 4.4.b. 
+
+𝑄𝑎 =   −𝐸 ∙ 𝐴 ∙
+
+𝑑2𝑢𝑓
+𝑑𝑥2  
+
+(4.4.a) 
+
+ 
+
+22 
+
+ 
+
+ 
+
+𝑢𝑓(𝑥) =   −
+
+𝑄𝑎
+𝐸 ∙ 𝐴
+
+∙
+
+𝑥2
+2
+
++ 𝑐𝑖 ∙ 𝑥 + 𝑐𝑖𝑖 
+
+(4.4.b) 
+
+ 
+
+ 
+
+Pelas hipóteses que assumimos, a região de feed-in é o trecho responsável por 
+
+alimentar  as  alças  de  flambagem,  e  após  ele,  o  deslocamento  axial  torna-se  nulo, 
+
+assim como o valor de 𝑁𝑓, Sendo assim, assumindo que a posição em (x) para o final 
+
+da região de feed-in seja dada por 𝐿0, podemos escrever as equações 4.4.c e 4.4.d. 
+
+𝑢𝑓(𝐿𝑜) = 0 
+
+𝑢𝑓′(𝐿𝑜) = 0 
+
+Aplicando as condições de contorno 4.4.c e 4.4.d em 4.4.b, teremos: 
+
+𝑢𝑓(𝑥) =   −
+
+𝑄𝑎
+
+2 ∙ 𝐸 ∙ 𝐴
+
+∙ (𝐿𝑜 − 𝑥)² 
+
+(4.4.c) 
+
+ 
+
+(4.4.d) 
+
+ 
+
+(4.4.e) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+As  condições  de  continuidade  entre  cada  região  também  são  válidas  para  as 
+
+equações que regem o deslocamento axial. Portanto, podemos escrever as equações 
+
+4.4.f, 4.4.g e 4.4.h. 
+
+ 
+
+ 𝑢𝑏(𝐿𝑏) = 𝑢1(𝐿𝑏) 
+
+𝑢1(𝐿1) = 𝑢2(𝐿1) 
+
+𝑢2(𝐿2) = 𝑢𝑓(𝐿2) 
+
+(4.4.f) 
+
+ 
+
+(4.4.g) 
+
+ 
+
+(4.4.h) 
+
+ 
+
+Adicionalmente,  como  o  ponto  (x=0)  divide  a  alça  em  metades  simétricas, 
+
+obtemos a equação 4.4.i. Para o ponto (x= L2), a força axial efetiva também deve ter o 
+
+mesmo valor nas duas expressões referentes aos trechos adjacentes, o que acaba por 
+
+fornecer a equação 4.4.j. 
+
+𝑢𝑏(0) = 0 
+
+𝑢2′(𝐿2) = 𝑢𝑓′(𝐿2) 
+
+Substituindo a condição 4.4.i em 4.3.j, teremos: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(4.4.i) 
+
+ 
+
+(4.4.j) 
+
+ 
+
+23 
+
+𝑥
+𝑢𝑏(𝑥) = (𝜙1 + 𝛼 ∙ ∆𝑇) ∙ 𝑥 − 𝜙2 ∙ 𝜆2 ∙ 𝑥 − ∫
+0
+
+1
+2
+
+𝑑2𝑣𝑏
+𝑑𝑥2
+
+∙
+
+𝑑𝑥 
+
+(4.4.k) 
+
+ 
+
+ 
+
+Fazendo  (x= L𝑏)  na  equação  4.4.k,  e,  utilizando  a  condição  de  continuidade 
+
+4.4.f, substituindo-a em 4.3.k, teremos: 
+
+𝑢1(𝑥) = (𝜙1 + 𝛼 ∙ ∆𝑇) ∙ (𝑥) − 𝜙2 ∙ 𝜆2 ∙ (𝑥) − (∫
+𝐿𝑏
+
+𝐿1
+
+1
+2
+
+∙
+
+𝑑2𝑣1
+𝑑𝑥2
+
+𝑑𝑥
+
+ 
+
+ 
+
+𝐿𝑏
+
++ ∫
+0
+
+1
+2
+
+∙
+
+𝑑2𝑣𝑏
+𝑑𝑥2
+
+𝑑𝑥) 
+
+(4.4.l) 
+
+ 
+
+ 
+
+ 
+
+Fazendo  (x= L1)  na  equação  4.4.l,  e,  utilizando  a  condição  de  continuidade 
+
+4.4.g, substituindo-a em 4.3.l, teremos: 
+
+𝑥
+𝑢2(𝑥) = (𝜙1 + 𝛼 ∙ ∆𝑇) ∙ (𝑥) − 𝜙2 ∙ 𝜆2 ∙ (𝑥) − (∫
+𝐿1
+
+1
+2
+
+𝑑2𝑣2
+𝑑𝑥2
+
+∙
+
+𝑑𝑥
+
+ 
+
+ 
+
+𝐿1
+
++ ∫
+𝐿𝑏
+
+1
+2
+
+∙
+
+𝑑2𝑣1
+𝑑𝑥2
+
+𝐿𝑏
+
+𝑑𝑥 + ∫
+0
+
+1
+2
+
+∙
+
+𝑑2𝑣𝑏
+𝑑𝑥2
+
+𝑑𝑥) 
+
+Tomando a derivada primeira da equação 4.4.b, teremos: 
+
+𝑢𝑓′(𝑥) =   −
+
+𝑄𝑎
+𝐸 ∙ 𝐴
+
+∙ 𝑥 + 𝑐𝑖 
+
+Tomando a derivada primeira da equação 4.4.m, teremos: 
+
+𝑢2′(𝑥) = 𝜙1 + 𝛼 ∙ ∆𝑇 − 𝜙2 ∙ 𝜆2 −
+
+𝑑 ∫
+
+𝑥
+𝐿1
+
+1
+2
+
+∙
+
+𝑑2𝑣2
+𝑑𝑥2
+
+𝑑𝑥
+
+𝑑𝑥
+
+ 
+
+(4.4.m) 
+
+ 
+
+ 
+
+(4.4.n) 
+
+ 
+
+(4.4.o) 
+
+Fazendo (x= L2) em 4.4.n e 4.4.o, e, utilizando a condição de continuidade 4.4.j, 
+
+ 
+
+ 
+
+ 
+
+ 
+
+teremos: 
+
+𝜙1 + 𝛼 ∙ ∆𝑇 − 𝜙2 ∙ 𝜆2 −
+
+𝑑 ∫
+
+𝐿2
+𝐿1
+
+1
+2
+
+∙
+
+𝑑2𝑣2
+𝑑𝑥2
+
+𝑑𝑥
+
+𝑑𝑥
+
+= −
+
+𝑄𝑎
+𝐸 ∙ 𝐴
+
+∙ 𝐿2 + 𝑐𝑖  
+
+ 
+
+(4.4.p) 
+
+ 
+
+ 
+
+24 
+
+Como  o  momento  fletor  no  ponto  (x= L2)  é  nulo,  podemos  desprezar  o  termo 
+
+diferencial em L2 da equação 4.4.p, obtendo a expressão 4.4.q. 
+
+𝜙1 + 𝛼 ∙ ∆𝑇 − 𝜙2 ∙ 𝜆2 +
+
+𝑄𝑎
+𝐸 ∙ 𝐴
+
+∙ 𝐿2 = 𝑐𝑖  
+
+ 
+
+(4.4.q) 
+
+ 
+
+Utilizando a condição 4.4.c, com o valor de Ci obtido em 4.4.q, substituímos na 
+
+expressão 4.4.b para encontrar o valor de Cii. 
+
+𝑐𝑖𝑖 =  
+
+𝑄𝑎
+𝐸 ∙ 𝐴
+
+∙
+
+𝐿𝑜2
+2
+
+ 
+
+−   (𝜙1 + 𝛼 ∙ ∆𝑇 − 𝜙2 ∙ 𝜆2 +
+
+𝑄𝑎
+𝐸 ∙ 𝐴
+
+∙ 𝐿2) ∙ 𝐿𝑜 
+
+ 
+
+(4.4.r) 
+
+Dessa forma, a equação 4.4.b pode ser apresentada como em 4.4.s. 
+
+𝑢𝑓(𝑥) =  
+
+𝑄𝑎
+
+2 ∙ 𝐸 ∙ 𝐴
+
+∙ (𝐿𝑜2 − 𝑥2)
+
+ 
+
+(4.4.s) 
+
+− (𝜙1 + 𝛼 ∙ ∆𝑇 − 𝜙2 ∙ 𝜆2 +
+
+𝑄𝑎
+𝐸 ∙ 𝐴
+
+∙ 𝐿2) ∙ (𝐿𝑜 − 𝑥) 
+
+Segundo a condição 4.4.h, podemos igualar as equações 4.4.s e 4.4.m quando 
+
+(x= L2), obtendo assim a equação 4.4.t. 
+
+(𝛿(𝑇) − 𝜙2 ∙ 𝜆2) ∙ (𝐿2 + 𝐿𝑓) −  
+
+1
+2
+
+∙ 𝜁 =
+
+𝑄𝑎
+
+2 ∙ 𝐸 ∙ 𝐴
+
+∙ 𝐿𝑓
+
+2
+
+ 
+
+ 
+
+(4.4.t) 
+
+ 
+
+ 
+
+Em  que  𝜁 = 2 ∙ (∫
+
+𝐿2
+𝐿1
+
+1
+
+2
+
+∙
+
+𝑑2𝑣2
+𝑑𝑥2
+
+𝑑𝑥 + ∫
+
+𝐿1
+𝐿𝑏
+
+1
+
+2
+
+∙
+
+𝑑2𝑣1
+𝑑𝑥2
+
+𝐿𝑏
+𝑑𝑥 + ∫
+0
+
+1
+
+2
+
+∙
+
+𝑑2𝑣𝑏
+𝑑𝑥2
+
+𝑑𝑥) e 
+
+também 𝛿(𝑇)   =   (𝜙1 + 𝛼 ∙ ∆𝑇). 
+
+ 
+
+Utilizando  a  equação  2.3.f,  isolando  o  parâmetro  𝐿𝑓  e  substituindo  em  4.4.t, 
+
+teremos: 
+
+(𝛿(𝑇) − 𝜙2 ∙ 𝜆2) ∙ (𝐿2 +
+
+𝑁0 − 𝑁𝑎𝑓
+
+𝑄𝑎
+
+) −  
+
+1
+2
+
+∙ 𝜁
+
+=
+
+𝑄𝑎
+
+2 ∙ 𝐸 ∙ 𝐴
+
+∙ (
+
+𝑁0 − 𝑁𝑎𝑓
+
+𝑄𝑎
+
+2
+
+)
+
+ 
+
+ 
+
+ 
+
+(4.4.u) 
+
+25 
+
+ 
+
+ 
+
+Desse  modo,  iremos  isolar  o  termo  (𝛿(𝑇) − 𝜙2 ∙ 𝜆2)  e  calcular  o  valor  da 
+
+força axial efetiva na região de flambagem, obtendo assim uma equação de governo 
+
+que pode ser comparada ao modelo de HOBBS. 
+
+𝜓𝑡
+
+2 + 2 ∙ 𝐿2 ∙ 𝑄𝑎 ∙ 𝜓𝑡 − 𝜁 ∙ 𝑄𝑎 ∙ 𝐸 ∙ 𝐴 = 0 
+
+(4.4.v) 
+
+ 
+
+ 
+
+ 
+
+Onde 𝜓𝑡 =   (𝐸 ∙ 𝐴 ∙ 𝛿(𝑇) −   𝜆2 ∙ 𝐸 ∙ 𝐼) 
+
+Resolvendo a equação (4.4.v), obtemos: 
+
+𝜓𝑡 =   −𝐿2 ∙ 𝑄𝑎 ∙ {1 − [1 +
+
+1/2
+
+𝜁 ∙ 𝐸 ∙ 𝐴
+2]
+𝑄𝑎 ∙ 𝐿2
+
+} 
+
+Com isso, isolando o termo (𝜆2 ∙ 𝐸 ∙ 𝐼), obtemos a expressão 4.4.x. 
+
+𝑁𝑎𝑓 =   𝑁0 + 𝐿2 ∙ 𝑄𝑎 ∙ {1 − [1 +
+
+1/2
+
+𝜁 ∙ 𝐸 ∙ 𝐴
+2]
+𝑄𝑎 ∙ 𝐿2
+
+} 
+
+(4.4.w) 
+
+(4.4.x) 
+
+Deste  modo,  obtemos  uma  equação  de  governo,  em  que  as  variáveis 
+
+desconhecidas são 𝑁𝑎𝑓, 𝐿2 e 𝐿1, sendo esta última implícita. Entretanto, o parâmetro 𝜁 
+
+é função de 𝑁𝑎𝑓, 𝐿2 e 𝐿1, o que dificulta a busca pela solução. 
+
+Como temos três incógnitas, devemos obter outras duas equações para montar 
+
+um  sistema  de  equações  algébricas  e  resolvê-lo.  Para  isso,  podemos  utilizar  as 
+
+condições de contorno 4.4.y e 4.4.z. 
+
+𝑣2(𝐿1) = 0 
+𝑣2′′(𝐿2) = 0 
+
+(4.4.y) 
+
+(4.4.z) 
+
+Essas condições são válidas, uma vez que o deslocamento em (x=𝐿1) deve ser 
+
+nulo,  por  ser  o  limiar  entre  a  alça  principal  e  a  alça  secundária,  e  o  momento  fletor 
+
+também deve ser nulo, uma vez que a alça principal e a alça secundária são formadas 
+
+opostamente.  Substituindo  as  condições  4.4.y  e  4.4.z  em  4.2.h  e  em  sua  derivada 
+
+segunda, teremos: 
+
+ 
+
+26 
+
+−
+
+𝑐6 ∙ 𝑠𝑒𝑛(𝜆 ∙ 𝐿1)
+
+𝜆2
+
+= 0 
+
+−
+
+𝑐5 ∙ cos(𝜆 ∙ 𝐿1)
+
+𝜆2
+
++
+
+1
+2
+
+∙
+
+𝑤 ∙ 𝐿12
+
+𝜆2 + 𝑐7 ∙ 𝐿1 + 𝑐8
+
+(4.4.a.a) 
+
+ 
+
+ 
+
+ 
+
+𝑐6 ∙ 𝑠𝑒𝑛(𝜆 ∙ 𝐿2) + 𝑐5 ∙ cos(𝜆 ∙ 𝐿2) +
+
+𝑤
+𝜆2 = 0 
+
+(4.4.a.b) 
+
+Dessa forma, resolvemos o problema para o número de variáveis, obtendo um 
+
+sistema de equações analíticas e prevendo não somente a força axial efetiva na região 
+
+de flambagem e o comprimento da alça principal, mas também o comprimento da alça 
+
+secundária, além do perfil de deslocamento lateral ao longo de toda a flambagem. 
+
+ 
+
+Precisamos ainda considerar que nosso estudo foi feito através da idealização 
+
+de  um  duto  infinito.  Sendo  assim,  iremos  construir  a  partir  das  últimas  expressões 
+
+obtidas para a equação de governo, o sistema de equações considerando a restrição 
+
+na  região  de  feed-in.  Para  tal,  vamos  interpretar  a  região  entre  pontos  virtuais  de 
+
+ancoragem como sendo a soma da região de feed-in e da região de flambagem. 
+
+𝐷
+2
+
+= 𝐿𝑓 + 𝐿2 
+
+ 
+
+Através da equação 4.4.a.c, substituindo na equação 4.4.u, teremos: 
+
+(𝛿(𝑇) − 𝜙2 ∙ 𝜆2) ∙ (𝐿2 +
+
+𝐷
+2
+
+𝐷
+2
+Isolando (𝛿(𝑇) − 𝜙2 ∙ 𝜆2), teremos: 
+
+2 ∙ 𝐸 ∙ 𝐴
+
+∙ (
+
+𝑄𝑎
+
+=
+
+1
+2
+
+∙ 𝜁
+
+− 𝐿2) −  
+
+2
+
+− 𝐿2)
+
+  
+
+𝑁𝑎𝑓 =   𝑁0 −
+
+𝑄𝑎
+4 ∙ 𝐷
+
+∙ (𝐷 − 2 ∙ 𝐿2)2 −
+
+𝐸 ∙ 𝐴 ∙ 𝜁
+
+𝐷
+
+ 
+
+(4.4.a.c) 
+
+ 
+
+ 
+
+(4.4.a.d) 
+
+(4.4.a.e) 
+
+4.5  EQUAÇÕES DE GOVERNO PARA OS DEMAIS MODOS DE FLAMBAGEM 
+ 
+
+Ao  seguir  o  mesmo  raciocínio  desenvolvido  nas  subseções  anteriores, 
+
+podemos  criar  as  equações  de  governo  para  os  demais  modos  de  flambagem,  e 
+
+assim,  completar  a  solução  teórica  do  problema.  Dessa  forma,  vale  suprimir  o 
+
+desenvolvimento  dessas  novas  equações,  uma  vez  que  sua  obtenção  é  análoga  ao 
+
+procedimento já descrito. 
+
+ 
+
+27 
+
+Como o 1º modo é equivalente ao 3º modo em termos de simetria da alça de 
+
+flambagem no ponto de maior deslocamento lateral, as condições de contorno são as 
+
+mesmas  para  ambos,  a  menos  do  comprimento  da  alça  secundária  para  o  3º  modo, 
+
+sendo em (x=0) o ponto onde a inclinação e o esforço cortante são nulos. 
+
+Já para o 2º e 4º modos, o comportamento do duto em  (x=0) será oposto,  ou 
+
+seja, apresentará deslocamento e momento fletor nulos.  Essas condições podem ser 
+
+mais bem observadas através da tabela 4.2.i. 
+
+5.  RESULTADOS OBTIDOS DO MODELO ANALÍTICO COM BÓIAS. 
+ 
+
+INTRODUÇÃO AO MATLAB E MAPLE 
+
+5.1 
+ 
+
+Para  obter  a  solução  da  equação  de  governo  descrita  na  seção  4,  utilizamos 
+
+dois  importantes  softwares,  sendo  eles  o  MAPLE  [12]  e  o  MATLAB  [8].  Todas  as 
+
+equações  mostradas 
+
+foram  desenvolvidas  em  MAPLE 
+
+[12],  Já  as 
+
+rotinas 
+
+computacionais para obter os resultados finais foram feitos em MATLAB [8]. 
+
+O  MAPLE  [12]  é  um  software  de  manipulação  algébrica  que  permite 
+
+desenvolver  equações  analiticamente  sem  perder  a  generalidade  das  variáveis. 
+
+Ferramenta  muito  útil  para  elaboração  de  extensas  soluções,  como  é  o  caso  das 
+
+equações de flambagem. 
+
+Já  o  MATLAB  [8]  é  um  recurso  computacional  com  uma  linguagem  bastante 
+
+simples  e  que  permite  o  usuário  desenvolver  praticamente  qualquer  tipo  de  lógica 
+
+funcional. Para a resolução numérica das equações de flambagem, iremos nos ater a 
+
+sua capacidade de resolver sistemas de equações algébricas  não lineares, além dos 
+
+recursos gráficos pertinentes à plotagem das alças de flambagem. 
+
+O cenário de trabalho é apresentado pelas tabelas 5.1.a e 5.1.b, e as listagens 
+
+dos programas estão apresentados na seção 8, onde o leitor poderá observar através 
+
+de uma linguagem computacional simples os procedimentos utilizados. 
+
+A  Interface  gráfica  utilizada  pode  ser  vista  nas  figuras  12  e  13,  as  quais 
+
+apresentam  resultados  importantes  como  os  valores  de  momento  máximo  e  tensão 
+
+longitudinal  máxima,  além  de  testes  para  verificação  estrutural  como  tensão  de  Von 
+
+Mises e critério de carregamento combinado, seguindo a regulamentação apresentada 
+
+pela DNV-OS-F101 [19]. 
+
+ 
+
+28 
+
+Tabela 5.1.a – Especificações do Duto Submarino. 
+
+Diâmetro do Duto 
+
+Espessura de Aço 
+
+Espessura de Revestimento 
+
+12,75 pol 
+
+0,938 pol 
+
+53 mm 
+
+Coeficiente de Dilatação Linear 
+
+1,17E-05 °𝐶−1 
+
+Massa Específica do Aço 
+
+Massa Específica do Revestimento 
+
+Módulo de Elasticidade 
+
+Coeficiente de Poisson 
+
+Comprimento do Duto 
+
+ 
+
+Tabela 5.1.b – Condições de Trabalho. 
+
+Pressão Interna 
+
+Lâmina d’água 
+
+Massa Específica do Óleo 
+
+7850 kg/m³ 
+
+900 kg/m³ 
+
+207 GPa 
+
+0,3 
+
+20 km 
+
+20,7 MPa 
+
+1200 m 
+
+894 kg/m³ 
+
+Massa Específica da Água do Mar 
+
+          1025 kg/m³ 
+
+Atrito Axial (nominal) 
+
+Atrito Lateral (nominal) 
+
+Temperatura Ambiente (na profundidade especificada) 
+
+Temperatura Máxima de Operação 
+
+Gravidade 
+
+ 
+
+ 
+
+ 
+
+0,5 
+
+0,7 
+
+4°C 
+
+100°C 
+
+9,81 m/s² 
+
+29 
+
+Figura 12. – Interface gráfica – perfil de deslocamento lateral. 
+
+ 
+
+Figura 13. – Interface gráfica – critérios de escoamento. 
+
+ 
+
+30 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5.2  COMPARAÇÃO  ENTRE  O  MODELO  DE  HOBBS  E  O  MODELO  ANALÍTICO 
+
+COM BÓIAS 
+
+ 
+
+Como uma primeira abordagem, podemos comparar o modelo de HOBBS com 
+
+o modelo analítico com bóias (gráfico 5.2.a). 
+
+Comparação entre o Modelo de Hobbs e o Modelo Analítico com 
+
+Bóias - 50° C
+
+)
+
+m
+
+(
+ 
+l
+
+a
+r
+e
+t
+a
+L
+ 
+o
+t
+n
+e
+m
+a
+c
+o
+l
+s
+e
+D
+
+30
+
+25
+
+20
+
+15
+
+10
+
+5
+
+0
+
+-5
+
+0
+
+20
+
+40
+
+60
+
+80
+
+100
+
+120
+
+Comprimento das Alças de Flambagem (m)
+
+Hobbs 1 modo
+Boia 60 metros
+
+Hobbs 3 modo
+Boia de 200 metros
+
+  
+
+Gráfico 5.2.a – Modelo de HOBBS vs Analítico com Bóias. 
+
+O  modelo  de  HOBBS  nos  dá  duas  configurações  possíveis  para  o  mesmo 
+
+conjunto  de  dados  disponível;  para  uma  mesma  temperatura,  atrito  e  pressão.  A 
+
+mudança  produzida  para  se  obter  modos  de  flambagem  diferentes  é  a  ligeira 
+
+modificação no valor da força axial efetiva na alça de flambagem. Isto quer dizer que o 
+
+alivio  da  carga  axial  determina  o  modo  no  qual  o  duto  irá  flambar.  O  3º  modo  de 
+
+HOBBS foi obtido através da solução das equações do modelo analítico considerando 
+
+um  comprimento  de  boia  nulo.  Já  o  1º  modo  foi  obtido  a  partir  dos  resultados  do  3º 
+
+modo alterando apenas o Naf. 
+
+Através  do  gráfico  5.2.a,  vemos  que  o  uso  de  módulos  de  bóias  faz  com que 
+
+tanto  o  comprimento  da  alça  de  flambagem  quanto  o  deslocamento  lateral  sejam 
+
+maiores em relação ao comportamento dos dutos previstos por HOBBS. 
+
+Dessa forma, a utilização de boias em dutos  é do ponto de vista teórico,  uma 
+
+técnica de iniciação à flambagem e, portanto, uma possível ferramenta de controle.  
+
+ 
+
+31 
+
+Além  disso,  o  tamanho  do  módulo  de  boia  também  influencia  o  modo  de 
+
+flambagem; o modelo com 60 metros de boia flamba no 3° modo, já o modelo com 200 
+
+metros de bóia apresenta-se no 1° modo.  
+
+A temperatura na qual se inicia a flambagem também é um aspecto importante.  
+
+No caso do modelo de Hobbs, a temperatura mínima onde ocorre a flambagem 
+
+levando  em  consideração  as  respostas  numéricas  mais  estáveis  do  programa 
+
+desenvolvido em MATLAB [8] é de 20° C, e no caso do modelo analítico com boias é 
+
+de  15°  C,  cujas  deflexões  laterais  máximas  estão  em  torno  de  3  metros.  No  gráfico 
+
+5.2.b, vemos uma comparação entre os modelos para 3 temperaturas diferentes. 
+
+Análise da Temperatura Mínima de Flambagem
+
+)
+
+m
+
+(
+ 
+l
+
+a
+r
+e
+t
+a
+L
+ 
+o
+t
+n
+e
+m
+a
+c
+o
+l
+s
+e
+D
+
+4,5
+
+4
+
+3,5
+
+3
+
+2,5
+
+2
+
+1,5
+
+1
+
+0,5
+
+0
+
+-0,5
+
+ 
+
+0
+
+10
+
+20
+
+30
+
+40
+
+50
+
+60
+
+70
+
+80
+
+Comprimento das Alças de Flambagem (m)
+
+20° C Hobbs
+20º C Boia de 60 m
+
+25° C Hobbs
+15° C Boia de 60 m
+
+Gráfico 5.2.b – Temperatura Mínima para Flambagem. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+32 
+
+INFLUÊNCIA DO COMPRIMENTO DE BOIA NA FLAMBAGEM 
+
+5.3 
+ 
+
+Podemos investigar a influência do comprimento do módulo de bóia em relação 
+
+à  magnitude  dos  deslocamentos  laterais  devido  à  flambagem.  Para  isso,  foi  fixada  a 
+
+temperatura  de  100º  C  para  comprimentos  de  bóia  de  60  a  200  metros,  no  gráfico 
+
+5.3.a. 
+
+Influência do Comprimento de Boias - 100°C
+
+)
+
+m
+
+(
+ 
+l
+
+a
+r
+e
+t
+a
+L
+ 
+o
+t
+n
+e
+m
+a
+c
+o
+l
+s
+e
+D
+
+35
+
+30
+
+25
+
+20
+
+15
+
+10
+
+5
+
+0
+
+-5
+
+0
+
+20
+
+40
+
+60
+
+80
+
+100
+
+120
+
+140
+
+Comprimento das Alças de Flambagem (m)
+
+60 metros
+
+90 metros
+
+120 metros
+
+200 metros
+
+Gráfico 5.3.a – Influência do Comprimento de Bóia. 
+
+  
+
+Observa-se que o aumento do módulo de bóia provoca o aumento da alça de 
+
+flambagem,  mas  principalmente  o  aumento  do  deslocamento  lateral.  Com  isso,  o 
+
+tamanho  do  comprimento  de  bóia,  além  do  seu  simples  uso,  também  é  um  fator 
+
+importante na sua utilização como dispositivo para controle do fenômeno. 
+
+No  gráfico  5.3.b,  podemos  ver  a  variação  da  temperatura  mínima  para 
+
+flambagem  com  o  tamanho  da  boia.  Fica  claro  que  a  diferença  entre  a  boia  de  60 
+
+metros  para  a  de  200  metros  causa  uma  variação  na  temperatura  mínima  de 
+
+flambagem de 15° C para 10° C aproximadamente. Para uma mesma temperatura, a 
+
+deflexão lateral do duto com a boia de 200 metros é maior do que com 60 metros de 
+
+boia. 
+
+ 
+
+33 
+
+Influência do Comprimento de Boia na Temperatura Mínima 
+
+de Flambagem
+
+4
+
+3,5
+
+3
+
+2,5
+
+2
+
+1,5
+
+1
+
+0,5
+
+0
+
+)
+
+m
+
+(
+ 
+l
+
+a
+r
+e
+t
+a
+L
+ 
+o
+t
+n
+e
+m
+a
+c
+o
+l
+s
+e
+D
+
+-0,5
+
+0
+
+20
+
+40
+
+60
+
+80
+
+100
+
+Comprimento das Alças de Flambagem (m)
+
+100 metros a 15° C
+
+60 metros a 15° C
+
+100 metros a 10° C
+
+ 
+
+Gráfico 5.3.b – Temperatura Mínima vs Comprimento de Boia. 
+
+ 
+
+5.4 
+
+INFLUÊNCIA DA FLUTUABILIDADE DO MÓDULO DE BÓIA 
+
+ 
+
+Uma  das  características  mais  interessantes  está  na  questão  da  eficiência  da 
+
+boia, ou seja, no seu potencial de flutuação. Fixando a temperatura em 50ºC, variamos 
+
+o  percentual  de  flutuabilidade  do  módulo,  analisando  assim  seu  comportamento 
+
+(gráfico 5.4.b). 
+
+ 
+
+34 
+
+Variação da Flutuabilidade - 50°C
+
+)
+
+m
+
+(
+ 
+l
+
+a
+r
+e
+t
+a
+L
+ 
+o
+t
+n
+e
+m
+a
+c
+o
+l
+s
+e
+D
+
+30
+
+25
+
+20
+
+15
+
+10
+
+5
+
+0
+
+-5
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+ 
+
+0
+
+20
+
+40
+
+60
+
+80
+
+Comprimento das Alças de Flambagem (m)
+
+Gráfico 5.4.a – Variação da Flutuabilidade. 
+
+A  flutuabilidade  altera  pouco  a  configuração  da  alça  de  flambagem,  isto  pode 
+
+ser  devido  ao  fato  de  que  o  acréscimo  ou  decréscimo  da  flutuabilidade  ter  pouca 
+
+influência sobre a força de atrito, ou seja, basta que no trecho do duto compreendido 
+
+pela bóia haja um peso submerso menor do que o restante do duto para que se facilite 
+
+a  flambagem.  Por  esta  razão,  fixamos  uma  referência  de  20%  de  flutuabilidade,  ou 
+
+seja,  o  peso  na  região  com  bóias  é  minorado  em  80%.  A flutuabilidade  também  tem 
+
+pouca  influência  sobre  a  temperatura  mínima  de  flambagem,  visto  que  a  diferença 
+
+entre as alças de flambagem para vários valores de k é pequena. 
+
+5.5  VARIAÇÃO DA DEFLEXÃO LATERAL COM A TEMPERATURA 
+ 
+
+Conforme  visto  no  gráfico  2.2.f,  a  temperatura  é  responsável  pela  maior 
+
+contribuição  na  composição  da  força  axial  ancorada.  Por  esse  motivo,  ela  também 
+
+está  diretamente  ligada  ao  tamanho  das  alças  de  flambagem  e  da  deflexão  lateral, 
+
+como  pode  ser  visto  no gráfico  5.5.a,  onde  é fixado  o  comprimento  de 60  metros  de 
+
+módulo de boia para valores de temperatura de 20°C, 40°C, 60°C e 80°C. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+35 
+
+ 
+
+Gráfico 5.5.a – Influência da Temperatura nas Alças de Flambagem. 
+
+ 
+
+INFLUÊNCIA DO ATRITO LATERAL NAS ALÇAS DE FLAMBAGEM 
+
+5.6 
+ 
+
+Ao ocorrer a flambagem, o atrito duto-solo pode restringir a deflexão lateral, isto 
+
+é, quanto maior o atrito, menor a deflexão lateral, pois a carga Q𝐿, como apresentado 
+
+pela  figura  11,  é  contrária  à  sua  expansão.  Esse  fenômeno  é  observado  no  gráfico 
+
+5.6.a. 
+
+Gráfico 5.6.a – Influência do Atrito Lateral na Deflexão Lateral. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+36 
+
+6.  CONCLUSÕES E TRABALHOS FUTUROS. 
+ 
+
+Podemos  concluir  que  o  modelo  analítico  com  bóias,  desenvolvido  em 
+
+MATLAB [8], possibilitou não somente a resolução do sistema de equações algébricas 
+
+não-lineares dispostas na seção 4, mas também foram de grande importância para a 
+
+interpretação  dos  fenômenos  físicos  e  o  estudo  da  influência  de  cada  parâmetro 
+
+citado. 
+
+O uso do módulo de bóia resulta em um aumento no comprimento das alças de 
+
+flambagem  e  da  deflexão  lateral  em  relação  ao  modelo  analítico  de  Hobbs.  Além 
+
+disso,  a  temperatura  mínima  para  ocorrência  de  flambagem  nos  casos  em  que  se 
+
+simulou  um  comprimento  de  bóia  também  é  menor.  Logo,  o  uso  desse  dispositivo 
+
+antecipa a flambagem, permitindo o seu controle. 
+
+Também podemos concluir que o comprimento de feed-in é um parâmetro que 
+
+prevê a distância entre o módulo de bóia aplicado e a próxima posição em que a força 
+
+axial  retorna  ao  valor  de  N0.  Esta  distância  indica  que  um  segundo  módulo  de  bóia 
+
+pode ser colocado para provocar a flambagem e aliviar a carga axial. 
+
+A  temperatura  foi  identificada  como  o  maior  responsável  pela  ocorrência  da 
+
+flambagem, estando diretamente ligada às geometrias obtidas. O Atrito duto-solo e a 
+
+flutuabilidade são parâmetros que também influenciam na configuração dos dutos na 
+
+pós-flambagem.  O  aumento  de  k,  ou  seja,  a  perda  de  eficiência  da  bóia,  resulta  na 
+
+diminuição  das  alças  de  flambagem.  O  atrito  lateral  por  sua  vez,  quando  reduzido, 
+
+provoca o aumento da deflexão lateral. 
+
+É  importante  ressaltar  aqui  algumas  propostas  de  trabalhos  futuros,  que  dão 
+
+continuidade  ao  estudo preliminar  desenvolvido  nesta  obra. Os  valores de  pressão  e 
+
+temperatura  são  considerados  constantes  ao  longo  de  todo  comprimento  do  duto, 
+
+porque  o  objetivo  do  trabalho  era  estudar  o  fenômeno  de  flambagem  isoladamente. 
+
+Entretanto,  as  perdas  de  temperatura  e  pressão  ao  longo  do  duto  devem  ser 
+
+consideradas  em  um  modelo  analítico  mais  aprimorado,  cujo  desenvolvimento  foi 
+
+realizado pelo aluno, porém não implementado computacionalmente. 
+
+Outro caminho que deve ser mencionado é o uso de dois ou mais módulos de 
+
+bóias para iniciação à flambagem. 
+
+ 
+
+ 
+
+37 
+
+Analisar  a  ocorrência  dos  modos  de  flambagem  talvez  seja  o  caminho  mais 
+
+interessante  para  continuar  o  trabalho.  Pode-se  comparar  a  ocorrência  dos  4  modos 
+
+de flambagem citados estudando em quais condições a iniciação à flambagem é mais 
+
+eficiente, ou seja, a força axial efetiva é mais reduzida. O aluno também desenvolveu 
+
+as equações para o 2° e 4° modos, implementando computacionalmente os sistemas 
+
+algébricos. Contudo, sendo o 1º e 3º modos os mais frequentes na prática, o foco do 
+
+trabalho foi definido segundo essa orientação. 
+
+Vale  ainda  mencionar  que,  apesar  da  flambagem  aliviar  a  carga  axial,  é 
+
+importante  observar  que  o  duto  poderá  flambar  em  regime  plástico,  ou  seja,  após  a 
+
+flambagem,  o  duto  pode  plastificar  devido  a  um  segundo  carregamento  axial, 
+
+provocado  pela  variação  de  temperatura  ou  afins.  Como  consideramos  as  equações 
+
+apenas  no regime  elástico,  não  estamos  admitindo que  a deformação  no  duto  possa 
+
+ser irreversível. Neste caso, o modelo analítico com bóias deveria ser reescrito. 
+
+7.  BIBLIOGRAFIA. 
+ 
+
+[1]  PIPELINE  –  UK:  PII Pipeline  Solution’  CFAS  Facilitates  Pipeline  Flaw  Detection  – 
+
+Subsea  World  News.  Disponível  em:  <http://subseaworldnews.com/2012/09/25/uk-pii-
+
+pipeline-solutions-cfas-facilitates-pipeline-flaw-detection/>.  Acesso  em  01  de  Ago. 
+
+2013, 13h02min. 
+
+[2]  ZONA  COSTEIRA  -  zonacosteira.bio.ufba.br  -  Faculdade  de  Biologia  da 
+
+Universidade  Federal  da  Bahia.  Disponível  em:  <www.zonacosteira.bio.ufba.br>. 
+
+Acesso em: 29 jun. 2013, 14h25min. 
+
+[3] 
+
+SEABED 
+
+IMPERFECTION 
+
+- 
+
+sini.ni.com. 
+
+Disponível 
+
+em: 
+
+<http://sine.ni.com/cs/app/doc/p/id/cs-10512>. Acesso em 29 de jun. 2013, 14h32min. 
+
+[4] GUAN, J., NYSTROM, P. R., Design Loads Uncertainties Study – Thermal Buckling 
+
+of Subsea Pipelines. In: Proceedings of the Eighteenth International Offshore and Polar 
+
+Engineering Conference. Vancouver, BC, Canadá, 6/Jul. a 11/Jul., 2008. 
+
+[5a]  HOBBS,  E.  ROGER,  In-Service  Buckling  of  Heated  Pipelines.  In:  Journal  of 
+
+Transportation Engineering. Volume 110, Artigo 2º, Mar. 1984. 
+
+[5b] HOBBS, E. ROGER, LIANG, F., Thermal Buckling of Pipelines Close to Restraints. 
+
+In:  Eighth  International  Offshore  Mechanics  and  Arctic  Engineering  Symposium,  pp. 
+
+121-127, New York, 1989. 
+
+ 
+
+38 
+
+[6]  ANTUNES,  B.R.,  Utilização  de  Módulos  de  Bóias  para  o  Controle  da  Flambagem 
+
+Termomecânica em Dutos Submarinos. Tese de M.Sc., COPPE/UFRJ, Rio de Janeiro, 
+
+RJ, Brasil, Novembro de 2009. 
+
+[7]  KERR,  A.D.,  Analysis  of  Thermal  Track  Buckling  in  the  Lateral  Plane,  Acta 
+
+Mechanica, v.30, n. 1-2, pp.17-50, 1978. 
+
+[8] MATLAB, MATRIX LABORATORY 7.11.0.584. R2010b LN 161051 MATHWORKS 
+
+INC. 1984-2010. 
+
+[9]  BEER,  P.F.,  JOHNSTON,  JR.  RUSSEL  E.,  Resistência  dos  Materiais,  3ª  ed. 
+
+Pearson Education do Brasil, 1996. 
+
+[10] BAI, Y., BAI, Q., Subsea Pipelines and Risers, 1 ed. Elsevier, 2005. 
+
+[11] QUEIROZ, O.J., Análise de Estabilidade de Dutos Rígidos Submarinos Sujeitos a 
+
+Ação  de  Ondas  e  Correntes  Marinhas.  Projeto  de  Graduação,  Escola 
+
+Politécnica/UFRJ, Rio de Janeiro, RJ, Brasil, Fevereiro de 2011. 
+
+[12] MAPLE, MAPLESOFT 14.00. ID 479326. WATERLOO MAPLE INC. 1981-2007. 
+
+[13]  MATTOS,  B..T.,  Controle  da  Flambagem  Termomecânica  de  Dutos  Submarinos 
+
+por  Sleepers.  Projeto  de  Graduação,  Escola  Politécnica/UFRJ,  Rio  de  Janeiro,  RJ, 
+
+Brasil, Novembro de 2011. 
+
+[14]  NYSTROM,  P.R.,  HANSEN,  H.F.,  GUAN,  J.,  Optimized  Solutions  to  Control 
+
+Lateral Buckling of Pipelines with Snaked-Lay: Theoretical and Numerical Results. 26th 
+
+International Conference on Offshore Mechanics and Arctic Engineering, OMAE2007-
+
+29256, San Diego, California, USA, 10-15 June 2007. 
+
+[15]  HJELMSTAD,  O.P.,  KIEFFER,  J.,  Qualification  of  Permanent  Buoyancy  Modules 
+
+for Lateral Buckling Mitigation. Rio Pipeline Conference & Exposition, IBP1367_07, Rio 
+
+de Janeiro, Brasil, 2-4 October 2007. 
+
+[16]  ABAQUS,  Abaqus/CAE  6.11-PR3  SIMULIA.  Build 
+
+ID:2011_04_11-00.59.39 
+
+111381. Dassault Systèmes, 2011. 
+
+[17] VILLAÇA, F.S., GARCIA, TABORDA F.L., Introdução à Teoria da Elasticidade, 4ª 
+
+ed.  –  Reimpressão.  Departamento  de  Mecânica  Aplicada  e  Estruturas/Escola 
+
+Politécnica/UFRJ. Rio de Janeiro, 2006. 
+
+ 
+
+39 
+
+[18]  BRUTON,  D.,  CARR,  M.,  CRAWFORD,  M.,  et  al.,  “The  Safe  Design  of  Hot  On-
+
+Bottom  Pipelines  with  Lateral  Buckling  using  the  Design  Guideline  Developed  by 
+
+SAFEBUCK  Joint  Industry  Project”.  Deep  Offshore  Technology  Conference,  Vitória, 
+
+Espírito Santo, Brasil, 8-10 November 2005. 
+
+[19]  DNV-OS-F101,  Submarine  Pipeline  Systems.  Det  Norske  Veritas.  October  2007, 
+
+amendments April 2008. 
+
+8.  ANEXOS 
+ 
+
+8.1  PROGRAMA  PARA  O  CÁLCULO  DO  COMPRIMENTO  DAS  ALÇAS  DE 
+
+FLAMBAGEM E DA FORÇA AXIAL EFETIVA 
+
+ 
+
+% MODO DE FLAMBAGEM SIMÉTRICO 
+  
+function [F,J] = myfun_mod_sim(x); 
+  
+% DADOS GERAIS - Geometria do Oleoduto e Revestimento 
+  
+De = 12.75*0.0254; % 12,75 polegadas de diâmetro externo x 0,0254 
+metro/polegada 
+es = 0.938*0.0254; % 0,938 polegada de espessura de aço X-65 x 0,0254 
+metro/polegada 
+Di = De - 2*es; % Diâmetro interno do duto 
+Aaco = pi*(De^2 - Di^2)/4; % Área de aço do duto 
+Ae = pi*(De^2)/4; % Área total da seção transversal do duto  
+Ai = pi*(Di^2)/4; % Área interna da seção transversal do duto  
+I = pi*(De^4 - Di^4)/64;% Momento de Inércia 
+espol = 0.053; % 53 milímetros de espessura - revestimento de 
+polipropileno 
+Dtotal = De + 2*espol; % Diâmetro total (considerando o revestimento 
+do duto) 
+Atotal = pi*(Dtotal^2)/4; % Área total da seção transversal do duto 
+(considerando o revestimento do duto) 
+Apol = Atotal - Ae; % Área de Revestimento de Polipropileno 
+  
+% DADOS GERAIS - Propriedades do Aço, Revestimento e condições 
+externas 
+  
+Roaco = 7850; % Massa específica do Aço X-65 em Kg/m³ 
+Ropol = 900; % Massa específica do Revestimento em Kg/m³ 
+Roagua = 1025; % Massa específica da Água Salgada em Kg/m³ 
+Rooleo = 894; % Massa específica do Óleo em Kg/m³ 
+E = 207*10^9; % Módulo de Elasticidade em N/m² 
+nii = 0.3; % Coeficiente de Poisson 
+alfa = 1.17*10^-5; % Coeficiente de dilatação linear 
+EA = E*Aaco; % Rigidez Axial do Duto 
+EI = E*I; % Rigidez à Flexão do Duto 
+g = 9.81; % gravidade 
+  
+% ////////// FASE DE OBTENÇÃO DOS DADOS DE ENTRADA ////////// 
+
+ 
+
+40 
+
+  
+Atrito_axial = 0.5; % Coeficiente de atrito axial --------------------
+------ VARIÁVEL 
+Atrito_lateral = 0.7; % Coeficiente de atrito lateral ----------------
+------ VARIÁVEL 
+Comprimento_da_Boia = 100; % Comprimento total da Seção com Módulo de 
+Bóias - VARIÁVEL 
+Temperatura_de_operacao = 10; % Temperatura Máxima de Operação -------
+------------------------- VARIÁVEL 
+  
+% /////////////////////////////////////////////////////////// 
+  
+% DADOS GERAIS - Cálculo dos carregamentos lateral e axial e peso 
+submerso 
+  
+Psub = ((Rooleo*Ai)+(Ropol*Apol)+(Roaco*Aaco)- (Roagua*Atotal))*g; % 
+Peso submerso efetivo 
+miA = Atrito_axial; 
+miL = Atrito_lateral; 
+QL = Psub*miL; % Força lateral exercida pelo solo 
+Qa = Psub*miA; % Força axial exercida pelo solo 
+w = QL/EI; % (simplificação) 
+k = 0.2; % Adimensional de peso submerso com e sem bóia ----------- 
+ARBITRARIAMENTE CONSTANTE 
+D = 20000; % Comprimento da região de Flambagem mais a Região de Feed-
+In 
+Lb = Comprimento_da_Boia/2; % Meia-Seção com Módulo de Bóia 
+  
+% DADOS GERAIS - Determinação da Força axial efetiva ancorada 
+  
+Top = Temperatura_de_operacao; 
+Tamb = 4; % Temperatura ambiente a 1200 metros de profundidade -------
+---- ARBITRARIAMENTE CONSTANTE 
+Pop = 20.7*10^6; % Pressão Máxima de Operação ----------- 
+ARBITRARIAMENTE CONSTANTE 
+%Pex = 1025*g*1200; % Pressão de Coluna D'água a 1200 metros de 
+profundidade 
+n = ((Pop*Ai)*(1 - 2*nii)/EA) + (alfa*(Top - Tamb)); % Coeficiente de 
+Expansão axial -Pex*Ae 
+  
+% CARACTERIZAÇÃO DAS TRÊS EQUAÇÕES DE FLAMBAGEM 
+  
+F1 = -w*(k*sin(x(2)*Lb)-
+sin(x(2)*Lb)+2*sin(x(2)*x(1)))*sin(x(2)*x(3))/x(2)^2+w*(2*x(2)*x(1)+k*
+Lb*x(2)-x(2)*Lb-
+cos(x(2)*x(3))*sin(x(2)*Lb)*k+cos(x(2)*x(3))*sin(x(2)*Lb)-
+2*cos(x(2)*x(3))*sin(x(2)*x(1))-
+x(2)*x(3))*cos(x(2)*x(3))/(sin(x(2)*x(3))*x(2)^2)+w/x(2)^2; 
+  
+F2 = w*(k*sin(x(2)*Lb)-
+sin(x(2)*Lb)+2*sin(x(2)*x(1)))*sin(x(2)*x(1))/x(2)^4-
+w*(2*x(2)*x(1)+k*Lb*x(2)-x(2)*Lb-
+cos(x(2)*x(3))*sin(x(2)*Lb)*k+cos(x(2)*x(3))*sin(x(2)*Lb)-
+2*cos(x(2)*x(3))*sin(x(2)*x(1))-
+x(2)*x(3))*cos(x(2)*x(1))/(sin(x(2)*x(3))*x(2)^4)+(1/2)*w*x(1)^2/x(2)^
+2-w*(2*x(1)+Lb*k-Lb)*x(1)/x(2)^2+(1/2)*w*(-
+x(2)^2*x(3)^2*sin(x(2)*x(3))+4*x(2)^2*x(1)*x(3)*sin(x(2)*x(3))+2*x(2)^
+2*x(3)*k*Lb*sin(x(2)*x(3))-
+2*x(2)^2*x(3)*Lb*sin(x(2)*x(3))+4*x(2)*x(1)*cos(x(2)*x(3))+2*cos(x(2)*
+x(3))*k*Lb*x(2)-2*cos(x(2)*x(3))*x(2)*Lb-
+
+ 
+
+41 
+
+2*k*sin(x(2)*Lb)+2*sin(x(2)*Lb)-4*sin(x(2)*x(1))-
+2*x(3)*cos(x(2)*x(3))*x(2))/(x(2)^4*sin(x(2)*x(3))); 
+  
+F3 = x(2)^2*EI-n*EA-Qa*x(3)*[1-[1-
+(1/6)*EA*w^2*(4*k^2*Lb^3*x(2)^3*cos(x(2)*x(3))^2-
+6*cos(x(2)*x(3))^2*x(2)*Lb*cos(x(2)*Lb)^2+60*cos(x(2)*x(1))*k*sin(x(2)
+*Lb)*cos(x(2)*x(3))^2-
+12*cos(x(2)*x(1))*cos(x(2)*Lb)*x(2)*Lb+6*cos(x(2)*Lb)^2*k^2*x(2)*Lb-
+12*cos(x(2)*Lb)^2*k*x(2)*Lb-
+30*cos(x(2)*x(3))^2*k*x(2)*Lb+15*cos(x(2)*Lb)*k^2*sin(x(2)*Lb)*cos(x(2
+)*x(3))^2-
+30*cos(x(2)*Lb)*k*sin(x(2)*Lb)*cos(x(2)*x(3))^2+30*k*Lb*x(2)-
+12*x(1)^2*k*Lb*x(2)^3+30*k*cos(x(2)*x(3))*cos(x(2)*Lb)^2*sin(x(2)*x(3)
+)-
+15*k^2*cos(x(2)*x(3))*cos(x(2)*Lb)^2*sin(x(2)*x(3))+48*Lb*sin(x(2)*x(3
+))*x(2)*sin(x(2)*x(1))-
+60*cos(x(2)*x(3))*sin(x(2)*x(1))*sin(x(2)*x(3))*sin(x(2)*Lb)-
+24*Lb*sin(x(2)*x(3))*x(2)*sin(x(2)*Lb)-
+24*x(3)*sin(x(2)*x(3))*x(2)*sin(x(2)*Lb)+48*x(1)*sin(x(2)*x(3))*x(2)*s
+in(x(2)*Lb)+12*sin(x(2)*Lb)*x(2)*sin(x(2)*x(1))*x(1)+48*x(3)*sin(x(2)*
+x(3))*x(2)*sin(x(2)*x(1))-96*x(1)*sin(x(2)*x(3))*x(2)*sin(x(2)*x(1))-
+12*x(1)^2*x(2)^3*Lb*cos(x(2)*x(3))^2-
+24*x(1)^2*x(3)*x(2)^3*cos(x(2)*x(3))^2-
+6*x(3)^2*x(2)^3*Lb*cos(x(2)*x(3))^2+6*k*x(2)*x(3)*cos(x(2)*Lb)^2+12*x(
+3)^2*x(2)^3*x(1)*cos(x(2)*x(3))^2-3*k^2*x(2)*x(3)*cos(x(2)*Lb)^2-
+12*sin(x(2)*Lb)*sin(x(2)*x(1))*x(2)*x(3)-
+6*k*Lb^3*x(2)^3*cos(x(2)*x(3))^2+9*k^2*Lb^2*x(2)^3*x(3)-
+6*Lb^2*x(3)*x(2)^3*cos(x(2)*x(3))^2-
+12*Lb*x(3)^2*k*x(2)^3+12*cos(x(2)*x(3))*sin(x(2)*x(1))*x(3)^2*x(2)^2-
+6*cos(x(2)*x(3))*sin(x(2)*Lb)*x(3)^2*x(2)^2+9*x(3)^2*x(2)^2*cos(x(2)*x
+(3))*sin(x(2)*x(3))+9*Lb^2*x(2)^2*cos(x(2)*x(3))*sin(x(2)*x(3))+36*x(1
+)^2*cos(x(2)*x(3))*sin(x(2)*x(3))*x(2)^2+24*cos(x(2)*x(1))*x(1)^2*sin(
+x(2)*x(3))*x(2)^2+3*x(2)*x(3)-39*x(2)*Lb-
+9*cos(x(2)*x(3))^2*k^2*x(2)*Lb-
+24*cos(x(2)*x(1))^2*x(2)*x(1)*cos(x(2)*x(3))^2-
+18*x(3)*Lb*k*cos(x(2)*x(3))*sin(x(2)*x(3))*x(2)^2+18*x(3)*Lb*cos(x(2)*
+x(3))*sin(x(2)*x(3))*x(2)^2+15*k^2*cos(x(2)*x(3))*sin(x(2)*x(3))-
+12*k*Lb*cos(x(2)*x(3))*sin(x(2)*x(1))*x(2)^2*x(3)-
+6*k^2*Lb*cos(x(2)*x(3))*sin(x(2)*Lb)*x(2)^2*x(3)+24*x(1)*x(3)*x(2)^3*L
+b*cos(x(2)*x(3))^2+6*Lb*x(3)^2*k*x(2)^3*cos(x(2)*x(3))^2-
+36*x(1)*x(3)*x(2)^3*Lb-
+6*cos(x(2)*x(3))*sin(x(2)*Lb)*cos(x(2)*Lb)*sin(x(2)*x(3))*x(2)*Lb-
+6*cos(x(2)*x(3))*sin(x(2)*Lb)*x(3)*x(2)^2*Lb+12*cos(x(2)*x(3))*sin(x(2
+)*x(1))*x(3)*x(2)^2*Lb+12*x(1)*cos(x(2)*Lb)*k*sin(x(2)*x(3))*x(2)^2*Lb
+-6*x(3)*cos(x(2)*Lb)*k*sin(x(2)*x(3))*x(2)^2*Lb-
+24*k^2*Lb*sin(x(2)*x(3))*x(2)*sin(x(2)*Lb)-
+12*x(1)*cos(x(2)*Lb)*sin(x(2)*x(3))*x(2)^2*Lb-
+15*sin(x(2)*Lb)*cos(x(2)*Lb)-
+15*cos(x(2)*x(3))*cos(x(2)*Lb)^2*sin(x(2)*x(3))+36*x(2)*x(1)-
+12*cos(x(2)*x(1))*x(3)*sin(x(2)*x(3))*x(2)^2*x(1)-
+24*cos(x(2)*x(1))*cos(x(2)*x(3))*sin(x(2)*x(1))*sin(x(2)*x(3))*x(2)*x(
+1)+12*cos(x(2)*x(1))*cos(x(2)*x(3))*sin(x(2)*Lb)*sin(x(2)*x(3))*x(2)*x
+(1)-24*cos(x(2)*x(3))*sin(x(2)*x(1))*x(3)*x(2)^2*x(1)-
+12*cos(x(2)*x(3))^2*sin(x(2)*Lb)*sin(x(2)*x(1))*x(2)*x(1)-
+12*cos(x(2)*x(3))*sin(x(2)*Lb)*k*x(3)*x(2)^2*x(1)+12*cos(x(2)*x(3))^2*
+sin(x(2)*Lb)*k*sin(x(2)*x(1))*x(2)*x(1)-
+12*cos(x(2)*x(1))*cos(x(2)*x(3))*sin(x(2)*Lb)*k*sin(x(2)*x(3))*x(2)*x(
+1)+12*cos(x(2)*x(3))*sin(x(2)*Lb)*x(3)*x(2)^2*x(1)+6*Lb^2*cos(x(2)*Lb)
+*sin(x(2)*x(3))*x(2)^2+6*k*Lb^3*x(2)^3+60*cos(x(2)*x(1))*sin(x(2)*x(1)
+)*cos(x(2)*x(3))^2+9*Lb^2*x(3)*x(2)^3-
+60*cos(x(2)*x(3))*cos(x(2)*x(1))^2*sin(x(2)*x(3))-
+
+ 
+
+42 
+
+60*cos(x(2)*x(1))*k*sin(x(2)*Lb)+6*cos(x(2)*Lb)^2*x(2)*Lb-
+15*cos(x(2)*Lb)*k^2*sin(x(2)*Lb)-36*cos(x(2)*x(3))^2*x(2)*x(1)-
+12*x(2)*x(3)*cos(x(2)*x(1))^2+9*k^2*x(2)*Lb-4*k^2*Lb^3*x(2)^3-
+2*x(3)^3*x(2)^3*cos(x(2)*x(3))^2-
+60*sin(x(2)*Lb)*cos(x(2)*x(1))*cos(x(2)*x(3))^2+39*cos(x(2)*x(3))^2*x(
+2)*Lb+12*x(3)^2*x(2)^3*Lb+30*cos(x(2)*Lb)*k*sin(x(2)*Lb)-
+30*k*cos(x(2)*x(3))*sin(x(2)*x(3))-6*k*x(2)*x(3)-
+24*x(3)^2*x(2)^3*x(1)+36*x(1)^2*x(3)*x(2)^3+15*cos(x(2)*x(3))^2*cos(x(
+2)*Lb)*sin(x(2)*Lb)+24*cos(x(2)*x(1))^2*x(2)*x(1)+3*k^2*x(2)*x(3)+12*x
+(1)^2*x(2)^3*Lb+12*x(1)^3*x(2)^3*cos(x(2)*x(3))^2-
+3*x(2)*x(3)*cos(x(2)*Lb)^2+2*Lb^3*x(2)^3*cos(x(2)*x(3))^2+12*cos(x(2)*
+x(3))*sin(x(2)*Lb)*k*x(3)*x(2)^2*Lb+75*cos(x(2)*x(3))*sin(x(2)*x(3))+6
+*k^2*Lb^2*cos(x(2)*Lb)*sin(x(2)*x(3))*x(2)^2-
+12*x(1)^3*x(2)^3+60*cos(x(2)*x(3))*sin(x(2)*x(1))*k*sin(x(2)*x(3))*sin
+(x(2)*Lb)-60*cos(x(2)*x(1))*sin(x(2)*x(1))-
+6*cos(x(2)*x(3))^2*k^2*x(2)*Lb*cos(x(2)*Lb)^2+48*Lb*k*sin(x(2)*x(3))*x
+(2)*sin(x(2)*Lb)+5*x(3)^3*x(2)^3+24*x(3)*k*sin(x(2)*x(3))*x(2)*sin(x(2
+)*Lb)+12*cos(x(2)*x(1))*cos(x(2)*Lb)*x(2)*Lb*cos(x(2)*x(3))^2+12*cos(x
+(2)*Lb)^2*k*x(2)*Lb*cos(x(2)*x(3))^2+12*cos(x(2)*x(3))*sin(x(2)*x(1))*
+cos(x(2)*Lb)*sin(x(2)*x(3))*x(2)*Lb+6*x(3)*cos(x(2)*Lb)*sin(x(2)*x(3))
+*x(2)^2*Lb-48*Lb*k*sin(x(2)*x(3))*x(2)*sin(x(2)*x(1))-
+12*k*sin(x(2)*Lb)*x(2)*sin(x(2)*x(1))*x(1)+36*k*Lb*x(3)*x(2)^3*x(1)+12
+*cos(x(2)*x(1))*k*Lb*sin(x(2)*x(3))*x(2)^2*x(1)-2*Lb^3*x(2)^3-
+18*k*Lb^2*x(3)*x(2)^3-
+12*cos(x(2)*x(3))*sin(x(2)*x(1))*cos(x(2)*Lb)*k*sin(x(2)*x(3))*x(2)*Lb
+-
+6*cos(x(2)*x(3))*sin(x(2)*Lb)*k^2*cos(x(2)*Lb)*sin(x(2)*x(3))*x(2)*Lb+
+12*cos(x(2)*x(3))*sin(x(2)*Lb)*k*cos(x(2)*Lb)*sin(x(2)*x(3))*x(2)*Lb-
+48*x(1)*k*sin(x(2)*x(3))*x(2)*sin(x(2)*Lb)+12*cos(x(2)*x(1))*cos(x(2)*
+Lb)*k*x(2)*Lb-
+12*cos(x(2)*x(1))*cos(x(2)*Lb)*k*x(2)*Lb*cos(x(2)*x(3))^2-
+12*k*Lb^2*cos(x(2)*Lb)*sin(x(2)*x(3))*x(2)^2+60*sin(x(2)*Lb)*cos(x(2)*
+x(1))-
+12*cos(x(2)*x(1))*x(1)*sin(x(2)*x(3))*x(2)^2*Lb+12*x(2)*x(3)*cos(x(2)*
+x(3))^2+12*x(1)^2*k*Lb*x(2)^3*cos(x(2)*x(3))^2+12*k*sin(x(2)*Lb)*sin(x
+(2)*x(1))*x(2)*x(3)-6*k^2*Lb^2*x(2)^3*x(3)*cos(x(2)*x(3))^2-
+24*k*Lb*x(3)*x(2)^3*x(1)*cos(x(2)*x(3))^2+12*k*Lb^2*x(3)*x(2)^3*cos(x(
+2)*x(3))^2+6*cos(x(2)*x(3))*sin(x(2)*Lb)*k*x(3)^2*x(2)^2-
+36*x(1)*Lb*x(2)^2*cos(x(2)*x(3))*sin(x(2)*x(3))+9*k^2*Lb^2*cos(x(2)*x(
+3))*sin(x(2)*x(3))*x(2)^2-
+36*x(1)*x(3)*x(2)^2*cos(x(2)*x(3))*sin(x(2)*x(3))+36*x(1)*k*Lb*x(2)^2*
+cos(x(2)*x(3))*sin(x(2)*x(3))-
+18*k*Lb^2*x(2)^2*cos(x(2)*x(3))*sin(x(2)*x(3)))/(x(2)^7*(-
+1+cos(x(2)*x(3))^2)*Qa*x(3)^2)]^.5]; 
+  
+F = [F1 , F2 , F3]; 
+  
+% x0 = [60,0.05,70]; 
+% 
+options=optimset('Display','iter','MaxIter',1e3,'MaxFunEval',1e9,'TolF
+un',1e-5); 
+% [x,fval,exitflag,output,jacobian] = 
+fsolve(@myfun_mod_sim,x0,options) 
+ 
+
+ 
+
+ 
+
+ 
+
+43 
+
+8.2  PROGRAMA PARA O CÁLCULO DA DEFLEXÃO LATERAL 
+ 
+
+function Vx_sim() 
+  
+% obtenção das variáveis de controle 
+  
+clear all 
+h = gcf; 
+L1 = str2double(get(findobj(h,'Tag','LP'),'String')); 
+L2 = str2double(get(findobj(h,'Tag','LS'),'String')); 
+lambda = str2double(get(findobj(h,'Tag','lambda'),'String')); 
+Boia = 
+str2double(get(findobj(h,'Tag','Comprimento_da_boia'),'String')); 
+Top = 
+str2double(get(findobj(h,'Tag','Temperatura_de_operacao'),'String')); 
+k = str2double(get(findobj(h,'Tag','k'),'String')); 
+miA = str2double(get(findobj(h,'Tag','Atrito_axial'),'String')); 
+miL = str2double(get(findobj(h,'Tag','Atrito_lateral'),'String')); 
+  
+% DADOS GERAIS - Geometria do Oleoduto e Revestimento 
+  
+De = 12.75*0.0254; % 12,75 polegadas de diâmetro externo x 0,0254 
+metro/polegada 
+es = 0.938*0.0254; % 0,938 polegada de espessura de aço X-65 x 0,0254 
+metro/polegada 
+Di = De - 2*es; % Diâmetro interno do duto 
+Aaco = pi*(De^2 - Di^2)/4; % Área de aço do duto 
+Ae = pi*(De^2)/4; % Área total da seção transversal do duto  
+Ai = pi*(Di^2)/4; % Área interna da seção transversal do duto  
+I = pi*(De^4 - Di^4)/64;% Momento de Inércia 
+espol = 0.053; % 53 milímetros de espessura - revestimento de 
+polipropileno 
+Dtotal = De + 2*espol; % Diâmetro total (considerando o revestimento 
+do duto) 
+Atotal = pi*(Dtotal^2)/4; % Área total da seção transversal do duto 
+(considerando o revestimento do duto) 
+Apol = Atotal - Ae; % Área de Revestimento de Polipropileno 
+Roaco = 7850; % Massa específica do Aço X-65 em Kg/m³ 
+Ropol = 900; % Massa específica do Revestimento em Kg/m³ 
+Roagua = 1025; % Massa específica da Água Salgada em Kg/m³ 
+Rooleo = 894; % Massa específica do Óleo em Kg/m³ 
+E = 207*10^9; % Módulo de Elasticidade em N/m² 
+nii = 0.3; % Coeficiente de Poisson 
+alfa = 1.17*10^-5; % Coeficiente de dilatação linear 
+EA = E*Aaco; % Rigidez Axial do Duto 
+EI = E*I; % Rigidez à Flexão do Duto 
+g = 9.81; % gravidade 
+Psub = ((Rooleo*Ai)+(Ropol*Apol)+(Roaco*Aaco) - (Roagua*Atotal))*g; % 
+Peso submerso efetivo 
+QL = Psub*miL; % Força lateral exercida pelo solo 
+Qa = Psub*miA; % Força axial exercida pelo solo 
+w = QL/EI; % (simplificação) 
+D = 20000; % Comprimento da região de Flambagem mais a Região de Feed-
+In 
+Lb = Boia/2; % Meia-Seção com Módulo de Bóia 
+Tamb = 0; % Temperatura ambiente a 1200 metros de profundidade -------
+---- ARBITRARIAMENTE CONSTANTE 
+Pop = 20.7*10^6; % Pressão Máxima de Operação ----------- 
+ARBITRARIAMENTE CONSTANTE 
+
+ 
+
+44 
+
+Pex = 1025*g*1200; % Pressão de Coluna D'água a 1200 metros de 
+profundidade 
+n = ((Pop*Ai-Pex*Ae)*(1 - 2*nii)/EA) + (alfa*(Top - Tamb)); % 
+Coeficiente de Expansão axial 
+  
+x=0; 
+for i=0:150 
+    x=i; 
+    if (0<=x)&(x<=L2) 
+       if (0<=x)&(x<Lb)&(0<Lb) % VB % 
+          vetorV(i+1,1) = -
+(1/2)*w*(4*sin(lambda*L1)+2*cos(lambda*x)*k*Lb*lambda-
+2*cos(lambda*x)*cos(lambda*L2)*sin(lambda*Lb)*k+k*x^2*sin(lambda*L2)*l
+ambda^2+2*cos(lambda*x)*cos(lambda*Lb)*sin(lambda*L2)*k-
+2*cos(lambda*x)*cos(lambda*Lb)*sin(lambda*L2)-2*sin(lambda*L2)-
+2*sin(lambda*Lb)-
+2*lambda^2*L2*k*Lb*sin(lambda*L2)+k*Lb^2*lambda^2*sin(lambda*L2)+lambd
+a^2*L2^2*sin(lambda*L2)-
+4*L1*lambda*cos(lambda*L2)+2*cos(lambda*L2)*lambda*Lb+2*lambda*L2*cos(
+lambda*L2)-
+Lb^2*lambda^2*sin(lambda*L2)+2*L1^2*lambda^2*sin(lambda*L2)-
+2*sin(lambda*L2)*k-
+4*L1*lambda^2*L2*sin(lambda*L2)+2*lambda^2*L2*Lb*sin(lambda*L2)-
+2*cos(lambda*L2)*k*Lb*lambda+2*k*sin(lambda*Lb)+4*cos(lambda*x)*lambda
+*L1+4*cos(lambda*x)*sin(lambda*L2)*cos(lambda*L1)-
+2*cos(lambda*x)*lambda*L2-
+2*cos(lambda*x)*lambda*Lb+2*cos(lambda*x)*cos(lambda*L2)*sin(lambda*Lb
+)-
+4*cos(lambda*x)*cos(lambda*L2)*sin(lambda*L1))/(sin(lambda*L2)*lambda^
+4); 
+       end    
+       if (Lb<=x)&(x<=L1) % V1 %   
+          vetorV(i+1,1) = -
+(1/2)*w*(2*sin(lambda*Lb)*sin(lambda*x)*sin(lambda*L2)-
+2*sin(lambda*Lb)*sin(lambda*x)*sin(lambda*L2)*k+4*sin(lambda*L1)-
+2*Lb*x*sin(lambda*L2)*lambda^2+2*cos(lambda*x)*k*Lb*lambda-
+2*cos(lambda*x)*cos(lambda*L2)*sin(lambda*Lb)*k+2*Lb*x*sin(lambda*L2)*
+lambda^2*k+x^2*sin(lambda*L2)*lambda^2-4*sin(lambda*L2)-
+2*sin(lambda*Lb)-
+2*lambda^2*L2*k*Lb*sin(lambda*L2)+lambda^2*L2^2*sin(lambda*L2)-
+4*L1*lambda*cos(lambda*L2)+2*cos(lambda*L2)*lambda*Lb+2*lambda*L2*cos(
+lambda*L2)+2*L1^2*lambda^2*sin(lambda*L2)-
+4*L1*lambda^2*L2*sin(lambda*L2)+2*lambda^2*L2*Lb*sin(lambda*L2)-
+2*cos(lambda*L2)*k*Lb*lambda+2*k*sin(lambda*Lb)+4*cos(lambda*x)*lambda
+*L1+4*cos(lambda*x)*sin(lambda*L2)*cos(lambda*L1)-
+2*cos(lambda*x)*lambda*L2-
+2*cos(lambda*x)*lambda*Lb+2*cos(lambda*x)*cos(lambda*L2)*sin(lambda*Lb
+)-
+4*cos(lambda*x)*cos(lambda*L2)*sin(lambda*L1))/(sin(lambda*L2)*lambda^
+4); 
+       end 
+       if (L1<x)&(x<=L2) % V2 %   
+          vetorV(i+1,1) = 
+(1/2)*w*(4*sin(lambda*x)*sin(lambda*L2)*sin(lambda*L1)-
+2*sin(lambda*Lb)*sin(lambda*x)*sin(lambda*L2)+2*sin(lambda*Lb)*sin(lam
+bda*x)*sin(lambda*L2)*k-
+4*sin(lambda*L1)+2*Lb*x*sin(lambda*L2)*lambda^2-
+2*cos(lambda*x)*k*Lb*lambda+2*cos(lambda*x)*cos(lambda*L2)*sin(lambda*
+Lb)*k-4*x*sin(lambda*L2)*lambda^2*L1-
+2*Lb*x*sin(lambda*L2)*lambda^2*k+x^2*sin(lambda*L2)*lambda^2+2*sin(lam
+bda*Lb)+2*lambda^2*L2*k*Lb*sin(lambda*L2)-
+
+ 
+
+45 
+
+lambda^2*L2^2*sin(lambda*L2)+4*L1*lambda*cos(lambda*L2)-
+2*cos(lambda*L2)*lambda*Lb-
+2*lambda*L2*cos(lambda*L2)+4*L1*lambda^2*L2*sin(lambda*L2)-
+2*lambda^2*L2*Lb*sin(lambda*L2)+2*cos(lambda*L2)*k*Lb*lambda-
+2*k*sin(lambda*Lb)-
+4*cos(lambda*x)*lambda*L1+2*cos(lambda*x)*lambda*L2+2*cos(lambda*x)*la
+mbda*Lb-
+2*cos(lambda*x)*cos(lambda*L2)*sin(lambda*Lb)+4*cos(lambda*x)*cos(lamb
+da*L2)*sin(lambda*L1))/(sin(lambda*L2)*lambda^4); 
+       end 
+    end    
+    if (x>L2) 
+       vetorV(i+1,1) = 0; 
+    end       
+end 
+  
+% Força Axial Ancorada/Efetiva + Feed-In + Deslocamento Lateral Máximo 
++ 
+% Momento Lateral Máximo 
+  
+No = n*EA/1000000; 
+set(findobj(h,'Tag','No'),'String',No); 
+Naf = (lambda^2)*EI/1000; 
+set(findobj(h,'Tag','Naf'),'String',Naf); 
+Lf = (No*1000000 - Naf*1000)/(1000*Qa); 
+set(findobj(h,'Tag','Lf'),'String',Lf); 
+YMAX = -(1/2)*w*(2*k*Lb*lambda+4*sin(lambda*L1)+4*lambda*L1-
+2*cos(lambda*L2)*sin(lambda*Lb)*k-2*sin(lambda*L2)-2*sin(lambda*Lb)-
+2*lambda^2*L2*k*Lb*sin(lambda*L2)+k*Lb^2*lambda^2*sin(lambda*L2)+lambd
+a^2*L2^2*sin(lambda*L2)-
+4*L1*lambda*cos(lambda*L2)+2*cos(lambda*L2)*lambda*Lb+2*lambda*L2*cos(
+lambda*L2)-
+Lb^2*lambda^2*sin(lambda*L2)+2*L1^2*lambda^2*sin(lambda*L2)+4*sin(lamb
+da*L2)*cos(lambda*L1)-4*cos(lambda*L2)*sin(lambda*L1)-
+2*sin(lambda*L2)*k+2*cos(lambda*Lb)*sin(lambda*L2)*k-2*lambda*Lb-
+4*L1*lambda^2*L2*sin(lambda*L2)+2*lambda^2*L2*Lb*sin(lambda*L2)-
+2*cos(lambda*L2)*k*Lb*lambda+2*cos(lambda*L2)*sin(lambda*Lb)-
+2*cos(lambda*Lb)*sin(lambda*L2)+2*k*sin(lambda*Lb)-
+2*lambda*L2)/(sin(lambda*L2)*lambda^4); 
+set(findobj(h,'Tag','ymax'),'String',YMAX); 
+MMAX_no_correction = -
+EI*w*(2*sin(lambda*L2)*cos(lambda*L1)+2*lambda*L1+k*Lb*lambda-
+lambda*Lb-
+cos(lambda*L2)*sin(lambda*Lb)*k+cos(lambda*L2)*sin(lambda*Lb)-
+2*cos(lambda*L2)*sin(lambda*L1)-
+lambda*L2+cos(lambda*Lb)*sin(lambda*L2)*k-
+cos(lambda*Lb)*sin(lambda*L2)-
+sin(lambda*L2)*k)/(sin(lambda*L2)*lambda^2); 
+MMAX = MMAX_no_correction/1000000; 
+set(findobj(h,'Tag','mmax'),'String',MMAX); 
+  
+% Tensão Longitudinal Máxima (Smax) + Tensão Longitudinal-Axial Máxima 
+(S1) + Tensão Circunferencial (S2) + Tensão de Von Mises 
+  
+SMAX = MMAX*De/(2*I); 
+set(findobj(h,'Tag','smax'),'String',SMAX); 
+S1 = (SMAX + (-Naf/(1000*Aaco))); 
+set(findobj(h,'Tag','s1'),'String',S1); 
+S2 = (Pop*Di-Pex*De)/(2*es*1000000); 
+set(findobj(h,'Tag','s2'),'String',S2); 
+S3 = 0; 
+
+ 
+
+46 
+
+Smises = sqrt(1/2*(((S1-S2)^2)+((S1-S3)^2)+((S2-S3)^2))); 
+set(findobj(h,'Tag','smises'),'String',Smises); 
+SMYS = 448; % MPa 
+SMTS = 531; % MPa 
+FS = 1.15*1.14*1.1*1.07; 
+Seq = SMYS/FS; 
+set(findobj(h,'Tag','seq'),'String',Seq); 
+if Seq>=Smises 
+    set(findobj(h,'Tag','teste'),'String','Integridade Estrutural 
+OK'); 
+end 
+if Smises>Seq 
+    set(findobj(h,'Tag','teste'),'String','FALHA ESTRUTURAL!'); 
+end 
+% DNV OS F101 
+  
+% Cálculo de Epsolon 
+escorrosao = 0.003; 
+c1 = De/(es-escorrosao); 
+if c1<15 
+    Epsolon = 0.5; 
+end 
+if (15<=c1)&(c1<=60) 
+    Epsolon = (60-(De/(es-escorrosao)))/90; 
+end 
+if c1>60 
+    Epsolon = 0; 
+end 
+  
+% Cálculo de Ftemp 
+if Top<50 
+    fytemp = 0; 
+    futemp = 0; 
+end 
+if (50<=Top)&(Top<=100) 
+    fytemp = (3/5)*Top-30; 
+    futemp = (3/5)*Top-30; 
+end 
+if Top>100 
+    fytemp = (2/5)*Top-10; 
+    futemp = (2/5)*Top-10; 
+end 
+alpha_U = 0.96; 
+fy = (SMYS-fytemp)*alpha_U; 
+fu = (SMTS-futemp)*alpha_U; 
+  
+% Cálculo de Pb 
+fu_linha = fu/1.15; 
+if fu_linha>=fy 
+    qmim = fy; 
+end 
+if fy>=fu_linha 
+    qmim = fu_linha 
+end 
+Pb = (4/3)*(es-escorrosao)*sqrt(3)*qmim/(De-(es-escorrosao)*sqrt(3)); 
+  
+% Cálculo do alpha_P 
+c2 = (Pop-Pex)/(1000000*Pb); 
+if c2<(2/3) 
+    alpha_P = 1-Epsolon; 
+end 
+
+ 
+
+47 
+
+if (2/3)<=c2 
+    alpha_P = 1-3*Epsolon*(1-c2); 
+end 
+  
+% Cálculo do alpha_C 
+alpha_C = (1-Epsolon)+Epsolon*(fu/fy); 
+  
+% Cálculo de SP, MP, SSD e MSD 
+SP = fy*pi*(De-(es-escorrosao))*(es-escorrosao); 
+MP = fy*((De-(es-escorrosao))^2)*(es-escorrosao); 
+gama_C = 1.07; 
+gama_F = 1.10; 
+SSD = -Naf*gama_C*gama_F/1000; 
+MSD = MMAX*gama_C*gama_F; 
+  
+% Cálculo do Critério OS-F101 
+gama_M = 1.15; 
+gama_SC = 1.14; 
+Crit_OS = 
+(gama_M*gama_SC*abs(MSD)/alpha_C+gama_M^2*gama_SC^2*SSD^2/(alpha_C^2*S
+P^2))^2+alpha_P^2*((Pop/1000000)-(Pex/1000000))^2/(alpha_C^2*Pb^2); 
+set(findobj(h,'Tag','crit_os_num'),'String',Crit_OS); 
+if Crit_OS<=1 
+    set(findobj(h,'Tag','crit_os'),'String','Alça de Flambagem OK'); 
+end 
+if Crit_OS>1 
+    set(findobj(h,'Tag','crit_os'),'String','FALHA ESTRUTURAL!'); 
+end 
+  
+% Gráfico de Deslocamento Lateral 
+z = [1:1:151] 
+y = vetorV 
+plot(z,y) 
+axis([0 L2 -L2/6 L2/2]); 
+  
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+48 
+
+8.3  DESENVOLVIMENTO DO MODELO ANALÍTICO COM MÓDULOS DE BÓIA 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+49 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+50 
+
+ 
+
+ 
+
+ 
+
+ 
+
+51 
+
+ 
+
+ 
+
+ 
+
+ 
+
+52 
+
+ 
+
+ 
+
+ 
+
+ 
+
+53 
+
+ 
+
+ 
+
+ 
+
+ 
+
+54 
+
+ 
+
+ 
+
+ 
+
+ 
+
+55 
+
+ 
+
+ 
+
+ 
+
+ 
+
+56 
+
+ 
+
+ 
+
+ 
+
+ 
+
+57 
+
+ 
+
+ 
+
+ 
+
+ 
+
+58 
+
+ 
+
+ 
+
+ 
+
+ 
+
+59 
+
+ 
+
+ 
+
+ 
+
+ 
+
+60 
+
+ 
+
+ 
+
+ 
+
+ 
+
+61 
+
+ 
+
+ 
+
+ 
+
+ 
+
+62 
+
+ 
+
+ 
+
+ 
+
+ 
+
+63 
+
+ 
+
+ 
+
+ 
+
+ 
+
+64 
+
+ 
+
+ 
+
+ 
+
+ 
+
+65 
+
+ 
+
+ 
+
+ 
+
+ 
+
+66 
+
+ 
+
+ 
+
+ 
+
+ 
+
+67 
+
+ 
+
+ 
+
+ 
+
+ 
+
+68 
+
+ 
+
+ 
+
+ 
+
+ 
+
+69 
+
+ 
+
+ 
+
+ 
+
+ 
+
+70 
+
+ 
+
+ 
+
+ 
+
+ 
+
+71 
+
+ 
+
+ 
+
+ 
+
+72 
+
+

@@ -1,0 +1,4524 @@
+ 
+
+ 
+
+UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE - UFRN 
+
+CENTRO DE TECNOLOGIA - CT 
+
+COORDENAÇÃO DO CURSO DE ENGENHARIA DE PETRÓLEO 
+
+ 
+
+ 
+
+ 
+
+TRABALHO DE CONCLUSÃO DE CURSO 
+
+DESENVOLVIMENTO DE UMA FERRAMENTA PARA CONTROLE 
+
+DE VELOCIDADE EM PIGs. 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+ 
+
+ 
+
+ 
+
+Orientadores: Prof. Dr. Wilson da Mata 
+
+Prof. Drª. Carla Wilza Souza de Paula Maitelli 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Natal/RN, Junho de 2012 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+DESENVOLVIMENTO DE UMA FERRAMENTA PARA CONTROLE 
+
+DE VELOCIDADE EM PIGs. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Natal/RN, Junho de 2012
+
+ 
+
+Trabalho de Conclusão de Curso – CCEP/UFRN 
+
+Ciro Rodolfo Santos Silva 
+
+ 
+
+Desenvolvimento de uma Tecnologia para Controle de Velocidade em PIGs. 
+
+ 
+
+ 
+
+Este  trabalho  corresponde  ao  Trabalho  de  Conclusão  de 
+
+Curso  apresentado  à  Coordenação  do  Engenharia  de 
+
+Petróleo da Universidade Federal do Rio Grande do Norte 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Aprovado em ____ de ________ de 2012 
+
+ 
+
+ 
+
+ 
+
+_____________________________________ 
+
+Prof. Dr. Wilson da Mata 
+
+Orientador – UFRN 
+
+ 
+
+_____________________________________ 
+
+Prof. Drª. Carla Wilza Souza de Paula Maitelli 
+
+Orientador – UFRN 
+
+_____________________________________ 
+
+Prof. Ph. D. Tarcílio Viana Dutra Junior 
+
+Membro Interno – UFRN 
+
+ 
+
+_____________________________________ 
+
+Prof. Drª. Jennys Lourdes Meneses Barillas 
+
+Membro Interno – UFRN 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+iii 
+
+Trabalho de Conclusão de Curso – CCEP/UFRN 
+
+Dedicatória 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Dedico não só este trabalho, mas todas as 
+minhas conquistas a minha mãe Valdemir, 
+meu  pai,  Francisco,  minha  esposa 
+Danielle,  e  por  fim  a  minha  filhinha  Ana 
+Cecília, esta vitória foi por ela. 
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+iv 
+
+Trabalho de Conclusão de Curso – CCEP/UFRN 
+
+Agradecimentos 
+
+ 
+
+Primeiramente  gostaria  de  agradecer  a  Deus  por  ter  me  dado  a  graça  de  mais  essa 
+
+vitória. 
+
+A  minha  família  que  foi  formada  há  pouco  tempo,  minha  esposa,  Danielle,  e  minha 
+
+filha, Ana Cecília, por fazerem parte dessa nova etapa da minha vida. 
+
+A meus pais  Francisco e Valdemir por todo o apoio e carinho em todas as horas. As 
+
+bases da minha vida. 
+
+A  todos  os  participantes  do  Projeto,  “Desenvolvimento  de  uma  Tecnologia  para 
+controle de velocidade em PIGs”, o Prof. Dr. André Laurindo Maitelli, Prof. Dr. Andres Ortiz 
+Salazar, aos bolsistas Paulo e Cinthia, pelo companheirismo e empenho. 
+
+Ao Prof. Marcos Alysson Felipe Rodrigues, por toda dedicação e apoio que sempre foi 
+
+em concedido, sem ele talvez não tivesse conseguido realizar este trabalho. 
+
+Ao  meu  orientador  Prof.  Dr.  Wilson  da  Mata  por  me  guiar  sempre  para  o  caminho 
+
+certo com toda sua sabedoria. 
+
+A  minha  orientadora  Prof.  Drª.  Carla  Wilza  Souza  de  Paula  Maitelli,  por  toda 
+
+dedicação, empenho e apoio dado, neste momento tão significativo em minha vida. 
+
+A Prof. Drª. Jennys Lourdes pelo conhecimento e apoio cedido em todo este trabalho. 
+
+A  ANP  e  ao  PRH  por  todo  apoio  financeiro  dado  para  o  desenvolvimento  deste 
+
+trabalho. 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+v 
+
+Trabalho de Conclusão de Curso – CCEP/UFRN 
+
+Resumo 
+
+ 
+
+Nos dias atuais, com a alta produção de petróleo todas as atenções estão voltadas para a fonte 
+de  energia  mais  utilizada  no  mundo.  Com  a  descoberta  de  novos  campos,  novas  reservas 
+petrolíferas imensas, as indústrias investem em técnicas para o melhor aproveitamento dessas 
+reservas. Este trabalho faz uma comparação entre dois métodos de recuperação suplementar, 
+injeção de água e injeção de gás em um reservatório com um óleo considerado leve e presença 
+de um aquífero, objetivando avaliar qual dos métodos oferece melhor eficiência com o melhor 
+retorno  financeiro  possível.  Três  projetos  são  apresentados,  um  com  injeção  de  água,  outro 
+com injeção de gás, e outro intercalando injeção de água e gás, todos estes em um esquema de 
+injeção periférica. Os resultados foram obtidos por simulação numérica e as alternativas são 
+comparadas  por  análise  econômica  pelo  critério  do  valor  presente  líquido  (VPL).    Com  o 
+aumento  cada  vez  maior  da  demanda  de  gás  natural  também  surgem  problemas  como 
+corrosão  que  é  causada  por  um  gás,  considerado  como  contaminante,  o  gás  sulfídrico,  pois 
+tem  as  características  de  ser  altamente  corrosivo  e  tóxico.  Os  dutos  que  fazem  o  transporte 
+desse  gás  sofrem  com  os  desgastes,  portanto  operações  de  inspeção  em  gasodutos  se  fazem 
+necessárias  para  mantê-los  em  boas  condições  de  operação.  A  melhoria  na  qualidade  das 
+ferramentas  de  inspeção  interna  tais  como  PIG  instrumentado  de  alta  resolução,  tem 
+contribuído  para  se  obter  um  retrato  mais  fiel  da  existência  de  corrosão,  trincas,  mossas, 
+defeitos  de  fabricação,  amassamentos,  etc.  A  eficiência  e  segurança  de  uma  operação  com 
+PIG demandam que diversos parâmetros operacionais, tais como pressões máximas e mínimas 
+no  duto  e  velocidade  de  movimentação  do  PIG  sejam  bem  avaliados  durante  a  etapa  de 
+planejamento  e  mantidos  dentro  de  determinados  limites  durante  o  acompanhamento  da 
+operação.  O difícil  controle da velocidade do PIG no interior do duto sempre foi motivo  de 
+preocupação  e  um  desafio  a  ser  vencido  pelas  empresas  que  prestam  esse  serviço,  por  essa 
+razão iniciou-se um estudo para desenvolver uma ferramenta que pudesse ajudar no controle 
+da  velocidade  do  PIG  utilizando  uma  válvula  by-pass  que  restringe  a  passagem  de  gás 
+fazendo  com  o  que  o  diferencial  de  pressão  e  consequentemente  a  velocidade  pudessem  ser 
+controlados.  A  pesquisa  se  dividiu  em  duas  partes,  a  comprovação  que  o  funcionamento  da 
+válvula  realmente  pudesse  controlar  a  velocidade,  e  um  estudo  através  de  simuladores 
+comerciais para o teste de queda de pressão através de um modelo de válvula apresentado. 
+ 
+ 
+
+Palavras-chave: Simulação numérica, Injeção de Água, Injeção de Gás, Análise Econômica, 
+Controle de velocidade e PIG. 
+
+ 
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+vi 
+
+Trabalho de Conclusão de Curso – CCEP/UFRN 
+
+ 
+
+ 
+
+Abstract 
+
+Nowadays, with  high oil production  all eyes are  focused on the most used energy source in 
+the  world.  With  the  discovery  of  new  fields,  vast  new  oil  reserves,  invest  in  technical 
+industries  for  the  best  use  of  these  reserves.  This  paper  makes  a  comparison  between  two 
+methods of supplementary  recovery, water injection  and  gas injection in  a reservoir with  an 
+oil  considered  mild  and  the  presence  of  an  aquifer,  to  evaluate  which  method  offers  better 
+efficiency with the best possible financial return. Three projects are presented, one with water 
+injection,  gas  injection  with  another,  and  another  alternating  injection  of  water  and  gas,  all 
+these in a peripheral injection scheme. The results were obtained by numerical simulation and 
+the  alternatives  are  compared  by  economic  analysis  by  the  criterion  of  net  present  value 
+(NPV). With the increase of the increasing demand for natural gas also arise problems such as 
+corrosion  which  is  caused  by  a  gas  deemed  dopant,  hydrogen  sulfide,  since  it  has  the 
+characteristics  of  being  highly  corrosive  and  toxic.  The  pipelines  are  transporting  this  gas 
+suffer  with  wear,  so  in  pipeline  inspection  operations  are  necessary  to  keep  them  in  good 
+operating  condition.  Improving  the  quality  of  internal  inspection  tools  such  as  PIG 
+instrumented high resolution, has helped to give a truer picture of the existence of corrosion, 
+cracks,  dents,  manufacturing  defects,  denting,  etc.The  efficiency  and  safety  of  an  operation 
+with  PIG  demand  that  various  operating  parameters,  such  as  maximum  and  minimum 
+pressures in  the pipeline and speed of movement of the  PIGA are well evaluated during the 
+planning stage and kept within certain limits during the follow-up. The speed control difficult 
+PIG  inside  the  duct  has  always  been  a  concern  and  a  challenge  to  be  overcome  by  the 
+companies providing this service, therefore initiated a study to develop a tool that could help 
+control the speed of SGA using a bypass valve that restricts the passage of the gas causing the 
+pressure differential and consequently the speed can be controlled. The study was divided into 
+two  parts,  proving  that  the  valve  operation  could  actually  control  the  speed,  and  through  a 
+study  of  commercial  simulators  for  testing  the  pressure  drop  across  a  valve  model  shown. 
+ 
+
+Keywords: Numerical simulation, Water Injection, Gas Injection, Economic Analysis, Speed 
+Control and PIG. 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+vii 
+
+Trabalho de Conclusão de Curso – CCEP/UFRN 
+
+ 
+
+LISTA DE FIGURAS 
+
+Figura 1: Esquema de Injeção periférica. ................................................................................................ 9 
+
+Figura 2: Fluxo de caixa gráfico. .......................................................................................................... 11 
+
+Figura 3: Modelos de PIG de limpeza. (Souza, 2005). ......................................................................... 14 
+
+Figura 4: Exemplo de PIG instrumento inserido no duto, (Gentil, 1996). ............................................ 15 
+
+Figura 5: PIG Instrumentado Ultrassônico, (Souza, 2003). .................................................................. 16 
+
+Figura 6: PIG de Fluxo Magnético, (Souza, 2003). .............................................................................. 16 
+
+Figura 7: PIG Palito (Salcedo, 2009). ................................................................................................... 17 
+
+Figura 8: PIG Geométrico (Salcedo, 2009). .......................................................................................... 18 
+
+Figura 9: Imagem estrutural de topo do campo 2TCC2012.1. .............................................................. 21 
+
+Figura 10: Visão 3D do reservatório no simulador. .............................................................................. 22 
+
+Figura 11: Curvas de Permeabilidade relativa versus Saturação de água. ............................................ 23 
+
+Figura 12: Gráfico da Kr versus Saturação de Líquidos. ...................................................................... 24 
+
+Figura 13: Gráfico do Rs e Bo versus Pressão. ..................................................................................... 24 
+
+Figura 14: Gráfico da Viscosidade versus Pressão ............................................................................... 25 
+
+Figura 15: Modelo do esquema de injeção e produção para injeção de água. ...................................... 27 
+
+Figura 16: Modelo do esquema de injeção e produção para injeção de gás. ......................................... 27 
+
+Figura 17: Gráfico do BSW em função do tempo, para o modelo Modificado 01. .............................. 28 
+
+Figura 18: Gráfico do Acumulativo de Óleo x Tempo. ........................................................................ 29 
+
+Figura 19: Vazão de Óleo x Tempo. ..................................................................................................... 30 
+
+Figura 20: Gráfico do Acumulativo de Gás x Tempo. .......................................................................... 31 
+
+Figura 21: Vazão de Gás x Tempo. ....................................................................................................... 32 
+
+Figura 22: Gráfico do Acumulativo de Água Produzido x Tempo. ...................................................... 33 
+
+Figura 23: Vazão de Água x Tempo. .................................................................................................... 33 
+
+Figura 24: Forma do corpo do PIG dentro do duto. .............................................................................. 37 
+
+Figura 25: Balanço de forças que atuam no PIG. .................................................................................. 38 
+
+Figura 26: Geometria da válvula de by-pass. ........................................................................................ 40 
+
+Figura 27: Modelo da Malha para o Caso C1. ...................................................................................... 42 
+
+Figura 28: Definição das condições de contorno. ................................................................................. 43 
+
+Figura 29: Velocidade x Tempo para o caso 1. ..................................................................................... 46 
+
+Figura 30 Layout do duto para o caso 2. ............................................................................................... 46 
+
+Figura 31: Velocidade x Tempo para o caso 2. ..................................................................................... 47 
+
+Figura 32: Perfil de velocidade desenvolvido através da válvula para o caso C2. ................................ 48 
+
+Figura 33: Perfil de Pressão através da válvula para o caso C2. ........................................................... 49 
+
+Ciro Rodolfo Santos Silva 
+
+viii 
+
+Trabalho de Conclusão de Curso – CCEP/UFRN 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+LISTA DE TABELAS 
+
+ 
+
+Tabela 1: Modelos Utilizados para simulação. ......................................................................... 26 
+
+Tabela 2: Características da Simulação. ................................................................................... 31 
+
+Tabela 3: Definição de custos/benefícios e seus respectivos valores. ...................................... 34 
+
+Tabela 4: Valores de VPL para todos os projetos. ................................................................... 35 
+
+Tabela 5: Dados da simulação no MATLAB. .......................................................................... 39 
+
+Tabela 6: Comparação entre abordagens. ................................................................................. 41 
+
+Tabela 7: Descrição dos parâmetros das malhas. ..................................................................... 41 
+
+Tabela 8: Equações utilizadas para resolução do problema. .................................................... 44 
+
+Tabela 9 Número máximo de interações para todos os casos. ................................................. 48 
+
+Tabela 10: Queda de pressão para todos os casos. ................................................................... 49 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+ix 
+
+Trabalho de Conclusão de Curso – CCEP/UFRN 
+
+SUMÁRIO 
+ 
+ 
+1. 
+
+Introdução .......................................................................................................................... 1 
+
+1.1  Objetivo ........................................................................................................................... 3 
+
+1.2 
+
+Estrutura ......................................................................... Erro! Indicador não definido. 
+
+2.  Aspectos Teóricos .............................................................................................................. 5 
+
+2.1 
+
+Petróleo e rocha-reservatório ........................................................................................... 5 
+
+2.2  Mecanismos de produção de petróleo ............................................................................. 5 
+
+2.3  Métodos de recuperação de petróleo ............................................................................... 6 
+
+2.3.1 
+
+Fluidos Injetados .......................................................................................................... 7 
+
+2.3.2 
+
+Injeção de água ............................................................................................................ 7 
+
+2.3.3 
+
+Injeção de gás ............................................................................................................... 8 
+
+2.4 
+
+Padrões de Injeção ........................................................................................................... 9 
+
+2.4.1 
+
+Injeção Periférica ......................................................................................................... 9 
+
+2.5 
+
+Simulação Numérica de reservatórios ........................................................................... 10 
+
+2.6  Conceitos de Análise econômica ................................................................................... 10 
+
+2.6.1 
+
+Fluxo de caixa ............................................................................................................ 10 
+
+2.6.2 
+
+Taxa Mínima de Atratividade (TMA) ....................................................................... 11 
+
+2.6.3  Valor Presente Líquido (VPL) ................................................................................... 12 
+
+2.7  Avaliação de dutos......................................................................................................... 12 
+
+2.7.1 
+
+Tipos de PIG .............................................................................................................. 13 
+
+2.7.2 
+
+PIG Instrumentado ..................................................................................................... 14 
+
+2.7.2.1  PIG Ultrassônico ........................................................................................................ 15 
+
+2.7.2.2  PIG de Fluxo Magnético ............................................................................................ 16 
+
+2.7.2.3  PIG Palito ................................................................................................................... 17 
+
+2.7.2.4  PIG Geométrico ......................................................................................................... 17 
+
+2.7.3  Modelagem da Movimentação do PIG ...................................................................... 18 
+
+2.8 
+
+Fluidodinâmica Computacional (CFD) ......................................................................... 19 
+
+3.  Modelagem do Processo .................................................................................................. 21 
+
+3.1  Modelo físico ................................................................................................................. 21 
+
+3.1.1 
+
+Propriedades da rocha reservatório ............................................................................ 22 
+
+3.1.2 
+
+Propriedade dos fluidos ............................................................................................. 23 
+
+3.1.3 
+
+Características Operacionais ...................................................................................... 25 
+
+Ciro Rodolfo Santos Silva 
+
+x 
+
+Trabalho de Conclusão de Curso – CCEP/UFRN 
+
+3.2  Metodologia do trabalho ................................................................................................ 26 
+
+3.2.1  Descrição do estudo ................................................................................................... 26 
+
+4.  Análise dos Resultados .................................................................................................... 29 
+
+4.1  Análises das Simulações ................................................................................................ 29 
+
+4.2  Análise Financeira ......................................................................................................... 34 
+
+5.  Controle de velocidade para PIGs ................................................................................. 36 
+
+5.1  Metodologia e Modelagem ............................................................................................ 36 
+
+5.1.1  Modelo Físico e Simulação do Controle de Velocidade ............................................ 36 
+
+5.1.2 
+
+Simulação do fluxo através da válvula ...................................................................... 39 
+
+5.2.1.1  Geometria ................................................................................................................... 39 
+
+5.2.1.2  Pré-Processamento ..................................................................................................... 40 
+
+5.2.1.1  Geração da Malha ...................................................................................................... 41 
+
+5.2.1.2  Parâmetros de Simulação ........................................................................................... 42 
+
+5.2.1.3  Condições de contorno ............................................................................................... 42 
+
+5.2.1.4  Critérios de Convergência.......................................................................................... 43 
+
+5.2.1.5  Solução Matemática (Solver) ..................................................................................... 44 
+
+5.3  Resultados ...................................................................................................................... 45 
+
+5.3.1 
+
+Resultados do Controle de Velocidade ...................................................................... 45 
+
+5.3.1.1  Caso 1 ........................................................................................................................ 45 
+
+5.3.2 
+
+Pós-Processamento da análise CFD ........................................................................... 47 
+
+6.  Conclusões ........................................................................................................................ 50 
+
+6.1 
+
+Simulações do Reservatório .......................................................................................... 50 
+
+6.2  Controle de Velocidade para PIGs ................................................................................ 50 
+
+7.  Referências Bibliográficas .............................................................................................. 52 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+xi 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+1. Introdução 
+
+ 
+
+Normalmente  os  reservatórios  de  petróleo  sujeitos  apenas  aos  mecanismos  de 
+
+produção  primários  depletam  rapidamente.  Isso  resulta,  na  grande  parte  dos  casos  em  altas 
+
+razões  gás-oleo  (RGO)  e  baixas  vazões  de  produção.  Após  a  depleção  têm-se  fatores  de 
+
+recuperação  de  cerca  de  20%  para  reservatórios  com  óleo  leve  e  10%  para  reservatórios  de 
+
+óleo pesado (Marsili, 2008). 
+
+Os métodos de recuperação suplementar são  aplicados, em  geral, após  a  recuperação 
+
+primária de petróleo, com o objetivo de aumentar o fator de recuperação do reservatório. Em 
+
+tempos  passados  tinha-se  o  pensamento  que  as  baixas  produções  se  davam  apenas  devido  a 
+
+rápida queda de pressão nas jazidas (Thomas, 2004). A injeção de água é o principal método 
+
+utilizado  para  manter  e/ou  elevar  os  níveis  de  pressão  no  reservatório.  Além  de  ajudar  no 
+
+deslocamento do óleo através do meio poroso devido à imiscibilidade entre estes dois fluidos. 
+
+A injeção de gás tem por finalidade aumentar a pressão formando uma capa de gás secundária 
+
+que tem o trabalho de servir como um simples agente mecânico de deslocamento. 
+
+Existem  inúmeras  técnicas  existentes  para  prever  o  comportamento  de  reservatórios. 
+
+Uma delas, a simulação numérica, merece destaque, pois consegue identificar problemas que 
+
+não são solucionáveis por outros métodos conhecidos. A simulação numérica é utilizada para 
+
+o  acompanhamento  de  campos  de  petróleo,  avaliação  e  comparação  entre  os  métodos  de 
+
+recuperação  suplementar.  Os  simuladores  podem  utilizar  diversas  condições  operacionais 
+
+existentes  na  prática,  além  de  serem  capazes  de  descrever  o  reservatório  em  propriedades 
+
+físicas e os fluidos em condições originais (Marsili, 2008). 
+
+Adicionalmente à simulação numérica  é também apresentada uma análise  econômica 
+
+do  projeto  em  estudo.  Não  menos  importante  do  que  a  previsão  da  produção  vinda  do 
+
+reservatório  ao  longo  do  tempo  de  produção  é  a  contabilização  dos  gastos  atribuídos  aos 
+
+custos operacionais,  e os investimentos iniciais.  Sendo assim  a escolha da melhor estratégia 
+
+para o desenvolvimento de um  campo  deve  andar em  conjunto com  a análise econômica do 
+
+projeto,  garantindo  assim  que  os  lucros  irão  cobrir  os  gastos  iniciais,  fazendo  com  que  o 
+
+projeto se torne viável.  
+
+Ciro Rodolfo Santos Silva 
+
+1 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Em  reservatórios  com  grandes  quantidades  de  gás  produzido  um  problema  é  a  corrosão 
+
+das tubulações por sulfeto de hidrogênio. O sulfeto de hidrogênio (H2S) é um gás incolor, de 
+
+odor  desagradável,  extremamente  tóxico,  corrosivo  e  mais  denso  do  que  o  ar.  A  ação 
+
+corrosiva  do  H2S  sobre  os  materiais  metálicos  tem  mostrado  ataques  generalizados, 
+
+localizados  e  dependendo  da  ação  de  esforços  mecânicos  podem  resultar,  na  maioria  das 
+
+vezes, em deteriorações ou fraturas nos equipamentos (Manier, 2007). 
+
+O  desenvolvimento  de  novas  tecnologias  na  indústria  de  petróleo  e  gás  é 
+
+imprescindível  para  reduzir  custos  de  manutenção  e  melhorar  as  condições  de  operação  dos 
+
+equipamentos.  Com  a  malha  de  dutos  viária  de  muitos  países  envelhecida,  com  pouca 
+
+manutenção e considerando a crescente preocupação com o meio ambiente, as operadoras de 
+
+inspeção têm investido em programas de reabilitação e de gerenciamento da integridade com 
+
+o objetivo de estender a vida útil de suas tubulações. A melhoria na qualidade das ferramentas 
+
+de  inspeção  interna  tais  como  PIG  instrumentado  de  alta  resolução,  tem  colaborado  para  se 
+
+obter  um  retrato  mais  fiel  da  existência  de  corrosão,  trincas,  defeitos  de  fabricação, 
+
+amassamentos, etc. Se por um lado, a informação mais precisa vinda da inspeção permite uma 
+
+avaliação  mais  precisa  dos  defeitos,  evitando  reparos  desnecessários,  por  outro  lado,  pode 
+
+mostrar um retrato crítico das condições de integridade do duto, sendo necessário executar um 
+
+grande número de reparos.  
+
+No  caso  dos  PIG,  que  é  utilizado  na  desobstrução  de  dutos  suscetíveis  à  ação  de 
+
+depósitos orgânicos e, como citado anteriormente, na inspeção da integridade física dos dutos, 
+
+é importante estabelecer as condições de funcionamento no interior da tubulação para que este 
+
+não  ocasione  interrupção  na  produção  em  função  dos  problemas  advindos  do  seu 
+
+deslocamento.  A  eficiência  e  segurança  de  uma  operação  com  PIG  demandam  que  diversos 
+
+parâmetros  operacionais,  tais  como  pressões  máximas  e  mínimas  no  duto  e  velocidade  de 
+
+movimentação  do  PIG  sejam  bem  avaliados  durante  a  etapa  de  planejamento  e  mantidos 
+
+dentro  de  determinados  limites  durante  o  acompanhamento  da  operação.  Devido  ao  grande 
+
+risco  acoplado  à  operação  de  inspeção  de  dutos  através  da  passagem  de  PIG,  este 
+
+procedimento  tornou-se  um  trabalho  cauteloso  para  as  empresas  de  produção  de  petróleo  e 
+
+gás.  Várias  tecnologias  para  tentar  controlar  a  velocidade  do  PIG  em  tubulações  estão  em 
+
+estudo,  uma  vez  que  ao  desenvolver  altas  velocidades  (cerca  de  20m/s)  podem  causar 
+
+acidentes fatais.  
+
+Ciro Rodolfo Santos Silva 
+
+2 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Em função do que foi exposto acima, neste trabalho, foi proposto um dispositivo que 
+
+pudesse  controlar  a  velocidade  do  PIG  na  tubulação  visando  uma  maior  segurança  na 
+
+operação de inspeção de dutos. Tal controle será feito utilizando uma válvula by-pass com o 
+
+intuito  de  controlar  o  fluxo  de  gás  a  montante  e  a  jusante  do  PIG,  juntamente  com  um 
+
+algoritmo de controle. A princípio foi feita a modelagem física do sistema a partir do balanço 
+
+de  forças  atuantes  no  PIG.  A  esse  sistema  foi  projetado  um  controlador  e  o  mesmo  foi 
+
+simulado para verificar a resposta do sistema em termos de velocidade quando se varia a área 
+
+de contato à qual está sendo exercida a pressão. Posteriormente foi projetada uma válvula, de 
+
+tal  forma  que  fosse  possível  variar  a  área  de  contato  com  o  fluido.  Este  modelo  físico  com 
+
+válvula foi simulado para obter dados quantitativos de pressão. Foi feito um estudo utilizando 
+
+técnicas  de  CFD  para  obter  o  diferencial  de  pressão  para  diferentes  tipos  de  abertura  na 
+
+válvula  de  by-pass  proposta  pela  equipe.  Sabendo-se  que  o  diferencial  de  pressão  está 
+
+diretamente  ligado  com  a  velocidade  desenvolvida  pelo  PIG,  com  o  controle  do  mesmo,  é 
+
+esperado o controle posterior da velocidade. 
+
+Graças  as  Disciplinas  de  Simulação  Numérica  de  Reservatórios  (PTR0405), 
+
+Reservatórios  (PTR0401),  Métodos  de  Recuperação  Suplementar  (PTR0402),  Análise 
+
+Econômica de Projetos (PTR0406) e Instrumentação e Controle (PTR0305), Fenômenos 
+
+de  Transportes  aplicados  a  Engenharia  de  Petróleo  (PTR0104),  Engenharia  do  Gás 
+
+Natural  (PTR0301)  e  Escoamento  de  Gás  Natural  (PTR0502)  oferecidas  pelo 
+
+Departamento de Engenharia de Petróleo da UFRN a produção deste trabalho foi satisfatória. 
+
+1.1  Objetivo 
+
+ 
+
+O presente trabalho tem dois objetivos:  
+
+O  estudo  comparativo  e  econômico  de  um  projeto  de  recuperação  suplementar  para 
+
+um campo hipotético com alto grau de exploração através da injeção de água, injeção de gás e 
+
+uma injeção alternada entre esses dois fluidos. 
+
+Avaliar,  através  de  simulações  computacionais,  o  desempenho  de  uma  válvula  by-pass  utilizada 
+
+como ferramenta  de controle da velocidade do PIG.  A válvula restringe a passagem de gás fazendo 
+
+com o que o diferencial de pressão e consequentemente a velocidade sejam controladas. 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+3 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+A previsão de desempenho dos projetos de injeção aqui sugeridos foi obtida através de 
+
+simulação  numérica.  As  simulações  e  o  modelo  de  reservatório  foram  desenvolvidos  no 
+
+simulador  CMGTM.  A  viabilidade  dos  projetos  foi  feita  através  de  uma  análise  econômica, 
+
+levando  em  considerações  os  volumes  de  produção,  investimentos  iniciais  e  custos 
+
+operacionais.  O  método  utilizado  para  esta  análise  é  o  do  valor  presente  líquido  (VPL), 
+
+considerando o preço do barril de petróleo e do gás-natural iguais ao longo de todo tempo de 
+
+produção.  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+4 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+2.  Aspectos Teóricos 
+
+2.1  Petróleo e rocha-reservatório 
+
+ 
+
+O  Petróleo  é  uma  mistura  complexa  de  hidrocarbonetos  que  se  encontra  na  forma 
+
+líquida  ou  sólida,  em  poros  e  fraturas,  em  geral  de  rochas  sedimentares.  Nos  depósitos 
+
+encontram-se  também  água  salgada  e  uma  mistura  de  gases  responsáveis  pela  pressão  que 
+
+provoca  a  ascensão  do  petróleo  através  de  poços  perfurados.  O  petróleo  líquido  é  também 
+
+chamado  óleo  cru  para  distingui-lo  do  óleo  refinado,  produto  comercial  mais  importante.  O 
+
+gás  de  petróleo  (gás  natural)  é  uma  mistura  de  hidrocarbonetos  leves,  enquanto  as  formas 
+
+semissólidas  são  compostas  de  hidrocarbonetos  pesados,  outros  componentes  como, 
+
+nitrogênio,  dióxido  de  carbono  e  sulfeto  de  hidrogênio  também  estão  presentes,  porém  são 
+
+considerados como contaminantes. 
+
+A  água  salgada  quase  sempre  está  presente  em  formas  de  aquíferos,  e  ela  define  em 
+
+muitas  vezes  o  tipo  de  método  em  que  o  reservatório  vai  ser  produzido.  As  propriedades 
+
+físicas  são  usadas,  comumente,  para  caracterizar  o  petróleo,  dentre  elas  estão:  a  cor,  a 
+
+densidade,  a  viscosidade,  e  a  pressão  de  ponto  de  bolha.  A  relação  entre  o  volume  de  gás 
+
+produzido  e  o  volume  de  óleo  produzido  (RGO)  é,  também,  um  parâmetro  muito  utilizado 
+
+para qualificar o tipo de reservatório. 
+
+2.2  Mecanismos de produção de petróleo 
+
+ 
+
+O  comportamento  dos  reservatórios  é  ditado  por  forças  viscosas,  capilares  e 
+
+gravitacionais. Entre os fatores que influenciam este comportamento estão: as características 
+
+geológicas,  as  propriedades  rocha-fluido,  os  mecanismos  de  escoamento  e  as  facilidades  de 
+
+produção (Thomas, 2001; Willhite, 1986). 
+
+Para que haja produção de petróleo em um poço é necessário que haja um diferencial 
+
+de pressão entre o fundo do poço e o reservatório. O fluido em contato com a zona de pressão 
+
+inferior  tende  a  diminuir  sua  pressão,  embora  o  restante  do  fluido  presente  no  resto 
+
+reservatório tenta manter sua pressão inicial. A expansão dos fluidos não acontece juntamente 
+
+com  a  expansão  do  volume  poroso,  e  desta  forma  o  volume  adicional  a  expansão  do  fluido 
+
+Ciro Rodolfo Santos Silva 
+
+5 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+escoa  para  o  poço.  Desta  forma,  a  queda  de  pressão  se  propaga  por  todo  o  reservatório  e  a 
+
+resposta  do  reservatório  a  essa  despressurizarão  é  que  determina  o  mecanismo  de  produção 
+
+natural. 
+
+Os  reservatórios  podem  apresentar  cinco  tipos  naturais  de  mecanismos  de  produção, 
+
+que são: 
+
+ 
+
+Influxo de água; 
+
+  Capa de gás; 
+
+  Gás em solução; 
+
+  Segregação Gravitacional e; 
+
+  Mecanismos combinados. 
+
+2.3  Métodos de recuperação de petróleo 
+
+ 
+
+Nos  reservatórios  cujos  métodos  de  produção  são  pouco  eficientes  os  reservatórios 
+
+ainda  possuem  grandes  quantidades  de  óleo,  porém  não  dispõe  de  energia  suficiente  para  a 
+
+produção. Esses reservatórios são submetidos a processos que visam aumentar a recuperação 
+
+do óleo. Esses processos tentam interferir nas características do reservatório que favorecem a 
+
+retenção exagerada de óleo. 
+
+Desde que se iniciou a exploração de petróleo, é necessário que se utilize métodos de 
+
+recuperação.  Inicialmente  utilizam  apenas  os  métodos  de  recuperação  primária,  e  para  um 
+
+melhor aproveitamento do campo começou-se o uso as técnicas de recuperação secundárias e 
+
+especiais.  
+
+A  princípio  tinha-se  a  ideia  que  as  baixas  produções  de  petróleo  eram  devidas  as 
+
+baixas pressões, então um método eficiente para aumentar a pressão era injetando-se fluidos 
+
+para fazer o deslocamento do óleo e ocupar os espaços porosos deixados por este. Como nem 
+
+sempre  o  aspecto  mais  crítico  do  fluxo  dos  fluidos  nos  meios  porosos  é  a  baixa  pressão,  a 
+
+simples  injeção  de  fluidos  para  deslocar  outros  fluidos  nem  sempre  resultava  em  sucesso. 
+
+Como  resultado  da  observação  e  da  análise  dos  comportamentos  dos  meios  porosos  quando 
+
+sujeitos  a  injeção  de  fluidos,  surgiram  os  diversos  processos  que  se  conhecem  atualmente. 
+
+(Thomas, 2004). 
+
+Ciro Rodolfo Santos Silva 
+
+6 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+2.3.1 Fluidos Injetados 
+
+ 
+
+Para injeção em reservatórios comumente utilizam-se dois tipos de fluido água, ou gás 
+
+natural.  A  água  pode  ter  vários  tipos  de  origens  como  água  subterrânea  coletada  por  poços 
+
+apenas para este fim, água de superfície, coletada em lagos ou rios, água produzida do próprio 
+
+reservatório,  ou  ainda  água  do  mar.  Água  antes  de  ser  injetada  deve  ser  passada  por  um 
+
+tratamento para se adequar ao processo de injeção. 
+
+2.3.2 Injeção de água 
+
+ 
+
+Os  projetos  de  injeção  de  água,  de  uma  maneira  geral,  são  compostos  das  seguintes 
+
+partes:  sistema  de  captação  de  água,  que  podem  ser  poços  no  caso  de  se  injetar  água 
+
+subterrânea, ou um conjunto de bombas para o caso de se utilizar água de superfície ou água 
+
+do mar; sistema de tratamento de água de injeção; sistema de injeção de água propriamente 
+
+dito,  que  é  composto  por  bombas,  linhas,  e  poços  de  injeção;  e  sistema  de  tratamento  e 
+
+descarte  de  água  produzida.  Em  certos  casos,  algumas  dessas  partes  são  dispensáveis 
+
+(Thomas, 2001). 
+
+Naturalmente se utiliza a injeção de água como método de recuperação secundária, já 
+
+que  o  mesmo  possui  menor  custo  operacional  comparados  com  outros  métodos  de 
+
+recuperação avançada ou Enhanced Oil Rrecovery (EOR) (Castañeira, 2008). 
+
+Apesar  da  água  a  ser  usada  na  injeção  do  reservatório  poder  ter  quatro  origens 
+
+distintas, em muitos projetos a água utilizada é a água dos aquíferos, pois essa água é similar à 
+
+água da formação e, é, geralmente, bastante salina não sendo apropriada nem para o consumo 
+
+humano e nem para o consumo animal. 
+
+Após o início da injeção, a água injetada no reservatório também é produzida junto ao 
+
+óleo e, então, os dois fluidos são separados na superfície, a quantidade de óleo remanescente é 
+
+removida  e  a  água  é,  então,  reinjetada  e,  apenas  uma  pequena  quantia  extra  de  água  é 
+
+necessária. 
+
+A  proporção  água/óleo  pode  atingir  valores  de  ate  99%  da  produção  total,  antes 
+
+mesmo  da  injeção  se  tornar  economicamente  inviável.  A  injeção  de  água  já  tem  suas 
+
+vantagens,  porém  existem  alguns  pontos  que  precisam  ser  melhorados,  principalmente, 
+7 
+
+Ciro Rodolfo Santos Silva 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+quando  fluidos  imiscíveis  são  colocados  em  contato  no  reservatório,  alterando  a  capacidade 
+
+da rocha de permear fluidos.  
+
+Outros métodos estão sendo analisados para aperfeiçoar a injeção de água e, também, 
+
+para  estender  sua  aplicação  a  reservatórios  com  óleos  mais  viscosos,  onde  sua  eficácia  é 
+
+bastante baixa, levando com que essa operação nesses tipos de reservatórios fosse altamente 
+
+inviável. 
+
+A  injeção  de  água  é  inadequada  para  alguns  casos.  Entre  os  reservatórios  mais 
+
+comuns,  para  os  quais  não  é  indicado  o  uso  de  injeção  de  água,  estão  aqueles  que  são 
+
+heterogêneos e apresentam pouca continuidade, pois o efeito da injeção de água pode não se 
+
+estender ao poço produtor. Por outro lado pode ocorrer o contrário, ou seja, a água escoa por 
+
+fraturas ou caminhos preferenciais causando uma produção de água elevada desde o início da 
+
+injeção. 
+
+Em muitos casos o que ocorre na realidade é a transformação de um poço produtor em 
+
+um poço injetor, devido aos altos custos para perfuração ou fechamento de um poço, no caso 
+
+deste já ser existente. 
+
+2.3.3 Injeção de gás 
+
+ 
+
+Nos projetos de injeção de gás natural, o gás injetado pode ser o mesmo gás oriundo 
+
+da produção ou ainda aquele gás que já passou pelo processamento (Thomas, 2001). 
+
+O  gás  é  injetado  no  reservatório  com  a  utilização  de  compressores  que  fornecem  as 
+
+pressões  e  as  vazões  de  acordo  com  cada  necessidade.  O  processo  não  requer  que  o  gás 
+
+injetado se misture com  o óleo do reservatório para deslocá-lo para fora  do meio poroso. O 
+
+papel  do  gás  é  de  um  simples  agente  mecânico  de  deslocamento.  As  instalações  para  uma 
+
+injeção de  gás se diferenciam basicamente de outros sistemas de produção pela presença de 
+
+compressores e poços para injeção de gás. 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+8 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+2.4  Padrões de Injeção 
+
+2.4.1 Injeção Periférica 
+
+ 
+
+Na  injeção  periférica  os  poços  injetores  são  localizados  na  parte  externa  do 
+
+reservatório  e  o  óleo  é  deslocado  para  o  centro  do  reservatório,  como  mostra  a  Figura  1. 
+
+Geralmente  utilizam-se  poços  perfurados  no  aquífero  ou  próximo  ao  contato  óleo/água,  e 
+
+procura-se utilizar a força da gravidade para fazer um deslocamento mais eficiente. A injeção 
+
+periférica  normalmente  apresenta  resultados  satisfatórios.  A  desvantagem  deste  esquema  é 
+
+que a pressão de topo do reservatório demora a sentir os efeitos da injeção na base. Portanto 
+
+um processo de injeção periférica pode não ser o mais lucrativo, pois, apesar de ter um fator 
+
+de recuperação alto, o retorno financeiro é mais tardio. (Pizarro, 2002). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 1: Esquema de Injeção periférica. 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+Injetores 
+
+Produtores 
+
+ 
+
+ 
+
+ 
+
+9 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Um recurso bastante utilizado é a conversão de poços produtores em injetores com o 
+
+passar do tempo, assim pode-se evitar gastos com novas perfurações. 
+
+2.5  Simulação Numérica de Reservatórios 
+
+ 
+
+A Simulação numérica é um método utilizado pela engenharia de petróleo para prever 
+
+o  comportamento  e  estimar  a  vida  de  um  reservatório  de  petróleo,  como  por  exemplo,  as 
+
+equações  baseadas  em  balanço  de  materiais  e  nas  curvas  de  declínio.  Os  modelos  baseados 
+
+nas  equações  de  balanço  de  materiais  são  compostos  por  modelos  numéricos  simplificados, 
+
+denominados  de  modelos  “tanque”  ou  de  dimensão  “zero”,  já  que  o  reservatório  é 
+
+considerado  uma  caixa  cujas  propriedades  da  rocha  e  dos  fluidos,  como  pressão,  assumem 
+
+valores  médios  uniformemente  distribuídos.  Os  simuladores  numéricos  de  reservatórios  são 
+
+comumente conhecidos  simuladores numéricos de fluxo, já que são utilizados para o  estudo 
+
+do comportamento do fluxo de fluidos em reservatórios de petróleo utilizando uma simulação 
+
+numérica. 
+
+Existem  inúmeras  formas  de  se  prever  o  comportamento  de  um  reservatório,  estimar 
+
+os  volumes  originais  de  óleo  e  volumes  recuperáveis.  Cada  escolha  dos  processos  deve  ser 
+
+feita de maneira compatível com a natureza, quantidade e qualidade dos dados disponíveis, do 
+
+tempo e dos recursos que se tem para processar esses dados e dos objetivos que se destina o 
+
+estudo.  
+
+2.6  Conceitos de Análise econômica 
+
+2.6.1 Fluxo de caixa 
+
+ 
+
+É a apreciação das contribuições monetárias (entradas e saídas de dinheiro) ao longo 
+
+do tempo a  uma  caixa simbólica já constituída. Pode ser  representado de  forma analítica ou 
+
+gráfica. Um exemplo de fluxo de caixa gráfico pode ser observado na Figura 2. 
+
+Ciro Rodolfo Santos Silva 
+
+10 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Figura 2: Fluxo de caixa gráfico. 
+
+ 
+
+ 
+
+O  fluxo  de  caixa  pode  ser  representado  graficamente  por  um  diagrama  no  qual  são 
+
+adotadas as seguintes convenções: 
+
+  O  eixo  horizontal  representa  o  tempo  a  partir  do  instante  considerado  inicial  até  o 
+
+instante final no prazo em questão; 
+
+  Nos  diversos  pontos  que  representam  instantes  ao  longo  do  eixo  do  tempo,  são 
+
+traçados: 
+
+  Segmentos  positivos  (seta  vertical  para  cima)  –  representam  dividendos, 
+
+receitas ou economias realizadas; 
+
+  Segmentos  negativos  (seta  vertical  para  baixo)  –  representam  despesas, 
+
+aplicações  em  dinheiro,  custos  de  aplicações  ou  parcelas  que  foram  deixadas 
+
+de receber. 
+
+  Valor presente ou valor atual (P) – quantia existente no instante inicial; 
+
+  Valor  futuro  ou  montante  (F  ou  S)  –  quantia  existente  ou  equivalente  num  instante 
+
+futuro; 
+
+  Taxa de juros por período de capitalização (i) – A representação de juros pela letra i se 
+
+deve ao fato de provir da palavra inglesa interest; 
+
+  Número de períodos de capitalização (n). 
+
+2.6.2 Taxa Mínima de Atratividade (TMA) 
+
+ 
+
+Ao se  analisar uma proposta de investimento deve ser considerado o  fato  de se  estar 
+
+perdendo  a  oportunidade  de  auferir  retornos  pela  aplicação  do  mesmo  capital  em  outros 
+
+projetos.  A  nova  proposta  para  ser  atrativa  deve  render,  no  mínimo,  a  taxa  de  juros 
+
+Ciro Rodolfo Santos Silva 
+
+11 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+equivalente à rentabilidade das aplicações correntes e de pouco risco. Esta taxa é, portanto, a 
+
+Taxa Mínima de Atratividade (TMA). 
+
+2.6.3 Valor Presente Líquido (VPL) 
+
+ 
+
+O método do Valor Presente Líquido (VPL) tem como finalidade valorar em termos de 
+
+valor  presente  o  impacto  dos  eventos  futuros  associados  a  um  projeto  ou  alternativa  de 
+
+investimento,  ou  seja,  mede  o  valor  presente  dos  fluxos  de  caixa  gerados  pelo  projeto  ao 
+
+longo da sua vida útil.  
+
+Valor  presente  líquido  de  um  fluxo  de  caixa  de  uma  alternativa  J,  portanto,  a 
+
+somatória algébrica dos vários valores presentes P envolvidos neste fluxo de caixa. 
+
+ 
+
+       ∑   (     )  
+
+ 
+
+   
+
+Onde: VPL 
+
+J = valor presente líquido da alternativa J; 
+
+ 
+
+n = número de períodos envolvidos; 
+
+Fn = cada um dos diversos valores futuros envolvidos no fluxo de caixa; 
+
+i  =  taxa  mínima  de  atratividade,  também  chamada  de  taxa  de  equivalência,  ou  ainda,  neste 
+
+caso de taxa de desconto; 
+
+N = contador do somatório. 
+
+2.7  Avaliação de dutos 
+
+ 
+
+A operação com PIG é uma prática comum nas indústrias de petróleo e gás natural. Em geral, 
+
+um PIG é uma ferramenta é introduzida em um duto a fim de ser limpo e/ou inspecionado. O fluido é 
+
+bombeado  a  montante  do  PIG  para  fornecer  a  força  necessária  para  colocar  o  dispositivo  em 
+
+movimento,  e  assim  executar  a  tarefa  desejada,  ou  seja,  a  remoção  de  depósitos  da  parede  do  tubo, 
+
+remover água ou dirigir uma ferramenta de inspeção. A utilização de PIGs tornou-se um procedimento 
+
+padrão  da  indústria.  Uma  grande  gama  de  modelos  de  PIGs  está  disponível  para  cada  tipo  de 
+12 
+
+Ciro Rodolfo Santos Silva 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+aplicação. Uma dificuldade frequentemente enfrentada pelos engenheiros ao projetar uma operação de 
+
+pigging (passagem do PIG pelo duto) é a falta de ferramentas confiáveis  para a predição de diversas 
+
+variáveis  relacionadas  ao  movimento  dos  PIGs  através  das  tubulações.  A  maioria  do  conhecimento 
+
+disponível  é  baseada  em  experiências  de  campo.  Por  isso,  muitas  vezes  há  algumas  hipóteses  e, 
+
+consequentemente,  um  grau  de  incerteza  na  escolha  do  melhor  PIG  estimando  a  sua  velocidade,  a 
+
+pressão de condução necessária, e a quantidade de circulação de fluidos. 
+
+As principais funcionalidades do PIG são: 
+
+  Remoção de líquidos; 
+
+  Separação de produtos dissimilares; 
+
+ 
+
+Inspeção interna (PIGs instrumentados); 
+
+  Prevenir a formação de depósitos orgânicos e inorgânicos; 
+
+  Limpeza interna e remoção de sólidos; 
+
+A origem do nome PIG possui algumas versões, sendo as mais aceitas são as que relacionam o 
+
+dispositivo  ao  animal  de  mesmo  nome,  devido  a  semelhança ao  som  emitido  pelos  porcos  e  ao som 
+
+produzido pelo PIG na passagem pela tubulação. 
+
+2.7.1 Tipos de PIG 
+ 
+
+Os PIGs são divididos basicamente em dois tipos, os de limpeza e os instrumentados. Entre os 
+
+PIGs de limpeza alguns modelos são o de disco, de copo e o de espuma. Já entre os instrumentados 
+
+existem os modelo Palito e MFL.  O PIG instrumentado é equipado com instrumentos, para passagem 
+
+interna  ao  duto,  com  finalidade  de  adquirir  informações  sobre  a  variação  da  espessura  da  parede  da 
+
+tubulação  ou  outras  descontinuidades,  tais  como:  solda,  corrosão,  mossas,  ranhuras,  etc.  (Souza, 
+
+2005). A Figura 3 mostra os tipos de PIG de limpeza citados. 
+
+Ciro Rodolfo Santos Silva 
+
+13 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Figura 3: Modelos de PIG de limpeza (Souza,2005). 
+
+ 
+
+2.7.2 PIG Instrumentado 
+ 
+
+Os PIGs cuja função é fornecer informações das condições da linha (por exemplo, localização 
+
+de amassamentos e ovalizações, detecção de vazamentos ou pontos onde há redução da espessura de 
+
+parede do duto) são denominados PIGs instrumentados, ou smart PIGs. Estes últimos informam com 
+
+boa precisão a localização e extensão de defeitos existentes no duto. (Caldwell et.al,2001) 
+
+A técnica de inspeção de dutos por PIGs é uma das técnicas mais utilizadas para avaliação da 
+
+integridade  dos  dutos.  A  grande  vantagem  é  a  inspeção  ao  longo  de  toda  tubulação,  o  que  seria 
+
+inviável usando outras técnicas, por exemplos, em dutos enterrados. A estrutura mecânica é composta 
+
+por uma cápsula cilíndrica apoiada entre dois suportes de poliuretano. Dentro do corpo do PIG estão 
+
+presentes os circuitos eletrônicos e as baterias. Os suportes de poliuretano fazem com que o corpo se 
+
+mantenha centralizado no duto. A pressão do fluido atua sobre o suporte traseiro e impulsiona o PIG 
+
+ao longo do duto. A Figura 4 mostra um esquema simplificado de um PIG instrumentado. 
+
+Ciro Rodolfo Santos Silva 
+
+14 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Figura 4: Exemplo de PIG instrumento inserido no duto, (Gentil, 1996). 
+
+ 
+
+ 
+
+Atualmente a inspeção interna de dutos através da passagem de PIGs instrumentados permite a 
+
+obtenção  de  muitas  informações  sobre  as  condições  do  duto.  O  grande  avanço  dessas  ferramentas 
+
+deve-se  ao  fato  que  a  rede  de  dutos  está  envelhecendo,  e  desta  forma  precisam  ser  cuidadosamente 
+
+inspecionadas a fim de prevenir acidentes. Em muitos casos, os PIGs instrumentados (Palito, MFL e 
+
+Ultrassônicos) são utilizados para verificar a existência de trincas, amassos, incrustações ou perda de 
+
+material por corrosão. 
+
+2.7.2.1 
+ 
+
+PIG Ultrassônico 
+
+O  PIG  ultrassônico  possui  grande  quantidade  de  cabeçotes  que  fazem  a  medição  direta  de 
+
+espessura do duto de maneira a varrer toda a circunferência do mesmo. A Figura 5 apresenta um PIG 
+
+ultrassônico. 
+
+Ciro Rodolfo Santos Silva 
+
+15 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Figura 5: PIG Instrumentado Ultrassônico, (Souza, 2003). 
+
+ 
+
+2.7.2.2 
+ 
+
+PIG de Fluxo Magnético  
+
+O PIG de fluxo magnético é comumente utilizado para inspeção de defeitos de corrosão, pois é 
+
+capaz  de  detectar  e  dimensionar  pontos  em  que  há  uma  redução  da  espessura  de  parede  do  duto  e 
+
+informar  com  boa  precisão  a  localização  destes  defeitos.  (Lima  et.al.,  2007).  O  vazamento  de  fluxo 
+
+magnético (Magnetic Flux Leakage – MFL) é o método mais antigo e mais comum utilizado em dutos 
+
+para  encontrar  regiões  com  perda  de  metal  em  dutos  de  transmissão  de  petróleo  e  gás.  O  MFL 
+
+funciona como um imã. Um imã tem dois polos, norte e sul. Os polos empregam forças de atração de 
+
+campo magnético na peça de aço e no polo oposto. A Figura 6 apresenta um PIG de fluxo magnético. 
+
+Figura 6: PIG de Fluxo Magnético, (Souza, 2003). 
+
+Ciro Rodolfo Santos Silva 
+
+ 
+
+16 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+2.7.2.3 
+ 
+
+PIG Palito 
+
+O PIG Palito que utiliza um sensor geométrico (sensor palito) para fazer a inspeção interna de 
+
+dutos  de  tamanhos  variados.  A  técnica  consiste  na  medição  direta  da  superfície  por  contato  dos 
+
+sensores  palito  ou  apalpadores  instrumentados,  que  são  precisamente distribuídos  ao longo  do corpo 
+
+da ferramenta. (Camerini, 2006) 
+
+A estrutura mecânica do sensor palito basicamente é um palito de contato fixo dentro de uma 
+
+haste articulada, um eixo de rotação da haste que está fixa a base do sensor, e o transdutor de efeito 
+
+Hall  dentro  deste  eixo.  Imãs  que  fornecem  um  campo  magnético  constante  ao  conjunto  eixo  e 
+
+transdutor estão fixos dentro da haste articulada do sensor palito. (Salcedo, 2009). 
+
+A Figura 7 mostra um PIG Palito. 
+
+Figura 7: PIG Palito (Salcedo, 2009). 
+
+ 
+
+ 
+
+2.7.2.4 
+ 
+
+PIG Geométrico 
+
+Os  PIGs  Geométricos  possuem  uma  eletrônica  juntamente  com  um  conjunto  de 
+
+sensores  que  percorrem  o  interior  do  duto  adquirindo  informações  sobre  a  geometria  das 
+
+tubulações como: amassamentos, variações de diâmetro, mossas, ovalizações, incrustações  e 
+
+Ciro Rodolfo Santos Silva 
+
+17 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+outras  restrições  internas.  Os  sensores  geométricos  são  posicionados  abaixo  do  copo  de 
+
+poliuretano e detectam uma eventual anomalia. Este defeito causa um movimento angular da 
+
+haste do sensor em relação ao seu eixo, que por sua vez está fixado na base do flange, assim o 
+
+sensor  de  posição  dentro  desta  base  gera  um  sinal  analógico  proporcional  à  variação  de 
+
+diâmetro interno. (Salcedo, 2009). A Figura 8 mostra um PIG Geométrico. 
+
+Figura 8: PIG Geométrico (Salcedo, 2009). 
+
+ 
+
+ 
+
+2.7.3 Modelagem da Movimentação do PIG 
+ 
+
+A  formulação  geral  que  rege  o  movimento  de  um  PIG  em  uma  seção  de  tubo 
+
+inclinado, como pode ser visto na Figura 9, pode ser obtido pelo agrupamento de equações de 
+
+fluxo com equações de movimento do PIG no interior do duto.  Na maioria dos casos o fluxo 
+
+pode ser assumido como unidimensional, considerando a deformação radial do tubo oriunda 
+
+das variações de pressão.  
+
+ 
+
+Conservação da Massa 
+
+ 
+
+Como o sistema pode ser considerado uma porção de matéria fixa, possui mesma quantidade 
+
+de  matéria  em  todos  os  instantes.  Logo  a  conservação  da  massa  exige  que  a  massa  do  sistema  seja 
+
+constante no tempo, como pode ser mostrado na Equação (05). 
+
+  
+
+  
+
+)
+       
+
+      
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(01) 
+
+Ciro Rodolfo Santos Silva 
+
+18 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Onde a massa do sistema será: 
+
+           ∫    (       )   ∫     (       )
+
+  
+
+ 
+
+(02) 
+
+Para obter a relação entre a taxa de variação de qualquer propriedade extensiva arbitrária N em 
+
+um sistema e as variações dessas propriedades associadas a um volume de controle através da Equação 
+
+(07). 
+
+  
+
+  
+
+)
+       
+
+ 
+
+ 
+
+  
+
+ 
+∫     
+  
+
+  ∫    ⃗      
+  
+
+ 
+  
+
+ 
+
+ 
+
+(03) 
+
+onde η=N/unidade de massa. 
+
+No caso da conservação da massa: 
+
+N=M e η=1 
+
+Conservação da quantidade de movimento 
+
+ 
+
+Para um sistema movendo-se em relação a um sistema de coordenadas inerciais, pela segunda 
+
+lei  de  Newton,  a  soma  de  todas  as  forças  agindo  sobre  um  sistema  é  igual  à  taxa  de  variação  da 
+
+quantidade de movimento linear do sistema. 
+
+    
+
+  ⃗ 
+  
+
+)
+       
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(04) 
+
+Onde a quantidade de movimento linear (P) é dada por: 
+
+ ⃗           ∫  ⃗    (       )   ∫  ⃗      (       )
+
+   
+
+(05) 
+
+ 
+
+2.8  Fluidodinâmica Computacional (CFD) 
+ 
+
+Fluidodinâmica Computacional (Computational Fluid  Dynamics  -  CFD)  é  a análise  
+
+de    sistemas    de    equações    diferenciais    parciais    (EDP´s)    que    envolvem    problemas    de 
+
+escoamento    de    fluidos,    transferência    de    calor    e    outros    processos,    com    o  intuito    de  
+
+obter soluções  numéricas  para  o  cálculo  de  pressões,  velocidade  e  temperatura  através  
+
+de simulações  computacionais. 
+
+Ciro Rodolfo Santos Silva 
+
+19 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Os  cálculos  de  CFD  são  feitos  através  modelos  matemáticos  baseados  nas  equações 
+
+diferenciais  de  Conservação  de  Massa,  Quantidade  de  Movimento  e  Energia  aplicadas  ao 
+
+escoamento,  além  das  equações  de  estado  referentes  ao  problema.    Na  maioria  dos  casos, 
+
+simplificações  como  a  consideração  de  densidade  e  viscosidade  constantes  são  necessárias 
+
+para obtenção de resultados satisfatórios, além da utilização de equações adicionais tais como 
+
+os modelos de turbulência empregados.  
+
+Diferentes métodos de solução são empregados na resolução de  problemas  em CFD. 
+
+Os mais utilizados são: 
+
+  O método das diferenças finitas; 
+
+  O método dos elementos finitos; 
+
+  O método dos volumes finitos. 
+
+Independentemente  do  método  de  solução  a  metodologia  para  encontrar  as  soluções  para 
+
+problemas  de  CFD  consiste  nas  etapas  de  pré-processamento,  resolução  (solver)  e  pós-
+
+processamento (resultados). 
+
+No  pré-processamento  são  definidas  as  condições  iniciais  para  solução  do  problema. 
+
+Primeiramente se define  a geometria a ser utilizada, mais especificamente o domínio fluido, 
+
+que nada mais é que a região de interesse, ou seja o espaço físico que envolve a análise com 
+
+definição  das  fronteiras  para  regiões  sólidas  e  para  o  escoamento.    O  intuito  da  criação  do 
+
+modelo  geométrico  é  poder  gerar  uma  malha  de  elementos  menores  no  domínio,  também 
+
+chamados de células, que dependendo do método de solução podem ser elementos planos ou 
+
+volumes  de  controle  com  propriedades  definidas.  Nesta  etapa  deve  ser  definido  qual  o 
+
+fenômeno  a  ser  tratado,  devem  ser  incluídas  as  condições  para  o  escoamento,  propriedades 
+
+dos  fluidos  e  condições  de  contorno  apropriadas  para  a  fronteira  do  domínio.  Outra  questão 
+
+importante é a determinação dos parâmetros de simulação, como a precisão desejada, tempo 
+
+de  execução,  número  de iterações, dentre outros (Maitelli, 2010). 
+
+No  solver  deverá  ocorrer  a  resolução  do  problema.  As  equações  diferenciais  são 
+
+integradas na região de interesse através da aplicação das leis de conservação para cada célula 
+
+da malha. Pelos métodos aproximados as integrais são convertidas em equações algébricas e 
+
+resolvidas 
+
+interativamente.  No  pós-processamento  os  resultados  são  apresentados  e 
+
+visualizados para análise do usuário (Maitelli, 2010) 
+
+Ciro Rodolfo Santos Silva 
+
+20 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+3.  Modelagem do Processo 
+ 
+
+Neste capítulo são abordados assuntos correspondentes à simulação de reservatórios e 
+
+as características da rocha-reservatório, dos fluidos e operacionais do modelo proposto. 
+
+Para  realização  das  simulações,  foi  utilizado  o  programa  IMEX  –  (Implicit–  Explicit 
+
+Black Oil Simulator) do grupo CMG – Computer ModelingGroup – versão 2010.10, que é 
+
+um simulador para o modelo defluidos Black Oil.  
+
+Os  sistemas  de  malha  podem  ser  cartesianos,  cilíndricos  ou  de  profundidade  e 
+
+espessura variáveis, além de possibilitar configurações bidimensionais ou tridimensionais 
+
+para qualquer sistema de malha. 
+
+Os parâmetros que são necessários na entrada de dados do simulador “IMEX” são:  a 
+
+configuração da malha do reservatório modelo, as propriedades da rocha, do reservatório e 
+
+do fluido, além das condições operacionais de produção. 
+
+3.1  Modelo físico 
+
+ 
+
+O modelo físico foi construído a partir de mapa estrutural de todo do campo 2TCC2012.1 
+
+com extensões de 1000 m de comprimento por 500 de largura, como mostrado na Figura 9. 
+
+Figura 9: Imagem estrutural de topo do campo 2TCC2012.1. 
+
+Ciro Rodolfo Santos Silva 
+
+ 
+
+21 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+O  reservatório  dispõe  de  uma  espessura  de  40  metros,  de  onde  30  metros  iniciais 
+
+compõem a zona de óleo e os 10 metros restantes compõe a zona de água. 
+
+Após a construção do reservatório no simulador o mesmo passou a ter 8832 blocos. A 
+
+Figura 10 mostra a visão 3D do reservatório após construção no simulador. 
+
+Figura 10: Visão 3D do reservatório no simulador. 
+
+ 
+
+3.1.1 Propriedades da rocha reservatório 
+
+ 
+  Profundidade do reservatório: 510 m; 
+
+  Compressibilidade efetiva da rocha: 1,4*10-7Pa-1; 
+
+  Espessura: 40 m; 
+
+  Temperatura: 425 K; 
+
+  Porosidade: 28% 
+
+  Permeabilidade horizontal: 100 mD; 
+
+  Permeabilidade vertical: 20 mD; 
+
+  Pressão de referencia: 91,77 kgf/cm² a 530 m. 
+
+Ciro Rodolfo Santos Silva 
+
+22 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+  Volume de oleo in place: 697730 m³ 
+
+  Contato óleo/água: 540 m; 
+
+  Saturação inicial de óleo: 29,518 % 
+
+  Saturação inicial de água: 70,482 % 
+
+3.1.2 Propriedade dos fluidos 
+
+ 
+
+  Densidade do óleo: 875,285 kg/m³; 
+
+  Viscosidade do óleo morto: 2cp; 
+
+  Grau API do óleo: 30°; 
+
+  Densidade da água: 994,508 kg/m³; 
+
+  Densidade do gás: 0,8575 kg/m³ 
+
+  Modelo dos fluidos: Black Oil. 
+
+As  curvas  de  permeabilidade  relativa  para  o  óleo  e  água  e  gás  são  mostradas  nas 
+
+Figuras 11 e 12. 
+
+ 
+
+w
+o
+r
+K
+
+ 
+,
+
+w
+r
+K
+
+1
+
+0.9
+
+0.8
+
+0.7
+
+0.6
+
+0.5
+
+0.4
+
+0.3
+
+0.2
+
+0.1
+
+0
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1
+
+Saturação de água (Sw) 
+
+Krw
+
+Krow
+
+ 
+
+Figura 11: Curvas de Permeabilidade relativa versus Saturação de água. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+23 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Krg,Krog x Saturação de Líquidos 
+
+1.2
+
+1
+
+0.8
+
+0.6
+
+0.4
+
+0.2
+
+0
+
+ 
+r
+K
+
+0
+
+-0.2
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1
+
+1.2
+
+Saturação de Líquidos 
+
+Krg
+
+Krog
+
+ 
+
+Figura 12: Gráfico da Kr versus Saturação de Líquidos. 
+
+ 
+
+As propriedades PVT, como Razão de Solubilidade, Fator Volume Formação e 
+
+Viscosidade em função da Pressão são mostradas nas Figuras 13 e 14. 
+
+ 
+
+25
+
+20
+
+ 
+)
+³
+
+m
+/
+³
+m
+
+(
+ 
+s
+R
+
+15
+
+10
+
+5
+
+0
+
+Rs, Bo X Pressão 
+
+1.075
+
+1.07
+
+1.065
+
+1.06
+
+1.055
+
+1.05
+
+1.045
+
+1.04
+
+1.035
+
+1.03
+
+1.025
+
+ 
+)
+d
+t
+s
+ 
+³
+
+m
+/
+³
+m
+
+(
+ 
+o
+B
+
+0
+
+1000
+
+2000
+
+3000
+
+4000
+
+5000
+
+6000
+
+7000
+
+Pressão (kgf/cm²) 
+
+Rs
+
+Bo
+
+Figura 13: Gráfico do Rs e Bo versus Pressão. 
+
+ 
+
+24 
+
+Ciro Rodolfo Santos Silva 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+ 
+
+l
+
+ 
+)
+p
+c
+(
+ 
+o
+e
+Ó
+o
+d
+e
+d
+a
+d
+i
+s
+o
+c
+s
+i
+V
+
+ 
+
+7
+
+6
+
+5
+
+4
+
+3
+
+2
+
+1
+
+0
+
+Viscosidade x Pressão 
+
+0.0136
+
+0.0134
+
+0.0132
+
+0.013
+
+0.0128
+
+0.0126
+
+0.0124
+
+0.0122
+
+ 
+
+ 
+
+ 
+)
+p
+c
+(
+ 
+s
+á
+G
+o
+d
+e
+d
+a
+d
+i
+s
+o
+c
+s
+i
+V
+
+0
+
+1000
+
+2000
+
+3000
+
+4000
+
+5000
+
+6000
+
+7000
+
+Pressão (Kgf/cm²) 
+
+Série1
+
+Série2
+
+Figura 14: Gráfico da Viscosidade versus Pressão 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3.1.3 Características Operacionais 
+
+ 
+
+  Distância média entre poços: 150 m; 
+
+  Pressão mínima de fundo de poço produtor: 196KPa; 
+
+ 
+
+Intervalo de completação: os poços produtor foram perfurados em zonas de óleo (da 1ª 
+
+a 6ª camada), os poços injetores de água no final da zona de óleo (5ª e 6ª camadas) e 
+
+os injetores de gás no topo do reservatório (1ª e 2ª camadas); 
+
+  Tempo de projetos: 40 anos. 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+25 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+3.2  Metodologia do trabalho 
+
+3.2.1 Descrição do estudo 
+ 
+
+A metodologia de trabalho consistiu em analisar as mudanças nos dados de produção após 
+
+começar  a  injeção  de  água  e  de  gás  no  reservatório  original,  a  fim  de  verificar  quais  deles 
+
+influenciam  mais  nos  parâmetros  de  produção  do  reservatório,  e  quais  levam  ao  melhor 
+
+investimento econômico, através da análise dos custos e receitas através do método do VPL. 
+
+A  partir  do  modelo  base  foi  implementado  os  projetos  de  injeção  periférica,  onde  os  poços 
+
+que  estão  localizados  na  parte  mais  externa  do  reservatório  passem  a  ser  injetores  no 
+
+momento em que o BSW atingir o patamar de  90%. Ao todo  foram  analisados sete projetos 
+
+distintos, como mostrados na Tabela 1: 
+
+Tabela 1: Modelos Utilizados para simulação. 
+
+Modelo 
+
+Quantidade de 
+
+Poços 
+
+Injetores 
+
+Produtores 
+
+Matriz 
+
+Modificado 01 
+Modificado A1 
+Modificado A2 
+Modificado A3 
+Modificado G1 
+Modificado G2 
+Modificado G3 
+Modificado G/W 
+
+ 
+
+1 
+6 
+6 
+6 
+6 
+10 
+10 
+10 
+10 
+
+- 
+- 
+4 
+4 
+4 
+4 
+4 
+4 
+
+1 
+6 
+2 
+2 
+2 
+6 
+6 
+6 
+
+04/04 
+
+06/02 
+
+Vazão 
+
+de 
+
+Injeção 
+(m³/d) 
+
+- 
+- 
+
+200  
+400  
+600  
+
+Início da 
+Injeção 
+
+- 
+- 
+
+2015 
+2015 
+2015 
+2015 
+2015 
+2015 
+
+2015/2020 
+
+Fluido 
+Injetado 
+
+- 
+- 
+
+Água 
+Água 
+Água 
+Gás 
+Gás 
+Gás 
+
+40000  
+200000  
+600000  
+Gás/Água  600000/ 
+
+600  
+
+Os modelos dos esquemas de injeção para gás e para água podem ser observados nas 
+
+Figuras 15 e 16 respectivamente. 
+
+Ciro Rodolfo Santos Silva 
+
+26 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Figura 15: Modelo do esquema de injeção e produção para injeção de água. 
+
+ 
+
+ 
+
+Figura 16: Modelo do esquema de injeção e produção para injeção de gás. 
+
+ 
+
+O  parâmetro  utilizado  para  a  injeção  de  água  ou  de  gás  no  reservatório  foi  o  BSW.  A 
+
+partir do modelo Modificado 01, é que se teve a noção de como o reservatório se comportaria 
+
+em relação à produção de água. A Figura 17 mostra o gráfico do BSW em função do tempo 
+
+Ciro Rodolfo Santos Silva 
+
+27 
+
+ 
+
+ 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+para  o  modelo  citado.  Em  meados  de  2015  o  BSW  atinge  pela  primeira  vez  o  patamar  de 
+
+cerca de 90%, e é a partir desse ponto que se inicia tanto a injeção de água quanto a de gás. 
+
+BSW x Tempo 
+
+100
+
+90
+
+80
+
+70
+
+60
+
+50
+
+40
+
+30
+
+20
+
+10
+
+ 
+)
+
+%
+
+(
+ 
+
+W
+S
+B
+
+0
+2011
+
+2016
+
+2021
+
+2026
+
+2031
+
+2036
+
+2041
+
+Tempo (Data) 
+
+BSW
+
+Figura 17: Gráfico do BSW em função do tempo, para o modelo Modificado 01. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+ 
+
+28 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+4. Análise dos Resultados 
+
+4.1  Análises das Simulações 
+
+ 
+
+Os resultados das simulações em  termos  de produção acumulada de óleo, gás e água 
+
+são mostrados a seguir. Como primeiro resultado tem-se o acumulativo de óleo para todos 
+
+os modelos apresentados na Figura 18, observa-se claramente que o modelo “Modificado 
+
+A3”  apresenta  o  maior  valor  de  produção  acumulada  de  óleo  ao  final  dos  40  anos  de 
+
+projeto cerca de quase 240 mil metros cúbicos de óleo, convertendo esse valor para barris 
+
+de petróleo, cerca de 1,5 milhão. 
+
+Acumulativo de Óleo x Tempo 
+
+ 
+s
+e
+r
+a
+h
+
+l
+i
+
+M
+
+ 
+)
+³
+
+m
+
+(
+ 
+a
+d
+a
+u
+m
+u
+c
+A
+o
+e
+Ó
+
+l
+
+l
+
+ 
+
+250.001
+
+200.001
+
+150.001
+
+100.001
+
+50.001
+
+0.001
+
+2011
+
+2016
+
+2021
+
+2026
+
+2031
+
+2036
+
+2041
+
+Matriz
+
+Modificado A2
+
+Modificado G2
+
+Tempo (Data) 
+
+Modificado 01
+
+Modificado A3
+
+Modificado G3
+
+Modificado A1
+
+Modificado G1
+
+Modificado G/W
+
+Figura 18: Gráfico do Acumulativo de Óleo x Tempo. 
+
+ 
+
+29 
+
+Ciro Rodolfo Santos Silva 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Vazão de óleo x Tempo 
+
+ 
+)
+d
+/
+³
+m
+
+ 
+
+ 
+
+l
+
+(
+ 
+o
+e
+Ó
+e
+d
+o
+ã
+z
+a
+V
+
+80
+
+70
+
+60
+
+50
+
+40
+
+30
+
+20
+
+10
+
+0
+2010
+
+ 
+
+2015
+
+2020
+
+2025
+
+2030
+
+2035
+
+2040
+
+2045
+
+Tempo (Data) 
+
+Matriz
+
+Modificado G/W
+
+Modificado 01
+
+Modificado A1
+
+Modificado A2
+
+Modificado A3
+
+Modificado G1
+
+Modificado G2
+
+Modificado G3
+
+Figura 19: Vazão de Óleo x Tempo. 
+
+ 
+
+A Tabela 2 descreve a fração recuperada em todos os casos, e o tempo de simulação 
+
+que  a  CPU  levou  até  o  término  da  simulação,  novamente  o  modelo  “Modificado  A3” 
+
+obteve o melhor recuperado em termos de fração recuperada, 28,17% do óleo. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+30 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Tabela 2: Características da Simulação. 
+
+Fração Recuperada de 
+
+Óleo (2042) 
+
+Tempo de Simulação 
+
+11,43 % 
+
+13,45 % 
+
+23,21 % 
+
+26,37 % 
+
+28,17 % 
+
+19,72 % 
+
+21,06 % 
+
+22,29 % 
+
+23,97 % 
+
+12,56 s 
+
+19,72 s 
+
+19,23 s 
+
+19,11 s 
+
+19,05 s 
+
+38,11 s 
+
+43,80 s 
+
+49,11 s 
+
+72,09 s 
+
+Modelo 
+
+Matriz 
+
+Modificado 01 
+
+Modificado A1 
+
+Modificado A2 
+
+Modificado A3 
+
+Modificado G1 
+
+Modificado G2 
+
+Modificado G3 
+
+Modificado G/W 
+
+ 
+
+Para o acumulativo de gás o modelo que obteve o melhor resultado foi o terceiro em 
+
+injeção  de  gás,  “Modificado  G3”,  como  visto  na  Figura  20.  O  modelo  que  mais  injetou  gás 
+
+chegou a um valor de quase 6 bilhões de metros cúbicos produzidos ao final do projeto. 
+
+Acumulativo de Gás x Tempo 
+
+ 
+s
+e
+õ
+h
+
+l
+i
+
+B
+
+6
+
+5
+
+4
+
+3
+
+2
+
+1
+
+ 
+)
+³
+
+m
+
+l
+
+(
+ 
+o
+d
+a
+u
+m
+u
+c
+A
+ 
+s
+á
+G
+
+0
+2011
+
+2016
+
+2021
+
+2026
+
+2031
+
+2036
+
+2041
+
+Matriz
+
+Modificado A2
+
+Modificado G2
+
+Tempo (Data) 
+
+Modificado 01
+
+Modificado A3
+
+Modificado G3
+
+Modificado A1
+
+Modificado G1
+
+Modificado G/W
+
+Figura 20: Gráfico do Acumulativo de Gás x Tempo. 
+
+ 
+
+31 
+
+Ciro Rodolfo Santos Silva 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Vazão de Gás x Tempo 
+
+ 
+)
+d
+/
+³
+m
+
+ 
+
+(
+ 
+s
+á
+G
+e
+d
+o
+ã
+z
+a
+V
+
+ 
+
+700000
+
+600000
+
+500000
+
+400000
+
+300000
+
+200000
+
+100000
+
+0
+2010
+
+-100000
+
+2015
+
+2020
+
+2025
+
+2030
+
+2035
+
+2040
+
+2045
+
+Tempo (Data) 
+
+Matriz
+
+Modificado G/W
+
+Modificado A1
+
+Modificado A2
+
+Modificado A3
+
+Modificado G1
+
+Modificado G2
+
+Modificado G3
+
+ 
+
+Figura 21: Vazão de Gás x Tempo. 
+
+ 
+
+Em termos de água produzida, visto na Figura 22, o modelo que atingiu o maior valor 
+
+foi  o  que  mais  injetou  água,  “Modificado  A3”  chegando  a  quase  6  milhões  de  metros 
+
+cúbicos ao final do projeto. 
+
+Ciro Rodolfo Santos Silva 
+
+32 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Acumulativo de Água Produzida x Tempo 
+
+ 
+s
+e
+õ
+h
+
+l
+i
+
+  M
+
+)
+³
+
+m
+
+(
+ 
+a
+d
+i
+z
+u
+d
+o
+r
+P
+a
+u
+g
+Á
+
+ 
+
+6
+
+5
+
+4
+
+3
+
+2
+
+1
+
+0
+2011
+
+2016
+
+2021
+
+2026
+
+2031
+
+2036
+
+2041
+
+Matriz
+
+Modificado A2
+
+Modificado G2
+
+Tempo (Data) 
+
+Modificado 01
+
+Modificado A3
+
+Modificado G3
+
+Modificado A1
+
+Modificado G1
+
+Modificado G/W
+
+Figura 22: Gráfico do Acumulativo de Água Produzido x Tempo. 
+
+Vazão de Água x Tempo 
+
+ 
+)
+d
+/
+³
+m
+
+ 
+
+(
+ 
+a
+u
+g
+Á
+e
+d
+o
+ã
+z
+a
+V
+
+ 
+
+700
+
+600
+
+500
+
+400
+
+300
+
+200
+
+100
+
+0
+2010
+
+2015
+
+2020
+
+2025
+
+2030
+
+2035
+
+2040
+
+2045
+
+Matriz
+
+Modificado A1
+
+Modificado G1
+
+Tempo (Data) 
+
+Modificado G/W
+
+Modificado A2
+
+Modificado G2
+
+Modificado 01
+
+Modificado A3
+
+Modificado G3
+
+Figura 23: Vazão de Água x Tempo. 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+ 
+
+ 
+
+33 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Observa-se  que  nos  projetos  de  injeção  de  água  a  quantidade  de  água  produzida  é 
+
+muito  superior  quando  comparado  aos  projetos  de  injeção  de  gás,  por  outro  lado,  nos 
+
+projetos  de  injeção  de  gás  a  quantidade  de  gás  produzido  é  muito  superior  quando 
+
+comparado aos projetos de injeção de água. 
+
+4.2  Análise Financeira 
+
+ 
+
+O  critério  utilizado  para  fazer  a  análise  econômica  dos  projetos  foi  o  valor  presente 
+
+líquido  que  visa  trazer  para  uma  “data  presente”  todos  os  custos  e  receitas  do  projeto.  Na 
+
+Tabela 3 define-se o que será contabilizado como receitas e custos, e seus respectivos valores 
+
+de cotação: 
+
+Tabela 3: Definição de custos/benefícios e seus respectivos valores. 
+
+Valores 
+
+Valor de Cotação 
+
+Receita/Custo 
+
+Óleo produzido 
+
+Gás produzido 
+
+Água produzida 
+
+Água injetada 
+
+Gás injetado 
+
+70 $/bbl 
+
+0,44 $/m³ 
+
+3 $/m³ 
+
+1,5 $/m³ 
+
+0,22 $/m³ 
+
+Poços perfurados 
+
+1.000.000,00 $/poço 
+
+ 
+
+Receita 
+
+Receita 
+
+Custo 
+
+Custo 
+
+Custo 
+
+Custo 
+
+O valor para recompletação de um poço produtor para injetor de água foi desprezado 
+
+nesse  projeto,  assim  sendo  no  momento  que  se  inicia  as  injeções  de  água  não  são 
+
+contabilizado custos adicionais. Já para os poços produtores e injetores de gás admitiu-se um 
+
+custo  fixo  de  1  milhão  de  dólares  para  os  dois  tipos,  e  não  foram  considerados  os  custos 
+
+iniciais para uma estação de compressão e injeção de gás. 
+
+A taxa mínima de atratividade foi definida em 15% a.a. Definido esses pontos temos 
+
+os valores de VPL para todos os projetos na Tabela 4. 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+34 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Tabela 4: Valores de VPL para todos os projetos. 
+
+Projeto 
+
+Matriz 
+
+Modificado 01 
+
+Modificado A1 
+
+Modificado A2 
+
+Modificado A3 
+
+Modificado G1 
+
+Modificado G2 
+
+Modificado G3 
+
+Modificado G/W 
+
+VPL ($) 
+
+12.680.200,64  
+
+28.311.294,76  
+
+49.942.880,79  
+
+ 49.313.783,40  
+
+ 49.741.200,97  
+
+ 56.522.243,98  
+
+99.599.548,26  
+
+198.021.483,68  
+
+-47.361.567,84  
+
+ 
+
+O projeto que mais se destacou pelo método de comparação por VPL foi o “Modificado 
+
+G3”  com  um  valor  que  quase  alcança  os  200  milhões  de  dólares,  é  o  projeto  mais  viável 
+
+economicamente. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+35 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+5. Controle de velocidade para PIGs 
+
+ 
+
+ 
+
+ 
+
+5.1  Metodologia e Modelagem 
+
+Para verificar a viabilidade de se projetar um  controle de velocidade para PIG foram 
+
+desenvolvidas duas simulações: a primeira foi feita levantando-se o modelo físico do sistema, 
+
+projetando um controlador e simulando o movimento do PIG com controle de velocidade no 
+
+software  MATLAB.  A  segunda  foi  realizada  projetando-se  uma  válvula  em  programa  CAD 
+
+(Computer-Aided  Design  –  Desenho  Assistido  por  Computador)  e  simulando  em  programa 
+
+CFD (ComputationalFluid Dynamics – Fluidodinâmica Computacional). 
+
+ 
+
+ 
+
+5.1.1 Modelo Físico e Simulação do Controle de Velocidade 
+
+ 
+
+O sistema modelado é composto por um motor de corrente contínua que irá atuar junto ao 
+
+PIG  aumentando  ou  diminuindo  a  área  de  contato.  Quando  for  necessário  aumentar  a 
+
+velocidade  do  PIG,  a  área  de  contato  deverá  aumentar  (fechar  a  válvula).  Dessa  forma,  a 
+
+pressão  a  montante  será  maior  que  a  pressão  a  jusante  resultando  em  um  diferencial  de 
+
+pressão  que  aumentará  a  velocidade  do  PIG.  De  forma  análoga,  quando  for  necessário 
+
+desacelerar o PIG, o motor irá atuar de forma a diminuir a área de contato (abrir a válvula), o 
+
+que irá diminuir o diferencial de pressão, causando diminuição na velocidade.  
+
+O  modelo  físico  da  válvula  não  foi  levantado  nessa  simulação,  portanto  o  PIG  e  o 
+
+motor  são  considerados  como  um  corpo  só  que  varia  sua  área  de  acordo  com  o  sinal  de 
+
+controle, como mostrado abaixo. 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+36 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Figura 24: Forma do corpo do PIG dentro do duto. 
+
+ 
+
+ 
+
+Essa área é limitada entre 10% e 100% da área total da secção transversal. Assim, 10% 
+
+da área total corresponde a área do PIG juntamente com o motor e válvula totalmente aberta. 
+
+O movimento do PIG foi modelado baseando-se na segunda lei de Newton. 
+
+ 
+
+   
+  
+
+           ( )     ( )     ( )   
+
+  ( )             (       )      
+
+  ( )         
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(06) 
+
+(07) 
+
+(08) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Onde, 
+
+  – ângulo entre a direção do PIG e a horizontal. 
+
+b = atrito do PIG com o duto. 
+
+v = velocidade. 
+
+  ( ) – Força exercida pela pressão do gás. 
+
+  ( ) – Força de contato entre o PIG e o gasoduto. 
+
+O balanço das forças pode ser visualizado a seguir: 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+37 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Figura 25: Balanço de forças que atuam no PIG. 
+
+ 
+
+ 
+
+ 
+
+Onde Fr(t) é a força resultante que empurra o PIG em função do diferencial de pressão. 
+
+O motor CC pode ser modelado como uma função de transferência de primeira ordem, com 
+
+uma voltagem como entrada e uma velocidade angular como saída, da seguinte forma: 
+
+ 
+
+ ( )
+
+ ( )
+
+   
+
+ 
+
+  
+
+    
+
+ 
+
+ 
+
+ 
+
+ 
+
+(09) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Para obter ângulo como saída do motor, fazemos  ( )     ( ). Assim, temos que: 
+
+ ( )
+
+ ( )
+
+   
+
+ 
+
+ (    )
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(10) 
+
+A relação do motor com a abertura da válvula foi feita de forma que a cada meia volta 
+
+dada  pelo  rotor  do  motor  CC,  a  válvula  se  fecha  completamente.  Com  o  modelo  levantado, 
+
+tentou-se projetar um controlador simples, a partir da análise do lugar das raízes, de forma a 
+
+se  obter  uma  resposta  temporal  com  menor  erro  de  regime  e  tempo  de  acomodação.  O 
+
+controlador projetado foi um P&D, com         e          . O valor desejado foi mantido 
+
+em 1m/  . A simulação foi realizada com os seguintes parâmetros: 
+
+Ciro Rodolfo Santos Silva 
+
+38 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+ 
+
+ 
+
+Tabela 5: Dados da simulação no MATLAB. 
+
+Parâmetro 
+
+Massa do PIG 
+
+   
+
+Diâmetro do duto 
+
+Atrito-viscoso 
+
+Valor 
+
+100 Kg 
+
+200 KPa 
+
+14” 
+
+7300 Kg.s-1 
+
+Constante K do motor CC 
+
+3 
+
+Constante de tempo do motor CC 
+
+5  segundos 
+
+ 
+
+ 
+
+5.1.2 Simulação do fluxo através da válvula 
+
+Como  foi visto anteriormente o diferencial de pressão está ligado diretamente com  a 
+
+velocidade  desenvolvida  pelo  PIG.  Nos  testes  feitos  através  do  modelo  físico  foi  visto  o 
+
+comportamento  da  velocidade  com  a  mudança  da  área  de  contato  na  válvula  de  by-pass. 
+
+Agora com o auxílio de um software comercial será verificada a mudança de pressão através 
+
+da válvula, que foi especialmente projetada para se adequar ao PIG, com diferentes aberturas. 
+
+Depois  de  definida  a  geometria  da  válvula,  pode-se  então  definir  o  domínio  fluido  e  assim 
+
+dar-se início as simulações em CFD, que por sua vez consiste em 4 etapas mostradas abaixo: 
+
+Geometria, Pré-Processamento, Solver (Solução matemática) e, Pós-Processamento. 
+
+5.2.1.1  Geometria 
+
+ 
+
+A válvula consiste em duas partes, uma fixa e outra móvel. Na parte fixa será fixado o 
+
+copo do PIG. Ela tem o formato de tronco de cone oco. Onde na face de menor diâmetro do 
+
+tronco  terá  um  orifício  para  o  eixo  de  rotação  da  parte  móvel.  No  lado  de  maior  diâmetro, 
+
+tem-se  as  extremidades  com  aba.  Nessa  aba  será  fixado  o  copo.  Na  face  lateral  do  tronco 
+
+encontram-se  duas  seções  que  servem  para  o  fluxo  do  gás  escoar  através  dela.  Ambas 
+
+defasadas em 180o entre si. A parte móvel da válvula é feita com base também no formato de 
+
+tronco  de  cone.  No  entanto,  o  tronco  não  é  completo  em  seu  comprimento  radial  e  ficará 
+39 
+
+Ciro Rodolfo Santos Silva 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+inserido  internamente  à  parte  fixa.  Ele  tem  dois  cortes  em  seu  comprimento  radial,  que  em 
+
+relação ao centro formando ângulos de 90º cada um e tornando-os entre si defasados em 180o. 
+
+Esses  cortes  coincidem  com  os  cortes  do  tronco  da  parte  fixa  da  válvula.  Eles  servem  para 
+
+permitir  o  fluxo  do  gás  quando  coincidem  com  a  abertura  da  parte  fixa  da  válvula.  Essa 
+
+abertura  será  controlada  através  do  acoplamento  de  um  motor  ao  eixo  de  acionamento  da 
+
+parte móvel da válvula. Ainda na parte móvel, existe uma estrutura para evitar que a parte que 
+
+servirá para bloquear o fluxo de gás flexione em seu sentido longitudinal e também no sentido 
+
+radial.  Este  trabalho  foi  feito  com  diferentes  tipos  de  abertura  de  válvula:  100%  aberta; 
+
+33,33%  fechada;  83,33%  fechada;  100%  fechada.  Os  quatro  casos  descritos  serão  definidos 
+
+como C1, C2, C3 e C4 respectivamente. 
+
+Parte Fixa 
+
+Abertura 
+
+Parte Móvel 
+
+ 
+
+Figura 26: Geometria da válvula de by-pass. 
+
+5.2.1.2  Pré-Processamento 
+ 
+
+Após  a  criação  de  um  novo  projeto  de  CFD  a  geometria  é  importada  no  módulo 
+
+Workbench  do  ANSYS®  CFX®,  neste  caso  optou-se  por  importar  o  arquivo  no  formato  de 
+
+ParaSolid(.x_t). 
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+40 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+5.2.1.1  Geração da Malha 
+ 
+
+ 
+
+ 
+
+As  malhas  utilizadas  em  todas  as  simulações  são  não  estruturadas  compostas  de 
+
+elementos tetraédricos. Para cada um dos quatro casos (C1, C2, C3 e C4) foi gerado um tipo 
+
+de  malha  M1,  M2  M3  e  M4  respectivamente.  As  malhas  são  geradas  automaticamente  pelo 
+
+programa. A Figura 27 mostra o desenho da malha gerada para o caso C1. As malhas geradas 
+
+são denominadas de acordo com a Tabela 6.  
+
+ 
+
+ 
+
+ 
+
+Tabela 6: Comparação entre abordagens. 
+
+Caso 
+
+C1 
+
+C2 
+
+C3 
+
+C4 
+
+Malha 
+
+M1 
+
+M2 
+
+M3 
+
+M4 
+
+Na Tabela 7 têm-se as características de cada malha gerada pelo programa. 
+
+Tabela 7: Descrição dos parâmetros das malhas. 
+
+Malha 
+
+M1 
+
+M2 
+
+M3 
+
+M4 
+
+Nós 
+
+17563 
+
+17007 
+
+17080 
+
+17143 
+
+Elementos 
+
+Tetraedros 
+
+Fator Global 
+
+89424 
+
+87259 
+
+87178 
+
+88534 
+
+ 
+
+89424 
+
+87259 
+
+87178 
+
+88534 
+
+1,0 
+
+1,0 
+
+1,0 
+
+1,0 
+
+Ciro Rodolfo Santos Silva 
+
+41 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Figura 27: Modelo da Malha para o Caso C1. 
+
+ 
+
+ 
+
+5.2.1.2  Parâmetros de Simulação 
+ 
+
+As simulações dos escoamentos tridimensionais foram realizadas em computador com 
+
+processador  Intel(R)  Core  (TM)  2  Duo,  CPU  @  2.2  GHz  e  4.0  Gb  de  RAM  utilizando  o 
+
+programa ANSYS® CFX® e seus módulos. Após a definição da geometria no Workbench  - 
+
+ANSYS®  CFX®  e  geração  da  malha  foram  determinados  os  parâmetros  físicos  e  as 
+
+propriedades dos fluidos necessárias à execução do programa.  
+
+O fluido escolhido para a simulação foi ar, em condições de um gás ideal. Em todos os 
+
+casos o regime escolhido foi o estacionário e a pressão de referência foi ajustada para um (1) 
+
+atm.  Todas  as  outras  pressões  são  calculadas  em  relação  à  pressão  de  referência.  As 
+
+superfícies sólidas foram consideradas lisas. O modelo de turbulência padrão escolhido foi o 
+
+Κ – ε. 
+
+5.2.1.3  Condições de contorno 
+ 
+
+A pressão total foi ajustada como sendo a condição de contorno na entrada (inlet) da 
+
+tubulação, nas quatro simulações (C1, C2, C3 e C4) e foi considerada um valor de  200 KPa 
+
+Ciro Rodolfo Santos Silva 
+
+42 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+em  todas  as  simulações.  Igualmente  também  para  todos  os  casos,  a  outra  condição  de 
+
+contorno  considerada  foi  a  vazão  mássica  na  saída  (outlet)  da  tubulação  de  2,8  Kg/s.  Esta 
+
+escolha  tem  resultado  em  soluções  robustas  e  adequada  para  o  problema  no  âmbito  da 
+
+ferramenta computacional utilizada. A velocidade e a pressão na saída fazem parte da solução 
+
+requerida (Ansys CFX  – Solver Modeling Guide, 2006). As regiões que restringem  o fluxo, 
+
+ou  seja,  regiões  sólidas  foram  definidas  como  condição  de  contorno  “wall”,  que  nada  mais 
+
+que restrições de fluxo. 
+
+ 
+
+ 
+
+ 
+
+Saída 
+(outlet) 
+
+Entrada 
+(Inlet) 
+
+Figura 28: Definição das condições de contorno. 
+
+ 
+
+5.2.1.4  Critérios de Convergência 
+
+ 
+
+A  medida  de  como  a  solução  converge  pode  ser  verificada  através  da  obtenção  dos 
+
+resíduos  no  cálculo  das  equações  de  conservação,  no  final  de  cada  iteração.  No  presente 
+
+estudo, o critério de convergência utilizado foi o de Raiz Quadrada da Média dos Quadrados 
+
+(Root  Mean  Square  -  RMS),  que  é  obtido  tomando  todos  os  resíduos  através  do  domínio, 
+
+elevando ao quadrado, tirando a média aritmética entre eles e então obtendo a raiz quadrada 
+
+do valor resultante. Para avaliar a convergência do problema, número de iterações mínimo foi 
+
+Ciro Rodolfo Santos Silva 
+
+43 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+de 1 e o máximo foi de 300 para todos os casos. O passo no  tempo  (timestep) se  comporta  
+
+como  parâmetro acelerador, reduzindo o número de iterações necessárias para convergência 
+
+do problema. O valor do passo no tempo foi ajustado para 1,  e por fim o valor residual foi de 
+
+0,0005.  
+
+5.2.1.5  Solução Matemática (Solver) 
+ 
+
+A  Solução  matemática  foi  feita  através  das  equações  de  para  escoamento  de  gás. 
+
+Como mostra a Tabela 7. 
+
+Tabela 8: Equações utilizadas para resolução do problema. 
+
+Variável 
+
+Dimensão 
+
+Valor 
+
+Definição 
+
+   
+
+( 
+
+ 
+ 
+
+) (
+
+ 
+
+  
+  
+  
+  
+
+ 
+
+)
+ 
+
+( 
+
+ 
+ 
+
+) (
+
+  
+  
+
+ 
+
+)
+ 
+
+Número de Mach 
+
+Adimensional 
+
+Compressibilidade 
+
+m s^2 kg^-1 
+
+Isentrópica 
+
+Compressibilidade 
+
+m s^2 kg^-1 
+
+Isotérmica 
+
+1 
+
+2 
+
+2 
+
+ 
+
+Onde, 
+
+                              
+
+                          
+
+                          
+
+                                   
+
+                           
+
+                           
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+44 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+5.3  Resultados 
+ 
+
+Os  resultados  obtidos  tanto  do  controle  de  velocidade,  quanto  da  simulação  do  fluido 
+
+através da válvula são mostrados abaixo. 
+
+5.3.1  Resultados do Controle de Velocidade 
+
+ 
+
+Foram  desenvolvidos  dois  estudos  de  casos  para  a  simulação  do  modelo  físico  obtido:  o 
+
+primeiro  corresponde  ao  controle  de  velocidade  do  PIG  sem  obstáculos.  O  PIG  está 
+
+inicialmente  parado  e  começa  seu  movimento  permanecendo  na  horizontal  até  o  final  do 
+
+percurso  sem  encontrar  perturbações.  No  segundo  caso,  o  PIG  encontra  inclinações  que 
+
+variam de      a     ao longo do percurso. 
+
+5.3.1.1  Caso 1 
+ 
+
+O duto correspondente ao primeiro estudo de caso não possui perturbações. Assim, o 
+
+PIG faz o percurso em linha reta, com ângulo igual a 0o com a horizontal. Com o controlador 
+
+projetado e um valor desejado de 1m/  , tivemos o seguinte comportamento da velocidade no 
+
+tempo: 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+45 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Figura 29: Velocidade x Tempo para o caso 1. 
+
+Pode-se se observar na Figura 29 o ajuste da velocidade no valor de set-point 1 m/s. 
+
+ 
+
+ 
+
+Caso 2 
+
+No segundo estudo de caso, o duto possui o seguinte layout: 
+
+Figura 30 Layout do duto para o caso 2. 
+
+Ciro Rodolfo Santos Silva 
+
+ 
+
+46 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Figura 31: Velocidade x Tempo para o caso 2. 
+
+A  Figura  31  mostra  que  à  medida  que  as  inclinações,  também  consideradas  como 
+
+“perturbações” vão surgindo a válvula se ajusta para manter a velocidade constante em 1m/s. 
+
+ 
+
+5.3.2  Pós-Processamento da análise CFD 
+
+ 
+
+Os  resultados  obtidos  na  simulação  do  CFD  são  mostrados  a  partir  das  curvas  de 
+
+convergência  para  conservação  da  massa  e  conservação  da  quantidade  movimento  para  as 
+
+velocidade  U  (velocidade  no  eixo x),  V  (velocidade  no  eixo  y)  e  W  (velocidade  no  eixo z), 
+
+como  mostrado  no  gráfico  a  seguir,  a  curva  vermelha  mostra  a  convergência  da  curva  de 
+
+massa, e as curvas verde, azul  e amarelo  para a conservação do movimento nas velocidades 
+
+U, V e W na respectiva ordem. A Tabela 8 mostra o número máximo de interações feitas para 
+
+cada caso até chegar a convergência ajustada. 
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+47 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+Tabela 9 Número máximo de interações para todos os casos. 
+
+Caso 
+
+C1 
+
+C2 
+
+C3 
+
+C4 
+
+Número Máximo de Interações 
+
+54 
+
+31 
+
+57 
+
+32 
+
+ 
+
+A seguir, na Figura 32, é mostrado o perfil de velocidade que passa pela válvula para o 
+
+caso C2. 
+
+ 
+
+ 
+
+ 
+
+Figura 32: Perfil de velocidade desenvolvido através da válvula para o caso C2. 
+
+A queda de pressão através da válvula para o caso C2 é mostrada adiante na Figura 33 
+
+e a Tabela 10 mostra a queda de pressão para todos os casos. 
+
+Ciro Rodolfo Santos Silva 
+
+ 
+
+48 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+y 
+
+z 
+
+x 
+
+ 
+
+Figura 33: Perfil de Pressão através da válvula para o caso C2. 
+
+Tabela 10: Queda de pressão para todos os casos. 
+
+Queda de Pressão (Pa) 
+
+2000 
+
+4400 
+
+14900 
+
+38400 
+
+Caso 
+
+C1 
+
+C2 
+
+C3 
+
+C4 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+49 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+6. Conclusões 
+
+6.1  Simulações do Reservatório 
+ 
+
+De acordo com  as simulações mostradas constatou-se que entre os modelos com  injeção 
+
+de  água,  o  que  tinha  a  vazão  de  600  m³/dia  obteve  um  maior  fator  de  recuperação  para  um 
+
+reservatório com óleo leve (28,17%), porém com alto grau de água produzida, cerca de quase 
+
+6 bilhões de metros cúbicos e baixa quantidade de gás natural ao final de 36 anos utilizando a 
+
+injeção de água. Já entre os modelos com injeção de gás o que tinha injeção diária de 600.000 
+
+metros cúbicos mostrou-se ser o mais eficiente, chegando a um fator de recuperação de óleo 
+
+no patamar de 22,29%, e também foi o modelo, entre todos, com maior acumulado de gás ao 
+
+final do projeto. 
+
+A  análise  econômica  indicou  que  a  viabilidade  de  todos  os  projetos  de  injeção, 
+
+considerando um preço de barril de petróleo fixo em 70 dólares, e metro cúbico de gás para 
+
+venda em 0,44 dólares ao longo de todo período de produção. O projeto de maior VPL foi o 
+
+com  injeção  diária  de  gás  de  600.000  m³.  É  notável  que  as  altas  quantidades  de  gás  natural 
+
+produzido  e  baixas  quantidades  de  água  produzida  fizeram  com  que  esse  projeto  fosse  tão 
+
+atrativo mesmo que não apresentasse o maior fator de recuperação de óleo. 
+
+A simulação numérica para a previsão do comportamento de um reservatório de petróleo 
+
+sujeitos  a  diferentes  projetos  de  recuperação  suplementar,  complementado  por  uma  análise 
+
+econômica subsequente, gerou resultados satisfatórios. Também mostrou que quanto maior a 
+
+injeção  de  gás,  maior  é  o  valor  do  VPL,  isso  se  dá  não  só  pela  produção  de  óleo,  mas  por 
+
+causa da grande produção de gás que contribuiu em boa parte para o aumento dos valores de 
+
+receitas de todos os projetos. 
+
+6.2  Controle de Velocidade para PIGs 
+
+ 
+
+Com a simulação do sistema físico, percebe-se através das Figuras 29 e 30 que a variação 
+
+da área de contato a qual é exercida uma força causada pela pressão do fluido implica em uma 
+
+diminuição  ou  aumento  da  velocidade  do  PIG.  O  controlador  proposto  conseguiu  manter  a 
+
+velocidade  desejada,  mesmo  em  situações  de  perturbações  ao  longo  do  duto.  Fisicamente, 
+
+Ciro Rodolfo Santos Silva 
+
+50 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+para  realizar  a  variação  dessa  área  de  contato  e  causar  um  diferencial  de  pressão  no  PIG, 
+
+projetou-se  uma  válvula  para  obter  dados  quantitativos  da  queda  de  pressão.  Observa-se 
+
+através da Figura  33 que o aumento da queda de pressão através da válvula à medida que o 
+
+percentual de fechamento é aumentado, lembrando-se que a velocidade do PIG é diretamente 
+
+proporcional ao diferencial de pressão entre ele, é claramente viável o uso da válvula de  by-
+
+pass para controlar a velocidade do PIG. 
+
+ 
+
+ 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+51 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+7.  Referências Bibliográficas 
+
+ 
+
+CALDWELL, J.; SMITH, G.; VIETH, P.;WILLIAMSON, G., 2001. Pipeline PiggingCourse. 
+
+Clarion Technical Conference and Pipes & Pipelines International. 
+
+CAMERINI,  C.,  MARINHO,  C.,  FRANZOI,  A.,  IBAJÉ, S.,  FREITAS,  M.,  WEID,  J.  
+P.,  “Feeler  Pig  -  A  New  Tool  for  Multi-Size  Pipeline  Inspection”,  Tu.3.1.4, European 
+Conference on NDT, Berlin, Germany, Sep., 2006. 
+
+CASTIÑEIRA, Paula Panaro. Estudo da Viabilidade Econômica de Projetos de Recuperação 
+
+Suplementar  para  Campos  com  Alto  Grau  de  Exploração. 2008.  53  f.  Monografia 
+
+(Graduação) - Curso de Engenharia de Petróleo, UFRJ, Rio de Janeiro, 2008. 
+
+CMG,  Computer  Simulator  Group  Ltda.  Guia  para  el  usuario.  IMEX  –  (Implicit–  Explicit 
+
+Black Oil Simulator) versão 2010.10, Calgary-Alberta-Canadá. 
+
+HAZZAN, S., POMPEO, N. J. Matemática Financeira, Editora Atlas S.A. p. 2-39. 
+
+MAINIER,  Fernando  B.;  SANDRES,  Gisele  C.;  TAVARES,  Sérgio  Souto  Maior.  Corrosão 
+
+por  sulfeto  de  hidrogênio  (h2  s)  e  suas  implicações  no  meio  ambiente  e  na  segurança 
+
+industrial.  In:  congresso  iberoamericano  de  engenharia  mecanica,  8.,  2007,  cusco. Corrosão 
+
+por  sulfeto  de  hidrogênio  (h2  s)  e  suas  implicações  no  meio  ambiente  e  na  segurança 
+
+industrial. Cusco: Congresso Iberoamericano De Engenharia Mecânica, 2007. p. 612 - 618. 
+
+MAITELLI,  Carla  Wilza  Souza  De  Paula.  Imulação  do  escoamento  monofásico  em  um 
+
+estágio de uma bomba centrífuga utilizando técnicas de fluidodinâmica computacional. 2010. 
+
+155 f. Tese (Doutorado) - Ufrn, Natal, 2010. 
+
+MARSILI, Marcelo  Danemberg. Simulação Numérica da  Injeção de Água como  Método  de 
+
+Recuperação  Suplementar  para  um  Campo  com  Alto  Grau  de  Explotação. 2008.  68  f. 
+
+Monografia (Graduação) - Curso de Engenharia de Petróleo, UFRJ, Rio de Janeiro, 2008. 
+
+MATHEWS,  L.,  KENNARD,  M.:  “Velocity  Control  of  Pigs  in  Gas  Pipelines”,  Pipeline 
+Pigging  &  Integrity  Technology,  J.  Tiratsoo,  ed.,  3rd.  Scientific  Surveys  Ltd.,  PO  Box  21, 
+Baconsfield HP9 1NS, Uk, Chapter 1, pp.35-47,  2003. 
+
+NETO, A. A. Matemática Financeira e Suas Aplicações. 8 ed. São Paulo: Editora Atlas S.A., 
+
+2003. 
+
+Ciro Rodolfo Santos Silva 
+
+52 
+
+Trabalho de Conclusão de Curso – DPET/UFRN 
+
+NIECKELE, A.O., BRAGA, A.M.B., Azevedo, L.F.A., Transient Pig Motion though Gas and 
+Liquid Pipelines, Journal of Energy Resources Technology, 123, 2001, 260-269. 
+
+ROSA,  A.  J.,  CARAVALHO,  R.  S.,  XAVIER,  J.  A.  D.  Engenharia  de  Reservatórios  de 
+
+Petróleo. I. ed. Rio de Janeiro: Editora Interciência, 2006. 
+
+SALCEDO,  T., Análise  do  Sensor  de  um  Pig  Instrumentado  do  Tipo  Palito. 2009.  89  f. 
+Dissertação de Mestrado (Mestrado) - PUC, Rio de Janeiro, 2009. 
+
+S.M.HUSSEINALIPOUR,    A.    ZARIFKHALILI,    AND    A.    SALAMI,            “Numerical  
+simulation  of  pig  motion  through  gas  pipelines,”  presented  at  16 th Australasian  Fluid  
+Mechanics  Conference,  Crown  Plaza,  Gold  Coast, Australia,  December  2007. 
+
+SOUZA,  R.  O., Avaliação  de  Modelos  Para  a  Remoção  de  Depósitos  de  Parafina  em  Dutos 
+
+Utilizando  Pigs. 2005.  129  f.  Dissertação  de  Mestrado  (Mestrado)  -  PUC,  Rio  de  Janeiro, 
+
+2005. 
+
+SOUZA,  R.  D.,  “Avaliação  Estrutural  de  Dutos  com  Defeitos  de  CorrosãoReais”.  Pós-
+
+Graduação  em  Engenharia  Mecânica,  PUC-Rio,  Rio  de  Janeiro,  Dissertação  de  Mestrado, 
+
+112p, 2003. 
+
+THOMAS, J. E. (org). Fundamentos de Engenharia de Petróleo. 2 ed. Rio de Janeiro: Editora 
+
+Interciência, 2004. 
+
+TOLMASQUIM,  Sueli  Tiomno. Projeto  e  controle  da  operação  de  passagem  de  pigs  em 
+dutos. 2004. 105 f. Tese (Mestrado) - Puc, Rio de Janeiro, 2004. 
+
+WILLHITE, G. P. Waterflooding, SPE Textbook Series, v. 3, p. 1-4,  1986. 
+
+ 
+
+Ciro Rodolfo Santos Silva 
+
+53 
+
+

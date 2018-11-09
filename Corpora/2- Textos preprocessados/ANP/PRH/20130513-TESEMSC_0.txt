@@ -1,0 +1,803 @@
+validacao algoritmo linear simulacoes numericas dominio tempo movimentos corpos presenca ondas julio cesar fernandez polo dissertacao mestrado apresentada programa posgraduacao engenharia oceanica coppe universidade federal rio janeiro parte requisitos necessarios obtencao titulo mestre engenharia oceanica 
+ orientador marcelo almeida santos neves rio janeiro fevereiro validacao algoritmo linear simulacoes numericas dominio tempo movimentos corpos presenca ondas julio cesar fernandez polo dissertacao submetida corpo docente instituto alberto luiz coimbra posgraduacao pesquisa engenharia coppe universidade federal rio janeiro parte requisitos necessarios obtencao grau mestre ciencias engenharia oceanica 
+ marcelo almeida santos neves ph 
+ claudio alexis rodriguez castillo 
+ mauro costa oliveira 
+ rio janeiro rj brasil fevereiro fernandez polo julio cesar validacao algoritmo linear simulacoes numericas dominio tempo movimentos corpos presenca ondas julio cesar fernandez polo 
+ rio janeiro ufrj coppe 
+ orientador marcelo almeida santos neves dissertacao mestrado ufrj coppe programa engenharia oceanica 
+ simulacao movimentos navios 
+ neves marcelo almeida santos 
+ universidade federal rio janeiro coppe programa engenharia oceanica 
+ mi familia iv agradecimentos prof 
+ marcelo neves orientacao amizade apoio durante desenvolvimento dissertacao nesta etapa vida academica 
+ professores programa engenharia oceanica especial professores area hidrodinamica conhecimentos conselhos oferecidos formacao academica 
+ pessoal tecgrafpuc cenpes petrobras valiosos debates contribuiram grandemente enriquecimento academico 
+ amigos colegas peno deno especial miguel 
+ celis ajuda conselhos dados durante etapa formacao 
+ programa recursos humanos prh agencia nacional petroleo anp fundacao coordenacao projetos pesquisas estudos tecnologicos coppetec conselho nacional desenvolvimento cientifico tecnologico cnpq suporte financeiro 
+ resumo dissertacao apresentada coppe ufrj parte requisitos necessarios obtencao grau mestre ciencias 
+ validacao algoritmo linear simulacoes numericas dominio tempo movimentos corpos presenca ondas julio cesar fernandez polo fevereiro orientadores marcelo almeida santos neves programa engenharia oceanica presente trabalho apresentado algoritmo linear simulacoes numericas movimentos dominio tempo seis graus liberdade embarcacoes presenca ondas 
+ modelacao matematica algoritmo desenvolvida enfase representacao linearidades decorrentes inercia corpo geometria exata submersa corpo consideracao movimentos instantaneos corpo avaliacao forcas externas efeitos inclusao sistema ancoragem 
+ posteriormente discutidas capacidades lineares algoritmo 
+ mostrase capacidades permitem representacao movimentos deriva instabilidades dinamicas 
+ finalmente algoritmo validado atraves comparacoes testes experimentais simulacoes numericas navio tipo fpso ancorado ondas traves proa 
+ geral obtevese boa concordancia comparacoes 
+ vi abstract dissertation presented coppe ufrj partial fulfillment requirements degree master science 
+ validation algorithm timedomain numerical simulations vessel motion presence waves julio cesar fernandez polo february advisors marcelo almeida santos neves department ocean engineering present work non linear algorithm numerical simulation vessel motion presence waves presented 
+ mathematical model algorithm developed special focus representation non linearities arisen inertia submerged part body computation external forces taking account vessel motions effects mooring system 
+ non linear capabilities algorithm discussed 
+ pointed capabilities allow representation drift motions dynamical instabilities 
+ finally algorithm validated comparisons experimental tests numerical simulations fpso vessel moored presence beam head waves 
+ general good agreement found comparisons 
+ simulacoes movimentos sistemas flutuantes dominio tempo 
+ objetivo organizacao dissertacao 
+ relacao velocidade angular taxa variacao angulos euler 
+ segunda lei newton 
+ metodo expansao perfil onda 
+ extensao teoria linear ondas 
+ forca onda irradiada 
+ amortecimento linear roll 
+ forca onda difratada 
+ esquema integracao numerica 
+ intercepcao ondacasco computo pressoes 
+ interpolacao forca difracao 
+ codigo computacional dsstab 
+ simulacoes movimentos dsstab 
+ influencia passo tempo 
+ influencia funcao rampa 
+ descricoes linearidades dsstab 
+ descricao linearidades devido forca hidrostatica 
+ descricao linearidades devido forca froude krylov 
+ validacao testes experimentais 
+ testes experimentais laboceano 
+ simulacoes ondas traves 
+ simulacoes ondas proa 
+ conclusoes recomendacoes gerais 
+ sobre modelacao matematica 
+ sobre implementacao numerica 
+ sobre validacoes testes experimentais 
+ xi capitulo introducao anos recentes distintos fenomenos experimentados navios ondas testes experimentais laboratorios especializados estudo dinamica sistemas flutuantes alertado comunidade cientifica sobre necessidade contar ferramentas possam predizer fenomenos escapam modelacoes lineares 
+ tal motivo muitos esforcos diversas instituicoes pesquisa sendo feitos introduzir modelacoes lineares teorias descrevem movimentos corpos flutuantes 
+ pode ser percebida atencao modelacoes dinamica sistemas flutuantes ondas diversos trabalhos apresentados diversos congressos simposios internacionais diversos programas benchmarkings sendo efetuados novas regras normas diversas instituicoes reguladoras sociedades classificadoras 
+ neste capitulo apresentadas motivacoes presente estudo assim breve resumo estudos antecedem trabalho mostram quais distintos caminhos considerando comunidade internacional afrontar desafio entender melhor distintos fenomenos governam dinamica corpos flutuantes 
+ motivacao atualidade diversos trabalhos focados conseguir compreender detalhadamente respostas sistemas flutuantes presenca grandes ondas condicoes ressonancia 
+ sob condicoes extremas ferramentas lineares atuais avaliacao estabilidade dinamica suficientemente acuradas predizer apropriadamente movimentos extremos sistemas flutuantes ondas 
+ estudo classico navios sistemas oceanicos ondas comum considerar flutuantes sistemas dinamicos lineares quais movimentam pequenas amplitudes 
+ nessa modelagem graus liberdade flutuantes linearmente 
+ reacoes desacoplados melhor casos acoplados hidrodinamicas modeladas base teoria potencial linear 
+ acoes restauracao levadas conta lineares estabilidade estatica inicial 
+ mar pode ser modelado regular aleatorio ajuda teoria espectral 
+ flutuantes seguem sofrendo movimentos indesejados perigosos tanto mares fortemente agitados relativamente calmos 
+ devido flutuantes podem sofrer grandes movimentacoes sob influencia fenomenos escapam modelacao teoria linear 
+ motivos investigadores nivel mundial fazem grandes esforcos passar nivel avancado criterios regulamentos estabilidade flutuantes considerando dinamica embarcacoes 
+ necessario descrever dinamica flutuantes modelos realistas considerando acoes lineares modelando mar forma realista sempre intuito poder garantir estabilidade mesmos 
+ desafio desenvolver ferramenta detalhada eficiente termos computacionais permita avaliacao direta respostas corpo flutuante 
+ ferramenta deveria contribuir melhorar avaliacao projetos navios 
+ poderia ajudar planejamento baterias testes experimentais ondas extremas laboratorios especializados 
+ objetivos comecouse desenvolvimento algoritmo descrito neste trabalho 
+ algoritmo nomeado dsstab modelo numerico seis graus liberdade simulacao sistemas flutuantes ondas dominio tempo baseado metodo panelizacao tres dimensoes 
+ modelo acoes inerciais casco forcas momentos froudekrylov restauracao consideradas lineares sendo pressoes computadas considerando superficie molhada instantanea navio cada passo tempo depende movimentos corpo passagem onda 
+ outro lado limitacoes computacionais forcas momentos hidrodinamicos radiacao difracao avaliados considerandose corpo superficie media constante 
+ momento amortecimento roll considerado linear pode ser introduzido modelo baseado metodologias semiempiricas alternativamente partir estimativas decorrentes testes experimentais decaimento 
+ finalmente efeitos lineares sistema ancoragem levados conta resolvendose equacao catenaria cada passo tempo 
+ principal objetivo contar algoritmo suficientemente sofisticado permita simular realisticamente movimentos grandes amplitudes seis graus liberdade 
+ algoritmo poderia ser usado economizar tempo importante gasto testes experimentais estabilidade navios plataformas ondas assim poderia ser empregado avaliacao direta estabilidade criterio estabilidade intacta segunda geracao imo modos falha estabilidade relacionados variacao braco restaurador perda pura estabilidade roll parametrico vide polo neves 
+ simulacoes movimentos sistemas flutuantes dominio tempo atualmente simulacoes numericas dominio frequencia amplamente difundidas estudo movimentos sistemas flutuantes devido facil implementacao relativa pouca dificuldade momento fazer analises respostas sistemas flutuantes 
+ ultimos anos devido diversos fenomenos ocorridos embarcacoes podem ser explicados metodologias lineares vide perez rojas al 
+ reconhecido necessidade introduzir linearidades estudo comportamento sistemas flutuantes 
+ sendo introducao fenomenos lineares pode ser complicada metodologias desenvolvidas dominio frequencia 
+ diversas pesquisas atuais favorecendo uso metodologias dominio tempo realizar estudos movimentos sistemas flutuantes 
+ diversas metodologias sido propostas literatura introduzir linearidades simulacao movimentos sistemas flutuantes 
+ alguns misturam calculos lineares conjuntamente calculos lineares outros empregam metodologias escoamento potencial linear 
+ outros estudos tentam resolver problema escoamento viscoso movimentos sistemas flutuantes ondas solucionando equacao promediada navierstokes conhecida rans dominio tempo 
+ metodos simulacao movimentos dominio tempo podem ser classificados segundo metodologia numerica 
+ mostramse distintos metodos conjuntamente vantagens desvantagens apresentados relatorio comite seakeeping ittc ano 
+ metodologias numericas abordagem dominio tempo metodo numerico vantagem desvantagem funcao resposta impulsiva facil implementar calculo rapido teoria faixas calculo rapido funcao transiente green paineis rankine cfd metodos hibridos condicao radiacao automaticamente satisfeita distribuicao paineis superficie corpo praticidade boa facil extensao analise linear geral boa precisao capacidade movimentos extremos navios inclusao efeitos viscosos aproveita vantagens metodos combinados precisa coeficientes hidrodinamicos computados anterioridade aplicabilidade limitada limitacoes metodo seccoes pouca precisao baixas frequencias dificuldade calcular funcao green velocidade avanco diferente zero aplicabilidade limitada dificuldade modelacao geracao paineis precisa metodo numerico condicao radiacao grande tempo esforco computacional pouca precisao memoria fluida nenhum beneficio muitas combinacoes esforco adicional combinacoes capacidade tempo computacional minima minima moderada moderada forte variante metodos mencionados tabela 
+ metodologias hibridas sendo consideradas atualmente comunidade internacional estudo fenomenos lineares dinamica sistemas flutuantes devido rapidez boa precisao termos engenharia possibilidade incorporar relativa facilidade varios aspectos projeto tanques estabilizadores efeitos agua conves outros 
+ sistema ancoragen modelo dsstab descrito utilizado neste trabalho pode ser classificado metodo hibrido 
+ estado arte devido foco trabalho validar algoritmo desenvolvido ser capaz capturar instabilidades decorrentes variacao geometria submersa casco mencionados trabalhos empregam teoria perturbacao favorece desenvolvimento metodologias dao solucao problemas potenciais segunda terceira ordem utilizadas area offshore 
+ terceiro capitulo durante descricao linearidades dsstab comentadas brevemente algumas equivalencias assim diferencas modelo baseado metodo perturbacoes modelo dsstab 
+ origem estudo moderno movimentos corpos flutuantes origem bem conhecida trabalho froude seculo dezenove motivado famoso engenheiro brunell comecou estudos estabilidade navios ondas sendo primeiro relatar instabilidades roll ondas longitudinais ressonancia parametrica 
+ outro lado trabalho st 
+ denis pierson trabalho pioneiro propos metodologia estimar movimentos corpos flutuantes empregando metodologias espectrais relacionando densidade espectral respostas navio espectro mar atuante navio mediante raos movimento corpo 
+ podese considerar trabalhos comecaram estudo cientifico movimentos corpos flutuantes ondas 
+ longo anos seguintes diversos pesquisadores continuado estudo comportamento sistemas flutuantes ondas 
+ seguir mencionamse descrevemse brevemente alguns trabalhos contribuiram entendimento comportamento ondas embarcacoes alguns modelos relevantes estudo instabilidades dinamicas 
+ kerwin observou ondas longitudinais podem existir frequencias encontro originam oscilacoes instaveis roll 
+ trabalho variacao altura metacentrica transversal ondas longitudinais abordada ponto vista quase hidrostatico outras palavras efeitos hidrodinamicos ocasionados movimentos navio ondas descartados 
+ entanto restauracao roll expressa funcao periodica tempo desta forma equacao desacoplada movimento roll fica forma equacao bem conhecida equacao mathieu 
+ paulling rosenberg acoplaram linearmente movimentos heave roll pitch 
+ neste acoplamento segunda ordem introduziuse dependencia tempo acoes restauracao pode gerar instabilidades qualquer graus liberdade 
+ analise feita empregando equacao mathieu demonstrandose roll parametrico pode acontecer frequencia excitacao dobro igual frequencia natural roll primeira segunda zonas instabilidade equacao mathieu respectivamente 
+ paulling demonstrou estabilidade ondas difere significativamente estabilidade aguas calmas nessas condicoes pode ser diminuida perigosamente 
+ caso pequenos angulos inclinacao estabilidade inicial proposta expressao analitica momento restaurador ondas considera efeito movimentos navio heave pitch afundamento arfagem assim perfil onda 
+ cummins primeiro apresentar formulacao determinacao movimentos navio dominio tempo fazendo uso principio funcao resposta impulsiva tal movimento navio pode ser desdobrado serie continua pequenos impulsos deslocamento 
+ assim podese incluir dependencia tempo forcas hidrodinamicas meio integrais convolucao 
+ ogilvie introduziu conceito memoria fluida 
+ nesse trabalho derivam expressoes potenciais velocidade dependentes tempo navio velocidade avanco constante 
+ himeno fez analise diversos aspectos amortecimento roll fazendo serie testes experimentais modelos objetivo compreender melhor amortecimento roll 
+ estudo himeno base trabalho ikeda al 
+ propoem diversos metodos empiricos estimar distintas componentes amortecimento roll trabalho formacao ondas casco friccao formacao vortices sustentacao bolinas 
+ kat desenvolveu modelo numerico seis graus liberdade baseado teoria faixas simular movimentos grandes amplitudes condicoes mar severo poderiam incorrer emborcamento navios 
+ objetivo estudo identificar numericamente modos falha estabilidade dinamica estudar mecanismos condicoes 
+ modelo baseado combinacao teoria potencial conjuntamente termos viscosos dominio tempo considerando efeitos computo pressoes superficie molhada instantanea memoria fluida 
+ identificadas instabilidades perda estabilidade transversal mar popa traves guinada brusca broaching ondas obliquas ambas ondas regulares 
+ ademais identificada instabilidade roll parametrico mar popa ondas regulares irregulares 
+ lin yue deram inicio desenvolvimento lamp codigo tridimensional dominio tempo estudar movimentos grandes amplitudes cargas navios ondas 
+ problema resolvido empregandose distribuicao fontes transientes funcao green superficie submersa casco 
+ implementada metodologia potencial hibrida combina metodologias fontes rankine funcoes transientes green 
+ nessa metodologia dominio fluido dividido duas regioes regiao externa corpo solucionada empregando funcoes transientes green enquanto regiao interior proxima corpo resolvida mediante fontes rankine 
+ desenvolvida interface lamp codigo analise elementos finitos intento estudar cargas navios devido ondas mar 
+ baseado trabalho youssef al 
+ implementado modelo tanque tipo utube antiroll passivo codigo lamp intento estudar influencia desse tipo tanques fenomeno ressonancia parametrica 
+ modelo calcula movimento fluido tanque determina forcas lineares acopladas seis graus liberdade 
+ forcas adicionadas calculo movimentos lamp forcas externas 
+ baseados trabalhos buchner zhou al 
+ sido integrado modelo green water codigo lamp permitindo introduzir efeitos agua conves simulacoes lineares dominio tempo 
+ codigo lamp sido empregado avaliar risco impacto onda extrema parte baixo estrutura principal plataforma semisubmersivel weems al 
+ assim estudo distintas configuracoes navios multicorpos trimaran harris 
+ tese doutoral kring apresentado modelo numerico denominado swan simular movimentos navios dominio tempo empregando metodologia baseada paineis rankine 
+ apresentada extensao linear codigo swan incluindo efeitos lineares forcas hidrostaticas froudekrylov tratamento fenomenos radiacao difracao ondas hipotese weak scatterer 
+ trabalho discutiu problema determinar valores extremos respostas mar irregular partir codigos lineares 
+ fonseca soares apresentaram formulacao linear dominio tempo 
+ metodo combinacao teoria linear faixas computo linear forcas restauracao metodo leva conta efeitos memoria fluida devido ondas irradiadas 
+ modelo sido principalmente empregado analises movimentos verticais momentos flexao produzidos ondas mar 
+ aplicado navio tipo portacontentor vasquez al 
+ navio tipo bulk carrier rajendra al 
+ nesses trabalhos temse registrado boas comparacoes testes experimentais simulacoes numericas movimentos verticais momentos flexao navios estudados 
+ matusiak apresentou metodo numerico denominado laidyn avaliar movimentos manobras navios domino tempo 
+ metodo baseado combinacao teoria linear faixas computo termos radiacao metodologia linear computo forca restauracao 
+ incluidos efeitos resistencia avanco propulsor leme mediante modelos semiempiricos 
+ assim podem ser avaliados movimentos extremos produzidos atuacao simultanea ondas ventos tempestuosos 
+ matusiak laidyn validado testes experimentais navio tipo ropax nesse estudo modelo capacidade reproduzir roll parametrico registrado testes experimentais 
+ matusiak laidyn empregado avaliar cumprimento criterio climatologico imo navio passageiros 
+ conclusoes estudo criterio climatologico elaborado avaliar capacidades navio condicoes mar real 
+ apesar disso deve ser mencionado criterio leva conta importantes elementos afetam seguranca navios 
+ apresentaram modelo matematico movimentos heave pitch navio dominio tempo predicao comportamento navio mares regulares 
+ modelo incluiu efeito memoria fluida acoes hidrodinamicas usando analise tridimensional escoamento potencial funcoes impulsivas 
+ onda incidente considerada linear forcas momentos restauracao computadas considerando volume submerso instantaneo cada passo tempo 
+ nesse trabalho estudaram dois cascos casco tipo serie casco tipo portacontentor ambos estudados mar proa 
+ modelo capaz reproduzir tendencias similares obtidas ensaios experimentais 
+ modelo ampliado quatro graus liberdade sway heave roll pitch 
+ modelo incluiu efeito memoria fluida acoes hidrodinamicas incluindo acoes difracao meio integrais convolucao referidas posicao media superficie livre 
+ acao onda incidente considerada linear mediante extrapolacao superficie instantanea 
+ modelo empregado estudo roll parametrico demonstrando ter boa concordancia qualitativa quantitativa ensaios experimentais portacontentor tipo postpanamax portacontentor ittca embarcacao pesqueira popa tipo tramson 
+ rodriguez propos modelo analitico linear movimento navio heave roll pitch estudo ressonancia parametrica 
+ modelo considera heave roll pitch acoplados linearmente acoes restaurativas termos terceira ordem mediante expansoes taylor 
+ trabalho mostra modelo terceira ordem apresenta caracteristicas dinamicas proprias existencia rigidez linear excitacao parametrica biharmonica relevancia casos roll parametrico intenso 
+ ademais deixou claro melhor analise estabilidade deve ser empregada equacao tipo hill lugar duma equacao tipo mathieu 
+ rodriguez modelo ampliado seis graus liberdade ademais incluido efeito smith aborda influencia atenuacao pressao onda profundidade 
+ ademais apresentou metodologia obtencao restauracao terceira ordem onde feito ajuste polinomios curva restauracao varias posicoes navio 
+ simular movimentos navio mar irregular autor propos metodologia mista representa bem carater ergodico movimento roll parametrico 
+ bulian propos dois modelos analiticos lineares simular movimento roll desacoplado nesses modelos incluidos efeitos modos heave pitch assim variacao volume submerso devido onda hipoteses quase estaticas obtencao curva gz 
+ amortecimento linear roll dois modelos obtido testes decaimento roll modelos escala reduzida navios estudados 
+ primeiro modelo desenvolvido simular roll desacoplado mar regular fazendose analises numericas dominio tempo analises analiticas dominio frequencia 
+ outro modelo usa conceito onda efetiva grim simular roll desacoplado mar irregular 
+ simulacoes modelo mar regular feitas comparadas ensaios experimentais quatro navios distintos navio tipo destroyer navio tipo fragata dois navios tipo roro 
+ simulacoes modelo mar irregular feitas comparadas ensaios experimentais dois navios tipo roro 
+ trabalho registrado carater gaussiano movimento roll mar irregular 
+ alem trabalhos mencionados autor reconhece trabalhos diversos pesquisadores professores beck blocki faltinsen francescutto fossen guo hua liapis liaw lorca nakos nayfeh neves newman oortemersen pawloski pinkster sanchez sclavounos stoker spyrou tuck umeda ursell valerio muitos outros fundamentais desenvolvimento trabalhos anteriormente mencionados assim inspiracao presente trabalho 
+ objetivo organizacao dissertacao trabalho visa fazer simulacoes numericas movimentos navio proposito validar algoritmo denominado dsstab desenvolvido parceria coppe centro pesquisas petrobras cenpes tecgraf puc 
+ principal caracteristica algoritmo capacidade reproduzir realisticamente fenomenos decorrentes variacao geometria instantaneamente submersa corpos flutuantes presencia ondas 
+ presente trabalho documentacao comparacoes simulacoes numericas navio tipo fpso testado experimentalmente laboceano 
+ comparacoes mostradas intencao ilustrar capacidades deficiencias algoritmo 
+ neste trabalho resultados numericos avaliados velocidade avanco zero ondas traves proa considerando mar regular 
+ capitulo descreve maneira breve modelacao equacoes movimento dominio tempo flutuantes mostra implementacao passeio lento incorporacao amarracoes sistema equacoes 
+ capitulo descreve implementacao numerica codigo dsstab mencionadas consideracoes numericas levadas conta desenvolvimento codigo 
+ neste capitulo discutidas linearidades introduzidas codigo 
+ capitulo descritas condicoes ensaios corpo estudado 
+ mostradas comparacoes feitas ensaios experimentais modelo escala reduzida codigo dsstab intencao validar codigo 
+ finalmente capitulo apresentadas conclusoes obtidas presente estudo assim recomendacoes trabalhos futuros relacionados codigo computacional dsstab 
+ capitulo modelacao matematica neste capitulo apresentada formulacao matematica implementada algoritmo numerico utilizado neste trabalho 
+ descritas equacoes movimento comportam dinamica sistemas flutuantes assim modelacao forcas externas atuantes consideradas modelo matematico 
+ definicoes basicas necessario definir alguns conceitos basicos antes iniciar estudo movimentos sistemas flutuantes 
+ neste trabalho sistemas flutuantes considerados corpos rigidos intactos velocidade avanco rumo definido 
+ ademais qualquer efeito produzido ondas mar linhas ancoragem desprezados tais efeitos sloshing outras cargas internas ventos correntezas 
+ assim cargas devido slamming cargas devido ingresso agua conves 
+ seguir definidos conceitos relacionados movimentos translacionais angulares flutuante angulo incidencia elevacao onda 
+ movimentos sistemas flutuantes movimentos translacionais sistema flutuante direcao eixos denominados surge sway heave respectivamente 
+ movimentos angulares definidos torno sistema fixo flutuante chamados roll pitch yaw respectivamente 
+ trabalho sub indices referemse movimentos surge sway heave respectivamente sub indices referemse movimentos roll pitch yaw respectivamente 
+ angulo incidencia elevacao onda angulo incidencia onda definido sistema inercial fixo angulo curso navio direcao propagacao onda vide figura 
+ portanto mar popa temse mar traves sentido bombordo 
+ elevacao onda incidenciaχ definida teoria linear airy numero onda ea amplitude onda 
+ equacao usada onde modelar mar regular descrevendo ondas mar harmonicos percebidos corpo 
+ sistemas referencia adotamse tres sistemas referencia dextrogiros ver figura 
+ apropriada modelacao dinamica sistemas flutuantes ondas 
+ assim possivel simular movimentos destes amplitudes consideraveis descrever sistema dinamico forma elaborada 
+ incidencias ondas atuantes corpo flutuante velocidade avanco 
+ sistema inercialaxyz fixo espaco relacao sistema definidas sistema inercial movelcxyz acompanha movimento corpo 
+ sistema definido partir posicao repouso inicial navio origemc intersecao vertical passa centro gravidade plano 
+ neste sistema definidos movimentos translacionais atualizam posicao relativa corpo relacao onda 
+ sistema inercial movel oxyz fixo corpo corpo repouso sistema coincide sistema inercial movel 
+ neste sistema definida geometria corpo definidos movimentos angulares deste 
+ sistemas referencia movimentos navio onda incidente 
+ transformacao eixos possivel determinar orientacao sistema ortogonal movel torno outro sistema ortogonal geralmente fixo mediante sucessao rotacoes yaw pitch roll 
+ sequencia rotacoes bem conhecida estudo navios aeronaves corresponde forma modificada angulos euler 
+ assim vetor definido sistema inercial fixo corpo pode ser representado vetor definido sistema inercial fixo espaco 
+ instante navio repouso sistema inercial fixo espaco sistema inercial fixo corpo paralelos figura 
+ assim nesse instante vetor velocidade deo pode ser expresso sistema inercial nesse instante vetor velocidade pode ser expresso sistema sistema velocidade aplicando primeira rotacao inercial fixo corpo sendo relacao forma abreviada seguidamente aplicamos rotacao vetor velocidade sistema sendo relacao forma reduzida torno eixo − figura 
+ torno eixo expresso − finalmente aplicamos rotacao torno eixo assume orientacao desejada sistema inercial figura 
+ sistema velocidade sendo relacao forma reduzida sendo repouso vetores − efetuando produto obtemos sendo matriz transformacao − − iguais assim − onde representam abreviacao coseno seno respectivamente 
+ esquema realizacao angulos modificados euler 
+ sistema inercial paralelo sistema inercial fixo 
+ definido sistema mediante matriz sistema desta forma vetor qualquer pode ser definido transformacao igual forma podese definir relacao inversa − − − − − matriz inversa matriz ortogonal definida sendo − particular linearizandose matriz pequenos deslocamentos obtemse dar solucao equacao movimento navio preciso relacionar mediante matriz transformacao inversa vetores velocidades lineares velocidades angulares forcas momentos sistemas inercial fixo espaco inercial fixo corpo 
+ proposito definese seguinte nomenclatura jz kuıvwk iy velocidade translacao ponto velocidade angularω ω iω jω kpıqrk fk forcas externasff jf kfıf momentos externosmm im jm kmım mk 
+ relacao velocidade angular taxa variacao angulos euler apesar quantidades angulares serem vetores velocidade angular vetor 
+ velocidade angular pode ser definida sistema inercial seguindo sequencia angulos euler velocidade angular dada funcao 
+ obter expressoes devese expressar assumimos entao agora entao − notacao matricial sendo matriz − obtemse velocidade angular sistema inercial − − − − − − − − forma linear pequenos deslocamentos angulares 
+ passeio lento eixos horizontais embarcacao obrigada fazer passeio lento plano horizontal estacao acao propulsiva devido ondas necessario distinguir sistema rastreamento registre atualizacoes sucessivas sistema referencia passeio lento ver figura 
+ partir obtencoes novas coordenadas horizontais translacao possiveis mudancas rumo embarcacao vide figura 
+ entao sistema passeio origem 
+ considerandose posicoes consecutivas origem podera existir sequencia intervalos tempo∆ definidas 
+ sendo sequencia angulos aproamento definida 
+ enquanto deslocamentos translacionais possam ocorrer registrados atraves atualizacoes definidas seguinte algoritmo eixos plano horizontal tal tal tal ⋮ × × × − − − trabalho unica acao vai obrigar corpo desenvolver passeio plano horizontal acao ondas incidentes tanto plano passeio ficara alinhado angulo incidencia ondas atraves sequencia angulos aproamento descrita acima 
+ sendo cada etapa desenvolvimento calculada frequencia encontro 
+ referencial passeio embarcacao notese execucao passeio lento forcas excitacao devem ser previamente calculadas varias incidencias forma permitir dentro processo integracao atualizacao forcas momentos ondas 
+ devido procedimento anteriormente descrito sistema referencia submetido rotacoes sucessivas yaw medio sistema passeio lento motivo matriz transformacao cada atualizacao fica dada matriz transformacao − deve incluir rotacao yaw tal 
+ frequencia encontro frequencia encontroω frequencia navio velocidade avanco constante encontra ondas frequencia ω incidencia χ 
+ velocidade pode ser induzida sistema propulsivo efeito linear ondas 
+ velocidade definida seguir 
+ frequencia encontro definese ondeg aceleracao gravidade ∆ deslocamento sistema passeio sentido direcao onda sendo velocidade sistema passeio direcao onde pode ser definida − ∆→ ∆∆ ∆→ ∆∆ onde anterior 
+ eixos plano horizontal passeio definidos item 
+ segunda lei newton segunda lei newton estabelece resultante acoes externas sobre corpo igual taxa variacao quantidade movimento movimentos translacionais expandindose duas equacoes posicao centro gravidade 
+ respeito eixo fixo temse respectivamente rotacionais respectivamente ω× × considerando corpo rigido composto determinado numero pode ser definida quantidade posicao elementos pequenos massa movimento angular sistema inercial sendo dinamica corpos rigidos substituindo equacao onde define − × ω× expandindo equacao caso geral onde × − ω× × ω× − − − − − − empregando conceitos momentos produtos inercia ordenando forma matriz onde − − ω × − − − − − − ω − − − − × substituindo finalmente equacao empregandose conceitos mecanica classica junto definicoes lineares matriz transformacao eixos matriz relacao velocidade angular taxa variacao angulos modificados euler ademais ordenando adequadamente expressoes chegase equilibrio 
+ procedimento encontra detalhado rodriguez 
+ equilibrio forcas onde cosθ − senφ senθsenφ cosθcosφ cosφ senθcosφ cosφsenφ − − − − × − − equilibrio momentos onde − lado direito sistemas equacoes definem inercias sistema flutuante notese lineares segunda ordem 
+ forcas externas acoes externas atuando corpo flutuante podem ser divididas parcelas dependem origem forcas gravidade forcas origem fluida forcas devido superficies controle forcas devido sistema ancoragem outras 
+ forcas gravidade levadas conta junto forcas restauracao devido dependencia deslocamento 
+ entanto forcas fluidas podem ser decompostas forcas hidrostaticas forcas hidrodinamicas sendo forcas hidrodinamicas modelacao complexa 
+ fazer calculo forcas fluidas necessario primeiro modelar dominio fluido corpo submerso 
+ considerando fluido incompressivel inviscido fluido ideal irrotacional escoamento potencial podemos definir equacao movimento partir equacao geral movimento fluidos reais eq 
+ navierstokes − consideramos fluido incompressivel 
+ inviscido ν fluxo irrotacional ∇×v podendo ser definido potencial velocidade 
+ introduzindo consideracoes satisfaz equacao laplace equacao pode ser definida equacao conhecida integral equacao euler equacao bernoulli funcao potencial velocidade total 
+ sendo forca momento fluido onde ficam determinados respectivamente 
+ forca calculada termo forca momento calculados expressoes contem potencial velocidade parte hidrostatica forca fluida 
+ portanto parte hidrodinamica 
+ problema hidrodinamico pode ser abordado soma dois fenomenos primeiro corpo parado sujeito acao ondas gravitacionais quais incidem nele difratadas sendo forca devido onda incidente denominada forca froudekrylov 
+ segundo corpo aguas calmas oscilando harmonicamente pequena amplitude gerando ondas 
+ cada desses fenomenos gera potencial onda superposicao linear potencial total onda irradiada potenciais onda incidente onda difratada soma 
+ necessario definir condicoes contorno dominio fluido superficie livre fundo assim condicao contorno superficie corpo mostra figura 
+ equacao governante condicoes contorno resumo forcas momentos considerados froudekrylov difracao irradiacao peso hidrostatica forcas amarracao 
+ forcas gravidade forca peso sistema inercial fixo espaco portanto momento desta forca sistema definido 
+ forcas restauracao obter forca empuxo pode ser obtida integral equacao euler onde podese onde volume volume submerso instantaneo corpo calculado superficie livre instantanea feito interceptandose geometria sistema flutuante onda incidente 
+ repouso satisfeito equilibrio forca peso empuxo onde volume submerso corpo estado repouso 
+ sendo forca restauracao resultante empuxo instantaneo forca peso momento desta forca define agora conhecidas acoes restaurativas superficie livre cada instante tempo 
+ permite captacao fenomenos lineares devido variacao geometria submersa corpo fato omitido completamente consideracoes lineares 
+ − × − 
+ forcas hidrodinamicas harmonicas determinados forcas momentos reacao hidrodinamicas sistema flutuante devido oscilacoes atraves denominados coeficientes hidrodinamicos 
+ acoes hidrodinamicas abrangem coeficientes massa adicional amortecimento excitacao onda 
+ acoes hidrodinamicas calculadas classicamente empregandose teoria potencial linear onde deslocamentos velocidades aceleracoes pressoes particulas fluidas guardam relacao linear elevacao superficie livre 
+ forcas excitacao onda oriundas campo pressoes atuantes superficie corpo compostas forca onda incidente forca difracao dependentes potencial onda incidente potencial onda difratada respectivamente quais relacionados mediante relacao haskindnewmann salvesen al 
+ caso forcas momentos froudekrylov vamos estender aplicabilidade teoria potencial linear faz calculo forcas nivel medio superficie livre aqui dentro modelo calculo dominio tempo forcas momentos computadas superficie livre instantanea posicao media corpo 
+ porem calculo forca difracao onda feito considerando diferenca forca excitatriz linear forca froudekrylov linear computada nivel medio superficie livre 
+ calculo coeficientes hidrodinamicos forcas difracao empregadase abordagem tridimensional baseada metodo paineis devido fato resultados obtidos metodologia bastante acurados corpos estacionarios geometrias diversas faixa ampla frequencias 
+ trabalho usado software comercial wamit® obtencao coeficientes hidrodinamicos potenciais 
+ exceto coeficiente amortecimento roll pode ser obtido outra metodologia experimental empirica devido fenomeno amortecimento direcao roll geral representado corretamente teoria potencial linear forte dependencia viscosidade 
+ integral equacao bernoulli teoria potencial linear airy temse ф − − − − positivo torno 
+ forcas froudekrylov forca froudekrylov devida incidencia onda superficie corpo considera ondas transpassam superficie corpo sofrerem nenhuma acao devida presenca outras palavras forca integral pressao onda superficie submersa corpo onda incidente afetada presenca corpo 
+ considerando aguas profundas parcela real potencial velocidades onda incidente entao pressao froudekrylov linear nivel medio superficie livre expandindo serie taylor valor superficie livre media − − −∞≤ ≤ pressao ponto mostra figura 
+ linear equacao bernoulli podese notar pressao linear apenas natureza hidrostatica sob crista onda nivel medio 
+ abaixo desse nivel pressao soma pressao hidrostatica pressao onda 
+ tal motivo formulacao linear apresenta descontinuidade alem usar parcela linear pressao dinamica empregaremos componente − − ∙ −∞≤ ≤ considerando entao pressao total − fig 
+ variacao pressao sob crista cavado onda seguindo teoria linear 
+ equacao expressa pressao total computada superficie media 
+ proposito capturar linearidades produzidas interacao onda corpo flutuante presente modelo estende calculo pressao onda pressao hidrostatica superficie livre instantanea 
+ tal motivo distinguiremos duas metodologias estender calculo pressao onda superficie livre instantanea primeira metodo expansao perfil onda baseado metodo proposto wheeler 
+ segundo metodo extensao teoria linear superficie livre proposto onde elevacao vertical superficie livre kat 
+ grande vantagem desses metodos devido fato estarem baseados teoria linear podem ser utilizados ondas irregulares nenhuma limitacao 
+ metodo expansao perfil onda metodo expansao wheeler consiste esticar perfil onda desde superficie instantanea fundo marinho substituindo nesse caso pressao dinamica primeira ordem ficara − coordenada vertical computacional h≤z≤ζ coordenada vertical real − ≤ ≤ − tal assumidas ondas longas → entao erro tende ser pequeno 
+ verdade metodo calcula pressao resultado considerado 
+ portanto pressao pode ser calculada superficie livre garantindo pressao nula sobre perfil onda pode ser facilmente comprovado crista cavado zeros onda 
+ resultado nivel medio perfil onda proximo superficie media calculado incluindo pequeno erro ver figura 
+ equivale multiplicar pressao linear termo 
+ expandese ≈ − − fig 
+ distribuicao pressoes sob crista onda metodo expansao perfil onda 
+ extensao teoria linear ondas metodo consiste estender outras correcoes aplicabilidade teoria linear perfil instantaneo onda 
+ desta forma pressao dinamica primeira ordem − −∞≤ ≤ mostra figura 
+ descontinuidade pressao total 
+ porem pressao perfil onda exatamente nula pequena ordem menor onda 
+ distribuicao pressao sob crista onda metodo extensao linear 
+ concordancia teoria linear amplitude onda menor comprimento ≪ portanto termo exponencial pode expandir ≈ −∞≤ ≤ ≅ significa termos ordens pequenas pressao dinamica primeira ordem torno superficie media portanto superficie livre pressao praticamente nula menos termos pequena ordem 
+ forca onda irradiada forca onda irradiada produzida ondas corpo gera faz alguma movimentacao neste caso vaose considerar movimentos harmonicos pequena amplitude 
+ potencial destas ondas pode ser expresso somatoria potenciais gerados cada graus liberdade corpo cada destes potenciais pode ser expresso potencial funcao geometria frequencia multiplicado velocidade considerando acoplamentos lineares movimento movimento grau liberdade pode induzir movimento outro grau liberdade acoplado primeiro portanto induzira potencial irradiacao segundo grau liberdade 
+ devido maioria corpos flutuantes apresenta simetria longitudinal existem acoplamentos graus liberdade indices indices separado 
+ fazendo integracao pressao devido potencial irradiacao corpos temse duas quantidades flutuando dominio fluido superficie livre proporcional aceleracao outra proporcional velocidade − 
+ matriz xa denominada matriz coeficientes massas adicionais matriz xb chamada matriz amortecimentos 
+ sendo − onde expressao forca devido potencial irradiacao forma reduzida − − 
+ amortecimento linear roll metodologia ser empregada neste trabalho metodo empirico extrapolacao dados ensaios decaimento roll 
+ sendo alternativamente podera ser usado metodo semiempirico ikeda 
+ metodo empirico extrapolacao dados ensaios decaimento roll metodo bem geral nenhuma limitacao devido geometria flutuantes porem necessario contar modelo escala reduzida navio fazer testes decaimento tanque experiencias hidrodinamicas 
+ metodo consiste deslocar modelo desde posicao equilibrio obter amplitudes oscilacao roll ser liberado seguida fazer ajuste minimos quadrados funcao amplitudes roll versus tempo 
+ varios metodos existem aproximacao amplitudes roll quais utilizam modelo analitico equacao movimento roll onde momento roll aproximado usualmente funcao polinomial segunda ordem 
+ coeficientes deste polinomio coeficientes hidrodinamicos amortecimento roll 
+ metodos conhecidos metodo krilovbogoliubov metodo perturbacoes metodo energia ver oliveira 
+ expressao geral momento amortecimento roll definida sendo termos equacao coeficientes linear quadratico cubico amortecimento roll obtidos regressao minimos quadrados 
+ desprezando termo modelo equacao quadratico 
+ ordem modelo dependera ordem funcao polinomial empregada regressao 
+ outro lado metodo ikeda amortecimento roll decomposto cinco componentes amortecimento friccao amortecimento devido formacao vortices amortecimento devido sustentacao amortecimento devido formacao ondas amortecimento devido bolinas 
+ obter amortecimento total condicao carregamento flutuante cada componente pode ser calculada usando formulacoes propostas ikeda himeno 
+ amortecimento ficara determinado funcao numero froude frequencia amplitudede oscilacao 
+ verdade metodo ikeda amalgama varios trabalhos diversos investigadores limitado geometrias navios estudados cada formulacao 
+ forca onda difratada forca onda difratada gerada presenca corpo meio fluido onde ondas incidindo nele 
+ potencial deve satisfazer condicao contorno cinematica superficie corpo onde componente normal velocidade assumida satisfazendo relacao integrando potencial ajuda segundo teorema green podese expressar forca difracao cada grau liberdade funcao potencial onda incidente geometria corpo − 
+ presente trabalho forcas computadas codigo comercial wamit® 
+ amarracoes modelacao sistema ancoragem empregaremos abordagem quase estatica usando equacao catenaria 
+ mostra problema duas dimensoes empregando representacao nomenclatura classica equacao catenaria linha ancoragem 
+ aqui cada passo tempo posicao ponto atualizada seguindo movimento sistema flutuante 
+ portanto cada passo tempo − coordenada vertical conhecidas posicoes pontos apoio assim comprimento linha ancoragem propriedades fisicas desta forma pode ser resolvida equacao catenaria cada passo tempo 
+ teoria catenaria tensao ponto pode ser calculada seguinte expressao onde peso unidade comprimento linha ponto sistema referencia catenaria 
+ comentado anteriormente abordagem descrita acima abordagem quase estatica portanto dinamica linha ancoragem considerada simulacoes movimentos 
+ sistema inercial linha ancoragem ancorada ponto estrutura flutuante ponto respectivamente ver figura 
+ tensao linha ponto flutuante experimenta coordenadas suspensa entao forca − onde valor determinado sendo momento forca −− × − definido desta maneira possivel introduzir acoes linhas ancoragem sistema equacoes 
+ linha amarracao sistema inercial fixo 
+ fonte journee massie 
+ equacao movimento podese agora unificar equacoes movimentos translacionais rotacionais expressoes forcas externas itens anteriores 
+ unificando equacoes expressao ademais considerando contribuicoes peso forcas hidrostatica froudekrylov difracao forcas linhas ancoragem equacao movimento sistemas flutuantes − − × − × − − onde − − × − − − sistema equacoes tipo diferencial descreve modelo seis graus liberdade robusto pesado analises dinamica sistemas flutuantes estacionarios linhas ancoragem ondas regulares dominio tempo 
+ grande vantagem desta formulacao permite inclusao rapida facil qualquer outra forca externa atuante sistema flutuante 
+ porem principal limitacao grande capacidade computacional requerida avaliar expressoes forcas externas cada passo tempo fazendo qualquer tipo analise deterministica respostas sistemas estudar metodologia penosa termos tempo computacional necessario 
+ modelo descrito neste capitulo ideal estudar comportamento corpo flutuante condicao especifica mares regulares 
+ sendo poder ser feito estudo completo comportamento ondas corpos flutuantes devera ser integrada modelacao algoritmo consideracoes permitam desenvolver simulacoes numericas mares irregulares 
+ assim estudo comportamento movimentos corpos flutuantes podera ser feito mediante metodologias estocasticas 
+ capitulo implementacao numerica neste capitulo apresenta codigo computacional dsstab ferramenta numerica resolve equacao movimento navio apresentada capitulo anterior 
+ descritas linearidades levadas conta dsstab 
+ adicionalmente feitas algumas comparacoes modelacoes lineares pares lineares intuito ilustrar diferencas vantagens inclusao linearidades codigo dsstab 
+ generalidades respostas dinamicas sistemas flutuantes podem ser conhecidas resolvendo equacao movimento equacao capitulo anterior 
+ porem equacao natureza linear solucao analitica conhecida portanto solucao pode ser obtida atraves metodos numericos 
+ primeira etapa dar solucao equacao movimento consiste mudar forma equacao resolvela mediante esquema numerico integracao 
+ multiplicando equacao matriz inversam × − × − − × × obtemos − − metodo simples resolver numericamente equacao diferencial linear segunda ordem equacao reduzila equacao diferencial primeira ordem 
+ procedimento seguinte primeiro introduzida nova funcao definida agora podese expressar equacao seguinte sistema passando forma vetorial favoravel temse → onde sendo vetores respectivamente 
+ implementacao numerica determinar valores instantaneos deslocamentos translacionais rotacionais sistema flutuante preciso resolver equacao diferencial meio algoritmo numerico 
+ algoritmo deve estar baseado esquema integracao numerica 
+ algoritmo deve poder avaliar todas forcas externas atuantes corpo 
+ caso calculo pressoes devido natureza formulacao preciso achar interceptacao perfil onda corpo submerso cada passo tempo 
+ ser feito necessario contar discretizacao paineis corpo onda poder avaliar pressoes superficie livre instantanea 
+ alem tudo poder realizar adequada coerente simulacao numerica preciso codigo possa introduzir funcao rampa momentos iniciais simulacao 
+ seguir descritas brevemente consideracoes numericas implementadas algoritmo numerico empregado neste trabalho 
+ esquema integracao numerica esquemas numericos populares resolver equacoes diferenciais primeira ordem equacao metodo numerico integracao runge kutta quarta ordem rk 
+ metodo consiste aproximar funcaofy onde 
+ ∆ ∙ ∆ ∆ ∙ ∆ ∙ ∙∆ ∙∆ ∙∆ 
+ sendo esquema marcha tempo ordenado dar solucao equacao intervalo tempo zero precisamos conhecer condicoes iniciais todos movimentos translacionais angulares assim velocidades devese informar vetor condicoes partindo repouso componentes vetor condicoes iniciais consideradas nulas 
+ porem simulacao numerica precisa alguma condicao inicial deslocamento velocidade seis graus liberdade condicao inicial pode iniciaisy 
+ normalmente navio sistema flutuante comeca simulacao ser introduzida vetory 
+ metodo rk amplamente utilizado devido regiao estabilidade numerica comumente maior regiao estabilidade muitos outros algoritmos explicitos integracao algoritmos explicitos algoritmos empregam dados instantes anteriores dados atuais tempo predizer dados instantes futuros tempo 
+ permite considerar valores de∆t ser feito estudo convergencia determinar um∆t otimo comprometa tempo duracao simulacao numerica garanta estabilidade numerica sistema 
+ demasiado pequenos tornar sistema numericamente instavel 
+ ainda assim deve 
+ interceptacao onda casco computo pressoes antes fazer computo pressoes preciso encontrar superficie molhada corpo submerso cada passo tempo 
+ feito interceptando perfil onda incidente equacao casco navio 
+ procedimento obter superficie molhada brevemente comentado seguir 
+ primeiro determinada posicao relativa cada painel respeito superficie livre instantanea 
+ paineis completamente submersos mar embaixo perfil onda considerados computo pressoes 
+ paineis parcialmente submersos preciso reconstruir paineis considerando apenas parcela submersa 
+ onde cor verde indica parcela submersa corpo 
+ paineis completamente submersos paineis reconstruidos temse superficie molhada exata navio instante tempo 
+ seguinte passo tempo interceptacao feita novamente considerando avanco onda deslocamento paineis quais acompanham movimento corpo 
+ assim possivel ter cada passo tempo superficie molhada instantanea 
+ esquema interceptacao onda casco calculo integral pressoes empregada coordenada baricentro cada painel submerso painel reconstruido ver figura 
+ portanto pressao total resultante somatoria contribuicao pressoes avaliadas baricentros cada painel 
+ funcao rampa funcao rampa implementada presente algoritmo definida ≤ funcao empregada introduzir gradualmente sistema flutuante energia onda incidente depende amplitude onda quadrado ver figura 
+ feito minimizar efeito posicao inicial corpo respeito onda pode produzir respostas transientes fortes incompativeis fisica modelada 
+ funcao rampa desenvolvimento perfil onda 
+ interpolacao forca difracao forca difracao depende posicao relativa onda incidente corpo 
+ movimentos horizontais sistema flutuante fazem incidencia onda mude portanto frequencia encontro muda 
+ forca difracao utilizada algoritmo computada codigo wamit determinadas incidencias onda definidas previamente 
+ procedimento acurado introduzir forca difracao correspondente posicao relativa instantanea onda incidente corpo 
+ forca pode ser conhecida fazendose interpolacao valores obtidos wamit sendo incidencia instantanea onda conhecida atraves sistema referencia passeio lento 
+ principal vantagem incluir metodologia possibilidade poder fazer simulacoes numericas corpos flutuantes onde corpo obrigado fazer mudancas aproamentos mediante passeio lento devido acoes ondas incidentes 
+ codigo computacional dsstab codigo computacional dsstab programa simulacao movimentos sistemas flutuantes geral plataformas flutuantes navios boias outros 
+ dsstab integra equacoes movimento sistemas flutuantes dominio tempo utilizando metodo integracao numerica rungekutta ordem passo constante 
+ determinar superficie molhada instantanea casco utiliza metodologia descrita item 
+ utiliza funcao rampa descrita item 
+ dsstab faz parte projeto gerar codigo computacional incorporacao simulacao movimentos sistemas flutuantes linearidades 
+ projeto vem laboceano coppe centro pesquisas cenpes petrobras tecnologia computacao grafica tecgraf pucrio 
+ sendo desenvolvido parceira poder executar dsstab preciso gerar arquivos entrada programas meshgenerator sstab wamit dynasimtpn 
+ meshgenerator programa meshgenerator mg geradas malhas corpos serem testados dsstab assim malha corpo submerso superficie livre media ser rodada programa wamit 
+ mg desenhada geometria computacional corpo ser discretizada paineis sendo eleicao usuario refinamento malha corpo outras palavras escolhido tamanho numero paineis 
+ malha cilindro paredes verticais gerada meshgenerator 
+ sstab programa sstab definidos dados inerciais corpos serem testados dsstab posicao centro gravidade massa matriz inercia assim posicao sistemas referencia navio calado 
+ wamit mencionado capitulo anterior codigo computacional wamit empregado obter forcas devido potencias lineares radiacao difracao 
+ wamit emprega modelo baseado teorema green derivar equacoes integrais potenciais velocidades radiacao difracao contorno parte submersa corpo 
+ maiores detalhes podem ser encontrados capitulo manual usuario wamit 
+ porem caso forca difracao computada wamit fornece diretamente forca difracao atuante corpo lugar fornece soma forcas froudekrylov difracao chama soma forca difracao 
+ preciso empregar metodologia especial obter forca difracao 
+ metodologia obtencao forca difracao consiste retirar parcela forca froudekrylov linear valor forca excitacao fornecido wamit 
+ pode ser feito computando forca froudekrylov linear feito wamit computando forca onda superficie livre media desprezando movimentos corpo 
+ assim forca froudekrylov linear computada pode ser retirada valor soma fornecido wamit deixando apenas valor forca difracao 
+ dsstab faz operacao automaticamente antes inicio cada simulacao 
+ dynasim tpn dynasimtpn modeladas linhas ancoragem sistemas flutuantes serem testados dsstab 
+ dados entrada requeridos coordenadas fairleads ancoras comprimento diametro modulo rigidez peso linhas dentre outros 
+ simulacoes movimento dsstab carregados arquivos entrada dsstab preciso selecionar onda requerida simulacao 
+ sendo parametros entrada onda amplitude frequencia direcao incidencia 
+ definidos tempo duracao funcao rampa passo tempo integracao numerica tempo total simulacao 
+ finalmente selecionados graus liberdade serem considerados durante simulacao numerica 
+ dados saida dsstab series temporais movimentos translacionais rotacionais corpo assim series temporais velocidades 
+ adicionalmente dsstab fornece series temporais todas forcas avaliadas durante simulacao numerica 
+ deve ser mencionado respostas dsstab podem sofrer grande influencia passo tempo funcao rampa malha utilizadas durante simulacao apesar fato parametros nenhuma relacao fisica governa movimentos sistemas flutuantes serem somente parametros numericos 
+ intuito ilustrar influencia desses parametros respostas simulacoes vaise utilizar corpo geometria simples caixa retangular 
+ geometria desse corpo pode ser observada figura 
+ empregado navio tipo vlcc cujos dados podem ser achados seguinte capitulo 
+ dados inerciais caixa retangular assim raos movimento podem ser encontrados apendice 
+ influencia passo tempo selecao passo tempo pode comprometer grandemente resultados simulacao numerica 
+ passo tempo parametro esquema numerico integracao quanto menor sistema dinamico estavel 
+ especial cuidado deve ser tomado modos movimento onde forcas governam movimento pequenas devido tendem ser instaveis outros modos 
+ exemplo caixa retangular mar popa forcas direcao surge produzidas principalmente forca onda incidente difracao amortecimento potencial 
+ regioes onde influencia amortecimento potencial minima equilibrio forcas gera forca resultante pequena pode alterar comportamento surge passo tempo escolhido apropriadamente 
+ unica diferenca simulacoes passo tempo sendo periodo feitos simulacoes forca amortecimento potencial praticamente nula 
+ simulacao menor passo tempo representou corretamente comportamento surge caixa retangular pequena deriva media frente 
+ outro lado simulacao passo relativamente grande deu deriva surge direcao contraria incidencia ondas 
+ influencia passo tempo deriva surge mar popa 
+ podese concluir antes fazer alguma simulacao numerica deve ser feita analise convergencia garantir coerencia respostas todos modos movimento 
+ influencia funcao rampa consequencias usar funcao rampa simulacao podem ser observadas figura 
+ nessa figura simulacao utilizou rampa experimentou acao onda incidente desde primeiro instante simulacao decorrendo forca resultante direcao negativa devido posicao relativa corpo respeito onda 
+ produz movimento inicial sentido corpo 
+ determinado tempo efeito onda corrigiu deriva movimento surge 
+ influencia funcao rampa simulacoes figura 
+ pode ser apreciado efeito funcao rampa minimizar resultados transientes inicio simulacoes geralmente altera comportamento final velocidade deriva surge 
+ influencia malha discretizacao paineis superficie corpo fundamental calculo pressoes hidrostaticas hidrodinamicas 
+ porem discretizacao deve ser feita cuidado garantindo criacao malha adequada simulacoes numericas 
+ comumente aceito tamanho paineis deve ter relacao comprimento onda incidente garantir adequada simulacao 
+ neste caso vamos considerar valor limite relacao sim vamos considerar perfil onda pode interceptar duas vezes painel vide figura 
+ fato garante boa relacao tamanho paineis comprimento onda incidente 
+ outro lado alem considerar tamanho adequado paineis devese garantir correta distribuicao paineis superficie corpo ademais distribuicao deve representar forma acurada curvatura geometria corpo toda superficie 
+ temse duas malhas distintas navio 
+ podese notar pequeno problema quase imperceptivel representacao curvatura superficie corpo assim uniao paineis 
+ problema uniao paineis pode incorrer desequilibrio forcas hidrostaticas devido forcas computadas mediante integral volume 
+ mostra teste feito duas malhas figura 
+ teste consistiu simular movimentos navio onda amplitude zero 
+ devido desequilibrio forcas originado errada discretizacao malha figura 
+ gerada forca hidrostatica resultante direcao negativa portanto navio desenvolveu movimento 
+ entanto malha figura 
+ resultou nenhum movimento espurio 
+ malha corretamente discretizada 
+ malha discretizada forma incorreta 
+ influencia malha simulacoes 
+ descricoes linearidades dsstab linearidades dsstab produzidas consideracao termos inerciais casco segunda ordem termo velocidade quadratica equacao bernoulli computo pressoes superficie livre instantanea influencia movimentos corpo integracao pressoes sobre superficie efeito produzido sistema ancoragem 
+ sendo ultimos tres fenomenos relevantes 
+ intencao ilustrar importancia linearidades simulacoes movimentos sistemas flutuantes utilizada caixa retangular item anterior assim corpo cilindrico paredes verticais ver figura 
+ alem desses corpos utilizada geometria navio tipo portacontentor 
+ caracteristicas todos corpos podem ser encontradas apendice 
+ descricao linearidades devido forca hidrostatica forca denominada dsstab fk resultante integracao pressao hidrostatica sobre superficie molhada instantanea 
+ teoria linear forcas restauracao consideradas funcoes harmonicas modos restaurativos movimento nula outros modos movimento 
+ expressoes principais forcas momentos restauracao hidrostatica teoria linear ∆ ∆ ∙ ∙ ∙ seguir mostramse algumas comparacoes forcas restauracao lineares forcas restauracao computadas dsstab caixa retangular 
+ forca restauracao fig 
+ momento restauracao fig 
+ momento restauracao principais diferencas resultados computo forca hidrostatica teoria linear linear dsstab diferenca amplitudes forca diferenca presente forca hidrostatica computada todos modos movimento restaurativos sendo magnitude dessa diferenca pode ser valor minimo caso corpo geometria simples valor consideravel corpo geometria complexa 
+ caso forcas computadas modos heave pitch forca hidrostatica apresenta periodo muda lentamente tempo ver figuras 
+ tipo comportamento caracteristico sistema dinamico linear 
+ caso forca hidrostatica heave resposta linear encontra deslocada verticalmente respeito forca hidrostatica linear devido corpo desenvolveu deriva vertical aspecto comentado seguintes secoes 
+ finalmente modo roll momento hidrostatico computado dsstab diferente zero sendo forca hidrostatica linear onda proa nula 
+ porem momento obtido suficientemente grande iniciar movimento direcao roll 
+ agora mostradas algumas comparacoes forcas restauracao lineares forcas restauracao computadas dsstab navio tipo portacontentor 
+ deve ser mencionado corpo apresenta diferenca significativa geometria proa popa comparado caixa retangular onde proa popa mesmas caracteristicas geometricas 
+ forca restauracao fig 
+ momento restauracao fig 
+ momento restauracao devido acurada representacao volume submerso forca hidrostatica computada corpo assimetria longitudinal pode apresentar maiores diferencas respeito teoria linear modos movimento heave pitch podese notar assimetrias respostas respeito forcas hidrostaticas vide figuras 
+ novamente resposta linear heave encontra deslocada verticalmente respeito forca hidrostatica linear 
+ novo resposta roll nula diferentemente resposta linear agora desenvolvimento momento hidrostatico roll caracteristico fenomeno conhecido ressonancia parametrica ressonancia parametrica fenomeno caracterizado incremento periodico modo movimento diretamente excitado caso sistemas flutuantes causa comum ressonancia parametrica variacao periodica momento restaurativo hidrostatica roll 
+ sendo magnitude momento obtido atinge magnitudes suficientemente grandes iniciar movimento direcao roll 
+ descricao linearidades devido forca froudekrylov linearidade produzida computo pressao onda tres origens computo pressao incidente onda superficie livre instantanea inclusao termo velocidade quadratica equacao bernoulli fato corpo possuir deslocamentos relativos onda 
+ entanto teoria linear forca devido integracao pressao onda incidente forca froudekrylov calculada apenas superficie livre media desprezando movimento corpo 
+ mencionado segundo capitulo dsstab duas metodologias calculo pressoes onda 
+ primeira metodologia chamada dsstab pt emprega equacao calculo pressao onda 
+ segunda metodologia chamada masn emprega equacao calculo pressao onda 
+ nomenclatura dsstab forca devido integral pressao onda incidente chamada fk termo segunda ordem equacao bernoulli chamado fk 
+ ademais forca froudekrylov linear chamada fk linear 
+ vaise mostrar algumas comparacoes forca fklinear duas fk computadas dsstab caixa retangular 
+ forca froudekrylov fig 
+ forca froudekrylov fig 
+ momento froudekrylov principal caracteristica forcas consideradas lineares lineares defasagem series temporais sendo forca froudekrylov calculada duas metodologias mesma defasagem respeito fk linear ver figuras 
+ forcas froudekrylov computadas duas metodologias lineares encontram levemente deslocadas verticalmente vide figura 
+ significa existe forca media direcao positiva maiores detalhes discutidos seguintes seccoes empregando teste 
+ caso forca computada forcas computadas duas metodologias lineares encontram deslocadas verticalmente direcao negativa 
+ sendo forca computada metodo pt diferenca maior forca linear respeito forca computada metodo masn devido diferenca condicao contorno superficie livre decorrente cada metodologia 
+ porem sendo deslocamento distinto ambas metodologias podese notar existe deriva media direcao negativa deriva discutida seccao 
+ caso momento froudekrylov calculado pitch momentos computados ambas metodologias mesmas caracteristicas apresentam mesma assimetria serie temporal pequena diferenca amplitudes 
+ deriva dsstab teoria linear movimentos horizontais possuem deriva oscilam harmonicamente media zero devido excitados forcas harmonicas primeira ordem 
+ estudos completos fenomeno deriva apresentado pinkster 
+ modelo linear segunda ordem pinkster forcas integradas partir equacao bernoulli incluindo termo segunda ordem 
+ definido calculado potencial segunda ordem potencial satisfazer equacao governante fluido mesmas condicoes contorno potencial primeira ordem 
+ alem disso dominio integracao superficie molhada corpo considerada movel dividida duas partes parte constante superficie molhada navio calado medio parte oscilatoria envolve perfil instantaneo onda calado medio 
+ modelo descrito pinkster descreve quantidades somatoria contribuicoes distintas ordens grandeza metodologia conhecida metodo perturbacoes onde forca resultante integracao pressoes zero primeira segunda ordens define onde numero pequeno tal queε≪ representa forca hidrostatica forca fluida primeira ordem ef forca fluida segunda ordem 
+ lado forca fluida segunda ordem resultante somatoria todas forcas segunda ordem incluem seguintes contribuicoes altura relativa perfil onda incidente termo segunda ordem equacao bernoulli produto gradiente potencial primeira ordem movimentos primeira ordem acoplamento inercial contribuicao potencial segunda ordemф 
+ contribuicoes forca segunda ordem produzem deriva modelo descrito pinkster 
+ entanto dsstab contribuicoes intrinsecamente definidas algoritmo devido computo pressoes superficie livre instantanea inclusao efeitos movimento corpo nesse calculo 
+ unica contribuicao levada conta dsstab contribuicoes potenciais segunda ordem associados onda incidente irradiacao difracao 
+ devido inclusao intrinseca componentes descritas modelo pinkster dsstab desenvolve movimentos deriva apesar computar diretamente termo segunda ordem equacao bernoulli correspondente potencial onda incidente 
+ podese afirmar devido fato forcas onda computadas dsstab funcoes harmonicas simetricas devido formulacao linear criam forca media resultante faz corpo derivar determinada direcao 
+ assimetria pode ser observada item anterior figuras 
+ onde existem medias resultantes forca fk direcao positiva negativa respectivamente 
+ deriva horizontal figuras 
+ mostram derivas direcao surge sway figuras podese notar periodo menor respectivamente 
+ nessas correspondente periodo onde movimentos verticais significativos ver raos movimentos anexo deriva dois sentidos valor consideravelmente elevado 
+ outro lado periodo maior correspondente periodo onde movimentos verticais quase nulos deriva dois sentidos pequena comparada deriva obtida periodo menor 
+ desses resultados podese notar deriva horizontal forte dependencia modos verticais movimento 
+ deriva sway fig 
+ deriva surge figuras 
+ mostram series temporais medias forcas fk fk fk onda longitudinal popa 
+ nessas figuras podese notar forca fk forca determina direcao deriva surge corpo 
+ sendo valor media fk periodo menor claramente valor positivo portanto corpo experimenta forca resultante direcao media forca fk 
+ outro lado media forca fk periodo maior valor quase nulo portanto deriva corpo igualmente quase nula 
+ medias forcas onda popa fig 
+ medias forcas onda popa figuras 
+ mostram series temporais medias forcas fk fk fk onda traves χ° 
+ notese comportamento media forca fk semelhante caso onda longitudinal sendo periodo menor onde ocorre deriva sway media forca fk positiva caso periodo maior media quase nula 
+ medias forcas onda traves fig 
+ medias forcas onda traves fig 
+ raos forcas deriva media surge sway respostas deriva surge sway mostradas nesta seccao certa equivalencia teoria linear pequenas perturbacoes 
+ mostra raos forcas deriva media calculadas wamit figura podese notar periodo ts ambas forcas deriva media surge sway valor distinto zero sendo periodo algoritmo prediz movimentos deriva tanto surge sway 
+ mostrado forca deriva media surge maior forca deriva media sway concordancia simulacoes numericas obtidas algoritmo 
+ caso periodo ts wamit prediz forca deriva media proxima zero tanto surge sway sendo simulacoes numericas algoritmo predizem pequeno movimento deriva dois graus liberdade 
+ exemplo dando inspecao detalhada velocidade surge obtida simulacao feita periodo ts ver figura 
+ velocidade surge ciclo movimento experimenta pequena media positiva valor aproximado 
+ significa corpo desloca lentamente velocidade 
+ sendo caixa atinge deslocamento proximo representa cerca comprimento 
+ resultado algoritmo periodos maiores deve ser avaliado maior rigorosidade considerando modelo desenvolvido algoritmo linear focado descrever tao acuradamente fenomenos lineares governam movimentos deriva fenomenos lineares decorrentes geometria submersa instantanea corpo 
+ deriva vertical inclusao termo segunda ordem equacao bernoulli assim computo pressoes onda superficie livre geram deriva vertical sistema flutuante periodos onde movimentos verticais intensos ver figura 
+ periodos movimentos verticais menos intensos deriva vertical desprezivel ver figura 
+ movimento heave onda popa 
+ movimento heave onda popa 
+ mostramse media forcas fk fk dsstab simulacao figura 
+ metodos pt masn respectivamente 
+ duas figuras podese notar media forca fk relevancia media forca fk 
+ influencia termo segunda ordem equacao bernoulli pode ser observado figura 
+ onde efeitos descartados simulacao numerica mesmas condicoes simulacao mostrada figura 
+ podese notar unica simulacao apresentou deriva vertical simulacao feita metodo pt 
+ compativel media forca fk metodo pt figura 
+ onde fk metodo pt pequena media negativa 
+ novamente devido diferenca condicao contorno superficie livre decorrente cada metodologia 
+ medias forcas metodologia pt fig 
+ medias forcas metodologia masn fig 
+ movimento heave fk onda popa 
+ amarracoes principal objetivo introduzir sistema ancoragem anular limitar movimento deriva sistemas flutuantes 
+ feito introduzindo forcas restaurativas opoem movimento deriva 
+ linhas ancoragem fornecem forcas restauracao movimentos restaurativos principalmente movimentos planares surge sway 
+ podem ser apreciados efeitos sistema ancoragem deriva corpo cilindrico paredes verticais 
+ mostram duas series temporais movimento surge serie cor azul simulada corpo livre sistema ancoragem serie cor vermelha simulada sistema ancoragem 
+ influencia sistema ancoragem simulacoes sistemas lineares desacoplados forcas restaurativas produzidas linhas ancoragem interferem outros modos movimento 
+ entanto caso modelo matematico dsstab alem interferir deriva sistemas flutuantes inclusao sistema ancoragem poderia introduzir forcas adicionais desfavoraveis outros graus movimento diferentes planares poderia acontecer realidade 
+ mostra influencia sistema ancoragem movimento roll corpo cilindrico 
+ nessa figura mostram series temporais movimento roll duas condicoes primeira corpo cilindrico livre sistema ancoragem segunda corpo cilindrico sistema ancoragem 
+ momento roll onda proa hm ts podese notar mera inclusao sistema ancoragem modifica resposta roll criando resposta ressonante modo sendo excitado diretamente onda incidente ressonancia parametrica 
+ mostram series temporais momentos restauracao onda resultante momento devido linhas ancoragem simulacoes sistema ancoragem sistema ancoragem respectivamente 
+ momento roll onda proa hm ts fig 
+ momento roll linhas ancoragem onda proa hm ts figura 
+ podese notar desenvolvimento momentos direcao roll corpo encontra livre desprezivel tanto corpo desenvolve nenhuma movimentacao direcao roll ver figura 
+ evidente desenvolvimento momentos direcao roll carater fortemente ressonante faz corpo movimente direcao roll 
+ fazendo inspecao detalhada momentos ver figura 
+ faixa tempo onde movimento roll encontra estabelecido queda evidencia interacao momento devido onda incidente momento resultante linhas ancoragem 
+ fenomeno instabilidade neste caso amplificacao movimento roll parece ser especialmente forte periodo onda testado assim rigidez configuracao linhas ancoragem testadas significaria caracteristicas governam fenomeno 
+ momento roll linhas ancoragem onda proa hm ts fenomeno instabilidade apresentado nesta seccao parte estudo preliminar feito codigo dsstab 
+ apesar fato ter testes experimentais apoiem existencia desse fenomeno ainda deve ser efetuado estudo detalhado 
+ baseado descrito neste capitulo incorporacao linearidades modelo dsstab permite simulacoes numericas movimentos corpos flutuantes forma realista 
+ ainda assim devese manter sempre presente limitacoes restricoes numericas modelo apresenta 
+ porem modelo implementado dsstab permite estudo estabilidade ondas completo levando conta diversos aspectos dinamica navios comumente ignorados especialmente fenomenos ressonantes lineares decorrentes variacao geometria submersa corpo fenomenos decorrentes interacao corpo linhas ancoragem 
+ capitulo validacao testes experimentais neste capitulo mostram comparacoes respostas movimentos corpo obtidas codigo dsstab bateria testes experimentais modelo escala reduzida casco fpso 
+ generalidades codigo computacional descrito capitulo tres empregado simular movimentos navio tipo vlcc ingles large crude carrier transformado unidade fpso ingles floating production storage offloading sistema ancoragem ondas regulares traves proa 
+ resultados simulacoes dsstab comparados testes experimentais feitos previamente laboceano intuito validar algoritmo 
+ feitas comparacoes codigo comercial wamit® respostas mar traves 
+ navio fpso navio plataforma tipo fpso conhecida plataforma auto suficiencia opera ancorada campo petrolifero albacora leste norte bacia campos rj 
+ transformacao consistiu duas fases primeira fase consistiu conversao petroleiro tipo vlcc felipe camarao unidade fpso segunda fase consistiu instalacao implementacao diversos modulos estaleiro mauajurong niteroi rj concluido dezembro 
+ entrada operacao unidade janeiro comecando producao dia abril 
+ principais caracteristicas vista transversal linhas forma navio mostradas tabela 
+ curvas coeficientes hidrodinamicos raos movimento podem ser encontrados apendice 
+ caracteristicas navio propriedade comprimento boca pontal calado deslocamento altura metacentrica transversal momento inercia roll momento inercia pitch momento inercia yaw periodo natural heave periodo natural roll periodo natural pitch simbolo valor unidade 
+ linhas forma navio 
+ testes experimentais laboceano modelo escala reduzida navio submetido previamente bateria testes experimentais laboceano parte projeto pesquisa petrobras 
+ escala ensaio vide figura 
+ resultados desses testes tomados validar codigo computacional dsstab informacoes testes experimentais mostradas tabelas 
+ ondas traves proa respectivamente 
+ primeira coluna indica numero figura mostra comparacao segunda coluna indica codigo cada teste experimental definido laboceano 
+ modelo empregado testes experimentais fig 
+ testes mar traves 
+ testes mar proa 
+ simulacoes numericas todas simulacoes numericas feitas passo tempo 
+ segundos tempo duracao funcao rampa segundos 
+ mostra esquema navio sistema ancoragem utilizado simulacoes numericas 
+ esquema sistema ancoragem 
+ simulacoes ondas traves figuras 
+ mostradas comparacoes resultados numericos experimentais ondas traves correspondentes tabela 
+ mostradas comparacoes movimentos sway heave roll devido modos relevantes ondas traves 
+ correspondem bateria testes nova realizada navio mesmas condicoes carga ondas periodo igual periodo natural roll navio 
+ devese notar nenhum esforco feito considerar efeitos transientes comparacoes devido principal objetivo nesta validacao comparar respostas permanentes navio 
+ podese observar todos casos movimento oscilatorio sway 
+ geral amplitudes primeira ordem boa correlacao assim tendencia final deriva media sway modelo 
+ porem oscilacoes grandes periodos observadas testes experimentais replicadas simulacoes numericas 
+ geral movimentos heave boa concordancia 
+ simulacoes numericas movimento roll ondas pequena amplitude tendencia serem maiores roll experimental possivelmente devido deficiencia momento amortecimento roll 
+ resultados lineares codigo wamit incluidos comparacoes seguem mesma tendencia dsstab 
+ condicoes grandes amplitudes roll figuras 
+ existe boa concordancia resultados dsstab experimentais mostrando melhoras significativas respeito wamit 
+ podese observar figuras 
+ series temporais movimento experimental roll periodos menores testados afastados ressonancia pequena media negativa sugere influencia pequenos efeitos segunda ordem 
+ assimetrias presentes figuras 
+ medias obtidas partir dsstab iguais zero 
+ sway heave roll onda traves 
+ sway heave roll onda traves 
+ sway heave roll onda traves 
+ sway heave roll onda traves 
+ sway heave roll onda traves 
+ sway heave roll onda traves 
+ sway heave roll onda traves 
+ sway heave roll onda traves 
+ simulacoes ondas proa figures 
+ mostram comparacoes resultados numericos experimentais ondas proa correspondentes ondas tabela 
+ mostra instante simulacao mar proa 
+ novamente devido maior relevancia ondas proa mostradas comparacoes movimentos surge heave pitch 
+ comentarios previos sob comportamento respostas sway ondas traves agora podem ser observados respostas surge ondas proa 
+ previsto condicoes ondas proa movimento lento surge pequeno oscilacoes frequencia natural surge ocorrem testes experimentais 
+ maioria casos possivel observar oscilacoes tendencia desaparecer infelizmente testes duracao necessaria poder verificar forma conclusiva 
+ simulacoes numericas movimentos heave pitch boa concordancia resultados experimentais 
+ porem deve ser mencionado quase todas respostas navio testado pequenas amplitudes ondas proa 
+ simulacao mar proa navio aw 
+ surge heave pitch onda proa 
+ surge heave pitch onda proa 
+ surge heave pitch onda proa 
+ surge heave pitch onda proa 
+ surge heave pitch onda proa 
+ surge heave pitch onda proa 
+ surge heave pitch onda proa 
+ surge heave pitch onda proa 
+ capitulo conclusoes recomendacoes 
+ generalidades presente trabalho apresentado discutido modelo dsstab algoritmo numerico simulacao movimentos seis graus liberdade 
+ apenas simulacoes velocidade avanco sistemas flutuantes aqui tratadas 
+ algoritmo soluciona equacoes movimento sistemas flutuantes dominio tempo 
+ proposito dar solucao equacoes movimento algoritmo avalia todas forcas consideradas atuantes corpo cada passo tempo 
+ algoritmo calcula forcas restauracao mediante integracao volume submerso determinado intersecao perfil onda incidente corpo 
+ computo forca froudekrylov superficie livre instantanea apresentadas duas metodologias primeira metodologia proposta wheeler metodo streching estiramento perfil pressoes superficie livre instantanea segunda metodologia proposta kat metodo extrapolacao teoria linear superficie livre instantanea 
+ outro lado forcas hidrodinamicas radiacao difracao avaliadas considerandose corpo superficie media constante empregando codigo comercial wamit® 
+ momento amortecimento roll considerado linear sendo neste trabalho introduzido partir coeficientes obtidos mediante testes experimentais decaimento 
+ algoritmo pode incluir efeitos sistema ancoragem solucionando equacao catenaria cada passo tempo 
+ finalmente deve ser mencionado algoritmo avalia todas forcas descritas considerando movimento instantaneo corpo 
+ feitas simulacoes numericas tres corpos distintos intuito fazer descricao capacidades lineares algoritmo 
+ empregada caixa retangular intento ilustrar vantagens calculo forca hidrostatica mediante integracao volume exato geometria submersa corpo sendo alem desse corpo empregado navio tipo portacontentor ilustrar diferencas computo geometria exata submersa corpo geometria simples caixa corpo geometria complexa portacontentor 
+ mesma caixa retangular estudada proposito descrever codigo consegue desenvolver movimentos deriva horizontais verticais 
+ finalmente empregado cilindro paredes verticais monocoluna intencao mostrar influencia sistema ancoragem simulacoes movimentos corpos flutuantes 
+ ultimo algoritmo validado atraves comparacoes testes experimentais simulacoes numericas navio tipo fpso ancorado ondas traves proa 
+ comentario final autor deseja mencionar desenvolvimento algoritmo apresentado presente trabalho constante evolucao atualidade 
+ preciso mencionar durante elaboracao algoritmo experimentado alteracoes aprimoramentos significativos formulacao implementacao 
+ conclusoes recomendacoes gerais conclusoes gerais trabalho seguintes 
+ sobre modelacao matematica  modelo apresentado capaz fazer simulacoes movimentos seis graus liberdade sistemas flutuantes presenca ondas regulares 
+ caracteristicas principais modelo consideracao termos inerciais segunda ordem representacao exata geometria submersa corpo computo pressoes hidrostatica onda superficie livre instantanea inclusao efeitos sistema ancoragem ademais consideracao movimento instantaneo corpo computo forcas 
+ caracteristicas permitem modelacao fenomenos lineares 
+  representacao exata geometria submersa corpo permite calculo acurado forca hidrostatica restauracao respeito modelacao linear 
+ trabalho ressaltada capacidade modelo representar fenomeno ressonancia parametrica corpo suscetivel instabilidade 
+  computo pressao onda superficie livre instantanea assim consideracao movimentos corpo computo pressao onda permite modelo desenvolver movimentos deriva horizontais verticais 
+ sendo movimento deriva horizontal fortemente associado movimentos verticais heave pitch 
+ outro lado movimento deriva vertical encontra ligado termo linear segunda ordem equacao bernoulli 
+  inclusao modelacao efeitos sistema ancoragem atraves equacao catenaria permite simulacao movimentos sistemas ancorados 
+ comentada capacidade modelo representar instabilidades sistemas ancorados presenca ondas decorrentes interacao forcas externas forcas restaurativas linhas ancoragem 
+ sobre implementacao numerica  trabalho apresentadas principais consideracoes numericas implementadas algoritmo discutidas influencias simulacoes movimentos 
+  apontado passo tempo esquema integracao runge kutta quarta ordem forte influencia simulacao movimento surge podendo alterar direcao desse movimento escolhido passo tempo adequado 
+  discutida influencia funcao rampa simulacoes numericas determinandose influencia restrita estado transiente movimento alterando significativamente desenvolvimento final movimentos corpo 
+ funcao rampa minimiza efeitos posicao inicial corpo onda incidente 
+  trabalho mostrou malha problemas algumas unioes faces adjacentes gerada forca hidrostatica resultante altera simulacoes numericas devido calculo errado volume corpo 
+ sobre validacoes testes experimentais modelo apresentado neste trabalho avaliado meio comparacoes testes experimentais simulacoes numericas movimentos navio tipo fpso ancorado ondas traves proa 
+ geral obtida boa concordancia particularmente movimentos heave roll pitch 
+ caso movimentos horizontais tendencia final deriva experimental tende estar conformidade movimentos deriva dsstab 
+ lamentavelmente testes experimentais suficiente duracao fazer melhor comparacao 
+ movimentos horizontais primeira ordem amplitudes obtidas dsstab coerentes ensaios experimentais 
+ casos ondas traves quais navio fpso desenvolve fortes amplificacoes roll simulacoes feitas dsstab boa concordancia testes experimentais mostrando melhoria respeito resultados metodologia considera termos hidrostaticos froudekrylov lineares resultados wamit 
+ trabalhos futuros recomendase realizacao seguintes trabalhos futuros fazer estudo estabilidade numerica determinar esquema integracao numerica apropriado simulacoes comprometa demasiado tempo duracao simulacoes 
+ validar algoritmo testes experimentais diferentes geometrias condicoes ondas 
+ testes deverao permitir corpos serem estudados desenvolver movimentos complexos caracteristicas lineares 
+ validar algoritmo outros codigos lineares caracteristicas similares dsstab aqwanaut fredyn laidyn lamp wasim outros 
+ implementacao simulacoes numericas velocidade avanco incluir forcas produzidas superficies controle leme assim forcas produzidas propulsores 
+ implementar modelo integral convolucao levar conta efeitos memoria fluida acoes hidrodinamicas 
+ implementar modelacao risers investigar influencia movimentos corpos flutuantes presenca ondas 
+ implementar inclusao corpos flutuantes simulacoes numericas proposito estudar distintas configuracoes navios empregadas industria offshore 
+ implementar validar experimental numericamente simulacoes numericas ondas irregulares 
+ desenvolver estudo estabilidade corpos ancorados presenca ondas proposito determinar influencia sistema ancoragem movimentos desses corpos quais tipos geometrias suscetiveis desenvolver instabilidades 
+ desenvolver metodologia estudo respostas corpos flutuantes mares irregulares 
+ desenvolver metodologia analise estabilidade dinamica problemas relacionados variacao gm tais ressonancia parametrica perda pura estabilidade mares regulares irregulares partir respostas obtidas simulacoes numericas dsstab 
+ investigar influencia efeitos cargas externas cargas devido ingresso agua conves 
+ assim influencia cargas internas movimento fluido tanques sloshing 
+ forcas podem ser modeladas metodologias cfd serem introduzidas algoritmo forcas externas 
+ referencias bibliograficas abkowitz 
+ stability motion control ocean vehicles 
+ massachusetts united states america 
+ investigation parametric roll resonance regular waves using partly nonlinear numerical model ocean engineering 
+ time domain simulation symmetric ship motions waves international journal maritime engineering 
+ modern seakeeping computations ships proceedings th symposium naval hydrodynamics val reuil france pp 
+ stability safety ships risk capsizing 
+ sname jersey city isbn 
+ dynamics marine vehicles 
+ new york united states america john wiley sons inc 
+ impulse response function ship motions 
+ international symposium ship theory 
+ hamburg germany pp 
+ water wave mechanics engineers scientists advance series ocean engineering 
+ volume world scientific washington 
+ hydrodynamics highspeed marine vehicles cambridge university press 
+ time domain analysis large amplitude vertical motions wave loads journal ship research vol 
+ nonlinear wave induced responses ships irregular seas proceedings th international conference offshore mechanics arctic engineering omae lisbon 
+ new york asme vol 
+ ship structural loads induced abnormal wave conditions containership journal marine science technology vol 
+ alternative shape spar platforms use hostile areas offshore technology conference houston 
+ prediction ship roll damping state art 
+ naval architecture marine engineering university michigan report 
+ advanced dynamics marine structures 
+ new york united states america john wiley sons inc 
+ three dimensional analysis motion rigid ship waves ph 
+ thesis dep mech eng 
+ university college london london united kingdom 
+ ittc seakeeping committee report proceedings th international towing tank conference rio janeiro brazil 
+ delft university technology delft 
+ large amplitude ship motions capsizing severe sea conditions ph 
+ thesis university california berkeley 
+ notes rolling longitudinal waves shipbuilding progress vol 
+ nonlinear ship motions wave induced loads rankine method proceedings th symposium naval hydrodynamics trondheim norway pp 
+ time domain ship motions threedimensional rankine panel method ph 
+ thesis department ocean engineering massachusetts institute technology massachusetts 
+ dynamics marine craft maneuvering seakeeping advance series ocean engineering volume world scientific washington 
+ numerical solutions largeamplitude ship motions time domain proceedings th symposium naval hydrodynamics university michigan 
+ timedomain analysis floating bodies mild slope waves large amplitude proceedings th international worshop water waves floating bodies newfoundland canada 
+ sequential linear program automatic loading vessels 
+ proceedings stab conference rio janeiro brazil 
+ twostage approach determination nonlinear motions ship waves th osaka collouqium seakeeping perfomance ships osaka japan october 
+ certain types ships responses disclosed twostage approach ship dynamics archives civil mechanical engineering pp 
+ excitation combination modes associated parametric resonance waves 
+ proceedings th international ship stability workshop issw webb institute new york 
+ unstable ship motions resulting form strong nonlinear coupling 
+ ocean engineering vol 
+ occurrence mathieu instabilities vertical cylinders proceedings th international conference offshore mechanics arctic engineering omae estoril portugal 
+ investigacoes sobre teoria biliniar analise balanco transversal fpsos 
+ oceanica universidade federal rio janeiro rio janeiro rj brasil 
+ transverse stability ship longitudinal seaway 
+ journal ship research vol 
+ unstable ship motions resulting nonlinear coupling journal ship research vol 
+ low frequency second order wave exciting forces floating structures 
+ thesis ocean engineering deparment delft university technology delft netherlands 
+ desarrollos recientes nuevos criterios estabilidad intacta buques en olas simposio panamericano ingenieria naval transporte maritimo ingenieria portuaria lima peru 
+ new york united states america addisonwesley publishing company inc 
+ estabilidade dinamica navio modelo naolinear terceira ordem 
+ oceanica universidade federal rio janeiro rio janeiro rj brasil 
+ sobre dinamica linear balanco parametrico 
+ oceanica universidade federal rio janeiro rio janeiro rj brasil 
+ nonlinear time domain simulations technology seakeeping waveload analysis modern ship design abs technical papers 
+ designing parametric instability following seas ocean engineering vol 
+ wamit® user manual 
+ massachusetts institute technology massachusetts 
+ method calculating forces produced irregular waves journal petroleum technology vol pp 
+ apendice caracteristicas operadores respostas corpos analisados generalidades nesta seccao apresentadas principais caracteristicas geometricas assim operadores resposta rao corpos empregados presente trabalho 
+ omitidos raos movimento yaw devido serem despreziveis todos corpos testados numericamente neste trabalho 
+ caixa retangular corpo simples paralelepipedo representa nenhuma embarcacao construida sendo corpo desenhado aproximar caracteristicas navio fpso 
+ proposito criacao desse corpo avaliar algumas caracteristicas dsstab geometria simples 
+ principais caracteristicas corpo mostradas tabela 
+ representacao tridimensional corpo mostrada figura 
+ caracteristicas caixa retangular propriedade comprimento pontal calado deslocamento altura metacentrica transversal momento inercia roll momento inercia pitch simbolo valor unidade 
+ representacao tridimensional caixa retangular seguir mostrados operadores respostas lineares corpo surge sway heave roll pitch 
+ rao surge caixa retangular fig 
+ rao sway caixa retangular fig 
+ rao heave caixa retangular fig 
+ rao roll caixa retangular fig 
+ rao pitch caixa retangular monocoluna corpo caracterizado ser cilindro secao circular constante objeto estudo experimental neves al 
+ nesse trabalho reportado fenomeno ressonancia parametrica ondas regulares longitudinais determinadas configuracoes sistema ancoragem 
+ principais caracteristicas geometricas corpo mostradas tabela 
+ representacao tridimensional corpo mostrada figura 
+ caracteristicas monocoluna propriedade comprimento pontal calado deslocamento altura metacentrica transversal momento inercia roll momento inercia pitch simbolo valor unidade 
+ representacao tridimensional monocoluna seguir mostrados operadores respostas lineares corpo surge sway heave roll pitch 
+ rao surge monocoluna fig 
+ rao sway monocoluna fig 
+ rao heave monocoluna fig 
+ rao roll monocoluna fig 
+ rao pitch monocoluna portacontentor ntu navio tipico portacontentor grande porte caracterizado principalmente ter grande variacao geometria torno proa angulos flare proa pronunciados 
+ corpo objeto estudo rodriguez 
+ tese doutorado rodriguez estudado fenomeno ressonancia parametrica distintas geometrias incluindo navio 
+ caracteristicas principais navio mostradas tabela 
+ representacao tridimensional corpo mostrada figura 
+ caracteristicas portacontentor ntu propriedade comprimento pontal calado deslocamento altura metacentrica transversal momento inercia roll momento inercia empitch simbolo valor unidade 
+ representacao tridimensional portacontentor ntu seguir mostrados operadores resposta linear corpo surge sway heave roll pitch 
+ rao surge portacontentor ntu fig 
+ rao sway portacontentor ntu fig 
+ rao heave portacontentor ntu fig 
+ rao roll portacontentor ntu fig 
+ rao pitch portacontentor ntu navio fpso caracteristicas principais navio discutidas capitulo 
+ mostra representacao tridimensional navio 
+ representacao tridimensional fpso seguir mostrados operadores respostas lineares corpo surge sway heave roll pitch 
+ rao surge fpso fig 
+ rao sway fpso fig 
+ rao heave fpso fig 
+ rao roll fpso fig 

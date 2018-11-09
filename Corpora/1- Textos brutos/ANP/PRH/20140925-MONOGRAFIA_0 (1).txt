@@ -1,0 +1,5669 @@
+UNIVERSIDADE FEDERAL DO ESPÍRITO SANTO 
+
+CENTRO TECNOLÓGICO 
+
+GRADUAÇÃO EM ENGENHARIA MECÂNICA 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+HILTON MOULIN CALIMAN 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+AVALIAÇÃO EXPERIMENTAL DA VARIAÇÃO DA ENTROPIA DA INFORMAÇÃO 
+
+DE ESCOAMENTOS EM MEIOS POROSOS 
+
+ 
+
+PARTE I – DESENVOLVIMENTO DE FERRAMENTAL DE ANÁLISE 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+VITÓRIA 
+
+2014 
+
+ 
+
+ 
+
+ 
+
+ 
+
+HILTON MOULIN CALIMAN 
+
+ 
+
+ 
+
+ 
+
+AVALIAÇÃO EXPERIMENTAL DA VARIAÇÃO DA ENTROPIA DA INFORMAÇÃO 
+
+DE ESCOAMENTOS EM MEIOS POROSOS 
+
+ 
+
+PARTE I – DESENVOLVIMENTO DE FERRAMENTAL DE ANÁLISE 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Projeto  de  Graduação  apresentado  ao 
+Departamento  de  Engenharia  Mecânica 
+da  Universidade  Federal  do  Espírito 
+requisito  parcial  para 
+Santo,  como 
+obtenção  do 
+título  de  Engenheiro 
+Mecânico. 
+Orientador:  Prof.  Ms.  Rogério  Silveira  de 
+Queiroz. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+VITÓRIA 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+“A  leitura  de  todos  os  bons livros  é  como  uma 
+
+conversa  com  os  melhores  espíritos  dos 
+
+séculos passados,  que  foram  os  seus  autores, 
+
+e  até  uma  conversa estudada,  em  que eles só 
+
+nos revelam os seus melhores pensamentos.” 
+
+René Descartes 
+
+ 
+
+AGRADECIMENTOS 
+
+ 
+
+Gostaria  de  agradecer  à  Deus  que  sempre  me  iluminou  e  me  proporcionou  tantas 
+
+oportunidades e realizações em minha vida. 
+
+À todos que contribuíram de alguma forma para a minha formação, em especial: 
+
+Meus familiares que me apoiaram e me incentivaram sempre que foi preciso. 
+
+Ao  professor  orientador  Rogério  Silveira  de  Queiroz,  pelo  auxílio  durante  este 
+
+trabalho e durante todo o curso, não apenas à mim, mas à todos os seus alunos. 
+
+Ao  grande  amigo  Victor  Luiz  Gripa,  que  foi  um  parceiro  imprescindível  para  a 
+
+realização deste trabalho. 
+
+Aos  amigos  e  colegas  que  caminharam  junto  comigo  ao  longo  destes  cinco  anos, 
+
+proporcionando  momentos  incríveis  e  tornando  esta  jornada  uma  experiência  tão 
+
+enriquecedora. 
+
+Aos professores que nos deram tanto conhecimento, não apenas na área da ciência, 
+
+mas para a vida. 
+
+À Agência Nacional de Petróleo, Gás Natural e Biocombustíveis (ANP), pela grande 
+
+auxílio  e  incentivo  dado  aos  alunos  para  desenvolvimento  de  estudos  que  irão 
+
+contribuir para o avanço desta área tão relevante atualmente. 
+
+Obrigado. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RESUMO 
+
+ 
+
+O presente estudo apresenta o  desenvolvimento de uma ferramenta computacional 
+
+para  a  avaliação  e  caracterização  do  escoamento  de  fluidos  em  meios  porosos, 
+
+utilizando  conceitos  de  entropia  configuracional.  Esta  avaliação  é  realizada  através 
+
+de  processamento  de  imagens  obtidas  em  experimentos.  O  aplicativo  consiste  em 
+
+padronizar,  realizar  o  tratamento  das  imagens  e  a  partir  desta  calcular  a  entropia 
+
+binarizada. O trabalho ainda inclui testes de conceito do software e por fim a análise 
+
+dos resultados obtidos, além de sugestões para trabalhos futuros. 
+
+Palavras-chave: Entropia configuracional. Processamento de imagens. Meio poroso. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ABSTRACT 
+
+ 
+
+This  study  introduces  the  development  of  a  computational  tool  to  evaluate  and 
+
+characterize  the  fluids  flow  through  a  porous  media,  using  the  concept  of 
+
+configuration  entropy.  The  evaluation  is  done  through  the  processing  of  images 
+
+obtained  from  experiments.  The  application  consists  in  standardize,  perform  the 
+
+image  treatment  and  then  calculate  the  binarized  entropy.  This  work  also  includes 
+
+the software concept proof, result analysis and proposals for future works. 
+
+Keywords: Configuration entropy. Image processing. Porous media. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+LISTA DE FIGURAS 
+
+ 
+
+Figura 1. Falha geológica aprisionando fluidos. Fonte: Paleontological Research 
+
+Institution. .................................................................................................................. 19 
+
+Figura 2. Reservatório típico de petróleo e gás. Fonte: PetroGasNews (2011) ........ 20 
+
+Figura 3. Ilustração da molhabilidade com ângulos de contato para diferentes fluidos.  
+
+Fonte: Ahmed (2006)................................................................................................. 23 
+
+Figura 4. Representação da tensão superficial entre ar e água num tubo capilar.  
+
+Fonte: Ahmed (2006)................................................................................................. 24 
+
+Figura 5. Entropia de uma fonte de informação binária. Fonte: Shannon (1965) ...... 41 
+
+Figura 6. Fotografia de uma população de 625 partículas que interagem numa região 
+
+de tamanho 50x50 e que representam uma microestrutura bifásica em evolução. 
+
+Fonte: Siclen (1997). ................................................................................................. 43 
+
+Figura 7. (A) Imagem de um filme granular de ouro acima do limite de percolação, 
+
+60% de fração metálica e comprimento ótimo de entropia de 100nm. (B) Entropia da 
+
+informação normalizada para diferentes tamanhos de janela. Fonte: Andraud e Lafait 
+
+(1998). ....................................................................................................................... 45 
+
+Figura 8. Exemplo de histograma de uma imagem de tons de cinza. ....................... 47 
+
+Figura 9. Tela inicial do programa. ............................................................................ 50 
+
+Figura 10. Diagrama de blocos do programa. ........................................................... 50 
+
+Figura 11. Tela da sub-rotina "Padroniza Nomes"..................................................... 51 
+
+Figura 12. Imagem padrão dos experimentos testados. Fonte: Strey (2012). ........... 52 
+
+Figura 13. Tela da sub-rotina "Tratamento Inicial". ................................................... 53 
+
+Figura 14. Tela de checagem do resultado da sub-rotina "Tratamento Inicial". ........ 54 
+
+Figura 15. Tela de mudança de parâmetros da sub-rotina “Tratamento Inicial”. ....... 54 
+
+Figura 16. Imagem após o tratamento inicial. ............................................................ 55 
+
+Figura 17. Tela da sub-rotina "Corta e Binariza". ...................................................... 56 
+
+Figura 18. (A) Imagem binarizada sem filtro. (B) Imagem binarizada com filtro. ....... 57 
+
+Figura 19. Tela da sub-rotina "Entropia Binarizada". ................................................. 57 
+
+Figura 20. Tela de aviso de parâmetros não possíveis. ............................................ 58 
+
+Figura 21. Exemplo de gráfico entropia e janela ótima em função das imagens. ...... 61 
+
+Figura 22. Exemplo da evolução da entropia de tons de cinza. ................................ 63 
+
+Figura 23. Disposição simplificada das nove janelas em uma imagem de tons de 
+
+cinza. ......................................................................................................................... 64 
+
+Figura 24. Entropia normalizada e janela ótima do experimento 03. ......................... 67 
+
+Figura 25. Entropia normalizada e janela ótima do experimento 20. ......................... 67 
+
+Figura 26.Entropia normalizada e janela ótima do experimento 22. .......................... 68 
+
+Figura 27. Exemplo de imagens da dispersão de uma substância líquida em um 
+
+meio líquido. .............................................................................................................. 70 
+
+Figura 28. Entropia de tons de cinza do experimento 06. ......................................... 70 
+
+Figura 29. Entropia de tons de cinza do experimento 14. ......................................... 71 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+LISTA DE TABELAS 
+
+ 
+
+Tabela 1 - Unidades de Medida de Informação.........................................................39 
+
+Tabela 2 – Exemplo de Resultados de Entropia Não Normalizada...........................58 
+
+Tabela 3 – Exemplo de Resultados de Entropia Binarizada......................................59 
+
+Tabela 4 – Exemplo de Resultados de Entropia de Tons de Cinza...........................61 
+
+Tabela 5 – Comparação dos Resultados do Programa com os da Bibliografia.........67 
+
+Tabela 6 – Esquema de Organização dos Dados......................................................75 
+
+Tabela 7 – Graus de Liberdade dos Fatores..............................................................79 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+        
+
+        
+
+     
+
+         
+
+LISTA DE SÍMBOLOS 
+
+Porosidade 
+
+Soma do volume dos poros 
+
+Volume total 
+
+Porosidade absoluta 
+
+Porosidade efetiva 
+
+                    
+
+Volume de poros interligados 
+
+  
+
+  
+
+  
+
+    
+
+  
+
+  
+
+  
+
+  
+
+   
+
+  
+
+  
+
+  
+
+   
+
+  
+
+  
+
+  
+
+   
+
+  
+
+  
+
+  
+
+  
+
+  ( ) 
+
+  
+
+Saturação 
+
+Volume 
+
+Ângulo de contato da interface líquido sólido 
+
+Tensão superficial, tensão interfacial 
+
+Raio do tubo capilar 
+
+Altura da coluna de líquido 
+
+Aceleração da gravidade 
+
+Massa específica 
+
+Pressão capilar 
+
+Permeabilidade 
+
+Velocidade aparente do fluxo fluido 
+
+Viscosidade do fluido 
+
+Queda de pressão 
+
+Comprimento do canal 
+
+Taxa de fluxo 
+
+Área da seção transversal do canal 
+
+Compressibilidade 
+
+Calor 
+
+Energia 
+
+Trabalho 
+
+Média da soma dos quadrados da energia das partículas 
+
+Probabilidade do estado quântico 
+
+Número do estado quântico, quantidade de partículas ou 
+
+pixels pretos em uma janela amostral 
+
+  
+
+  
+
+ (  ) 
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+   
+
+  ( ) 
+  ( ) 
+
+  
+
+ ( ) 
+
+  ( ) 
+
+   
+   
+
+       
+
+   
+
+Instante de tempo 
+
+Entropia da informação 
+
+Função arbitrária em    
+
+Constante arbitrária 
+
+Informação 
+
+Evento 
+
+Fonte de eventos 
+
+Tamanho do lado da janela amostral 
+
+Total de partículas da imagem 
+
+Tamanho do lado da imagem 
+
+Entropia da informação para o sistema perfeitamente 
+
+aleatório 
+
+Probabilidade real 
+
+Entropia da informação normalizada 
+
+Tamanho do lado da janela amostral 
+
+Quantidade de amostras de uma imagem 
+
+Quantidade de janelas amostrais de lado   contendo   pixels 
+
+pretos 
+
+Tamanho de janela amostral ótimo 
+
+Taxa de variação da entropia da informação normalizada 
+
+Valores observados para cada combinação de fatores 
+
+Soma dos quadrados 
+
+           
+
+Quantidade de níveis dos fatores 
+
+Graus de liberdade 
+
+Média da soma dos quadrados 
+
+Resultado do teste F. 
+
+   
+
+   
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+SUMÁRIO 
+
+ 
+
+1 
+
+INTRODUÇÃO .................................................................................................... 14 
+
+1.1  MOTIVAÇÃO ................................................................................................ 14 
+
+1.2  REVISÃO BIBLIOGRÁFICA ......................................................................... 14 
+
+1.3  OBJETIVOS ................................................................................................. 16 
+
+1.3.1  Objetivos Gerais .................................................................................... 16 
+
+1.3.2  Objetivos Específicos ............................................................................ 16 
+
+1.4  ESTRUTURA DO TRABALHO ..................................................................... 17 
+
+2  FUNDAMENTAÇÃO TEÓRICA .......................................................................... 18 
+
+2.1  O PETRÓLEO .............................................................................................. 18 
+
+2.1.1  Formação do Petróleo ........................................................................... 18 
+
+2.1.2  Migração do Petróleo ............................................................................. 18 
+
+2.1.3  Acumulação do Petróleo ........................................................................ 19 
+
+2.2  A ROCHA RESERVATÓRIO E SUAS PROPRIEDADES ............................ 20 
+
+2.2.1  Definição de reservatório ....................................................................... 21 
+
+2.2.2  Porosidade (ϕ) ....................................................................................... 21 
+
+2.2.2.1  Porosidade Absoluta (ϕabs) ................................................................. 21 
+
+2.2.2.2  Porosidade Efetiva (ϕefetiva) ................................................................. 22 
+
+2.2.3  Saturação .............................................................................................. 22 
+
+2.2.4  Molhabilidade ......................................................................................... 22 
+
+2.2.5  Tensão Superficial e Tensão Interfacial ................................................. 23 
+
+2.2.6  Pressão Capilar ..................................................................................... 25 
+
+2.2.7  Permeabilidade ...................................................................................... 25 
+
+2.2.8  Compressibilidade ................................................................................. 27 
+
+2.3  MECANISMOS DE PRODUÇÃO E A RECUPERAÇÃO ADICIONAL .......... 27 
+
+2.3.1  Mecanismos de Produção ..................................................................... 27 
+
+2.3.2  Recuperação Adicional .......................................................................... 28 
+
+2.4  PRINCÍPIOS TERMODINÂMICOS .............................................................. 29 
+
+2.4.1  Primeira Lei da Termodinâmica ............................................................. 29 
+
+2.4.2  Segunda Lei da Termodinâmica ............................................................ 30 
+
+2.4.2.1  Evolução Histórica do Conceito de Entropia ...................................... 30 
+
+2.4.2.2  Conceito Microscópico de Entropia .................................................... 32 
+
+2.4.2.3  Relação Entre Microestado e Macroestado ........................................ 34 
+
+2.4.2.4  A Função Entropia .............................................................................. 34 
+
+2.5  ENTROPIA DA INFORMAÇÃO DE SHANNON ........................................... 36 
+
+2.5.1  Definição de Informação ........................................................................ 37 
+
+2.5.2  Definição da Entropia de Shannon ........................................................ 40 
+
+2.5.3  Princípio da Máxima Entropia ................................................................ 41 
+
+2.5.4  Entropia Configuracional........................................................................ 42 
+
+2.5.4.1  O Lado de Janela Ótimo ..................................................................... 45 
+
+2.5.5  Entropia de Tons de Cinza .................................................................... 46 
+
+2.5.6  Caracterização do Escoamento Através da Taxa de Variação da 
+
+Entropia Configuracional Normalizada................................................................ 47 
+
+3  DESCRITIVO DO PROGRAMA .......................................................................... 48 
+
+3.1  FERRAMENTAS COMPUTACIONAIS ......................................................... 48 
+
+3.1.1  Padroniza Nomes .................................................................................. 51 
+
+3.1.2  Tratamento Inicial .................................................................................. 52 
+
+3.1.3  Corta e Binariza ..................................................................................... 55 
+
+3.1.4  Entropia Binarizada ............................................................................... 57 
+
+3.1.5  Entropia Tons de Cinza ......................................................................... 61 
+
+3.1.6  Nove Janelas ......................................................................................... 63 
+
+3.2  MELHORIAS PROPOSTAS AO CÓDIGO ................................................... 64 
+
+4  TESTES DE CONCEITO .................................................................................... 66 
+
+4.1  ENTROPIA CONFIGURACIONAL ............................................................... 66 
+
+4.1.1  Experimento 03 ...................................................................................... 67 
+
+4.1.2  Experimento 20 ...................................................................................... 67 
+
+4.1.3  Experimento 22 ...................................................................................... 68 
+
+4.1.4  Comparação com Cálculos da Bibliografia ............................................ 68 
+
+4.2  ENTROPIA DE TONS DE CINZA ................................................................ 69 
+
+4.2.1  Experimento 06: ..................................................................................... 70 
+
+4.2.2  Experimento 14: ..................................................................................... 71 
+
+5  TRABALHOS FUTUROS .................................................................................... 72 
+
+6  CONCLUSÕES ................................................................................................... 73 
+
+7  REFERÊNCIAS .................................................................................................. 74 
+
+APÊNDICE – ANÁLISE ESTATÍSTICAS DOS DADOS ............................................ 75 
+
+14 
+
+ 
+
+ 
+
+1 
+
+INTRODUÇÃO 
+
+ 
+
+ 
+
+1.1 MOTIVAÇÃO 
+
+ 
+
+A engenharia de reservatório é a área da engenharia de petróleo na qual se estuda 
+
+o  reservatório  de  petróleo  e  gás  natural  e  se  aplicam  os  princípios  científicos  aos 
+
+problemas de drenagem que surgem durante o desenvolvimento e produção destes 
+
+reservatórios,  de  modo  a  obter  uma  máxima  recuperação  dos  recursos.  Estes 
+
+reservatórios consistem de rochas porosas onde o óleo e gás encontram-se presos 
+
+entre seus interstícios. 
+
+Sabe-se que estes reservatórios, assim como todo o processo de recuperação, são 
+
+extremamente  complexos  e 
+
+relacionam  de 
+
+forma  direta  a  qualidade  da 
+
+caracterização  destes  com  a  eficiência  da  recuperação.  A  caracterização  da  rocha 
+
+reservatório  e  do  escoamento  do  fluido  dentro  dessa  são  alguns  dos  fatores  mais 
+
+cruciais.  No  entanto  entende-se  que  isto  cria  barreiras  e  desafios  devido  ao  seu 
+
+elevado  grau  de  complexidade,  sendo  assim  necessário  o  desenvolvimento  de 
+
+ferramentas  que  permitam  um  entendimento  e  caracterização  de  qualidade  destes 
+
+fatores, sendo esta a principal motivação deste estudo. 
+
+ 
+
+ 
+
+1.2 REVISÃO BIBLIOGRÁFICA 
+
+ 
+
+Este estudo tem como base o conceito de entropia da informação, estabelecido por 
+
+Claude Elwood Shannon (1916 - 2011). Em seus estudos, a entropia de um sistema 
+
+pode ser interpretada como a quantificação da incerteza da informação do  mesmo. 
+
+ 
+
+15 
+
+Fazendo uso deste conceito ele pôde então analisar a eficiência de transmissão de 
+
+dados em sistemas de comunicação de forma sistemática.  
+
+Tendo  em  vista  que  a  morfologia  é  o  principal  parâmetro  no  que  diz  respeito  à 
+
+resposta  óptica  de  um  meio  heterogêneo,  Andraud  e  Lafait  (1998)  desenvolveram 
+
+uma  ferramenta  para  análise  morfológica  destes  meios,  conhecida  como  entropia 
+
+configuracional normalizada. Em seu trabalho, esta foi aplicada especificamente ao 
+
+estudo da morfologia granular de filmes metálicos finos. O método proposto permite 
+
+a  determinação  de  um  comprimento  típico,  característico  da desordem  da  imagem, 
+
+possibilitando  a  criação  de  um  modelo  óptico  do  meio  heterogêneo  a  partir  da 
+
+partição  da  imagem  real  deste  meio.  Este  modelo  gerou  bons  resultados  para 
+
+propriedades ópticas para filmes próximos do limiar de percolação, onde as teorias 
+
+clássicas falham. 
+
+Vakarin e Badiali (2007?) analisaram a utilização da máxima entropia na estimativa 
+
+de  propriedades  estatísticas  de  meios  aleatórios  através  de  sondas  indiretas.  O 
+
+estudo  mostrou  que  a  abordagem  da  máxima  entropia  estabelece  claramente  uma 
+
+ligação entre a quantidade de informação em um meio aleatório e a diferença entre, 
+
+a  função  resposta  da  sonda  e  a  estimativa  do  modelo.  Isto  permite  traduzir  a 
+
+resposta  em  taxa  de  informação  sem  entrar  nos  detalhes  microscópicos  do 
+
+comportamento  da  sonda.  A  maior  vantagem  apresentada  no  estudo  desta 
+
+abordagem é evitar medições parametrizadas de entropia. 
+
+Siclen  (1997)  desenvolveu  um  estudo  a  partir  de  uma  microestrutura  bifásica 
+
+evolutiva  simulada  por  um  conjunto  de  partículas  que  interagiam  entres  si 
+
+bidimensionalmente em uma superfície. Foi observado que a entropia da informação 
+
+aumenta  em  todas  as  escalas  de  comprimento  à  medida  que  a  configuração 
+
+aleatória  inicial  das  partículas  evoluí  para  produzir  uma  distribuição  ramificada.  A 
+
+função  da  entropia  da  informação  normalizada  é  obtida  a  partir  da  subtração  da 
+
+entropia  da  informação  de  uma  configuração  de  partículas  perfeitamente  aleatória 
+
+daquela da configuração ramificada. A função neste caso tem seus máximos valores 
+
+em escalas de comprimento onde o sistema mais se difere da configuração aleatória 
+
+inicial  e  mínimo  para  escalas  de  comprimento  onde  o  sistema  se  encontra 
+
+relativamente  ordenado  ou  periódico.  Foi  então  demonstrado  que  a  entropia  da 
+
+informação  fornece  uma  avaliação  sensível  da  complexidade  de  um  sistema  com 
+
+ 
+
+16 
+
+múltiplos componentes, onde o termo "complexidade" se refere ao alcance da escala 
+
+de comprimento onde as características morfológicas estão presentes. 
+
+Feldman  e  Crutchfield  (2002)  mostram  em  seu  trabalho  que  a  maneira  na  qual  a 
+
+entropia  condicional  converge  para  seus  valores  assintóticos  serve  como  forma  de 
+
+avaliação  da  estrutura  e  correlação  global  para  sistemas  espaciais  em  qualquer 
+
+dimensão.  Além  disso  foi  comparado  a  convergência  da  entropia  com  outras 
+
+técnicas para quantificar estruturas espaciais. 
+
+Schreiber  (2008),  tendo  em  vista  que  técnicas  padrões  de  lapso  temporal  para 
+
+avaliar informação falham no sentido de distinguir informação que é trocada de fato, 
+
+daquela  que  é  compartilhada,  desenvolveu  um  estuo  de  avaliação  da  informação 
+
+teórica que quantifica a coerência estatística entre sistemas que evoluem no tempo. 
+
+Em  sua  nova  abordagem,  a  influência  de  sinais  de  entrada  e  histórico  em  comum 
+
+das  partículas  são  eliminadas  através  de  condicionamento  apropriado  de 
+
+probabilidades  de  transição.  Assim,  a  entropia  de  transferência  resultante  é  capaz 
+
+de distinguir elementos de ação e resposta. 
+
+ 
+
+1.3 OBJETIVOS 
+
+ 
+
+1.3.1  Objetivos Gerais 
+
+ 
+
+Este trabalho tem como objetivo o desenvolvimento de uma ferramenta para análise 
+
+da  entropia  da  informação  de  Shannon  cara  caracterização  de  escoamento  em 
+
+meios porosos. 
+
+ 
+
+1.3.2  Objetivos Específicos 
+
+ 
+
+Realizar  uma  revisão  bibliográfica  de  estudos  feitos  relacionados  à  entropia  de 
+
+informação  e  transporte  de  informação.  Desenvolvimento  de  uma  ferramenta 
+
+aplicativo  para  a  avaliação  da  entropia  da  informação  em  escoamentos  em  meios 
+
+ 
+
+17 
+
+porosos.  Testes  de  conceito  do  aplicativos,  análises  dos  resultados  e  sugestões 
+
+para estudos futuros. 
+
+ 
+
+ 
+
+1.4 ESTRUTURA DO TRABALHO 
+
+ 
+
+No  capítulo  1  deste  trabalho,  apresenta-se  um  introdução  ao  assunto  abordado, 
+
+juntamente  com 
+
+revisões  bibliográficas.  No  capítulo  2,  é 
+
+realizada  uma 
+
+fundamentação  teórica  que  serviu  de  base  para  o  estudo.  No  capítulo  3  é  feito  um 
+
+descritivo da  ferramenta  desenvolvida  para  a  análise.  No  capítulo  4 é  realizado  um 
+
+teste  de  conceito  do  ferramental,  onde  os  resultados  obtidos  são  analisados.  No 
+
+capítulo 5, aborda-se sugestões e propostas para trabalhos futuros que poderão ser 
+
+feitos a partir deste projeto. E por fim, no capítulo 6, as conclusões do trabalho são 
+
+apresentadas. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2 
+
+FUNDAMENTAÇÃO TEÓRICA 
+
+ 
+
+18 
+
+Neste  tópico,  será  apresentado  a  fundamentação  teórica  na  qual  este  trabalho 
+
+utilizou como base. 
+
+ 
+
+2.1 O PETRÓLEO 
+
+ 
+
+2.1.1  Formação do Petróleo 
+
+ 
+
+O  petróleo  é  um  combustível  fóssil  derivado  de  restos  de  matéria  orgânica  pré-
+
+histórica fossilizada, como algas e zooplânctons. Grandes quantidades destes restos 
+
+se  acumularam  no  fundo  de  lagos  e  oceanos,  se  misturaram  com  sedimentos  e 
+
+foram  soterrados.  À  medida  que  novas  camadas  de  sedimento  se  acumularam  por 
+
+cima destes leitos, condições extremas de temperatura e pressão foram criadas nas 
+
+regiões  mais  profundas.  Este  processo  fez  a  matéria  orgânica  se  transformar 
+
+primeiro em um composto conhecido como  kerogen, e em seguida, com condições 
+
+mais  intensas  de  temperatura  e  pressão,  transformou-se  em  hidrocarbonetos 
+
+líquidos  e  gasosos,  através  de  um  processo  conhecido  como  catagênese.  A 
+
+formação  do  petróleo  ocorre  por  meio  da  pirólise  (decomposição  termoquímica  de 
+
+um  material orgânico submetido a elevadas temperaturas na ausência de oxigênio) 
+
+dos  hidrocarbonetos  numa  variedade  de  reações  endotérmicas  a  elevadas 
+
+condições de temperatura e/ou pressão. 
+
+ 
+
+2.1.2  Migração do Petróleo  
+
+ 
+
+A expulsão do petróleo de sua rocha geradora para camadas rochosas adjacentes é 
+
+chamada  de  migração  primária.  Esta  expulsão  se  deve  ao  fato  de  que  quando  o 
+
+kerogen  se  transforma  em  fluidos  (líquidos  e  gasosos),  ocorre  uma  expansão 
+
+ 
+
+19 
+
+volumétrica  do  composto,  elevando  a  pressão  nos  interstícios  da  rocha  geradora. 
+
+Estes  fluidos  são  então  forçados  a  passar  através  de  poros  ou  fissuras  existentes 
+
+entre  as  camadas  de  rochas  adjacentes.  Caso  essas  fissuram  não  existam,  a 
+
+pressão  no  interior  das  rochas  geradoras  se  eleva  a  ponto  criar  passagens  para  a 
+
+expulsão  dos  fluidos.  De  qualquer  forma,  a  migração  primária  é  controlada  a  partir 
+
+da taxa de geração de petróleo no interior das rochas geradoras. 
+
+Assim  que  o  petróleo  deixa  as  vizinhanças  da  rocha  geradora,  ocorre  a  migração 
+
+secundária,  onde  outras  condições  físicas  prevalecem.  As  formações  rochosas 
+
+desta vez apresentam porosidade e permeabilidade significantemente maiores, com 
+
+poros cujos tamanhos permitem a formação de gotas e até mesmo pequenos filetes 
+
+contínuos de óleo, isto é, uma rede interconectada de poros contendo óleos e gases. 
+
+O  movimento  destas  pequenas  correntes  ocorre  principalmente  devido  ao  empuxo, 
+
+existente  devido  à  diferença  de  densidade  entre  água  e  óleo,  que  naturalmente 
+
+desloca os fluidos para cima por entre as falhas geológicas das formações rochosas. 
+
+A  taxa  que  esse  movimento  ocorre  depende  do  empuxo,  da  porosidade  e  da 
+
+permeabilidade das rochas 
+
+ 
+
+2.1.3  Acumulação do Petróleo  
+
+ 
+
+O  movimento  ascendente  do  petróleo  continua  até  que  o  fluido  encontra  com 
+
+camadas  rochosas  impermeáveis  e  que,  devido  à  falhas  geológicas,  formam  um 
+
+reservatório  ou  “armadilha”  onde  os  fluidos  ficam  armazenados,  como  ilustrado  na 
+
+figura abaixo. 
+
+ 
+
+Figura 1. Falha geológica aprisionando fluidos. Fonte: Paleontological Research Institution. 
+
+ 
+
+ 
+
+ 
+
+20 
+
+Uma  vez  estabelecido  dentro  deste  reservatório  poroso,  devido  à  gravidade,  os 
+
+fluidos  tendem  a  se  organizar  em  camadas  de  acordo  com  sua  densidade.  Dessa 
+
+forma,  dentro  de  uma  rocha  reservatório  encontram-se  três  camadas  de  fluidos:  a 
+
+camada de gases (mais leve) por cima da de óleo, que por sua vez está por cima da 
+
+camada  de  água  (mais  pesada).  A  figura  a  seguir  ilustra  um  típico  reservatório  de 
+
+óleo e gás. 
+
+ 
+
+Figura 2. Reservatório típico de petróleo e gás. Fonte: PetroGasNews (2011) 
+
+ 
+
+ 
+
+ 
+
+2.2 A ROCHA RESERVATÓRIO E SUAS PROPRIEDADES 
+
+ 
+
+Propriedades  das  rochas,  caracterização  das  jazidas,  propriedades  dos  fluidos  e 
+
+maneira  como  estes 
+
+interagem  são 
+
+itens  estudados  na  Engenharia  de 
+
+Reservatórios. Portanto, pode-se afirmar que uma das áreas de aplicação  da teoria 
+
+exposta  neste  trabalho  é  a  Engenharia  de  Reservatórios.  Esta  importante  área  da 
+
+Engenharia  se  preocupa  basicamente  com  a  retirada  dos  fluidos  do  interior  das 
+
+rochas reservatórios, de modo que eles possam ser conduzidos até a superfície. 
+
+Com  o  objetivo  de  definir  parâmetros  para  a  produção  de  petróleo,  várias 
+
+propriedades  foram  definidas.  Para  contextualizar  o  leitor  à  aplicabilidade  deste 
+
+ 
+
+21 
+
+trabalho,  algumas  destas  propriedades  foram  descritas  abaixo.  É  preciso  salientar 
+
+que  a  Engenharia  de  Reservatórios  não  é  o  foco  deste  trabalho,  portanto  os 
+
+conceitos abaixo são superficiais.  
+
+ 
+
+2.2.1  Definição de reservatório 
+
+ 
+
+A característica principal de uma rocha reservatório é a presença de permeabilidade 
+
+e  porosidade  adequadas  à  acumulação  de  petróleo.  Além  disso,  um  reservatório 
+
+deve  ser  selado  por  rochas  impermeáveis.  O  conjunto  supracitado  chama-se 
+
+armadilha de petróleo, ou trapa. No caso dos hidrocarbonetos serem compostos por 
+
+gás e petróleo, o gás, menos denso, encontra-se por cima do petróleo, mais denso. 
+
+ 
+
+2.2.2   Porosidade (ϕ) 
+
+ 
+
+Porosidade  é  a  medida  da  capacidade  de  uma  rocha  armazenar  fluidos.  De  uma 
+
+maneira  quantitativa,  a  porosidade  pode  ser  expressa  pela  razão  entre  volume  de 
+
+poros e volume total da rocha, ou seja:  
+
+   
+
+       
+      
+
+ 
+
+É  preciso  destacar  que  podem  haver  poros dentro  da rocha  que  sejam  isolado,  ou 
+
+seja,  não  existe  nenhum  caminho  para  que  o  fluido  os  ocupem.  Estes  poros  não 
+
+possuem  utilidade  para  o  armazenamento  de  fluidos.  Devido  a  este  fato,  define-se 
+
+dois tipos de porosidade, a porosidade absoluta e a relativa. 
+
+ 
+
+2.2.2.1 
+
+Porosidade Absoluta (ϕabs) 
+
+ 
+
+É expressa pela razão entre o volume total de poros (incluindo os poros isolados) e 
+
+o volume total da rocha, matematicamente: 
+
+      
+
+       
+      
+
+ 
+
+ 
+
+2.2.2.2 
+
+Porosidade Efetiva (ϕefetiva) 
+
+ 
+
+22 
+
+Neste  caso  considera-se  apenas  o  volume  de  poros  interligados,  ou  seja,  aqueles 
+
+que podem efetivamente serem ocupados por fluido, matematicamente:  
+
+          
+
+                   
+
+      
+
+ 
+
+ 
+
+2.2.3  Saturação  
+
+ 
+
+Além de hidrocarbonetos, os  poros de uma rocha reservatório podem contes água. 
+
+Portanto o conhecimento do percentual de volume poroso que é ocupado por cada 
+
+fluido  é  essencial  para  concluir  sobre  a  viabilidade  do  poço  e  outras  coisas.  A 
+
+saturação é definida como a fração do volume do poro ocupado por um determinado 
+
+fluido (óleo, gás ou água). Assim: 
+
+       
+
+     
+     
+
+ 
+
+      
+
+    
+     
+
+ 
+
+       
+
+     
+     
+
+ 
+
+ 
+
+2.2.4  Molhabilidade 
+
+ 
+
+Diz-se que um líquido molha um corpo sólido quando é susceptível a se espalhar e 
+
+aderir  sobre  o  mesmo.  Uma  gota  de  mercúrio  sobre  uma  placa  de  vidro  não  se 
+
+espalha,  uma  vez  que  o  mercúrio  não  molha  o  vidro.  Já  uma  gota  de  água  se 
+
+espalha e pode se aderir ao vidro de modo espontâneo, molhando-o. 
+
+ 
+
+23 
+
+A molhabilidade pode ser medida através dos valores do ângulo que o líquido forma 
+
+em  contato  com  o  sólido:  quanto  menor  o  ângulo,  maior  a  molhabilidade.  Este 
+
+fenômeno  depende  da  atração  entre  às  molecular  superficiais  do  líquido  pelas 
+
+moléculas da parede do sólido. 
+
+A  molhabilidade  em  rochas  reservatório  é  importante  na  distribuição  dos  fluidos 
+
+nesse meio. Por causa das forças atrativas, fases com maior molhabilidade tendem 
+
+a  ocupar  poros  menores  e  fases  com  maior  molhabilidade  ocupam  espaços  mais 
+
+abertos. 
+
+ 
+
+Figura 3. Ilustração da molhabilidade com ângulos de contato para diferentes fluidos.  Fonte: Ahmed 
+(2006). 
+
+ 
+
+ 
+
+2.2.5  Tensão Superficial e Tensão Interfacial 
+
+ 
+
+Tensão  superficial  (ou  tensão  interfacial,  quando  ocorre  entre  dois  líquidos)  é  um 
+
+efeito  físico  que  ocorre  na  camada  superficial  de  um  líquido  que  leva  a  sua 
+
+superfície a se comportar como uma  membrana elástica. As moléculas situadas no 
+
+interior de um líquido são atraídas em todas as direções pelas moléculas vizinhas e, 
+
+por  isso,  a  resultante  das  forças  que  atuam  sobre  cada  molécula  é  praticamente 
+
+nula.  As  moléculas  da  superfície  do  líquido,  entretanto,  sofrem  apenas  atração 
+
+lateral e inferior. Esta força para o lado e para baixo cria a tensão na superfície, que 
+
+faz  a  mesma  comportar-se  como  uma  película  elástica.  Uma  modelagem 
+
+matemática  é  feita  para  tubos  capilares  (Figura  4)  e  as  tensões  podem  ser 
+
+calculadas segundo a equação (AHMED, 2006): 
+
+ 
+
+Onde:  
+
+24 
+
+     
+
+   (       )
+
+       
+
+  
+
+  : massa específica do fluido mais denso (1); 
+
+  : massa específica do fluido menos denso (2); 
+
+   : tensão superficial ou tensão interfacial entre os fluidos 1 e 2; 
+
+ : ângulo de contato; 
+
+ : raio do tubo capilar; 
+
+ : diferença de altura entre as superfícies do fluido dentro e fora do tubo capilar; 
+
+ : aceleração da gravidade. 
+
+ 
+
+Figura  4.  Representação  da  tensão  superficial  entre  ar  e  água  num  tubo  capilar.    Fonte:  Ahmed 
+(2006). 
+
+ 
+
+ 
+
+ 
+
+2.2.6  Pressão Capilar 
+
+ 
+
+25 
+
+Quando  dois  fluidos  estão  em  contato  e  contidos  em  uma  estrutura  porosa,  uma 
+
+descontinuidade  na  pressão  existe  através  da  interface  que  separa  ambos  os 
+
+fluidos.  A  magnitude  dessa  descontinuidade depende  da  curvatura  da interface em 
+
+determinada  região  do  espaço  poroso.  Essa  diferença  de  pressão  através  da 
+
+interface  é  conhecida  como  pressão  capilar.  Referindo-se  novamente  aos 
+
+parâmetros  apresentados  na  Figura  4,  a  pressão  capilar  pode  ser  calculada  por 
+
+(AHMED, 2006): 
+
+       (       ) 
+
+Pode-se  interpretar  a  pressão  capilar  como  uma  medida  da  tendência  de  um  meio 
+
+poroso  absorver  um  fluido  molhante  ou  repelir  um  fluido  não  molhante  (BEAR, 
+
+1972).  Muitas  vezes,  quando  se  deseja  obter  informações  da  geometria  porosa  de 
+
+determinado  meio  poroso,  como  a  porosidade  e  a  distribuição  do  tamanho  dos 
+
+poros,  costuma-se  injetar um  fluido  na  fase porosa,  como  mercúrio,  variando-se  as 
+
+pressões  externas  aplicadas.  Esse  processo  fornece  as  curvas  de  pressão  capilar, 
+
+que permitem a obtenção de relações entre a pressão capilar aplicada e a saturação 
+
+de  uma  das  fases.  Essas  informações  podem  ser  úteis  em  processos  de 
+
+deslocamento imiscível em meios porosos, pois podem fornecer as quantidades das 
+
+fases  que  são  bloqueadas  durante  o  deslocamento.  Assim,  se  pode  fazer  uma 
+
+estimativa  da  quantidade  de  determinado  fluido  que  pode  ser  extraído  de  um 
+
+determinado meio poroso. 
+
+ 
+
+2.2.7  Permeabilidade 
+
+ 
+
+Permeabilidade  é  a  propriedade  que  avalia  a  capacidade  de  um  meio  poroso  em 
+
+permitir  a  passagem  de 
+
+fluidos  através  do  mesmo.  Meios  com  grande 
+
+permeabilidade, permitem que os fluidos passem  mais facilmente através da rocha. 
+
+ 
+
+26 
+
+É  uma  propriedade  que  é  afetada  pela  pressão  no  meio.  O  conceito  de 
+
+permeabilidade é importante na determinação das características do escoamento de 
+
+hidrocarbonetos 
+
+nas 
+
+rochas 
+
+reservatório.  A 
+
+propriedade 
+
+foi 
+
+definida 
+
+matematicamente  por  Henry  Darcy  em  1856  e  a  equação  que  define  essa 
+
+propriedade é chamada Lei de Darcy (AHMED, 2006): 
+
+   
+
+ 
+ 
+
+  
+  
+
+     
+
+Onde:  
+
+ : velocidade aparente do fluxo fluido; 
+
+ : permeabilidade; 
+
+ : viscosidade do fluido; 
+
+: queda de pressão por unidade de comprimento. 
+
+  
+
+  
+
+ 
+
+Para um modelo linear, isola-se κ e se obtém: 
+
+   
+
+   
+   
+
+     
+
+Onde: 
+
+ : taxa de fluxo; 
+
+  : queda de pressão no canal; 
+
+ : comprimento do canal (poros interligados); 
+
+ : área da seção transversal do canal. 
+
+ 
+
+Para que a equação acima seja válida, as seguintes condições devem ser atendidas: 
+
+a)  fluxo laminar; 
+
+b)  não ocorrência de reações entre fluido e rocha; 
+
+27 
+
+ 
+
+c)  apenas uma fase presente no poro; e 
+
+d)  poro completamente saturado. 
+
+2.2.8  Compressibilidade 
+
+ 
+
+É  definido  como  a  mudança,  em  fração  de  volume,  devida  a  uma  variação  unitária 
+
+da  pressão  a  uma  dada  temperatura.  A  importância  dessa  propriedade  é  que  a 
+
+rocha reservatório varia seu volume a partir do momento em que é descoberta e isso 
+
+influencia na produção do petróleo. De uma forma geral: 
+
+    
+
+ 
+ 
+
+  
+  
+
+ 
+
+Onde: 
+
+  : compressibilidade; 
+
+ : porosidade; 
+
+ : pressão. 
+
+ 
+
+ 
+
+2.3 MECANISMOS DE PRODUÇÃO E A RECUPERAÇÃO ADICIONAL 
+
+ 
+
+2.3.1  Mecanismos de Produção 
+
+ 
+
+Os fluidos contidos em uma rocha reservatório dispões de uma certa quantidade de 
+
+energia natural que possibilita a produção “espontânea” do conteúdo do reservatório. 
+
+Essa energia resulta de todas as situações e circunstâncias geológicas pelas quais a 
+
+jazida  passou  até  se  formar  completamente  e  é  manifestada  sob  a  forma  de 
+
+pressão.  Para  que  ocorra  a  produção  natural  (recuperação  primária),  esta  pressão 
+
+ 
+
+28 
+
+precisa ser suficiente para vencer as resistências oferecidas pelos canais porosos e 
+
+deslocar os fluidos em direção aos poços de produção. 
+
+De  um  modo  geral,  esta  produção  ocorre  devido  a  dois  efeitos  principais:  a 
+
+descompressão  (que  causa  e  expansão  dos  fluidos  contidos  no  reservatório  e 
+
+contração do volume poroso); e o deslocamento de um fluido por outro fluido. A este 
+
+conjunto  de  fatores  que  fazem  desencadear  esses  efeitos  dá-se  o  nome  de 
+
+Mecanismos de Produção do Reservatório. 
+
+ 
+
+2.3.2  Recuperação Adicional 
+
+ 
+
+Foi  observado  que  os  mecanismos  naturais  de  produção  acima  apresentados  são 
+
+pouco  eficientes,  o  que  significa  que  após  a  exaustão  da  energia  natural  do 
+
+reservatório,  este  ainda  retém  uma  grande  quantidade  de  hidrocarbonetos.  Dessa 
+
+forma é vantajoso o emprego de uma série de processos que visam a obtenção de 
+
+uma  recuperação  adicional.  Esses  processos  são  chamados  de  Métodos  de 
+
+Recuperação,  que,  de  uma  maneira  geral,  tentam  interferir  nas  características  do 
+
+reservatório. 
+
+Baseadas  na  ideia  de  que  as  baixas  recuperações  eram  resultados  de  baixas 
+
+pressões  nos  reservatórios,  as  primeiras  experiências  buscavam  fornecer  pressão 
+
+ao  reservatório  por  meio  da injeção  de  um  fluido  cujas  finalidades eram  deslocar  o 
+
+fluido  residente  no  meio  poroso  e  ocupar  o  espaço  deixado  por  este.  Como  nem 
+
+sempre  o  aspecto  mais  crítico  do  fluxo  dos  fluidos  nos  meios  porosos  é  a  baixa 
+
+pressão,  a  simples  injeção  de  fluidos  para  deslocar  outros  fluidos  nem  sempre 
+
+resultava  em  sucesso.  Como  resultado  da  observação  e  da  análise  dos 
+
+comportamentos dos meios porosos quando sujeitos a injeções de fluidos, surgiram 
+
+os  diversos  processos.  O  presente  estudo  tem  por  objetivo  avaliar  condições  e 
+
+parâmetros  envolvidos  nesta  recuperação  no  sentido  de  torná-la  o  mais  eficiente 
+
+possível.  
+
+A  aplicação  de  um  processo  de  recuperação  é  muito  mais  ampla  que  a  simples 
+
+intervenção  em  alguns  poços,  ou  seja,  a  área  de  atuação  é  todo  o  reservatório, 
+
+ 
+
+29 
+
+independente da simplicidade ou complexidade do método que está sendo utilizado. 
+
+Não é necessário esperar o declínio total da produção para se começar a injeção de 
+
+fluidos no reservatório. Ao contrário, a boa prática de engenharia recomenda que a 
+
+injeção  seja  iniciada  bem  antes  que  isso  aconteça.  Ou  seja,  os  métodos  de 
+
+recuperação  são  aplicados  mesmo  havendo  condições  de  produção  com 
+
+recuperação primária. 
+
+2.4 PRINCÍPIOS TERMODINÂMICOS 
+
+ 
+
+2.4.1  Primeira Lei da Termodinâmica 
+
+ 
+
+Um aspecto fundamental sobre o conceito de energia é que energia se conserva, ou 
+
+seja,  a  energia  de  um  sistema  isolado  é  constante.  A  equação  que  traduz 
+
+matematicamente  esta  lei  fornece  as  bases  para  uma  análise  quantitativa  das 
+
+interações entre dois sistemas.  
+
+Esta lei é simples, porém sua aplicação pode não ser tão simples uma vez que todos 
+
+os tipos de energia envolvidos em um processo devem ser identificados, isso inclui: 
+
+energia  cinética,  energia  potencial  gravitacional,  energia  potencial  elástica,  energia 
+
+de  pressão,  energia  química,  energia  radiante,  energia  elétrica,  energia  sonora, 
+
+energia térmica, etc.  
+
+A equação mais utilizada para a primeira lei da termodinâmica entre dois estados 1 e 
+
+2 é a explicitada abaixo: 
+
+Onde:  
+
+                      
+
+Q é a transferência de energia sobre a forma de calor para o sistema; 
+
+W é o trabalho realizado pelo sistema entre os estados 1 e 2; 
+
+Ei é a energia interna do sistema no estado i. 
+
+ 
+
+ 
+
+30 
+
+MORAN  et  al  se  aprofunda  no  estudo  da  primeira  lei  em  sistemas  fechados  e 
+
+volumes de controle. Esta análise mais aprofundada não é abordada neste trabalho 
+
+pois não pertence ao escopo do mesmo. 
+
+ 
+
+2.4.2  Segunda Lei da Termodinâmica 
+
+ 
+
+A  ideia  central  da  ciência  é  que  a  natureza se  comporta  de  maneira  previsível.  Os 
+
+conceitos  de  energia  e  conservação  da  energia  previamente  apresentados  são 
+
+tentativas de quantificar este comportamento da natureza. 
+
+Sabe-se  pela  experiência  que  existem  mudanças  espontâneas  de  estado  que 
+
+podem  ocorrer  em  um  sentido  mas  nunca  é  observada  no  sentido  oposto.  Um 
+
+exemplo é a reação de oxigênio e hidrogênio. Estes dois elementos se transformam 
+
+espontaneamente em água, mas a reação oposta (e igualmente espontânea) nunca 
+
+foi observada.  
+
+A primeira lei não pode revelar a possibilidade ou impossibilidade de um processo e 
+
+esta habilidade é essencial para qualquer teoria de previsão da natureza  – objetivo 
+
+principal da ciência. É neste contexto que a segunda lei da termodinâmica se faz tão 
+
+necessária. 
+
+ 
+
+2.4.2.1 
+
+Evolução Histórica do Conceito de Entropia 
+
+ 
+
+Os  primeiros  pensamentos  registrados  sobre  o  desenvolvimento  da  segunda lei  da 
+
+termodinâmica remetem a Carnot, e são datados da primeira metade do século XIX. 
+
+Carnot  propôs  que  o  calor  sempre  é  perdido  para  que  um  motor  produza  trabalho, 
+
+porém  ele  não  quantificou  esta  perda.  Rudolf  Clausius  foi  o  primeiro  a  apresentar 
+
+trabalhos  conclusivos  sobre  o  assunto.  Em  seu  quarto  memorando,  Clausius  (apud 
+
+MORAN  et  al,  2002)  afirma  que  “é  impossível  para  qualquer  sistema  operar  de 
+
+maneira que o único resultado seria a transferência de energia sob a forma de calor 
+
+de um corpo mais frio para um corpo mais quente.” 
+
+ 
+
+31 
+
+A  desigualdade  de  Clausius,  desenvolvida  em  seu  sexto  memorando  (CLAUSIUS, 
+
+1865), é aqui repetida: 
+
+∮ (
+
+  
+ 
+
+)
+
+ 
+
+    
+
+Onde:  
+
+δQ é um elemento de calor transmitido pelo corpo às vizinhanças através de uma 
+
+parte da fronteira b; 
+
+T  é  a  temperatura  absoluta  da  parte  da  fronteira  por  onde  ocorreu  a  troca  de 
+
+calor e no momento em que ela ocorreu. 
+
+ 
+
+A  soma  algébrica  de  todas  as  transformações  ocorrendo  em  um  processo  cíclico 
+
+deve ser positiva, ou, no caso extremo, nula. Seguindo o pensamento, 
+
+ 
+
+ 
+
+Qualquer  processo  que  aumenta  a  entropia  de  um  sistema  isolado  é 
+
+possível; qualquer processo que diminua a entropia de um sistema isolado é 
+
+impossível  e  qualquer  processo  que  mantenha  a  entropia  de  um  sistema 
+
+isolado constante é possível nas duas direções. (REYNOLDS, 1965). 
+
+Acredita-se  que  Clausius  escolheu  o  nome  entropia  devido  à  seu  significado  grego 
+
+“conteúdo  de  transformação”  e  porque  ele  queria  um  nome  o  mais  similar  possível 
+
+com energia. Como pode-se verificar estas duas propriedades são muito relacionas 
+
+fisicamente.  Já  a  letra  que  representa  a  entropia  (S),  acredita-se  que  ele  escolheu 
+
+em homenagem a Sadi Carnot (Clausius trabalhou por 15 anos no artigo de Carnot 
+
+de 1924). 
+
+Com  o  conceito  exposto  pela  segunda  lei  da  termodinâmica,  é  possível  prever 
+
+direções  possíveis  de  reações  químicas  e  também  de  troca  de  calor  entre  corpos 
+
+com diferentes temperaturas. 
+
+ 
+
+ 
+
+2.4.2.2 
+
+Conceito Microscópico de Entropia 
+
+ 
+
+32 
+
+Tendo  explicado  o  conceito  macroscópico  da  entropia,  uma  explanação  sobre  os 
+
+conceitos  microscópicos  desta  propriedade  será  feita.  Esta  explanação  tem  como 
+
+objetivo estabelecer paralelos em ter a entropia e a teoria da informação discorrida 
+
+posteriormente  neste  texto.  O  exemplo  abaixo  de  Reynolds  (apud  STREY,  2012) 
+
+serve para elucidar a relação entre os conceitos macroscópicos e microscópicos da 
+
+segunda lei da termodinâmica.  
+
+Considera-se hipoteticamente um balde com um grande número de “feijões saltantes 
+
+treinados,” metade deles vermelhos e metade brancos. Imagine que os feijões foram 
+
+treinados  para  saltar  em  pares  e  assim  trocar  de  lugar.  O  balde  está  inicialmente 
+
+com os feijões vermelhos em um lado e os brancos em outro. Um observador vê o 
+
+balde de uma distância grande o suficiente para não conseguir identificar os feijões 
+
+individualmente.  Para  este observador  o  balde  é  apenas um  objeto  com  uma  parte 
+
+branca e outra parte vermelha. Agora, permite-se que os feijões comecem a saltar. 
+
+O  observador identificará  que  a  parte  vermelha  do  balde  está  se  difundindo  para  a 
+
+parte branca e vice-versa.  
+
+Após  um  tempo,  o  observador  verá  apenas uma  tonalidade  rosa  e  deste  momento 
+
+em  diante  ele  não  verá  mais  mudanças  no  balde.  Porém  na  visão  microscópica, 
+
+pode-se observar mudanças continuas no balde pois os feijões continuam saltando e 
+
+trocando  de  posições  entre  si.  Pode-se  até  observar  momentâneas  concentrações 
+
+de uma das cores em alguns pontos, mas estas concentrações desaparecem rápido. 
+
+Este  mesmo  experimento  pode  ser  repetido  inúmeras  vezes  e  todas  as  vezes  o 
+
+observador verá, a princípio, a difusão do vermelho no branco e depois de um tempo 
+
+o  sistema  se  torna  rosa.  O  observador  pode  formular  várias  teorias  matemáticas 
+
+sobre  esta  difusão  e  talvez até  prever  a  taxa  de  difusão  e  mesmo  sem  conhecer  a 
+
+dinâmica  dos  feijões  saltadores  ele  pode  construir  uma  boa  teoria  sobre  isso.  Mas 
+
+certamente uma teoria que considere os feijões saltadores seria uma teoria melhor e 
+
+mais inteligível.  
+
+Com  o  conhecimento  da  existência  dos  feijões  saltadores  pode-se  postular  uma 
+
+teoria estatística de que o arranjo dos feijões dentro do balde se torna cada vez mais 
+
+ 
+
+33 
+
+incerto à medida que eles pulam. Por exemplo, no instante inicial quando os feijões 
+
+estão  organizados  por  cor  a  posição  dos  feijões  é  relativamente  certa  e  à  medida 
+
+que  o  tempo  passa  o  observador  fica  cada vez  menos  certo  sobre  o  detalhamento 
+
+instantâneo  do  estado.  Ou  seja,  a  desordem  ou  incerteza  dos  feijões  aumenta. 
+
+Assim uma teoria sobre o comportamento dos feijões pode ser baseada na premissa 
+
+de que esta desordem nunca diminui. Três termos utilizados em Mecânica Quântica 
+
+e  que  são  se  suma  importância  para  a  compreensão  do  texto  que  segue  são 
+
+definidos a seguir (STREY, 2012): 
+
+a)  microestado  é  qualquer  estado  microscópico  do  sistema,  especificado  em 
+
+termos das propriedades individuais das partículas; 
+
+b)  macroestado  é  qualquer  estado  do  sistema  especificado  em  termos  das 
+
+propriedades  da  coleção  de  todas  as  partículas,  sendo  importante  observar 
+
+que há vários microestados possíveis para um dado macroestado; 
+
+c)  conjunto  é  a  totalidade  de  macroestados  (ou  microestados)  onde  energia, 
+
+volume,  magnetização  e  polarização  se  mantêm  fixos,  ou  seja,  representam 
+
+um sistema isolado. 
+
+Outro  conceito  importante  existente  em  mecânica  quântica  é  que  a  quantidade  de 
+
+microestados  possíveis  de  um  sistema  pode  ser  discretamente  quantificada.  Estes 
+
+estados  possíveis  são  determinados  pela  natureza  das  partículas  e  pelas 
+
+circunstâncias nas quais elas se encontram. O cálculo dos microestados permitidos 
+
+pode  ser  feito  pela  equação  de  Schroedinger  que  não  será  explorada  neste  texto 
+
+porque não faz parte do escopo deste trabalho. 
+
+No caso do exemplo supra citado, um microestado seria uma configuração de feijões 
+
+saltadores em um determinado tempo (vista por um observador de curta distância) e 
+
+um macroestado seria uma tonalidade vista pelo observador que não pode observar 
+
+os feijões individualmente. 
+
+Como  pode-se  observar,  este raciocínio  tem  pontos  em  comum  com  as  noções  de 
+
+entropia  macroscópica  e  da  segunda  lei  da  termodinâmica  amplamente  difundidas 
+
+nos cursos de Engenharia. A seguir está mostrado o desenvolvimento da função de 
+
+entropia conhecida atualmente.  
+
+34 
+
+ 
+
+ 
+
+2.4.2.3 
+
+Relação Entre Microestado e Macroestado 
+
+ 
+
+Considere  um  sistema  que  pode  apresentar  n  estados  quânticos  (microestados). 
+
+Suponha  que  estes  estados  possam  ser  bem  observados.  Seja  pi  (1<i<n)  a 
+
+probabilidade  de  um  microestado  ocorrer,  pi  é  determinado  pela  razão  entre  a 
+
+quantidade  de  vezes  que  o  microestado  ocorreu  e  a  quantidade  total  de 
+
+microestados  observados  ou  a  quantidade  de  tempo  em  que  o  sistema  esteve  no 
+
+estado i dividido pelo total de tempo observado, de forma que:  
+
+   
+∑   
+   
+
+    
+
+Considere ainda que o sistema em questão está em equilíbrio com suas vizinhanças 
+
+de forma que não existam mudanças macroscópicas. Sabe-se que as propriedades 
+
+macroscópicas do sistema podem ser obtidas pela média das propriedades de cada 
+
+microestado  ponderadas  pela  probabilidades  do  mesmo  (REYNOLDS,  1965),  ou 
+
+seja, considera-se G como o valor de uma propriedade do sistema:  
+
+   
+
+    ∑        
+
+ 
+
+   
+
+ 
+
+2.4.2.4 
+
+A Função Entropia 
+
+ 
+
+Para  iniciar  as  considerações  sobre  o  cálculo  da  entropia  do  ponto  de  vista 
+
+microscópico, propõe um exemplo hipotético (REYNOLDS, 1965): 
+
+Supõe-se  um  sistema  que  possa  existir  em  3  microestados  (n=3)  e  considera-se 
+
+cinco casos listados abaixo:  
+
+A)  p1=1; p2=0; p3=0; 
+
+B)  p1=0,8; p2=0,2; p3=0; 
+
+C)  p1=0,8; p2=0,1; p3=0,1; 
+
+ 
+
+D)  p1=0,1; p2=0,8; p3=0,1; 
+
+E)  p1=1/3; p2=1/3; p3=1/3. 
+
+35 
+
+Para o caso A o sistema possui incerteza nula pois sabemos que o sistema sempre 
+
+apresenta o microestado 1.  
+
+Para  o  caso  B  o  microestado  mais provável continua  sendo  o 1,  mas  neste  caso a 
+
+incerteza é maior que no caso A.  
+
+Para o caso C, pode-se verificar que ele apresenta maior incerteza que os anteriores 
+
+pois  os  20%  do  tempo  que  o  sistema  não  apresenta  o  microestado  1  agora  é 
+
+dividido entre o microestado 2 e 3.  
+
+O  caso  D  apresenta  a  mesma  incerteza  que  o  C  apesar  de  ser  uma  configuração 
+
+diferente.  Neste  ponto  começa-se  a  perceber  a  ideia  (explicada  posteriormente  no 
+
+tópico  de  teoria  da  informação)  de  que  estamos  interessados  em  captar  a 
+
+informação de um sistema e não no conteúdo da informação em si. 
+
+O  caso  E  é  o  caso  que  todos  os  microestados  ocorrem  com  igual  probabilidade  e 
+
+este  caso  é  o  apresenta  a  maior  incerteza  (explanações  sobre  entropia  máxima 
+
+serão feitas em um tópico a parte posteriormente). 
+
+Como  pode-se  notar,  o  conjunto  das  probabilidades  dos  microestados  apresenta 
+
+uma boa noção da incerteza de um sistema, porém tal conjunto é de difícil utilização 
+
+(por ser uma lista muito extensa). Seria muito mais conveniente a existência de um 
+
+único número para medir a incerteza. A entropia fornece esta medida.  
+
+A  função  para  o  cálculo  da  entropia  deve  primordialmente  satisfazer  às  premissas 
+
+seguintes:  
+
+a)  deve ser proporcional à incerteza do sistema; e 
+
+b)  deve ser extensiva. 
+
+Abaixo são mostradas algumas das possíveis funções para o cálculo da entropia e o 
+
+porquê que elas não foram escolhidas (REYNOLDS,1965): 
+
+a)  a  multiplicação  das  probabilidades  de  cada  microestado  não  satisfaz  as 
+
+premissas pois é zero quando a probabilidade de algum microestado é zero; 
+
+ 
+
+36 
+
+b)  o  somatório  das  probabilidades  de  cada  microestado  não  satisfaz  por  ser 
+
+sempre é igual à unidade; 
+
+c)  a  probabilidade  média  do  sistema  apesar  de  ser  proporcional  à incerteza  do 
+
+sistema, não é extensiva (REYNOLDS, 1965). 
+
+A  última  função  testada  mostrou  uma  boa  diretriz  para  a  definição  de  uma  função 
+
+para  a  entropia:  a  média  das  probabilidades.  Basta  agora  escolher  uma  função,  a 
+
+ser  aplicada em  todas  as  probabilidades,  cuja  a  média  seja  extensiva.  Uma  função 
+
+que satisfaz esta necessidade é a função logaritmo.  
+
+Pode  ser  mostrado  então  que  a  forma  mais  genérica  para  a  função  cuja  média  é 
+
+uma propriedade extensiva é a seguinte (REYNOLDS, 1965):  
+
+              
+
+Como  pi  é  menor  que  a  unidade  assume-se  a  constante  negativa  para  que  a 
+
+entropia seja positiva. Assim a definição de entropia assume a seguinte forma:  
+
+         ∑   
+
+      
+
+ 
+
+Onde K é a constante de Boltzmann. 
+
+                    [
+
+ 
+ 
+
+] 
+
+ 
+
+ 
+
+2.5 ENTROPIA DA INFORMAÇÃO DE SHANNON 
+
+ 
+
+O  conceito  de  entropia  é  de  suma  importância  na  Teoria  da  Informação.  Este 
+
+conceito  foi  usado  primeiramente  em  1864  pelo  físico  R.  Clausius  que  postulou  a 
+
+segunda  lei  da  termodinâmica.  Trabalhos  subsequentes  de  L.  Boltzmann  definiram 
+
+entropia  como  uma  medida  natural  de  desordem.  Os  precursores  e  fundadores  da 
+
+Teoria  da  informação  (L.  Szilàrd,  H.  Nyquist,  R.  Hartley,  J.  Von  Neumann,  C. 
+
+ 
+
+37 
+
+Shannon, E. Jaynes, e L. Brillouin) estabeleceram vários paralelos entre medida de 
+
+informação e entropia física.  
+
+Comparar  informação  com  desordem  não  é  nada  intuitivo,  isso  porque  o  senso 
+
+comum conceitua informação como o oposto de desordem. Os tópicos a seguir têm 
+
+o  objetivo  de  esclarecer  estes  conceitos  para  facilitar  o  completo  entendimento  do 
+
+ambiente no qual o presente trabalho foi desenvolvido.  
+
+ 
+
+2.5.1  Definição de Informação 
+
+ 
+
+A  princípio,  introduz-se  o  conceito  de  informação.  Pode-se  dizer  que  a  teoria  da 
+
+informação  está  interessada  no  conteúdo  da  informação  da  mensagem  e  não  na 
+
+mensagem em si, de forma que a quantidade de informação possa ser relacionada à 
+
+uma grandeza numérica (MINEI, 1999). 
+
+Acredita-se  que  as  primeiras  ideias  sobre  a  teoria  da  informação  foram  publicadas 
+
+por  Nyquist  (1924)  no  artigo  “Certain  Factors  Affecting  Telegraph  Speed”.  Neste 
+
+artigo  Nyquist  quantifica  a  velocidade  com  que  uma  „inteligência‟  pode  ser 
+
+transmitida como:  
+
+Onde: 
+
+              
+
+W é a velocidade de transmissão; 
+
+m é o número de valores de corrente possíveis; 
+
+K é uma constante. 
+
+ 
+
+Após  isso,  Hartley  (1928)  em  seu  artigo  “Transmission  of  Information”  mede  a 
+
+informação presente em uma sequência de símbolos da seguinte maneira:  
+
+              
+
+ 
+
+Onde:  
+
+H é a informação da sequência de símbolos; 
+
+m é a quantidade de símbolos da sequência; 
+
+38 
+
+s é a quantidade de alternativas que cada símbolo pode assumir. 
+
+Por exemplo, em um evento onde há duas alternativas igualmente prováveis um bit 
+
+de informação dirá qual das duas alternativas ocorreu.  
+
+                  
+
+Pode-se  notar  que  tanto  Nyquist  quanto  Hartley  consideraram  eventos  discretos  e 
+
+que possuem igual probabilidade de ocorrer. Shannon em seu artigo 1948 e em seu 
+
+livro  em  coautoria  com  Weaver  em  1964,  verificou  que  a  definição  de  informação 
+
+deveria  ser  generalizada  para  contabilizar  a  influência  da  probabilidade  de  cada 
+
+evento e para o caso de medir a variação de uma variável continua. Com base nisso 
+
+ele definiu a Entropia de Shannon que é explicada neste texto.  
+
+Uma definição mais recente que segue muito os conceitos introduzidos por Nyquist, 
+
+Hartley  e  Shannon  foi  feita  por  Minei  (1999).  Minei  define  a  quantidade  de 
+
+informação recebida decorrente da ocorrência de um evento como: 
+
+        (
+
+  
+ 
+
+) 
+
+Onde:  
+
+p‟ é a probabilidade do evento, junto ao receptor, após a chegada da mensagem; 
+
+p  é  a  probabilidade  do  evento,  junto  ao  receptor,  antes  da  chegada  da 
+
+mensagem.  
+
+ 
+
+Considera-se  a  situação  ideal,  onde  não  há  interferência  na  transmissão  de 
+
+informação,  ou  seja,  o  receptor  tem  certeza  de  estar  recebendo  a  mensagem 
+
+correta. Neste caso, p‟ é igual a 1. Logo: 
+
+             
+
+ 
+
+39 
+
+Deusuvire  (2009)  utiliza  a  mesma  definição  de  informação  da  equação  acima  e  dá 
+
+uma definição leiga para a quantidade de informação de um evento: a quantidade de 
+
+informação de um evento é proporcional à surpresa que ele causa.  
+
+Hartley citado em Shannon (1948) mostra razões pelas quais a função logarítmica é 
+
+mais conveniente: 
+
+a)  é mais prática. Parâmetros de importância para a engenharia como o tempo, 
+
+largura de banda, número de transmissões, etc., tendem a variar linearmente 
+
+com  o  logaritmo  do  número  de  possibilidades.  Por  exemplo,  somando  uma 
+
+transmissão a um grupo de transmissões dobra-se o número de transmissões 
+
+possíveis. 
+
+b)  está mais próxima do nosso sentimento intuitivo quanto à medida adequada. 
+
+Está  bastante  relacionado  com  o  fato  de  que  nós,  intuitivamente,  medimos 
+
+por uma comparação linear com padrões comuns. Por exemplo, o sentimento 
+
+de  que  dois  canais  idênticos  devem  possuir  o  dobro  de  capacidade  de 
+
+transmissão.  É  matematicamente  mais  satisfatório.  Muitas  operações  em 
+
+termos  de  limites  são  simples  em  forma  de  logaritmo.  A  unidade  de 
+
+informação varia de acordo com a base logarítmica utilizada.  
+
+ 
+
+ 
+
+Tabela 1 - Unidades de Medida de Informação 
+
+Base 
+
+Unidade de 
+
+Logarítmica 
+
+Informação 
+
+2 
+
+e 
+
+10 
+
+Bit 
+
+Napier ou Nats 
+
+Decibel ou Hartley 
+
+Deste ponto em diante, todas as medidas de informação ou entropia serão feitas em 
+
+napiers. 
+
+ 
+
+ 
+
+2.5.2  Definição da Entropia de Shannon 
+
+ 
+
+40 
+
+Shannon  (1948)  definiu  uma  maneira  de  calcular  a  quantidade  de  informação 
+
+produzida  por  uma  fonte  de  informação  discreta.  Considera-se  que  esta  fonte  de 
+
+informação  possa  produzir  n  eventos  (dados)  dos  quais  as  probabilidades  de 
+
+ocorrência  p1,  p2,  ...,  pn  são  as  únicas  informações  que  existem  a  seu  respeito. 
+
+Segundo  Shannon,  uma  função  H(p1,  p2,  ...,  pn)  capaz  de  medir  o  quanto  de 
+
+incerteza  (ou  informação)  existente  neste  conjunto  de  eventos  deve  satisfazer  às 
+
+seguintes premissas: 
+
+a)  H deve ser contínua em pi, 1 ≤ i ≤ n; 
+
+b)  H  deve  obter  um  máximo  quando  os  eventos  tem  probabilidades  iguais,  i.e. 
+
+pi=1/n; e 
+
+c)  se  um  evento  for  dividido  em  dois  a  entropia  do  evento  original  deve  ser 
+
+obtida  por  uma  soma  ponderada  dos  valores  individuais  dos  sub  eventos 
+
+(análogo à extensividade).  
+
+Shannon (1948), afirma que a única função H que satisfaz as premissas acima é: 
+
+ 
+
+         ∑          
+
+ 
+
+   
+
+Onde  K  é  uma  constante  positiva,  que  relaciona-se  apenas  com  a  unidade  de 
+
+medida escolhida (Tabela 1).  
+
+Shannon (1948), também define a entropia de uma variável continua que possua um 
+
+função densidade de probabilidades p(x): 
+
+  
+
+      ∫  ( )      ( )  
+
+ 
+
+  
+
+Pode-se notar que a escolha da função logarítmica preserva a propriedade extensiva 
+
+da entropia, i.e. seja um sistema A composto pelas partes B e C: 
+
+ ( )    ( )    ( ) 
+
+ 
+
+41 
+
+Sendo  que  a  inequação  acima  será  uma  igualdade  quando  as  partes  B  e  C  forem 
+
+independentes. 
+
+A entropia de Shannon pode ser entendida como a informação média ponderada de 
+
+um conjunto de eventos. A ponderação de cada evento é dada pela probabilidade do 
+
+evento ocorrer. 
+
+2.5.3  Princípio da Máxima Entropia 
+
+ 
+
+Para  ilustrar  um  caso  simples,  Shannon  considera  dois  eventos,  y1  e  y2  com 
+
+probabilidades  p  e  q  =  1-p  respectivamente.  A  seguir  ele  aplica  a  definição  de 
+
+entropia à uma fonte Y= {y1, y2 }: 
+
+     (                  ) 
+
+O resultado está plotado na figura abaixo:  
+
+ 
+
+Figura 5. Entropia de uma fonte de informação binária. Fonte: Shannon (1965) 
+
+ 
+
+ 
+
+Faz-se duas observações da imagem: 
+
+a)  para  p=0  ou  p=1,  H=0.  Nestes  dois  casos  já  existe  o  conhecimento  prévio 
+
+sobre o resultado do evento, logo, a informação adicionada é nula; 
+
+b)  para um dado n, H é máximo e igual a log n quando todos os pi são iguais. 
+
+ 
+
+42 
+
+Este exemplo é consistente tanto com a noção microscópica da entropia quanto com 
+
+a  noção  de  que  a  informação  de  um  evento  é  máxima  quando  ele  é  o  mais 
+
+improvável  possível,  ou  seja,  quando  todas  as  suas  possibilidades  são  igualmente 
+
+prováveis. 
+
+ 
+
+2.5.4  Entropia Configuracional 
+
+ 
+
+Todos  as  teorias  desenvolvidas  sobre  o  comportamento  de  meios  heterogêneos 
+
+utilizam a morfologia. O exemplo mais simples de análise morfológica no estudo da 
+
+resposta  ótica  de  meios  heterogêneos é  a  mensuração  da fração  de área  ocupada 
+
+por  um  dos  elementos  do  meio.  Segundo  Siclen  (1997)  a  função  entropia  da 
+
+informação  fornece  uma  medida  sensível  da  complexidade  de  um  sistema 
+
+multifásico.  
+
+A  Entropia  Configuracional  Normalizada  foi  desenvolvida  baseada  na  Teoria  da 
+
+Informação  de  Shannon.  Esta  teoria  permite  fazer  uma  análise  morfológica  de  um 
+
+meio heterogêneo composto de duas fases. A figura abaixo é uma representação de 
+
+um meio bifásico. Uma fase é representada pelos pixels pretos e a outra pelos pixels 
+
+brancos. 
+
+ 
+
+ 
+
+43 
+
+Figura  6.  Fotografia  de  uma  população  de  625  partículas  que  interagem  numa  região  de  tamanho 
+50x50 e que representam uma microestrutura bifásica em evolução. Fonte: Siclen (1997). 
+
+ 
+
+ 
+
+O  método  para  o  cálculo  da  Entropia  Configuracional  Normalizada  consiste  em 
+
+varrer  a  imagem  acima  com  n  células  de  lado  l.  A  seguir,  para  cada  conjunto  de 
+
+imagens  de  lado  l,  define-se  a  distribuição  de  probabilidades  pi(l).  Onde  pi(l)  é 
+
+definida da seguinte maneira:  
+
+  ( )  
+
+  ( )
+ 
+ ( )
+
+Onde: 
+
+Ni(l) é o número de células de lado l que contém i pixels pretos (ou brancos); 
+
+N(l) é o número total de células de lado l. 
+
+ 
+
+A equação da Entropia Configuracional é obtida aplicando-se a Entropia de Shannon 
+
+à distribuição de probabilidades acima. Ela é descrita abaixo:  
+
+  
+
+  ( )     ∑   ( )   [  ( )]
+ 
+
+   
+
+ 
+
+44 
+
+A  equação  acima  mostra  a  entropia  configuracional  não  normalizada.  A 
+
+normalização se faz necessária na medida em que pretende-se comparar valores de 
+
+entropias de diferentes tamanhos de janelas (l). A normalização é feita com base no 
+
+máximo  valor  que  a  entropia  pode  obter  para  o  lado l.  A  máxima  entropia  é  obtida 
+
+quando a desordem dos pixels é máxima, ou seja:  
+
+  ( )  
+
+ 
+
+      
+
+       
+
+Pode-se descrever a equação acima como: todas as probabilidades são iguais entre 
+
+si  e  equivalem  ao  inverso  do  total  de  possibilidades.  Calcula-se  a  entropia 
+
+configuracional máxima: 
+
+  
+     ( )     ∑
+   
+
+ 
+
+      
+
+   [
+
+ 
+
+      
+
+]
+ 
+
+  
+
+  
+   ( )   ∑
+   
+
+ 
+
+      
+
+  [      ]
+ 
+
+Como  trata-se  de  um  somatório  de  (l2+1)  parcelas  idênticas,  pode-se  simplificar  a 
+
+equação:   
+
+     ( )   (      )   [
+
+ 
+
+      
+
+  [      ]] 
+
+     ( )     [      ] 
+
+Portanto a equação da Entropia Configuracional Normalizada pode ser expressa da 
+
+seguinte forma:  
+
+ ( )  
+
+  
+   
+
+  ∑   ( )   [  ( )]
+ 
+
+  [      ]
+
+É  preciso  notar  que  a  Entropia  Configuracional  Normalizada permite  a  comparação 
+
+entre diferentes valores de l, porém a normalização faz com que a função não seja 
+
+mais uma função extensiva.  
+
+ 
+
+ 
+
+2.5.4.1 
+ 
+
+O Lado de Janela Ótimo 
+
+45 
+
+Andraud  (1998)  aplicou  a  Entropia  Configuracional  Normalizada  para  diversas 
+
+imagens  experimentais  e  simuladas.  Para  todas  elas  pode-se  observar  a  presença 
+
+de um lado ótimo. O lado ótimo é aquele onde:  
+
+a)  a entropia normalizada é máxima; 
+
+b)  a desordem é máxima; e 
+
+c)  a distribuição de probabilidades é próxima de um histograma plano.  
+
+A figura a seguir mostra uma imagem de uma meio bifásico (esquerda) e os valores 
+
+da entropia Configuracional Normalizada para esta imagem. 
+
+ 
+
+Figura  7.  (A)  Imagem  de  um  filme  granular  de  ouro  acima  do  limite  de  percolação,  60%  de  fração 
+metálica  e  comprimento  ótimo  de  entropia  de  100nm.  (B)  Entropia  da  informação  normalizada  para 
+diferentes tamanhos de janela. Fonte: Andraud e Lafait (1998). 
+
+ 
+
+ 
+
+Pode-se  observar  na  figura  acima  que  o  lado  ótimo  é  o  lado  correspondente  a  18 
+
+pixels.  O lado  ótimo  é  característica da  desordem  de  uma  imagem.  Quanto  mais  a 
+
+imagem é complexa, menor é o lado ótimo.  
+
+ 
+
+ 
+
+2.5.5  Entropia de Tons de Cinza 
+
+ 
+
+46 
+
+O  que  faz  a  análise  de  imagens  uma  disciplina  comum  a  diferentes  áreas  é  que 
+
+imagens são na realidade um suporte físico para troca e transporte de informações. 
+
+Esta  informação  pode  estar  associada  a  uma  medida  (neste  caso  falamos  de  um 
+
+sinal  em  associação  a  um  fenômeno  físico),  ou  pode  estar  associada  a  um  nível 
+
+cognitivo (neste caso falamos de conhecimento). 
+
+Processar  uma  imagem  consiste  em  transformá-la  sucessivamente  com  o  objetivo 
+
+de  extrair  a  informação  nela  presente.  Estas  transformações  vão  desde  o  sinal 
+
+numérico até tratamentos de mais alto nível, que correspondem ao sentido cognitivo 
+
+da imagem. Uma destas transformações com o objetivo de quantificar a informação 
+
+contida na imagem é a entropia de tons de cinza. 
+
+Analogamente a todos os conceitos de entropia mostrados neste trabalho, a entropia 
+
+da  imagem  pode  ser  definida  como  um  número  quantificador  da  aleatoriedade  da 
+
+imagem. Ela é matematicamente definida como:  
+
+   
+
+    ∑            
+
+ 
+
+   
+
+Onde  M  é  o  número  total  de  tons  diferentes  na  imagem.  No  caso  das  imagens 
+
+utilizadas, elas apresentam 256 tonalidades de cinza. Sendo a tonalidade 0 a  mais 
+
+escura  e  255  a  tonalidade  totalmente  branca.  Abaixo,  segue  um  exemplo  de 
+
+histograma de uma imagem em tons de cinza.  
+
+ 
+
+47 
+
+ 
+
+Figura 8. Exemplo de histograma de uma imagem de tons de cinza. 
+
+ 
+
+Onde pi é a probabilidade da tonalidade i ocorrer, ou seja:  
+
+    
+
+  
+  
+
+ 
+
+Onde:  
+
+Ni é a quantidade de pixels encontrados com a tonalidade i; 
+
+Nt é a quantidade total de pixels. 
+
+Sabe-se  que  a  tonalidade  de  um  pixel  está  relacionada  com  a  concentração  de 
+
+rodamina  naquela  posição,  desta  forma  a  entropia  de  tons  de  cinza  pode  ser 
+
+utilizada para quantificar a dispersão do contaminante (e por consequência  do fluido 
+
+que leva o contaminante) pelo meio poroso.  
+
+ 
+
+2.5.6  Caracterização do Escoamento Através da Taxa de Variação da Entropia 
+
+Configuracional Normalizada 
+
+ 
+
+ 
+
+48 
+
+Vakarin e Badiali (2007), citados na revisão bibliográfica deste trabalho mostram que 
+
+que  existe  uma  relação  explícita  entre  a  resposta  de  um  sistema  analisado  a  um 
+
+estímulo externo e a taxa de informação. 
+
+Logo utiliza-se esta relação para quantificar o desenvolvimento de um escoamento. 
+
+Após  isso  faz-se  a  análise  estatística  da  influência  de  cada  parâmetro  no 
+
+desenvolvimento do escoamento.   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3 
+
+DESCRITIVO DO PROGRAMA 
+
+ 
+
+ 
+
+3.1 FERRAMENTAS COMPUTACIONAIS 
+
+ 
+
+A  linguagem  de  programação  utilizada  para programar  as  análises  e  manipulações 
+
+das  imagens  através  da  entropia  de  imagem  foi  a  Octave/MATLAB.  O  MATLAB 
+
+(abreviatura de Matrix Laboratory) é um software computacional altamente difundido 
+
+em  todo  o  mundo  devido  a  ser  uma  ferramenta  excelente  para  soluções  de 
+
+ 
+
+49 
+
+problemas  matemáticos,  científicos  e  tecnológicos,  que  possuí  comandos  muito 
+
+próximos da forma como escrevemos as expressões matemáticas, o que facilita seu 
+
+uso.  Sua  popularidade  também  é  devida  ao  seu  sistema  interativo  cujo  elemento 
+
+básico  de  informação  é  uma  matriz  que  não  requer  dimensionamento,  permitindo 
+
+resoluções  de  problemas  de  uma  forma  muito  mais  rápida  do  que  em  outras 
+
+linguagens de programação. Além disso o MATLAB conta com uma vasta família de 
+
+aplicativos  ("toolboxes"),  que  são  coleções  de  funções  usadas  para  solucionar 
+
+determinados  problemas  específicos.  Dentro  das  vantagens  do  software  temos  a 
+
+opção de construir um interface gráfica interativa para o usuário, facilitando bastante 
+
+a  operação.  No  entanto,  por  ser  uma  linguagem  interpretada,  pode  ser  um  pouco 
+
+mais lenta para ser compilada, além do fato de que uma cópia completa do MATLAB 
+
+é significativamente mais cara do que de um compilador convencional. 
+
+Toda a análise foi dividida em sub-rotinas. Cada sub-rotina possui sua interface para 
+
+entrada  dos  parâmetros  necessários.  Os  possíveis  erros  dos  usuários  que  foram 
+
+identificados foram tratados (ou ao menos, foram feitas instruções a fim de minimiza-
+
+los).  
+
+As sub-rotinas foram organizadas utilizando a interface GUIDE do MATLAB. Esta é a 
+
+interface principal do código. Ela é mostrada na figura abaixo: 
+
+ 
+
+ 
+
+50 
+
+ 
+
+Figura 9. Tela inicial do programa. 
+
+ 
+
+Como é possível observar na imagem acima, a interface é composta por seis botões 
+
+(um  para  cada  sub-rotina)  e  por  um  espaço  chamado  “visualizador  de  imagens” 
+
+utilizado  para  mostrar  ao  usuário  alguns  resultados  e  possibilitar  a  mudança  de 
+
+parâmetros baseada nestes resultados.  
+
+As sub-rotinas principais do código são descritas no diagrama de blocos abaixo: 
+
+ 
+
+Figura 10. Diagrama de blocos do programa. 
+
+ 
+
+ 
+
+51 
+
+Além  das  sub-rotinas  voltadas  para  o  cálculo  da  taxa  de  variação  da  entropia 
+
+configuracional, o código possui uma sub-rotina para o cálculo das entropias de tons 
+
+de  cinza  e  outra  sub-rotina  para  possibilitar  uma  possível  analise  de  transporte  de 
+
+informação. Todas estas sub-rotinas são explicadas no corpo do texto.   
+
+Além  destas  sub-rotinas  o  código  possui  uma  ferramenta  que  cria  imagens  de 
+
+acordo  com  os  parâmetros  entrados  pelo  usuário.  Esta  ferramenta  visa  auxiliar 
+
+aqueles  que  não  possuíres  imagens  experimentais  ou  que  quiserem  analisar  o 
+
+comportamento do programa com algumas imagens específicas.  
+
+O código deve ser colocado dentro da pasta que contenha as imagens provenientes 
+
+dos experimentos. Tais imagens normalmente estão em formato “.jpeg”.  
+
+ 
+
+3.1.1  Padroniza Nomes 
+
+ 
+
+Esta  sub-rotina  é  apenas  um  facilitador  de  manipulação  das  imagens.  Visto  que 
+
+cada  experimento  pode  ter  mais  de  100  imagens  e  que  a  ordem  das  imagens  é 
+
+importante,  programou-se  a  mudança  dos  nomes  das  imagens  do  padrão  da 
+
+máquina  fotográfica  utilizada  para  nomes  no  padrão  “expX_imY.jpg”.  Este  padrão 
+
+facilita  a  identificação  da  imagem  durante  a  análise  dos  resultados.  O  único 
+
+parâmetro  de  entrada  é  o  número  do  experimento,  como  pode-se  observar  na 
+
+imagem abaixo.  
+
+ 
+
+Figura 11. Tela da sub-rotina "Padroniza Nomes". 
+
+ 
+
+ 
+
+ 
+
+3.1.2   Tratamento Inicial 
+
+ 
+
+52 
+
+As  imagens  obtidas  experimentalmente  podem  possuir  alguns  problemas  que 
+
+impossibilitam ou prejudicam a análise pela entropia configuracional. Além disso elas 
+
+podem abranger uma área maior do que a área de interesse para a análise.  
+
+A  imagem  abaixo  ilustra  alguns  dos  problemas  pelos  quais  a  sub-rotina  de 
+
+tratamento inicial das imagens se faz necessária. 
+
+ 
+
+Figura 12. Imagem padrão dos experimentos testados. Fonte: Strey (2012). 
+
+ 
+
+ 
+
+Problemas da imagem1:  
+
+a)  imagem rotacionada; 
+
+b)  imagem decentralizada; 
+
+c)  imagem com regiões não interessantes para a análise.  
+
+A caixa de diálogo da sub-rotina de tratamento inicial é mostrada na imagem abaixo: 
+
+                                                             
+1 A maioria destes problemas foi gerada devido ao fato das imagens não teres sido capturadas da maneira 
+ideal. A segunda parte deste projeto de graduação fará a análise utilizando fotos retiradas de maneira mais 
+apropriada, mesmo assim, um tratamento inicial mais apurado pode ser necessário. 
+
+ 
+
+53 
+
+Figura 13. Tela da sub-rotina "Tratamento Inicial". 
+
+ 
+
+O usuário precisa entrar com:  
+
+ 
+
+a)  o número do experimento a ser feita a análise; 
+
+b)  a quantidade de imagens que este experimento possui; 
+
+c)  as  dimensões  (em  pixels)  dos  lados  horizontais  e  verticais  da  imagem  a  ser 
+
+gerada. O objetivo é excluir as partes não significativas da imagem; 
+
+d)  o parâmetro de centralização, que varia de -10 até +10. Um número negativo 
+
+desloca a imagem para a esquerda e um número positivo desloca a imagem 
+
+para a direita; 
+
+e)  posição  vertical  do  primeiro  pixel  (em  pixels)  –  exclui  a  faixa  superior  da 
+
+imagem original que normalmente retrata apenas o protótipo de vidro; 
+
+f)  ângulo de rotação anti-horária. Rotaciona a imagem (a entrada de parâmetros 
+
+negativos permite a rotação horaria). 
+
+Após entrar com todos os parâmetros de maneira correta, o código exibe o resultado 
+
+das  modificações  no  visualizador  de  imagens  (utilizando  a  última  imagem  da  série 
+
+como  exemplo)  e  uma  janela  de  diálogo  que  pergunta  se  o  usuário  gostaria  de 
+
+mudar os parâmetros.  
+
+ 
+
+54 
+
+Figura 14. Tela de checagem do resultado da sub-rotina "Tratamento Inicial". 
+
+ 
+
+ 
+
+Esta iteração é de suma importância para a escolha correta dos parâmetros (como 
+
+alguns  estão  em  pixels,  não  é  fácil  ter  a  sensibilidade  necessária  para  acertar  na 
+
+primeira  tentativa).  Caso  o  usuário  escolha  alterar  os  parâmetros  uma  nova  janela 
+
+de entrada de parâmetros é aberta.  
+
+ 
+
+Figura 15. Tela de mudança de parâmetros da sub-rotina “Tratamento Inicial”. 
+
+ 
+
+ 
+
+ 
+
+55 
+
+Um  ponto  facilitador  para  o  usuário  é  que  nesta  nova  janela  de  entrada  de 
+
+parâmetros,  os  parâmetros  “default”  que  aparecem  inicialmente  nos  campos  são 
+
+aqueles anteriormente inseridos pelo usuário.  
+
+Ao  final  desta  sub-rotina  gera-se  um  conjunto  de imagens  em  tons  de  cinza  com  a 
+
+imagem abaixo:  
+
+ 
+
+Figura 16. Imagem após o tratamento inicial. 
+
+ 
+
+ 
+
+Nota-se  que  um  inconveniente  desta  imagem  é  a  presença  de  ruídos  (reflexos  da 
+
+captura da foto). Estes ruídos serão eliminados durante a binarização da imagem. 
+
+ 
+
+3.1.3   Corta e Binariza 
+
+ 
+
+Esta sub-rotina tem a finalidade principal de gerar imagens binarizadas (em preto e 
+
+branco).  Os  parâmetros  de  entrada  são  mostrados  na  imagem  e  descritos  em 
+
+seguida: 
+
+ 
+
+56 
+
+Figura 17. Tela da sub-rotina "Corta e Binariza". 
+
+ 
+
+ 
+
+O número do experimento e quantidade de imagens é análogo às outras sub-rotinas. 
+
+A porcentagem da borda a cortar é utilizada caso o usuário queira excluir as bordas 
+
+verticais das imagens. O limiar é o parâmetro de binarização. Pode variar de 0 até 1, 
+
+sendo  que  quanto  mais  próximo  de  0  maior  a  tendência  de  um  ponto  cinza  ficar 
+
+branco (se for 0, toda a imagem se torna branca).  
+
+Área do ruído é utilizado para retirar pequenos pontos brancos do corpo da imagem. 
+
+Por  exemplo,  se  área  do  ruído  for  100  pixels  quadrados  todos  os  aglomerados 
+
+brancos com menos de 100 pixels serão excluídos. Esta ferramenta é muito útil para 
+
+retirar  ruídos  pontuais  que  não  foram  removidos  durante  a  binarização  e  garantir 
+
+uma  imagem  do  escoamento  mais  íntegra.  Um  exemplo  da  utilização  deste  filtro  é 
+
+mostrada na Figura 18. 
+
+Analogamente  à  sub-rotina  anterior,  nesta  sub-rotina  existe  uma  iteração  para  a 
+
+mudança  dos  parâmetros.  O  resultado  é  mostrado  e,  caso  o  usuário  deseje  mudar 
+
+os parâmetros, uma nova janela de entrada é aberta.  
+
+Esta  rotina  gera  uma  pasta  chamada  “ExpX_imagens_finalizadas”.  Dentro  desta 
+
+pasta  o  código  cria 
+
+imagens  chamadas 
+
+“ExpX_imY_gray_finalizada.jpg”  e 
+
+“ExpX_imY_bin.jpg”. 
+
+57 
+
+ 
+
+ 
+
+Figura 18. (A) Imagem binarizada sem filtro. (B) Imagem binarizada com filtro. 
+
+ 
+
+3.1.4   Entropia Binarizada 
+
+ 
+
+Esta sub-rotina calcula a entropia binarizada (configuracional) das imagens. 
+
+ 
+
+Figura 19. Tela da sub-rotina "Entropia Binarizada". 
+
+ 
+
+ 
+
+58 
+
+Com relação aos parâmetros de entrada, deve-se notar: 
+
+a)  o número do experimento (análogo às sub-rotinas anteriores); 
+
+b)  a quantidade de imagens (análogo às sub-rotinas anteriores); 
+
+c)  a  quantidade  de  janelas  aleatórias.  Como  foi  explicado  anteriormente,  é  a 
+
+quantidade  de  janelas  que  o  programa  irá  gerar  (dentro  de  cada  imagem) 
+
+para  cada  tamanho  de  lado.  Foram  utilizadas  500  janelas  aleatórias.  Este 
+
+número  é  suficiente,  uma  vez  que  executou-se  o  programa  3  vezes  com  as 
+
+mesmas imagens e os resultados deram idênticos, logo, pode-se concluir que 
+
+o número de janelas é grande o suficiente para tornar imperceptível variações 
+
+aleatórias; 
+
+d)  o  lado  inicial,  lado  final  e  intervalo  de  lado.  São  usados  para  entrar  com  a 
+
+gama  de  lados  com  a  qual  cada  imagem  será  „varrida‟  e  a  entropia 
+
+configuracional  calculada.  Exemplo:  Se, lado  inicial  =  100,  lado final  =  200  e 
+
+intervalo de lados = 20; as imagens serão „varridas‟ por janelas de lado 100, 
+
+120, 140, 160, 180 e 200. 
+
+e)  que o lado final deve ser menor que a menor dimensão do grupo de imagens 
+
+daquele  experimento.  Caso  o  usuário  insira  valores  que  não  permitem  uma 
+
+configuração  correta,  a  mensagem  da  Figura  20  é  exibida  e  a  janela  de 
+
+entrada de parâmetros é reaberta. 
+
+ 
+
+Figura 20. Tela de aviso de parâmetros não possíveis. 
+
+ 
+
+ 
+
+Assim  que  o  código  é  finalizado,  ele  gera  uma  planilha  do  Excel  dentro  da  pasta 
+
+“ExpX_imagens_finalizadas”  chamada  “entropy_expX.xls”.  Dentro  desta  pasta  do 
+
+Excel,  existem  duas  planilhas.  A  primeira  chamada  “entropia”  armazena  todos  os 
+
+ 
+
+59 
+
+valores  de  entropia  calculados  para  cada  uma  das  imagens.  Um  exemplo  desta 
+
+tabela é mostrado abaixo: 
+
+ 
+
+ 
+
+100 
+
+200 
+
+300 
+
+400 
+
+500 
+
+600 
+
+700 
+
+800 
+
+900 
+
+1000 
+
+1100 
+
+1200 
+
+1300 
+
+1400 
+
+1500 
+
+ 
+
+Tabela 2 – Exemplo de Resultados de Entropia Não Normalizada 
+
+image_1 
+
+image_2 
+
+image_3 
+
+image_4 
+
+image_5 
+
+image_6 
+
+image_7 
+
+image_8 
+
+image_9 
+
+image_10 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0,02885 
+
+0,014427 
+
+0,144091 
+
+0,072096 
+
+0,158478 
+
+0,086503 
+
+0,115305 
+
+0,144091 
+
+0,02885 
+
+0 
+
+0,04327 
+
+0,100906 
+
+0,244712 
+
+0,144091 
+
+0,244712 
+
+0,187239 
+
+0,072096 
+
+0,04327 
+
+0,100906 
+
+0,115305 
+
+0,115305 
+
+0,187239 
+
+0,227577 
+
+0,373784 
+
+0,057685 
+
+0,100906 
+
+0,201613 
+
+0,241939 
+
+0,244712 
+
+0,31646 
+
+0,359459 
+
+0,359459 
+
+0,072096 
+
+0,1297 
+
+0,115305 
+
+0,299346 
+
+0,473937 
+
+0,31646 
+
+0,428267 
+
+0,58814 
+
+0,155705 
+
+0,17286 
+
+0,287773 
+
+0,388104 
+
+0,551297 
+
+0,659376 
+
+0,628122 
+
+0,727729 
+
+0,155705 
+
+0,256297 
+
+0,302119 
+
+0,353914 
+
+0,653155 
+
+0,653831 
+
+0,895201 
+
+0,869645 
+
+0,184466 
+
+0,37874 
+
+0,296574 
+
+0,614259 
+
+0,60833 
+
+1,004514 
+
+0,991697 
+
+0,957625 
+
+0,223758 
+
+0,524892 
+
+0,505705 
+
+0,883144 
+
+0,969254 
+
+1,018089 
+
+1,075304 
+
+1,189147 
+
+0,302128 
+
+0,390732 
+
+0,690639 
+
+0,726329 
+
+0,917486 
+
+1,006319 
+
+1,133787 
+
+1,363892 
+
+0,394023 
+
+0,598683 
+
+0,703804 
+
+0,913848 
+
+1,118032 
+
+1,430186 
+
+1,153592 
+
+1,534562 
+
+0,314162 
+
+0,52807 
+
+0,7861 
+
+0,859085 
+
+1,362097 
+
+1,544034 
+
+1,687177 
+
+2,038438 
+
+0,4923 
+
+0,626274 
+
+0,884125 
+
+1,146323 
+
+1,443831 
+
+1,925351 
+
+2,027512 
+
+1,971559 
+
+0,589331 
+
+1,024958 
+
+1,306866 
+
+1,610912 
+
+2,123229 
+
+2,083666 
+
+2,447425 
+
+2,812589 
+
+0,771896 
+
+1,391957 
+
+1,662667 
+
+2,232876 
+
+2,701401 
+
+3,073585 
+
+3,443623 
+
+3,831562 
+
+Esta pastas do Excel possui uma segunda planilha chamada “entropia normalizada”. 
+
+Esta  planilha  possui  uma 
+
+tabela  que  armazena  os  valores  das  entropias 
+
+normalizadas.  Abaixo  desta  tabela  existem  duas  linhas  que  armazenam  os  valores 
+
+das  máximas  entropias  normalizadas  de  cada  imagem  e  o  lado  com  o  qual  tal 
+
+entropia máxima foi obtida. Abaixo, segue um exemplo desta planilha: 
+
+ 
+
+ 
+
+60 
+
+ 
+
+ 
+
+100 
+
+200 
+
+300 
+
+400 
+
+500 
+
+600 
+
+700 
+
+800 
+
+900 
+
+1000 
+
+1100 
+
+1200 
+
+1300 
+
+1400 
+
+1500 
+
+1600 
+
+1700 
+
+ 
+
+Entropia Máxima 
+
+ 
+
+Tabela 3 – Exemplo de Resultados de Entropia Binarizada 
+
+image_1 
+
+image_2 
+
+image_3 
+
+image_4 
+
+image_5 
+
+image_6 
+
+image_7 
+
+image_8 
+
+image_9 
+
+image_10 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+ 
+
+0 
+
+ 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+0 
+
+ 
+
+0 
+
+ 
+
+0,003132 
+
+0,001566 
+
+0,015644 
+
+0,007828 
+
+0,017206 
+
+0,009392 
+
+0,012519 
+
+0,015644 
+
+0,002723 
+
+0 
+
+0,004083 
+
+0,009522 
+
+0,023093 
+
+0,013598 
+
+0,023093 
+
+0,01767 
+
+0,00632 
+
+0,003793 
+
+0,008846 
+
+0,010108 
+
+0,010108 
+
+0,016414 
+
+0,01995 
+
+0,032766 
+
+0,004814 
+
+0,008421 
+
+0,016825 
+
+0,02019 
+
+0,020422 
+
+0,026409 
+
+0,029998 
+
+0,029998 
+
+0,005801 
+
+0,010435 
+
+0,009277 
+
+0,024084 
+
+0,038131 
+
+0,025461 
+
+0,034456 
+
+0,047319 
+
+0,01217 
+
+0,013511 
+
+0,022493 
+
+0,030335 
+
+0,043091 
+
+0,051538 
+
+0,049096 
+
+0,056881 
+
+0,011884 
+
+0,019561 
+
+0,023059 
+
+0,027012 
+
+0,049851 
+
+0,049902 
+
+0,068325 
+
+0,066374 
+
+0,013798 
+
+0,028329 
+
+0,022183 
+
+0,045946 
+
+0,045502 
+
+0,075136 
+
+0,074178 
+
+0,071629 
+
+0,016447 
+
+0,038581 
+
+0,037171 
+
+0,064914 
+
+0,071244 
+
+0,074833 
+
+0,079039 
+
+0,087407 
+
+0,021869 
+
+0,028282 
+
+0,04999 
+
+0,052573 
+
+0,06641 
+
+0,07284 
+
+0,082066 
+
+0,098722 
+
+0,028132 
+
+0,042744 
+
+0,05025 
+
+0,065246 
+
+0,079824 
+
+0,102111 
+
+0,082363 
+
+0,109564 
+
+0,022155 
+
+0,03724 
+
+0,055437 
+
+0,060584 
+
+0,096057 
+
+0,108887 
+
+0,118982 
+
+0,143753 
+
+0,03433 
+
+0,043673 
+
+0,061653 
+
+0,079937 
+
+0,100684 
+
+0,134262 
+
+0,141386 
+
+0,137484 
+
+0,040676 
+
+0,070743 
+
+0,0902 
+
+0,111186 
+
+0,146546 
+
+0,143816 
+
+0,168922 
+
+0,194126 
+
+0,052774 
+
+0,095167 
+
+0,113675 
+
+0,15266 
+
+0,184693 
+
+0,210139 
+
+0,235438 
+
+0,261961 
+
+0,087426 
+
+0,129732 
+
+0,176812 
+
+0,214972 
+
+0,281468 
+
+0,306917 
+
+0,32089 
+
+0,320812 
+
+0,214607 
+
+0,227283 
+
+0,226408 
+
+0,226114 
+
+0,226397 
+
+0,227039 
+
+0,22684 
+
+0,227017 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+0,214607 
+
+0,227283 
+
+0,226408 
+
+0,226114 
+
+0,281468 
+
+0,306917 
+
+0,32089 
+
+0,320812 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Janela Ótima 
+
+100 
+
+100 
+
+1700 
+
+1700 
+
+1700 
+
+1700 
+
+1600 
+
+1600 
+
+1600 
+
+1600 
+
+ 
+
+Além destes dados, o código também gera um gráfico (em formato de imagem). Um 
+
+exemplo deste gráfico é mostrado abaixo: 
+
+ 
+
+61 
+
+ 
+
+Figura 21. Exemplo de gráfico entropia e janela ótima em função das imagens. 
+
+  
+
+Pode-se notar que o gráfico possui duas abscissas. A abscissa da esquerda retrata 
+
+a  entropia  normalizada  e  a  da  direita  o  lado  da  janela  onde  a  maior  entropia 
+
+normalizada ocorreu em cada janela. 
+
+ 
+
+3.1.5  Entropia Tons de Cinza 
+
+ 
+
+O objetivo desta sub-rotina é quantificar a variação na entropia de tons de cinza nas 
+
+imagens  no  decorrer  do  experimento.  As  entradas  desta  sub-rotina  são  apenas  o 
+
+número  do  experimento  e  a  quantidade  de imagens  deste  experimento.  A  principal 
+
+saída  gerada  é  uma  pasta  do  Excel  chamada  “ent_tons_cinza_expX”  onde  são 
+
+ 
+
+62 
+
+armazenadas  os  valores  das  entropias  de  tons  de  cinza  para  cada  uma  das 
+
+imagens. Um exemplo da tabela é mostrado abaixo2: 
+
+ 
+
+ 
+
+Tabela 4 – Exemplo de Resultados de Entropia de Tons de Cinza 
+
+Imagens 
+
+Entropias 
+
+Imagem1 
+
+4,221749 
+
+Imagem2 
+
+4,20301 
+
+Imagem3 
+
+4,213114 
+
+Imagem4 
+
+4,211312 
+
+Imagem5 
+
+4,209269 
+
+Imagem6 
+
+4,208342 
+
+Imagem7 
+
+4,215168 
+
+Imagem8 
+
+4,211472 
+
+Imagem9 
+
+4,227929 
+
+Imagem10 
+
+4,23938 
+
+Além  disso,  a  sub-rotina  cria  uma  imagem  com  a  evolução  da  entropia  de  tons  de 
+
+cinza com o experimento. Um exemplo é mostrado abaixo: 
+
+                                                             
+2 Por conveniência, apenas uma parte da tabela foi mostrada. 
+
+ 
+
+63 
+
+Figura 22. Exemplo da evolução da entropia de tons de cinza. 
+
+ 
+
+ 
+
+Uma melhoria importante que deve ser feita no código é a utilização de um filtro para 
+
+diminuir a influência de ruídos no valor da entropia de tons de cinza.  
+
+ 
+
+3.1.6  Nove Janelas 
+
+ 
+
+Esta  sub-rotina  foi  criada  para  possíveis  análises  futuras  utilizando  transporte  de 
+
+informação.  Ela  cria  nove  janelas  na  imagem  original,  calcula  a  entropia  (tons  de 
+
+cinza)  de  todas  as  janelas  e  salva  estes  valores  em  uma  planilha  do  Excel.    As 
+
+janelas geradas por esta sub-rotinas são dispostas como no exemplo a seguir: 
+
+ 
+
+ 
+
+64 
+
+Figura 23. Disposição simplificada das nove janelas em uma imagem de tons de cinza. 
+
+ 
+
+ 
+
+ 
+
+3.2 MELHORIAS PROPOSTAS AO CÓDIGO 
+
+ 
+
+Apesar  de  todo  o  trabalho  ter  sido  realizado  com  bastante  dedicação  e  atenção, 
+
+sempre haverá espaços para melhorias. Algumas delas são listadas a seguir: 
+
+ 
+
+a)  detecção completa de erros de entrada de dados: 
+
+- limitar centralização à -10 +10 
+
+- lados finais da imagem maiores que os lados originais da imagem no 
+
+“tratamento inicial” 
+
+- limitar limiar de binarização 
+
+- limitar porcentagem da borda a cortar 
+
+b)  caixas de diálogo: 
+
+- erro de centralização 
+
+65 
+
+- número de experimento inexistente 
+
+- imagem inexistente 
+
+c)  ferramentas de ajuda; 
+
+d)  otimização  de  tempo  de  execução  pela  redução  da  quantidade  de  iteração 
+
+entre MATLAB e Excel; 
+
+e)  fazer uma estimativa de tempo de execução e mostrar ao usuário; 
+
+f) 
+
+transformar  as  sub-rotinas  “tratamento  inicial”  e  “corta  e  binariza”  em  uma 
+
+única sub-rotina sequencial; 
+
+g)  eliminação  da  necessidade  de  entrar  com  o  número  do  experimento  e  a 
+
+quantidade de imagens em todas as sub-rotinas; 
+
+h)  calculo  automático  da  taxa  de  variação  da  entropia  (associando-a  ao  tempo 
+
+de escoamento); 
+
+i) 
+
+tratar os ruídos na análise de entropia de tons de cinza; 
+
+j)  dar a opção de salvar ou não as janelas criadas na sub-rotina nove janelas; 
+
+k)  permitir a personalização do tamanho final da imagem binarizada; 
+
+l) 
+
+impedir execução do programa sem a entrada de dados. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+66 
+
+ 
+
+4 
+
+TESTES DE CONCEITO 
+
+ 
+
+4.1 ENTROPIA CONFIGURACIONAL 
+
+ 
+
+Afim  de  comprovar  a  funcionalidade  do  programa,  fez-se  análise  de  entropia 
+
+binarizada  de  três  séries  de  imagens  de  experimentos  feitos  por  Strey  (2012).  Os 
+
+experimentos escolhidos foram os que melhor atendiam os critérios seguintes: 
+
+a)  maior número de imagens; 
+
+b)  maior qualidade das imagens; e 
+
+c)  imagens com menos ruído.  
+
+Desta forma os experimentos escolhidos foram os 03, 20 e 22. O tratamento inicial 
+
+das  imagens  foi  feito  conforme  descrito  anteriormente  e  o  cálculo  da  entropia 
+
+configuracional foi feito utilizando os seguintes parâmetros:  
+
+a)  tamanho das imagens: aproximadamente 850 x 850 pixels; 
+
+b)  lado inicial: 50 pixels; 
+
+c)  lado final: 850 pixels; 
+
+d)  intervalo de lados: 50 pixels; e 
+
+e)  quantidade de janelas aleatórias: 500. 
+
+Intervalo de lados e tamanho das imagens foram limitados devido à capacidade de 
+
+processamento  da  máquina  disponível  (computador  pessoal  convencional  – 
+processador  CORETM  I7).  O  tempo  de  execução  do  programa  foi  em  torno  de  5 
+
+horas  para  cada  experimento.  Como  explicado  acima,  os  resultados  obtidos 
+
+consistem em tabelas do Excel onde todos os valores de entropias (normalizados e 
+
+não  normalizados)  são  armazenados.  Estas  tabelas  não  são  mostradas  neste 
+
+trabalho  devido  ao  seu  tamanho  inconveniente.  Desta  forma  mostra-se  a  seguir 
+
+apenas  os  gráficos  de  entropia  normalizada  e  lado  ótimo  em  função  da  imagem 
+
+analisada: 
+
+ 
+
+4.1.1  Experimento 03 
+
+ 
+
+67 
+
+Figura 24. Entropia normalizada e janela ótima do experimento 03. 
+
+ 
+
+4.1.2  Experimento 20 
+
+ 
+
+Figura 25. Entropia normalizada e janela ótima do experimento 203. 
+
+                                                             
+3 A parte inicial é zero, pois as imagens deste experimento não mostram escoamento. 
+
+ 
+
+ 
+
+ 
+
+4.1.3  Experimento 22 
+
+ 
+
+68 
+
+Figura 26.Entropia normalizada e janela ótima do experimento 22. 
+
+ 
+
+4.1.4  Comparação com Cálculos da Bibliografia 
+
+ 
+
+ 
+
+Afim  de  verificar  a  confiabilidade  do  código, fez-se  a  análise  de  séries  de  imagens 
+
+que  já  haviam  sido  analisadas  na  bibliografia,  principalmente  provenientes  do 
+
+trabalho  de  Strey  (2012).  Uma  destas  comparações  é  mostrada  abaixo,  onde  o 
+
+experimento analisado foi o experimento 01: 
+
+ 
+
+Tabela 5 – Comparação dos Resultados do Programa com os da Bibliografia 
+
+Imagens 
+
+STREY 
+
+1 
+
+2 
+
+3 
+
+0 
+
+0,236149 
+
+0,324251 
+
+Código próprio 
+
+(500 janelas) 
+
+0 
+
+0,233002 
+
+0,328583 
+
+ 
+
+69 
+
+Tabela 5 – Comparação dos Resultados do Programa com os da Bibliografia 
+
+Imagens 
+
+STREY 
+
+Código próprio 
+
+(500 janelas) 
+
+4 
+
+5 
+
+6 
+
+7 
+
+8 
+
+9 
+
+10 
+
+11 
+
+0,539092 
+
+0,594599 
+
+0,641681 
+
+0,683837 
+
+0,719739 
+
+0,738714 
+
+0,688765 
+
+0,660024 
+
+0,552132 
+
+0,596468 
+
+0,6433 
+
+0,686352 
+
+0,725528 
+
+0,729096 
+
+0,688767 
+
+0,648919 
+
+ 
+
+ 
+
+4.2 ENTROPIA DE TONS DE CINZA 
+
+ 
+
+No  caso  da  entropia  de  tons  de  cinza,  procedeu-se  com  o  tratamento  inicial  das 
+
+imagens  de  maneira  adequada  e  após  isso,  calculou-se  as  entropias  de  tons  de 
+
+cinza.  O  tempo  de  processamento  foi  bem  reduzido,  comparado  à  entropia 
+
+binarizada, não passou de um minuto. 
+
+Analogamente ao caso da entropia configuracional, a saída da sub-rotina entropia de 
+
+tons de cinza é uma grande tabela com todos os valores de entropia para  todas as 
+
+imagens e gráficos de entropia de tons de cinza versus imagens. A seguir expõe-se 
+
+os gráficos obtidos para as imagens de dois experimentos feitos por Loureiro (2001). 
+
+Estes experimentos foram realizados a partir da dispersão de uma substância líquida 
+
+em  um  meio  líquido,  ilustrado  pela  Figura  27,  e  os  resultados  se  encontram  na 
+
+sequência. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 27. Exemplo de imagens da dispersão de uma substância líquida em um meio líquido. 
+
+ 
+
+4.2.1  Experimento 06: 
+
+ 
+
+Figura 28. Entropia de tons de cinza do experimento 06. 
+
+ 
+
+70 
+
+ 
+
+ 
+
+71 
+
+ 
+
+ 
+
+4.2.2  Experimento 14: 
+
+ 
+
+Figura 29. Entropia de tons de cinza do experimento 14. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5 
+
+TRABALHOS FUTUROS 
+
+ 
+
+72 
+
+Como  o  próprio  título  deste  projeto  sugere,  ele  é  composto  por  duas  partes.  A 
+
+primeira  parte  foi  o  desenvolvimento  e  o  teste  de  conceito  do  software.  A  segunda 
+
+parte será composta pelos seguintes assuntos: 
+
+a)  aprimoramento do código com os itens listados no corpo do texto; 
+
+b)  projeto experimental de um meio poroso; 
+
+c)  obtenção de imagens de escoamentos com  o auxílio do laser de íon argônio 
+
+do Laboratório de Aerossóis e Bioescoamentos da UFES; 
+
+d)  obtenção da taxa de variação da entropia de cada experimento com o auxílio 
+
+do código; 
+
+e)  análise estatística da influência dos parâmetros de cada experimento na taxa 
+
+de variação da entropia de acordo com o Apêndice deste projeto. 
+
+Vale  ressaltar  este  trabalho  foi  programado  para  ser  feito  em  duas  partes,  desta 
+
+forma  a  parte  dois 
+
+já  está  em  processo  de  elaboração,  por  exemplo,  o 
+
+aprimoramento do código é algo que está sendo feito initerruptamente e o projeto de 
+
+um meio poroso está em fase de testes.  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+6 
+
+CONCLUSÕES 
+
+ 
+
+73 
+
+De  acordo  com  os  resultados  mostrados  no  texto,  pode-se  afirmar  que  o  código 
+
+possibilita  a  análise  dos  experimentos  de  maneira  facilitada  e  com  um  tempo  de 
+
+execução  apropriado  (ainda  suscetível  de  melhoria).  Além  de  proporcionar  outras 
+
+vantagens como a remoção próxima da totalidade de ruído das imagens e o fato de 
+
+que  o  tempo  de  análise  da  entropia  em  tons  de  cinza  é  praticamente  insignificante 
+
+em  comparação  com  a  da  entropia  binarizada.  Além  disso,  pode-se  verificar  os 
+
+resultados  obtidos  pelo  código  com  resultados  da  bibliografia,  indicando  que  os 
+
+resultados gerados pelo código são corretos. Outro item satisfatório foi a praticidade 
+
+proporcionada  pelo  código  que  facilitara  muitas  futuras  analises  com  esta  teoria. 
+
+Vale ressaltar que a análise em nove janelas serve de base para futuras análises de 
+
+transporte de informação dentro da imagem. 
+
+Também  nota-se  que  o  programa  é  funcional  não  apenas  para  a  análise  de 
+
+escoamentos  em  meios  porosos,  mas  também  para  outros  meios,  assim  como 
+
+mostrado  na  análise  de  tons  de  cinza  de  imagens  de  experimentos  de  dispersão 
+
+entre uma substância líquida em um meio líquido.  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+7 
+
+REFERÊNCIAS 
+
+ 
+
+74 
+
+1.  AHMED, T. Reservoir Engineering Handbook. 3 ed. Oxford: Elsevier, 2006. 
+
+2.  ANDRAUD,  C.;  LAFAIT,  J.  Entropic  model  for  the  optical  properties  of 
+
+heterogeneous  media:  Validation  on  granular  gold  films  near  percolation. 
+
+Physical Review B, [S.I.], v. 57, n. 20, p. 227-234, 1998. 
+
+3.  CLAUSIUS,  R.  Mechanic  Theory  of  Heat,  1864.  Disponível  em: 
+
+<http://www.humanthermodynamics.com/Clausius.html#anchor_152>. 
+
+Acessado em 15 de outubro de 2013. 
+
+4.  DEUSUVIRE,  E.  Classical  and  quantum 
+
+information 
+
+theory:  an 
+
+introduction  for  the  telecom  scientist.  1.  ed.  Cambridge:  Cambridge 
+
+University Press, 2009. 
+
+5.  FELDMAN,  D.  P.;  CRUTCHFIELD,  J.  P.  Structural  Information  in  Two-
+
+Dimensional  Patterns:  Entropy  Convergence  and  Excess  Entropy.  Bar 
+
+Harbor: College of the Atlantic, 2002. 
+
+6.  HARTLEY, R. V. L. Transmission of Entropy. 1928. 
+
+7.  LOUREIRO,  B.  V.  Avaliação  experimental  da  dispersão  de  um 
+
+contaminante  inerte  em  ambientes  altamente  instáveis.  Vitória:  UFES, 
+
+2001. 
+
+8.  MINEI,  N.  Um  método  expedido  para  a  medição  de  vazão  em  rios  e 
+
+canais abertos. São Paulo: USP, 1999. 
+
+9.  MONTGOMERY,  D.  C.  Design  and  analysis  of  experiments.  5.  ed.  New 
+
+York: Willey, 2001. 
+
+10. NYQUIST,  H.  Certain  Factors  Affecting  Telegraph  Speed.  The  Bell  System 
+
+Technical Journal, p. 324-346, 1924. 
+
+11. PEROTA, M. L. L. R.; CARVALHO, I. C. L.; BECCALLI, A. M. Normalização e 
+
+apresentação de trabalhos científicos e acadêmicos. 3. ed. Vitória: UFES, 
+
+A Biblioteca, 2011. 
+
+75 
+
+12. PEROTA, M. L. L. R.; CARVALHO, I. C. L.; BECCALLI, A. M.  Normalização 
+
+de referências: NBR 6023:2002. Vitória: UFES, A Biblioteca, 2006. 
+
+13. PETROGASNEWS. 
+
+Geologia 
+
+do 
+
+Petróleo. 
+
+Disponível 
+
+em: 
+
+<http://petrogasnews.wordpress.com/2011/03/14/geologia-do-petroleo/>. 
+
+Acessado em 11 de dezembro de 2013. 
+
+14. REYNOLDS, W. C. Thermodynamics. 1. ed. New York: McGraw-Hill, 1965. 
+
+15. SCHREIBER,  T.  Measuring  Information  Transfer.  Dresden:  Max  Plank 
+
+Institute for Physics of Complex Systems, 2008. 
+
+16. SHANNON,  C.  E.  A  Mathematical  Theory  of  Communication.  The  Bell 
+
+System Technical Journal, [S.I.], v. 27, p. 379-423, 623-656, 1948. 
+
+17. SICLEN, C. D. V. Information entropy of complex structures. Physical Review 
+
+E, [S.I.], v. 56, n. 5, p. 211-215, 1997. 
+
+18. STREY,  N.  F.  Avaliação  Experimental  da  Variação  da  Entropia  da 
+
+Informação de Escoamentos em Meios Porosos. Vitória: UFES, 2012. 
+
+19. THOMAS,  J.  E.  et  al  Fundamentos  de  engenharia  do  petróleo.  1.  ed.  Rio 
+
+de Janeiro: Interciência, 2001. 
+
+20. VAKARIN,  E.  V.;  BADIALLI,  J.  P.  Maximum  entropy  approach  to 
+
+characterization of random media. Paris, [2007?] 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+APÊNDICE – ANÁLISE ESTATÍSTICAS DOS DADOS 
+
+ 
+
+ 
+
+76 
+
+A  fim  de  estudar  o  efeito  de  cada  um  dos  fatores  envolvidos  no  escoamento 
+
+(porosidade,  fluido  e  vazão),  a  análise  estatística  dos  dados  será  feita  de  forma 
+
+fatorial,  onde  todas  as  combinações  de  níveis  dos  fatores  serão  avaliadas  em 
+
+experimentos. Isto significa que em um estudo contendo 3 fatores, A (com  a níveis), 
+
+B (com b níveis) e C (com c níveis), onde para cada combinação de níveis dos três 
+
+fatores foram realizados n experimentos, existe um total de abcn observações. 
+
+Generalizando,  seja  yijkl  a  resposta  observada  do  experimento  onde  o  fator  A  se 
+
+encontra no i-ésimo nível (i = 1, 2, ..., a), o fator B se encontra no j-ésimo nível (j = 1, 
+
+2,  ...,  b),  o  fator  C  se  encontra  no  k-ésimo  nível  (j  =  1,  2,  ...,  c),  durante  a  l-ésima 
+
+realização  do  experimento  (l  =  1,  2,  ...,  n)  para  a  respectiva  combinação  de  níveis 
+
+dos  fatores.  Os  dados  obtidos  com  os  experimentos  são  organizados  conforme  a 
+
+tabela a seguir: 
+
+Fator B 
+
+Fator C 
+
+Tabela 6 – Esquema de Organização dos Dados 
+
+Nível 1 
+
+Nível 2 
+
+Nível 1 
+
+Nível 2 
+
+Nível 1 
+
+Nível 2 
+
+yi... 
+
+Fator A – Nível 1 
+
+yijk. 
+
+yij.. 
+
+Fator A – Nível 2 
+
+yijk. 
+
+yij.. 
+
+y.jk. 
+
+y.j.. 
+
+y1111 
+
+y1112 
+
+y1113 
+
+y111. 
+
+y2111 
+
+y2112 
+
+y2113 
+
+y211. 
+
+y11.. 
+
+y1121 
+
+y1122 
+
+y1123 
+
+y112. 
+
+y2121 
+
+y2122 
+
+y2123 
+
+y212. 
+
+y1211 
+
+y1212 
+
+y1213 
+
+y121. 
+
+y2211 
+
+y2212 
+
+y2213 
+
+y221. 
+
+y12.. 
+
+y1221 
+
+y1222 
+
+y1223 
+
+y122. 
+
+y2221 
+
+y2222 
+
+y2223 
+
+y222. 
+
+y1... 
+
+ 
+
+y2... 
+
+y21.. 
+
+y22.. 
+
+y.11. 
+
+y.12. 
+
+y.21. 
+
+y.22. 
+
+y.1.. 
+
+y.2.. 
+
+y.... 
+
+ 
+
+ 
+
+Visando a organização dos dados, seja  yi... a soma de todas as observações dentro 
+
+do  i-ésimo  nível  do  fator  A.  Analogamente,  y.j..  é  a  soma  de  todas  as  observações 
+
+ 
+
+77 
+
+dentro do j-ésimo nível do fator B, yij.. é a soma de todas as observações dentro das 
+
+combinações do i-ésimo nível do fator A e do j-ésimo nível do fator B, y.jk. é a soma 
+
+de todas as observações dentro das combinações do j-ésimo nível do fator B e do k-
+
+ésimo  nível  do  fator  C,  yijk.  é  a  soma  de  todas  as  observações  dentro  das 
+
+combinações  do  i-ésimo  nível  do  fator  A,  do  j-ésimo  nível  do  fator  B  e  do  k-ésimo 
+
+nível  do  fator  C  e,  finalmente,  y....  é  a  soma  de  todas  as  observações  de  todos  os 
+
+experimentos.  Além  disso,  definimos   ̅i...,   ̅.j..,   ̅ij..,   ̅.jk.  e   ̅ijk.  como  as  médias  das 
+
+suas variáveis correspondentes. Matematicamente: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+      ∑ ∑ ∑ ∑      
+
+ 
+
+   
+
+   
+
+   
+
+   
+
+ 
+
+ 
+
+ 
+
+      ∑ ∑ ∑      
+
+ 
+
+   
+
+   
+
+   
+
+ 
+
+ 
+
+ 
+
+        ∑ ∑ ∑      
+
+ 
+
+   
+
+   
+
+   
+
+ 
+
+ 
+
+        ∑ ∑      
+
+ 
+
+   
+
+   
+
+ 
+
+ 
+
+        ∑ ∑      
+
+ 
+
+   
+
+   
+
+ 
+
+        ∑      
+
+ 
+
+   
+
+ 
+
+1 SOMA TOTAL DOS QUADRADOS 
+
+ 
+
+Em  análises  estatísticas  como  a  deste  estudo,  a  Soma  Total  dos  Quadrados  é  um 
+
+indicador  padrão  para  apresentar  resultados  obtidos  durante  a  análise.  É  definida 
+
+como  a  soma,  a  partir  de todas as  observações,  do  quadrado  da  diferença  entre o 
+
+valor observado e a média total. A “distância” de qualquer ponto de um conjunto de 
+
+ 
+
+78 
+
+dados  até  a  média  deste  conjunto  é  o desvio,  isto  é,  se  todos estes  desvios  foram 
+
+elevados  ao  quadrado,  e  em  seguida  somados,  obtém-se  a  soma  total  dos 
+
+quadrados  para  este  conjunto  de  dados.  Dessa  forma,  este  indicador  representa 
+
+quanto  o  conjunto  de  dados  desvia  da  média.  A  Soma  Total  dos  Quadrados 
+
+usualmente pode ser expressa da seguinte forma: 
+
+ 
+
+ 
+
+ 
+
+ 
+          ∑ ∑ ∑ ∑
+   
+
+   
+
+   
+
+   
+
+ 
+
+     
+ 
+
+ 
+
+ 
+   
+    
+
+ 
+
+Realizando  uma  partição  da  soma  dos  quadrados  em  vários  componentes  permite 
+
+que a variação total de um conjunto de dados seja expresso em diferentes fontes de 
+
+desvios, onde a relevância/importância de cada um é quantificada pela influência de 
+
+cada componente na Soma Total dos Quadrados. 
+
+Dessa forma, a soma total pode ser dividida em desvios devido ao fator A, desvios 
+
+devido ao fator B, desvios devido ao fator C, desvios devido à interação dos fatores 
+
+A e B, desvio devido à interação dos fatores B e C, desvios devido à interação dos 
+
+fatores A e C, desvios devido à interação dos fatores A, B e C, e desvios devido à 
+
+erros. Matematicamente: 
+
+ 
+      ∑
+   
+
+ 
+   
+   
+
+ 
+
+ 
+   
+    
+
+ 
+
+ 
+      ∑
+   
+
+ 
+     
+   
+
+ 
+
+ 
+   
+    
+
+ 
+
+ 
+      ∑
+   
+
+ 
+     
+   
+
+ 
+
+ 
+   
+    
+
+ 
+
+ 
+
+Para obter os valores da soma para as interações de fatores, é conveniente separar 
+
+o  cálculo  em  duas  etapas:  primeiro  calcula-se  a  soma  de  todos  os  desvios  que 
+
+envolvem os dois fatores (que inclui a soma devido cada fator individualmente, além 
+
+da soma devido à interação dos fatores), denominada “Soma Subtotal”, em seguida 
+
+subtrai-se  deste  valor  a  soma  devido  cada  fator  individualmente  (que  pode  ser 
+
+calculada com as expressões acima). Assim: 
+
+ 
+
+79 
+
+ 
+
+ 
+       ∑ ∑
+   
+
+   
+
+ 
+
+ 
+       ∑ ∑
+   
+
+   
+
+ 
+
+ 
+       ∑ ∑
+   
+
+   
+
+ 
+     
+  
+
+ 
+
+ 
+   
+    
+
+            
+
+ 
+     
+  
+
+ 
+
+ 
+   
+    
+
+             
+
+ 
+     
+  
+
+ 
+
+ 
+   
+    
+
+            
+
+Analogamente, para obter a soma devido à interação dos três fatores, temos: 
+
+ 
+
+ 
+
+ 
+        ∑ ∑ ∑
+   
+
+   
+
+   
+
+ 
+
+     
+ 
+
+ 
+
+ 
+   
+    
+
+                                        
+
+O que restar para completar a Soma Total dos Quadrados é a parte da soma devido 
+
+aos erros. Assim, temos: 
+
+                                                              
+
+ 
+
+ 
+
+2 GRAUS DE LIBERDADE 
+
+ 
+
+Em sistemas dinâmicos, o Grau de Liberdade é definido como o número mínimo de 
+
+coordenadas  independentes  capazes  de  especificar  completamente  o  movimento. 
+
+Matematicamente, Grau de Liberdade é o número de dimensões do domínio de um 
+
+vetor aleatório, ou essencialmente, o número de componentes “livres” (o número de 
+
+componentes  que  precisam  ser  conhecidos  para  que  o  vetor  seja  completamente 
+
+determinado). 
+
+Geralmente, em análise estatística, os Graus de Liberdade de uma estimativa de um 
+
+dado  parâmetro  é  igual  ao  número  de  dados  independentes  que  entram  na 
+
+estimativa,  menos  o  número  de  parâmetros  usados  como  etapas  intermediárias  na 
+
+ 
+
+80 
+
+estimativa  do  parâmetro  em  questão,  que  no  caso  é  “1”,  já  que  a  média  é  a  única 
+
+etapa intermediária. 
+
+Dessa forma, no estudo em questão, os fatores principais A, B e C que possuem a, 
+
+b e c níveis, possuem (a – 1), (b – 1) e (c – 1) graus de liberdade respectivamente. 
+
+Os  graus  de  liberdade  das  interações  dos  fatores  são  simplesmente  os  graus  de 
+
+liberdade  total  para  a  combinação  de  níveis  dos  fatores,  menos  os  graus  de 
+
+liberdade de cada fator individualmente, assim: 
+
+       (     )  (    )  (    )   (    )(    ) 
+
+       (     )  (    )  (    )   (    )(    ) 
+
+       (     )  (    )  (    )   (    )(    ) 
+
+Analogamente: 
+
+        (      )                                    (    )(    )(    ) 
+
+Dentro  da  combinação  de todos os  fatores  existem  n  repetições  dos  experimentos, 
+
+assim temos abc(n – 1) graus de liberdade para o erro. O número total de graus de 
+
+liberdade  é  a  soma  de  todos  os  descritos  anteriormente  e  é  expresso  na  tabela  a 
+
+seguir. 
+
+Tabela 7 – Graus de Liberdade dos Fatores 
+
+Fator 
+
+Graus de 
+
+Liberdade 
+
+A 
+
+B 
+
+C 
+
+AB 
+
+AC 
+
+BC 
+
+a – 1 
+
+b – 1 
+
+c – 1 
+
+(a–1)(b–1) 
+
+(a–1)(c–1) 
+
+(b–1)(c–1) 
+
+ABC 
+
+(a–1)(b–1)(c–1) 
+
+Erro 
+
+Soma 
+
+abc(n – 1) 
+
+abcn – 1 
+
+ 
+
+81 
+
+A Soma Total dos Quadrados pode ser relacionada com o Grau de Liberdade com a 
+
+finalidade de estimar a dispersão, ou variância, dos dados observados em torno do 
+
+valor médio. Esta relação pode ser feita através da Média da Soma dos Quadrados, 
+
+que pode ser calculada como: 
+
+    
+
+  
+  
+
+  
+
+ 
+
+ 
+
+3 TESTANDO HIPÓTESES 
+
+ 
+
+3.1 Teste F 
+
+ 
+
+A hipótese de não haver diferença entre as médias dos fatores (hipótese nula) pode 
+
+ser  verificada  comparando  os  valores  de  MQFATORES  e  MQERRO.  Uma  maneira  de 
+
+comparar  esses  valores  é tomando  a  razão entre as  duas.  Obtém-se  o  valor  F0  do 
+
+chamado teste F. Assim: 
+
+    
+
+       
+      
+
+ 
+
+Valores  altos de     implicam  em  diferenças  grandes  entre  as  médias  dos fatores  e 
+
+dos erros, resultando num efeito significativo do fator no valor da variável resposta, 
+
+ou seja, ele é representativo para o experimento em questão. 
+
+ 
+
+3.2 P-Valor 
+
+ 
+
+Uma forma de quantificar a significância do fator de forma efetiva é calcular, a partir 
+
+do número de graus de liberdade e do valor    , o nível de significância deste fator, 
+
+também chamado de P-Valor. De certa forma, o P-Valor representa a chance de um 
+
+ 
+
+82 
+
+dado efeito de um fator ter ocorrido ao acaso. O que se busca então é o menor P-
+
+Valor  possível  para  confirmar  que  o  efeito  de  um  determinado  fator  é  válido.  Para 
+
+fins  práticos  e  de  engenharia  o  valores  abaixo  de  5%  já  são  bem  aceitáveis.  O  P-
+
+Valor pode ser extraído de tabelas específicas ou ser calculado de forma iterativa. 
+
+

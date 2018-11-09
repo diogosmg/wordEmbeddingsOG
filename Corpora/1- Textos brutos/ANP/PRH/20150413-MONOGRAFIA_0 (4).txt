@@ -1,0 +1,3515 @@
+ 
+
+UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE 
+
+PROGRAMA DE RECURSOS HUMANOS DA ANP-PRH 43 
+
+ENGENHARIA DE PETRÓLEO 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO DE CONCLUSÃO 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+MODELAGEM E DESENVOLVIMENTO DE UM BANCO DE 
+
+DADOS DE ESCOAMENTO MULTIFÁSICO 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Discente: Fábio Pereira dos Santos 
+
+Orientador: Msc. Célio Gurgel Amorim 
+
+ 
+
+ 
+
+Natal/RN, Abril de 2015 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+ 
+
+Fábio Pereira dos Santos 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+MODELAGEM E DESENVOLVIMENTO DE UM BANCO DE 
+
+DADOS DE ESCOAMENTO MULTIFÁSICO  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Relatório de conclusão do programa 
+de 
+recursos  humanos  ANP-43, 
+realizado  durante  o  curso  de 
+Engenharia 
+pela 
+Universidade Federal do Rio Grande 
+do Norte. 
+
+de  Petróleo 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Natal/RN, Abril de 2015 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+ 
+
+                                 2 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+DEDICATÓRIA 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Dedico  esse  trabalho  a  minha  mãe, 
+
+Milene  Pereira  dos  Santos  e  a  meu 
+
+pai, Flávio Francisco dos Santos, por 
+
+todo  esforço,  dedicação  e  carinho 
+
+que  ofereceram  a  mim,  desde  o 
+
+momento que eu vim ao mundo. Sou 
+
+imensamente  grato  por  tudo  que 
+
+fizeram. Muito obrigado! 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+ 
+
+                                 3 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+ 
+
+AGRADECIMENTOS 
+
+ 
+
+A Deus em primeiro lugar, por ter me dado saúde e sabedoria. E por sempre me 
+
+ter concedido força de vontade nos momentos mais difíceis. 
+
+ 
+
+À minha mãe, Milene Pereira dos Santos, por todo o apoio, ajuda e acima de 
+
+tudo, pelo carinho que tem por mim. E ao meu pai, Flávio Francisco dos Santos, 
+
+que dedicou a sua vida para que eu tivesse uma boa educação, e que aliás, me 
+
+ensinou conhecimentos preciosos. 
+
+ 
+
+Aos meus  irmãos, Leandro  Pereira  dos  Santos e  Michele  Pereira  dos  Santos, 
+
+por  me  encorajarem  a  acreditar  nos  meus  objetivos  e  por  todo  o  esforço  e 
+
+paciência a mim dedicados. 
+
+ 
+
+Ao  meu  orientador  e  amigo,  Célio  Gurgel  Amorim,  por  todo  o  ensinamento, 
+
+dedicação e paciência que teve por mim, durante a realização desse projeto. 
+
+ 
+
+Aos professores do Curso de Engenharia de Petróleo,  que contribuíram direta 
+ou indiretamente na realização desse trabalho. 
+
+ 
+
+Aos colegas de curso, pela amizade e por todo o conhecimento compartilhado 
+ao longo da minha graduação. 
+
+ 
+
+À Universidade Federal do Rio Grande do Norte (UFRN), por ter me dado todo 
+o suporte e infraestrutura necessária a realização desse trabalho. 
+
+ 
+
+Ao PRH/ANP-43 por todo o apoio financeiro. 
+
+ 
+
+Ao FINEP, MCTI e ANP pelas contribuições cedidas a minha pesquisa. 
+
+ 
+
+A todos muito obrigado! 
+
+ 
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+ 
+
+                                 4 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+ 
+
+RESUMO 
+
+O escoamento de petróleo nas tubulações de produção é uma das etapas 
+
+mais delicadas e importantes na etapa de produção. Esse escoamento pode ser 
+
+de dois tipos: fluxo monofásico e fluxo multifásico. O fluxo monofásico trata-se 
+
+apenas do escoamento de uma fase, que pode ser o petróleo bruto, enquanto 
+
+que  no  fluxo  multifásico  pode-se  encontrar,  além  do  petróleo,  água,  gás  e 
+
+partículas sólidos. Desde meados do século XX, diversos autores propuseram 
+
+correlações  que  pudessem  prever  a  queda  de  pressão  no  sistema  de 
+
+escoamento  multifásico.  Essas  correlações  sofreram,  com  o  tempo,  diversas 
+
+melhorias,  tornando-se  mais  confiáveis  e  condizentes  com  a  realidade 
+
+observada  nos  poços  de  petróleo.  Ao  passar  dos  anos,  muitas  dessas 
+
+correlações  entraram  em  desuso,  ao  mesmo  tempo  em  que  gradativamente 
+
+surgiam  novas  maneiras  de  cálculo  para  o  gradiente  de  pressão.  A  partir  de 
+
+então,  se  tornavam  mais  comuns  os  métodos  mecanicistas  e  modelos 
+
+computacionais, os quais apresentavam erros bem menores de interpretação do 
+
+fenômeno multifásico. Apesar da maneira de cálculo do gradiente de pressão ter 
+
+evoluindo  com  o  passar  dos  anos,  sempre  houve  a  necessidade  de  possuir 
+
+dados  reais  de  campos,  a  fim  de  que  esses  métodos  pudessem  ser 
+
+desenvolvidos,  modelados  e  testados.  Foi  com  esse  intuito  que  o  presente 
+
+trabalho  se  predispõe  a  criar  um  banco  de  dados  de  escoamento  multifásico, 
+
+contemplando os principais parâmetros de poços. 
+
+Palavras-chave: Banco de dados, Fluxo multifásico, Escoamento multifásico.  
+
+ 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+ 
+
+                                 5 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+ 
+
+SUMÁRIO 
+
+ 
+1 INTRODUÇÃO ................................................................................................ 9 
+
+1.1 Objetivos ................................................................................................. 10 
+
+2 ASPECTOS TEÓRICOS ............................................................................... 12 
+
+2.1 Fluxo multifásico em Tubulação Vertical ................................................. 12 
+
+2.1 Padrão de Escoamento ........................................................................... 13 
+
+2.1.1 Padrão Bolha .................................................................................... 14 
+
+2.1.2 Padrão Golfada ................................................................................. 15 
+
+2.1.3 Padrão de Transição ......................................................................... 15 
+
+2.1.4 Neblina .............................................................................................. 16 
+
+2.3 Complexidade do Fluxo Multifásico ......................................................... 16 
+
+2.4 Cálculo do Gradiente de Pressão do Fluxo Multifásico ........................... 17 
+
+2.4.1 Correlações Empíricas ...................................................................... 18 
+
+2.4.1 Métodos Mecanicistas ...................................................................... 25 
+
+3 MATERIAIS E MÉTODOS............................................................................. 27 
+
+3.1 Ferramentas Computacionais ................................................................. 27 
+
+3.2 Dados de poços de petróleo ................................................................... 28 
+
+4 RESULTADOS E DISCUSSÕES .................................................................. 31 
+
+4.1 Estatística dos dados .............................................................................. 33 
+
+4.2 Análise dos dados ................................................................................... 33 
+
+5 CONSIDERAÇÃO FINAIS ............................................................................. 39 
+
+6 REFERÊNCIAS ............................................................................................. 41 
+
+ 
+
+ 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+ 
+
+                                 6 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+ 
+
+LISTA DE IMAGENS 
+
+Figura 1. Padrões de Escoamento. Fonte: ORKISZEWSKI, 1967. ................. 14 
+
+Figura 2. Esquemático para determinação do gradiente de pressão. ............. 19 
+
+Figura 3. Vazão de Produção de líquido (BPD). Fonte: TAKACS, 2005. ........ 21 
+
+Figura 4. Razão Gás-Líquido (ft³/bbl.). Fonte: TAKACS, 2005. ....................... 21 
+
+Figura 5. Correlação para o Fator de Fricção de Poettman e Carpenter. ........ 24 
+
+Figura 6. Planilhas de Dados Excel. ................................................................ 28 
+
+Figura 7. Dados de poços................................................................................ 32 
+
+Figura 8. Histograma da profundidade do poços em metros. .......................... 34 
+
+Figura 9. Histograma do diâmetro dos poços. ................................................. 34 
+
+Figura 10. Histograma do °API. ....................................................................... 35 
+
+Figura 11. Histograma da vazão de óleo em barril por dia. ............................. 36 
+
+Figura 12. Histograma da Pressão de cabeça do poço em psi. ...................... 36 
+
+Figura 13. Histograma da Pressão de fundo do poço em psi. ......................... 37 
+
+Figura 14. Correlação (Vazão de óleo x ∆P). .................................................. 38 
+
+Figura 15. Correlação (Comprimento x Pressão de Fundo). ........................... 38 
+
+ 
+
+ 
+
+LISTA DE TABELAS 
+
+ 
+
+Tabela 1. Correlações empíricas e suas respectivas categorias. .................... 20 
+
+Tabela 2. Dados de produção. ......................................................................... 30 
+
+Tabela 3. Análise estatística dos dados. .......................................................... 33 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+ 
+
+                                 7 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+LISTA DE ABREVIATURAS E SIGLAS 
+
+Variação da Pressão 
+Grau Celsius 
+Grau Fahrenheit 
+Área transversal 
+Barril 
+Fator Volume-Formação do gás 
+Fator Volume-Formação do óleo 
+Barril por dia 
+Centipoise 
+diâmetro 
+fator de fricção 
+Fluxo fracionário de óleo 
+unidade de medida “pés” 
+Fluxo fracionário de água 
+Gravidade 
+OLGA Validation and Improvement Program 
+Pressão de Fundo 
+Vazão de gás 
+vazão do líquido 
+Vazão de óleo 
+Vazão de água 
+Razão Água-Óleo 
+Razão Gás-Líquido 
+Razão Gás-Óleo 
+Razão de Solubilidade 
+Pé cúbico padrão 
+Society of Petroleum Engineers 
+Temperatura de fundo 
+Tulsa University Fluid Flow Project 
+Visual Basic for Aplications 
+Velocidade da mistura 
+Velocidade Superficial do gás 
+Velocidade Superficial do líquido 
+Densidade do gás 
+Densidade da mistura 
+Densidade do óleo 
+
+ 
+
+ 
+
+ –  
+∆P 
+ – 
+°C  
+ –  
+°F  
+ –  
+Ap  
+ –  
+Bbl 
+ –  
+Bg  
+ –  
+Bo  
+ –  
+BPD 
+ –  
+cP  
+ –  
+d 
+ –  
+f  
+ –  
+fo 
+ –  
+ft 
+ –  
+fw  
+g  
+ –  
+OVIP   –  
+Pf  
+ –  
+ –  
+qg  
+ –  
+ql  
+qo  
+ –  
+qw  
+ –  
+RAO    –  
+RGL 
+ –  
+RGO    –  
+ –  
+Rs  
+ – 
+Scf 
+SPE 
+ – 
+Tf  
+ –  
+TUFFP– 
+VBA 
+ –  
+ –  
+Vm  
+ –  
+Vsg  
+Vsl  
+ –  
+ –  
+ρg 
+ –  
+ρm  
+ρo  
+ –  
+ 
+
+ 
+
+ 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+ 
+
+                                 8 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+1. INTRODUÇÃO 
+ 
+
+ 
+
+Durante a produção de petróleo pelas tubulações, pode ocorrer o fluxo de 
+
+apenas uma fase, a qual dar-se o nome de escoamento monofásico. Entretanto, 
+
+é sabido que grande parte dos poços de petróleo produz não apenas o petróleo 
+
+bruto,  mas  também  frações  de  água  e  gases,  e  por  vezes,  partículas  sólidas, 
+
+como  areia  e  parafinas.  Esse  fluxo  simultâneo  de  diferentes  componentes  ao 
+
+longo da tubulação de produção chama-se escoamento multifásico. Esse tipo de 
+
+escoamento  pode  ocorrer  tanto  em  trechos  verticais  da  tubulação,  como  em 
+
+trechos inclinados e horizontais. 
+
+ 
+
+Conforme SUTTON e LANGLINAIS (1988), o escoamento de multifásico 
+
+em tubulações, como é comumente visto na indústria de petróleo e gás, tem sido 
+
+investigado 
+
+tanto  experimentalmente  como 
+
+teoricamente.  Um  particular 
+
+interesse  tem  sido  mostrado  no  fluxo  combinado  de  óleo,  água  e  gás  em 
+
+tubulações verticais, tanto na produção por método naturais, como por método 
+
+de elevação artificial (gás-lift). 
+
+ 
+
+O  eficiente  escoamento  de  petróleo  e  gás  pelas  tubulações  requer 
+
+determinada capacidade para se prever o comportamento do fluxo ao longo da 
+
+tubulação. Normalmente, os poços de petróleo produzem uma mistura de gás e 
+
+líquidos, e devido as diferentes características físico-químicas entre as fases, o 
+
+escoamento multifásico é significativamente mais complexo que o escoamento 
+
+monofásico.  Entretanto,  nas  últimas  décadas,  foram  desenvolvidos  inúmeros 
+
+métodos e correlações para compreensão do escoamento multifásico. Em geral, 
+
+as correlações são válidas a uma estreita faixa de valores dentro de uma variável 
+
+- vazão de óleo, por exemplo - e em decorrência disso, pode-se usar mais de um 
+
+método de cálculo para a predição do gradiente de pressão de uma tubulação.  
+
+ 
+
+A  importância  das  correlações  empíricas,  modelos  mecanicistas  e 
+
+computacionais  voltadas  ao  escoamento  multifásico  está  na  capacidade  de 
+
+determinar  informações  como:  perda  de  carga,  variação  da  temperatura  e 
+
+velocidades de escorregamento entre fases. Informações como as citadas são 
+
+importantes, por exemplo, no dimensionamento dos equipamentos de produção 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+ 
+
+                                 9 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+e separação, nas etapas de tratamento e processamento, na área de segurança 
+
+operacional, entre outras. 
+
+ 
+
+Para  que  haja  a  formulação  ou  validação  de  novas  correlações  há  a 
+
+necessidade  de  se  possuírem  determinados  dados  de  campo,  além  de 
+
+informações das propriedades físico-químico do petróleo. Esses dados incluem 
+
+usualmente as vazões de escoamento das fases óleo, água e gás; o diâmetro e 
+
+o  comprimento  da  tubulação,  além  do  ângulo  de  inclinação;  pressões  e 
+
+temperaturas de fundo e cabeça de poço; °API do óleo; e outras características. 
+
+ 
+
+Dados reais de poços são importantes não apenas na área de elevação 
+
+natural  ou  artificial  do  petróleo,  mas  em  inúmeras  outras  áreas  do  setor 
+
+petrolífero. Atualmente, inúmeras pesquisas são realizadas com o  objetivo de:  
+
+oferecer  soluções  para  problemas  encontrados  no  campo;  elaborar  métodos 
+
+mais  eficientes  na  produção  do  petróleo;  propiciar  melhorias  nas  etapas  de 
+
+processamento; facilitar o transporte dos fluidos; reduzir os custos inerentes à 
+
+produção,  entre  outros.  Para  que  muitas  dessas  pesquisas  possam  ser 
+
+realizadas,  há  a  necessidade  de  se  obter  parâmetros  coletadas  em  poços  de 
+
+petróleo.  
+
+ 
+
+1.1 Objetivos 
+ 
+
+ 
+
+É  de  notório  conhecimento  a  importância  do  entendimento  do  fluxo 
+
+multifásico  nas  tubulações  de  produção  de  petróleo.  Sendo  assim  inúmeras 
+
+pesquisas  estão  sendo  realizadas  com  a  finalidade  de  propor  correlações 
+
+empíricas,  métodos  mecanicistas  e  modelos  computacionais,  que  possam 
+
+calcular a queda de pressão em um sistema de produção de petróleo.  
+
+Esse trabalho tem como objetivo realizar um levantamento de quais dados 
+
+de  poços  são  necessários  no  cálculo  da  queda  de  pressão  do  escoamento 
+
+multifásico. E então, prosseguir com uma busca de dados de poços em fontes 
+
+diversas,  como:  artigos  científicos,  banco  de  teses,  revistas  especializadas  e 
+
+centros de pesquisa e ensino.  
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 10 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+De  posse  do  conjunto  de  informações  de  poços,  será  procedida  a 
+
+modelagem  e  posterior  alimentação  do  banco  de  dados.  O  trabalho  também 
+
+realiza  uma  análise  dos  dados  obtidos,  abordando  aspectos  estatísticos  e 
+
+elaborando-se histogramas e correlações de interesse.  
+
+ 
+
+ 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 11 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+2. ASPECTOS TEÓRICOS 
+ 
+
+O  modo  como  ocorre  a  queda  de  pressão  no  fluxo  multifásico  é  bem 
+
+diferente  quando  comparado  ao  fluxo  monofásico.  Parte  das  diferenças 
+
+observadas decorre da existência, na maioria dos casos, de uma interface onde 
+
+o  gás  desliza  através  do 
+
+líquido,  gerando  superfícies  de  diferentes 
+
+características,  dependendo  do  padrão  de  fluxo  observado.  O  escoamento 
+
+simultâneo de petróleo, água e gás pode gerar uma determinada turbulência no 
+
+fluxo,  sendo  acentuada  à  medida  que  os  fluidos  se  aproximam  da  superfície, 
+
+devido à gradativa diminuição da pressão do sistema. 
+
+ 
+
+2.1 Fluxo multifásico em Tubulação Vertical 
+ 
+
+ 
+
+Prever  com  precisão  a  queda  de  pressão  em  tubulações  verticais  de 
+
+petróleo costuma ser uma tarefa laboriosa. O escoamento multifásico pode ser 
+
+complexo de se modelar com apenas uma correlação, pois o fenômeno da queda 
+
+de pressão é gerado em virtude de um conjunto de variáveis. Sendo possível o 
+
+uso  de  mais  de  uma  correlação  para  abranger  todo  o  escopo  de  variação  do 
+
+sistema multifásico. 
+
+ 
+
+O caminho percorrido pelos fluidos do reservatório através da tubulação 
+
+de  produção  consome  a  maior  parte  da  pressão  disponível  pelo  sistema.  Por 
+
+isso, é importante realizar uma avaliação precisa da distribuição da pressão ao 
+
+longo da tubulação. A determinação do perfil de pressão ao longo da tubulação 
+
+de produção possibilita: 
+
+  Projetar  equipamentos  de  elevação  artificial  (gas-lift,  bombeio 
+
+mecânico, etc.); 
+
+  Calcular  o  efeito  da  redução  de diâmetro e estranguladores  sobre  o 
+
+fluxo; 
+
+  Determinar a vida produtiva dos poços; 
+
+  Utilizar os dados e resultados obtidos no ajuste de novas correlações. 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 12 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+2.1 Padrão de Escoamento 
+ 
+
+ 
+
+Um dos aspectos mais importantes no fluxo multifásico em tubulações de 
+
+produção de petróleo é a geometria e a distribuição das fases sob condições de 
+
+fluxo. Esta distribuição geométrica das fases é normalmente chamada de regime 
+
+ou padrão de escoamento.  
+
+ 
+
+Segundo AZIZ e GOVIER (1972), o escoamento de petróleo e gás pelas 
+
+tubulações é um fenômeno complexo, e a modelagem desse sistema deve levar 
+
+em consideração a existência de alguns regimes de fluxo ao longo da tubulação. 
+
+ 
+
+Os  padrões  de  escoamento  do  fluxo  multifásico  dependem  de  alguns 
+
+fatores,  entre  eles,  ângulo  de  inclinação  da  tubulação,  direção  do  fluxo  e 
+
+parâmetros físico-químicos dos fluidos envolvidos. A maioria dos pesquisadores 
+
+reconhece  a  existência  de  quatro  regimes  de  escoamento,  são  eles:  bolha, 
+
+golfada, 
+
+transição  e  neblina.  Geralmente  aparecem  na 
+
+tubulação 
+
+progressivamente nesta mesma ordem, devido ao aumento do fluxo de gás em 
+
+relação à fase líquida. Esse fato ocorre em condições normais de produção de 
+
+petróleo, porque o gás em solução escapa gradativamente do óleo à medida que 
+
+sobe para a superfície, resultando em um aumento da velocidade do gás. O gás 
+
+liberado a partir da solução se expande devido à redução de pressão na direção 
+
+ascendente,  aumentando  ainda  mais  a  velocidade  do  gás.  Esse  aumento 
+
+contínuo da velocidade do gás faz aparecer os diversos padrões de fluxo, e que 
+
+podem ser visualizados na Figura 1. 
+
+Os padrões de escoamento são importantes, pois: afeta o fenômeno de 
+
+hold up; simula a dinâmica de transferência de calor; determina que fase esteja 
+
+em contato com a parede da tubulação; e determina as condições de operação 
+
+das instalações de produção. 
+
+Entre os fatores que  interferem nos padrões de escoamento, podem-se 
+
+citar: 
+
+  RGL (Razão Gás-Líquido); 
+
+  Pressão (Expansão do gás); 
+
+  Geometria da tubulação (diâmetro e ângulo de inclinação); 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 13 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+  Propriedades dos fluidos (viscosidade, densidade, tensão superficial, 
+
+etc.). 
+
+Prever a ocorrência dos padrões de escoamento e as suas localizações 
+
+na tubulação é uma tarefa usualmente difícil. Correlações empíricas ou modelos 
+
+mecanicistas  são  usados  para  predizer  o  comportamento  do  escoamento  em 
+
+vários  regimes  de  fluxo.  Basicamente,  os  cálculos  de  regimes  de  fluxo  são 
+
+baseadas em dados de sistemas de baixa pressão, desprezando a transferência 
+
+de massa entre as fases. Assim sendo, estes cálculos podem ser inadequados 
+
+para sistemas com altas pressões e poços com altas temperaturas.  
+
+ 
+
+Os  principais  padrões  de  escoamento  em  tubulações  verticais  são 
+
+mostrados na Figura 1. 
+
+Figura 1. Padrões de Escoamento. Fonte: ORKISZEWSKI, 1967. 
+
+ 
+
+ 
+
+ 
+
+2.1.1 Padrão Bolha 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 14 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+De acordo CEBALLOS e ARDILA (2012), nesse padrão de escoamento a 
+
+tubulação é preenchida quase que exclusivamente pela fase líquida,  enquanto 
+
+que  a  fase  gás  está  presente  na  forma  de  pequenas  bolhas  distribuídas 
+
+aleatoriamente.  
+
+A fase líquida se move a uma velocidade bem uniforme, enquanto que as 
+
+bolhas  de  gás  se  movem  a  diferentes  velocidades,  dependendo  de  seus 
+
+respectivos  diâmetros.  É  importante  notar  que,  com  exceção  da  densidade,  a 
+
+fase gás possui um efeito mínimo no gradiente de pressão, e que a parede do 
+
+tubo está sempre em contato com a fase líquida. 
+
+ 
+
+2.1.2 Padrão Golfada 
+
+ 
+
+ 
+
+No padrão de golfada a fase gasosa está mais pronunciada, apesar de a 
+
+fase líquida ainda ser contínua. As pequenas bolhas de gás se juntam e formam 
+
+bolhas maiores e estáveis, de forma e tamanho similar ao diâmetro da tubulação. 
+
+As  bolhas  são  separadas  pela  fase  líquida  que  ainda  contínua  sendo  a  fase 
+
+dominante. Nota-se que a velocidade das bolhas é muito maior que a velocidade 
+
+do  líquido,  e  que a  velocidade desta não  é constante. Enquanto  as  bolhas  da 
+
+tubulação se movem para cima, em direção do fluxo, o líquido da película que 
+
+rodeiam as bolhas pode-se mover para baixo. Esta variação das velocidades dos 
+
+líquidos  pode  resultar  em  uma  variação  das  perdas  por  fricção  na  parede  da 
+
+tubulação, como também numa variação do hold up do líquido (ORKISZEWSKI, 
+
+1967). 
+
+ 
+
+2.1.3 Padrão de Transição 
+
+ 
+
+ 
+
+É nesse padrão de fluxo que ocorre a inversão da fase contínua que agora 
+
+passa a  ser  a fase  gás.  A  camada  de  líquido  que  separava  as  bolhas  de  gás 
+
+praticamente desaparece nesse padrão de fluxo, e a fase gasosa passa ser a 
+
+dominante.  O  gás  arrasta  consigo  uma  significativa  quantidade  de  líquido, 
+
+apesar dos efeitos da fase líquida serem mínimos. A fase gás é a que determina 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 15 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+os  efeitos  mais  expressivos  no  fluxo.  Nessa  fase,  as  bolhas  costumam  ser 
+
+instáveis  e  colapsam,  gerando  turbulências  e  dispersão  de  ambas  as  fases 
+
+(ORKISZEWSKI, 1967). 
+
+ 
+
+2.1.4 Neblina  
+
+ 
+
+ 
+
+Nesse tipo de padrão de fluxo o gás é a fase contínua, o qual arrasta e 
+
+transporta a fase líquida. Uma película de líquido molha a parede da tubulação, 
+
+mas  seus  efeitos  são  secundários  quando  comparados  aos  efeitos 
+
+proporcionados pela fase gasosa (CEBALLOS e ARDILA, 2012). 
+
+ 
+
+2.3 Complexidade do Fluxo Multifásico 
+
+ 
+
+ 
+
+O  fluxo  multifásico  acontece  quando  há  o  movimento  simultâneo  de 
+
+petróleo, água e gás na tubulação. O seu comportamento é bastante complexo 
+
+devido  a  existência  de  diversos  fatores  como:  turbulência,    fronteiras  de 
+
+separação  entre  as  fases,  e  diferença  de  densidades.  Como  mencionado 
+
+anteriormente, a interface entre as fases pode resultar em várias configurações 
+
+conhecidas  como  padrões  de  escoamento.  E  como  dito,  o  padrão  de 
+
+escoamento resultante dependerá das condições de fluxo, das propriedades do 
+
+fluido e da geometria da tubulação. Os padrões de fluxo mais importantes são 
+
+os do tipo Golfada e Transição, já que ambos aparecem com maior frequência 
+
+no  escoamento  multifásico  de  poços  de  petróleo.  Outro  fato  importante  para 
+
+ressaltar é que os padrões de fluxo são um conceito subjetivo e qualitativo, pois 
+
+eles  não  são  incorporados  diretamente  como  um  parâmetro  nas  equações 
+
+matemáticas. 
+
+ 
+
+Um fenômeno importante observado no fluxo multifásico é proporcionado 
+
+pelo gás disperso, pois este tende a fluir mais rapidamente que o líquido. O efeito 
+
+do  deslizamento  faz  com  que  as  condições  do  fluxo  estejam  sujeitas  às 
+
+propriedades dos fluidos, e seu entendimento depende de métodos que levem 
+
+em consideração esse fato.  
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 16 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+ 
+
+Entre os parâmetros que afetam o comportamento do fluxo, pode-se citar:  
+
+  Velocidade Superficial; 
+
+  Viscosidade; 
+
+  Tensão Superficial; 
+
+  Densidade do óleo e do gás; 
+
+  Diâmetro e Comprimento da tubulação; 
+
+  Ângulo de Inclinação e Rugosidade da tubulação. 
+
+ 
+
+2.4 Cálculo do Gradiente de Pressão do Fluxo Multifásico 
+
+ 
+
+ 
+
+As  equações  para  o  cálculo  do  gradiente  de  pressão  no  escoamento 
+
+monofásico são relativamente simples, e usa os princípios da conservação de 
+
+massa e da quantidade de movimento linear. Os mesmos princípios são usados 
+
+para o  cálculo do  gradiente  de  pressão  no escoamento  multifásico,  contudo  a 
+
+presença de duas ou três fases torna o seu entendimento muito mais complexo.  
+
+ 
+
+Atualmente,  os  métodos  usados  para  prever  o  gradiente  de  pressão 
+
+podem  ser  classificados  em  três  tipos:  correlações  empíricas,  modelos 
+
+mecanicistas e modelos computacionais. Este presente trabalho aborda apenas 
+
+os dois primeiros métodos.  
+
+ 
+
+As  correlações  empíricas  desenvolvem  relações  entre  parâmetros 
+
+importantes do sistema, os quais, em grande parte, foram elaborados a partir de 
+
+dados experimentais. Estas correlações foram feitas para determinados regimes 
+
+de fluxo e deslizamento e podem fornecer  bons resultados, mas se limitam as 
+
+mesmas condições propostas pelo experimento de origem. 
+
+ 
+
+Os modelos mecanicistas aproximam o fenômeno físico levando em conta 
+
+os  processos  mais  importantes,  deixando  de  lado  efeitos  secundários  que 
+
+podem  complicar  o  processo.  Esse  método  pode  fornecer  uma  precisão 
+
+satisfatória.  
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 17 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+2.4.1 Correlações Empíricas 
+
+Desde  a  segunda  metade  do  século  XX,  várias  correlações  empíricas 
+
+ 
+ 
+
+ 
+
+foram desenvolvidas com o intuito de calcular a queda de pressão e o hold up 
+
+do  líquido  em  tubulações  de  produção  de  petróleo,  as  quais  estejam  sob  o 
+
+regime  de  fluxo  multifásico.  Inicialmente,  os  modelos  empíricos  tratavam  o 
+
+escoamento multifásico como o fluxo de uma mistura homogênea de líquido e 
+
+gás.  Esta  primeira  abordagem  ignorava  o  deslizamento  entre  as  fases,  e  por 
+
+causa  do  pobre  modelo  físico  adotado,  a  precisão  nos  resultados  era  baixa. 
+
+Entretanto,  com  o  passar  dos  anos,  houve  uma  evolução  nas  correlações 
+
+empíricas  devido  a  inserção  do  hold  up  nos  modelos  de  cálculo,  explicitando 
+
+assim, o efeito de deslizamento entre as fases. Esses modelos mais recentes 
+
+incluíam também uma análise dos diferentes arranjos espaciais entre as fases, 
+
+dessa  forma,  os  diferentes  padrões  de  escoamento  começaram  a  ser 
+
+considerados.  
+
+ 
+
+A  modelagem de  correlações  empíricas  necessita  preferencialmente de 
+
+dados reais de poços. Por conseguinte, o cálculo do gradiente de pressão em 
+
+uma  tubulação  passa  a  ser  mais  condizente  com  a  realidade,  portanto  mais 
+
+preciso. Na Figura 2, observa-se as principais variáveis requeridas pela maioria 
+
+das correlações empíricas. 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 18 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+ 
+
+Figura 2. Esquemático para determinação do gradiente de pressão. 
+
+ 
+
+Para BRILL e MUKHERJEE (1999), as correlações empíricas podem ser 
+
+separadas levando em consideração a similaridade nos conceitos teóricos. Os 
+
+métodos publicados por diferentes autores foram distribuídos em três categorias: 
+
+categorias I, II, III. 
+
+Nas correlações de categoria I, nem o deslizamento entre as fases, nem 
+
+os padrões de fluxo foram considerados. Consequentemente, as velocidades de 
+
+ascensão do líquido e do gás eram as mesmas. Nessas correlações o  hold up 
+
+não  era  utilizado  no  cálculo  da  densidade  e  não  havia  distinção  entre  os 
+
+diferentes padrões de fluxo.  
+
+Nas correlações de categoria II, os padrões de fluxo continuavam a ser 
+
+ignorados, entretanto já se consideravam o deslizamento entre as fases. Sendo 
+
+assim, os autores já tratavam que o líquido e o gás se deslocavam a diferentes 
+
+velocidades dentro da tubulação. O hold up e o fator de fricção eram calculados, 
+
+e usados no cálculo do gradiente de pressão. 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 19 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+Nas  correlações  de  categoria  III,  o  deslocamento  entre  as  fases  e  os 
+
+padrões de fluxo são considerados. O hold up do líquido era utilizado no cálculo 
+
+da  densidade,  visto  que  sua  determinação  levava  em  consideração  alguns 
+
+conceitos  de  escorregamento  entre  fases.  Nessas  correlações,  a  predição  do 
+
+hold up e do fator de fricção só eram feitos após o estabelecimento do padrão 
+
+de  fluxo  predominante  no  sistema.  Portanto,  o  método  usado  no  cálculo  do 
+
+gradiente de pressão também dependia do padrão de fluxo atuante.  
+
+Na  Tabela  1,  podem-se  ver  os  principais  autores  que  propuseram 
+
+correlações de fluxo multifásico e a que categorias eles pertencem. 
+
+ 
+
+Tabela 1. Correlações empíricas e suas respectivas categorias. 
+
+Correlações Empíricas para fluxo Vertical 
+
+Categoria 
+
+Autores 
+
+ 
+ 
+I 
+
+ 
+II 
+
+ 
+ 
+III 
+
+Poettmann and Carpenter 
+Baxendell and Thomas 
+Fancher and Brown 
+Hagedorn and Brown  
+Gaither et al. 
+
+Gray 
+Asheim 
+Hagedorn and Brown 
+
+Duns and Ros 
+Orkiszewski 
+Aziz et al. 
+Chierici et al. 
+Beggs and Brill 
+Mukherjee and Brill 
+
+ 
+
+ 
+
+É pertinente enfatizar que entre as correlações apresentadas na Tabela 
+
+1, às propostas por Beggs e Brill e Mukherjee e Brill (1999) foram desenvolvidas 
+
+para o cálculo do gradiente de pressão em quaisquer ângulos de inclinação da 
+
+tubulação.  
+
+ 
+
+O range de aplicabilidade dos modelos de fluxo multifásico depende de 
+
+vários fatores, tais como: diâmetro da tubulação,  °API do óleo, RGL, vazão de 
+
+óleo, gás e água. O efeito dessas variáveis na estimativa do perfil de pressão 
+
+em um poço pode variar de uma correlação para outra. Nas Figura 3 e Figura 4, 
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 20 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+observa-se  o  range  de  aplicabilidade  das  principais  correlações  para  as 
+
+variáveis, vazão de líquido e RGL, respectivamente. 
+
+ 
+
+Figura 3. Vazão de Produção de líquido (BPD). Fonte: TAKACS, 2005. 
+
+ 
+
+ 
+
+Figura 4. Razão Gás-Líquido (ft³/bbl.). Fonte: TAKACS, 2005. 
+
+ 
+
+ 
+
+2.4.1.1 Poettman e Carpenter 
+ 
+
+ 
+
+O método de cálculo desenvolvido por Poettman e Carpenter (1952) pode 
+
+ser considerado como um método semi-empírico. Está correlação se enquadra 
+
+na categoria I, a qual desconsidera os efeitos provocados pelo escorregamentos 
+
+entre  as  fases,  como  também  a  existência  dos  padrões  de  escoamento.  O 
+
+modelo foi criado a partir de dados de 34 poços surgentes e 15 poços de gás-lift. 
+
+Um fato a ser notado é que o óleo, a água e o gás foram alocados em apenas 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 21 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+uma fase, sendo assim, a presente correlação não se predispõe a calcular o hold 
+
+up do líquido e do gás.  
+
+ 
+
+Essa  correlação  possui  um  determinado  range  de  aplicabilidade,  entre 
+
+eles cita-se: 
+
+  Tubulações de diâmetro de 2”, 2 ½”, 3”; 
+
+  Vazão entre 400 e 1000 bpd; 
+
+  RGL < 1500 scf / bbl; 
+
+  Viscosidade menores que 5cP. 
+
+POETTMAN E CARPENTER (1952), afirmam que os procedimentos de 
+
+cálculo  desenvolvidos  por  eles,  permitem a  obtenção da  pressão de fundo do 
+
+poço  quando  do  escoamento  em  tubulações  de  petróleo,  e  desde  que  sejam 
+
+conhecidos  os  dados  de  superfície.  E,  em  casos  de  poços  com  gás-lift,  há  a 
+
+possibilidade de calcular a profundidade, pressão e vazão com o qual o gás será 
+
+injetado. 
+
+O  procedimento  de  cálculo  do  gradiente  de  pressão  para  o  método  de 
+
+Poettman  e  Carpenter  é  mostrado  a  seguir.  É  imprescindível  possuir  alguns 
+
+parâmetros, que podem ser obtidos diretamente no campo ou obtidos por meios 
+
+de correlações. Os dados necessários são: Vazão de óleo (qosc), vazão de gás 
+
+(qgsc),  Razão  Gás-Óleo  (RGO),  Fator  volume  formação  do  óleo  (Bo),  Fator 
+
+volume formação do gás (Bg), Razão de Solubilidade (Rs), diâmetro do poço (d), 
+
+pressão  de  fundo  (Pf),  temperatura  de  fundo  (Tf),  densidade  do  óleo  (ρo), 
+
+densidade da água (ρw). 
+
+ 
+
+ 
+
+ 
+
+Os cálculos a seguir foram realizados considerando o modelo Black-Oil. 
+
+1.  Inicialmente calcula-se a área transversal da tubulação, por onde percorre 
+
+o fluxo, pela expressão:  
+
+𝐴𝑝 =  
+
+𝑑2    
+
+𝜋
+
+4
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+[1] 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 22 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+2.  Calcula-se a vazão de óleo nas condições de Pressão e Temperatura na 
+
+tubulação. 
+
+ 
+
+𝑞𝑜 = 𝑞𝑜(𝑠𝑐) . 𝐵𝑜 
+
+ 
+
+ 
+
+3.  Encontra-se a velocidade superficial do líquido. 
+
+ 
+
+𝑉𝑠𝑙 =   𝑞𝑙 𝐴𝑝⁄
+
+  
+
+ 
+
+ 
+
+4.  Determina-se a vazão do gás. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ [2] 
+
+ [3] 
+
+ 
+
+𝑞𝑔 =   [𝑞𝑔(𝑠𝑐) − 𝑞𝑜(𝑠𝑐). 𝑅𝑠 − 𝑞𝑤(𝑠𝑐). 𝑅𝑠𝑤]. 𝐵𝑔   
+
+[4] 
+
+5.  Calcula-se a velocidade superficial do gás. 
+
+ 
+
+𝑉𝑠𝑔 =   𝑞𝑔 𝐴𝑝⁄
+
+  
+
+ 
+
+ 
+
+6.  A velocidade total da mistura é definido por: 
+
+ 
+
+𝑉𝑚 = 𝑉𝑠𝑙 + 𝑉𝑠𝑔  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+[5] 
+
+[6] 
+
+7.  Encontra-se o volume fracionário do líquido pela expressão:  
+
+ 
+
+𝜆𝑙 =
+
+𝑞𝑙
+
+𝑞𝑙 + 𝑞𝑔
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+[7] 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 23 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+8.  Em seguida, calcula-se a densidade da mistura líquida. 
+
+ 
+
+ 
+
+𝜌𝑙 =  𝜌𝑜. 𝑓𝑜 +  𝜌𝑤. 𝑓𝑤 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ [8] 
+
+9.  Determina-se 
+
+a 
+
+densidade 
+
+da  mistura, 
+
+desconsiderando 
+
+o 
+
+escorregamento entre fases. 
+
+ 
+
+ 
+
+𝜌𝑚 =  𝜌𝑙. 𝜆𝑙 +  𝜌𝑔. (1 − 𝜆𝑙)   
+
+ 
+
+ 
+
+ 
+
+[9] 
+
+10.  Tem-se  que  determinar  o  fator  de  fricção.  Para  tal,  multiplica-se  os 
+
+parâmetros  encontrados  nas  equações  [6]  e  [9]  com  o  diâmetro  da 
+
+tubulação,  em  seguida,  insere-se  o  valor  encontrado  na  Figura  5  para 
+
+obter o Fator de Fricção.  
+
+ 
+
+𝜌𝑚. 𝑉𝑚. 𝑑  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+[10] 
+
+Figura 5. Correlação para o Fator de Fricção de Poettman e Carpenter. 
+
+Fonte: BRILL e MUKHERJEE (1999). 
+
+ 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 24 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+11.  Com o valor do Fator de Fricção obtido na Figura 5, pode-se determinar 
+
+o gradiente de pressão do sistema, utilizando a equação [11]. 
+
+ 
+
+ 
+
+𝑑𝑝
+
+𝑑𝑍
+
+=  
+
+𝑓 .  𝜌𝑚 .  𝑉𝑚²
+
+2  .  𝑑
+
++  𝜌𝑚. 𝑔. 𝑠𝑒𝑛𝜃  
+
+ 
+
+ 
+
+ 
+
+ 
+
+[11] 
+
+Da  equação  acima,  pode-se  inferir  que  se  a  tubulação  for  vertical,  o 
+
+segundo termo da soma ficaria apenas em função da densidade da mistura e da 
+
+gravidade.  Esse  cálculo  do  gradiente  de  pressão  considera apenas  as perdas 
+
+ocasionadas pela fricção e as perdas ocasionadas pelo o movimento ascendente 
+
+do  fluido.  Essa  correlação  pode  produzir  resultados  satisfatórios  apenas  para 
+
+poços  com  vazões  moderadas,  onde  o  padrão  de  fluxo  seria  o  de  pequenas 
+
+bolhas dispersas, essa condição contemplaria o não deslizamento das fases. 
+
+A  correlação  de  Poettman  e  Carpenter,  assim  como  as  demais 
+
+correlações pertencentes a categoria I, deixaram de ser utilizadas no cálculo do 
+
+gradiente de pressão do fluxo multifásico. Elas foram correlações pioneiras, e se 
+
+tornaram fonte de inspiração para os trabalhos posteriores.  
+
+2.4.2 Métodos Mecanicistas  
+ 
+
+ 
+
+Os métodos de cálculos empíricos, pela sua natureza, não podem cobrir 
+
+toda a gama de parâmetros observados nas operações de extração do petróleo, 
+
+e sua aplicabilidade é limitada pela base de dados utilizada na sua construção. 
+
+Gradualmente,  as  pesquisas  voltadas  à  modelagens  empíricas  do  fluxo 
+
+multifásico perderam espaço para  uma  análise mais abrangente  do  problema. 
+
+Estes pesquisadores adotaram um modelo de abordagem partindo de conceitos 
+
+físicos  do  fluxo  de  diferentes  fluidos,  e  desenvolveram  relações  com  os 
+
+parâmetros do sistema. Dessa maneira eles foram além do que as correlações 
+
+empíricas  eram  capazes  e  alargaram  os  intervalos  de  aplicabilidade  dos 
+
+modelos. 
+
+ 
+
+Para  TAKACS  (2005),  os  modelos  mecanicistas  usados  no  cálculo  da 
+
+queda de pressão em tubulações verticais de fluxo multifásico costumam serem 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 25 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+caracterizados  por  uma  determinação  abrangente  do  padrão  de 
+
+fluxo 
+
+predominante em várias profundidades. O cálculo de alguns parâmetros de fluxo, 
+
+como  densidade  da  mistura  e  coeficiente  de  atrito,  são  realizados  usando 
+
+fórmulas desenvolvidas a partir da modelagem mecânica do padrão de fluxo em 
+
+particular. 
+
+ 
+
+O primeiro objetivo dos modelos mecanicistas é o de determinar o padrão 
+
+de  fluxo  em  um  determinado  sistema,  e  para  cada  padrão  de  fluxo  existe  um 
+
+modelo matemático específico. Os modelos mecanicistas também inferiram na 
+
+delimitação do limite de transição entre os regimes de fluxo. 
+
+ 
+
+ANSARI  et  al.  (1994)  apresentou  um  modelo  integral  para  prever  o 
+
+comportamento  do  escoamento  ascendente  de  fluxo  bifásico.  Já  Gómez  et  al 
+
+(1999)  desenvolveu  um  modelo  mecanicista  para  a  predição  do  hold  up  e  a 
+
+distribuição  da  queda  de  pressão  em  poços  direcionais,  o  modelo  pode  ser 
+
+aplicado  a  qualquer  ângulo  de  inclinação,  desde  tubulações  horizontais  à 
+
+verticais. 
+
+ 
+
+Entre os modelos mecanicistas de destaque atualmente, pode-se citar o 
+
+de Tulsa (1999). Com ele pode-se determinar os regimes de fluxo, a queda de 
+
+pressão  e  o  hold  up  de  líquido  de  tubulações  verticais  de  fluxo  multifásico.  O 
+
+modelo  identifica  cinco  regimes  de  fluxo:  bolha,  bolhas  dispersas,  golfada, 
+
+transição  e  neblina.  Esse  modelo  foi  validado  usando  uma  base  de  dados  de 
+
+2052 poços provenientes da TUFFP (“Tulsa University Fluid Flow Project”). 
+
+ 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 26 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+3. MATERIAIS E MÉTODOS 
+ 
+
+ 
+
+Esse tópico aborda os materiais e métodos utilizados na realização deste 
+
+trabalho. Aborda também os aspectos funcionais do software utilizado na criação 
+
+do banco de dados, assim como os meios e fontes de captação dos dados. Além 
+
+disso, foi realizada uma abordagem teórica das variáveis de poços, enfatizando 
+
+quais delas são necessárias para inserção ao banco de dados.  
+
+ 
+
+3.1 Ferramentas Computacionais 
+
+ 
+
+ 
+
+Existe  no  mercado  várias  ferramentas  computacionais  que  podem  ser 
+
+utilizadas na criação de um banco de dados. Com o intuito de adotar o software 
+
+que  apresente  o  maior  número  de  vantagens,  esse 
+
+trabalho  avaliou 
+
+qualitativamente alguns deles. Os softwares avaliados foram:  
+
+  Microsoft Acess; 
+
+  Microsoft Excel;  
+
+  LibreOffice – Calc;  
+
+ 
+
+iWork Numbers;  
+
+  Gnumeric;  
+
+  NeoOffice. 
+
+ 
+
+Após  uma  criteriosa  análise  dos  softwares  candidatos,  optou-se  pela 
+
+escolha  do  Excel.  Dentre  os  softwares  analisados  o  Excel  é  o  mais  utilizado 
+
+atualmente;  possui  um  ambiente  computacional 
+
+intuitivo  e  de 
+
+fácil 
+
+implementação e utilização; possui uma ampla gama de funcionalidades, além 
+
+de apresentar uma enorme capacidade de armazenamento de informações. 
+
+ 
+
+O  software  Excel,  ver  Figura  6,  faz  parte  do  pacote  Office  da  empresa 
+
+Microsoft. Esse software é compatível com plataformas do Microsoft Windows, 
+
+Apple  Inc.,  além  de  dispositivos  móveis  como  o Windows  Phone,  Android  e o 
+
+iOS. Entre os softwares do gênero, o Excel é o aplicativo dominante no mercado 
+
+desde 1993, sendo usado por milhares de pessoas em várias nacionalidades. 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 27 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+O Excel é uma ferramenta computacional que permite calcular e analisar 
+
+dados,  além  de  guardar  informações  dos  mais  diversos  tipos  -  por  meios  de 
+
+tabelas  ou  planilhas.  Este  software  ainda  permite  criar  gráficos,  diagramas  e 
+
+desenhos  ilustrativos.  O  Excel  ainda  conta  com  o  VBA  (Visual  Basic  for 
+
+Aplications),  trata-se  de  uma  linguagem  de  programação  inserida  no  próprio 
+
+software, dessa forma o usuário pode criar suas próprias funções, métodos de 
+
+cálculo, e meios de análise de dados.  
+
+ 
+
+Figura 6. Planilhas de Dados Excel. 
+
+ 
+ 
+
+ 
+
+3.2 Dados de poços de petróleo 
+ 
+
+  
+
+ 
+
+A partir da definição do software a ser utilizado na modelagem do banco 
+
+de  dados,  a  etapa  seguinte  dedicou-se  à  busca  de  informações  para  a 
+
+alimentação do banco de dados.  
+
+ 
+
+Como  é  sabido,  alguns  parâmetros  de  poços  são  essenciais  no 
+
+desenvolvimento  e  aperfeiçoamento  de  correlações  empíricas,  modelos 
+
+mecanicistas  e  simuladores  computacionais.  Inúmeras  empresas  do  setor 
+
+petrolífero, universidades e instituições de pesquisas dispõem de seus próprios 
+
+bancos  de  dados  de  escoamento  multifásico.  Entretanto,  o  acesso  a  essas 
+
+informações costuma ser de difícil acesso por pesquisadores e pela comunidade 
+
+científica em geral. 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 28 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+ 
+
+Entre os importantes bancos de dados que se tem conhecimento pode-se 
+
+citar o do projeto TUFFP (“Tulsa University Fluid Flow Project”). Que é um grupo 
+
+de pesquisa  cooperativa  Indústria-universidade  com foco  em  projetos de fluxo 
+
+de  fluidos  multifásicos  em  tubulações  de  petróleo.  Os  projetos  de  fluxo  da 
+
+Universidade  de  Tulsa  estão  entre  os  mais  bem  conceituados  do  mundo. 
+
+Fundada em 1973, desenvolveu grande parte da tecnologia atualmente utilizada 
+
+na produção e transporte de petróleo e gás. O TUFFP dispõe de um banco de 
+
+dados de escoamento multifásico doado pela Schlumberger, e o objetivo não é 
+
+apenas  o  de  manter  os  dados  já  obtidos,  mas  o de  ampliar  o  repositório  com 
+
+dados contidos na literatura e dados cedidos por demais empresas do setor.  
+
+ 
+
+Outro importante banco de dados foi desenvolvido pelo SPT GROUP que 
+
+é uma companhia da Schlumberger. Seu ramo de atuação está voltado para a 
+
+modelagem de fluxo multifásico na indústria de petróleo e gás. O seu principal 
+
+software de simulação dinâmica de escoamento multifásico é o OLGA (2015), e 
+
+com o propósito de aperfeiçoar e validar esse software, foi criado o OVIP (“OLGA 
+
+Validation and Improvement Program”). O banco de dados da OVIP é um dos 
+
+maiores e mais completos bancos de dados de fluxo multifásico já montado. 
+
+ 
+
+Em decorrência do difícil acesso às informações presentes nos bancos de 
+
+dados  de  empresas  do  ramo  petrolífero  e  Universidades.  A  obtenção  de 
+
+informações requeridas para a montagem do banco de dados foi feita a partir da 
+
+captação  de  informações  em  fontes  alternativas,  entre  essas  fontes  pode-se 
+
+citar: 
+
+  Bancos de Teses e Dissertações  de Universidades  (Tulsa, Stanford, 
+
+Calgary,  Texas,  Oklahoma,  Imperial  College,  Universidade  Industrial 
+
+de Santander, UFRJ, Unicamp, etc.); 
+
+  Periódicos CAPES; 
+
+  Artigos Científicos e Papers; 
+
+  Journal of Petroleum Science & Engineering; 
+
+ 
+
+International Journal of Oil, Gas and Coal Technology; 
+
+  SPE (Society of Petroleum Engineers); 
+
+  One Petro; 
+
+  Science Direct; 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 29 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+  Elsevier. 
+
+Na Tabela 2, observa-se um exemplo de conjunto de dados de poços. A 
+
+tabela contém informações coletadas em 21 (vinte e um) poços, localizados no 
+
+campo de Santiago, Colômbia. 
+
+ 
+
+Tabela 2. Dados de produção. 
+
+Fonte. PETROBRAS Colombia Limited. Dados de produção do Campo de Santiago. 
+
+Julho, 2010. 
+
+ 
+
+ 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 30 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+4. RESULTADOS E DISCUSSÕES 
+ 
+
+ 
+
+O banco de dados desenvolvido por esse trabalho contém parâmetros de 
+
+substancial interesse ao desenvolvimento de pesquisas na área do escoamento 
+
+multifásico  de  petróleo.  O  banco  de  dados  contempla  propriedades  físico-
+
+químicas  dos  fluidos  do  reservatório,  características  físicas  dos  poços,  e 
+
+variáveis de campo e de produção do petróleo.  Algumas dessas variáveis são 
+
+citadas a seguir: 
+
+  Propriedades dos fluidos: 
+
+  Viscosidades (óleo e gás); 
+
+  Densidades (óleo, gás e água); 
+
+ 
+
+°API do óleo; 
+
+  Características físicas do poço: 
+
+  Diâmetro; 
+
+  Profundidade; 
+
+  Variáveis de campo e de produção: 
+
+  BSW; 
+
+  Pressões; 
+
+  Temperaturas; 
+
+  Razão Gás-Óleo (RGO); 
+
+  Razão Água-Óleo (RAO); 
+
+Na Figura 7, observa-se uma parte do conjunto de informações inseridas 
+
+no banco de dados.  
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 31 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+ 
+
+Figura 7. Dados de poços. 
+
+ 
+
+É importante enfatizar que, com o intento de padronizar as informações, 
+
+foi  realizado  dois  bancos  de  dados  em  paralelo.  Um  deles  contendo  os 
+
+parâmetros nas unidades do Sistema Internacional de Medidas (SI) e o outro em 
+
+Unidades de Campo. (Vide anexos I e II) 
+
+O banco de dados possui um total de 484 (quatrocentos e oitenta e quatro) 
+
+conjunto  de  dados  e  27  (vinte  e  sete)  parâmetros  abordados.  Entretanto,  é 
+
+importante ressaltar que os dados coletados não são abrangidos pela totalidade 
+
+de parâmetros, e que a quantidade de dados e parâmetros abordados depende 
+
+exclusivamente da referência de origem.  
+
+ 
+
+Devido  à  grande  parte  das  informações  coletadas  serem  originarias  de 
+
+outros  países,  a  maioria  derivada  de  países  de  língua  inglesa  e  espanhola,  e 
+
+apresentarem  siglas  e  abreviaturas  típicas  de  suas  nacionalidades  e  do  setor 
+
+petrolífero, foi inserido ao banco de dados um índice com a tradução e significado 
+
+das siglas e abreviações utilizadas.  
+
+ 
+
+ 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 32 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+4.1 Estatística dos dados 
+ 
+
+ 
+
+O banco de dados final é composto por aproximadamente 500 conjuntos 
+
+de dados. Realizou-se uma análise dessas informações com a aplicação de um 
+
+estudo estatístico sobre eles.  
+
+ 
+
+Esse  estudo  abrangeu  informações  estatísticas  como:  média,  maior  e 
+
+menor valor, moda e desvio padrão.  As variáveis abordados na análise foram: 
+
+comprimento  e  diâmetro  das  tubulações,  °API,  vazão  de  óleo,  valores  de 
+
+pressões  e  temperaturas,  RGO  e  RAO,  e  densidades  da  água  e  do  óleo.    O 
+
+resultado do estudo estatístico pode ser visto na Tabela 3. 
+
+ 
+
+ 
+
+Comprimento (ft) 
+
+Diâmetro (in) 
+
+°API 
+
+Tabela 3. Análise estatística dos dados. 
+
+Média  Menor 
+valor 
+2520 
+
+8765 
+
+Maior 
+valor 
+12990 
+
+Moda  Desvio 
+Padrão 
+2124,9 
+
+8809 
+
+1,25 
+
+8,76 
+
+2,992 
+
+0,921 
+
+54 
+
+44 
+
+11,43 
+
+2,98 
+
+28,3 
+
+4 
+
+6 
+
+Vazão de óleo (bbl/d) 
+
+1105 
+
+19375 
+
+Pressão cabeça (psi) 
+
+948,8 
+
+20 
+
+4478 
+
+Pressão no Fundo 
+
+2380 
+
+105 
+
+6612 
+
+(psi) 
+
+- 
+
+- 
+
+- 
+
+2027,4 
+
+891,8 
+
+1307 
+
+Temperatura cabeça 
+
+100,14 
+
+52 
+
+240,8 
+
+104 
+
+30,34 
+
+(°F) 
+
+Temperatura Fundo 
+
+195,08 
+
+65 
+
+296,6 
+
+190 
+
+38,2 
+
+(°F) 
+
+BSW (%) 
+
+58,01 
+
+0 
+
+99,88 
+
+- 
+
+38,97 
+
+ 
+ 
+4.2 Análise dos dados 
+ 
+
+ 
+
+Essa seção aborda um conjunto de análises sobre os dados, feitas a partir 
+
+de  gráficos  de  histograma.  As  variáveis  estudadas  foram  as  seguintes: 
+
+Profundidade e diâmetro dos poços, °API, vazão de óleo, e pressão na cabeça 
+
+e no fundo do poço. A partir dessa análise visual, pode-se inferir rapidamente, 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 33 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+como é o comportamento médio do conjunto de dados, tornando-se assim, uma 
+
+valiosa ferramenta de consulta.  
+
+ 
+
+ 
+
+ 
+
+Profundidade dos Poços
+
+137
+
+62
+
+67
+
+30
+
+23
+
+1
+
+Entre 500 e 1000m
+
+Entre 1000 e 1500m
+
+Entre 1500 e 2000m
+
+Entre 2000 e 2500m
+
+Entre 2500 e 3000m
+
+34
+
+Entre 3000 e 3500m
+
+Maior que 4000m
+
+ 
+
+140
+
+120
+
+100
+
+80
+
+60
+
+40
+
+20
+
+0
+
+ 
+
+S
+O
+Ç
+O
+P
+E
+D
+O
+R
+E
+M
+Ú
+N
+
+ 
+
+Figura 8. Histograma da profundidade do poços em metros. 
+
+Da  análise  da  Figura  8,  nota-se  que  a  maioria  dos  poços  possuem 
+
+profundidades entre 2000 e 3500 metros, mais precisamente entre 2500 e 3000 
+
+metros. Portanto, o banco de dados possui poucos poços rasos e profundos. 
+
+ 
+
+ 
+
+S
+O
+Ç
+O
+P
+E
+D
+O
+R
+E
+M
+Ú
+N
+
+ 
+
+300
+
+250
+
+200
+
+150
+
+100
+
+50
+
+0
+
+Diâmetro dos Poços
+
+272
+
+Menor que 2 in
+
+Entre 2 e 4 in
+
+Entre 4 e 6 in
+
+Maior que 6 in
+
+ 
+
+22
+
+52
+
+2
+
+Figura 9. Histograma do diâmetro dos poços. 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 34 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+A  maior  parte  dos  poços  possui  tubulação  de  produção  com  diâmetros 
+
+entre 2 e 4 polegadas, sendo 272 poços num total de 328 poços. Nota-se então, 
+
+que são tubulações de pequeno diâmetro.  
+
+ 
+
+ 
+
+°API
+
+91
+
+72
+
+74
+
+58
+
+100
+
+90
+
+80
+
+70
+
+60
+
+50
+
+40
+
+30
+
+20
+
+10
+
+0
+
+22
+
+Menor que 10° API
+
+Entre 10 e 20 °API
+
+Entre 20 e 30° API
+
+Entre 30 e 40° API
+
+Maior que 40° API
+
+ 
+
+ 
+
+S
+O
+Ç
+O
+P
+E
+D
+O
+R
+E
+M
+Ú
+N
+
+ 
+
+ 
+
+Figura 10. Histograma do °API. 
+
+Analisando  a  Figura  10,  nota-se  que  a  maioria  do  poços  contemplados 
+
+pelo  banco  de  dados  possui  um  °API  entre  20  e  30  (91  poços),  ou  seja,  um 
+
+petróleo de média densidade. Observa-se também que apenas 22 poços são de 
+
+óleo extremamente pesado. 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 35 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+ 
+
+S
+O
+Ç
+O
+P
+E
+D
+O
+R
+E
+M
+Ú
+N
+
+ 
+
+Vazão de Óleo (bbl/d)
+
+120
+
+113
+
+100
+
+80
+
+60
+
+40
+
+20
+
+0
+
+43
+
+43
+
+27
+
+11
+
+8
+
+10
+
+4
+
+22
+
+1
+
+Menor que 250 bbl/d
+
+Entre 250 e 500 bbl/d
+
+Entre 500 e 1000 bbl/d
+
+Entre 1000 e 2000 bbl/d
+
+Entre 2000 e 3000 bbl/d
+
+Entre 3000 e 4000 bbl/d
+
+Entre 4000 e 5000 bbl/d
+
+Entre 5000 e 6000 bbl/d
+
+Maior que 6000 bbl/d
+
+ 
+
+ 
+
+Figura 11. Histograma da vazão de óleo em barril por dia.  
+
+Analisando o histograma da Figura 11, percebe-se que a maior parte dos 
+
+poços possui uma vazão de produção de óleo inferior a 250 barris por dia.  
+
+ 
+
+ 
+
+S
+O
+Ç
+O
+P
+E
+D
+O
+R
+E
+M
+Ú
+N
+
+ 
+
+200
+
+180
+
+160
+
+140
+
+120
+
+100
+
+80
+
+60
+
+40
+
+20
+
+0
+
+Pressão da cabeça (psi)
+
+194
+
+90
+
+24
+
+6
+
+1
+
+Menor que 1000 psi
+
+Entre 1000 e 2000 psi
+
+Entre 2000 e 3000 psi
+
+Maior que 4000 psi
+
+ 
+
+Figura 12. Histograma da Pressão de cabeça do poço em psi. 
+
+ 
+
+ 
+
+A  partir  da  Figura  12, nota-se  que para  a maioria  dos  poços  a  pressão 
+
+observada na cabeça do poço é inferior a 1000 psi, e que cerca de 90 (noventa) 
+
+poços apresentam pressões entre 1000 e 2000 psi. Observa-se ainda, que são 
+
+mínimos os poços que possuem pressões acima de 2000 psi. 
+
+ 
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 36 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+ 
+
+S
+O
+Ç
+O
+P
+E
+D
+O
+R
+E
+M
+Ú
+N
+
+ 
+
+160
+
+140
+
+120
+
+100
+
+80
+
+60
+
+40
+
+20
+
+0
+
+Pressão de Fundo (psi)
+
+141
+
+90
+
+80
+
+1
+
+51
+
+9
+
+Menor que 1000 psi
+
+Entre 1000 e 2000 psi
+
+Entre 2000 e 3000 psi
+
+Entre 3000 e 4000 psi
+
+Entre 4000 e 5000 psi
+
+Maior que 5000 psi
+
+ 
+
+ 
+
+Figura 13. Histograma da Pressão de fundo do poço em psi. 
+
+Observando a Figura 13, percebe-se que a maioria dos poços de petróleo 
+
+pertencentes  ao  banco  de  dados  apresentam  uma  pressão  de  fundo  de  poço 
+
+situado entre 1000 e 2000 psi. E que uma ínfima quantidade de poços, apenas 
+
+9 (nove), possuem uma pressão acima de 5000 psi. 
+
+ 
+
+Em conjunto com os histogramas elaborados neste trabalho, também foi 
+
+desenvolvido duas correlações: 
+
+  Correlação da Vazão de óleo x Variação de pressão (∆P); 
+
+  Correlação do Comprimento do poço x Pressão de fundo de poço; 
+
+Ambas  as  correlações  são  mostrados  nas  Figura  14  e  Figura  15, 
+
+respectivamente. 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 37 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+ 
+
+ 
+
+Figura 14. Correlação (Vazão de óleo x ∆P).  
+
+Figura 15. Correlação (Comprimento x Pressão de Fundo). 
+
+ 
+
+ 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 38 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+5 CONSIDERAÇÃO FINAIS 
+ 
+
+Este trabalho teve como objetivo a elaboração de um banco de dados de 
+
+escoamento  multifásico.  Contemplando  os  parâmetros 
+
+requeridos  na 
+
+modelagem de correlações empíricas. 
+
+O  banco  de  dados  elaborado  apresenta  um  total  de  482  conjuntos  de 
+
+dados, sendo ao todo 27 parâmetros abordados. 
+
+Entre os dados obtidos, observou-se que a média dos comprimentos dos 
+
+poços é de 8765 pés, o diâmetro médio da tubulação de produção equivale a 
+
+2,98  polegadas,  28,3  é  o  °API  médio  dos  poços,  a  pressão  média  de  fundo 
+
+equivale a 2380 psi, e a temperatura de fundo média observada foi de 195 °F.  
+
+Em  relação  à  profundidade  dos  poços,  observou-se  que  um  número 
+
+expressivo deles possuem profundidades entre 2500 e 3000m. E que acima e 
+
+abaixo dessa profundidade, a quantidade de poços é menor. 
+
+Ao  analisar  o  diâmetro  dos  poços,  notou-se  que  a  maior  parte  deles 
+
+apresentam  um  diâmetro  da  tubulação  entre  2  e  4  polegadas,  ou  seja, 
+
+apresentam um diâmetro reduzido. 
+
+Observando-se o °API dos poços inseridos no banco de dados, constatou-
+
+se que boa parte dos poços apresentam °API entre 20 e 30, que é considerado 
+
+um petróleo de densidade média. Foi visto também que um número considerado 
+
+de poços apresentam °API entre 10 e 20, e também, maiores que 30. Entretanto, 
+
+os poços que apresentam óleo extremamente pesado, caracterizados pelo °API 
+
+menor que 10, são poucos, apenas vinte e dois poços. 
+
+Este  trabalho  também  analisou  a  vazão  de  produção  de  petróleo  dos 
+
+poços,  dessa  análise  constatou-se  que  um  grande  número  de  poços 
+
+apresentava uma vazão menor que 250 barris de petróleo por dia. Um  número 
+
+significativo de poços possuíam vazões de 250 a 2000 barris de petróleo por dia, 
+
+e apenas alguns poços apresentavam vazões superiores a 2000 barris por dia.  
+
+Após uma análise das pressões observadas no topo dos poços, verificou-
+
+se que 90% dos poços apresentavam pressões menores a 2000 psi. Enquanto 
+
+que  uma  análise  das  pressões  de  fundo  mostrou  que  os  dados  são  bem 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 39 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+dispersos, e que significativa parte dos poços apresentam pressões entre 1000 
+
+e 2000 psi, o qual representa 32% de todos os poços. 
+
+ 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 40 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+____________________________________________________________________________ 
+
+Trabalho de Conclusão do PRH ANP-43 
+
+6. REFERÊNCIAS  
+
+ 
+
+ANSARI, A. M., et al. A Comprehensive Mechanistic Model for Upward Two-Phase Flow in Well 
+
+bore. New Orleans, Louisiana. 1990. 
+
+AZIZ, K., GOVIER, G. W. and FOGARASI, M. Pressure Drop in Wells Producing Oil and Gas. 
+
+Journal Canadian Petroleum Technology. Vol. 11, p: 38-48. 1972. 
+
+BRILL, J. P. and MUKHERJEE, H. Multiphase Flow in Wells. Society of Petroleum Engineers Inc. 
+
+Richardson, Texas. 1999. 
+
+CEBALLOS, A. S. M. and ARDILA, D. P. G. Evaluacióm de la Caída de Presión para sistemas 
+
+de  flujo  Bifásico  (líquido-gas)  em  Tuberías  verticales.  Trabajo  de  grado  presentado  como 
+
+requísito  para  optar  el  título  de:  Ingeníero  de  Petróleos.  Escuela  de  Ingeniería  de  Petróleos. 
+
+Bucaramanga. 2012. 
+
+CHIERICI,  G.L.,  CIUCCI,  G.M.,  and  SCLOCCHI,  G.  Two-Phase  Vertical  Flow  in  Oil  Wells  - 
+
+Prediction of Pressure Drop. Journal of Petroleum Technology. Agosto, 1974. p: 927-938. 
+
+EXCEL. Disponível em: <http://www.aprenderexcel.com.br/2013/artigos/o-que-e-excel>. Acesso 
+
+em: 24/03/2015. 
+
+GOVIER, G. W., and FORAGASI, M. Pressure Drop in Wells Producing Gas and Condensate. 
+
+Journal of Canadian Petroleum Technologists, October 1975. 
+
+ORKISZEWSKI, J. Predicting Two-Phase Pressure Drops in Vertical Pipe. Journal of Petroleum 
+
+Technology. Junho, 1967. 
+
+OVIP  PROGRAM.  Disponível 
+
+em: 
+
+http://www.tuffp.utulsa.edu/public_projects/Steady-
+
+State_Multiphase_Flow_Database.html. Acesso em: 24/03/2015.  
+
+PACIEVITCH, Y. Excel. Disponível em: <http://www.infoescola.com/informatica/excel/>. Acesso 
+
+em 24/03/2015.  
+
+POETTMANN, F. H. and CARPENTER, P. G. The Multiphase of Gas, Oil, and Water Through 
+
+Vertical Flow Strings with Application to the Design of Gas-lift Installation. Drill. And Prac.., API, 
+
+1952. 
+
+SUTTON,  D.  and LANGLINAIS,  J.  A  condensation  model  for  calculating pressure  gradients  in 
+
+condensate wells. Journal of Petroleum Science and Engineering. 1988. 
+
+TAKACS, G. Gas Lift Manual. Pennwell Books. Tulsa, Oklahoma. 2005.  
+
+TULSA  FLUID  FLOW  PROJECT.  Disponível  em:  <http://www.software.slb.com/pages/SPT-
+
+Group.aspx>. Acesso em: 24/03/2015. 
+
+ 
+
+_______________________________________________________________________
+Fábio Pereira dos Santos  
+                                 41 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+

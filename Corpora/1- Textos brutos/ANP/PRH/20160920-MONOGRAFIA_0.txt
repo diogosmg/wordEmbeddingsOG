@@ -1,0 +1,2672 @@
+UNIVERSIDADE FEDERAL DA PARAÍBA 
+
+CENTRO DE TECNOLOGIA 
+
+DEPARTAMENTO DE ENGENHARIA MECÂNICA 
+
+ 
+
+ 
+
+ 
+
+ 
+
+HEITOR ABDIAS DA SILVA PEREIRA 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ANÁLISE NUMÉRICA DAS TENSÕES RESIDUAIS 
+
+DE SOLDAGEM EM UMA TUBULAÇÃODA 
+
+INDÚSTRIA DE PETRÓLEO E GÁS 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+João Pessoa 
+
+ 2016 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+HEITOR ABDIAS DA SILVA PEREIRA 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ANÁLISE NUMÉRICA DAS TENSÕES RESIDUAIS 
+
+DE SOLDAGEM EM UMA TUBULAÇÃO DA 
+
+INDÚSTRIA DE PETRÓLEO E GÁS 
+
+ 
+
+ 
+
+Monografia  apresentada  ao  Curso  de 
+em  Engenharia  Mecânica  da 
+Graduação 
+Universidade  Federal  da  Paraíba, 
+como 
+requisito  parcial  para  a  obtenção  do  título  de 
+Engenheiro Mecânico. 
+
+Orientador: Prof. Dr. Marcelo Cavalcanti Rodrigues 
+
+ 
+
+ 
+
+João Pessoa 
+
+2016 
+
+HEITOR ABDIAS DA SILVA PEREIRA 
+
+ 
+
+ 
+
+ANÁLISE NUMÉRICA DAS TENSÕES RESIDUAIS 
+DE SOLDAGEM EM UMA TUBULAÇÃO DA 
+
+INDÚSTRIA DE PETRÓLEO E GÁS 
+
+ 
+
+ 
+
+ 
+
+LOCAL DE DEFESA: JOÃO PESSOA – PB 
+
+ 
+
+BANCA EXAMINADORA 
+
+ 
+
+ 
+
+___________________________________________ 
+
+Prof. Dr. Marcelo Cavalcanti Rodrigues 
+
+ 
+
+ 
+
+___________________________________________ 
+
+Prof. Dr. 
+
+ 
+
+ 
+
+___________________________________________ 
+
+Prof. Dr.  
+
+ 
+
+ 
+
+ 
+
+AGRADECIMENTOS 
+
+ 
+
+Ao Senhor, pela saúde e força para superar as muitas dificuldades. 
+
+À minha mãe, pelo incentivo, apoio e principalmente pelo amor. 
+
+Ao meu pai, pelo exemplo de superação e de força de vontade. 
+
+À minha namorada, pela compreensão e pelo carinho incessante. 
+
+Ao meu orientador, pelo auxílio, correção e disposição. 
+
+Ao corpo docente da universidade, pela oportunidade e pela transmissão de 
+conhecimento.  
+
+À ANP, Agência Nacional de Petróleo, Gás Natural e Biocombustíveis, bem como ao 
+FINEP pelo financiamento do projeto. 
+
+Aos amigos de curso, em particular Adyllyson, pelas discussões e ajuda na construção 
+de conhecimento. 
+
+E a todos que, mesmo de forma indireta, fizeram parte da minha formação. 
+
+ 
+
+ 
+
+“Assim, pois, isto não depende do que quer, nem do que corre, mas de 
+Deus, que se compadece.” Romanos 09: 16 
+
+ 
+
+ 
+
+RESUMO 
+
+ 
+
+O presente trabalho se propõe a comparar o estado de tensões residuais de soldagem em tubos 
+
+de pequeno diâmetro utilizados na indústria de petróleo e Gás, obtido por métodos numéricos, 
+
+com  resultados  experimentais  apresentados  em  outro  trabalho.  A  análise  foi  realizada  pelo 
+
+método dos elementos finitos, com o uso do software comercial ANSYS, e é tridimensional, 
+
+termomecânica desacoplada, com fonte de calor móvel e de distribuição não uniforme, e com 
+
+propriedades térmicas e mecânicas dependentes da temperatura. Os resultados se mostraram 
+
+promissores, tanto em termos quantitativos quanto qualitativos. 
+
+Palavras-chave: soldagem; tensões residuais; elementos finitos; autógena; 
+
+ 
+
+ 
+
+ABSTRACT 
+
+ 
+
+The present paper proposes a comparison of the welding residual stress state in small diameter 
+
+pipes  used  in  oil  and  gas  industry,  obtained  by  numerical  method,  with  the  experimental 
+
+results presented in other work. The analysis were performed by finite element method, in the 
+
+commercial  software  ANSYS,  is  uncoupled  tridimensional  thermo-mechanical,  with  a 
+
+moving  heat  source  with  non  uniform  distribution,  and  temperature  dependency  on 
+
+mechanical  and  thermal  properties.  The  results  were  promising,  as  in  quantitative  as  in 
+
+qualitative ways. 
+
+Key-words: welding; residual stresses; finite element; autogenous; 
+
+ 
+
+ 
+
+LISTA DE FIGURAS 
+
+ 
+
+Figura 1: Metal de adição, de base, poça de fusão e solda. ................................................................... 12 
+Figura 2: Tipos de chanfros. .................................................................................................................. 12 
+Figura 3: Tipos de chanfros em conjunto aos tipos de juntas................................................................ 13 
+Figura 4: Dimensões representativas para cordão de solda de (a) topo e (b) filete. .............................. 13 
+Figura 5: Seção transversal de um cordão de solda de topo. ................................................................. 13 
+Figura 6: Esquematização do processo de soldagem TIG e equipamentos. .......................................... 15 
+Figura 7: Influências do tipo de corrente utilizada na soldagem TIG. .................................................. 15 
+Figura 8: Fonte de calor móvel ao longo de uma chapa em translação paralelamente ao eixo z. ......... 18 
+Figura 9: Elipsóide que compreende a região afetada pelo calor cedido pela tocha de soldagem. ....... 19 
+Figura 10: Esquema das tensões desenvolvidas durante o aquecimento na soldagem. ......................... 19 
+Figura 11: Esquema das tensões desenvolvidas durante o resfriamento na soldagem. ......................... 20 
+Figura 12: Tensões residuais longitudinais no centro de uma placa plana. ........................................... 21 
+Figura  13:  Esquematização  da  distribuição  de  temperaturas  e  tensões  durante  uma  soldagem  em  4 
+(quatro) seções distintas. ....................................................................................................................... 22 
+Figura 14: Diferentes tipos de elementos finitos. .................................................................................. 23 
+Figura 15: Esquema da aplicação do método dos elementos finitos. .................................................... 24 
+Figura 16: Aproximação de função por polinômios. ............................................................................. 24 
+Figura 17: Malha de diferenças finitas. ................................................................................................. 30 
+Figura 18: Dimensões do tubo. ............................................................................................................. 33 
+Figura 19: Dimensões do cordão de solda. ........................................................................................... 33 
+Figura 20: Modelo CAD e malha. ......................................................................................................... 34 
+Figura 21: Modelo de elastoplasticidade com endurecimento bilinear. ................................................ 35 
+Figura 22: Curva tensão-deformação no modelo bi-linear com dependência da temperatura para o aço 
+ASTM 106 Gr. B. .................................................................................................................................. 35 
+Figura 23: Referencial adotado. ............................................................................................................ 38 
+Figura 24: Histórico térmico como carga na análise estrutural transiente. ........................................... 39 
+Figura 25: Pontos para medição de tensões........................................................................................... 39 
+Figura 26: (esq.) Distribuição de temperaturas (esq.) e superfícies isotermas para o instante 25 s (dir.).
+ ............................................................................................................................................................... 40 
+Figura 27: Variação das temperaturas máxima (verde) e mínima observadas no corpo. ...................... 41 
+Figura 28: Tensão de Von Mises. .......................................................................................................... 41 
+Figura 29: Tensões normais axiais. ....................................................................................................... 42 
+Figura 30: Distribuição de tensões residuais longitudinais para 3 corpos de prova avaliados por Silva 
+(2007). ................................................................................................................................................... 42 
+Figura 31: Comparação entre a distribuição de tensões residuais obtida por Silva (2007) e a obtida pelo 
+método de elementos finitos. ................................................................................................................. 43 
+Figura 32: Comparação pela curva média. ............................................................................................ 43 
+Figura 33: Distribuição das tensões residuais axiais na superfície externa do tubo para 4 posições. ... 44 
+Figura 34: Evolução das tensões de Von Mises no centro do cordão para as quatro posições. ............ 44 
+
+ 
+
+ 
+
+LISTA DE TABELAS 
+
+ 
+
+Tabela 1: Classificação dos processos de soldagem. ............................................................................ 11 
+Tabela 2: Propriedades do aço ASTM 106 Gr. B. ................................................................................. 35 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+SUMÁRIO 
+
+ 
+1. 
+
+INTRODUÇÃO ............................................................................................................................. 8 
+
+1.1  Objetivos ................................................................................................................................ 9 
+
+2.  FUNDAMENTAÇÃO TEÓRICA ............................................................................................. 10 
+
+2.1 
+
+Soldagem .............................................................................................................................. 10 
+
+2.1.1 
+
+2.1.2 
+
+2.1.3 
+
+Definições e classificações dos processos de soldagem ............................................. 10 
+
+Terminologia da soldagem .......................................................................................... 11 
+
+Soldagem TIG .............................................................................................................. 14 
+
+2.2 
+
+Transferência de calor na soldagem e sua modelagem .................................................... 16 
+
+2.2.1 
+
+Fluxos térmicos ............................................................................................................ 16 
+
+2.2.2  Modelagem da fonte de calor ..................................................................................... 17 
+
+2.3 
+
+Tensões Residuais de Soldagem ......................................................................................... 19 
+
+2.3.1 
+
+O caráter crítico das tensões residuais ...................................................................... 22 
+
+2.4  Método dos elementos finitos ............................................................................................. 23 
+
+2.4.1 
+
+Preliminar .................................................................................................................... 23 
+
+2.4.2  Método variacional ...................................................................................................... 25 
+
+2.4.3 
+
+Análise não linear ........................................................................................................ 27 
+
+2.4.4  Método Newton-Raphson ........................................................................................... 27 
+
+2.4.5 
+
+2.4.6 
+
+2.4.7 
+
+Causas de não linearidades ......................................................................................... 29 
+
+Análise térmica transiente .......................................................................................... 29 
+
+Análise transiente estrutural ...................................................................................... 31 
+
+3.  ESTADO DA ARTE.................................................................................................................... 32 
+
+4.  METODOLOGIA ....................................................................................................................... 33 
+
+4.1  Modelo, malha e material ................................................................................................... 33 
+
+4.2 
+
+4.3 
+
+Análise térmica transiente .................................................................................................. 37 
+
+Análise estrutural transiente .............................................................................................. 38 
+
+5.  RESULTADOS ............................................................................................................................ 40 
+
+6.  CONCLUSÕES ........................................................................................................................... 46 
+
+7.  REFERÊNCIAS .......................................................................................................................... 47 
+
+ 
+
+ 
+
+1.  INTRODUÇÃO 
+
+8 
+
+  A soldagem pode ser definida como o “processo de união entre duas partes metálicas, 
+
+usando  uma  fonte  de  calor,  com  ou  sem  aplicação  de  pressão”  (WAINER;  BRANDI; 
+
+MELLO, p.1, 1992). O resultado da aplicação de um processo de soldagem é a solda. 
+
+  O  grande  impulso  ao  uso  da  soldagem  se  deu  durante  a  Segunda  Guerra  Mundial, 
+
+devido  principalmente  à  fabricação  de  navios  e  aviões  soldados.  Hoje,  mais  de  cinquenta 
+
+processos de soldagem diferentes, usados nas mais variadas aplicações, estão disponíveis no 
+
+mercado. 
+
+  Segundo  Masubachi  (1980),  as  principais  vantagens  que  a  soldagem  oferece  em 
+
+relação a outros processos de união, tais como o uso de rebites ou parafusos, são: 
+
+(cid:1) Alta  eficiência  da  junta:  Sendo  a  eficiência  da  junta  definida  como  a  razão 
+
+resistência a fratura da junta e a do metal de base, observa-se valores próximos a 100% para 
+
+juntas soldadas, algo não obtido com outros processos de união; 
+
+(cid:1) Impermeabilidade  a  água  e  ar:  Algo  complicado  de  se  obter  quando  se  usa 
+
+parafusos ou rebites, por exemplo, em aplicações onde tal característica é imprescindível, tais 
+
+como em submarinos, tanques de armazenamento e vasos de pressão; 
+
+(cid:1) Produz economia de peso: Em certos casos, o peso pode ser reduzido de 10 a 20% 
+
+quando se utiliza a soldagem; 
+
+(cid:1) Sem  restrições  quanto  à  espessura:  Enquanto  o  uso  de  rebites  e  parafusos  em 
+
+grandes  quantidades  é  limitado  à  disponibilidade  comercial  desses  elementos,  tornando  tais 
+
+processos  inviáveis  em  aplicações  onde  grande  espessura  é  requerida,  juntas  soldadas  são 
+
+virtualmente ilimitadas quanto a tal requisição;  
+
+(cid:1) Projeto  estrutural  simples:  Para  outros  processos  de  união,  projetos  complexos  de 
+
+junta são necessários, enquanto que na soldagem isso não é tão recorrente; 
+
+(cid:1) Redução no tempo de nos custos de fabricação: O tempo e os custos são reduzidos 
+
+quando à soldagem é aplicada em detrimento a outros processos de união; 
+
+Por essas razões, a soldagem se firmou na indústria como principal processo de união de 
+
+materiais, sendo amplamente utilizada na fabricação e recuperação de peças e estruturas. 
+
+Assim,  a  soldagem  desempenha  um  papel  crucial  na  indústria  de  petróleo  e  gás, 
+
+dependendo  dela  a  integridade  de  muitas  estruturas  envolvidas  no  ramo.  Seu  uso  não  se 
+
+restringe a operações de construção e montagem, mas também de reparo e manutenção. 
+
+9 
+
+ 
+
+Dentro do ciclo de vida de um poço de petróleo, as etapas de perfuração, completação e 
+
+produção são operações críticas, e os sistemas envolvidos nas suas realizações – do ponto de 
+
+vista da integridade mecânica, principalmente os de transmissão de movimentos, sustentação 
+
+e  movimentação  de  cargas,  rotativos,  segurança  de  erupção  de  poços  e  bombeamento  de 
+
+fluido  -  são  alvos  de  grande  atenção  devido  às  condições  operacionais  às  quais  são 
+
+submetidos. Além disso, particularmente em refinarias de petróleo, a soldagem está envolvida 
+
+em elementos tais como tubulações para transporte de fluidos, que apresentam caráter crítico 
+
+pelas  condições  químicas  envolvidas  no  serviço.  Portanto  a  soldagem,  como  processo 
+
+recorrente  na  elaboração  e  construção  de  tais  sistemas,  deve  também  ser  objeto  de  grande 
+
+atenção. 
+
+Como todo processo de  fabricação,  a soldagem  apresenta seus inconvenientes. Dentre 
+
+os  mais  comuns  podemos  destacar  as  trincas  de  hidrogênio,  cordão  de  solda  fragilizado, 
+
+presença de porosidades, inclusões, distorções e  o aparecimento de tensões residuais, sendo 
+
+este  último  extremamente  crítico  à  integridade  das  estruturas  soldadas,  e  foco  do  presente 
+
+trabalho. 
+
+1.1 
+
+Objetivos 
+
+Neste  trabalho  procura-se  determinar  o  campo  de  tensões  residuais  desenvolvidos  em 
+
+tubulações comumente encontradas na indústria de petróleo e gás pelo método de análise por 
+
+elementos finitos, através do uso do software comercial ANSYS 16. A geometria e o material 
+
+da tubulação, bem como os parâmetros do processo, seguem o utilizado por Silva (2007) em 
+
+suas análises experimentais, possibilitando então, através da comparação entre os resultados, a 
+
+validação do método. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2.  FUNDAMENTAÇÃO TEÓRICA 
+
+Soldagem 
+
+ 
+2.1 
+ 
+2.1.1  Definições e classificações dos processos de soldagem 
+
+10 
+
+Conforme definido anteriormente, a soldagem é o “processo de união entre duas partes 
+
+metálicas,  usando  uma  fonte  de  calor,  com  ou  sem  aplicação  de  pressão”  (WAINER; 
+
+BRANDI;  MELLO,  p.1,  1992).  Outra  definição  interessante  é  dada  pela  American 
+
+WeldingSociety, ou Sociedade Americana de Soldagem, que diz: 
+
+“Processo  de  união  de  materiais  utilizado  para  se  obter  a  coalescência 
+
+localizada  de  metais  e  não-metais,  produzida  por  aquecimento  até  uma 
+
+temperatura adequada, com ou sem a  utilização de pressão e/ou  material de 
+
+adição.”  (AWS,  2001  apud  MARQUES;  MONDENESI;  BRACARENSE, 
+
+2011, p. 18). 
+
+Trata-se de um processo de união que garante, de maneira mais aproximada possível, a 
+
+continuidade das propriedades físicas e químicas da junta. A continuidade no sentido de que, 
+
+ainda  que  as  propriedades  variem  ao  longo  da  junta,  não  são  observadas  variações  muito 
+
+bruscas. 
+
+De  acordo  com  Houldcroft  (1979  apud  WAINER;  BRANDI;  MELLO,  p.2,  1992),  os 
+
+processos  de  soldagem,  além  de  gerar  quantidade  de  energia  necessária  à  união  de  dois 
+
+materiais,  devem  remover  as  contaminações  das  superfícies  que  serão  unidas,  evitar  a 
+
+contaminação pela atmosfera e proporcionar o controle da transformação de fase que assegura 
+
+que a solda alcance as propriedades desejadas. 
+
+A classificação dos processos de soldagem é comumente feita em função da natureza da 
+
+união  ou  da  fonte  de  energia  empregada.  A  primeira  forma  de  classificação  divide  os 
+
+processos entre aqueles cuja união se dá no estado sólido (ou por pressão) e os que ocorrem 
+
+com a presença da fusão, enquanto que a segunda separa os processos nos que se baseiam em 
+
+energia  mecânica,  química,  elétrica  ou  radiante  (WAINER;  BRANDI;  MELLO,  1992; 
+
+MARQUES; MONDENESI; BRACARENSE, 2011). 
+
+A  tabela  1  abaixo  apresenta  as  classificações  com  alguns  exemplos  de  processos 
+
+segundo cada classificação. 
+
+ 
+
+Tabela 1: Classificação dos processos de soldagem. 
+
+Classificação 
+
+Tipo 
+
+Exemplos de processos 
+
+11 
+
+Energia Mecânica 
+
+Energia Química 
+
+Explosão, Atrito, 
+
+Ultrassom e etc. 
+
+Oxiacetilênica, 
+
+Aluminotermia e etc. 
+
+Eletrodo revestido, Arco 
+
+Energia Elétrica 
+
+submerso, MIG-MAG, 
+
+Energia Radiante 
+
+TIG e etc. 
+
+Feixe de elétrons, Laser e 
+
+etc. 
+
+Estado Sólido 
+
+Explosão, Ultrassom e etc. 
+
+Estado Líquido 
+
+Eletrodo revestido, Arco 
+
+Submerso, TIG e etc. 
+
+Fonte de Energia 
+
+Empregada 
+
+Natureza da União 
+
+ 
+
+ 
+
+ 
+
+Fonte: Adaptado de Wainer, Brandi e Mello (1992). 
+
+ 
+
+Cada  processo  possui  suas  peculiaridades,  vantagens,  desvantagens  e  aplicações 
+
+específicas. No presente trabalho, utiliza-se o processo, seguindo uma das análises de Silva 
+
+(2007), a soldagem TIG, na forma orbital automática, sem adição de material. 
+
+ 
+
+2.1.2  Terminologia da soldagem 
+
+Soldagem  é  o  processo  de  união  dos  materiais.  Solda  é  o  resultado  da  soldagem.  A 
+
+Figura 1 abaixo apresenta outras definições importantes a serem feitas. 
+
+ 
+
+ 
+
+Figura 1: Metal de adição, de base, poça de fusão e solda. 
+
+12 
+
+ 
+
+Fonte: Marques, Mondenesi e Bracarense (2011). 
+
+ 
+
+O metal de base constitui o material da peça a ser soldada. Chama-se metal de adição 
+
+àquele  que  é  fornecido,  adicionalmente,  para  a  formação  da  solda.  Ele  pode  ser  ou  não  do 
+
+mesmo material que constitui a peça (metal de base). Em soldas denominadas autógenas, não 
+
+há a utilização de metal de adição e o cordão de solda, uma vez que a temperatura alcançada 
+
+ultrapassa o ponto de fusão do metal de base, será constituído pelo material da própria peça. A 
+
+poça de fusão é região fundida pela ação da fonte de calor. É constituída pelo metal de adição, 
+
+quando há, e pelo metal de base. 
+
+A  região  onde  ocorrerá  a  união  é  denominada  de  junta,  e  o  posicionamento  relativo 
+
+entre as peças determina os seus vários tipos. Os tipos básicos são as juntas de topo, de canto, 
+
+de  aresta,  sobrepostas  e  em  ângulo.  Para  proporcionar  a  execução  adequada  e  garantir  uma 
+
+união mais eficiente, geralmente se jaz o uso dos chanfros, que são sulcos feitos nas peças a 
+
+serem unidas, e que acomodarão o metal de adição.Os seus tipos mais comuns de chanfros 
+
+estão representados na Figura 2. Na  Figura 3, tem-se a  representação dos tipos de chanfros 
+
+usados em conjunto aos tipos de juntas. 
+
+Figura 2: Tipos de chanfros. 
+
+ 
+
+Fonte: Marques, Mondenesi e Bracarense (2011). 
+
+ 
+
+ 
+
+Figura 3: Tipos de chanfros em conjunto aos tipos de juntas. 
+
+13 
+
+ 
+
+Fonte: Marques, Mondenesi e Bracarense (2011). 
+
+ 
+
+A  Figura  4  mostra  as  dimensões  típicas  do  cordão  de  solda,  para  junta  de  topo  e  de 
+
+ângulo.  A  Figura  5  trás  outras  definições  de  extrema  importância  para  desenvolvimento  do 
+
+presente trabalho. 
+
+Figura 4: Dimensões representativas para cordão de solda de (a) topo e (b) filete. 
+
+Fonte: Marques, Mondenesi e Bracarense (2011). 
+
+ 
+
+Figura 5: Seção transversal de um cordão de solda de topo. 
+
+ 
+
+ 
+Fonte: Marques, Mondenesi e Bracarense (2011). 
+
+14 
+
+ 
+
+A Zona fundida (ZF) é a região que compreende o metal de solda. A Zona termicamente 
+
+afetada (ZTA) é a região do metal de base, nas imediações do cordão de solda, cuja estrutura 
+
+e/ou  propriedades  foram  afetadas  pelos  ciclos  de  aquecimento  e  resfriamento  inerentes  ao 
+
+processo de soldagem. Por estas razões, ela constitui uma região crítica onde problemas como 
+
+aumento  do  tamanho  do  grão,  aparecimento  de  estrutura  martensítica,  presença  de  poros 
+
+relativamente grandes e desenvolvimento de altas tensões residuais podem eventualmente ser 
+
+observados. 
+
+ 
+
+2.1.3 
+
+Soldagem TIG 
+
+As  principais  características  da  soldagem  TIG  (Tungsten  Inert  Gas)  –  também 
+
+conhecida  como  GTAW  (Gas  Tungsten  Arc  Welding)  –  é  a  utilização  de  um  arco  elétrico 
+
+como fonte de calor, que é mantido entre um eletrodo não-consumível de tungstênio e a peça 
+
+a  soldar,  com  proteção  do  arco  e  da  poça  de  fusão  contra  contaminação  atmosférica  sendo 
+
+realizada através do fluxo de um gás inerte. Uma das particularidades da soldagem TIG é a 
+
+possibilidade de realizar soldagens de componentes de pouca espessura sem o uso de metal de 
+
+adição.  Tais  processos  são  chamados  autógenos,  e  os  tubos  analisados  no  presente  trabalho 
+
+foram submetidos a um processo desse tipo. Quando utilizado, o metal de adição é chamado 
+
+“vareta”. Wainer, Brandi e Mello (1992) afirmam que esse processo é largamente utilizado na 
+
+soldagem de ligas de alumínio, magnésio, titânio e aços inoxidáveis, com a obtenção de uma 
+
+solda de muito boa qualidade. 
+
+Os equipamentos básicos para a soldagem manual pelo processo TIG são: 
+
+(cid:1) Fonte de energia; 
+(cid:1) Tocha de soldagem apropriada; 
+(cid:1) Fonte de gás protetor; 
+(cid:1) Dispositivo para a abertura do arco; 
+(cid:1) Cabos e mangueiras; 
+
+A Figura 6 ilustra esses equipamentos básicos: 
+
+ 
+
+ 
+
+ 
+
+Figura 6: Esquematização do processo de soldagem TIG e equipamentos. 
+
+15 
+
+ 
+
+Fonte: Wainer, Brandi e Mello (1992) e Marques, Mondenesi e Bracarense (2011). 
+
+ 
+
+As principais variáveis operatórias são o comprimento de arco, a característica elétrica, 
+
+velocidade de soldagem e a vazão e tipo de gás de proteção. O comprimento de arco – que é a 
+
+distância entre a ponta do eletrodo e a peça a ser soldada – deve ser intermediário, uma vez 
+
+que  arcos  muito  longos  ou  muito  curtos  favorecem  a  formação  de  descontinuidades  e  são 
+
+muito instáveis. No caso manual, tal característica depende muito da experiência do soldador. 
+
+A  penetração  e  a  largura  do  cordão  de  solda  diminuem  com  o  aumento  da  velocidade  de 
+
+soldagem. Os tipos de proteção mais utilizados são o gás argônio, hélio e suas misturas, com 
+
+vazão  intermediária  determinada  por  teste.  No  que  diz  respeito  às  características  elétricas, 
+
+estão  disponíveis  as  soldagens  em  corrente  contínua  de  polaridade  direta  e  indireta,  assim 
+
+como a soldagem em corrente alternada, e suas influências ao resultado final são detalhadas 
+
+na Figura 7 a seguir. 
+
+Figura 7: Influências do tipo de corrente utilizada na soldagem TIG. 
+
+Fonte: Marques, Mondenesi e Bracarense (2011). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2.2 
+
+Transferência de calor na soldagem e sua modelagem 
+
+2.2.1  Fluxos térmicos 
+
+16 
+
+A tocha de soldagem, utilizada na maioria dos processos mais convencionais, promove 
+
+um aquecimento não uniforme na peça de trabalho. Uma vez que há gradiente de temperatura 
+
+no interior do sólido, o modo de transferência de calor por condução se faz presente. Ele  é 
+
+modelado pela equação do calor dada por: 
+
+ 
+
+ 
+
+ 
+
+(cid:1)(cid:2) (cid:3)(cid:4)
+(cid:3)(cid:5) = (cid:3)
+
+(cid:3)(cid:7)(cid:8)(cid:9) (cid:3)(cid:4)
+
+(cid:3)(cid:7)(cid:10) + (cid:3)
+
+(cid:3)(cid:12)(cid:8)(cid:9) (cid:3)(cid:4)
+
+(cid:3)(cid:12)(cid:10) + (cid:3)
+
+(cid:3)(cid:13)(cid:8)(cid:9) (cid:3)(cid:4)
+
+(cid:3)(cid:13)(cid:10) + (cid:14)(cid:15)(cid:16)  
+
+(1) 
+
+ 
+
+Onde  “(cid:1)”  é  a  densidade  em  (cid:17)(cid:18)((cid:20)(cid:21)(cid:22)),  “(cid:2)”  é  o  calor  específico  em  (cid:24)((cid:17)(cid:18) (cid:17))(cid:21)(cid:26),  “(cid:9)”  a 
+condutividade  térmica  em  (cid:27)((cid:20) (cid:17))(cid:21)(cid:26)  e  “(cid:14)(cid:15)(cid:16) ”  o  calor  gerado  em  “(cid:27)”.  Considerando  o 
+material como isotrópico (“(cid:9)” independente da direção), pode-se ainda simplificar a equação. 
+
+Masubachi  (1980)  afirma  que  o  fator  preponderante  com  respeito  à  entrada  térmica, 
+
+conforme esperado, é a ação do arco elétrico. O calor fornecido por este – potência térmica – 
+
+é dado, baseado no efeito Joule, por: 
+(cid:14)(cid:16) = (cid:28)(cid:29)(cid:30) 
+
+   
+
+(2) 
+
+Onde “(cid:28)” é a eficiência do processo, “(cid:29)” é a tensão de soldagem em Volts e “(cid:30)” é a corrente 
+de  soldagem  em  Ampères.  Outras  parcelas  de  menor  influência  são  o  calor  gerado  pelas 
+
+reações químicas na fusão do eletrodo  (quando  for o caso), no  ar atmosférico  e na poça de 
+
+fusão,  e  o  calor  gerado  pela  transformação  do  metal.  Assim,  considerando  também  a 
+velocidade de soldagem “(cid:31)”, a energia de soldagem, em  (cid:24) ((cid:20)(cid:21)(cid:26)), é dada por: 
+  = (cid:28)(cid:29)(cid:30)
+(cid:31)  
+
+(3) 
+
+ 
+
+Ela traz a informação de energia fornecida à peça por unidade de comprimento do cordão de 
+
+solda. 
+
+A  dissipação  do  calor  gerado  pelo  arco  ocorre  pelos  três  modos:  condução  para  o 
+
+interior da peça, como já foi dito; convecção, devido o fluxo de ar externo à peça de trabalho, 
+
+ 
+
+e  radiação  para  a  atmosfera  circunvizinha.  A  equação  referente  à  convecção  é  a  lei  do 
+
+17 
+
+resfriamento de Newton, dada por: 
+(cid:14)(cid:16) = ℎ"((cid:4)# − (cid:4)∞) 
+ 
+
+(4) 
+
+Onde “ℎ” é o coeficiente convectivo, dado em (cid:27)((cid:20)²(cid:17))(cid:21)(cid:26), “"” é área exposta, dada em (cid:20)², 
+“(cid:4)#” é a temperatura da superfície – suposta maior – e “(cid:4)∞” a do fluido externo, ambas dadas 
+em (cid:17).  Já  a  equação  que  descreve  o  fenômeno  da  radiação  é  a  descrita  pela  Lei  de  Stefan-
+Boltzmann, escrita como: 
+ (cid:14)(cid:16) = %&"((cid:4)#’ − (cid:4)()*’
+ 
+
+(5) 
+
+) 
+
+Com “%” sendo a emissividade da superfície, “&” a constante de Stefan-Boltzmann, dada por 
+5,67.10(cid:21)2 (cid:27)((cid:20)3(cid:17)’)(cid:21)(cid:26), “A” e “(cid:4)#” tendo o mesmo significado que o expresso para a Lei do 
+Resfriamento  de  Newton,  e  “(cid:4)()*”  representando  a  temperatura  da  ambiente  vizinho,  dada 
+em (cid:17). 
+ 
+
+2.2.2  Modelagem da fonte de calor 
+
+Goldak,  Chakravarti  e  Bibby  (1984)  propuseram  um  modelo  de  distribuição  de 
+
+densidade  de  potência  duplo-elipsoidal,  que  mostrou  ser  capaz  de  analisar  bem  o  campo 
+
+térmico na peça de trabalho durante a operação de soldagem, tanto para baixas quanto altas 
+
+penetrações.  O  modelo  leva  em  consideração  o  fluxo  de  calor  tridimensional  na  peça  de 
+
+trabalho, enquanto a fonte de calor – tocha de soldagem – executa movimento de translação 
+
+ao longo do chanfro onde se localizará o cordão de solda. A função que expressa a potência 
+
+térmica  é  então  dependente  das  coordenadas  espaciais  “x”,  “y”  e  “z”,  e  da  temporal  “t”. 
+
+Segundo o desenvolvimento apresentado em Goldak, Chakravarti e Bibby (1984), ela é escrita 
+
+como: 
+
+4((cid:7),(cid:12),(cid:13),(cid:5)) = 6√37(cid:14)
+
+89(cid:2):√:;(cid:21)(cid:22)<² (²⁄ ;(cid:21)(cid:22)?² *²⁄ ;(cid:21)(cid:22)@² (²⁄  
+
+ 
+
+(6) 
+
+ 
+
+Onde “8”, “9” e “(cid:2)” são referentes aos semi-eixos do elipsóide no qual o efeito do calor “Q” 
+produzido  pelo  arco  elétrico  –  valor  dado  pela  equação  (2)  –  é  atuante,  “7”  é  um  fator  de 
+concentração de calor, dependente do quadrante em questão. O termo “A” é dado por: 
+
+18 
+
+ 
+
+A = (cid:13) + (cid:31)(B − (cid:5)) 
+
+(7) 
+
+ 
+A  equação  (7),  junto  à  Figura  8,  deixa  evidente  o  movimento  de  translação  da  tocha  de 
+soldagem, com “(cid:31)” sendo a velocidade de avanço de soldagem ao longo do cordão de solda, 
+paralelo ao eixo “z”. O valor “B” aparece para conFigurar a posição inicial relativa da tocha 
+de  soldagem,  ao  longo  do  eixo  “z”,  em  relação  à  origem  do  sistema  fixo  de  coordenadas. 
+
+Trata-se,  portanto,  de  um  eixo  móvel  que  acompanha  o  movimento  da  tocha,  conforme 
+
+mostrado abaixo na Figura 8. 
+
+ 
+
+Figura 8: Fonte de calor móvel ao longo de uma chapa em translação paralelamente ao eixo z. 
+
+Fonte: Adaptado de Goldak et. al. (1984). 
+
+ 
+
+ 
+
+No  momento  em  que  “(cid:5) = B”,  temos  que  “A = (cid:13)”,  condizendo  com  o  expresso  pela 
+Figura.  Em  outras  palavras,  a  tocha  se  move  em  relação  a  origem  de  um  sistema  fixo  de 
+
+coordenadas,  carregando  junto  a  ela  um  sistema  móvel  de  coordenadas.  O  elipsóide  que 
+
+compreende a porção da peça onde os efeitos de calor da tocha de soldagem são sentidos, e a 
+
+distribuição  em  função  da  equação  (6),  está  ilustrado  na  Figura  9.  Note  que  no  centro  do 
+
+cordão de solda, o valor do calor cedido pela fonte tem valor máximo, e corresponde ao dado 
+
+pela equação (2), conforme já dito anteriormente. 
+
+ 
+
+Figura 9: Elipsóide que compreende a região afetada pelo calor cedido pela tocha de soldagem. 
+
+19 
+
+ 
+
+Fonte: Goldak et. al. (1984). 
+
+ 
+
+2.3 
+
+Tensões Residuais de Soldagem 
+
+Durante  os  processos  de  soldagem,  o  calor  fornecido  pela  fonte  de  energia  tende  a 
+
+dilatar  as  regiões  aquecidas.  Se  uma  peça  for  aquecida  e  resfriada  uniformemente,  e  não 
+
+existirem restrições a essas variações, nenhuma tensão interna será produzida. Todavia, uma 
+
+vez  que  isso  é  impossível  de  ser  obtido,  e  a  não  uniformidade  do  aquecimento,  junto  às 
+
+restrições, fazem com que as regiões sob o efeito de menores temperaturas atuem restringindo 
+
+a dilatação de regiões vizinhas a maiores temperaturas, localizadas nas proximidades da solda. 
+
+Portanto, uma vez que a dilatação é impedida, tensões de compressão são desenvolvidas, e, 
+
+quando o limite de escoamento por compressão do material for atingido, o componente estará 
+
+deformado em compressão. Esse efeito está ilustrado na Figura abaixo. 
+
+ 
+
+Figura 10: Esquema das tensões desenvolvidas durante o aquecimento na soldagem. 
+
+Fonte: Zeemann (2003). 
+
+ 
+
+20 
+
+ 
+
+Então, no início do resfriamento, a região apresentará as mesmas dimensões, todavia 
+
+estando deformada em compressão. Com a diminuição da temperatura a região tenderá a se 
+
+contrair. Para tanto, primeiro ele deverá aliviar a compressão. Após isso, ela buscará reduzir 
+
+seu tamanho, mas as regiões vizinhas não permitem, induzindo assim tensões de tração. Isso 
+
+está ilustrado na Figura 11. Quando o limite de escoamento em tração é alcançado, a região 
+
+então se deforma em tração. No entanto, como ela só consegue se deformar após o limite de 
+
+escoamento,  as  tensões  inferiores  a  esse  limite  permanecem  na  peça  ao  final  da  soldagem. 
+
+Essas são as tensões residuais. 
+
+ 
+
+Figura 11: Esquema das tensões desenvolvidas durante o resfriamento na soldagem. 
+
+ 
+
+Fonte: Zeemann (2003). 
+
+ 
+
+De acordo com Villanni, Mondenesi e Bracarense (2011) as tensões residuais não são 
+
+exclusivas  de  processos  de  soldagem,  ou  de  processos  com  entradas  térmicas,  mas  podem 
+
+aparecer  também  em  componentes  submetidos  a  processamentos  mecânicos,  tais  como 
+
+laminação,  forjamento,  usinagem  e  dobramento.  No  caso  da  soldagem,  como  a  causa  são 
+
+mudanças não uniformes da temperatura, essas tensões são geralmente chamadas de tensões 
+
+térmicas (MASUBACHI, 1980). Conforme dito anteriormente, pode-se dizer ainda que elas 
+
+são  as  quepermanecem  na  peça  quando  todas  as  cargas  externas  são  removidas. 
+
+(MASUBACHI,  1980;  VILLANNI;  MONDENESI;  BRACARENSI,  2011).  Tal  fato  indica 
+
+que  a  força  e  o  momento  resultante  produzido  por  essas  tensões  devem  ser  nulos, 
+
+caracterizando assim o que Masubachi (1980) chama de “condições de equilíbrio de tensões 
+
+residuais”. 
+
+ 
+
+Antunes  (1995)  traz  a  Figura  12  abaixo  como  sendo  a  representação  idealizada  da 
+
+distribuição das tensões residuais longitudinais ao longo de uma perpendicular do cordão de 
+
+21 
+
+solda, localizada no meio de uma chapa fina. 
+
+Figura 12: Tensões residuais longitudinais no centro de uma placa plana. 
+
+ 
+
+Fonte: Antunes (1995). 
+
+ 
+
+Nota-se que na região do cordão de solda temos elevadas tensões de tração. À medida 
+
+que nos distanciamos do centro do cordão, o nível das tensões diminui até atingir o zero. A 
+
+partir daí, novas tensões, agora compressivas, são desenvolvidas. Ao continuar o afastamento 
+
+da linha central de solda, as tensões tendem a desaparecer por completo. Essa conFiguração 
+
+pode ser explicada claramente pelo exposto anteriormente. 
+
+A  Figura  13  abaixo  ainda  ilustra  as  mudanças  de  temperatura  e  de  tensões  residuais 
+
+durante  a  execução  de  um  processo  de  soldagem.  A  análise  é  feita  em  4  (quatro)  seções 
+
+diferentes – uma seção ainda a ser soldada (A-A), uma que está sendo submetida à ação da 
+
+tocha de soldagem (B-B), uma que já recebeu o aquecimento e se localiza nas proximidades 
+
+da região atualmente sendo soldada (C-C) e uma região já soldada e afastada da tocha (D-D) – 
+
+onde o perfil de temperaturas e tensões residuais são mostrados. 
+
+ 
+
+Figura 13: Esquematização da distribuição de temperaturas e tensões durante uma soldagem em 4 (quatro) 
+
+seções distintas. 
+
+22 
+
+ 
+
+Fonte: Masubachi (1980). 
+
+ 
+
+2.3.1  O caráter crítico das tensões residuais 
+
+A  propagação  de  trincas  em  um  componente  mecânico  está  intimamente  ligada  à 
+
+presença de um nível elevado de tensões de tração. Uma vez que o nível das tensões residuais 
+
+se aproxima do escoamento do material, esse é um ponto de considerável relevância sobre o 
+
+tema.  Similarmente,  segundo  Radaj  (1990),  a  vida  por  fadiga  de  um  componente  pode  ser 
+
+reduzida  consideravelmente  devido  à  presença  de  tensões  residuais  de  tração.  Chang  et  al. 
+
+(2010)  também  afirmam  que  essas  mesmas  tensões,  especialmente  nas  proximidades  do 
+
+cordão de solda, podem provocar, além da falha por fadiga, fratura frágil e fragilização por 
+
+corrosão sob tensão. 
+
+A avaliação das tensões residuais como gatilho para a formação de trincas pode fornecer 
+
+informações cruciais para minimizar a ocorrência de falhas nos casos em que elas constituem 
+
+fator  crítico.  Oliveira,  Miranda  e  Farias  (2009)  ainda  observam  que  o  ajuste  correto  do 
+
+processo  de  soldagem  pode  proporcionar  níveis  aceitáveis  de  tensões  residuais,  sem  a 
+
+necessidade  de  investir  tempo  na  realização  de  teste  hidrostático  nas  tubulações,  reduzindo 
+
+assim tempo e custo envolvido. Portanto, a boa estimativa dessas tensões pode proporcionar 
+
+facilidade  e  economia  de  tempo  e  dinheiro  envolvidos  na  fabricação  de  estruturas  -  não  só 
+
+tubulações - soldadas. Nesse ponto, devido à crescente acessibilidade da indústria ao uso de 
+
+métodos  computacionais,  particularmente  a  análise  pelo  método  de  elementos  finitos,  na 
+
+ 
+
+solução de problemas de engenharia, os esforços de abordar o tema por esse ponto de vista é 
+
+23 
+
+justificável. 
+
+ 
+
+2.4 
+ 
+
+Método dos elementos finitos 
+
+2.4.1 
+
+Preliminar 
+
+A análise por elementos finitos é um método numérico fundamentado na possibilidade 
+
+de  se  substituir  a  aplicação  de  uma  equação  que  governa  algum  fenômeno  físico  sobre  um 
+
+domínio  de  geometria  grande  e  complexa,  pela  sua  aplicação  em  subdomínios  de  menor 
+
+tamanho e complexidade, através de algum método de matemática variacional. A Figura 14 
+
+abaixo mostra diferentes tipos de subdomínios, ou elementos finitos, utilizados. No bordo dos 
+
+elementos temos os nós. 
+
+Em  síntese,  para  a  aplicação  do  método,  primeiro  realiza-se  a  simplificação  da 
+
+geometria  em  um  conjunto  de  subdomínios,  ou  elementos.  Em  seguida,  as  equações  que 
+
+regem  o  fenômeno  são  discretizadas,  ou  seja,  transformadas  em  um  conjunto  de  equações 
+
+algébricas, que são resolvidas para cada um dos elementos.  Opróximo passo é a montagem 
+
+dos elementos. O compartilhamentodos nós por elementos vizinhosque faz a interligação dos 
+
+subdomínios permitem que assim se obtenha a resposta do sistema por completo. Essas etapas 
+
+estão ilustradas na Figura 15. 
+
+Figura 14: Diferentes tipos de elementos finitos. 
+
+ 
+
+Fonte: Autor. 
+
+ 
+
+Figura 15: Esquema da aplicação do método dos elementos finitos. 
+
+24 
+
+ 
+
+Fonte: Adaptado de Reddy (2006). 
+
+ 
+
+  Segundo Reddy (2006), a principal razão para se buscar soluções aproximadas sobre 
+
+uma  coleção  de  subdomínios  é  a  possibilidade  e  maior  facilidade  em  representar  funções 
+
+complexas como uma coleção de simples polinômios, considerando que cada segmento deve 
+
+ser compatível com sua vizinhança, e também, possivelmente, apresentar derivadas contínuas 
+
+nos pontos de ligação. Isso fica claro através do exame da Figura 16. O método introduz erros 
+
+de aproximação nos estágios de divisão de domínio, uma vez que o conjunto de subdomínios 
+
+quando  montados  podem  apresentar  algum  desvio  do  domínio  original,  na  análise  das 
+
+equações governantes, devido às aproximações já citadas, e também na avaliação das integrais 
+
+sobre  o  volume.  Em  um  terceiro  estágio,  erros  são  induzidos  na  solução  do  sistema  de 
+
+equações  obtidos  da  montagem  dos  elementos.  Quando  todos  os  erros  são  nulos,  temos  a 
+
+solução real do problema. No caso da aplicação do método isso não ocorre, mas esses erros 
+
+podem ser tão pequenos de modo a garantir uma aproximação ótima do problema real. 
+
+Figura 16: Aproximação de função por polinômios. 
+
+Fonte: Reddy (2006). 
+
+ 
+
+ 
+
+A  base  para  a  apresentação  do  método  dos  elementos  finitos  são  as  técnicas 
+
+empregadas na formulação de equações de equilíbrio que governam sistemas de engenharia. 
+
+Nesse sentido, têm-se dois tipos de sistemas: os discretos, compostos por um número finito 
+
+25 
+
+identificável de partículas, e os contínuos.  
+
+ 
+
+Para os sistemas discretos, a resposta real do sistema pode ser obtida pela solução de 
+
+um  número  finito  de  variáveis  de  estado.  Já  para  os  sistemas  contínuos,  ao  invés  de  um 
+
+conjunto de equações algébricas com um número finito de variáveis de estado desconhecidas, 
+
+temos  equações  diferenciais  representando-os,  e  a  solução  exata  para  essas  equações 
+
+diferenciais, satisfazendo todas as condições de contorno, só é possível para um grupo muito 
+
+restrito e simples de sistemas. Mas apesar disso, o princípio para formulação das equações de 
+
+equilíbrio  governantes  é  o  mesmo  para  ambos  os  tipos  de  sistemas.  A  saber,  os  seguintes 
+
+passos podem ser identificáveis para o processo (BATHE, 1992): 
+
+1.  Idealização do sistema como uma montagem de elementos; 
+2.  Estabelecimento  dos  requisitos  para  o  equilíbrio  de  cada  elemento  em  termos  de 
+
+variáveis de estado; 
+
+3.  Montagem dos elementos e as condições de acoplamento entre eles são invocadas; 
+4.  Solução das equações de equilíbrio e obtenção da resposta d e cada elemento; 
+
+A  diferença  no  processo  é  a  consideração  de  elementos  diferenciais  para  os  elementos  nos 
+
+sistemas contínuos. A equação diferencial resultante deve estar definida para todo o domínio 
+
+do  sistema,  e  deve  ser  completada  com  condições  de  contorno  e  condições  iniciais  –  esta 
+
+última,  no  caso  de  análises  dinâmicas.  O  procedimento  descrito  acima  é  chamado  de 
+
+abordagem  direta  para  obtenção  das  equações  de  equilíbrio  que  governam  o  fenômeno  em 
+
+questão. É muito útil em sistemas discretos, mas não tanto para sistemas contínuos. 
+
+ 
+
+Um das alternativas mais amplamente utilizadas à abordagem direta é a aplicação do 
+
+“método da formulação variacional”, ou ainda “problema de extremo” (BATHE, 1982). 
+
+ 
+
+2.4.2  Método variacional 
+
+ 
+“Um problema de extremo consiste em localizar o conjunto (ou conjuntos) de valores 
+(cid:29)C, D = 1,…,F,  para  o  qual  um  dado  funcional G((cid:29)(cid:26),…,(cid:29)H)  é  um  ponto  de  máximo,  de 
+mínimo ou de sela.” (BATHE, 1992). 
+
+26 
+
+ 
+
+Esse funcional G é na verdade o potencial total do sistema, e, como pode ser concluído 
+ 
+da declaração acima, a essência da aplicação do método é usar a estacionariedade de  G, ou 
+seja, IG = 0, com relação às variáveis de estado (cid:29)C, para análise de problema. A observação 
+mais importante a respeito do uso do método variacional é que, uma vez que esteja construído 
+
+para  uma  classe  de  problemas,  o  que  está  relacionado  à  natureza  da  equação  diferencial 
+
+governante do sistema, independente do fenômeno observado, ele poderá ser empregado para 
+
+gerar equações governantes para todos os problemas naquela classe, caracterizando então uma 
+
+ferramenta generalizada (BATHE, 1992). 
+
+No caso de uma análise estrutural linear, o funcional G será dado pela diferença entre 
+
+a energia de deformação do sistema e o potencial total das cargas externas. Assim: 
+
+G = J − K 
+ 
+
+(8) 
+
+Onde J é a energia de deformação, e K o potencial total, ou trabalho realizado pelas cargas 
+externas.  Ambos  são  funções  dos  deslocamentos  experimentados  pelo  sistema.  Conforme 
+
+destacado  anteriormente,  com  a  observação  adequada  da  física  do  problema,  e  estabelecer 
+
+correspondência  entre  os  termos,  o  método  pode  ser  aplicado  similarmente  para  análise 
+
+térmicas, conforme descrito em Bathe (1992).  
+
+ 
+
+Ao  aplicar  a  condição  de  estacionário  ao  funcional,  e  observando  as  condições  de 
+
+contorno  impostas  ao  sistema,  a  equação  obtida  será  a  base  da  aplicação  do  método  dos 
+
+elementos finitos. A partir da equação obtida as matrizes para os elementos serão obtidas. No 
+
+caso  de  análises  estruturais,  por  exemplo,  a  equação  obtida  é  chamada  de  “princípio  dos 
+
+deslocamentos virtuais”.  
+
+No  trabalho  em  questão,  considerando  o  caráter  termomecânico  do  problema,  duas 
+
+análises,  ambas  de  natureza  não-linear,  são  realizadas:  Análise  térmica  transiente  e  outra 
+
+estrutural  transiente.  Essa  duas  análises  são  realizadas  em  separado  –  o  que  se  chama 
+
+“análises desacopladas” – uma vez que se observa uma dependência unidirecional, ou seja, o 
+
+estabelecimento  das 
+
+tensões  residuais  depende  fortemente  do  histórico 
+
+térmico  do 
+
+componente soldado, mas a dependência inversa  é inexistente (CHANG et. al., 2010). Essa 
+
+relação  é  o  que  possibilita  essa  separação,  reduzindo  a  complexidade  e  também  o  tempo 
+
+computacional envolvido. 
+
+ 
+
+ 
+
+2.4.3  Análise não linear 
+
+27 
+
+Numa análise estrutural, a equação a ser resolvida é a lei de Hooke. Ela é expressa por: 
+
+L(cid:9)MN(cid:7)O = NPO 
+
+ 
+
+(9) 
+
+Onde “L(cid:9)M” é a matriz de rigidez, “N(cid:7)O” é vetor de deslocamentos nodais e “NPO” de forças 
+nodais. 
+
+Quando essa relação entre as forças e os deslocamentos nodais é linear, ou seja, a matriz 
+de  rigidez L(cid:9)M  é  "constante",  o  problema  é  dito  linear.  No  entanto  essa  teoria,  aplicável  no 
+caso  de  pequenos  deslocamentos,  não  condiz  com  a  maioria  das  situações  reais.  Nessas 
+
+circunstâncias uma análise não linear é requerida. Numa análise estrutural não linear estática, 
+por  exemplo,  a  rigidez  “L(cid:9)M”  depende  do  deslocamento,  conforme  mostrado  na  equação 
+abaixo. 
+
+L(cid:9)((cid:7))MN(cid:7)O = NPO 
+
+ 
+
+A forma incremental dessa equação governante é: 
+
+L(cid:9)((cid:7)C)MNQ(cid:7)CO = NQPCO 
+
+ 
+
+(10) 
+
+(11) 
+
+Onde “NQ(cid:7)CO” é o vetor incremento do vetor de deslocamentos nodais, que é um termo 
+desconhecido, e “NQPCO” é o vetor incremento de carga, conhecido. 
+
+Em razão desse comportamento não linear,  a solução de uma  análise desse tipo é um 
+
+processo iterativo e a relação entre carga e resposta não é conhecida previamente. O método 
+
+de Newton-Raphson, que é particularmente importante nesse tipo de análise, realiza uma série 
+
+de aproximações lineares com correções. 
+
+ 
+
+2.4.4  Método Newton-Raphson 
+
+Considere  uma  função  7: S → S  contínua  e  diferenciável,  tal  que  7U((cid:7)) ≠ 0,  e  que 
+buscamos achar sua raíz. Ao expandir a função por série de Taylor com centro em (cid:7)C(cid:21)(cid:26) temos: 
+
+ 
+
+28 
+
+Y
+
+7((cid:7)) = W 7(H)((cid:7)C(cid:21)(cid:26))
+
+7((cid:7)C(cid:21)(cid:26)) + 7U((cid:7)C(cid:21)(cid:26))((cid:7) − (cid:7)C(cid:21)(cid:26))
+
+HZ[
+
+((cid:7) − (cid:7)C(cid:21)(cid:26))H =
+
+F!
++ (cid:5);\(cid:20)]^ _; ]\_;(cid:20) ^‘a;\D]\ 
+
+Desprezando os termos de ordem superior e calculando o valor de 7 para (cid:7)C, temos: 
+
+7((cid:7)C) = 7((cid:7)C(cid:21)(cid:26)) + 7U((cid:7)C(cid:21)(cid:26))((cid:7)C − (cid:7)C(cid:21)(cid:26)) 
+ 
+
+Uma vez que a busca é pela raiz, fazemos 7((cid:7)C) = 0. A equação (12) se torna: 
+
+(cid:7)C = (cid:7)C(cid:21)(cid:26) − 7((cid:7)C(cid:21)(cid:26))
+7U((cid:7)C(cid:21)(cid:26)) 
+
+ 
+
+(12) 
+
+(13) 
+
+Esse procedimento constitui uma iteração no método Newton-Raphson, onde, a partir de 
+uma  estimativa (cid:7)C(cid:21)(cid:26)  para  a  solução  do  problema,  uma  próxima  solução (cid:7)C  é  encontrada  na 
+direção de aproximar a raiz da função 7. Esse é um dos métodos empregados na solução de 
+problemas não lineares. É um processo iterativo, onde uma série de passos lineares é realizada 
+
+sempre  na  direção  da  solução  exata.  As  aproximações  obtidas  por  esse  método  apresentam 
+
+convergência quadrática (Reddy, 2006). 
+
+No contexto do método por elementos finitos, o método, a partir da equação (10), tem-
+
+se a seguinte expressão para o erro, ou vetor desequilíbrio de carga: 
+
+ C = S − L(cid:9)((cid:7)C)M(cid:7)C 
+ 
+ 
+Ela  expressa  a  diferença  entre  as  cargas  externamente  aplicadas  “S”,  e  as  cargas  nodais 
+“P = L(cid:9)((cid:7)C)M(cid:7)C”,  obtidas  pelo  método  com  a  aproximação  que  está  sendo  utilizada  para  a 
+solução. Busca-se então resolver a equação (11) para  C = 0. 
+
+(14) 
+
+Se  a  convergência  não  é  observada,  a  solução  {(cid:7)C}  é  atualizada  para N(cid:7)Cb(cid:26)O = N(cid:7)CO +
+NQ(cid:7)CO, para a qual novo incremento NQ(cid:7)Cb(cid:26)O e novo vetor desequilíbrio de carga  Cb(cid:26) serão 
+calculados,  até  que  o  erro  esteja  no  intervalo  estipulado  pela  tolerância.  Um  procedimento 
+
+similar  é  aplicado  à  equação  (11),  onde,  a  partir  de  uma  solução  teste  inicial,  o  programa 
+
+realiza as aproximações até que a convergência, dentro da tolerância estipulada, seja satisfeita. 
+
+Quando se trata de uma análise transiente, isso é feito para cada instante da análise. 
+
+ 
+
+2.4.5  Causas de não linearidades 
+
+29 
+
+Existem três  principais  causas  de  não  linearidades:  geometria,  material  e  contato.Se  a 
+
+estrutura experimenta grandes deformações, essa mudança na conFiguração geométrica pode 
+
+causar  o  comportamento  não  linear.  No  segundo  caso,  a  inserção  da  plasticidade  de  um 
+
+material  no  problema,  por  não  obedecer  à  lei  de  Hooke,  também  é  uma  causa.  E  as  não 
+
+linearidades de contato, ou topológicas, estão relacionados a mudanças abruptas que podem 
+
+ocorrer na rigidez quando corpos entram ou saem de contato. 
+
+Para o problema em questão, considerando o princípio de estabelecimento das tensões 
+
+residuais, as causas relacionadas ao material são muita importância em função da necessidade 
+
+de implementar a plasticidade no diagramas tensão-deformação. 
+
+ 
+
+2.4.6  Análise térmica transiente 
+
+A  não  linearidade  do  problema  induz  a  necessidade  de  uma  solução  iterativa.  Para 
+
+ilustrar a questão da estabilidade para a solução da análise térmica transiente, apresentar-se-á 
+
+as informações para o problema usando o método de diferenças finitas, anterior ao método de 
+
+elementos finitos, mas que, nesse caso, acaba apresentando mesma condição. 
+
+A condução de calor no interior de um sólido é regida pela chamada equação do calor, 
+
+ilustrada  na  equação  (1).    A  simplificação  dessa  equação  para  um  caso  em  que  não  haja 
+
+geração  de  calor,  para  um  meio  bidimensional  e  material  isotrópico,  fornece  a  seguinte 
+
+expressão: 
+
+(cid:1)(cid:2)
+(cid:9)
+ 
+
+ 
+
+(cid:3)(cid:5) = (cid:3)3(cid:4)
+(cid:3)(cid:4)
+
+(cid:3)(cid:7)3 + (cid:3)3(cid:4)
+(cid:3)(cid:12)3 
+
+(15) 
+
+Conforme  o  procedimento  adotado  por  Incropera  et.  al.  (2008),  ela  pode  ser  escrita 
+
+apropriadamente para diferenças finitas como: 
+db(cid:26) = P]e(cid:4)Cb(cid:26),c
+(cid:4)C,c
+ 
+
+d
+d + (cid:4)C,c(cid:21)(cid:26)
+
+d  
+f + (1 − 4P])(cid:4)C,c
+
+d + (cid:4)C(cid:21)(cid:26),c
+
+d + (cid:4)C,cb(cid:26)
+
+(16) 
+
+Nessa  equação,  índice  “a”  diz  respeito  ao  incremento  de  tempo,  “D”  à  coordenada 
+ 
+espacial  horizontal,  “h”  à  coordenada  espacial  vertical  dos  nós,  e  “P]”  é  o  parâmetro 
+
+30 
+
+ 
+
+⁄
+
+²)”, sendo “∆” a menor distância entre os nós 
+adimensional de Fourier, dado por “(cid:9)Q(cid:5) ((cid:1)(cid:2)∆
+da malha de diferenças finitas – geralmente as distâncias adotadas são iguais. Basicamente, 
+essa equação nos diz que podemos determinar a temperatura de um nó de coordenada “(D,h)” 
+num instante de tempo “a + 1” em função da temperatura deste nó e dos seus nós vizinhos no 
+instante “a”.  Ela pode então ser aplicada a um caso como o da Figura 17. Segundo Incropera 
+et.  al.  (2008),  a  estabilidade  da  equação  é  garantida  para  os  casos  em  que  o  coeficiente 
+“(1 − 4P])” do termo referente à temperatura do nó “p” no instante atual seja maior que zero. 
+Dessa condição, pode-se, obter a relação para incrementos de tempo adequados à análise. Eles 
+
+são dados por: 
+
+P] = (cid:9)Q(cid:5)
+
+(cid:1)(cid:2)Q² < 1
+4 
+
+ 
+
+Obtém-se então: 
+
+Q(cid:5) < (cid:1)(cid:2)Q²
+
+4(cid:9) = Q²
+4k 
+
+ 
+
+(17) 
+
+(17) 
+
+Onde “k” é a difusividade térmica. Apesar de no método de diferenças finitas não ocorrer a 
+integração  em  todo  o  volume  dos  elementos,  essa  condição  também  é  válida,  e  pode  ser 
+
+atestada no manual de análises térmicas do ANSYS, p.47 (ANSYS, 2009). 
+
+Figura 17: Malha de diferenças finitas. 
+
+ 
+
+Fonte: Autor. 
+
+No caso do método de elementos finitos, quanto maior o número de elementos, maior a 
+
+capacidade de obter melhores aproximações. Contudo a capacidade computacional pode ser 
+
+comprometida no refinamento excessivo da malha, tornando o processo muito dispendioso e 
+
+ 
+
+complexo. Então é necessário encontrar um equilíbrio, e fazer verificação de convergência de 
+
+malha. A escolha e observação das restrições (condições de contorno) também influenciam no 
+
+resultado final para desenvolvimento do algoritmo do método. 
+
+31 
+
+ 
+
+2.4.7  Análise transiente estrutural 
+
+A  análise  transiente  estrutural  é  do  tipo  “dinâmica  estrutural”,  assim  como  a  análise 
+
+dinâmica explícita, de resposta harmônica, modal e etc.. Esse tipo de análise se preocupa em 
+
+inserir efeitos dinâmicos, de amortecimento e de inércia, e assim obter a resposta transiente de 
+
+estruturas. A equação a ser resolvida é: 
+
+LlMN(cid:7)mO + LnMN(cid:7)(cid:16)O + L(cid:9)MN(cid:7)O = NPO 
+
+ 
+
+(18) 
+
+Onde “LlM” é matriz de massa, correspondendo à inércia, “LnM” é a matriz de amortecimento, 
+“L(cid:9)M” continua sendo a matriz de rigidez, “N(cid:7)O” é o vetor de deslocamento nodal, e “N(cid:7)(cid:16)O” e 
+“N(cid:7)mO” são primeira e segunda derivada temporal desse vetor, respectivamente. No caso desse 
+trabalho,  essa  análise  é  utilizada  por  apresentar  a  dependência  temporal,  possibilitando  a 
+
+obtenção da evolução das tensões na peça durante a operação de soldagem. A matriz de força 
+
+pode  ser  dependente  do  tempo,  como  é  o  caso  desse  trabalho,  e  todas  as  não  linearidades 
+
+podem  ser  inclusas.  Então,  no  presente  caso,  considerando  desprezado  o  amortecimento, 
+
+irrelevante no contexto: 
+
+LlMN(cid:7)mO + L(cid:9)((cid:7))MN(cid:7)O = NP((cid:5))O 
+ 
+
+(19) 
+
+Para  o  caso  das  tensões  residuais,  o  “carregamento”  será  de  forças  nodais  relacionadas  às 
+
+deformações sofridas pelo corpo durante o ciclo térmico da soldagem, que são determinadas 
+
+pelo histórico de temperaturas da peça obtido na análise térmica transiente. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3. 
+
+ESTADO DA ARTE 
+
+32 
+
+Devido  à  importância  do  tema,  alguns  trabalhos  notáveis  têm  sido  desenvolvidos  nos 
+
+últimos anos na área de avaliação numérica de tensões residuais de soldagem. 
+
+Goldak,  Chakravarti  e  Bibby  (1984)  propuseram  o  modelo  duplo  elipsoidal  para 
+
+distribuição do aporte térmico durante uma operação de soldagem. Wilkander  et. al. (1994) 
+
+realizaram um dos primeiros trabalhos na área, realizando a simulação das tensões residuais 
+
+de soldagem numa viga soldada.  
+
+Anos  depois,  Fanous;  Younam  e  Wifi  (2003)  realizaram  a  modelagem  da  soldagem 
+
+através  da  técnica  de  “birthelement”,  bem  como  a  modelagem  da  tocha  de  soldagem  como 
+
+uma fonte de calor móvel.  
+
+Deng  e  Marakawa  (2005)  desenvolveram  a  análise  do  campo  de  temperatura  e  de 
+
+tensões residuais em tubos de aço inoxidável, com soldagem em múltiplos passos. 
+
+Li et. al. (2009) investigaram o relaxamento de tensões residuais em juntas, e seu efeito 
+
+na fatiga e na propagação de trincas. 
+
+Ainda em 2009, Stamenkovic eVasovic avaliaram as tensões residuais em duas placas 
+
+similares de aço carbono, através do software ANSYS.  
+
+Em 2010, Chang et. al. avaliaram as tensões residuais desenvolvidas também num tubo 
+
+de aço inoxidável, mas com a superposição de tensões de serviço de tração.  
+
+Liu et. al. (2015) analisaram a distribuição de tensões residuais em uma placa submetida 
+
+à soldagem autógena a laser.  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+4.  METODOLOGIA 
+
+ 
+4.1 
+
+Modelo, malha e material 
+
+33 
+
+O  trabalho  de  Silva  (2007)  focalizou  na  obtenção  experimental  da  distribuição  de 
+
+tensões  residuais  de  soldagem  em  tubulações  de  2”  e  4”  de  diâmetro,  soldados  através  do 
+
+processo de soldagem TIG. Foram implementadas variações dos parâmetros do processo para 
+
+avaliação da interferência dessas variações na distribuição de tensões residuais longitudinais. 
+
+Além  disso,  realizou-se  soldagem  TIG  orbital  automática,  sem  adição  de  material,  ou  seja, 
+
+autógena, em corpos de prova de 2” de diâmetro. Essa última foi alvo da nossa investigação 
+
+para validação do método. Na Figura 18 apresenta-se a modelagem do tubo de 2” (60,30 mm) 
+
+de diâmetro e 410,40 mm de comprimento. 
+
+Figura 18: Dimensões do tubo. 
+
+Fonte: Autor. 
+
+ 
+
+Na  Figura  19  apresenta-se  a  conFiguração  do  cordão  de  solda,  com  ângulo  de  35°  e 
+
+profundidade de 3,90 mm. 
+
+Figura 19: Dimensões do cordão de solda. 
+
+ 
+
+Fonte: Autor. 
+
+ 
+
+Na  Figura  20  apresenta-se  o  modelo  em  CAD  com  a  malha  aplicada.  A  malha  é 
+
+composta de elementos tetraédricos com 10 nós. O tamanho máximo dos elementos é de8mm, 
+
+ 
+
+com a aplicação de uma opção de refinamento na região do cordão de solda, que é a região 
+
+34 
+
+mais crítica no processo. 
+
+Figura 20: Modelo CAD e malha. 
+
+ 
+
+Fonte: Autor. 
+
+ 
+
+Utiliza-se o material aço ASTM A106 Gr. B, cujas propriedades estão apresentadas na 
+
+tabela 2. Trata-se de um aço de baixo carbono para serviço em altas temperaturas. O modelo 
+
+de  plasticidade  adotado  foi  o  elastoplástico  de  endurecimento  linear.  Ou  seja,  o  diagrama 
+
+tensão-deformação do material é composto por duas porções lineares de inclinações distintas, 
+
+com  o  ponto  de  mudança  sendo  correspondente  ao  limite  de  escoamento  do  material, 
+
+conforme Figura 21. A porção anterior do gráfico diz respeito à região elástica, e a inclinação 
+
+aqui  é  dada  pelo  módulo  de  Young  “E”  do  material,  com  observância  da  lei  de  Hooke.  A 
+
+partir  dos  dados  fornecidos  pela  norma  ASTM  para  o  aço  em  questão,  implementa-se  a 
+
+dependência  da  temperatura  no  módulo  de  Young,  assim  como  no  coeficiente  de  expansão 
+
+térmica.  
+
+O limite de escoamento é o ponto “&?”, onde ocorre mudança na inclinação da curva. 
+Essa  nova  inclinação  é  dada  então  pelo  módulo  tangente  “ o”.  Ali  tem  o  início  da  região 
+plástica,  ou  seja,  das  tensões  que  promovem  deformações  permanentes  no  material.  Essa 
+
+região corresponde a tensões posteriores ao escoamento e anteriores ao limite de resistência 
+do material “&p”. 
+
+ 
+
+ 
+
+Tabela 2: Propriedades do aço ASTM 106 Gr. B. 
+
+35 
+
+ASTM 106 Gr. B 
+
+Densidade (Kg.m(cid:21)(cid:22)) 
+Condutividade térmica 
+
+(W.m(cid:21)(cid:26).K(cid:21)(cid:26)) 
+
+Calor específico (J.kg(cid:21)(cid:26).K(cid:21)(cid:26)) 
+
+Coeficiente de expansão térmica 
+
+(10(cid:21)w℃(cid:21)(cid:26)) 
+
+Temperatura solidus (℃) 
+Temperatura Liquidus (℃) 
+Calor latente (kJ.kg(cid:21)(cid:26)) 
+
+ 
+
+Propriedades 
+
+7850 
+
+51 
+
+461 
+
+100 ºC 
+200 ºC 
+300 ºC 
+400 ºC 
+450 ºC 
+
+1,25 
+1,3 
+1,36 
+1,41 
+1,43 
+
+1437 
+1501 
+205 
+
+Fonte: Silva (2007) e ASTM (2015). 
+
+ 
+
+Figura 21: Modelo de elastoplasticidade com endurecimento bilinear. 
+
+ 
+
+Fonte: Adaptado de Arzina (2009). 
+
+ 
+
+ 
+
+A  Figura  22  apresenta-se  a  curva  tensão  –  deformação  do  modelo  bi-linear  com 
+
+dependência da temperatura para o aço ASTM 106 Gr B. Essa implementação permite que o 
+
+ 
+
+modelo  em  elementos  finitos  reconheça  a  região  plástica  quando  as  tensões  ultrapassam  o 
+
+36 
+
+limite de escoamento do material. 
+
+ 
+
+Figura 22: Curva tensão-deformação no modelo bi-linear com dependência da temperatura para o aço ASTM 
+
+106 Gr. B. 
+
+ 
+
+Fonte: Siva (2007) e ASTM (2015). 
+
+ 
+
+ 
+
+A inclinação na região plástica, ou seja, o módulo tangente pode ser calculado por: 
+
+ o =
+
+&p − &?
+
+%y(z{( − %|#}~()|Ho~
+ 
+
+ 
+
+(20) 
+
+ 
+
+Como  a  deformação  específica  no  escoamento  é  consideravelmente  menor  que  a 
+
+deformação específica no limite de resistência, pode-se observar na Figura 22, e lembrando 
+
+que  a  elongação  é  uma  medida  de  deformação  específica,  o  módulo  tangente  pode  ser 
+
+estimado por: 
+
+ o = &p − &?
+"(cid:127)]F(cid:18)8çã] 
+
+ 
+
+(21) 
+
+A  curva  tensão-deformação  para  o  aço  ASTM  106  Gr.  B  no  software  ANSYS  está 
+
+ilustrada na Figura 22. Quando visto na totalidade, a distinção das curvas para as temperaturas 
+
+ 
+
+não  é  tão  clara,  portanto  um  “zoom”  na  região  elástica  da  curva  foi  dado  para  facilitar  a 
+
+37 
+
+visualização.  
+
+Também  é  importante  destacar  que,  para  levar  em  conta  o  efeito  térmico  da 
+
+transformação de fase sólido-líquido, foi aplicado um aumento artificial no calor específico, 
+
+conforme o procedimento proposto por Liu et. al. (2015), através da equação, entre os pontos 
+
+solidus e liquidus. 
+
+(cid:2)(cid:130)U = (cid:2)(cid:130) + (cid:131)
+(cid:4)
+
+(cid:4) − (cid:4)#
+(cid:4)(cid:132) − (cid:4)#
+
+ 
+
+ 
+
+(22) 
+
+Nela,  “(cid:2)(cid:130)U ”é  o  calor  específico  entre  as  temperaturas  de  solidus  e  liquidus,  cujas 
+ 
+temperaturas são “(cid:4)#” e “(cid:4)#”, e são consideradas aqui de 1437ºC e 1501ºC, respectivamente. 
+“(cid:131)” é o calor latente, tomado como 205 kJ/kg. São valores típicos para aços de baixo carbono, 
+
+caso do material em questão, encontrados na bibliografia. 
+
+ 
+
+4.2 
+
+Análise térmica transiente 
+
+A ação do arco elétrico na execução da soldagem promove um aquecimento móvel, não 
+
+uniforme e de distribuição duploelipsoidal na peça. No presente trabalho utiliza-se a extensão 
+
+“MovingHeat Flux v.4” que trabalha segundo uma simplificação do modelo de distribuição de 
+
+temperaturas gaussiano de Goldak et. al. (1984), dado por: 
+
+(cid:14)((cid:7),(cid:12),(cid:13)) = n(cid:26);(cid:21)((cid:133)(cid:134)(cid:133)(cid:135))(cid:136)(cid:137)((cid:138)(cid:134)(cid:138)(cid:135))(cid:136)(cid:137)((cid:139)(cid:134)(cid:139)(cid:135))(cid:136)
+
+(cid:140)(cid:136)(cid:136)
+
+ 
+
+ 
+
+(23) 
+
+Nessa  equação,  ((cid:7)[,(cid:12)[,(cid:13)[)  define  a  posição  instantânea  do  centro  da  distribuição  – 
+ 
+ponto onde a fonte de calor está atuando no dado instante – e que dista “(cid:141) × (cid:5)” do ponto de 
+início,  com  “v”,  que  também  é  dado  de  entrada,  sendo  a  velocidade  de  soldagem.  Como  o 
+
+tempo  “t”  varia  ao  longo  da  análise,  o  centro  também  varia  segundo  definido  na  extensão, 
+sempre dentro da aresta da junta. Além disso, “n(cid:26)” é a intensidade do fluxo térmico pela ação 
+do arco e “n3” o raio de incidência sobre a peça. 
+
+ 
+
+A  análise  térmica  foi  realizada  para  um  período  de  600  segundos  (10  minutos).  A 
+
+temperatura ambiente utilizada foi de 22ºC, com condições de contorno de convecção, com 
+
+coeficiente  de  0,0005  W/mm².K,  valor  típico  de  convecção  com  fluxo  de  ar  em  condições 
+
+normais e ambiente, e radiação, com superfície de emissividade 0,7. Ambas aplicadas às faces 
+
+38 
+
+externas do tubo.  
+
+Os  parâmetros  de  soldagem  utilizados  por  Silva  (2007)  para  a  análise  TIG  orbital 
+
+automática  foram  velocidade  de  10,3  cm/mim  (1,72  mm/s),  tensão  eficaz  foi  de  13,2  V  e 
+
+corrente eficaz de 130 A. Esses parâmetros fornecem uma energia de soldagem de 6,2 kJ/cm. 
+
+Toma-se um raio de incidência para a ação do arco elétrico de 5mm. A partir da equação (1), 
+
+e considerando um valor de eficiência η para o processo TIG de 0,7, conforme proposto por 
+
+Deng e Murakawa (2006), obtém-se um fluxo térmico de entrada de 15,3 W/mm². A solda foi 
+
+iniciada na posição plana, que é a mesma posição na qual as tensões foram medidas. Seguindo 
+
+o sistema de coordenadas da Figura 2, e que será importante na apresentação dos gráficos de 
+
+distribuição obtidos para outras posições, ela corresponde à posição 0º da Figura 23. 
+
+Figura 23: Referencial adotado. 
+
+ 
+
+Fonte: Autor. 
+
+ 
+
+4.3 
+
+Análise estrutural transiente 
+
+Para  a  análise  estrutural,  a  carga  de  entrada  é  o  histórico  de  temperaturas  obtido  na 
+
+análise  térmica  transiente,  uma  vez  que  se  trata  de  análises  desacopladas.  Apresenta-se  na 
+
+Figura 24 o histórico térmico que é colocado como carga na análise estrutural. 
+
+ 
+
+Figura 24: Histórico térmico como carga na análise estrutural transiente. 
+
+39 
+
+ 
+
+Fonte: Autor. 
+
+ 
+
+  Na  realização  da  análise  foram  utilizadas  condições  de  engaste  nas  extremidades  da 
+
+tubulação.  
+
+  Para  obtenção  das  tensões  residuais,  Silva  (2007)  posicionou  sensores  na  superfície 
+
+externa da tubulação, na posição plana de soldagem. Ou seja, no ponto de início e término da 
+
+solda, a 0º seguindo o referencial ilustrado na Figura 23. Esse posicionamento está ilustrado 
+
+abaixo. 
+
+Figura 25: Pontos para medição de tensões. 
+
+Fonte: Silva (2007). 
+
+ 
+
+  Na análise foram efetuadas as medições nas mesmas posições, buscando assim avaliar 
+
+a acurácia da análise na predição do comportamento real das tensões. Não foi possível para 
+
+Silva (2007) efetuar as medições em outras posições, nem na superfície interna da tubulação, 
+
+por limitações do equipamento. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5.  RESULTADOS 
+
+ 
+
+40 
+
+O  perfil  de  temperaturas  obtido  através  da  extensão  “Moving  Heat  Flux  v.4”  está 
+
+mostrado na Figura 25 para o instante de 25 segundos.  
+
+Figura 26: (esq.) Distribuição de temperaturas (esq.) e superfícies isotermas para o instante 25 s (dir.). 
+
+Fonte: Autor. 
+
+ 
+
+ 
+
+Percebe-se claramente o caráter elíptico da distribuição, e sua ação ao longo da espessura do 
+
+tubo pelas superfícies isotérmicas. 
+
+A  Figura  27  apresenta  o  gráfico  da  evolução  das  temperaturas  máxima  e  mínima 
+
+observadas em toda a peça, para todos os instantes de tempo avaliados. Pode-se constatar que 
+
+a  temperatura  máxima  alcançou  valores  da  ordem  de  1550ºC,  e  a  mínima  permaneceu  na 
+
+temperatura ambiente de 22ºC e que, após o término do processo de soldagem no tempo de 
+
+100 segundos, a temperatura máxima apresentar uma queda, até que o equilíbrio térmico seja 
+
+completamente atingido. 
+
+ 
+
+Figura 27: Variação das temperaturas máxima (vermelho) e mínima (azul) observadas no modelo. 
+
+41 
+
+ 
+
+Fonte: Autor. 
+
+ 
+
+Usando  tal  histórico  na  análise  estrutural,  obtêm-se  então  a  distribuição  das  tensões 
+
+residuais. A Figura 28 mostra o estado de tensões de von Mises, e a Figura 29 apresenta as 
+
+tensões residuais axiais. 
+
+Figura 28: Tensão de von Mises. 
+
+ 
+
+Fonte: Autor. 
+
+ 
+
+ 
+
+ 
+
+Figura 29: Tensões normais axiais. 
+
+42 
+
+Fonte: Autor. 
+
+ 
+
+ 
+
+Silva (2007) avaliou as tensões para a posição plana – 0º -, onde a soldagem tem início e 
+
+onde ela termina, em 4 corpos de prova. Abaixo, na Figura 30, têm-se os resultados dele para 
+
+os corpos de prova 1, 3 e 4. A amostra 2 foi omitida por apresentar mais pontos que as demais 
+
+e alguns pontos divergirem dos outros em posição.  
+
+Figura 30: Distribuição de tensões residuais longitudinais para 3 corpos de prova avaliados por Silva (2007). 
+
+Fonte: Adaptado de Silva (2007). 
+
+ 
+
+A  Figura  31  insere  a  curva  obtida  pelo  método  de  elementos  finitos,  fazendo  então  a 
+
+comparação entre a distribuição das tensões residuais longitudinais. 
+
+ 
+
+Figura 31: Comparação entre a distribuição de tensões residuais obtidas por Silva (2007) e a obtida pelo método 
+
+de elementos finitos. 
+
+43 
+
+ 
+
+Fonte: Autor. 
+
+ 
+
+A  Figura  32  toma  os  pontos  da  curva  média  de  Silva  (2007),  insere  o  desvio  padrão,  e 
+
+efetua a comparação. 
+
+Figura 32: Comparação pela curva média. 
+
+ 
+
+Fonte: Autor. 
+
+Tal comparação mostra que há boa aproximação pelo método. Silva, por limitações do 
+
+equipamento  e  conveniência,  mediu  as  tensões  unicamente  na  posição  plana  da  soldagem. 
+
+Apresentaremos também, nas Figuras 33 e 34, as distribuições de tensões residuais axiais na 
+
+superfície externa para 4 posições (0º, 90º, 180º e 270º) conforme referenciado na Figura 23.  
+
+ 
+
+: Distribuição das tensões residuais axiais na superfície externa do tubo par
+Figura 33: Distribuição das tensões residuais axiais na superfície externa do tubo par
+: Distribuição das tensões residuais axiais na superfície externa do tubo para 4 posições. 
+
+44 
+
+Fonte: Autor. 
+
+ 
+
+ 
+
+Analisou-se  também  a  evolução  das  tensões  de 
+
+mbém  a  evolução  das  tensões  de  von  Mises  na  superfície  externa  no 
+Mises  na  superfície  externa  no 
+
+centro  do  cordão,  nas  quatro  posições,  para  avaliar  os  efeitos  do  duplo  aquecimento  na 
+centro  do  cordão,  nas  quatro  posições,  para  avaliar  os  efeitos  do  duplo  aquecimento  na 
+centro  do  cordão,  nas  quatro  posições,  para  avaliar  os  efeitos  do  duplo  aquecimento  na 
+
+posição  plana  (0º)  uma  vez  que  o  ponto  de  término  da  solda
+posição  plana  (0º)  uma  vez  que  o  ponto  de  término  da  solda  é  igual  ao  ponto  inic
+
+é  igual  ao  ponto  inicial.  Está 
+
+ilustrado na Figura 34. 
+
+ 
+
+Figura 34: Evolução das tensões de 
+
+: Evolução das tensões de von Mises no centro do cordão para as quatro posições.
+on Mises no centro do cordão para as quatro posições. 
+
+Fonte: Autor. 
+
+ 
+
+ 
+
+45 
+
+ 
+
+  O aquecimento da região é caracterizado no gráfico pela oscilação brusca na tensão. 
+
+Observa-se no caso da posição 0º que duas oscilações ocorrem: a primeira no tempo inicial, e 
+
+segunda  próxima  ao  tempo  correspondente  ao  fim  da  operação,  no  caso,  100  segundos. 
+
+Considerando  que  no  caso  das  posições  180º  e  270º,  a  tensão  se  estabiliza  em  níveis  bem 
+
+próximos ao apresentado imediatamente após a oscilação – presença do aquecimento -, e que 
+
+no caso da posição plana esse nível é consideravelmente inferior ao estabelecido entre os dois 
+
+aquecimentos – região em torno de 25 e 75 segundos. Isso dá indícios de que um alívio nas 
+
+tensões  naquela  posição  é  possível.  Isso  também  pode  ser  observado  nas  tensões  residuais 
+
+longitudinais  inferiores  nessa  posição  em  relação  às  demais.  No  caso  de  90º,  o  nível  de 
+
+estabilização também é bem inferior às posições de 180º e 270º. Isso pode ser explicado pela 
+
+pequena dimensão do tubo, o que proporciona um leve aquecimento nessa posição quando a 
+
+posição 0º é aquecida novamente. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+6. 
+ 
+
+CONCLUSÕES 
+
+46 
+
+Pode-se  concluir  que  o  modelo  numérico,  em  todos  as  4  posições,  se  comportou  de 
+
+modo  semelhante  aos  resultados  experimentais  proposto  por  Silva  (2007).  As  tensões  de 
+
+maior  valor  se  concentraram  sempre  na  região  do  cordão  de  solda,  e  o  modelo  numérico 
+
+apresentou para a posição plana tensões de intensidade próxima aos resultados experimentais.  
+
+Observa-se  também  que  o  ponto  de  início  e  término  de  execução  da  operação  de 
+
+soldagem, que é aquecido duas vezes, acaba por receber uma espécie tratamento térmico que 
+
+alivia as tensões e as deixam menores que em outras posições. 
+
+Portanto, a análise numérica por elementos finitos pode ser usada para calcular e prever 
+
+o comportamento de tensões residuais de juntas soldadas, desde que bem avaliada e modelada 
+
+em  suas  características  físicas,  térmicas  e  mecânicas,  bem  como  todas  as  condições  de 
+
+contorno existentes.  
+
+Uma  análise  numérica  prévia  pode  ser  usada  como  estratégia  de  manutenção  e 
+
+prevenção de falhas em equipamentos, principalmente em equipamentos que não podem parar 
+
+a produção ou que possui difícil acesso. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+47 
+
+ 
+
+7. 
+
+ 
+
+REFERÊNCIAS 
+
+ANSYS(R). Thermal Analysis Guide. Realease 12.1. 2009. 
+
+ 
+
+ASTM  A106  /  A106M-15,  Standard  Specification  for  Seamless  Carbon  Steel  Pipe  for 
+
+High-Temperature Service, ASTM International, West Conshohocken, PA, 2015 
+
+ 
+
+CHANG,  Kyong-Ho;  LEE,  Chin-Hyung;  PARK,  Ki-Tae;  YOU,  Young  Jun;  JOO,  Bong-
+
+Chul;JANG, Gab-Chul. Analysis of Residual Stress in Stainless Steel Pipe Weld Subject to 
+
+Mechanical Axial Tension Loading.International Journal of Steel Structures, no 4, pp. 411-
+
+418, 2010. 
+
+ 
+
+DENG, Dean; MURAKAWA, Hidezaku. Numerical simulation of temperature field and 
+
+residual  stress  in  multi-pass  welds  in  stainless  steel  pipe  and  comparison  with 
+experimental measurements.Computational Materials Science, 37, pp. 269-277, 2006. 
+
+ 
+
+FANOUS,  Ihab  F.  Z.;  YOUNAN,  Maher  Y.  A.;  WIFI,  AbdallaS..  3-D  finite  element 
+
+modeling of the welding process using element birth and element movement techniques. 
+
+Transactions of ASME, v. 15, May 2013. 
+
+ 
+
+GOLDAK,  John.;Chakravarti,  Aditya;  BIBBY,  Malcolm.  A  new  finite  element  model  for 
+
+welding heat sources. Metallurgical Transactions B, v. 15B, pp. 299-305, 1984. 
+
+ 
+
+ INCROPERA,  Frank  P.;  DeWitt,  David P..  Fundamentos  de  transferência  de  calor  e  de 
+
+massa. 6 ed. LTC, Rio de Janeiro, RJ, 2008. 
+
+ 
+
+LIU,  Wei;  MA,  Junjie.;  KONG,  Fanrong;  LIU,  Shuang;  KOVACEVIC,  Radovan.; 
+
+Numerical  Modeling  and  Experimental  Verification  of  Residual  Stress  in  Autogenous 
+Laser  Welding  of  High-Strength  Steel.  Lasers  Manuf.  Mater.  Process.,  v.  2,  pp.  24-42, 
+
+2015. 
+
+ 
+
+ 
+MARQUES, Paulo Villani; MONDENESI, Paulo José; BRACARENSE, Alexandre Queiroz. 
+
+Soldagem: Fundamentos e Tecnologia. 3ª ed. Belo Horizonte: Editora UFMG, 2011. 
+
+48 
+
+ 
+
+MASUBACHI, Koichi. Analysis of Welded Structures: Residual Stresses, Distortion and 
+their Consequences. 1st ed. Massachusetts: Pergamon Press, 1980. 
+ 
+
+OLIVEIRA,  George  Luiz  Gomes  de;  MIRANDA,  Hélio  Cordeiro  de;  FARIAS,  Jesualdo 
+
+Pereira.  Avaliação  das  tensões  residuais  em  tubos  de  pequeno  diâmetro  soldados  pelo 
+
+processo TIG orbital. Soldagem Insp. v. 14, No. 2, São Paulo, p. 114-121, 2009. 
+
+ 
+
+SILVA, Cleiton Carvalho. Avaliação das tensões residuais de soldagem em tubulações de 
+
+pequeno  diâmetro  usadas  em  refinarias  de  petróleo.  2007.  194  f.  Dissertação  (Mestrado 
+
+em engenharia e ciência dos materiais) - Universidade Federal do Ceará,Ceará, 2007. 
+
+ 
+RADAJ,  Dieter.  Design  and  Analysis  of  Fatigue  Resistant  Welded  Structures.  1st  ed. 
+Abington Publishing: Cambridge UK, 1990. 
+
+ 
+
+REDDY, J. N.: An Introduction to the Finite Element Method. 3rd Ed. McGraw-Hill Book 
+
+Co., 2006. 
+
+ 
+
+STAMENKOVIC, Dragi; VARSOVIC, Ivana.Finite Element Analysis of Residual Stress in 
+
+Butt Welding Two Similar plates.ScientificTechnicalReview, Vol 59, No.1, 13 mar. 2009. 
+
+ 
+
+WAINER, Emílio; BRANDI, Sérgio Duarte; MELLO, Fábio Décourt Homem de. Soldagem: 
+
+Processos e metalurgia. 4ª ed. Ed. Edgard Blucher LTDA., 1992. 
+
+ 
+
+ZEEMANN, 
+
+A.. 
+
+Tensões 
+
+residuais 
+
+de 
+
+soldagem. 
+
+Disponível 
+
+em: 
+
+<http://www.infosolda.com.br/images/Downloads/Artigos/metal/tenses-residuiais-na-
+
+soldagem.pdf>. Acessado em 20 de novembro de 2015. 
+
+

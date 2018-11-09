@@ -1,0 +1,6191 @@
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+SIMULAÇÃO DINÂMICA DO PROCESSO DE DESTILAÇÃO DE BIOETANOL 
+
+EM SIMULADOR BASEADO EM EQUAÇÕES (EMSO) 
+
+José Izaquiel Santos da Silva 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+São Carlos, SP 
+
+Julho/2012 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+UNIVERSIDADE FEDERAL DE SÃO CARLOS 
+
+CENTRO DE CIÊNCIAS EXATAS E TECNOLOGIA 
+
+DEPARTAMENTO DE ENGENHARIA QUÍMICA 
+
+PROGRAMA DE PÓS-GRADUAÇÃO EM ENGENHARIA QUÍMICA 
+ÁREA DE PESQUISA: SIMULAÇÃO E CONTROLE DE PROCESSOS 
+
+QUÍMICOS 
+
+ 
+ 
+ 
+ 
+
+SIMULAÇÃO DINÂMICA DO PROCESSO DE DESTILAÇÃO DE BIOETANOL 
+
+EM SIMULADOR BASEADO EM EQUAÇÕES (EMSO) 
+
+ 
+ 
+
+ 
+ 
+
+Química, 
+
+apresentada 
+
+Dissertação 
+ao 
+Programa  de  Pós-Graduação  em 
+Engenharia 
+da 
+Universidade Federal de São Carlos, 
+como  parte  dos  requisitos  para  a 
+obtenção  do  título  de  Mestre  em 
+Engenharia Química. 
+
+Autor: José Izaquiel Santos da Silva 
+Orientador: Prof. Dr. Roberto de Campos Giordano 
+Co-Orientador: Prof. Dr. Luiz Fernando de Moura 
+
+ 
+ 
+
+São Carlos, SP 
+
+Julho/2012 
+
+ 
+
+ 
+ 
+ 
+
+Aos meus pais, José Virgovino 
+(em memória) e Maria Amável. 
+
+A  Edilailsa,  pela  parceria, 
+amizade e amor. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Este 
+
+trabalho 
+
+foi  desenvolvido  no  Laboratório  de  Desenvolvimento  e 
+
+Automação  de  Bioprocessos  (LaDABio),  e  no  kyatera,  do  Departamento  de 
+
+Engenharia Química (DEQ) da Universidade Federal de São Carlos (UFSCar). 
+
+Contou com o apoio financeiro do programa PRH-ANP/MCT Nº 44. 
+
+ 
+
+ 
+
+ 
+
+AGRADECIMENTOS 
+ 
+A Jeová Deus, por tudo. 
+ 
+Aos professores  doutores  Roberto  de  Campos  Giordano  e  Luiz  Fernando  de 
+Moura pelas orientações, dedicação, ensinamentos e amizade. 
+ 
+Aos  amigos  Felipe  Furlan  e  Gabriel  Fonseca  pela  valorosa  ajuda  com  o 
+simulador de processos EMSO. 
+ 
+Ao  professor  doutor  Argimiro  Resende  Secchi  pelos  prestativos 
+esclarecimentos no uso do simulador de processos EMSO. 
+ 
+Ao  técnico  Eudoro  Lemos  pelas  inúmeras  ajudas  prestadas  na  solução  de 
+problemas com hardwares e softwares.  
+ 
+Ao  professor  doutor  Marco  Giulietti  pela  amizade  e  momentos  de 
+descontrações. 
+ 
+Ao professor doutor Wu Hong Kwong pela amizade e descontração. 
+ 
+Às  secretárias  do  PPG-EQ/UFSCAR,  Raquel,  Renata,  Cátia,  pela 
+disponibilidade e atenção nos dada. 
+ 
+À  Agência  Nacional  do  Petróleo  –  ANP  –  e  à  Financiadora  de  Estudos  e 
+Projetos – FINEP – que por meio do Programa de Recursos Humanos da ANP 
+para o Setor de Petróleo, Gás e Biocombustíveis – PRH-ANP/MCT, financia o 
+PRH 44 - Formação de Pessoal em Biocombustíveis. 
+ 
+À FAPESP pelo financiamento do projeto temático. 
+ 
+Ao DEQ/UFSCar pela oportunidade de estar aqui. 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+“Não fiques justo demais, nem te mostres excessivamente sábio.” 
+Eclesiastes 7:16. 
+
+RESUMO 
+ 
+A destilação de misturas hidroalcoólicas que surgem no processo de produção 
+de  etanol  por  rota  fermentativa  tem  sido  bastante  estudada.    Contudo,  três 
+aspectos  têm  sido  frequentemente  relevados:  a  variabilidade  inerente  à 
+fermentação,  principalmente  em  ambiente  industrial;  a  influência  sobre  a 
+alimentação  das  colunas  causada  pela  mistura  de  vinhos  de  primeira  (1G)  e 
+segunda (2G) geração na mesma biorrefinaria; e a variação do nível da dorna 
+volante  ao  longo  da  operação  da  destilaria.  Os  dois  primeiros  aspectos 
+resultam em variações da concentração de etanol e de outros sub-produtos da 
+fermentação  (como  o  álcool  isoamílico)  na  dorna  volante.  O  terceiro  aspecto 
+promove  alterações  nas vazões  das  bombas  de alimentação e consequentes 
+oscilações na temperatura de saída do trocador K (ou seja, na alimentação da 
+primeira coluna). Neste trabalho, utilizando o simulador EMSO (Environment for 
+Modeling, Simulation and Optimization), estudou-se a natureza transiente das 
+perturbações  na  operação  das  colunas,  utilizando  uma  coluna  modelo  para 
+representar o trem de destilação A-A1-D, bem como o efeito da composição do 
+vinho na dorna volante a ser bombeado para a destilação. Temperatura e nível 
+de  refervedor  e  condensador  são  controlados  por  malhas  PID,  e  a 
+representação  da  dinâmica  da 
+inclui  correlações  (já 
+implementadas  no  EMSO)  para  prever  o  acúmulo  de  líquido  sobre  o 
+vertedouro,  a  perda  de  carga  no  prato,  dentre  outros  aspectos.  O  equilíbrio 
+líquido-vapor  (ELV)  foi  representado  pela  abordagem  gamma-phi,  usando  a 
+correlação UNIFAC-Dortmund para a fase líquida, e o modelo SRK para a fase 
+vapor.  Em  um  primeiro  momento  foi  estudado  o  processo  dinâmico  de 
+destilação considerando o vinho composto por misturas etanol-água e etanol-
+água-álcool  isoamílico  com  o  transcurso  de  tempo  suficiente  para  que  fosse 
+atingido  o  estado  estacionário.  Compararam-se  as  respostas  do  simulador 
+EMSO com resultados estacionários obtidos no simulador de processos Aspen 
+Plus® (versão 7.3) da Aspen Tech, observando-se bastante semelhança entre 
+os  resultados  das  simulações  nas  duas  plataformas.  Posteriormente,  para 
+melhor  representar  a  complexidade  da  situação  real,  inseriu-se  no  EMSO 
+modelo  de  bomba  centrífuga  e  tubulação,  interligando  a  dorna  volante,  o 
+regenerador (trocador de calor K) responsável por pré-aquecer o vinho com a 
+
+torre  de  pratos 
+
+vinhaça  efluente  do  fundo  da  coluna  A,  e  a  própria  coluna.    As  principais 
+conclusões  foram:  a  consideração  da  presença  de  álcool  isoamílico  teve 
+alguma influência nos perfis transientes de composição e temperatura ao longo 
+da coluna, mas a composição de topo foi pouco afetada. A variação de nível da 
+dorna  durante  a  operação,  em  ciclos  de  esvaziamento/enchimento,  causou 
+perturbações cíclicas nas variáveis-resposta do sistema (vazões, temperaturas 
+e  frações  molares  dos  efluentes  do  processo),  cuja  amplitude  pode  ser 
+absorvida  pelo  sistema  de  controle.  Perturbações  degrau  na  dorna  volante 
+foram  simuladas, com respostas consistentes  nas simulações,  como atestam 
+os balanços  globais de  massa  do  processo.  A  mistura na  dorna  de vinho  de 
+menor  teor  alcoólico,  eventualmente  provindo  do  setor  de  etanol  2G,  é 
+absorvida após um ciclo de recarga da dorna. No longo prazo, as respostas do 
+modelo indicam que,  mantidas a razão de refluxo e as condições de topo de 
+fundo da coluna, o sistema tende gradualmente a pontos de operação estável. 
+ 
+Palavras-chave:  Bioetanol.  Destilação  multicomponente.  Processo  dinâmico. 
+Simulador global. EMSO. Dorna volante. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ABSTRACT 
+ 
+Distillation of hydroalcoholic mixtures that result from the fermentative route of 
+production of ethanol has been widely studied. Nonetheless, three points have 
+not deserved special attention yet: the industrial fermentation intrinsic variability; 
+the changes  on  the  feed stream  of  the  columns  caused  by  the  mixing  of  1st 
+(1G) and 2nd (2G) generation wines in the same biorefinery; and the alteration 
+of the level in the buffer vat throughout the operation of the industrial plant. The 
+two  first  aspects  result  in  changes  of  the  concentration  of  ethanol  and  other 
+fermentation by-products, such as isoamyl alcohol in the buffer tank. The third 
+aspect alters the flow impelled by the feed pumps and, consequently, changes 
+the  outlet  temperature  of  the  K  heat  exchanger  (i.e.  of  the  first  column  feed 
+stream).  In  this  work,  the  EMSO  simulator  (Environment  for  Modeling, 
+Simulation  and Optimization) was  used  to study  transient  perturbations of the 
+columns operation, and the effect of wine composition in the buffer vat that will 
+be  pumped  for  distillation,  with  aid  of  a  column  model  representing  the 
+distillation  train  A-A1-D.  Reboiler  and condenser  temperatures  and  levels  are 
+controlled  by  PID  loops,  and  the  dynamic  model  of  the  tray  column  includes 
+correlations (already implemented in EMSO) for liquid holdup, pressure drop in 
+the  tray,  among  other  aspects.  The  gamma-phi  approach,  using  UNIFAC-
+Dortmund  equation  for  the  liquid  phase  non-ideality  and  SRK  model  for  the 
+vapour,  was  used  to  represent  vapor-liquid  equilibrium  (VLE).  Firstly,  the 
+dynamics  of  distillation  of  ethanol-water  and  ethanol-water-isoamyl  alcohol 
+mixtures  was  simulated,  up  to  steady  state.  The  EMSO  steady-state  results 
+were very similar to Aspen-Pus® (7.3) simulations. Following, in order to closer 
+represent the complexity of the real situation, a model of the centrifugal pump 
+plus tabulation was inserted in EMSO, integrated to the K heat exchanger (that 
+regenerates  the  energy  of  vinasse,  pre-heating  the  column  feed)  and  to  the 
+column  itself.  The  main  conclusions  were:  the  presence  of  isoamyl  alcohol 
+influenced  somehow  the  temperature  and  molar  fractions  transient  profiles  in 
+the column,  but  the  composition of  the  top stream  was  not  sensibly  affected. 
+Changes of the liquid level in the buffer vat during the operation, following load-
+unload  cycles,  caused  periodic  perturbations  in  the  system  output  variables 
+(flows, temperatures and mol fractions of the process outflow), whose amplitude 
+
+could be absorbed by the control system.  Step perturbations in the buffer vat 
+were simulated, with consistent responses, as assessed by the system global 
+mass balance. Mixing wines with lower alcoholic contents, as the ones coming 
+from  the  2G  process,  causes  effects  that  are  dumped  after  one  load-reload 
+cycle of the vat. In long term, model responses indicate that, kept the reflux ratio 
+and the top and bottom conditions in the column, the system gradually achieves 
+stable operation points. 
+ 
+Keywords:  Bioethanol.  Multicomponent  distillation.  Dynamic  process.  Global 
+simulator. EMSO. Buffer vat.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+LISTA DE FIGURAS 
+ 
+Figura 1 - Etapas do processamento do bioetanol de primeira e segunda 
+geração. ........................................................................................................... 20 
+Figura 2 - Quadro geral dos biocombustíveis. ................................................. 24 
+Figura 3 - Diferentes rotas para a produção de bioetanol................................ 25 
+Figura 4 - Esquema do processo Melle-Boinot de fermentação. ..................... 26 
+Figura 5 - Esquema simplificado da configuração do processo de destilação 
+empregado na indústria para a produção de AEHC. ........................................ 27 
+Figura 6 - Representação esquemática de um estágio genérico. .................... 37 
+Figura 7 - Interface gráfica do simulador EMSO. ............................................. 41 
+Figura 8 - Sistema de bombeamento do vinho. ............................................... 41 
+Figura 9 - Movimentação do ponto de operação do sistema de alimentação, de 
+acordo com o nível de vinho na dorna.............................................................. 43 
+Figura 10 - Modelo esquemático de uma bomba. ........................................... 45 
+Figura 11 - Modelo esquemático de um splitter. .............................................. 46 
+Figura 12 - Modelo esquemático de um refervedor. ........................................ 47 
+Figura 13 - Modelo esquemático de um condensador dinâmico. .................... 49 
+Figura 14 - Representação esquemática de um estágio genérico. .................. 51 
+Figura 15 - Fluxograma do processo de destilação de etanol. ........................ 56 
+Figura 16 - Esquema do processo proposto no Sistema 2. ............................. 59 
+Figura 17 - Curvas do sistema e da bomba. .................................................... 64 
+Figura 18 - ELV da mistura etanol(1)-água(2) a 1 atm: comparação das 
+previsões no EMSO (UNIFAC-Dortmund/SRK) com dados experimentais 
+(GMEHLING et al., 1988). ................................................................................ 68 
+Figura 19 - ELV da mistura etanol(1)-álcool isoamílico(2) a 1 atm: comparação 
+das previsões no EMSO (UNIFAC-Dortmund/SRK) com dados experimentais 
+(GMEHLING et al., 1988). ................................................................................ 68 
+Figura 20 - ELV da mistura água(1)-álcool isoamílico(2) a 1 atm: comparação 
+das previsões no EMSO (UNIFAC-Dortmund/SRK) com dados experimentais 
+(GMEHLING e ONKEN, 1982). ........................................................................ 69 
+Figura 21 - Frações molares do etanol (1) e água (2) no estado líquido ao 
+longo da coluna no Aspen Plus (estado estacionário) e no EMSO (após 60 
+horas de operação). ......................................................................................... 70 
+
+Figura 22 - Frações molares do etanol (1), água (2) e álcool isoamílico (3) no 
+estado líquido ao longo da coluna no Aspen Plus (estado estacionário) e no 
+EMSO (após 300 horas de operação). ............................................................. 70 
+Figura 23 - Frações molares do etanol (1) e água (2) água na fase vapor ao 
+longo da coluna no Aspen Plus (estado estacionário) e no EMSO (após 60 
+horas de operação). ......................................................................................... 70 
+Figura 24 - Frações molares do etanol (1), água (2) e álcool isoamílico (3) na 
+fase vapor ao longo da coluna no Aspen Plus (estado estacionário) e no EMSO 
+(após 300 horas de operação). ........................................................................ 70 
+Figura 25 - Perfis de temperaturas ao longo da coluna no Aspen Plus (estado 
+estacionário) e no EMSO (após 60 horas de operação) durante o processo de 
+destilação da mistura etanol(1)-água(2). .......................................................... 71 
+Figura 26 - Perfis de temperaturas ao longo da coluna no Aspen Plus (estado 
+estacionário) e no EMSO (após 300 horas de operação) durante o processo de 
+destilação da mistura etanol(1)-água(2)-álcool isoamílico(3). .......................... 71 
+Figura 27 - Perfis de frações molares do etanol (1) em função do tempo no 
+estágio 25 da coluna, obtidos com a simulação do processo de destilação das 
+misturas etanol(1)-água(2) e etanol(1)-água(2)-álcool isoamílico(3) no EMSO.
+ ......................................................................................................................... 72 
+Figura 28 - Perfis de temperaturas em função do tempo no estágio 25 da 
+coluna, obtidos com a simulação do processo de destilação das misturas 
+etanol(1)-água(2) e etanol(1)-água(2)-álcool isoamílico(3) no EMSO. ............. 72 
+Figura 29 - Perfis de frações molares do etanol na fase vapor em função do 
+tempo nos estágios 1, 5, 10, 15, 25 e 38, obtidos com a simulação do processo 
+de destilação da mistura etanol(1)-água(2)-álcool isoamílico(3) no EMSO. ..... 73 
+Figura 30 - Perfis de temperaturas em função do tempo para os estágios 1, 5, 
+10, 15, 25 e 38 da coluna, obtidos com a simulação do processo de destilação 
+da mistura etanol(1)-água(2)-álcool isoamílico(3) no EMSO. ........................... 74 
+Figura 31 - Perfis de pressões em função do tempo nos estágios 1, 5, 10, 15, 
+25 e 38, obtidos com a simulação do processo de destilação das misturas 
+etanol(1)-água(2) e etanol(1)-água(2)-álcool isoamílico(3) no EMSO. ............. 75 
+Figura 32 - (a) Esvaziamento da dorna volante no primeiro ciclo de operação 
+após o chaveamento para a segunda dorna; (b) Vazão da bomba. 
+
+Considerando o enchimento da dorna com vinho de 2 a 5% de etanol (fração 
+molar). .............................................................................................................. 76 
+Figura 33 - (a) Temperatura de entrada na coluna (Ts1); (b) Temperatura da 
+vinhaça, Te2 (fluido quente de entrada no trocador de calor) no primeiro ciclo 
+de operação após o chaveamento para a segunda dorna. Considerando o 
+enchimento da dorna com vinho de 2 a 5% de etanol (fração molar). ............. 77 
+Figura 34 - (a) Vazão de alimentação da coluna no primeiro ciclo de operação 
+após o chaveamento para a segunda dorna; (b) Vinhaça; (c) Destilado; (d) 
+Retirada lateral de vapor. Considerando o enchimento da dorna com vinho de 2 
+a 5% de etanol (fração molar). ......................................................................... 78 
+Figura 35 - Calor no refervedor, considerando o enchimento da dorna com 
+vinho de 2 a 5% de etanol (fração molar) no primeiro ciclo de operação após o 
+chaveamento para a segunda dorna. ............................................................... 79 
+Figura 36 - (a) Fração molar de etanol no destilado no primeiro ciclo de 
+operação após o chaveamento para a segunda dorna; (b) Fração molar de 
+etanol na vinhaça. Considerando o enchimento da dorna com vinho de 2 a 5% 
+de etanol (fração molar). .................................................................................. 79 
+Figura 37 - Fração molar de etanol na fase vapor no primeiro ciclo de operação 
+após o chaveamento para a segunda dorna, nos estágios (est): (a) 1, (b) 5; (c) 
+15 e (d) 38. Considerando o enchimento da dorna com vinho de 2 a 5% de 
+etanol (fração molar). ....................................................................................... 80 
+Figura 38 - Fração molar de etanol no vapor da retirada lateral no primeiro ciclo 
+de operação após o chaveamento para a segunda dorna. Considerando o 
+enchimento da dorna com vinho de 2 a 5% de etanol (fração molar). ............. 81 
+Figura 39 - Fração molar de etanol na fase líquida nos estágios (est) no 
+primeiro ciclo de operação após o chaveamento para a segunda dorna: (a) 1, 
+(b) 5; (c) 15 e (d) 38. Considerando o enchimento da dorna com vinho de 2 a 
+5% de etanol (fração molar). ............................................................................ 82 
+Figura 40 - Fração molar de etanol na vinhaça (x1) no primeiro ciclo de 
+operação após o chaveamento para a segunda dorna, com o enchimento da 
+dorna com vinho de 2 a 5% de etanol (fração molar). ...................................... 83 
+Figura 41 - Fração molar de etanol na fase vapor com o tempo nos estágios 
+(est): (a) 1, (b) 2; (c) 15 e (d) 38. Considerando o enchimento da dorna com 
+vinho de 2 a 5% de etanol (fração molar). ........................................................ 84 
+
+Figura 42 - Fração molar de etanol na fase líquida com o tempo nos estágios 
+(est): (a) 1, (b) 2; (c) 15 e (d) 38. Considerando o enchimento da dorna com 
+vinho de 2 a 5% de etanol (fração molar). ........................................................ 85 
+Figura 43 - Perfis de fração molar de etanol na retirada lateral de vapor. 
+Considerando o enchimento da dorna com vinho de 2 a 5% de etanol (fração 
+molar). .............................................................................................................. 86 
+Figura 44 - Perfis de fração molar de etanol: (a) no destilado; (b) na vinhaça. 
+Considerando o enchimento da dorna com vinho de 2 a 5% de etanol (fração 
+molar). .............................................................................................................. 86 
+Figura 45 - Balanço de massa (BM) na coluna ao longo do processo: (a) BM 
+por componente (etanol); (b) BM global. Considerando uma alimentação com 
+vinho de 2 a 5% de etanol (fração molar). ........................................................ 87 
+Figura 46 - BM por componente (etanol) para o vinho a 5% em fração molar de 
+etanol (verificação da tendência do perfil). ....................................................... 87 
+Figura 47 - (a) Esvaziamento e enchimento da dorna; (b) Vazão da bomba; (c) 
+Temperatura de entrada na coluna (Ts1); (d) Temperatura da vinhaça (Te2). 
+Considerando o enchimento da dorna com vinho de mesma concentração 
+inicial (2 a 5% em fração molar de etanol). ...................................................... 88 
+Figura 48 - Calor no refervedor (QR), considerando o enchimento da dorna com 
+vinho de mesma concentração inicial (2 a 5% em fração molar de etanol). ..... 89 
+Figura 49 - (a) Vazão de alimentação da coluna; (b) Vinhaça; (c) Destilado; (d) 
+Retirada lateral de vapor. Considerando o enchimento da dorna com vinho de 
+mesma concentração inicial (2 a 5% em fração molar de etanol). ................... 90 
+Figura 50 - (a) Esvaziamento e enchimento da dorna; (b) Vazão da bomba. .. 91 
+Figura 51 - (a) Fração molar de etanol no vinho saindo da dorna volante; (b) 
+Detalhes do momento em que há a mistura do vinho existente na dorna (fração 
+molar de etanol igual a 0,05) com o vinho de segunda geração (fração molar de 
+etanol igual a 0,03) alimentando a dorna volante. ............................................ 92 
+Figura 52 - (a) Temperatura da alimentação da coluna (Ts1); (b) Temperatura 
+da vinhaça (Ts2). .............................................................................................. 93 
+Figura 53 - Fração molar de etanol no vapor da retirada lateral. ..................... 93 
+Figura 54 - Perfis de fração molar de etanol: (a) no destilado; (b) na vinhaça. 94 
+Figura 55 - (a) Vazões de alimentação da coluna e da vinhaça; (b) Vazão do 
+destilado. .......................................................................................................... 94 
+
+ 
+
+Figura 56 - Vazão da retirada lateral de vapor. ............................................... 95 
+Figura 57 - Consumo de calor no refervedor. .................................................. 95 
+Figura 58 - Balanço de massa (BM) no sistema ao longo do processo: (a) BM 
+por componente (etanol); (b) BM global. .......................................................... 96 
+Figura 59 - Versão do EMSO utilizada nesta dissertação. .............................. 97 
+Figura 60 - Interface do EMSO: um exemplo de modelos usados; teste de 
+consistência; montagem de um FlowSheet. ..................................................... 99 
+Figura 61 - Interface do EMSO: escolha de modelos para resolver os sistemas 
+de equações. .................................................................................................... 99 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+LISTA DE TABELAS 
+ 
+Tabela 1 - Número de estágios nas colunas de destilação convencional de 
+etanol................................................................................................................ 28 
+Tabela 2 - Configuração do Sistema 1. ............................................................ 57 
+Tabela 3 - Frações molares dos principais componentes presentes na carga 
+considerada neste trabalho e em uma carga típica industrial, desconsiderando 
+a presença de eletrólitos. ................................................................................. 57 
+Tabela 4 - Configuração de cada ponto marcado no Sistema 2. ..................... 60 
+Tabela 5 - Configuração de cada trecho do Sistema 2. ................................... 60 
+Tabela 6 - Configuração da coluna do Sistema 2. ........................................... 61 
+Tabela 7 - Coeficiente global de troca térmica em trocadores de calor. .......... 65 
+Tabela 8 - Percentual de acúmulo de massa na coluna. ................................. 96 
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Área da seção transversal 
+Área total dos furos do prato 
+Área útil do prato 
+Sigla para Environment for Modeling Simulation and Optimization 
+Fator de atrito 
+Vazão molar da corrente que entra no equipamento 
+Vazão molar da corrente que sai do equipamento 
+Entalpia da corrente que entra no equipamento 
+Entalpia da corrente que sai do equipamento 
+É a altura do vertedouro 
+É a altua manométrica total do sistema 
+É o nível de líquido no prato 
+Acúmulo molar de líquido 
+Acúmulo molar de vapor 
+Acúmulo molar do componente i 
+Pressão da corrente que sai do equipamento 
+Pressão da corrente que entra no equipamento 
+Carga térmica no refervedor 
+Número de Reynolds 
+Temperatura 
+Temperatura da corrente que sai do equipamento 
+Temperatura da corrente que entra no equipamento 
+
+ 
+LISTA DE ABREVIATURAS, SIGLAS E SÍMBOLOS 
+ 
+Across 
+Ah 
+Ap 
+EMSO 
+f 
+Fini 
+Fout 
+hin 
+hout 
+hw 
+HS 
+Level 
+ML 
+MV 
+Mi 
+Pout 
+Pin 
+QR 
+Re 
+T 
+Tout 
+Tin 
+Trocador K  Trocador de calor do tipo Kettle 
+vL 
+vV 
+Vref 
+Vtray 
+ 
+Z 
+Z1 
+
+Volume molar da fase líquida 
+Volume molar da fase vapor 
+Volume do refervedor 
+É o volume do prato 
+Fração vaporizada da corrente 
+Fator de compressibilidade do componente i na fase vapor 
+Nível de vinho na dorna volante 
+
+Altura da alimentação na coluna de destilação 
+Fração  molar  do  componente  i  na  corrente  que  entra  no 
+equipamento 
+Fração  molar  do  componente 
+equipamento 
+Viscosidade absoluta 
+Fugacidade da espécie i na fase vapor 
+
+i  na  corrente  que  sai  do 
+
+Fugacidade da espécie i na fase líquida 
+
+Fugacidade da espécie i pura 
+
+Fração molar do componente i na fase líquida 
+
+Fração molar do componente i na fase vapor 
+
+Coeficiente de fugacidade do componente i na fase vapor 
+
+Coeficiente de fugacidade do componente i na fase líquida 
+
+Coeficiente de atividade do componente i na fase líquida 
+
+Símbolo para enfatizar o etanol de primeira geração 
+Símbolo para enfatizar o etanol de segunda geração 
+
+Z2 
+zin i 
+
+zout i 
+
+L
+
+V
+
+L
+
+V
+
+ 
+
+ 
+ifˆ
+ 
+ifˆ  
+if  
+ix  
+iy  
+iˆ  
+iˆ
+i  
+1G 
+2G 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+SUMÁRIO 
+ 
+1  INTRODUÇÃO ............................................................................................. 19 
+2  REVISÃO DA LITERATURA ....................................................................... 23 
+2.1  Agroindústria da cana-de-açúcar no Brasil ............................................ 23 
+2.2  Produção de bioetanol ........................................................................... 23 
+2.3  Destilação de bioetanol .......................................................................... 25 
+2.4  Desidratação do bioetanol...................................................................... 29 
+2.5  Determinação de propriedades termodinâmicas .................................... 30 
+2.5.1  Equilíbrio de fases ........................................................................... 30 
+2.6  Modelagem de colunas de destilação em regime estacionário .............. 36 
+2.7  Modelagem de colunas de destilação em regime transiente.................. 38 
+2.8  Simuladores de processos ..................................................................... 39 
+2.9  Simulador de processos EMSO ............................................................. 39 
+2.10  Bombas centrífugas ............................................................................. 41 
+2.11  Controle de processos ......................................................................... 43 
+3  METODOLOGIA .......................................................................................... 44 
+3.1  Modelagem matemática dos equipamentos ........................................... 44 
+3.1.1  Hidráulica de Pratos ......................................................................... 54 
+3.2  Modelos termodinâmicos usados ........................................................... 55 
+3.3  Sistemas estudados na simulação do processo de destilação de etanol
+ ...................................................................................................................... 55 
+3.3.1  Sistema 1 ......................................................................................... 55 
+3.3.2  Sistema 2 ......................................................................................... 58 
+4  RESULTADOS E DISCUSSÃO ................................................................... 67 
+4.1  Validação dos modelos termodinâmicos adotados ................................ 67 
+4.2  Processo de destilação (Sistema 1) ....................................................... 69 
+4.3  Processo de destilação (Sistema 2) ....................................................... 76 
+4.4  Facilidades e dificuldades com o simulador EMSO ............................... 97 
+5  CONCLUSÕES .......................................................................................... 100 
+6  PROPOSTAS DE CONTINUIDADE........................................................... 102 
+REFERÊNCIAS BIBLIOGRÁFICAS .............................................................. 103 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         18 
+
+ 
+ 
+
+ 
+
+ 
+
+1  INTRODUÇÃO 
+ 
+
+O uso do petróleo, gás natural e seus derivados como fonte condensada 
+de energia está associado a vários problemas, como as mudanças climáticas e 
+segurança  no  seu  abastecimento.  Esses  são  desafios  que  assolam  a 
+humanidade nos dias de hoje (BANCO NACIONAL DE DESENVOLVIMENTO 
+ECONÔMICO E SOCIAL, 2008). Assim, há, ultimamente, uma corrida intensa 
+por  fontes  de  energia  alternativas,  que  substituam  o  petróleo  na  matriz 
+energética mundial. 
+
+fosseis 
+
+O  uso  da  biomassa  é  uma  alternativa  tecnológica  para  substituir  os 
+combustíveis 
+(BANCO  NACIONAL  DE  DESENVOLVIMENTO 
+ECONÔMICO E SOCIAL, 2008). De acordo com Goldemberg (2009), o etanol 
+é um excelente substituto para a gasolina. No Brasil, de acordo com o Banco 
+Nacional de Desenvolvimento Econômico e Social (2008), o etanol produzido a 
+partir  da  cana-de-açúcar,  além  de  ter  custo  competitivo,  já  pode  substituir 
+grande parte da gasolina que é consumida.  
+
+Muitos  estudos  vem  sendo  realizados  a  respeito  das  características 
+biológicas da cana-de-açúcar como planta, as técnicas de produção do álcool e 
+os seus coprodutos, como bioeletricidade, avançando o estado da arte do que 
+é chamado de tecnologia de primeira geração, ou seja, do etanol produzido a 
+partir do caldo de cana. Há, ainda, intensa discussão sobre as tecnologias de 
+segunda  geração  para  a  produção  de  etanol,  que  se  dá  através  de  rotas 
+bioquímicas  para  processamento  de  biomassa  lignocelulósica  (inclusive  o 
+bagaço  de  cana-de-açúcar),  bem  como  de  tecnologias  de  gaseificação  de 
+biomassa. 
+
+Na Figura 1 são demonstradas as principais etapas necessárias para a 
+obtenção  do  bioetanol  de  primeira  e  segunda  geração  (este  por  rota 
+bioquímica). Percebe-se que não é um processo simples, pois envolve muitas 
+operações  unitárias  de  forma  simultânea,  cuja  otimização  requer  que  sejam 
+empregados  conceitos  da  engenharia  de  (bio)processos  e  da  bioquímica, 
+sempre à luz de questões econômicas de produção. 
+
+ 
+
+ 
+
+ 
+
+19 
+
+ 
+
+ 
+ 
+
+Figura 1 - Etapas do processamento do bioetanol de primeira e segunda 
+
+geração. 
+
+ 
+
+Fonte - Adaptado de GOLDEMBERG, 2009. 
+
+ 
+A  operação  de  separação  de  componentes  de  uma  mistura  por 
+ 
+destilação  é  um  dos  mais  antigos  e  importantes  processos  utilizados  na 
+indústria química e petroquímica. Entretanto, é uma das operações que mais 
+demanda energia dentre estes processos (LOCKETT, 1986). 
+
+A  simulação  de  processos  de  separação,  em  especial  de  colunas  de 
+destilação, é uma área muito importante na simulação de processos dinâmicos. 
+Os primeiros trabalhos com metodologias propostas para solução de sistemas 
+de separação modelados prato a prato surgiram na década de 1930. Porém, só 
+a  partir  da  década  de  1950,  com  o  advento  do  computador  digital,  foram 
+desenvolvidos  novos  algoritmos  e  simuladores  para  aplicação  industrial, 
+inclusive.  Posteriormente,  iniciou-se  a  modelagem  da  dinâmica  de  processos 
+de  destilação,  prevendo-se  inclusive  o  comportamento  hidrodinâmico  nos 
+estágios  (STAUDT,  2007).  Assim,  com  computadores  mais  eficientes  e 
+algoritmos numéricos mais robustos, é possível resolver de forma mais rápida 
+os modelos desenvolvidos para esta finalidade.  
+
+Os simuladores de processos químicos podem ser classificados quanto 
+ao modo como resolvem as equações dos modelos envolvidos. Estas podem 
+ser resolvidas seguindo uma sequência específica (em geral coincidente com a 
+20 
+
+ 
+
+ 
+
+ 
+
+sequência  física  dos  equipamentos),  conhecida  como  abordagem  modular 
+sequencial.  Outra  abordagem  agrupa  todas  as  equações  envolvidas  no 
+processo  e  as  resolve  de  forma  simultânea.  Os  sistemas  que  empregam  tal 
+arquitetura  são  denominados  globais,  ou  baseados  em  equações  (STAUDT, 
+2007; FURLAN et al., 2010). 
+
+EMSO  é  a  sigla  para  Environment  for  Modeling,  Simulation  and 
+Optimization.  Essa  plataforma  suporta  simulações  em  modo  dinâmico  e 
+estacionário simplesmente  selecionando  e  conectando  blocos  de modelos.  O 
+simulador  EMSO  pode  ser  utilizado  de  forma  genérica  e  nos  mais  variados 
+ramos  da  Engenharia.  Apresenta  várias  características  importantes  que 
+auxiliam no desenvolvimento de modelos e na realização de simulações como: 
+análise de consistência de unidades de medida, verificação de singularidade do 
+sistema  e  consistência  das  condições  iniciais.  Aliado  a  isso,  o  usuário  pode 
+ainda desenvolver seus próprios modelos utilizando linguagem de modelagem 
+própria (VRTECH, 2005).  
+
+Este trabalho faz parte do Programa de Recursos Humanos da Agência 
+Nacional  de  Petróleo  (PRH-ANP),  um  programa  de  âmbito  nacional  que  tem 
+por  objetivo  formar  pessoal  especializado  de  nível  superior  para  atender  à 
+demanda da indústria do petróleo, gás natural e biocombustíveis, seja na área 
+operacional,  seja  para  a  realização  de  pesquisas.  Portanto,  esta  dissertação 
+está  inserida  no  PRH-44,  que  dá  ênfase  à  Formação  de  Pessoal  em 
+Biocombustíveis, com sede na Universidade Federal de São Carlos (UFSCar). 
+Este trabalho também está inserido no projeto temático do programa BIOEN, 
+Bioprocess Systems Engineering (BSE) Applied to the Production of Bioethanol 
+from Sugarcane Bagasse, financiado pela FAPESP (proc. 2008/56246-0). 
+
+Existem  muitos desafios no que tange aos processos de destilação de 
+etanol. Desde o modo como é feita a operação das colunas, até os problemas 
+envolvendo a demanda de carga no processo, juntamente com a necessidade 
+de um ambiente capaz de simular o processo e obter respostas consistentes. 
+Assim, o objetivo desta dissertação foi simular processo dinâmico de destilação 
+de  bioetanol  de  primeira  e/ou  segunda  geração,  incluindo  um  sistema  de 
+bombeamento e tubulações interligando o "tanque pulmão" (dorna volante) do 
+trecho de destilação, bem como regenerador de calor da vinhaça. A influência 
+
+ 
+
+ 
+
+21 
+
+ 
+
+de um terceiro componente (álcool isoamílico) sobre os perfis etanol-água na 
+coluna  foi  também  analisada.  Objetiva-se,  ao  final,  estudar  a  natureza 
+transiente do processo. Para isso, utilizou-se o simulador de processos EMSO, 
+que devido suas facilidades de manuseio, surge como uma ferramenta capaz 
+de responder às necessidades do processo. 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+22 
+
+ 
+
+ 
+
+2  REVISÃO DA LITERATURA 
+
+ 
+
+2.1  Agroindústria da cana-de-açúcar no Brasil 
+ 
+O setor sucroalcooleiro tem bastante relevância na economia brasileira. 
+Além  do  açúcar,  as  usinas  podem 
+foco  na  produção  de  etanol, 
+bioeletricidade,  alcoolquímicos  e  na  comercialização  de  créditos  de  carbono. 
+Tecnologias que  aumentam  a  produtividade e reduzem custos têm, portanto, 
+grande interesse para a indústria dessa área (NEVES et al., 2010). 
+
+ter 
+
+De acordo com Carvalho (2007), a cultura da cana alcança quase todos 
+os estados brasileiros e ocupa cerca de 9% da superfície agrícola do país. As 
+usinas de açúcar e álcool geram, aproximadamente, 270 kg de bagaço (50% 
+de  umidade)  por  tonelada  de  cana-de-açúcar.  Deste  total,  estima-se  que 
+apenas 50% sejam suficientes para suprir a energia necessária para a planta 
+(BAUDEL  et  al.,  2005).  O excedente  pode ser vendido  para  outras  indústrias 
+com  o  mesmo  intuito  de  geração  de  energia  ou  pode  ser  transformado  em 
+ração  para  animais,  empregado  na  geração  de  energia  elétrica  ou 
+transformado em etanol de segunda geração (2G). 
+ 
+
+2.2  Produção de bioetanol 
+
+ 
+
+A produção de biocombustíveis com base em matérias-primas vegetais 
+pode  ser  efetuada  por  distintas  rotas  tecnológicas,  cada  uma  delas  com 
+diferentes vantagens  e  limitações.  O  bioetanol  se  destaca  por  ser  alternativa 
+com maturidade industrial, já efetivamente inserido nas matrizes energéticas de 
+diversos  países  (BNDES/CGEE,  2008).  Algumas  matérias-primas  e  suas 
+vantagens para a produção de bioetanol são mostradas na Figura 2. Mediante 
+rotas  biológicas,  o  bioetanol  pode  ser  produzido  com  base  em  qualquer 
+biomassa que contenha quantidades significativas de amido ou açúcares.  
+ 
+ 
+
+23 
+
+ 
+
+ 
+
+ 
+
+Figura 2 - Quadro geral dos biocombustíveis. 
+
+Fonte - BANCO NACIONAL DE DESENVOLVIMENTO ECONÔMICO E SOCIAL, 2008. 
+
+ 
+
+Considerando  a  produção  com  base  em  açúcares,  como  é  o  caso  da 
+cana e da beterraba, o processo é mais simples e envolve uma etapa a menos 
+do que a produção a partir de matéria-prima amilácea (como o molho), já que 
+os açúcares estão disponíveis na biomassa, sem necessidade de hidrolisar o 
+amido. A Figura 3 sintetiza as rotas tecnológicas para produção de bioetanol, 
+considerando  as  diferentes  matérias-primas  de  interesse.  Segundo  o  Banco 
+Nacional  de  Desenvolvimento  Econômico  e  Social  (2008),  a  produção  de 
+bioetanol utilizando celulose ainda não tem impacto real no contexto energético 
+atual, contando ainda com obstáculos tecnológicos e econômicos por superar. 
+
+ 
+
+ 
+ 
+ 
+
+ 
+
+24 
+
+ 
+
+Figura 3 - Diferentes rotas para a produção de bioetanol. 
+
+ 
+
+Fonte - BANCO NACIONAL DE DESENVOLVIMENTO ECONÔMICO E SOCIAL, 2008. 
+
+ 
+No Brasil, a produção do bioetanol a partir da cana-de-açúcar ocorre em 
+larga escala, fazendo com que o desenvolvimento de novas fontes de energia 
+esteja ligado a esse ramo agroindustrial.  
+ 
+
+2.3  Destilação de bioetanol 
+ 
+O sistema  etanol-água,  em  termos  de equilíbrio  líquido-vapor, constitui 
+uma mistura líquida não ideal. Seus componentes formam um azeótropo com 
+fração molar de aproximadamente 89% de etanol (ou 95,6% em massa) a 1atm 
+(PRAUSNITZ et al., 1986). A destilação é uma operação unitária de separação 
+que se baseia nas diferenças de volatilidade dos componentes de uma mistura 
+líquida.  A destilação do etanol em nível industrial é constituída por uma série 
+de colunas de destilação, as quais tem seu número variado conforme o tipo e 
+qualidade do álcool que se deseja. 
+
+ 
+
+25 
+
+ 
+
+ 
+
+Como o processo de destilação é contínuo e o mais difundido processo 
+industrial de fermentação alcoólica (pela levedura Saccharomyces cerevisiae), 
+o  processo  Melle-Boinot,  é  descontínuo,  faz-se  necessário  um  acoplamento 
+entre  eles.  Essa  ligação  ocorre  na  chamada  dorna  volante,  onde  o  vinho 
+delevedurado é armazenado (Figura 4). 
+
+ 
+
+Figura 4 - Esquema do processo Melle-Boinot de fermentação. 
+
+ 
+
+Fonte - Adaptado de FRITZEN et al., 2012. 
+
+ 
+O vinho que vem da fermentação possui em sua composição 7 a 10° GL 
+(% em volume) de etanol, e água com teores de 89% a 93% em volume, além 
+de outros componentes, como glicerol, alcoóis homólogos superiores, furfural, 
+aldeído acético, ácidos succínico e acético, dentre outros, em quantidades bem 
+menores.  Há  ainda  sólidos  representados  por  bagacilhos,  leveduras  e 
+bactérias,  outros  solutos  como  açúcares  não-fermentescíveis,  sais  minerais, 
+matérias albuminoides e outros, e gases dissolvidos, principalmente CO2 e SO2 
+(COPERSUCAR,  2010).  O  vinho  resultante  da  centrifugação  do  mosto 
+fermentado é enviado para a dorna volante, a qual alimenta a destilaria, onde é 
+produzido o álcool etílico hidratado carburante (AEHC), que possui entre 92,6 e 
+93,8  ºINPM,  ou  seja,  92,6  e  93,8%  de  etanol  em  massa.  Nas  unidades  de 
+desidratação é obtido o álcool etílico anidro (AEAC), com teor alcoólico de, no 
+mínimo,  99,3  ºINPM  (BRASIL1,  2005,  apud  BATISTA,  2008).  Nas  usinas 
+brasileiras, costuma-se usar cinco colunas no processo de produção de álcool 
+hidratado, como mostrado na Figura 5.  
+ __________ 
+1BRASIL. Resolução ANP n. 36, de 06/12/2005. Diário Oficial da União, Brasília, 07/12/2005. 
+ 
+
+26 
+
+ 
+
+ 
+
+Figura 5 - Esquema simplificado da configuração do processo de destilação 
+
+empregado na indústria para a produção de AEHC. 
+
+ 
+
+ 
+
+Fonte - Adaptado de DIAS, 2008. 
+
+ 
+A coluna A é conhecida como coluna de esgotamento do vinho, A1 de 
+depuração  do  vinho  e  D,  de  concentração  de  álcool  de  segunda,  onde  se 
+concentram  os  componentes  mais  voláteis,  os  quais  poderiam  contaminar  o 
+álcool hidratado. O conjunto dessas três colunas é chamado no chão de fábrica 
+de  coluna  de  destilação.  O  segundo  conjunto  de  colunas,  formado  pelas 
+colunas B1 e B, é chamado de coluna de retificação. É nesse conjunto que é 
+obtido  o  etanol  anidro.  O  óleo  fúsel,  que  é  composto  por  alcoóis  de  cadeia 
+longa,  pode  ser  retirado  na  coluna  B  (PÉREZ  et  al.,  2001).  O  principal 
+componente do óleo fúsel é o álcool isoamílico. Segundo Batista (2008), esta 
+retirada é indispensável para o bom funcionamento desta coluna e obtenção de 
+álcool hidratado de boa qualidade. Estes alcoóis encontram-se diluídos no topo 
+das  colunas  A  e  B1,  concentrando-se  na  fase  vapor  e  sendo  conduzidos  à 
+coluna B. Nesta coluna, o teor de etanol aumenta rapidamente à medida que 
+se  sobe  do  fundo  para  o  topo,  de  forma  que  a  volatilidade  desses  alcoóis 
+27 
+
+ 
+
+ 
+
+superiores  diminui  e  eles  tendem  a  se  concentrar  na  fase  líquida.  Assim,  a 
+concentração dos alcoóis que compõem o óleo fúsel atinge os maiores valores 
+na  região  próxima  à  base  da  coluna  B,  de onde  devem  ser  retirados.  A  não 
+retirada  nessa  região  provoca  o  seu  acúmulo  no 
+interior  da  coluna, 
+prejudicando a operação do equipamento e a obtenção de um álcool hidratado 
+com teor alcoólico desejado. 
+
+Deve-se  atentar  para  o  fato  de  que  a  configuração  apresentada  na 
+Figura 5 vem sendo  utilizada  há  muitos  anos  em  usinas  brasileiras  e  não  foi 
+originalmente projetada para este processo, mas adaptada para a produção de 
+álcool  combustível  (JUNQUEIRA,  2010).  Devido  a  isso,  configurações  mais 
+adequadas  e  otimizadas  deste  processo  são  empregadas  em  algumas 
+destilarias. Na Tabela 1 pode ser visualizado o número de estágios em cada 
+coluna  do  conjunto  destilação  empregado  no  processo  convencional  na 
+indústria. 
+
+ 
+
+Tabela 1 - Número de estágios nas colunas de destilação convencional de 
+
+etanol. 
+
+Coluna 
+
+A 
+A1 
+D 
+B 
+B1 
+
+Número de estágios de 
+
+equilíbrio 
+
+16-24 
+
+8 
+6 
+45 
+18 
+
+Fonte - BATISTA, 2008. 
+
+ 
+Alguns  trabalhos  encontrados  na  literatura  citam  algumas  mudanças 
+e/ou adaptações realizadas no processo de destilação convencional de etanol 
+hidratado,  alguns  propondo  unir  as  colunas A,  A1  e  D,  formando  uma  única 
+coluna AA1D (com diâmetros iguais), além da coluna BB1 (BATISTA, 2008). 
+ 
+ 
+
+ 
+
+28 
+
+ 
+
+2.4  Desidratação do bioetanol 
+
+ 
+Quando se quer produzir álcool anidro, um processo além da destilação 
+é desejado. Com isso faz-se necessária a concentração do álcool hidratado (a 
+pelo  menos  99,3%  de  etanol  em  massa).  Então,  processos  adicionais  são 
+requeridos  para  complementar  a  destilação  convencional:  destilação 
+azeotrópica, destilação extrativa e adsorção em peneiras moleculares. 
+
+A  destilação  azeotrópica  (azeotrópica heterogênea) consiste  na adição 
+de  um  terceiro componente  (conhecido  como  componente de  arraste) com  a 
+finalidade  de  formar  um  novo  azeótropo  com  um  ou  mais  dos  componentes 
+presentes  inicialmente  na  mistura.  O  novo  azeótropo  é  retirado  no  topo 
+(conhecido como azeótropo de mínimo) ou no fundo (azeótropo de máximo) da 
+coluna,  enquanto  um  dos  componentes  da  mistura  original  é  obtido  puro  na 
+outra extremidade da coluna (BRITO, 1997). Faz-se necessária a utilização de 
+outra  coluna  para  recuperar  o  componente  de  arraste.  Já  na  destilação 
+extrativa  (azeotrópica  homogênea),  um  solvente  (terceiro  componente)  é 
+adicionado à mistura azeotrópica original, de  modo que a volatilidade relativa 
+dos componentes é alterada, através da mudança dos coeficientes de atividade 
+dos componentes (ITO, 2002). A desidratação do etanol por meio da adsorção 
+em peneiras moleculares é feita com a utilização de um leito de zeólitas para 
+adsorver  a  água  presente  no  etanol  hidratado,  produzindo  etanol  anidro.  O 
+diâmetro  nominal  dos  poros  das  zeólitas  empregadas  no  processo  de 
+desidratação  de  etanol  é  de  3  Å,  onde  se  adsorvem  as  moléculas  de  água 
+(diâmetro de van de Walls da ordem de 2,8 Å), separando-se do etanol, que 
+tem  diâmetro  da  ordem  de  4,4  Å  (HUANG  et  al.,  2008).  Outra  forma  de 
+promover  a  desidratação  do  etanol  é  através  da  destilação  extrativa  salina, 
+onde  o  agente  de  separação  é  um  sal,  mistura  de  sais  ou  soluções  salinas 
+(DIAS,  2008).  A  desidratação  do  etanol  também  pode  ser  feita  através  da 
+pervaporação  e  permeação  de  vapor  (HUANG  et  al.,  2008).  A  separação  de 
+componentes através da pervaporação se dá por meio da vaporização parcial 
+da mistura líquida através de uma membrana. 
+ 
+
+ 
+
+29 
+
+ 
+
+2.5  Determinação de propriedades termodinâmicas 
+
+ 
+A  modelagem  clássica  dos  processos  de  destilação  se  baseia  na 
+termodinâmica do equilíbrio líquido-vapor nos estágios, considerando eventuais 
+desvios por  meio  de uma eficiência de  prato.  Com isso,  é  indispensável  que 
+haja  uma  caracterização  termodinâmica  do  comportamento  da  mistura.  De 
+acordo  com  Giordano  (1985),  o  levantamento  de  dados  experimentais  de 
+equilíbrio líquido-vapor  de  misturas compreende  a  medição  das  propriedades 
+termodinâmicas  que  caracterizam  o  sistema  em  estudo,  como  temperaturas, 
+pressões e composições de uma ou mais fases. Contudo, estas variáveis estão 
+inter-relacionadas  por  equações  termodinâmicas,  o  que  torna,  em  tese, 
+desnecessária  a  medição  de  todas  elas.  Quando  há  a  consideração  dos 
+desvios  da 
+torna-se 
+necessário conhecer parâmetros característicos da mistura em questão.  
+ 
+
+idealidade  no  cálculo  do  equilíbrio 
+
+líquido-vapor, 
+
+2.5.1  Equilíbrio de fases 
+
+ 
+Nos  processos  da  indústria  química,  comumente  ocorrerem  situações 
+ 
+onde é indispensável aplicar conceitos relativos ao equilíbrio termodinâmico de 
+fases. Uma fase de um sistema é, por definição, uma porção homogênea da 
+matéria.  É  de  se  saber  que  o  termo  homogêneo  significa  que  todas  as 
+propriedades são, ao menos em primeira aproximação, uniformes ao longo da 
+fase. 
+ 
+Um  sistema  é  constituído  por  uma  única  fase  se  tiver  a  mesma 
+composição química e propriedades intensivas iguais em toda parte. Por outro 
+lado,  quando  estão  presentes  duas  ou  mais  fases,  as  π  fases  e  m 
+componentes obedecem aos critérios de equilíbrio: 
+ 
+T
+P
+μ
+
+ 
+    (1a) 
+              (1b) 
+ 
+    (1c) 
+
+T
+P
+(2)
+μ
+
+...
+...
+...
+
+  
+  
+  
+
+)
+(
+
+
+
+
+T
+P
+)
+(
+
+μ
+(
+)
+
+1
+
+
+
+
+
+
+
+
+
+(2)
+
+
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+
+
+(1)
+
+(1)
+
+(1)
+1
+
+(2)
+1
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+μ
+
+(1)
+2
+
+
+
+μ
+
+(2)
+2
+
+
+
+...
+
+)
+(
+
+2
+
+μ
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+    (1d) 
+30 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+
+ 
+
+ 
+  
+
+    (1e) 
+
+       
+...
+        
+        
+...
+...
+...
+μ
+μ
+...
+μ
+)
+(1)
+(2)
+(
+
+m
+m
+m
+ 
+Quando as fases não estão em equilíbrio, ocorre transferência de massa 
+entre elas  até  que as  igualdades  da equação  (1) se restabeleçam. Logo,  um 
+sistema em equilíbrio é aquele que se mantém em condições nas quais não há 
+tendências  para  ocorrer  uma  modificação  de  estado.  Devido  ao  fato  de  que 
+pressão  e 
+facilmente  mensuráveis,  a 
+propriedade termodinâmica  da  Energia Livre  de  Gibbs é  a  mais  utilizada nos 
+cálculos  de  equilíbrio  de  fases.  O  processo  de  recondução  do  sistema  ao 
+estado  de  equilíbrio  ocorre  com  a  diminuição  da  Energia  Livre  de  Gibbs,  à 
+temperatura e pressão constantes. Essa propriedade possui o valor mínimo na 
+condição de equilíbrio, sendo então válida a seguinte expressão: 
+
+temperatura  são  variáveis  mais 
+
+(
+
+0
+
+dG
+)
+
+                                                                                                      (2) 
+
+ 
+, PT
+ 
+Assim,  a  condição  de  equilíbrio  de  mínima  Energia  Livre  de  Gibbs  é 
+condição  para  garantir  o  estado  de  equilíbrio  e  estabilidade  do  sistema 
+(MODELL; REID, 1974). 
+
+Múltiplas  fases  nas  mesmas  T  e  P  estão  em  equilíbrio  quando  a 
+fugacidade de cada espécie constituinte é a  mesma em todas as fases. Este 
+critério  de  equilíbrio  é  normalmente  utilizado  por  Engenheiros  Químicos  na 
+resolução  de  problemas  envolvendo  equilíbrio  de  fases,  em  substituição  à 
+igualdade  de  potenciais  químicos,  pois  a  fugacidade  tende  a  zero  quando  a 
+pressão vai a zero, enquanto que o potencial químico vai a menos infinito. 
+
+Assim,  a  igualdade de  fugacidades é um  critério  de  Equilíbrio Líquido-
+
+Vapor (ELV), equação (3), Prausnitz et al. (1986) e Smith et al. (2007). 
+
+l
+
+ 
+ˆ
+f
+i
+,(ˆ
+xPTf
+,
+i
+
+v
+
+ˆ
+f
+i
+ˆ
+f
+i
+
+
+
+
+ou  
+  
+
+y
+
+)
+
+i
+
+i
+
+ 
+ 
+
+ 
+
+           
+
+            (i=1,2,...,N)                                        (3) 
+
+31 
+
+ 
+
+v
+
+Onde, 
+ifˆ
+ifˆ
+
+l
+
+ é a fugacidade do componente i na fase vapor (saturado); 
+ é a fugacidade do componente i na fase líquida (saturado); 
+
+ 
+A fugacidade do componente i na fase vapor é dada pela equação (4). 
+iˆ , é função 
+
+Onde o coeficiente de fugacidade do componente i na fase vapor, 
+
+v
+
+das variáveis temperatura, pressão e composição. 
+
+i
+
+v
+
+v
+i
+
+y
+
+P
+
+ˆ 
+f
+
+                                                                                                        (4) 
+
+ 
+ˆ
+i
+ 
+Onde, 
+iy = fração molar do componente i na fase vapor; 
+iˆ =  coeficiente  de  fugacidade  do  componente  i  na  mistura  contida  na  fase 
+vapor, que é obtido a partir de relações P-V-T; 
+P = pressão do sistema. 
+
+v
+
+ 
+Para o cálculo da fugacidade da fase líquida, existem duas alternativas: 
+uma  baseada  no  conceito  de  atividade,  mostrado  na  equação  (5a),  e  outra 
+baseada  no 
+fator  de  compressibilidade,  apresentada  na  equação  (5b) 
+(SANDLER, 1989).  
+
+l
+
+ 
+ˆ
+f
+ˆ 
+ˆ
+f
+
+x
+
+x
+
+i
+
+i
+
+l
+
+i
+
+i
+
+i
+
+l
+i
+
+                                                                                                        (5a) 
+
+f
+
+i
+
+P
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                          (5b) 
+
+ 
+Onde, 
+xi = fração molar do componente i na fase líquida; 
+fi  = fugacidade da espécie i pura; 
+i = i (P,T,xi) = coeficiente de atividade de i na fase líquida. 
+
+ 
+Pela equação (5a), a fugacidade do componente i na mistura contida na 
+fase líquida é obtida a partir do seu respectivo coeficiente de atividade na fase 
+
+32 
+
+ 
+
+ 
+
+líquida, i, e da respectiva fugacidade líquida de referência, fi. O coeficiente de 
+atividade depende  da  temperatura  e composição  da  fase  líquida,  e  pode  ser 
+relacionado à Energia Livre de Gibbs em Excesso através da equação (6). 
+
+ 
+RT
+E
+/
+i
+n
+
+
+i
+
+)
+
+
+
+
+
+
+
+G
+(
+
+
+
+
+
+
+
+ln
+i
+
+nPT
+,
+
+,
+
+j
+
+                                                                                         (6) 
+
+ 
+Pode-se  calcular  o  ELV  utilizando  a  condição  de  igualdade  entre  as 
+
+equações (4) e (5a); desta forma, tem-se: 
+
+ 
+
+y
+
+ˆ
+v
+ 
+i
+i
+
+xP
+
+
+i
+i
+
+f
+
+i
+
+                                                                                                    (7) 
+
+ 
+Com isso, tem-se a chamada abordagem - (gamma-phi), equação (7). 
+Essa abordagem é mais empregada em processos que ocorrem em pressões 
+baixas e/ou moderadas. 
+
+Os sobrescritos  v e  l da equação (7) não precisam ser utilizados nesta 
+if  são 
+
+ se refere à fase vapor, e que 
+
+expressão porque é suposto que 
+
+i  e 
+
+iˆ
+
+propriedades dos componentes na fase líquida. 
+
+Considerando  como referência  o  estado  do  componente  i  na  condição 
+de líquido puro na temperatura do sistema, o cálculo da fugacidade líquida de 
+referência é efetuado pela equação (8). 
+
+ 
+
+f
+
+i
+
+
+
+sat
+
+i
+
+P
+i
+
+sat
+
+
+exp
+
+
+
+l
+
+(
+
+PPV
+
+i
+i
+RT
+
+sat
+
+)
+
+
+
+
+
+                                                                             (8) 
+
+ 
+Onde a exponencial  é  conhecida como  fator de  correção  de  Poynting, 
+
+que expressa os desvios da fase líquida devido ao efeito da pressão. 
+
+Assim, substituindo (8) em (7), tem-se: 
+ 
+
+y
+
+ˆ
+v
+
+i
+i
+
+xP
+
+
+
+sat
+
+i
+i
+i
+
+P
+i
+
+sat
+
+
+exp
+
+
+
+ 
+
+ 
+
+l
+
+(
+
+PPV
+
+i
+i
+RT
+
+sat
+
+)
+
+
+
+
+
+                                                                 (9) 
+
+33 
+
+ 
+
+Fazendo  uma  simplificação,  de  forma  que  se  tenha  uma  razão  de 
+
+coeficientes de fugacidade, surge a próxima expressão: 
+
+ 
+
+i
+
+i
+
+iPxPy
+
+i
+
+
+
+i
+
+sat
+
+                                                                                               (10) 
+
+i
+
+sat
+
+)
+
+l
+
+(
+
+
+
+
+
+
+
+exp
+
+
+
+
+RT
+
+PPV
+i
+i
+
+ 
+Onde, 
+ˆ
+v
+
+i
+sat
+
+i
+ 
+Como o fator de Poynting, em pressões baixas e moderadas, típicas da 
+destilação,  difere  muito  pouco  da  unidade,  a  sua  omissão  introduz  um  erro 
+desprezível, logo a equação (11) é simplificação para: 
+
+                                                                           (11) 
+
+
+
+
+
+                                                                                                          (12) 
+
+
+
+ 
+ˆ
+v
+i
+i 
+sat
+i
+ 
+Onde, 
+i = a razão de coeficientes de fugacidade; 
+i =coeficiente de fugacidade do componente i no estado de saturação; 
+sat
+iˆ = coeficiente de fugacidade da espécie i em solução. 
+
+v
+
+ 
+Para facilitar os cálculos, algumas simplificações são feitas usualmente. 
+Sob  baixas  pressões,  sem  a  presença  de  ácidos  carboxílicos  (PERRY  e 
+GREEN 1999), supõe-se o modelo de gás ideal para a fase vapor, implicando 
+1i
+, e considera-se o fator de correção de Poynting igual à unidade devido 
+ao comportamento de fluido incompressível da fase líquida, tem-se: 
+
+ 
+
+iPxPy
+
+
+i
+
+i
+
+i
+
+sat
+
+                                                                                                   (13) 
+
+ 
+Com isso, pode-se explicitar yi de acordo com a equação (14). 
+ 
+
+ 
+
+34 
+
+ 
+
+y
+
+i
+
+
+
+sat
+
+Px
+
+i
+i
+P
+
+i
+
+                                                                                          (14) 
+
+ 
+O coeficiente de fugacidade do componente i na mistura contida na fase 
+iˆ ,  pode  ser  calculado  pela  equação (15),  dada  a  seguir,  que  é  uma 
+
+v
+
+vapor, 
+equação do tipo P = f(T,V,n1,n2,...,nc): 
+
+ 
+
+ln
+
+ˆ
+v
+
+i
+
+
+
+
+
+1
+
+RT V
+
+
+
+
+
+
+
+
+
+P
+
+n
+
+i
+
+
+
+
+
+nVT
+,
+
+,
+
+j
+
+
+
+RT
+V
+
+
+
+
+
+
+dV
+
+
+
+ln
+
+Z
+
+                                                           (15) 
+
+ 
+Onde, 
+Z= fator de compressibilidade do componente i na fase vapor. 
+
+ 
+Outra abordagem que merece destaque no cálculo ELV é a abordagem 
+
+- (phi-phi), onde se tem as seguintes fugacidades: 
+
+ 
+y
+
+ˆ
+V
+i
+i
+
+P
+
+                                                                                                     (16) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+P
+
+ˆ
+L
+i
+i
+ 
+Da igualdade entre as equações (16) e (17), tem-se:  
+ 
+
+
+P
+
+ 
+
+                       
+
+    (17) 
+
+i
+
+V
+
+ˆ 
+f
+ˆ 
+f
+
+L
+
+i
+
+x
+
+xP
+
+y
+
+y
+
+ˆ
+v
+
+i
+i
+ˆ 
+v
+
+i
+i
+
+ˆ
+l
+
+i
+i
+ˆ
+l
+
+i
+i
+
+x
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+        
+
+ 
+
+              (18) 
+
+ 
+O  coeficiente  de  fugacidade  pode  ser  calculado  com  o  uso  de  uma 
+equação PVT que represente convenientemente os fluidos reais em questão. O 
+iˆ   é,  portanto,  imediato  (desde  que  se  tenha  uma  equação  PVT 
+cálculo  de 
+v
+para  a  mistura válida  desde  P=0  até  P  do  sistema).  Já  quando  se  deseja  o 
+cálculo  de 
+iˆ ,  entretanto,  o  problema  se  complica,  pois  é  necessária  uma 
+equação PVT que represente bem a mistura desde P=0 até a fase líquida, ou 
+seja, a equação deve ser integrada desde um estado de gás ideal, passando 
+35 
+
+l
+
+ 
+
+ 
+
+pelo vapor saturado, transição  de  fases  até líquido saturado à T do sistema. 
+Poucas equações satisfazem essa condição. Algumas correlações como as de 
+Benedict-Webb-Rubin (para hidrocarbonetos), Soave e Peng-Robinson são as 
+que  fornecem  melhores  resultados.  Mesmo  com  estes  inconvenientes,  esta 
+abordagem phi-phi é utilizada com razoável frequência. 
+
+Ao  longo  do  tempo,  muitas  relações  PVT  têm  sido  propostas  na 
+literatura.  A  maioria  delas,  no  entanto,  são  ou  totalmente  ou  parcialmente 
+empíricas, impossibilitando seu uso generalizado. 
+
+Já para a fase líquida, a expressão para o coeficiente de atividade em 
+função da temperatura T e fração molar xi, é geralmente obtida a partir de um 
+modelo para a Energia Livre de Gibbs em Excesso, conforme a equação (6). 
+Nesses modelos, a energia de interação entre as moléculas é considerada na 
+forma de parâmetros de interação binários, que são obtidos a partir do ajuste 
+de  dados  experimentais  (PRAUSNITZ  et  al.,  1986).  Estes  modelos  se 
+distinguem em dois tipos: 
+
+1°:  Modelos  que  contêm  parâmetros  obtidos  no  ajuste  de  dados 
+experimentais  de equilíbrio  do sistema  em estudo.  Exemplos  destes  modelos 
+são as equações de Margules, van Laar, Wilson, UNIQUAC e NRTL; 
+
+2°:  Modelos  que  contêm  parâmetros  obtidos  a  partir  dos  grupos 
+presentes  nas  moléculas  que  constituem  cada  componente  do  sistema  em 
+estudo.  Exemplos  destes  modelos  são  os  denominados  métodos  de 
+contribuição de grupos, UNIFAC e ASOG. 
+ 
+
+2.6  Modelagem de colunas de destilação em regime estacionário 
+
+ 
+O  modelo  matemático  clássico  para  uma  coluna  de  destilação  inclui 
+equações  básicas:  balanço  de  massa  (M),  relações  de  equilíbrio  (E),  o 
+somatório das frações molares (S) e o balanço de energia (H). Essas equações 
+são normalmente designadas de equações MESH (BRITO, 1997).  
+
+A  Figura  6  mostra  a  representação  esquemática  de  um  prato,  onde  o 
+número de estágios foi numerado da base para o topo da coluna. Seguindo a 
+estrutura  desenvolvida  por  Naphtali  e  Sandholm  (1971),  são  mostradas  as 
+funções  discrepâncias,  D1,  D2  e  D3  (que  se  aproximam  de  zero  quando  o 
+36 
+
+ 
+
+ 
+
+método  numérico converge),  obtidas  a  partir  dos  balanços e  das  relações  de 
+equilíbrio: 
+
+ 
+
+Figura 6 - Representação esquemática de um estágio genérico. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+Onde, 
+F é a alimentação, L é a vazão de líquido, V é a vazão de vapor, R é a vazão 
+de  retirada  lateral,  H  é  a  entalpia  do vapor,  h  é  a  entalpia  do  líquido,  x  é  a 
+fração molar do componente i no líquido, y é a fração molar do componente i 
+no vapor. 
+
+ 
+
+Balanço de massa para o componente i no estagio j: 
+.xL D1
+.yF
+V
+F
+j
+j i,
+
+.xF
+L
+F
+j i,
+j
+
+.yV
+j
+j i,
+
+.yV
+1j
+
+
+.xL
+i
+ji,
+
+1j 1,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1j
+
+
+j i,
+
+ji,
+
+
+
+.yR
+j i,
+
+V
+j
+
+
+
+.xR
+j i,
+
+L
+j
+
+
+
+0
+
+    (19) 
+
+
+
+.hF
+L
+j
+
+F
+j
+
+
+
+.HF
+V
+F
+j
+j
+
+
+
+.HR
+
+V
+j
+
+j
+
+
+
+.hR
+
+L
+j
+
+j
+
+
+
+0
+
+     (20) 
+
+j
+
+i
+
+
+
+j
+
+1j
+
+
+1j
+
+
+1j
+
+
+
+
+
+
+
+
+.hL
+
+.HV
+
+ 
+Balanço global de energia no prato j: 
+.hL D2
+.HV
+ 
+Relações de equilíbrio:  
+D3
+
+ 
+
+.xK
+
+
+
+
+
+
+
+0
+
+y
+
+j i,
+
+j i,
+
+j i,
+
+j
+
+j
+
+j
+
+j
+
+ji,
+
+                                                                             (21) 
+
+Brito  (1997)  e  Pescarini  (1996),  em  seus  trabalhos,  fizeram  uso  dos 
+conceitos  de  eficiência  de  prato  de  Murphree.  A  definição  de  Murphree 
+relaciona  o  comportamento  de  um  estágio  real  com  o  de  um  estágio  ideal, 
+admitindo-se  que  o  líquido  esteja  completamente  misturado  no  prato.  A 
+
+37 
+
+ 
+
+ 
+
+eficiência  pode  ser  definida  para  ambas  as  fases,  sendo  que  para  a  fase 
+gasosa pode ser escrita como: 
+
+η
+
+V
+ji,
+
+
+
+y
+y
+
+ji,
+*
+ji,
+
+
+
+
+y
+y
+
+1ji,
+
+
+1ji,
+
+
+                                                                            (22) 
+
+e para a fase líquida como sendo: 
+
+η
+
+L
+i,
+
+j
+
+
+
+x
+x
+
+i,
+*
+i,
+
+1-j
+
+1-j
+
+
+
+
+x
+x
+
+j i,
+
+i,
+
+j
+
+                                                                        (23) 
+
+Onde, 
+ é a eficiência; 
+x é a fração molar no seio da fase líquida; 
+x* é a fração molar de líquido que está em equilíbrio com y; 
+y é a fração molar no seio da fase vapor; 
+y* é a fração molar de vapor que está em equilíbrio com x. 
+
+ 
+
+2.7  Modelagem de colunas de destilação em regime transiente 
+ 
+Brito  (1997)  fez  um  levantamento  sobre  dinâmica  de  colunas  de 
+destilação. De acordo com seus relatos, o interesse pela dinâmica de colunas 
+de destilação vem desde a década de 1970.  
+
+Gani  et  al.  (1986)  publicaram  trabalhos  nessa  área.  Em  seus  artigos, 
+descrevem modelos, tratam do aspecto numérico e também estudam partidas e 
+paradas  de  colunas  de  destilação.  Choe  e  Luyben  (1987)  fizeram  uma 
+comunicação onde comparavam o efeito de considerar ou não o holdup da fase 
+vapor desprezível. Eles chegaram à conclusão de que o holdup da fase vapor 
+somente  tem  influência  quando  a  densidade  do  vapor  se  torna  significativa 
+quando  comparada  com  a  do  líquido.  Isto  acontece,  normalmente,  para 
+pressões entre 5 e 10 atm. 
+
+Um dos objetivos do estudo da dinâmica de um processo é definir seu 
+sistema  de  controle.  Skogestad  e  Morari  (1988)  avaliaram  a  dinâmica  de 
+colunas de destilação, abordando exclusivamente o aspecto do controle. 
+
+ 
+
+38 
+
+ 
+
+Em  simuladores  dinâmicos  de  colunas,  um  conjunto  de  equações 
+diferenciais  e  algébricas  deve  resolvido.  Perregaard  et  al.  (1992)  avaliaram 
+duas formas de resolver esse sistema de equações algébrico-diferenciais (DAE 
+- Differential-Algebraic-Equations): a primeira resolve os dois tipos de equações 
+simultaneamente. Na segunda estratégia, o sistema DAE é tranformado em um 
+sistema  de  equações  diferenciais  ordinárias  (ODE  -  Ordinary-Differential-
+Equations), com uma convergência à parte das equações algébricas.  
+
+Staudt  (2007)  estudou  a  partida  de colunas,  bem  como  estratégias  de 
+controle para o processo. Outras referências recentes que tratam do tema são 
+Lu et al. (2011), Gil et al. (2012), Luyben (2012). 
+
+ 
+
+2.8  Simuladores de processos 
+
+ 
+
+Simuladores  comerciais  populares,  como  os  aplicativos  Aspen  Plus®  e 
+Aspen  Hysys®,  baseiam-se  na  arquitetura  modular,  onde  a  convergência  de 
+reciclos  da  planta  é  feita  de  modo  iterativo.  Já  nos  simuladores  globais,  a 
+convergência  de  reciclos  não  é  questão  relevante,  uma  vez  que  todas  as 
+equações  são  resolvidas  simultaneamente.  Enquanto  simuladores  modulares 
+podem  incorporar  rotinas  de convergência  específicas  para  cada  módulo,  os 
+simuladores baseados  em  equações, por  resolvê-las  todas  simultaneamente, 
+devem necessariamente empregar algoritmos mais genéricos. Para processos 
+de  destilação,  existem  técnicas  clássicas  para  auxiliar  na  convergência  do 
+problema,  que  podem  ser  mais  facilmente  incorporadas  em  simuladores 
+modulares do que em globais. 
+
+ 
+
+2.9  Simulador de processos EMSO 
+ 
+No  simulador  EMSO  (Environment 
+
+for  Modeling,  Simulation  and 
+Optimization),  todos  os  modelos  são  implementados  em  uma  linguagem  de 
+modelagem  simples,  e  podem  ser  inspecionados  e  editados  livremente  pelo 
+usuário.  
+
+ 
+
+39 
+
+ 
+
+O EMSO é um simulador de processos de enfoque global, que utiliza a 
+abordagem  baseada  em  equações.  Seus  modelos  matemáticos,  tanto  os 
+internos ao ambiente como os desenvolvidos ad hoc, são acessíveis ao usuário 
+(SOARES,  2003).  Essas  características  são  importantes  para  aplicações  em 
+pesquisa  e  desenvolvimento,  onde  constantemente  são  estudados 
+equipamentos não convencionais. O EMSO possui outras características que o 
+tornam flexível em aplicações, como a possibilidade de se adicionarem plug-ins 
+na  forma  de  bibliotecas  dinâmicas  (dll’s),  para  realizar  cálculos  que  não  são 
+possíveis ou são pouco práticos dentro da linguagem de modelagem do EMSO 
+(RODRIGUES et al., 2006). Outra possibilidade é adicionar novos solvers e/ou 
+rotinas  de  otimização  ao  simulador.  Esta  plataforma  pode  ser  usada  em 
+simulações  estacionárias  e  dinâmicas,  na  estimação  de  parâmetros, 
+reconciliação de dados, otimização estacionária e dinâmica, dentre outros. Sua 
+interface  gráfica  facilita  a  comunicação  com  o  usuário,  tornando-se  ágil  e  de 
+fácil  manuseio  (veja  a  Figura  7).  O  EMSO,  faz  parte  do  projeto  ALSOC 
+(Ambiente  Livre  para  Simulação,  Otimização e  Controle),  o  qual se  propõe a 
+desenvolver  continuamente  um  ambiente  integrado  de  síntese,  modelagem, 
+simulação,  controle  e  otimização  de  processos,  com  características  de 
+modularidade,  reutilização  e  interfaceamento  padrão.  O  EMSO  se  encontra 
+disponível 
+ALSOC: 
+livre 
+http://www.enq.ufrgs.br/trac/alsoc.  
+
+gratuita 
+
+forma 
+
+de 
+
+e 
+
+no 
+
+portal 
+
+ 
+
+ 
+
+40 
+
+ 
+
+Figura 7 - Interface gráfica do simulador EMSO. 
+
+Fonte - SECCHI; BISCAIA JR, 2009. 
+
+ 
+
+ 
+
+2.10  Bombas centrífugas 
+ 
+As bombas centrífugas são conhecidas por fornecerem energia cinética 
+aos  líquidos  no  rotor  e  por  transformarem  essa  energia  em  elevação  de 
+pressão  na  carcaça.  Dessa  forma  pode-se  aplicar  o  balanço  de  Energia 
+Mecânica ao modelo genérico mostrado na Figura 8, onde o líquido escoa do 
+ponto 1 (nível da dorna volante) até o ponto 4 (entrada da coluna AA1D). 
+
+ 
+
+Figura 8 - Sistema de bombeamento do vinho. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+41 
+
+ 
+
+ 
+
+ 
+A  energia  mecânica  (E),  expressa  em  unidades  de  carga  (energia  por 
+
+peso), em qualquer ponto i pode é dada pela relação 24: 
+
+ 
+
+E
+i
+
+
+
+P
+i
+g
+
+
+
+
+v
+2
+i
+g
+2
+
+
+
+z
+i
+
+                                                                                   (24) 
+
+ 
+No  contexto  da 
+
+figura  anterior  (Figura  8),  resulta  que  a  altura 
+
+manométrica total do sistema em função da vazão, HS, seja: 
+
+2
+
+ 
+
+
+
+  
+
+3 E
+E
+
+
+ 
+H S
+ 
+Essa relação pode ser levada para os pontos extremos pela equação de 
+Bernoulli, onde lw12 e lw34 são, respectivamente, as perdas de carga na sucção 
+(trecho 1-2, Figura 8) e no recalque da bomba (trecho 3-4, Figura 8). 
+
+    (25) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+H S
+
+
+
+E
+
+4
+
+
+
+lw
+34
+
+
+
+E
+1
+
+
+
+lw
+12
+
+H S
+
+
+
+(
+
+z
+
+4
+
+
+
+z
+
+1
+
+)
+
+P
+1
+
+)
+
+
+
+(
+
+P
+
+4
+g
+
+
+                          
+v
+2
+4
+g
+2
+
+v
+2
+1
+g
+2
+
+  
+
+
+
+  
+
+                         (26) 
+
+                         
+
+ 
+
+    (27) 
+
+ 
+Da equação 27 resulta que o sistema fica dependente de Z1, o nível de 
+fluido na dorna volante. Neste contexto, a energia cinética no ponto 1 pode ser 
+desconsiderada, visto que a velocidade ali é bem pequena em relação ao ponto 
+4. A Figura 9 mostra o efeito na vazão na movimentação do ponto de operação 
+do sistema de alimentação. 
+
+ 
+
+ 
+
+42 
+
+ 
+
+Figura 9 - Movimentação do ponto de operação do sistema de alimentação, de 
+
+acordo com o nível de vinho na dorna. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+
+2.11  Controle de processos 
+
+ 
+ 
+ 
+As plantas químicas, em sua essência, operam de forma que atendam a 
+determinadas  especificações,  sejam  estas  impostas  pelo  projeto  e  pelas 
+condições técnicas, econômicas e/ou sociais.  Em  qualquer  configuração  de 
+controle, o controlador é o atuador que recebe as informações das medidas e 
+implementam  as  ações  de  controle  apropriadas  para  ajustar  os  valores  das 
+variáveis  manipuladas 
+(STEPHANOPOULOS,  1984;  KWONG,  2010). 
+Basicamente,  usam-se  três  tipos  básicos  de  controladores:  Proporcional  (P), 
+Proporcional-IntegraI (PI) e Proporcional-Integral-Derivativo (PID). No 
+controlador  Proporcional  (P),  a  saída  é  proporcional  ao  erro.  No  Controlador 
+Proporcional-Integral (PI), o sinal de atuação relacionado ao erro é dado pelo 
+termo Proporcional (controlador P) mais um termo de integração desse erro. Já 
+nos  controladores  Proporcional-Integral-Derivativo  (PID),  consideram-se  os 
+termos usados no controlador PI mais um termo diferencial do erro. 
+ 
+Existem outras técnicas de controle, como por exemplo, o MBC (Model 
+Based Control), entretanto estas não fazem parte do escopo desta dissertação.  
+
+ 
+ 
+
+ 
+
+43 
+
+ 
+
+3  METODOLOGIA 
+
+ 
+ 
+Boa parte do trabalho de simulação nesta dissertação foi desenvolvida 
+no  ambiente  EMSO,  no  qual  todos  os  modelos  pré-existentes  são  rigorosos, 
+prato-a-prato, se  baseiam  na  consideração de  equilíbrio  termodinâmico  entre 
+as  fases  líquida  e  vapor  (incluindo  eficiências  de  Murphree),  e  permitem 
+cálculos referentes à hidráulica de pratos. 
+ 
+As  simulações  foram  realizadas  para  duas  situações:  a)  estudo  da 
+presença do  óleo fúsel  na carga da coluna,  simulada  como apenas  a coluna 
+AA1D e b) estudo do efeito da queda do nível da dorna volante e da variação 
+da  concentração  do  vinho  pela  adição  alternada  de  soluções  diluídas  e 
+concentradas  à  dorna.  Esta  análise  buscou  identificar  as  perturbações 
+provocadas  pela  variação  na  vazão,  na  concentração  e  na  temperatura  de 
+entrada, o que por si só justifica o uso de um simulador robusto para a análise 
+de regimes transientes. 
+ A  seguir,  nos  tópicos  3.1  e  3.1.1,  segue  a  descrição  matemática  de 
+ 
+alguns  modelos  dos  equipamentos  usados  nesta  dissertação.  Vale  ressaltar 
+que os modelos dos pratos, refervedor, condensador, splitter, bomba do refluxo 
+da coluna, controladores PID e as correntes do processo estão disponíveis na 
+biblioteca  de  modelos  do  simulador  EMSO  (EML  -  EMSO  Model  Library),  os 
+quais podem ser acessados e manipulados facilmente pelo usuário. 
+ 
+
+3.1  Modelagem matemática dos equipamentos 
+
+ 
+Bomba 
+
+ 
+ 
+ 
+ 
+Um modelo de bomba (Figura 10) foi usado para introduzir a corrente de 
+destilado na coluna de destilação. O modelo inclui um acréscimo de pressão da 
+sua corrente de saída com relação à corrente de entrada. 
+ 
+ 
+ 
+
+ 
+
+44 
+
+ 
+
+Figura 10 - Modelo esquemático de uma bomba. 
+
+Fonte - Adaptado de STAUDT, 2007. 
+
+ 
+
+ 
+ 
+As  equações  que  regem  este  modelo  podem  ser  visualizadas  como 
+seguem,  onde  temos  o  balanço  de  massa  (equações  28  e  29),  entalpia 
+(equação 30), pressão (equação 31) e massa específica (equação 32). 
+
+ (cid:1832)(cid:3036)(cid:3041)=(cid:1832)(cid:3042)(cid:3048)(cid:3047)                                                                                                         (28) 
+ (cid:1878)(cid:3036)(cid:3041)(cid:3284)=(cid:1878)(cid:3042)(cid:3048)(cid:3047)(cid:3284)													(cid:1861)=1,2,….(cid:1855)                                                                            (29) 
+ ℎ(cid:3042)(cid:3048)(cid:3047)=ℎ(cid:3036)(cid:3041)+∆(cid:3017)(cid:3096)∗(cid:1839)(cid:3050)								                                                                                  (30) 
+ (cid:1842)(cid:3042)(cid:3048)(cid:3047)=(cid:1842)(cid:3036)(cid:3041)+∆(cid:1842)							                                                                                           (31) 
+ (cid:2869)(cid:3096)=((cid:2869)(cid:2879)	(cid:3100))(cid:3096)(cid:3261) + (cid:3049)(cid:3096)(cid:3271)								                                                                                             (32) 
+ Mw é a massa molar média da mistura, (cid:2029) é a fração vaporizada da corrente,  
+
+ 
+Onde, 
+
+é a massa específica e os superscritos L e V são utilizados para especificar o 
+caso  líquido  e vapor,  respectivamente. hout  e  hin são  as  entalpias de saída e 
+entrada, respectivamente. zin e zout são as frações molares de entrada e saída 
+do componente i. A temperatura e a fração vaporizada da corrente que sai da 
+bomba  são  calculadas  pelo  pacote  termodinâmico  (pacote  VRTherm,  que  é 
+uma  biblioteca  de  rotinas  para  cálculos  termodinâmicos),  fazendo  uso  de 
+funções externas ao simulador, no caso funções de plugins. 
+ 
+
+45 
+
+ 
+
+ 
+
+Splitter (divisor de correntes) 
+
+ 
+ 
+ 
+Na  Figura  11  pode  ser  visualizado  um  esquema  simplificado  de  um 
+splitter, que é um divisor de correntes, que é utilizado em modelos de colunas 
+de destilação para separar a corrente de topo em destilado e refluxo. Ou seja, 
+no  splitter,  a  corrente  de  entrada  se  separa  em  duas  correntes  de  saída.  É 
+necessário especificar um valor da fração (frac) do quanto de Fin irá para uma 
+das correntes de saída. 
+ 
+
+Figura 11 - Modelo esquemático de um splitter. 
+
+Fonte - Adaptado de STAUDT, 2007. 
+
+ 
+
+ 
+
+A seguir, seguem as equações relacionadas a este equipamento. 
+
+ (cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:2870)=(cid:1832)(cid:3036)(cid:3041).(cid:1858)(cid:1870)(cid:1853)(cid:1855)                                                                                               (33) 
+ (cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:2869)+(cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:2870)=(cid:1832)(cid:3036)(cid:3041)                                                                                            (34) 
+ (cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:2869)=(cid:1846)(cid:3036)(cid:3041)	                                                                                                       (35) 
+ (cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:2870)=(cid:1846)(cid:3036)(cid:3041)	                                                                                                       (36) 
+ (cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:2869)=(cid:1842)(cid:3036)(cid:3041)	                                                                                                       (37) 
+ (cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:2870)=(cid:1842)(cid:3036)(cid:3041)	                                                                                                       (38) 
+
+ 
+
+ 
+
+46 
+
+ 
+
+(cid:1878)(cid:3042)(cid:3048)(cid:3047)(cid:2869)(cid:3284)=(cid:1878)(cid:3036)(cid:3041)(cid:3284)										(cid:1861)=1,2,….(cid:1855)                                                                            (39) 
+ (cid:1878)(cid:3042)(cid:3048)(cid:3047)(cid:2870)(cid:3284)=(cid:1878)(cid:3036)(cid:3041)(cid:3284)								(cid:1861)=1,2,….(cid:1855)                                                                             (40) 
+ ℎ(cid:3042)(cid:3048)(cid:3047)(cid:2869)=ℎ(cid:3036)(cid:3041)								ou				ℎ(cid:3042)(cid:3048)(cid:3047)(cid:2869)=ℎ((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:2869),	(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:2869),	(cid:1878)(cid:3042)(cid:3048)(cid:3047)(cid:2869))                                             (41) 
+ ℎ(cid:3042)(cid:3048)(cid:3047)(cid:2870)=ℎ(cid:3036)(cid:3041)								ou				ℎ(cid:3042)(cid:3048)(cid:3047)(cid:2870)=ℎ((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:2870),	(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:2870),	(cid:1878)(cid:3042)(cid:3048)(cid:3047)(cid:2870))                                             (42) 
+ (cid:1874)(cid:3042)(cid:3048)(cid:3047)(cid:2869)=(cid:1874)(cid:3036)(cid:3041)								ou				(cid:1874)(cid:3042)(cid:3048)(cid:3047)(cid:2869)=(cid:1874)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:2869),	(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:2869),	(cid:1878)(cid:3042)(cid:3048)(cid:3047)(cid:2869))                                             (43) 
+ (cid:1874)(cid:3042)(cid:3048)(cid:3047)(cid:2870)=(cid:1874)(cid:3036)(cid:3041)								ou				(cid:1874)(cid:3042)(cid:3048)(cid:3047)(cid:2870)=(cid:1874)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:2870),	(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:2870),	(cid:1878)(cid:3042)(cid:3048)(cid:3047)(cid:2870))                                             (44) 
+
+ 
+
+Refervedor 
+
+ 
+ 
+ 
+ 
+ O modelo do refervedor usado nesta dissertação foi o de um refervedor 
+ 
+dinâmico, representando um refervedor do tipo Kettle (Figura 12). O refervedor 
+recebe uma corrente de alimentação (vinda do fundo da coluna) e possui duas 
+correntes  de  saída,  uma  líquida  e  outra  vapor,  além  de  receber  calor.  Este 
+refervedor  é  considerado  como  mais  um  estágio  de  equilíbrio da  coluna,  em 
+condições de mistura perfeita em ambas as fases. O modelo do refervedor é 
+composto pelas equações 45 a 62. 
+ 
+
+Figura 12 - Modelo esquemático de um refervedor. 
+
+Fonte - Adaptado de STAUDT, 2007. 
+
+ 
+
+47 
+
+ 
+
+ 
+
+ 
+Balanço molar por componente: 
+
+                                                                                                       (49) 
+
+                                                                                             (50) 
+
+ 
+Balanço de energia: 
+
+ 
+Acúmulos: 
+
+ 
+Restrições das frações molares: 
+
+ (cid:3031)(cid:3014)(cid:3284)(cid:3031)(cid:3047) =(cid:1832)(cid:3036)(cid:3041)(cid:3013).(cid:1876)(cid:3036)(cid:3041)(cid:3284)−(cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:3013) .(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)−(cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:3023) .(cid:1877)(cid:3042)(cid:3048)(cid:3047)(cid:3284)																	(cid:1861)=1,2,…,(cid:1855)                              (45) 
+(cid:3031)(cid:3006)(cid:3031)(cid:3047)=(cid:1832)(cid:3036)(cid:3041)(cid:3013).ℎ(cid:3036)(cid:3041)(cid:3013) −(cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:3013) .ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3013) −(cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:3023) .ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3023) +(cid:1843)(cid:3019)                                                         (46) 
+(cid:1839)(cid:3036)=(cid:1839)(cid:3013).(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)+(cid:1839)(cid:3023).(cid:1877)(cid:3042)(cid:3048)(cid:3047)(cid:3284)																(cid:1861)=1,2,…,(cid:1855)                                                  (47) 
+ (cid:1831)=(cid:1839)(cid:3013).ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3013) +(cid:1839)(cid:3023).ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3023) −(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013) 	.(cid:1848)(cid:3045)(cid:3032)(cid:3033)	                                                                (48) 
+∑(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)=1
+(cid:3036)
+=∑(cid:1877)(cid:3042)(cid:3048)(cid:3047)(cid:3284)
+ ∑(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)
+(cid:3036)
+(cid:3036)
+∅(cid:3553)(cid:3036)(cid:3013).(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)=∅(cid:3553)(cid:3036)(cid:3023).(cid:1877)(cid:3042)(cid:3048)(cid:3047)(cid:3284)																												(cid:1861)=1,2,…,(cid:1855)                                                  (51) 
+ (cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013) =(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3023) 	                                                                                                      (52) 
+ (cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3013) =(cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3023) 	                                                                                                      (53) 
+(cid:1848)(cid:3045)(cid:3032)(cid:3033)=(cid:1839)(cid:3013).(cid:1848)(cid:3013)+(cid:1839)(cid:3023).(cid:1848)(cid:3023)                                                                                     (54) 
+(cid:1838)(cid:1857)(cid:1874)(cid:1857)(cid:1864)=(cid:3014)(cid:3261).(cid:3049)(cid:3261)
+(cid:3002)(cid:3278)(cid:3293)(cid:3290)(cid:3294)(cid:3294)                                                                                                    (55) 
+
+ 
+Equilíbrio químico, mecânico e térmico: 
+
+ 
+Restrições geométricas: 
+
+ 
+Nível de líquido: 
+
+ 
+
+ 
+
+48 
+
+ 
+
+Apesar  disso,  é  necessário 
+
+fazer  os  cálculos  das  propriedades 
+ 
+termodinâmicas,  que  são  calculadas  através  de  rotinas  externas,  usando  o 
+VRTherm: 
+
+,(cid:1876)(cid:3042)(cid:3048)(cid:3047))	                                                                                (56) 
+ ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3013) =ℎ(cid:3013)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3013) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013)
+ ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3023) =ℎ(cid:3023)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1877)(cid:3042)(cid:3048)(cid:3047))	                                                                                (57) 
+ (cid:1874)(cid:3042)(cid:3048)(cid:3047)(cid:3013) =(cid:1874)(cid:3013)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3013) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013)
+,(cid:1876)(cid:3042)(cid:3048)(cid:3047))	                                                                                (58) 
+ (cid:1874)(cid:3042)(cid:3048)(cid:3047)(cid:3023) =(cid:1874)(cid:3023)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1877)(cid:3042)(cid:3048)(cid:3047))	                                                                                (59) 
+ ∅(cid:3553)(cid:3036)(cid:3013)=∅(cid:3553)(cid:3036)(cid:3013)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3013) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013) ,(cid:1876)(cid:3042)(cid:3048)(cid:3047))																				(cid:1861)=1,2,…,(cid:1855)                                                 (60) 
+ ∅(cid:3553)(cid:3036)(cid:3023)=∅(cid:3553)(cid:3036)(cid:3023)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1877)(cid:3042)(cid:3048)(cid:3047))																				(cid:1861)=1,2,…,(cid:1855)                                                 (61) 
+ (cid:2025)(cid:3023)=(cid:2025)(cid:3023)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1877)(cid:3042)(cid:3048)(cid:3047))                                                                                   (62) 
+
+ 
+Condensador 
+
+ 
+ 
+ 
+ 
+ 
+equações básicas estão expostas a seguir: 
+ 
+
+Um  modelo  de  condensador  dinâmico  (Figura  13)  foi  usado  e  suas 
+
+Figura 13 - Modelo esquemático de um condensador dinâmico. 
+
+Fonte - Adaptado de STAUDT, 2007. 
+
+ 
+
+49 
+
+ 
+
+ 
+
+Balanço molar por componente: 
+
+ 
+
+ 
+Acúmulos: 
+
+ 
+Balanço de energia: 
+
+                                                                                                       (67) 
+
+ 
+Restrições das frações molares: 
+
+(cid:3031)(cid:3014)(cid:3284)(cid:3031)(cid:3047) =(cid:1832)(cid:3036)(cid:3041)(cid:3023).(cid:1877)(cid:3036)(cid:3041)(cid:3284)−(cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:3013) .(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)−(cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:3023) .(cid:1877)(cid:3042)(cid:3048)(cid:3047)(cid:3284)																	(cid:1861)=1,2,…,(cid:1855)                              (63) 
+(cid:3031)(cid:3006)(cid:3031)(cid:3047)=(cid:1832)(cid:3036)(cid:3041)(cid:3023).ℎ(cid:3036)(cid:3041)(cid:3023)−(cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:3013) .ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3013) −(cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:3023) .ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3023) +(cid:1843)(cid:3004)                                                         (64) 
+(cid:1839)(cid:3036)=(cid:1839)(cid:3013).(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)+(cid:1839)(cid:3023).(cid:1877)(cid:3042)(cid:3048)(cid:3047)(cid:3284)																(cid:1861)=1,2,…,(cid:1855)                                                  (65) 
+ (cid:1831)=(cid:1839)(cid:3013).ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3013) +(cid:1839)(cid:3023).ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3023) −(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013) 	.(cid:1848)(cid:3030)(cid:3042)(cid:3041)(cid:3031)	                                                              (66) 
+∑(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)=1
+(cid:3036)
+ ∑(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)
+=∑(cid:1877)(cid:3042)(cid:3048)(cid:3047)(cid:3284)
+(cid:3036)
+(cid:3036)
+∅(cid:3553)(cid:3036)(cid:3013).(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)=∅(cid:3553)(cid:3036)(cid:3023).(cid:1877)(cid:3042)(cid:3048)(cid:3047)(cid:3284)																												(cid:1861)=1,2,…,(cid:1855)                                                  (69) 
+ (cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013) =(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3023) 	                                                                                                      (70) 
+ (cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3013) =(cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3023) 	                                                                                                      (71) 
+(cid:1848)(cid:3030)(cid:3042)(cid:3041)(cid:3031)=(cid:1839)(cid:3013).(cid:1874)(cid:3013)+(cid:1839)(cid:3023).(cid:1874)(cid:3023)                                                                                   (72) 
+(cid:1838)(cid:1857)(cid:1874)(cid:1857)(cid:1864)=(cid:3014)(cid:3261).(cid:3049)(cid:3261)
+(cid:3002)(cid:3278)(cid:3293)(cid:3290)(cid:3294)(cid:3294)                                                                                                    (73) 
+
+ 
+Equilíbrio químico, mecânico e térmico: 
+
+                                                                                             (68) 
+
+ 
+Restrições geométricas: 
+
+ 
+Nível de líquido: 
+
+ 
+ 
+termodinâmicas são feitos através de rotinas externas, usando o VRTherm: 
+
+refervedor,  os 
+
+cálculos  das  propriedades 
+
+como  no 
+
+Assim 
+
+ 
+
+50 
+
+ 
+
+,(cid:1876)(cid:3042)(cid:3048)(cid:3047))	                                                                                (74) 
+ ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3013) =ℎ(cid:3013)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3013) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013)
+ ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3023) =ℎ(cid:3023)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1877)(cid:3042)(cid:3048)(cid:3047))	                                                                                (75) 
+ (cid:1874)(cid:3042)(cid:3048)(cid:3047)(cid:3013) =(cid:1874)(cid:3013)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3013) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013)
+,(cid:1876)(cid:3042)(cid:3048)(cid:3047))	                                                                                (76) 
+ (cid:1874)(cid:3042)(cid:3048)(cid:3047)(cid:3023) =(cid:1874)(cid:3023)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1877)(cid:3042)(cid:3048)(cid:3047))	                                                                                (77) 
+ ∅(cid:3553)(cid:3036)(cid:3013)=∅(cid:3553)(cid:3036)(cid:3013)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3013) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013)
+,(cid:1876)(cid:3042)(cid:3048)(cid:3047))																				(cid:1861)=1,2,…,(cid:1855)                                                 (78) 
+ ∅(cid:3553)(cid:3036)(cid:3023)=∅(cid:3553)(cid:3036)(cid:3023)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1877)(cid:3042)(cid:3048)(cid:3047))																				(cid:1861)=1,2,…,(cid:1855)                                                 (79) 
+
+Estágio de Equilíbrio (Prato) 
+
+ 
+ 
+ 
+ 
+ 
+O modelo de estágio usado nesta dissertação foi utilizado com base no 
+trabalho  de  Gani  et  al.  (1986),  descrito  por  Staudt  (2007).  Na  Figura  14  se 
+encontra o esquema de um prato. 
+ 
+
+Figura 14 - Representação esquemática de um estágio genérico. 
+
+Fonte - Adaptado de STAUDT, 2007. 
+
+ 
+
+ 
+
+51 
+
+ 
+
+ 
+
+ 
+Restrições das frações molares: 
+
+                                                                                                       (84) 
+
+                                                                                             (85) 
+
+ 
+
+Balanço molar por componente: 
+
+                                                                                                                         (81) 
+Acúmulos: 
+
+i = 1,2,...,c                                                                                                        (80) 
+ 
+Balanço de energia: 
+
+(cid:3031)(cid:3014)(cid:3284)(cid:3031)(cid:3047) =(cid:1832)(cid:3036)(cid:3041).(cid:1878)(cid:3036)(cid:3041)(cid:3284)+(cid:1832)(cid:3036)(cid:3041)(cid:3013).(cid:1876)(cid:3036)(cid:3041)(cid:3284)+(cid:1832)(cid:3036)(cid:3041)(cid:3023).(cid:1877)(cid:3036)(cid:3041)(cid:3284)−(cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:3013) .(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)−(cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:3023) .(cid:1877)(cid:3042)(cid:3048)(cid:3047)(cid:3284)−(cid:1844)(cid:3013).(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)−(cid:1844)(cid:3023).(cid:1877)(cid:3042)(cid:3048)(cid:3047)(cid:3284)    
+(cid:3031)(cid:3006)(cid:3031)(cid:3047)=(cid:1832)(cid:3036)(cid:3041).ℎ(cid:3036)(cid:3041)+(cid:1832)(cid:3036)(cid:3041)(cid:3013).ℎ(cid:3036)(cid:3041)(cid:3013) +(cid:1832)(cid:3036)(cid:3041)(cid:3023).ℎ(cid:3036)(cid:3041)(cid:3023)−(cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:3013) .ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3013) −(cid:1832)(cid:3042)(cid:3048)(cid:3047)(cid:3023) .ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3023) −(cid:1844)(cid:3013).ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3013) −(cid:1844)(cid:3023).ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3023) +(cid:1843)                                                                                                                             
+(cid:1839)(cid:3036)=(cid:1839)(cid:3013).(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)+(cid:1839)(cid:3023).(cid:1877)(cid:3042)(cid:3048)(cid:3047)(cid:3284)																(cid:1861)=1,2,…,(cid:1855)                                                  (82) 
+ (cid:1831)=(cid:1839)(cid:3013).ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3013) +(cid:1839)(cid:3023).ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3023) −(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013) 	.(cid:1848)(cid:3047)(cid:3045)(cid:3028)(cid:3052)	                                                               (83) 
+∑(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)=1
+(cid:3036)
+=∑(cid:1877)(cid:3042)(cid:3048)(cid:3047)(cid:3284)
+ ∑(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)
+(cid:3036)
+(cid:3036)
+ ∅(cid:3553)(cid:3036)(cid:3013).(cid:1876)(cid:3042)(cid:3048)(cid:3047)(cid:3284)=∅(cid:3553)(cid:3036)(cid:3023).(cid:1877)(cid:3032)(cid:3044)(cid:3284)																												(cid:1861)=1,2,…,(cid:1855)                                                    (86) 
+ (cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013) =(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3023) 	                                                                                                      (87) 
+ (cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3013) =(cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3023) 	                                                                                                       (88) 
+(cid:1831)(cid:3014)(cid:3023)(cid:3284)=(cid:3052)(cid:3290)(cid:3296)(cid:3295)(cid:3284)(cid:2879)(cid:3052)(cid:3284)(cid:3289)(cid:3284)
+(cid:3052)(cid:3280)(cid:3292)(cid:3284)(cid:2879)(cid:3052)(cid:3284)(cid:3289)(cid:3284)                                                                                                 (89) 
+(cid:1848)(cid:3047)(cid:3045)(cid:3028)(cid:3052)=(cid:1839)(cid:3013).(cid:1874)(cid:3013)+(cid:1839)(cid:3023).(cid:1874)(cid:3023)                                                                                    (90) 
+
+ 
+Eficiência de Murphree: 
+
+ 
+Restrições geométricas: 
+
+ 
+Equilíbrio químico, mecânico e térmico: 
+
+ 
+
+ 
+
+52 
+
+ 
+
+Nível de líquido: 
+
+(cid:1838)(cid:1857)(cid:1874)(cid:1857)(cid:1864)=(cid:3014)(cid:3261).(cid:3049)(cid:3261)(cid:3002)(cid:3291)                                                                                                     (91) 
+
+ 
+ 
+rotinas externas, usando o VRTherm: 
+
+Os  cálculos  das  propriedades  termodinâmicas  foram  feitos  através  de 
+
+ ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3013) =ℎ(cid:3013)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3013) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013) ,(cid:1876)(cid:3042)(cid:3048)(cid:3047))	                                                                                (92) 
+ ℎ(cid:3042)(cid:3048)(cid:3047)(cid:3023) =ℎ(cid:3023)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1877)(cid:3042)(cid:3048)(cid:3047))	                                                                                (93) 
+ (cid:1874)(cid:3042)(cid:3048)(cid:3047)(cid:3013) =(cid:1874)(cid:3013)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3013) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013) ,(cid:1876)(cid:3042)(cid:3048)(cid:3047))	                                                                                (94) 
+ (cid:1874)(cid:3042)(cid:3048)(cid:3047)(cid:3023) =(cid:1874)(cid:3023)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1877)(cid:3042)(cid:3048)(cid:3047))	                                                                                (95) 
+ ∅(cid:3553)(cid:3036)(cid:3013)=∅(cid:3553)(cid:3036)(cid:3013)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3013) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3013)
+,(cid:1876)(cid:3042)(cid:3048)(cid:3047))																				(cid:1861)=1,2,…,(cid:1855)                                                 (96) 
+ ∅(cid:3553)(cid:3036)(cid:3023)=∅(cid:3553)(cid:3036)(cid:3023)((cid:1846)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1842)(cid:3042)(cid:3048)(cid:3047)(cid:3023) ,(cid:1877)(cid:3042)(cid:3048)(cid:3047))																				(cid:1861)=1,2,…,(cid:1855)                                                 (97) 
+
+ 
+ 
+No modelo de prato utilizado, tem-se que Ap é a área útil do prato (área 
+total do prato - área do downcomer), Vtray é o volume total do prato, Level é o 
+nível de líquido e yeqi é a composição do vapor que está em equilíbrio com o 
+líquido. Mesmo assim, ainda se fazem necessárias duas equações (equações 
+98 e 99) para o cálculo das vazões de líquido e vapor do prato que são funções 
+das  propriedades  físicas  dos  fluidos,  da  geometria  do  prato,  da  queda  de 
+pressão e do acúmulo de líquido em cada estágio. 
+
+ (cid:1832)(cid:3013)=(cid:1832)(cid:3013)((cid:1839),(cid:1859)(cid:1857)(cid:1867)(cid:1865)(cid:1857)(cid:1872)(cid:1870)(cid:1861)(cid:1853),(cid:1868)(cid:1870)(cid:1867)(cid:1868)(cid:1870)(cid:1861)(cid:1857)(cid:1856)(cid:1853)(cid:1856)(cid:1857)(cid:1871)	(cid:1858)í(cid:1871)(cid:1861)(cid:1855)(cid:1853)(cid:1871))                                                (98) 
+(cid:1832)(cid:3023)=(cid:1832)(cid:3023)(∆(cid:1842),(cid:1859)(cid:1857)(cid:1867)(cid:1865)(cid:1857)(cid:1872)(cid:1870)(cid:1861)(cid:1853),(cid:1868)(cid:1870)(cid:1867)(cid:1868)(cid:1870)(cid:1861)(cid:1857)(cid:1856)(cid:1853)(cid:1856)(cid:1857)(cid:1871)	(cid:1858)í(cid:1871)(cid:1861)(cid:1855)(cid:1853)(cid:1871))                                              (99) 
+
+ 
+ 
+ 
+ 
+
+ 
+
+53 
+
+ 
+
+ 
+
+3.1.1  Hidráulica de Pratos 
+
+ 
+Alguns modelos de cálculos referentes à hidráulica de pratos estão bem 
+ 
+implementados no EMSO, os quais podem ser encontrados em Staudt (2007). 
+Nesta  dissertação,  utilizaram-se  modelos  de  pratos  perfurados,  fazendo  uso 
+das  correlações  de  Reepmeyer  et  al.  (2003)  para  o  cálculo  da  queda  de 
+pressão em função da vazão de vapor (Fv) saindo do prato (equação 100). 
+
+ (cid:1832)(cid:3023)=(cid:3002)(cid:3283)(cid:3049)(cid:3271).(cid:3495)(cid:3017)(cid:3284)(cid:3289)(cid:3271)(cid:2879)(cid:3017)(cid:3290)(cid:3296)(cid:3295)(cid:3271)(cid:3096)(cid:3271).(cid:3080)                                                                                            (100) 
+(cid:1827)(cid:3035) é a área total dos furos do prato; 
+(cid:1874)(cid:3023) é o volume de vapor no prato; 
+(cid:2009)  é o coeficiente de queda de pressão no prato seco, utilizado como parâmetro 
+
+ 
+Tem-se que, 
+
+(cid:4673)(cid:3119)/(cid:3118)
+
+de ajuste. 
+ 
+ 
+ 
+Com relação à vazão de líquido, nesta dissertação, foi usada a equação 
+(101), apresentada por Wang et al. (2003). A altura de líquido, Level, no prato 
+foi calculada através da equação 102, baseada em Locket (1986). 
+
+ (cid:1832)(cid:3013)=(cid:2009)(cid:3050).(cid:1864)(cid:3050).(cid:4672)(cid:3261)(cid:3280)(cid:3297)(cid:3280)(cid:3287)(cid:3127)(cid:3329).(cid:3283)(cid:3298)
+(cid:3329)
+(cid:3049)(cid:3261)
+(cid:1838)(cid:1857)(cid:1874)(cid:1857)(cid:1864)=(cid:1827).ℎ(cid:3050)+(cid:1828).(cid:1832)(cid:3020)+(cid:1829).(cid:3018)(cid:3261)(cid:3039)(cid:3298)+(cid:1830)       
+Onde (cid:2009)(cid:3050) e (cid:2010) são parâmetros  de ajuste  do  modelo; (cid:1838)(cid:1857)(cid:1874)(cid:1857)(cid:1864)  é  o nível  de 
+líquido no prato (m); (cid:1864)(cid:3050) é o comprimento do vertedouro (m); ℎ(cid:3050) é a altura do 
+vertedouro (m); (cid:1832)(cid:3020) é fator superficial dos parâmetros geométricos, ℎ(cid:3050) e (cid:1864)(cid:3050) , e 
+da vazão volumétrica de líquido, (cid:1843)(cid:3013). 
+
+           (101) 
+
+(102) 
+
+     
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Os parâmetros A, B, C e D da equação 102 variam conforme o tipo de 
+prato  e  mistura  a  ser  destilada.  Alguns  valores  podem  ser  encontrados  em 
+Lockett  (1986).  Os  parâmetros  dos  modelos  utilizados  se  encontram 
+disponíveis na biblioteca do EMSO. 
+
+54 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3.2  Modelos termodinâmicos usados 
+
+ 
+ 
+Como  os  equipamentos  de  destilação  operam  em  pressões  baixas  ou 
+moderadas  (próximas  à  atmosférica),  optou-se  pela  formulação  "gama-fi"  do 
+equilíbrio líquido vapor (ELV), conforme descrito no tópico 2 desta dissertação. 
+Para a execução das simulações do processo de destilação no EMSO, 
+utilizou-se o pacote termodinâmico VRTherm (VRTECH, 2005). Considerando 
+os  modelos  disponíveis  no  VRTherm,  para  prever  o  ELV  da  mistura,  foi 
+utilizado  o  modelo  termodinâmico  UNIFAC-Dortmund/SRK  (o  qual  usa  o 
+UNIFAC modificado para os cálculos da fase líquida, e a equação cúbicas de 
+estado  de  Redlich-Kwong  para  os  cálculos  da  fase  vapor).  Esses  modelos 
+foram descritos no tópico 2 desta dissertação. 
+
+ Para testar os modelos termodinâmicos utilizados, foram usados dados 
+experimentais do ELV de misturas binárias para os componentes presentes na 
+carga  da  coluna,  que  foram  comparados  com  resultados  do  cálculo  do  ELV 
+obtidos no EMSO, considerando as misturas binárias etanol-água, etanol-álcool 
+isoamílico e água-álcool isoamílico. Os dados experimentais foram obtidos na 
+coletânea DECHEMA (GMEHLING e at., 1988; GMEHLING e at., 1982).  
+
+ 
+
+3.3  Sistemas estudados na simulação do processo de destilação 
+
+de etanol 
+
+ 
+
+ 
+
+ 
+
+3.3.1  Sistema 1 
+
+ 
+ 
+Na Figura 15 encontra-se o esquema do sistema estudado na primeira 
+etapa da Dissertação. O modelo da coluna de destilação foi construído através 
+do  conceito  de  composição  (derivado  da  Programação  Orientada  a  Objetos, 
+OOP),  uma  das  funcionalidades  do  EMSO.  Com  isso,  todas  as  unidades  da 
+coluna, ou seja, os estágios de equilíbrio, trocador de calor, splitters, etc., foram 
+modelados.  Assim,  foi  gerado  um  conjunto  de  sub-modelos  que  conectados 
+
+55 
+
+ 
+
+ 
+
+entre  si  formam  o  modelo  de  todo  o  sistema  de  separação  em  análise.  Foi 
+utilizada  a  eficiência  de  prato  de  Murphree  para  a  fase  vapor  com  um  valor 
+constante para todos os estágios igual a 1. Foram também implementadas as 
+seguintes  estruturas  de  controle  PID:  controle  de  nível  do  condensador  pela 
+manipulação  da  vazão  do  produto  de  topo;  controle  de  nível  do  refervedor 
+através  da  manipulação  da  vazão  do  produto  de  fundo;  controle  das 
+temperaturas  do  condensador  e  refervedor,  manipulando  suas  respectivas 
+cargas térmicas. 
+ 
+
+Figura 15 - Fluxograma do processo de destilação de etanol. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+Foram 
+
+ 
+ 
+feitas,  no  EMSO,  simulações  dinâmicas  do  processo  de 
+destilação  da  mistura  etanol-água,  e  em  seguida  foi  adicionado  o  terceiro 
+componente (álcool isoamílico) para verificar a sua influência nas respostas. As 
+simulações foram também realizadas em regime estacionário no simulador de 
+processos  Aspen  Plus®  (versão  7.3)  da  Aspen  Tech,  utilizando  o  módulo 
+RadFrac, que é um modelo rigoroso disponível no Aspen Plus e que pode ser 
+usado  para  vários  tipos  de  operações  de  fracionamento  líquido-vapor.  O 
+modelo termodinâmico utilizado no EMSO foi o UNIFAC-Dortmund/SRK, e no 
+Aspen  Plus 
+(Dortmund  Modified  UNIFAC-RKS).  A 
+56 
+
+foi  o  UNIF-DMD 
+
+ 
+
+ 
+
+configuração das colunas utilizadas em ambos os simuladores está na Tabela 
+2. As composições do vinho utilizadas neste estudo se encontram na Tabela 3. 
+ 
+Optou-se pelo  aquecimento  com  um  refervedor  para  se  evitar  o  efeito 
+diluidor na vinhaça com borbotagem de vapor d'água.  
+ 
+respectivamente, 2 e 0,4 metros. 
+ 
+
+O  comprimento  e  a  altura  do  vertedouro  do  prato 
+
+foi  de, 
+
+Tabela 2 - Configuração do Sistema 1. 
+
+ 
+ 
+nº de pratos 
+Refervedor parcial 
+QRefervedor (kW) 
+Condensador total 
+Prato de alimentação 
+Razão de refluxo 
+Ef. Murphree vapor 
+
+Alimentação 
+
+T (ºC) 
+P(atm) 
+F(kmol/h) 
+
+Coluna 
+
+AA1D (EMSO)  AA1D (Aspen Plus) 
+
+38 
+1 
+
+Controlado 
+
+1 
+10 
+10 
+1 
+95 
+1,6 
+100 
+
+38 
+1 
+230 
+1 
+10 
+10 
+1 
+95 
+1,6 
+100 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+
+Tabela 3 - Frações molares dos principais componentes presentes na carga 
+considerada neste trabalho e em uma carga típica industrial, desconsiderando 
+
+a presença de eletrólitos. 
+
+Componente  Fração molar (este trabalho)  Fração molar (JUNQUEIRA, 2010) 
+
+Etanol 
+Água 
+Álcool 
+
+isoamílico 
+Glicerol 
+Glicose 
+
+ 
+
+0,03950 
+0,96000 
+
+0,00050 
+
+- 
+- 
+
+Fonte - JUNQUEIRA, 2010. 
+
+0,03010 
+0,96850 
+
+0,00043 
+
+0,00082 
+0,00017 
+
+57 
+
+ 
+
+Escolheu-se trabalhar com as frações em base molar, pois os modelos 
+utilizados  no  EMSO  já  preexistiam  com  base  molar.  As  constantes  dos 
+controladores PID utiilzados nas simulações foram as já existentes no EMSO 
+(valores default). 
+
+ 
+
+ 
+
+3.3.2  Sistema 2 
+
+ 
+ 
+A  outra  parte  do  desenvolvimento  desta  Dissertação  diz  respeito  à 
+implementação  do  sistema  de  bombeamento  e  alimentação  da  coluna  do 
+Sistema 1. Com isso foi modelado o sistema incluindo uma dorna volante, uma 
+bomba  centrífuga  e  um  trocador  de  calor  (trocador  K),  além  da  presença  de 
+retirada lateral  de vapor  na coluna, como pode ser visualizado  na Figura  16. 
+Também aqui optou-se pelo aquecimento com refervedor. O chaveamento da 
+dorna,  que  pode  ser  entendido  como  abertura  e  fechamento  da  válvula  da 
+corrente de alimentação da dorna volante, é uma interessante opção para se 
+estudar efeitos da oferta de carga para a coluna. Além do mais, o acoplamento 
+entre  um  processo  que  se  pode  dizer  semicontínuo/batelada  alimentada 
+(processo  fermentativo)  e  um  contínuo  (processo  de  destilação)  pode  ser 
+ajustado com o emprego da dorna volante, também conhecida como “tanque 
+pulmão”. 
+ 
+
+ 
+
+58 
+
+ 
+
+ 
+
+Figura 16 - Esquema do processo proposto no Sistema 2. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+Foi  feita  a  modelagem  da  dorna  volante,  considerando  o  balanço  de 
+
+3.3.2.1  A dorna volante e a tubulação 
+
+ 
+ 
+ 
+massa, descrito a seguir. 
+ 
+Balanço global de massa na dorna: 
+
+ (cid:3031)(cid:3023)(cid:3279)(cid:3290)(cid:3293)(cid:3289)(cid:3031)(cid:3047) =−(cid:1832)(cid:3046)(cid:3028)+(cid:1832)(cid:3032)(cid:3041)∗(cid:3014)(cid:3288)(cid:3096)   
+ (cid:3031)(cid:3051)(cid:3284)(cid:3031)(cid:3047)=(cid:3007)(cid:3294)(cid:3276)(cid:3041)∗((cid:1878)(cid:3036)−(cid:1876)(cid:3036))    
+
+ 
+Balanço na dorna por componente i: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+            
+
+ 
+
+(103) 
+
+ 
+
+            
+
+(104) 
+
+59 
+
+ 
+
+(cid:1876)(cid:3036)=(cid:3041)(cid:3284)(cid:3041)   
+ (cid:1866)= (cid:3096)(cid:3014)(cid:3288)∗(cid:2024)∗(cid:3005)(cid:3279)(cid:2872)∗(cid:1852)(cid:2869)   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+            
+
+            
+
+ 
+
+ 
+
+ 
+
+ 
+
+(105) 
+
+(106) 
+
+ 
+Onde, 
+Vdorn é o volume de vinho na dorna volante (m3); 
+Fsa é a vazão de saída de vinho da dorna volante (m3/h); 
+Fen é a vazão de alimentação de vinho da dorna volante (kmol/h); 
+Mm é a massa molar média da mistura (kg/kmol); 
+
+(cid:2025) é a densidade da mistura (kg/m3); 
+(cid:1876)(cid:3036) é a fração molar do componente (cid:1861) no vinho da dorna volante; 
+(cid:1878)(cid:3036) é a fração molar do componente (cid:1861) no vinho da alimentação da dorna volante; 
+(cid:1866)(cid:3036) é o número de mols do componente (cid:1861) no vinho; 
+(cid:1866) é o número total de mols no vinho; 
+(cid:1852)(cid:3036) é o nível de vinho na dorna volante (m); 
+
+ 
+ 
+As dimensões da dorna volante cilíndrica foram: 10 m de altura por 5 m 
+de diâmetro. A vazão molar de vinho delevedurado para a recarga da dorna foi 
+fixada em 500 kmol/h. 
+ 
+ponto e os comprimentos dos trechos das tubulações do sistema. 
+ 
+
+Nas  Tabelas  4  e  5  se  encontram  dados  referentes  ao  nível  de  cada 
+
+Tabela 4 - Configuração de cada ponto marcado no Sistema 2. 
+
+ 
+
+Ponto 1  Ponto 2  Ponto 3  Ponto 4  Ponto 5  Ponto 6 
+
+Nível (m)  variável 
+
+0 
+
+0 
+Fonte - Elaborado pelo autor. 
+
+0 
+
+0 
+
+10 
+
+ 
+
+ 
+
+Tabela 5 - Configuração de cada trecho do Sistema 2. 
+
+ 
+
+Trecho 1→2  Trecho 3→4  Trecho 4→5  Trecho 5→6 
+
+Comprimento (m) 
+Diâmetro (m) 
+
+5 
+
+0,10 
+
+5 
+
+0,09 
+
+5 
+
+0,09 
+
+15 
+0,09 
+
+Fonte - Elaborado pelo autor. 
+
+60 
+
+ 
+
+3.3.2.2  A coluna 
+ 
+Na Tabela 6 encontram-se informações da coluna usada nesta etapa do 
+foi  de, 
+
+ 
+ 
+ 
+trabalho.  O  comprimento  e  a  altura  do  vertedouro  do  prato 
+respectivamente, 2 e 0,4 metros. 
+ 
+
+Tabela 6 - Configuração da coluna do Sistema 2. 
+
+COLUNA 
+
+nº de pratos 
+Refervedor parcial 
+QRefervedor (kW) 
+Condensador total 
+Prato de alimentação 
+Razão de refluxo 
+Ef. Murphree vapor 
+Estágio de retirada lateral 
+
+38 
+1 
+
+calculado 
+
+1 
+7 
+10 
+0,7 
+15 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+3.3.2.3  A bomba centrífuga 
+
+ 
+ 
+A altura manométrica do sistema foi caracterizada através do balanço de 
+energia mecânica, e pode ser verificado na equação 107. Percebe-se que ela 
+fica dependente da energia nos pontos 1 e 6, bem como da perda de carga ao 
+longo do caminho até a coluna de destilação. 
+ 
+H
+
+
+
+lw
+
+
+
+E
+
+6
+
+S
+
+
+
+E
+1
+
+ 
+
+  (107) 
+
+ij
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Onde, 
+HS é a altura manométrica do sistema, em metros; 
+E1 é a energia mecânica no ponto 1, em metros; 
+E6 é a energia mecânica no ponto 6, em metros; 
+lw é a perda de carga, em metros. 
+
+ij
+
+ 
+
+61 
+
+ 
+
+
+
+lwij
+
+
+
+lw
+12
+
+
+
+lw
+
+34
+
+
+
+lw
+
+45
+
+
+
+lw
+56
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  (108) 
+
+As perdas de carga, lwij,foram calculadas pela equação 109 (Equação de 
+
+ 
+ 
+Darcy). 
+ 
+
+lw
+
+
+
+f
+
+L
+eq
+
+)
+
+(
+
+L
+
+
+D
+
+vel
+2
+g
+2
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+    
+
+ 
+
+  (109) 
+
+ 
+Onde, 
+f é o fator de atrito; 
+L é o comprimento da tubulação, em metros; 
+Leq  é  o  comprimento  equivalente  em  metros,  devido  às  perda  de  carga 
+localizadas (neste trabalho, o comprimento equivalente foi de 30 m); 
+D  é  o  diâmetro  da  tubulação,  em  metros  (neste  trabalho,  on  diâmetro  da 
+sucção foi de 10 cm, e no recalque, 9 cm); 
+vel é a velocidade de escoamento de fluido, em m/s; 
+g é a aceleração da gravidade, em m/s2; 
+ 
+ 
+O  fator  de  atrito  (f)  foi  calculado  em  função  do  número  de  Reynolds. 
+Para  regimes  de  escoamento  turbulento, utilizou-se  a equação  110  (equação 
+de Swamee-Jain). 
+ 
+
+f
+
+
+
+25,0
+
+D
+7,3
+
+
+
+
+
+
+
+log
+
+
+
+
+
+74,5
+9,0Re
+
+2
+
+
+
+
+
+
+
+
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Onde, 
+  é a rugosidade absoluta do material da tubulação; 
+Re  é o número de Reynolds, dado pela equação 111: 
+ 
+
+Re 
+
+ Dvel.
+.
+
+
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(110) 
+
+(111) 
+
+62 
+
+ 
+
+ é a densidade do fluido, em kg/m3;  
+ é viscosidade do fluido (Pa.s). 
+ 
+ 
+através da equação 112 (fator de atrito de Darcy).  
+ 
+
+Para regimes de escoamento laminar, o cálculo do fator de atrito foi feito 
+
+f
+
+64
+Re
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  (112) 
+
+A região de transição entre os regimes de escoamento foi admitida como 
+
+Expandindo-se  a  equação  107,  obtém-se  a  equação  113,  que  é  a 
+
+ 
+ 
+parte da modalidade de escoamento turbulento. 
+ 
+equação atualizada da curva do sistema. 
+ 
+
+H
+
+S
+
+
+
+(
+
+P
+
+6
+g
+
+
+P
+1
+
+)
+
+
+
+(
+
+vel
+
+6
+
+vel
+
+)
+
+1
+
+
+g
+2
+
+
+
+(
+
+Z
+
+6
+
+
+
+Z
+
+1
+
+)
+
+
+
+lw
+
+ij
+
+     
+
+ 
+
+ 
+
+ 
+
+  (113) 
+
+ 
+Onde, 
+Z1  é o nível de líquido na dorna volante, em metros; 
+Z6  é a altura da alimentação na coluna de destilação, em metros; 
+P6  é a pressão de alimentação, em atm; 
+P1  é pressão na superfície do nível Z1, em atm; 
+vel6   é a velocidade em Z6, em m/s. 
+vel1   é a velocidade em Z1, em m/s. 
+ 
+ 
+Para que as condições do sistema fossem satisfeitas, escolheu-se uma 
+bomba  Schneider  de  2  CV,  modelo  ME1-1420.  A  equação  que  relaciona  a 
+altura  manométrica  (m.c.a.)  fornecida  pela  bomba  em  função  da  vazão 
+volumétrica  (m³/h)  foi obtida  através  de  um  ajuste  polinomial  (Figura  17) dos 
+dados fornecidos  pelo  fabricante.  Como  já  foi  mostrado  no  item 2,  quando  o 
+volume da dorna varia, a vazão se altera, deslocando o ponto de operação (ver 
+a curva em vermelho na Figura 17). 
+ 
+
+63 
+
+ 
+
+ 
+
+ 
+
+Figura 17 - Curvas do sistema e da bomba. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3.3.2.4  O trocador K 
+
+O trocador de calor foi modelado de forma que recuperasse o calor da 
+
+ 
+ 
+ 
+vinhaça, pré-aquecendo o vinho.  
+A área de troca térmica foi considerada igual a 5 m2, e o coeficiente de 
+ 
+troca térmica foi extraído de Bspang (2012), conforme a Tabela 7. Escolheu-se 
+o menor valor para U (W.m-2.K-1), igual a 150, que se refere ao material tubular, 
+pelo  qual  escoa  líquido.  Esta  escolha  foi  feita  para  que  fosse  possível  atuar 
+com uma área de troca térmica maior, conforme a equação 114. Essa hipótese 
+foi adotada para maximizar a troca térmica entre os dois fluidos. A equação 114 
+é a que rege essa troca. 
+ 
+mLTAUQ
+ 
+Onde, 
+Q  é o calor trocado entre os fluidos quente e frio, em kW; 
+U  é o coeficiente global de troca térmica, em kW.m-2.K-1; 
+
+            (114) 
+
+
+
+.
+
+.
+
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+64 
+
+ 
+
+ é a média logarítmica entre as temperaturas das correntes de entrada e 
+
+A  é a área de troca térmica, em m2; 
+mLT
+saída co trocador de calor. 
+ 
+
+Tabela 7 - Coeficiente global de troca térmica em trocadores de calor. 
+
+Tipo 
+
+Condições de Aplicação 
+
+Aquecimento ou 
+
+resfriamento 
+
+tubular 
+
+Gases  a  pressão  atmosférica  dentro  e 
+fora dos tubos 
+ 
+Gases  a  alta  pressão  dentro  e  fora  dos 
+tubos  
+ 
+Líquidos  de  um  lado  e  gás  a  pressão 
+atmosférica do outro lado dos tubos. 
+ 
+Gás  a  alta  pressão  dentro  dos  tubos  e 
+líquido fora. 
+ 
+Líquidos dentro e fora dos tubos. 
+ 
+Vapor fora e líquido dentro dos tubos 
+
+Fonte - BSPANG, 2012. 
+
+U 
+
+W/(m2 K) 
+
+5-35 
+
+150-500 
+
+15-70 
+
+200-400 
+
+150-1200 
+
+300-1200 
+
+ 
+ 
+Todas as simulações do Sistema 2 foram inicializadas com os resultados 
+estacionários  de  uma  simulação  feita  com  uma  dorna  de  diâmetro  muito 
+grande, de 500 m (este diâmetro possibilitou que a variação do nível da dorna 
+não  fosse  significativa),  com  um  vinho  (etanol-água)  contendo  5%  em  base 
+molar  de  etanol.  Assim,  as  simulações  no  Sistema  2  foram  feitas  em  duas 
+situações: Primeira situação: iniciavam-se as simulações com a dorna volante 
+cheia de vinho a 5% de etanol (fração molar). Quando atingido um nível mínimo 
+(50  cm)  de  vinho  em  seu  interior,  a  alimentação  era  chaveada  para  uma 
+segunda  dorna  contendo  5,  4,  3  e  2%  de  etanol  (base  molar).  Em  seguida, 
+quando o líquido no interior dessa segunda dorna atingisse o nível mínimo de 
+50 cm, ligava-se a alimentação de um novo vinho de mesma composição da 
+dorna (5, 4, 3 ou 2% molar de etanol). Quando o nível de vinho era ligeiramente 
+inferior  ao 
+fechava-se  a  alimentação.  Assim,  nestas 
+simulações,  o  primeiro  estágio  de  esvaziamento  era  distinto  dos  demais 
+65 
+
+limite  da  dorna, 
+
+ 
+
+ 
+
+(exceto  para  o  caso  em  que  as  duas  dornas  tivessem  5%  de  etanol,  feito 
+apenas  para  verificar  a  consistência  das  respostas).  Em  todos  os  casos,  a 
+vazão de enchimento da dorna foi de 500 kmol/h. 
+ 
+Segunda  situação:  apenas  uma  dorna  era  disponível  no  sistema;  o 
+sistema foi inicializado com dados estacionários (incluindo a dorna volante) do 
+vinho a 5% em fração molar de etanol. Ao se chegar a um nível mínimo, 50 cm, 
+de vinho na dorna, era ligada a vazão de alimentação da dorna com vinho a 3% 
+em  fração  molar  de  etanol.  O  balanço  de  massa  transiente  na  dorna  era 
+resolvido,  calculando-se  a  gradativa  diluição  da  alimentação  da  coluna  (no 
+primeiro caso, essa perturbação era um degrau). 
+No Sistema 2 também foram implementadas estratégias de controle PID 
+ 
+no topo e fundo da coluna. O nível de líquido do refervedor e do condensador 
+foi controlado, manipulando-se a válvula da corrente de fundo e de destilado. 
+As 
+foram  controladas, 
+manipulando suas respectivas cargas térmicas. 
+
+temperaturas  do  refervedor  e  do  condensador 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+66 
+
+ 
+
+4  RESULTADOS E DISCUSSÃO 
+
+ 
+ 
+ As  simulações  buscaram  dois  objetivos:  1)  estudar  os  efeitos  da 
+presença  de  óleo  fúsel,  representado  pelo  álcool  isoamílico,  no  vinho;  2) 
+estudar os efeitos da variação de nível da dorna volante e da concentração de 
+etanol no vinho delevedurado na resposta transiente do sistema, utilizando-se 
+perturbações degrau nas correntes de recarga da dorna. 
+ 
+
+4.1  Validação dos modelos termodinâmicos adotados 
+ 
+A opção pela formulação "gamma-phi" do equilíbrio gerou a necessidade 
+da adoção de um modelo para o cálculo do coeficiente de fugacidade da fase 
+vapor e de outro para o coeficiente de atividade. Para o primeiro, optou-se pela 
+equação  cúbica  de  Redlich-Kwong-Soave  (SRK)  e  para  o  segundo,  a 
+formulação UNIFAC-Dortmund, ambas disponíveis no módulo VRTherm. Para 
+avaliação dos eventuais desvios em relação a dados experimentais, fez-se uma 
+análise comparativa de frações molares, tanto na fase líquida quanto na fase 
+vapor.  As  Figuras  18,  19  e  20  mostram  os  diagramas  xy  para  as  misturas 
+binárias  etanol-água,  etanol-álcool  isoamílico  e água-álcool isoamílico.  Nelas, 
+os pontos em preto representam dados experimentais da literatura e os pontos 
+em verde, o modelo SRK gerados pelo EMSO. Nota-se um ligeiro afastamento 
+nas regiões de baixa concentração, fato que pode ter sido causado pelo fato de 
+que a implementação UNIFAC do VRTherm utilizada neste trabalho faz uso da 
+formulação UNIFAC(Dortmund), porém com a parametrização PSRK, que é a 
+equação  preditiva  de  contribuição  de  grupo  de  Soave-Redlich-Kwong, 
+(DOI:10.1016/j.fluid.2004.11.002).  Entretanto  percebeu-se  que  o  ajuste  deste 
+modelo aos dados experimentais ocorre com uma discrepância razoável, para 
+os casos de interesse deste trabalho. Levando-se em conta que os parâmetros 
+de interação binária do UNIFAC são generalizados, a partir de contribuições de 
+grupo, pode se considerar satisfatório o ajuste. 
+
+Verifica-se que o modelo usado previu de forma satisfatória o ELV em 
+ambas  as  misturas.  Na  Figura  20,  verifica-se  uma  região  tracejada,  onde  a 
+mistura água-álcool isoamílico forma duas fases líquidas. 
+
+67 
+
+ 
+
+Figura 18 - ELV da mistura etanol(1)-água(2) a 1 atm: comparação das 
+previsões no EMSO (UNIFAC-Dortmund/SRK) com dados experimentais 
+
+(GMEHLING et al., 1988). 
+
+ 
+
+ 
+
+Fonte - Elaborado pelo autor. 
+
+Figura 19 - ELV da mistura etanol(1)-álcool isoamílico(2) a 1 atm: comparação 
+das previsões no EMSO (UNIFAC-Dortmund/SRK) com dados experimentais 
+
+(GMEHLING et al., 1988). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+68 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 20 - ELV da mistura água(1)-álcool isoamílico(2) a 1 atm: comparação 
+das previsões no EMSO (UNIFAC-Dortmund/SRK) com dados experimentais 
+
+(GMEHLING e ONKEN, 1982). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+
+4.2  Processo de destilação (Sistema 1) 
+
+ 
+Foram  feitas  simulações  dinâmicas  do  processo  de  destilação  das 
+misturas etanol-água e etanol-água-álcool isoamílico para simular a influència 
+de  um  terceiro  componente  nos  perfis  etanol-água.  Escolheu-se  o  álcool 
+isoamílico por ser o principal componente do óleo fúsel. Nas Figuras 21 a 26 
+encontram-se os resultados da simulação no estado estacionário do processo 
+de  destilação  da  mistura  etanol-água,  com  e  sem  a  presença  do  álcool 
+isoamílico, obtidas no Aspen Plus, comparados com os obtidos no EMSO após 
+ser atingido o regime. Percebe-se que o simulador EMSO respondeu de forma 
+semelhante ao Aspen Plus. Os perfis estacionários em ambos os simuladores 
+tem  qualitativamente  a  mesma  tendência,  embora  se  note  um  desvio 
+sistemático  entre  eles,  que  pode  ser  atribuído  ao  modelo  termodinâmico 
+utilizado  para  o  cálculo  dos  coeficientes  de  atividade  em  ambos  os 
+simuladores. 
+
+69 
+
+ 
+
+ 
+
+Figura 21 - Frações molares do 
+etanol (1) e água (2) no estado 
+
+líquido ao longo da coluna no Aspen 
+
+Plus (estado estacionário) e no 
+
+EMSO (após 60 horas de operação). 
+
+ 
+
+ 
+
+ 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+Figura 23 - Frações molares do 
+etanol (1) e água (2) água na fase 
+vapor ao longo da coluna no Aspen 
+
+Plus (estado estacionário) e no 
+
+EMSO (após 60 horas de 
+
+ 
+
+ 
+
+operação). 
+
+ Fonte - Elaborado pelo autor. 
+
+Figura 22 - Frações molares do 
+
+etanol (1), água (2) e álcool 
+
+isoamílico (3) no estado líquido ao 
+
+longo da coluna no Aspen Plus 
+(estado estacionário) e no EMSO 
+(após 300 horas de operação). 
+
+ 
+
+ 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+Figura 24 - Frações molares do 
+
+etanol (1), água (2) e álcool 
+
+isoamílico (3) na fase vapor ao 
+longo da coluna no Aspen Plus 
+(estado estacionário) e no EMSO 
+(após 300 horas de operação). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+70 
+
+ 
+
+ 
+
+ 
+
+Figura 25 - Perfis de temperaturas 
+ao longo da coluna no Aspen Plus 
+(estado estacionário) e no EMSO 
+
+(após 60 horas de operação) 
+
+durante o processo de destilação da 
+
+mistura etanol(1)-água(2). 
+
+ 
+
+Figura 26 - Perfis de temperaturas 
+ao longo da coluna no Aspen Plus 
+(estado estacionário) e no EMSO 
+
+(após 300 horas de operação) 
+
+durante o processo de destilação da 
+
+mistura etanol(1)-água(2)-álcool 
+
+isoamílico(3). 
+
+ 
+
+Fonte - Elaborado pelo autor. 
+
+ Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+Os principais resultados referentes às simulações dinâmicas do Sistema 
+1  estão  mostrados  nas  Figuras  27  a  31.  A  queda  de  pressão  na  coluna 
+observada nas simulações foi da ordem de 4 mbar. As estratégias de controle 
+implementadas  fizeram  com  que  o  sistema  se  aproximasse  do  estado 
+estacionário ao final do período simulado. 
+
+Na  Figura  27,  o  perfil  de  fração  molar  do  vapor  de  etanol  na  mistura 
+ternária só  alcança  o  estado  estacionário  a partir  de  160 horas  de simulação 
+computacional. Isso se deve ao maior calor específico da fase líquida e à maior 
+entalpia de vaporização do álcool isoamílico. 
+
+Verifica-se na Figura 28 que a presença do álcool isoamílico fez com que 
+
+houvesse um leve deslocamento da temperatura para valores maiores.  
+
+ 
+
+ 
+
+71 
+
+ 
+
+ 
+
+Figura 27 - Perfis de frações molares do etanol (1) em função do tempo no 
+estágio 25 da coluna, obtidos com a simulação do processo de destilação das 
+misturas etanol(1)-água(2) e etanol(1)-água(2)-álcool isoamílico(3) no EMSO. 
+
+y1 (mistura binária)
+y1 (mistura ternária)
+
+x1 (mistura binária)
+x1 (mistura ternária)
+
+0,70
+
+0,60
+
+0,50
+
+0,40
+
+0,30
+
+0,20
+
+0,10
+
+0,00
+
+1
+y
+ 
+,
+1
+x
+
+0
+
+20
+
+40
+
+60
+
+80
+
+tempo (h)
+
+100
+
+120
+
+140
+
+160
+
+ 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+Figura 28 - Perfis de temperaturas em função do tempo no estágio 25 da 
+coluna, obtidos com a simulação do processo de destilação das misturas 
+
+etanol(1)-água(2) e etanol(1)-água(2)-álcool isoamílico(3) no EMSO. 
+
+115
+
+110
+
+105
+
+100
+
+95
+
+90
+
+85
+
+)
+C
+°
+(
+ 
+T
+
+ 
+
+T (mistura binária)
+T (mistura ternária)
+
+0
+
+20
+
+40
+
+60
+
+80
+
+100
+
+tempo (h)
+
+Fonte - Elaborado pelo autor. 
+
+120
+
+140
+
+160
+
+ 
+
+72 
+
+ 
+
+Na Figura 29 são verificados os perfis de fração molar do etanol na fase 
+vapor  em  alguns  estágios  selecionados.  Observa-se  que  as  oscilações 
+desaparecem  quando  se  atinge  o  estado  estacionário,  isso  também  significa 
+que as perturbações foram amortecidas pelas ações dos controladores. 
+
+ 
+
+Figura 29 - Perfis de frações molares do etanol na fase vapor em função do 
+
+tempo nos estágios 1, 5, 10, 15, 25 e 38, obtidos com a simulação do processo 
+
+de destilação da mistura etanol(1)-água(2)-álcool isoamílico(3) no EMSO. 
+
+estágio 1
+estágio 15
+
+estágio 5
+estágio 25
+
+estágio 10
+estágio 38
+
+1,00
+0,90
+0,80
+0,70
+0,60
+0,50
+0,40
+0,30
+0,20
+0,10
+0,00
+
+1
+y
+
+0
+
+20
+
+40
+
+60
+
+80
+
+tempo (h)
+
+100
+
+120
+
+140
+
+160
+
+ 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+Verifica-se, nos perfis de temperaturas na Figura 30, que, até o tempo de 
+20  horas  de  simulação  computacional,  os  controladores  empregados 
+responderam às  perturbações  de  forma  estável,  forçando  os  perfis chegar  ao 
+estado estacionário. 
+
+ 
+
+ 
+
+73 
+
+ 
+
+ 
+
+Figura 30 - Perfis de temperaturas em função do tempo para os estágios 1, 5, 
+10, 15, 25 e 38 da coluna, obtidos com a simulação do processo de destilação 
+
+da mistura etanol(1)-água(2)-álcool isoamílico(3) no EMSO. 
+
+estágio 1
+estágio 10
+estágio 25
+
+estágio 5
+estásio 15
+estágio 38
+
+)
+C
+°
+(
+ 
+T
+
+113
+
+110
+107
+104
+
+101
+98
+95
+
+92
+89
+86
+
+83
+80
+
+0
+
+20
+
+40
+
+60
+
+80
+
+100
+
+120
+
+140
+
+160
+
+tempo (h)
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+Os perfis  de pressões na coluna podem  ser visualizados  na Figura 31. 
+Quando alcançado o regime estacionário, as pressões em cada estágio tendem 
+a um valor próximo  de  1,6 atm nas simulações  da mistura binária  (sis  bin),  e 
+1,72 atm  nas simulações  da  mistura  ternária  (sis  ter).  Entretanto  percebeu-se 
+uma perda de carga em torno de 4 mbar (3,95*10-3 atm) na coluna. 
+
+ 
+
+ 
+
+74 
+
+ 
+
+Figura 31 - Perfis de pressões em função do tempo nos estágios 1, 5, 10, 15, 
+
+25 e 38, obtidos com a simulação do processo de destilação das misturas 
+
+etanol(1)-água(2) e etanol(1)-água(2)-álcool isoamílico(3) no EMSO. 
+
+)
+
+m
+t
+a
+(
+ 
+P
+
+3,0
+2,8
+2,6
+2,4
+2,2
+2,0
+1,8
+1,6
+1,4
+1,2
+1,0
+
+estágio 1 (sis ter)
+estágio 10 (sis ter)
+estágio 25 (sis ter)
+estágio 38 (sis ter)
+
+estágio 1 (sis bin)
+estágio 10 (sis bin)
+estágio 25 (sis bin)
+estágio 38 (sis bin)
+
+Sistema ternário (sis tern)
+
+Sistema binário (sis bin)
+
+0
+
+10
+
+20
+
+30
+40
+tempo (h)
+
+50
+
+60
+
+70
+
+ 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+De  maneira  geral,  conclui-se  que  o  modelo  respondeu  de  forma 
+consistente. O EMSO e o Aspen Plus mostraram comportamentos similares no 
+regime estacionário, e as simulações dinâmicas no EMSO apontaram um efeito 
+sensível  da  presença  do  álcool  isoamílico  nos  perfis  dentro  da  coluna  e  no 
+tempo para se atingir o estado estacionário. Os perfis de fração molar de etanol 
+e de temperatura no regime estacionário, entretanto, foram pouco influenciados 
+pela presença do álcool isoamílico, como se pode ver comparando as Figuras 
+21 com a 22, 23 com a 24 e 25 com a 26. 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+
+ 
+
+75 
+
+ 
+
+4.3  Processo de destilação (Sistema 2) 
+
+ 
+As  Figuras  32  a  58  mostram  resultados  referentes  à  simulação  do 
+processo de destilação de etanol, incluindo o bombeamento do vinho da dorna 
+volante. Essa dorna era esvaziada até se atingir o nível de 50 cm. Vale ressaltar 
+que  as  simulações  do  Sistema  2  foram  iniciadas  com  valores  estacionários 
+obtidos de simulações do processo que utilizou uma dorna de diâmetro  muito 
+grande, com um vinho etanol-água a 5% em fração molar de etanol. 
+
+Nas  Figuras  32  a  40,  os  resultados  se  referem  ao  primeiro  ciclo  de 
+esvaziamento  da  dorna  volante.  Verifica-se  que  o  nível  de  vinho  na  dorna 
+diminui  com  o  tempo  (Figura  32a),  e  à  medida  que  isso  ocorre,  a  vazão  de 
+bombeamento  também  diminui  (Figura  32b),  causando  leve  oscilação  na 
+temperatura  do  vinho  de  saída  do  trocador  de  calor  (Ts1,  Figura  33a).  A 
+temperatura do fluido quente (vinhaça) no trocador sofreu uma rápida oscilação 
+nas  primeiras  6  horas,  entretanto  tende  a  um  valor  constante  para  todas  as 
+frações molares (2, 3, 4 e 5%) de etanol no vinho (Figura 33b). 
+
+ 
+
+Figura 32 - (a) Esvaziamento da dorna volante no primeiro ciclo de operação 
+
+após o chaveamento para a segunda dorna; (b) Vazão da bomba. 
+
+Considerando o enchimento da dorna com vinho de 2 a 5% de etanol (fração 
+
+molar). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+76 
+
+ 
+
+ 
+
+ 
+
+Figura 33 - (a) Temperatura de entrada na coluna (Ts1); (b) Temperatura da 
+
+vinhaça, Te2 (fluido quente de entrada no trocador de calor) no primeiro ciclo de 
+
+operação após o chaveamento para a segunda dorna. Considerando o 
+enchimento da dorna com vinho de 2 a 5% de etanol (fração molar). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+Na Figura 34 podem ser verificados os perfis de vazão de alimentação da 
+coluna (Figura  34a), vinhaça  (Figura  34b),  destilado (Figura  34c).  A vazão  da 
+retirada  lateral  de  vapor  foi  mantida  constante,  como  pode  ser  verificado  na 
+Figura 34d, com valor de 5 kmol/h para todas as situações. Percebe-se que os 
+perfis  apresentados  para  todos  os  vinhos,  2  a  5%  de  etanol  em  base  molar, 
+apresentam comportamento similar, visto que a vazão de bombeamento pouco 
+é influenciada pela fração de etanol no vinho. 
+
+ 
+
+ 
+
+77 
+
+ 
+
+Figura 34 - (a) Vazão de alimentação da coluna no primeiro ciclo de operação 
+
+após o chaveamento para a segunda dorna; (b) Vinhaça; (c) Destilado; (d) 
+
+Retirada lateral de vapor. Considerando o enchimento da dorna com vinho de 2 
+
+a 5% de etanol (fração molar). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+O calor fornecido ao refervedor pode ser verificado na Figura 35. Percebe-
+se que há uma grande oscilação no início do processo, decorrente da ação dos 
+controladores, os quais tentam  manter a temperatura no valor especificado. A 
+diferença observada nos perfis da Figura 35 pode ser causada pela diferença 
+entre  as  frações  de  etanol  no  vinho,  e  também  pela  similaridade  entre  os 
+valores das vazões de vinhaça para os quatro tipos de vinho. 
+
+ 
+
+ 
+
+78 
+
+ 
+
+Figura 35 - Calor no refervedor, considerando o enchimento da dorna com 
+
+vinho de 2 a 5% de etanol (fração molar) no primeiro ciclo de operação após o 
+
+chaveamento para a segunda dorna. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+Na Figura 36a é obsevado que a recuperação do etanol é maior quando 
+se tem uma carga mais rica neste componente, embora haja pouca diferença 
+para os vinhos analisados. Percebe-se que há uma perda significativa de etanol 
+na vinhaça (Figura 36b), mas sem afetar as conclusões deste trabalho. Verifica-
+se  que  o  vinho  mais  “pobre”  em  etanol  apresenta  uma  menor  fração  molar 
+deste na vinhaça. 
+
+ 
+Figura 36 - (a) Fração molar de etanol no destilado no primeiro ciclo de 
+operação após o chaveamento para a segunda dorna; (b) Fração molar de 
+
+etanol na vinhaça. Considerando o enchimento da dorna com vinho de 2 a 5% 
+
+de etanol (fração molar). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+79 
+
+ 
+
+ 
+
+A  Figura  37  mostra  perfis  de  fração  molar  do  etanol  na  fase  vapor  em 
+alguns estágios de equilíbrio da coluna (estágios 1, 5, 15 e 38). O baixo teor de 
+etanol  alimentado  na coluna  acarreta  uma  menor  quantidade  deste  álcool  no 
+vapor saindo de cada estágio, comparado com um vinho de maior teor.  
+
+ 
+
+Figura 37 - Fração molar de etanol na fase vapor no primeiro ciclo de operação 
+após o chaveamento para a segunda dorna, nos estágios (est): (a) 1, (b) 5; (c) 
+
+15 e (d) 38. Considerando o enchimento da dorna com vinho de 2 a 5% de 
+
+etanol (fração molar). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+Percebe-se  que as características  do vinho a ser destilado impactam na 
+composição do vapor de retirada lateral, mostrando que é necessário um vinho 
+mais  rico  em  etanol  para  que  se  tenha  uma  retirada  mais  rica  neste 
+componente (Figura 38).  
+
+80 
+
+ 
+
+ 
+
+ 
+
+Figura 38 - Fração molar de etanol no vapor da retirada lateral no primeiro ciclo 
+
+de operação após o chaveamento para a segunda dorna. Considerando o 
+
+enchimento da dorna com vinho de 2 a 5% de etanol (fração molar). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+A  Figura 39  mostra os valores  das  frações molares de etanol  no líquido 
+nos estágios 1, 5, 15 e 38. As frações de etanol na vinhaça são mostradas na 
+Figura 40. 
+
+ 
+
+81 
+
+ 
+
+ 
+
+Figura 39 - Fração molar de etanol na fase líquida nos estágios (est) no 
+
+primeiro ciclo de operação após o chaveamento para a segunda dorna: (a) 1, 
+(b) 5; (c) 15 e (d) 38. Considerando o enchimento da dorna com vinho de 2 a 
+
+5% de etanol (fração molar). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+
+82 
+
+ 
+
+Figura 40 - Fração molar de etanol na vinhaça (x1) no primeiro ciclo de 
+
+operação após o chaveamento para a segunda dorna, com o enchimento da 
+
+dorna com vinho de 2 a 5% de etanol (fração molar). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+
+Nas Figuras 41 a 49 são mostrados resultados das simulações do Sistema 
+2, entretanto as simulações são feitas com um tempo bem maior (até 600 horas 
+de  simulação  computacional).  Percebe-se  que  os  valores  das  variáveis 
+mostradas sofrem oscilações devido ao enchimento e esvaziamento da dorna 
+volante.  Entretanto  estes  valores  caminham  para  um  valor  médio  constante 
+(seguem  uma  tendência  periódica).  Na  Figura  45  pode  ser  observado  que  o 
+balanço de massa tende a um valor próximo de zero, e que, devido à variação 
+da  carga,  observa-se  na  Figura  45b  que,  hora  o  balanço  é  positivo,  hora  é 
+negativo, entretanto a área positiva tende a ser igual à área negativa limitada 
+pelo eixo das abscissas. Verifica-se, na Figura 46, que o acúmulo tende a ser 
+minimizado com o tempo para o vinho a 5% em fração molar de etanol. 
+ 
+
+ 
+
+83 
+
+ 
+
+ 
+
+Figura 41 - Fração molar de etanol na fase vapor com o tempo nos estágios 
+(est): (a) 1, (b) 2; (c) 15 e (d) 38. Considerando o enchimento da dorna com 
+
+vinho de 2 a 5% de etanol (fração molar). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+
+84 
+
+ 
+
+ 
+
+Figura 42 - Fração molar de etanol na fase líquida com o tempo nos estágios 
+(est): (a) 1, (b) 2; (c) 15 e (d) 38. Considerando o enchimento da dorna com 
+
+vinho de 2 a 5% de etanol (fração molar). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+
+85 
+
+ 
+
+ 
+
+Figura 43 - Perfis de fração molar de etanol na retirada lateral de vapor. 
+
+Considerando o enchimento da dorna com vinho de 2 a 5% de etanol (fração 
+
+molar). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+
+Figura 44 - Perfis de fração molar de etanol: (a) no destilado; (b) na vinhaça. 
+Considerando o enchimento da dorna com vinho de 2 a 5% de etanol (fração 
+
+molar). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+
+86 
+
+ 
+
+ 
+
+Figura 45 - Balanço de massa (BM) na coluna ao longo do processo: (a) BM 
+por componente (etanol); (b) BM global. Considerando uma alimentação com 
+
+vinho de 2 a 5% de etanol (fração molar). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+Figura 46 - BM por componente (etanol) para o vinho a 5% em fração molar de 
+
+etanol (verificação da tendência do perfil). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+Os  perfis  de  nível  de  vinho  na  dorna  volante,  da  vazão  volumétrica  da 
+bomba e as temperaturas de saída do trocador K se encontram na Figura 47. 
+Pequenas oscilações podem ser observadas nas Figuras 47c e 47d, as quais 
+
+87 
+
+ 
+
+ 
+
+são  atribuídas  à  ação  de  enchimento  e  esvaziamento  da  dorna  volante,  bem 
+como da ação dos controladores. 
+
+ 
+
+Figura 47 - (a) Esvaziamento e enchimento da dorna; (b) Vazão da bomba; (c) 
+Temperatura de entrada na coluna (Ts1); (d) Temperatura da vinhaça (Te2). 
+
+Considerando o enchimento da dorna com vinho de mesma concentração inicial 
+
+(2 a 5% em fração molar de etanol). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+O consumo de energia pelo refervedor pode ser observado na Figura 48. 
+Verifica-se que os perfis tendem a um valor médio, entretanto as oscilações são 
+atribuídas à variação da carga na coluna. Na Figura 49 podem ser observadas 
+todas as vazões de entrada e saída da coluna de destilação. 
+
+88 
+
+ 
+
+ 
+
+Figura 48 - Calor no refervedor (QR), considerando o enchimento da dorna com 
+
+vinho de mesma concentração inicial (2 a 5% em fração molar de etanol). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+89 
+
+ 
+
+ 
+
+ 
+
+Figura 49 - (a) Vazão de alimentação da coluna; (b) Vinhaça; (c) Destilado; (d) 
+Retirada lateral de vapor. Considerando o enchimento da dorna com vinho de 
+
+mesma concentração inicial (2 a 5% em fração molar de etanol). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+A  área  abaixo  da  curva  da  vazão  molar  (kmol/h)  da  carga  da  coluna 
+ 
+observada na Figura 49a, que relaciona o quanto de massa entra na coluna, foi 
+comparada com os acúmulos globais vistos na Figura 45b (também integrando 
+a curva ao longo do tempo). Na Tabela 7 pode ser verificado que os resultados 
+(calculados  no  software  Origin  6)  mostraram  que  o  acúmulo  de  massa  na 
+coluna  é  muito  pequeno  em  relação  ao  que  entra  na  coluna.  Este  fato  foi 
+verificado em  todas as simulações  feitas (na  Tabela 7 são mostrados valores 
+para a dorna com vinho a 5% em fração molar de etanol, entretanto, para os 
+outros vinhos analisados, os valores são similares). 
+
+90 
+
+ 
+
+ 
+
+ 
+
+Tabela 7 - Percentual de acúmulo de massa na coluna. 
+
+ 
+
+Área (kmol)  % Acumulado 
+BM global (Figura 45b) 
+0,42406 
+Carga da coluna (Figura 49a)  349008 
+
+1,215 × 10-4 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+As  Figuras  50  a  58  mostram  resultados  das  simulações  do  Sistema  2, 
+ 
+incluindo  uma  alimentação  na  dorna  (quando  essa  se  esvazia)  com  vinho 
+diluído, atribuído à segunda geração (considerando etanol-água), contendo 3% 
+de etanol (molar) e com a inicialização do sistema com valores estacionários do 
+vinho  a  5%  em  fração  molar  de  etanol.  Em  outras  palavras,  agora  há  uma 
+diluição do etanol na dorna, em razão do menor teor da nova alimentação.  
+
+O  nível  de  vinho  e  a  vazão  volumétrica  da  bomba  são  mostrados  na 
+Figura 50, na qual nota-se o comportamento de esvaziamento e enchimento da 
+dorna  volante.  Na  Figura  51  percebe-se  que  a  adição  do  vinho  de  menor 
+concentração de etanol fez com que a mistura resultante tenha uma quantidade 
+de etanol que decresce até se estabilizar em determinado tempo de simulação. 
+ 
+
+Figura 50 - (a) Esvaziamento e enchimento da dorna; (b) Vazão da bomba. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+91 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 51 - (a) Fração molar de etanol no vinho saindo da dorna volante; (b) 
+Detalhes do momento em que há a mistura do vinho existente na dorna (fração 
+molar de etanol igual a 0,05) com o vinho de segunda geração (fração molar de 
+
+etanol igual a 0,03) alimentando a dorna volante. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+
+ 
+As temperaturas da alimentação e da vinhaça são mostradas na Figura 
+52. A temperatura do vinho que sai do trocador tem leve oscilação nos instantes 
+iniciais, e,  assim  que  se  inicia  a  mistura  dos vinhos,  percebe-se  um  aumento 
+leve  na  temperatura,  visto  que  há  uma  diluição  do  vinho.  Entretanto  este 
+aumento não chega a ser relevante, visto que ocorre na casa dos décimos ou 
+centésimos de graus, assim os perfis tendem a um valor constante. 
+ 
+
+ 
+
+92 
+
+ 
+
+Figura 52 - (a) Temperatura da alimentação da coluna (Ts1); (b) Temperatura 
+
+da vinhaça (Ts2). 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+A variação na fração molar de etanol na carga (vide Figura 51) acarreta 
+em oscilações ao longo da coluna, como pode ser representado pelo perfil de 
+etanol  no vapor de  retirada lateral  (Figura  53).  A  diluição  do vinho causa  um 
+decréscimo  na  recuperação  de  etanol  na  coluna.  Na  Figura  54a,  percebe-se 
+que esta diluição ocasionou queda na fração de etanol no destilado, bem como 
+na diminuição da fração do mesmo na vinhaça (Figura 54b). 
+ 
+
+Figura 53 - Fração molar de etanol no vapor da retirada lateral. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+93 
+
+ 
+
+ 
+
+Figura 54 - Perfis de fração molar de etanol: (a) no destilado; (b) na vinhaça. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+As  vazões  molares  de  entrada  e  saída  da  coluna  são  mostradas  nas 
+Figuras 55 e 56. A vazão de vapor de retirada lateral foi mantida constante igual 
+a 5 kmol/h (Figura 56). A variação na fração molar de etanol na dorna, iniciada 
+no instante em que se misturam os vinhos, causa uma perturbação no sistema, 
+ocasionando oscilações na carga térmica requerida pelo refervedor (Figura 57). 
+Entretanto este consumo de energia diminui com o transcorrer do processo.  
+
+ 
+
+Figura 55 - (a) Vazões de alimentação da coluna e da vinhaça; (b) Vazão do 
+
+destilado. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+94 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 56 - Vazão da retirada lateral de vapor. 
+
+Fonte - Elaborado pelo autor. 
+
+Figura 57 - Consumo de calor no refervedor. 
+
+ 
+
+ 
+
+Fonte - Elaborado pelo autor. 
+
+95 
+
+ 
+
+O balanço de massa no sistema é mostrado na Figura 58. Verifica-se que, 
+como o processo é dinâmico e há ciclos de enchimento-esvaziamento da dorna, 
+há acúmulos negativos e positivos, e que à medida que o tempo passa, esse 
+acúmulo tende a um valor constante próximo de zero (ver Tabela 8). 
+ 
+
+Figura 58 - Balanço de massa (BM) no sistema ao longo do processo: (a) BM 
+
+por componente (etanol); (b) BM global. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+ 
+
+A  área  abaixo  da  curva  da  vazão  molar  (kmol/h)  da  carga  da  coluna 
+observada na Figura 55a, que reporta o quanto de massa entra na coluna, foi 
+relacionada com os acúmulos globais mostrados na Figura 58b. Os resultados 
+(calculados no Origin 6) mostraram que a relação entre o mínimo que acumula 
+e  a  quantidade  da  carga  permite  observar  que  a  quantidade  que  acumula  é 
+irrelevante, uma vez que o percentual de acúmulo é bem pequeno (Tabela 8). 
+
+ 
+
+ 
+
+ 
+
+Tabela 8 - Percentual de acúmulo de massa na coluna. 
+
+ 
+
+Área (kmol)  % Acumulado 
+
+BM global (Figura 58a) 
+Carga da coluna (Figura 55a) 
+
+6,9888 
+353237 
+Fonte - Elaborado pelo autor. 
+
+1,978 × 10-3 
+
+96 
+
+ 
+
+ 
+
+4.4  Facilidades e dificuldades com o simulador EMSO 
+ 
+A versão  do  EMSO  utilizada  neste  trabalho  foi  a  0.10.6,  que  pode  ser 
+
+ 
+visualizada na Figura 59. 
+ 
+O  EMSO  surge  como  uma  ferramenta  capaz  de  responder  de  forma 
+robusta  às  simulações  dos  mais  diversos  processos  da  industrial  química, 
+dentre outras aplicações gerais. Com sua estrutura, o EMSO se torna de fácil 
+utilização,  além  de  ser  de  boa  comunicação  com  o  usuário.  Como  este 
+simulador  de  processos  já  possui  uma  biblioteca  de  modelos,  o  usuário pode 
+usar estes modelos e adaptar para uma situação de interessse, montando o seu 
+FlowSheet (ver Figura 60). 
+ 
+
+Figura 59 - Versão do EMSO utilizada nesta dissertação. 
+
+ 
+
+Fonte - ENVIRONMENT FOR MODELING, SIMULATION AND OPTIMIZATION - EMSO, 2012. 
+ 
+ 
+Os solvers existentes no EMSO, tanto para resolver as EDO's quanto as 
+DAE's funcionam bem, além do mais o usuário pode escolher o solver de sua 
+preferência.  
+ 
+Outra característica positiva encontrada no EMSO é sua capacidade de 
+checar a consistência do sistema, analisando seus graus de liberdade (inclusive 
+dinâmicos). Com apenas um click no local indicado, a análise é feita de forma 
+imediata  (ver  as  Figuras  60  e  61).  E  enquanto  o  grau  de  liberdade  não  for 
+zerado  e  enquanto  as  condições  iniciais  referentes  às  equações  diferenciais 
+não forem atendidas, não se iniciam as simulações. O EMSO também alerta ao 
+usuário sobre possíveis incompatibilidades entre unidades de medidas, e indica 
+o exato local onde se encontra esta discrepância. Além do mais, o usuário pode 
+visualizar  o  número  de  variáveis  e  o  número  de  equações  do  sistema,  bem 
+como o número de especificações feitas. 
+
+ 
+
+97 
+
+ 
+
+Dentre estas e outras vantagens, a facilidade de utilizar a herança para 
+
+ 
+gerar submodelos faz do EMSO um simulador muito atrativo. 
+ 
+Entretanto,  há  dificuldades  no  uso  do  EMSO,  principalmente  quando  o 
+usuário tem pouca familiaridade com o modelo que se utiliza. A maior delas é a 
+inicialização das simulações, visto que se faz necessário ter uma inicialização 
+consistente, exigindo um bom conhecimento do sistema e de seu modelo pelo 
+usuário.  Como  o  sistema  aqui  estudado  era  complexo,  a  falta  de  uma  boa 
+iniciaização  dificultava  o  início  do  processo.  Todavia,  quando  se  tem  dados 
+consistentes para  inicializar,  as simulaçõs  fluem. Com  isso,  a convergência  é 
+alcançada  de  forma  robusta  e  rápida  (em  menos  tempo  de  simulação 
+computacional).  Outra  dificuldade  vivida  foi  o  problema  com  índice  estrutural 
+diferencial maior que 1, fato que deixa o sistema mais difícil de ser resolvido. As 
+rotinas de cálculos existentes no pacote VRTherm não conseguem resolver o 
+sistema  de  equações  quando  o  índice é maior  que 1,  exigindo  que seja  feita 
+uma redução do mesmo para 1, fato que pode ser alcançado mudando algumas 
+especificações,  dentre  outros  meios.  Contudo  não  é  tarefa  fácil  mudar  uma 
+especificação  quando  se  tem  um  sistema  de  grandes  dimensões,  como  o 
+estudado aqui. De todo modo, essa dificuldade certamente é superada quando 
+se conhece bem o sistema em questão. 
+ 
+Como  um  comentário  final,  o  ambiente  EMSO,  com  suas  vantagens  e 
+facilidades,  é  uma  ferramenta  poderosa.  Um  processo  químico  industrial 
+complexo  pode  ser  seguramente  estudado  aqui  e  respostas  consistentes 
+podem ser obtidas. 
+ 
+
+ 
+
+98 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 60 - Interface do EMSO: um exemplo de modelos usados; teste de 
+
+consistência; montagem de um FlowSheet. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+Figura 61 - Interface do EMSO: escolha de modelos para resolver os sistemas 
+
+de equações. 
+
+Fonte - Elaborado pelo autor. 
+
+ 
+
+99 
+
+ 
+
+5  CONCLUSÕES 
+
+O modelo dinâmico da coluna no EMSO respondeu de forma consistente 
+
+ 
+O simulador global de processos EMSO, mostrou-se robusto e eficiente, 
+ 
+visto  que  simulou  várias  situações  de  processamento,  sem  problemas  de 
+divergência numérica na solução do sistema DAE. É de muita importância nos 
+dias  atuais  que  se  tenha  uma  ferramenta  capaz  de  suportar  simulações  dos 
+mais diversos processos da indústria química, os desafios atuais são enormes, 
+e nesse cotexto, o simulador de processos EMSO, se torna uma opção forte na 
+escolha desta ferramenta de trabalho. 
+ 
+As simulações do processo dinâmico de destilação do etanol mostraram-
+se  robustas  e  qualitativamente  consistentes.  A  presença  de  um  terceiro 
+componente  (álcool  isoamílico)  influenciou  de  forma  significativa  os  perfis 
+simulados no transiente.  
+ 
+às perturbações feitas na carga. 
+ 
+Os controladores PID empregados neste trabalho mostraram-se estáveis 
+e com  desempenho  adequado. As  oscilações observadas nos  tempos iniciais 
+das simulações são atribuídas às atuações destes controladores, e consistentes 
+com o esperado fisicamente. 
+ 
+apresentou 
+desempenho  aceitável  em  cálculos  de  termodinâmicos  das  misturas  binárias, 
+quando suas previsões foram comparadas a dados experimentais da literatura. 
+ 
+As  simulações  feitas  com  a  presença  da  dorna  volante  mostraram-se 
+qualitativamente  satisfatórias.  A  inclusão  da  dorna  volante  é  importante,  pois 
+esse equipamento é a conexão entre um setor do processo que na maioria das 
+plantas  industriais  opera  em  regime  descontínuo  (ou  semi-contínuo),  a 
+fermentação, e um setor que opera em regime permanente, a destilação. Essa 
+dorna  serve,  portanto,  para  manter  o  processo  global  funcionando  de  forma 
+contínua.  
+
+O  modelo 
+
+termodinâmico 
+
+(UNIFAC-Dortmund/SRK) 
+
+As  perturbações  causadas  pelo  bombeamento  do  vinho  da  dorna 
+volante, bem como a qualidade do vinho de enchimento desta dorna influenciou 
+diretamente nas respostas das simulações feitas. A carga térmica requerida no 
+refervedor  mostrou-se  um  pouco  menor  para  um  vinho  com  menor  teor  de 
+100 
+
+ 
+
+ 
+
+etanol.  No  entanto  há  nesse  caso  uma  menor  quantidade  de  produto 
+recuperado tanto no topo quanto na retirada lateral de vapor. A perda de etanol 
+na vinhaça é de suma importância, visto que é indesejada.  
+
+O  efeito  de  esvaziamento  da  dorna  volante 
+
+O bombeamento de vinho no sistema estudado mostrou-se satisfatório. A 
+
+Note-se  que  a  coluna  utilizada  neste  trabalho  não  teve  seu  projeto 
+otimizado, e os valores elevados de etanol no fundo ainda podem ser reduzidos 
+de forma importante. 
+ 
+leva  a  um  maior 
+enriquecimento do produto de topo quando se tem a mesma razão de refluxo na 
+torre. 
+ 
+bomba correspondeu bem às demandas do processo.  
+ 
+O chaveamento da dorna (abertura e fechamento da válvula da corrente 
+de  alimentação  da  dorna  volante)  é  uma  interessante  opção  para  se  estudar 
+efeitos  da  oferta  de  carga  para  a  coluna.  Assim,  o  acoplamento  entre  um 
+processo  que  se  pode  dizer  semicontínuo/batelada  alimentada  (processo 
+fermentativo) e um contínuo (processo de destilação) pode ser ajustado com o 
+emprego da dorna volante (o chamado “tanque pulmão”). 
+ 
+A  propriedade  de  herança  permite  a  fácil  utilização  do  device  em 
+simulações de processos convencionais e não convencionais de biorrefinarias 
+(etanol 2G, borbotagem de vapor, etc.). 
+ 
+A aplicação do EMSO em simulações mais complexas de biorrefinarias 
+irá  requerer  modelos  termodinâmicos  não-preditivos  para  os  cálculos  dos 
+desvios da idealidade da fase líquida. 
+ 
+O cálculo de entalpias a partir de modelos para propriedades em excesso 
+deve ser considerado como alternativa ao uso de equações cúbicas para esse 
+fim,  quando  se  trabalha  com  substâncias  polares  presentes  tipicamente  na 
+biorrefinaria. 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+101 
+
+ 
+
+6  PROPOSTAS DE CONTINUIDADE 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+  Ajustar  a  configuração  da  coluna  para  se  adequar  às  situações 
+
+ 
+
+reais da indústria; 
+Introduzir  o  conjunto  de  colunas  B  para  a  produção  de  etanol 
+hidratado, e simular a dinâmica do processo global; 
+
+  Estudar  o  efeito  da  dorna  volante  no  processo  convencional, 
+
+usando configurações industriais das colunas AA1D e BB1; 
+
+102 
+
+ 
+
+REFERÊNCIAS BIBLIOGRÁFICAS 
+
+ 
+BAUDEL,  H.  M.;  ZAROR,  C.;  ABREU,  C.  A.  M.  Improving  the  value  of 
+sugarcane  bagasse  wastes  via  integrated  chemical  production  systems:  an 
+environmentally  friendly  approach.  Industrial  Cropsand  Products,  21:  309-315, 
+2005. 
+ 
+ 
+BATISTA,  F.  R.  M.  Estudo  do  processo  de  destilação  alcoólica  contínua: 
+Simulação  de  Plantas  Industriais  de  Produção  de  Álcool  Hidratado,  Álcool 
+Neutro  e  Cachaça.  Dissertação 
+(Mestrado  em  Engenharia  Química). 
+FEA/UNICAMP. Campinas, SP. 2008. 
+ 
+ 
+BANCO  NACIONAL  DE  DESENVOLVIMENTO  ECONÔMICO  E  SOCIAL  - 
+BNDES.  CENTRO  DE  GESTÃO  E  ESTUDOS  ESTRATÉGICOS  -  CGEE. 
+Bioetanol  de  Cana-de-Açúcar:  Energia  para  o  Desenvolvimento  Sustentável. 
+Organização BNDES e CGEE. Rio de Janeiro: BNDES; CGEE, 2008. 326p. 
+ 
+ 
+BRITO,  R.  P.  Processo  de  Destilação  Extrativa:  Modelagem  Dinâmica, 
+Simulação e Avaliação de Nova Configuração. Tese (Doutorado em Engenharia 
+Química). FEQ/UNICAMP. Campinas, SP. 1997.  
+ 
+ 
+BSPANG.  U 
+in  Heat  Exchangers.  Chemical  and  Process  Engineering 
+Resources.  Disponível  em <http://www.cheresources.com/content/articles/heat-
+transfer/u-in-heat-exchangers>. Acesso em: jul. 2012. 
+ 
+ 
+CARVALHO, E. Perspectivas da agroenergia. São Paulo: UNICA, 2007. 
+ 
+ 
+CHOE, Y. S.; LUYBEN, W. L. Rigorous dynamic models of distillation columns. 
+Ind. Eng. Chem. Res., 26, 1987. 
+ 
+ 
+COPERSUCAR.  Cana-de-açúcar:  Alimento  e  Energia  Limpa  para  o  Planeta. 
+Disponível em <www.copersucar.com.br>. Acesso em: nov. 2010. 
+ 
+ 
+DIAS, M. O. S. Simulação do processo de produção de Etanol a partir do açúcar 
+e do bagaço, visando a integração do processo e a maximização da produção 
+de  energia  e  excedentes  do  bagaço.  Dissertação  (Mestrado  em  Engenharia 
+Química). FEQ-UNICAMP. Campinas, SP. 2008. 
+ 
+ 
+FRITZEN,  N.  A;  LUIZ,  E.  P.;  DALANHOL,  R.  L.  Fabricação  de  álcool. 
+Universidade  Federal  de  Santa  Catarina,  Centro  Tecnológico,  Engenharia 
+
+103 
+
+ 
+
+ 
+
+Bioquímica.  2012.  Disponível  em  <http://pt.scribd.com/doc/58036270/alcool>. 
+Acesso em: fev. 2012. 
+ 
+ 
+FURLAN,  F.  F.;  GONÇALVES,  J.  A.  S.;  HENRIQUE,  V.  M.;  SECCHI,  A.  R.; 
+SOARES, R. P.; GIORDANO, R. C. Método robusto para simulação de colunas 
+de destilação em simuladores baseados em equações: o caso da purificação de 
+bioetanol. COBEQ, Foz do Iguaçu: UEM, 2010. 
+ 
+ 
+GANI,  R.;  RUIZ,  C.  A.;  CAMERON,  I.  T.  A  generalized  model  for  distillation 
+columns  -  i  -  model  description  and  applications.  Computers  and  Chemical 
+Engineering, v. 10, n. 3, p. 181-198, 1986. 
+ 
+ 
+GIL, I. D.; GÓMEZ, J. M.; RODRÍGUEZ, G. Control of an extractive distillation 
+process  to  dehydrate  ethanol  using  glycerol  as  entrainer.  Computers  and 
+Chemical Engineering, v. 39, p. 129-142, 2012. 
+ 
+ 
+GIORDANO, R. C. Termodinâmica do Equilíbrio Aplicada à Destilação Etanol-
+Água. Dissertação (Mestrado em Engenharia Química). UNICAMP. Campinas, 
+SP. 1985. 
+ 
+ 
+GMEHLING, J.; ONKEN, U.; ARLT, W. Vapor-liquidequilibrium data collection - 
+Organic  Hydroxy Compounds: Alcohols. Frankfurt: DECHEMA, 1982. 
+ 
+ 
+GMEHLING, J.; ONKEN, U.; RAREY-NIES, J. R. Vapor-Liquid Equilibrium Data 
+Collection – Aqueous Systems (Suplement 2). Dechema Chemistry Data Series, 
+Vol. I, Part 1b. 1988. 
+ 
+ 
+GOLDEMBERG, J. Biomassa e energia. Química Nova vol. 32, n.3, São Paulo 
+2009. 
+ 
+ 
+HUANG,  H.;  RAMASWAMY,  S.;  TSCHIRNER,  U.  W.;  RAMARAO,  B.  V.  A 
+review of separation technologies in current and future biorefineries. Separation 
+and Purification Technology, 62(1), p. 1-21, 2008. 
+ 
+ 
+ITO,  V.  M.  Otimização  de  colunas  de  destilação  complexas.  Dissertação 
+(Mestrado em Engenharia Química). FEQ-UNICAMP, Campinas-SP, 2002. 
+ 
+ 
+JUNQUEIRA, T. L. Simulação de colunas de destilação convencional, extrativa 
+e azeotrópica no processo de produção de bioetanol através da modelagem de 
+não  equilíbrio  e  da  modelagem  de  estágios  de  equilíbrio  com  eficiência. 
+104 
+
+ 
+
+ 
+
+Dissertação  (Mestrado  em  Engenharia  Química).  FEQ-UNICAMP.  Campinas, 
+SP. 2010. 
+ 
+ 
+KWONG, W. H. Introdução ao controle de processos químicos com MATLAB. 
+São carlos: EdUFSCar, São Carlos, 2010.  v.1. (Série Apontamentos). 
+ 
+ 
+LOCKETT,  M.  J. Distillation tray  fundamentals.  New  York:  Press Syndicate  of 
+the University of Cambridge, 1986. 
+ 
+ 
+LU, S.; LEI, Z.; WU, J.; YANG, B. Dynamic control analysis for manufacturing 
+ethanol  fuel  via  reactive  distillation.  Chemical  Engineering  and  Processing,  v. 
+50, p. 1128-1136, 2011. 
+ 
+ 
+LUYBEN,  W.  L.  Rigorous  dynamic  models  for  distillation  safety  analysis. 
+Computers and Chemical Engineering, v. 40, p.110-116, 2012. 
+ 
+ 
+MODELL, M.; REID, R. C. Thermodynamics and its applications. Prentice-Hall. 
+New Jersey, 1974. 
+ 
+ 
+NAPHTALI, L. M.; SANDHOLM, D. P. Multicomponent Separation Calculations 
+by Linearization. AIChE Journal, 17, 148-153 (1971). 
+ 
+ 
+NEVES,  M.  F.;  TROMBIN,  V.  G.;  CONSOLI,  M.  O  mapa  sucroenergético  do 
+Brasil. Capítulo 1 do livro Etanol e Bioeletricidade: a cana-de-açúcar no futuro 
+da  matriz  energética.  Ed.  Luc  Projetos  de  Comunicação.  UNICA  -  União  da 
+Indústria de Cana-de-açúcar. São Paulo, 2010. 
+ 
+ 
+PÉREZ, E. R.; CARDOSO, D. R.; FRACO, D. W. Análise dos álcoois, ésteres e 
+compostos carbonílicos em amostras de óleo fúsel. Química Nova. V. 24, n. 1, 
+p. 10-12, 2001. 
+ 
+ 
+PERREGAARD,  J.;  PEDERSEN,  B.  S.;  GANI,  R.  Steady  state  and  dynamic 
+simulation of complex chemical processes. Trans. IChemE, 70, 1992. 
+ 
+ 
+PERRY,  R.  H.;  GREEN,  D. W.  Perry's chemical engineers' handbook.  7th  ed. 
+New York: McGraw-Hill, 1999. 
+ 
+ 
+PESCARINI, M. H. Desenvolvimento do algoritmo para a simulação de colunas 
+de destilação multicomponente em estado estacionário utilizando a modelagem 
+105 
+
+ 
+
+ 
+
+de estágios de não equilíbrio. Dissertação (Mestrado em Engenharia Química). 
+FEQ/UNICAMP. Campinas, SP. 1996. 
+ 
+ 
+REEPMEYER, F.; REPKE, J.-U.; WOZNY, G. Analysis of the start-up process 
+for reactive distillation. Chemical Engineering Technology, v. 26, p. 81-86, 2003. 
+ 
+ 
+PRAUSNITZ,  J.  M.;  LICHTENTHALER,  R.  N.;  AZEVEDO,  E.  G.  Molecular 
+thermodynamics  of  fluid  phase  equilibria.  2nd  ed.,  Prentice-Hall,  Englewood 
+Cliffs, 1986. 
+ 
+ 
+RODRIGUES,  R.;  GUERRA,  C.  D.  W.;  SECCHI,  A.  R.;  LANSARIN,  M.  A. 
+Ensino de cinética e cálculo de reatores químicos utilizando o simulador EMSO. 
+In:  Congresso  Brasileiro  de  Engenharia  Química,  16,  2006,  Santos.  Anais, 
+Santos, 2006. 
+ 
+ 
+SANDLER,  S.  I.  Chemical and  Engineering  Thermodynamics. John Wiley  and 
+Sons, 1989. (Wiley Series in Chemical Engineering). 
+ 
+ 
+SECCHI, R. R.; BISCAIA Jr, E. C. Simulador dinâmico de processos orientado 
+por  equações  -  Instalação  -.  Escola  Piloto  Prof.  Giulio  Massarini.  PEQ-
+COPPE/UFRJ. Rio de Janeiro, RJ. Outubro, 2009. 
+ 
+ 
+SKOGESTAD,  S.;  MORARI,  M.  Understanding  the  dynamic  behavior  of 
+distillation columns. Ind. Eng. Chem. Res., 27, 1988. 
+ 
+ 
+SMITH, J. M.; VAN NESS, H. C.; ABBOTT, M. M. Introdução à Termodinâmica 
+da Engenharia Química. 7. ed. Tradução de Eduardo M. Queiroz e Fernando L. 
+P. Pessoa. Rio de Janeiro: LTC editora, 2007. 
+ 
+ 
+SOARES,  R.  P.  Desenvolvimento  de  um  simulador  genérico  de  processos 
+dinâmicos.  Dissertação 
+(Mestrado  em  Engenharia).  Departamento  de 
+Engenharia Química, Universidade Federal do Rio Grande do Sul, Porto Alegre, 
+2003. 
+ 
+ 
+STAUDT, P. B. Modelagem e Simulação Dinâmica de Colunas de Destilação. 
+Dissertação (Mestrado em Engenharia). DEQ/UFRGS. Porto Alegre, RS, 2007. 
+ 
+ 
+STEPHANOPOULOS,  G.  Chemical  process  control:  na  introduction  to  theory 
+and practice. New Jersey: Prentice Hall, 1984. 
+ 
+
+106 
+
+ 
+
+ 
+
+ 
+VRTECH.  Vrtherm,  a  software  to  predict  thermodynamics  and  physical 
+properties  of  complex  mixtures  and  pure  substances.  Disponível  em 
+<www.vrtech.com.br>, 2005. 
+ 
+ 
+WANG, L.; LI, P.; WOZNY, G.; WANG, S. A start-up model for simulation of bath 
+distillation  from  a  cold  state.  Computers  and  Chemical  Engineering,  v.  27,  p. 
+1485-1497, 2003. 
+
+ 
+
+107 
+
+

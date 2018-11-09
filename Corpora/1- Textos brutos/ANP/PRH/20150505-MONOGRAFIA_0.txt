@@ -1,0 +1,1912 @@
+ 
+ 
+
+ 
+ 
+ 
+
+UNIVERSIDADE FEDERAL DE SÃO CARLOS 
+
+CENTRO DE CIÊNCIAS EXATAS E DE TECNOLOGIA 
+
+DEPARTAMENTO DE ENGENHARIA QUÍMICA 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+Relatório Final: 
+
+ 
+ 
+
+Aplicação de superestruturas na integração energética de uma 
+
+biorrefinaria de cana-de-açúcar 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Aluna: Kênia Fernandes de Oliveira 
+
+ 
+
+Orientadora: Profa. Dra. Caliane Bastos Borba Costa 
+
+ 
+
+ 
+
+Abril de 2015 
+
+São Carlos-SP 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Este trabalho foi desenvolvido no Laboratório Kyatera da Área de Pesquisa em 
+
+Simulação e Controle de Processos do Departamento de Engenharia Química (DEQ) da 
+
+Universidade  Federal  de  São  Carlos  (UFSCar)  e  contou  com  o  apoio  financeiro  do 
+
+Programa  de  Recursos  Humanos  da  Agência  Nacional  do  Petróleo,  Gás  natural  e 
+
+Biocombustíveis (PRH-ANP/MCT Nº 44). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Resumo 
+
+ 
+
+O  setor  sucroalcooleiro  apresenta  importância  não  só  na  produção  de  açúcar  e 
+
+etanol  a  partir  da  cana-de-açúcar,  mas  também  na  geração  de  energia  elétrica.  Em 
+
+muitos  casos,  a  quantidade  de  energia  gerada  pela  queima  do  bagaço  supre  as 
+
+necessidades internas da planta industrial e possibilita a comercialização de excedentes. 
+
+Porém, o mesmo bagaço pode ser utilizado para produzir o chamado etanol de segunda 
+
+geração,  aumentando  a  produção  da  empresa.  Para  que  essa  produção  seja  mais 
+
+vantajosa do que a geração de energia elétrica, é necessário o desenvolvimento de uma 
+
+tecnologia  eficiente  e  que  seja  economicamente  viável.  Um  aspecto  importante  a  ser 
+
+considerado  para  viabilizar  este  novo  modo  de  produção  de  etanol  diz  respeito  à 
+
+integração  energética.  A  partir  de  uma  rede  de  trocadores  de  calor  (RTC),  haverá  o 
+
+aproveitamento  de  energia  térmica  entre  as  correntes  do  processo,  o  que  provoca  uma 
+
+diminuição no consumo de energia e na demanda de utilidades quentes e frias. Assim, 
+
+com  a  necessidade  de  uma  menor  quantidade  de  energia,  menos  bagaço  precisará  ser 
+
+queimado  e  o  excedente  poderá  ser  destinado  para  a  produção  de  etanol  de  segunda 
+
+geração.  O  trabalho  em  questão  tinha  como  meta  final  integrar  energeticamente  uma 
+
+biorrefinaria  de  cana-de-açúcar,  de  modo  que  uma  superestrutura  fosse  formada  e,  a 
+
+partir  dessa,  pudesse  se  levantar  qual  a  melhor  integração  em  termos  energéticos,  que 
+
+otimizaria um critério a ser estipulado para avaliar a RTC. Até o presente momento foi 
+
+realizada  uma  revisão  bibliográfica  dos  principais  conceitos  envolvidos  no  trabalho  e 
+
+iniciada  a  implementação  da  primeira  etapa  de  otimização  necessária  para  sintetizar  a 
+
+RTC  ótima  para  a  biorrefinaria.  O  projeto  não  foi  concluído  pois  a  elaboração  do 
+
+programa  que  torna  possível  levantar  esta  rede  estava  prevista  para  o  segundo  ano  de 
+
+trabalho. 
+
+ 
+
+ 
+
+ 
+
+Sumário: 
+
+ 
+
+1.Introdução ..................................................................................................................... 5 
+
+1.1 Objetivos .................................................................................................................. 7 
+
+2.Revisão bibliográfica .................................................................................................... 8 
+
+3.Atividades realizadas .................................................................................................. 18 
+
+4.Materiais e métodos .................................................................................................... 20 
+
+5.Resultados e discussão ................................................................................................ 24 
+
+6.Considerações finais ................................................................................................... 30 
+
+Referências Bibliográficas ............................................................................................ 32 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+1. Introdução 
+
+Um dos maiores desafios para a sociedade atual é atender a demanda crescente 
+
+de  energia  para  diversos  processos 
+
+industriais  e  de 
+
+transporte,  de  maneira 
+
+ambientalmente sustentável e economicamente viável. 
+
+Diante  desta  necessidade,  as  atenções  do  mundo  se  voltam  para  fontes 
+
+alternativas  de  energia,  em  especial  para  os  biocombustíveis,  como  o  etanol.  Os 
+
+biocombustíveis são combustíveis produzidos a partir de fontes renováveis (biomassa), 
+
+seja  esta  produzida  especificamente  com  esse  propósito,  nos  chamados  cultivos 
+
+energéticos, ou obtida a partir de resíduos orgânicos de algum processo, caracterizando 
+
+a biomassa residual. 
+
+O  etanol  como  biocombustível  líquido  aparece  como  um  dos  mais  importantes 
+
+recursos alternativos aos combustíveis fósseis. Sua produção no Brasil é feita a partir do 
+
+processamento e fermentação do caldo da cana-de-açúcar. 
+
+O  consumo  de  energia  não  só  na  indústria  do  etanol,  mas  como  em  qualquer 
+
+outra,  é  um  fator  importante  na  composição  final  dos  custos  dos  produtos.  Por  esse 
+
+motivo, as empresas procuram de forma intensa a redução no seu consumo energético. 
+
+Como  todo  processo  industrial  apresenta  correntes  que  precisam  ser  resfriadas  e 
+
+correntes que precisam ser aquecidas, uma possível solução é a integração energética da 
+
+planta,  de  maneira  que  o  consumo  de  utilidades  quentes  e  frias  seja  reduzido  e  as 
+
+necessidades energéticas da planta sejam supridas pelas próprias correntes do processo, 
+
+a partir de uma rede de trocadores de calor. 
+
+Um dos principais desafios encontrados para se realizar integração energética é a 
+
+escolha  de  quais  correntes  devem  ser  combinadas  e  qual  deve  ser  a  sequência  de 
+
+trocadores na rede (o problema apresenta uma natureza combinatorial). Esta dificuldade 
+
+cresce com o aumento do número de correntes no processo. 
+
+ 
+
+5 
+
+Para  sintetizar  uma  rede  de 
+
+trocadores  de  calor,  utilizam-se  métodos 
+
+matemáticos,  por  meio  de  programações  lineares  e  não  lineares,  ou  métodos  baseados 
+
+em  conceitos  termodinâmicos,  como  a  Tecnologia  Pinch.  A  obtenção  de  uma  rede  de 
+
+trocadores de calor envolve determinar o consumo de utilidades, a área de transferência 
+
+de calor, o número de trocadores e o custo global anual, bem como as combinações de 
+
+correntes de processo em cada trocador de calor. 
+
+O  setor  sucroalcooleiro  apresenta  importância  não  só  na  produção  de  açúcar  e 
+
+etanol a partir da cana-de-açúcar, mas também na geração de energia elétrica. O bagaço 
+
+da cana é queimado em caldeiras e o vapor produzido movimenta turbinas, provocando 
+
+tal geração. Desta maneira, os gastos da usina são reduzidos e em muitos casos  há um 
+
+excedente  de  energia  gerada  pela  queima  (isto  é,  a  quantidade  de  energia  produzida 
+
+excede as necessidades internas da planta industrial), que pode ser comercializado. 
+
+Assim,  a  queima  do  bagaço  para  geração  de  energia  elétrica  é,  atualmente,  um 
+
+procedimento  favorável  para  a  indústria  deste  setor  de  biocombustíveis.  Porém,  o 
+
+mesmo bagaço pode ser utilizado para produzir o chamado etanol de segunda geração, 
+
+aumentando a produção da empresa. Para que essa produção seja mais vantajosa do que 
+
+a  geração  de  energia  elétrica,  é  necessário  o  desenvolvimento  de  uma  tecnologia 
+
+eficiente e que seja economicamente viável. 
+
+Deste modo, várias pesquisas vêm sendo realizadas e a integração energética da 
+
+biorrefinaria  certamente  tem  um  papel  fundamental  para  que  este  novo  método  de 
+
+produção de etanol seja implantado. Isso porque, a partir de uma rede de trocadores de 
+
+calor, haverá o aproveitamento de energia térmica entre as correntes do processo, o que 
+
+provoca uma diminuição no consumo de energia e na demanda de utilidades quentes e 
+
+frias.  Assim,  com  a  necessidade  de  uma  menor  quantidade  de  energia,  menos  bagaço 
+
+ 
+
+6 
+
+precisará ser queimado e o excedente poderá ser destinado para a produção de etanol de 
+
+segunda geração. 
+
+Vale  ressaltar  que,  além  dos  aspectos  econômicos  que  envolvem  a  redução  no 
+
+gasto com energia e utilidades e o aumento no lucro devido à maior produção de etanol, 
+
+os  benefícios  ambientais  são  de  suma  importância,  uma  vez  que  as  indústrias  devem 
+
+atender  à  legislação  vigente,  evitando  impactos  ambientais  e  buscando  que  seus 
+
+processos sejam os mais sustentáveis possíveis. 
+
+1.1. Objetivo 
+
+O  presente  trabalho  tinha  como  meta  final  integrar  energeticamente  uma 
+
+biorrefinaria  de  cana-de-açúcar,  pela  otimização  do  critério  estipulado  para  avaliar  a 
+
+rede de trocadores de calor e estruturar a rede ótima.  
+
+Os  objetivos  específicos  envolviam  a  aquisição  de  dados  das  correntes  que 
+
+deveriam sofrer troca térmica, como: temperatura final e inicial, vazão mássica, tipo de 
+
+corrente, capacidade calorífica, variação de entalpia e capacidade térmica; determinação 
+
+da função objetivo que seria otimizada; seleção da plataforma para simulação e criação 
+
+de  superestruturas  na  mesma;  avaliação  da  integração  energética  na  biorrefinaria  e 
+
+projeto da configuração da rede de trocadores de calor. 
+
+É válido ressaltar que os objetivos não foram plenamente cumpridos visto que o 
+
+projeto  foi  programado  para  ser  executado  em  um  período  de  2  anos,  o  que  não  foi 
+
+possível diante do encerramento antecipado do mesmo. 
+
+ 
+
+ 
+
+ 
+
+7 
+
+2. Revisão bibliográfica 
+
+O  etanol  como  biocombustível  líquido  aparece  como  um  dos  mais  importantes 
+
+recursos alternativos aos combustíveis fósseis. Sua produção no Brasil é feita a partir do 
+
+processamento e fermentação do caldo da cana-de-açúcar. 
+
+A  produção  de  etanol  a  partir  da  cana-de-açúcar  se  inicia  com  a  colheita  e 
+
+limpeza  da  matéria-prima.  A  colheita  da  cana  pode  ser  realizada  manualmente  ou  por 
+
+cortadeiras  mecânicas.  Após  esta  operação,  a  cana  é  transportada  para  a  usina 
+
+predominantemente  por  meio  de  caminhões.  A  cana  chega  à  usina  com  terra  e  outras 
+
+impurezas, que podem diminuir o rendimento do processo ao aumentar a proliferação de 
+
+microorganismos  concorrentes  e  prejudicar  as  etapas  de  purificação  do  caldo.  Assim, 
+
+inicialmente,  a  cana  passa  por  uma  lavagem  com  água  ou  ar.  A  cana  limpa  é 
+
+encaminhada para mesas de distribuição, sendo nivelada pela ação dos niveladores. Em 
+
+seguida, as células da cana são abertas utilizando-se desfibradores, que são uma série de 
+
+martelos giratórios que promovem o esmagamento da cana com o objetivo de facilitar a 
+
+extração dos açúcares na etapa seguinte. 
+
+A  extração  dos  açúcares  contidos  nos  colmos  da  cana-de-açúcar  pode  ser 
+
+realizada  tanto  pelo  emprego  de  moendas  quanto  difusores.  O  bagaço  gerado  no 
+
+processo  segue  para  a  caldeira  onde  será  queimado  para  produzir  energia  para  toda  a 
+
+usina,  com  possibilidade  de  excedente  de  energia,  dependendo  da  pressão  e  da 
+
+eficiência da caldeira utilizada. 
+
+As  etapas  seguintes  de  tratamento  físico  e  químico  do  caldo  têm  o  objetivo  de 
+
+purificar  e  concentrar  os  açúcares  presentes  neste,  para  possibilitar  alto  rendimento  na 
+
+etapa  de  fermentação.  O  processo  envolve  eliminar  os  compostos  que  atuam  como 
+
+inibidores na fermentação, mantendo os açúcares em uma faixa de concentração na qual 
+
+o  substrato  não  esteja  excessivamente  concentrado,  de  modo  a  inibir  o  processo,  nem 
+
+ 
+
+8 
+
+muito  diluído,  tornando  necessário  um  volume  maior  das  dornas  de  fermentação  e 
+
+dando  origem  a  um  vinho  de  baixo  grau  alcoólico,  o  que  demanda  maior  energia  na 
+
+etapa de destilação. No tratamento  físico são eliminadas as partículas em  suspensão, a 
+
+partir do uso de peneiras (que visam remover os sólidos insolúveis de maior diâmetro) e 
+
+de hidrociclones (que permitem eliminar as partículas menores). O tratamento químico 
+
+visa remover as impurezas presentes no caldo na forma solúvel, coloidal e insolúvel. O 
+
+processo  consiste  na  coagulação  e  floculação  destas  e  posterior  eliminação  por 
+
+processos de separação física. Normalmente, isso é realizado mediante aquecimento do 
+
+caldo,  ajustes  no  pH  e  adição  de  agentes  coagulantes  e  floculantes.  Outra  função  do 
+
+tratamento químico é a neutralização do caldo. 
+
+O caldo clarificado obtido após o tratamento químico deve ser concentrado antes 
+
+de seguir para a etapa de fermentação. A concentração é feita em evaporadores múltiplo 
+
+efeito com cinco ou seis estágios operando de forma co-corrente (na qual vapor e caldo 
+
+fluem  na  mesma  direção),  contra-corrente  (na  qual  vapor  e  caldo  fluem  em  sentidos 
+
+opostos) ou mista. Na sequência, o caldo é enviado para as dornas de fermentação. 
+
+O processo de fermentação alcoólica da sacarose nas plantas industriais utiliza a 
+
+levedura  Saccharomyces  cerevisiae.  A  formação  do  etanol  ocorre  em  condições 
+
+anaeróbicas  e  serve  como  meio  de  obtenção  de  energia  para  a  levedura.  De  forma 
+
+resumida, pode-se dizer que a sacarose, na presença de levedura, forma etanol e CO2. A 
+
+fermentação  alcoólica,  em  geral,  é  realizada  nas  usinas  em  um  processo  de  batelada 
+
+alimentada,  conhecido  como  processo  Melle-Boinot,  ou  em  um  processo  contínuo. 
+
+Ambos  os  processos  apresentam  vantagens  e  desvantagens,  porém,  por  questões 
+
+históricas, o processo Melle-Boinot é mais amplamente utilizado nas usinas brasileiras. 
+
+O vinho oriundo do processo Melle-Boinot possui concentração de etanol entre 7 
+
+e 10% em massa. Já o oriundo do processo contínuo apresenta concentração e entre 8 e 
+
+ 
+
+9 
+
+12% em massa. Para ser comercializado como etanol hidratado combustível (EHC), este 
+
+deve  possuir  teor  alcoólico  entre  92,5  e  93,8%  em  massa  (BRASIL,  2011).  Por  esse 
+
+motivo, o vinho é enviado para um trem de colunas de destilação, no qual será obtido o 
+
+EHC, além da vinhaça, do álcool de segunda, do óleo fúsel e da flegmaça. 
+
+Como visto anteriormente, o bagaço da cana é utilizado para geração de vapor e 
+
+energia  elétrica,  a  partir  da  queima  em  caldeiras.  Porém,  este  mesmo  bagaço  pode  ser 
+
+utilizado para produzir o chamado etanol de segunda geração. Esse é produzido a partir 
+
+de materiais lignocelulósicos, como é o caso do bagaço da cana-de-açúcar. O bagaço é 
+
+constituído  principalmente  por  celulose,  hemicelulose  e  lignina.  A  hidrólise  da 
+
+biomassa lignocelulósica visa a quebrar a celulose e, possivelmente, a hemicelulose em 
+
+seus açúcares constituintes (pentoses e hexoses). Estes açúcares podem ser fermentados, 
+
+gerando  etanol.  Tal  hidrólise  pode  ser  realizada  de  duas  maneiras  distintas:  hidrólise 
+
+ácida  (empregando  ácido  diluído  ou  ácido  concentrado)  e  enzimática.  Na  hidrólise 
+
+enzimática  empregam-se  enzimas  que  ocorrem  na  natureza,  chamadas  celulases. 
+
+Entretanto,  para  o  processo  ser  efetivo,  as  enzimas  devem  ter  acesso  ao  material 
+
+(celulose).  Para  isso,  é  necessário  que  a  biomassa  passe  por  um  pré-tratamento  para 
+
+retirar a lignina e expor a celulose ao ataque da enzima. Existem diversos tipos de pré-
+
+tratamento e alguns são apresentados a seguir: 
+
+  Explosão a vapor: Neste método a biomassa é tratada com vapor saturado a alta 
+
+pressão  e  então  submetida  a  uma  descompressão  explosiva.  Neste  processo,  a 
+
+lignina  e  a  hemicelulose  se  degradam,  aumentando  o  acesso  a  celulose  (SUN; 
+
+CHENG, 2002). A adição de H2SO4 ou CO2 ao vapor pode aumentar a eficiência 
+
+da hidrólise, diminuir a formação de compostos inibidores e aumentar a remoção 
+
+da hemicelulose. 
+
+ 
+
+10 
+
+  Explosão com vapor de amoníaco: Neste processo emprega-se amônia líquida a 
+
+alta  pressão  e  temperatura  e,  após  um  período  de  tempo,  a  pressão  é  reduzida 
+
+drasticamente.  A  composição  do  material  permanece  inalterada  após  o 
+
+tratamento  com  amônia,  dado  que  esta  não  solubiliza  nenhum  composto.  Este 
+
+tratamento  tem  a  vantagem  de  não  gerar  compostos  inibidores  do  processo  de 
+
+fermentação. 
+
+  Organosolv:  O  método  originou-se  na  indústria  de  celulose,  na  qual  há  o 
+
+interesse  em  separar  a  lignina  da  madeira.  O  emprego  de  solventes  orgânicos 
+
+passíveis de serem recuperados foi adotado visando eliminar o uso de compostos 
+
+químicos  agressivos.  A  fase  líquida  obtida  no  processo  contém  o  solvente,  a 
+
+lignina  dissolvida,  a  hemicelulose  e  outros  compostos  solúveis  que  foram 
+
+gerados  durante  o  processo  de  degradação  da  celulose  e  da  hemicelulose.  O 
+
+solvente pode ser recuperado em um flash, no qual se obtém também os demais 
+
+compostos na forma sólida. Estes compostos são dissolvidos em água e a lignina 
+
+é separada em filtros (por ser insolúvel em água). Os açúcares da hemicelulose 
+
+podem ser purificados e utilizados (PAN et al., 2005). 
+
+  Extração  alcalina:  Na  extração  alcalina  a  lignina  é  removida  pela  ação  de  uma 
+
+base, normalmente NaOH. Acredita-se que a remoção ocorra pela saponificação 
+
+dos ésteres que ligam a hemicelulose à lignina e outros componentes. 
+
+Desta  maneira,  nota-se  que  o  bagaço  da  cana  pode  ser  utilizado  para  gerar 
+
+energia  elétrica  e  também  para  produzir  etanol,  o  que  consequentemente  aumenta  a 
+
+produção e lucro da indústria deste setor. Para que essa produção seja mais vantajosa do 
+
+que  a  geração  de  energia  elétrica,  é  necessário  o  desenvolvimento  de  uma  tecnologia 
+
+eficiente e que seja economicamente viável. A fim de desenvolver esta nova tecnologia 
+
+de produção, pode-se utilizar o conceito de integração energética. 
+
+ 
+
+11 
+
+A integração energética visa o aproveitamento da energia térmica das correntes 
+
+do  processo,  a  partir  da  utilização  de  equipamentos  denominados  trocadores  de  calor. 
+
+Esses  podem  ser  classificados  de  diversas  maneiras.  De  forma  básica,  duas 
+
+classificações  são  interessantes:  a  que  divide  os  trocadores  de  acordo  com  o  modo  de 
+
+transferência de calor (contato direto e indireto) e a que os classifica de acordo com o 
+
+modo de construção do equipamento. 
+
+Em um trocador de calor de contato indireto, os fluidos permanecem separados e 
+
+o  calor  é  transferido  continuamente  através  de  uma  parede  que  apresenta  alta 
+
+condutibilidade térmica. Os trocadores de contato indireto classificam-se em: trocadores 
+
+de  transferência  direta  e  de  armazenamento.  Nos  de  transferência  direta,  há  um  fluxo 
+
+contínuo de calor do fluido quente ao frio através da parede que os separa. Este trocador 
+
+é  designado  como  um  trocador  de  calor  de  recuperação,  ou  simplesmente  como  um 
+
+recuperador.  Alguns  exemplos  de  trocadores  de  transferência  direta  são  trocadores  de: 
+
+placa, tubular, e de superfície estendida. Nos trocadores de armazenamento, os fluidos 
+
+percorrem  alternativamente  as  mesmas  passagens  de  troca  de  calor.  A  superfície  de 
+
+transferência  de  calor  geralmente  é  de  uma  estrutura  chamada  matriz.  Em  caso  de 
+
+aquecimento, o fluido quente atravessa a superfície de transferência de calor e a energia 
+
+térmica  é  armazenada  na  matriz.  Posteriormente,  quando  o  fluido  frio  passa  pelas 
+
+mesmas  passagens,  a  matriz  “libera”  a  energia  térmica  (na  refrigeração  ocorre  o 
+
+inverso). Este trocador também é chamado regenerador. 
+
+Já nos trocadores de contato direto, os fluidos se misturam. Aplicações comuns 
+
+destes  trocadores  envolvem  transferência  de  massa  além  de  transferência  de  calor. 
+
+Aplicações que envolvem apenas transferência de calor são raras. 
+
+Quanto  ao  modo  de  construção,  pode-se  citar  o  trocador  tubular,  de  placas,  de 
+
+superfície estendida, regenerativos, entre outros. Os trocadores tubulares são geralmente 
+
+ 
+
+12 
+
+construídos  com  tubos  circulares,  existindo  uma  variação  de  acordo  com  o  fabricante. 
+
+São usados para aplicações de transferência de calor líquido/líquido. Eles trabalham de 
+
+maneira ótima em  aplicações de transferência de calor  gás/gás, principalmente quando 
+
+pressões  e/ou  temperaturas  operacionais  são  muito  altas  e  nenhum  outro  tipo  de 
+
+trocador pode operar. Estes trocadores podem ser classificados como casco e tubo, tubo 
+
+duplo  e  de  espiral.  O  tipo  mais  utilizado  industrialmente  é  o  trocador  casco  e  tubo, 
+
+devido  a  sua  construção  resistente,  flexibilidade  de  projeto  e  fácil  adaptação  às 
+
+condições  operacionais  do  processo.  Este  trocador  é  construído  com  tubos  e  uma 
+
+carcaça.  Um  dos  fluidos  passa  por  dentro  dos  tubos,  e  o  outro  pelo  espaço  entre  a 
+
+carcaça e os tubos. Já o trocador de tubo duplo consiste de dois tubos concêntricos, onde 
+
+um dos fluidos escoa pelo tubo interno e o outro pela parte anular entre tubos. 
+
+O primeiro passo no projeto de um trocador de calor, antes do dimensionamento 
+
+termo-hidráulico,  consiste  no  estabelecimento  dos  requisitos  a  serem  obedecidos  pela 
+
+unidade. Quanto à transferência de calor, deve-se conhecer as especificações do fluido, 
+
+as temperaturas de entrada e saída (ou faixas de temperaturas possíveis). Quanto à perda 
+
+de  carga,  essa  deve  ficar  dentro  dos  limites  estabelecidos,  procurando-se  sempre,  para 
+
+melhor  troca  de  calor,  usar  toda  perda  de  carga  disponível.  Além  disso,  pode  haver 
+
+restrições  quanto  ao  comprimento,  altura,  largura,  volume  ou  peso  de  um  trocador. 
+
+Critérios  como  manutenção  e  custo  também  devem  ser  considerados.  Após  a 
+
+especificação  preliminar  do  trocador,  procura-se  dimensioná-lo  de  modo  que  satisfaça 
+
+simultaneamente  os  requisitos  de  transferência  de  calor  e  as  perdas  de  carga 
+
+admissíveis. Maiores velocidades dos fluidos, que implicam em maiores perdas de carga 
+
+e  potências  de  bombeamento,  resultam  em  maiores  coeficientes  de  película,  melhor 
+
+troca de calor e, consequentemente, menor necessidade de área de troca (o que demanda 
+
+ 
+
+13 
+
+trocadores  menores  e  mais  baratos).    De  maneira  geral,  o  dimensionamento  de  um 
+
+trocador de calor envolve determinar o coeficiente de película e a perda de carga. 
+
+A síntese de uma rede de trocadores de calor (RTC) envolve estruturar as trocas 
+
+térmicas  entre  as  correntes  do  processo,  escolher  quais  fluidos  irão  trocar  calor  e 
+
+configurar  a  rede  dos  equipamentos  envolvidos.  O  problema  a  ser  resolvido  para  a 
+
+síntese de uma RTC pode ser elaborado da seguinte maneira: diante de um conjunto de 
+
+correntes  que  precisam  ser  aquecidas,  um  conjunto  de  correntes  que  precisam  ser 
+
+resfriadas  e  um  número  de  utilidades  quentes  e  frias  disponíveis  para  aquecimento  e 
+
+resfriamento  de  correntes,  qual  a  melhor  combinação  possível  entre  as  diferentes 
+
+correntes  e  utilidades  que  proporciona  o  ótimo  de  algum  critério,  como:  consumo 
+
+mínimo  de  utilidades,  área  mínima  de  transferência  de  calor,  número  mínimo  de 
+
+trocadores, custo global anual mínimo, dentre outros? Nota-se que o problema apresenta 
+
+natureza combinatorial  e quanto  maior o número de correntes  envolvidas no processo, 
+
+mais complexo ele se torna. Existe ainda a possibilidade de ocorrer mudança de fase em 
+
+uma  ou  mais  correntes  do  processo,  o  que  pode  ser  um  fator  complicador,  já  que  as 
+
+condições  de  operação  para  um  trocador  envolvendo  gases  e  líquidos  são  muito 
+
+diferentes. 
+
+Diante  da  importância  das  redes  de  trocadores  de  calor  no  custo  global  dos 
+
+processos industriais, muito se tem estudado sobre o assunto. Houve, no passado, duas 
+
+escolas para síntese de RTC. A primeira utilizava princípios termodinâmicos somados a 
+
+regras  heurísticas,  com  destaque  para  a  Tecnologia  Pinch.  Já  a  segunda  utilizava 
+
+técnicas matemáticas de programação linear e não linear (programação matemática). No 
+
+final  dos  anos  1990  e  início  do  novo  século,  surgiu  um  terceiro  grupo  de  métodos:  os 
+
+métodos  heurísticos.  Algumas  técnicas  como  os  Algoritmos  Genéticos  e  Simulated 
+
+Annealing  foram  empregadas.  Atualmente,  outras  técnicas  heurísticas  têm  sido 
+
+ 
+
+14 
+
+propostas, como método do enxame de partículas e colônia de formigas, dentre outras. 
+
+Também  surgiram  métodos  híbridos,  combinando  programação  matemática,  Análise 
+
+Pinch e métodos heurísticos (RAVAGNANI; SUÁREZ, 2012). 
+
+Para classificar os diferentes métodos de síntese de RTC é conveniente dividi-los 
+
+em dois grupos: o dos métodos sequenciais e o dos métodos simultâneos. 
+
+Os métodos sequenciais consistem na decomposição do problema da síntese em 
+
+uma  série  de  subproblemas  com  o  objetivo  de  reduzir  o  esforço  computacional  na 
+
+solução,  podendo  ainda  ser  divididos  em  duas  subcategorias:  (1)  método  da  Análise 
+
+Pinch,  que  utiliza  conceitos  termodinâmicos  e  regras  heurísticas,  (2)  métodos  de 
+
+programação  matemática,  que  são  baseados  na  solução  sequencial  de  subproblemas 
+
+lineares e não lineares. 
+
+Inicialmente  o  problema  é  dividido  em  uma  série  de  subproblemas  com 
+
+diferentes  metas,  baseadas  em  regras  heurísticas.  Geralmente,  as  metas  dos 
+
+subproblemas são apresentadas na seguinte ordem de importância: (1) mínimo consumo 
+
+de  utilidades,  (2)  número  mínimo  de  unidades  de  troca  térmica,  (3)  mínimo  custo  de 
+
+área, ou seja, mínimo custo fixo da rede. Para a solução do terceiro subproblema, uma 
+
+superestrutura  pode  ser  montada  com  base  na  resposta  ótima  obtida  do  segundo 
+
+subproblema.  É  importante  ressaltar  que  esta  heurística  não  garante  a  síntese  de  uma 
+
+rede com o custo total anual mínimo, uma vez que a rede final será a soma de todas as 
+
+sub-redes ótimas, o que  não necessariamente fornece uma rede  global ótima. (SILVA, 
+
+20031 apud SILVA, 2009). 
+
+Já os métodos simultâneos não utilizam a decomposição do problema e baseiam-
+
+se  unicamente  na  definição  de  superestruturas  para  a  síntese  da  rede  de  trocadores  de 
+
+                                                           
+1  SILVA,  A.  P.,  2003,  Síntese  de  Redes  de  Trocadores  de  Calor  Utilizando  Algoritmos  Genéticos. 
+Dissertação de Mestrado, Programa de Pós-Graduação em Engenharia Química, Universidade Estadual de 
+Maringá, Maringá, PR, Brasil. 
+ 
+
+15 
+
+ 
+
+calor.  O  problema  é  formulado  e  resolvido  em  uma  única  etapa,  considerando  a 
+
+importância dos custos de utilidades e de equipamentos simultaneamente. Portanto, para 
+
+um  dado  espaço  de  soluções,  definido  pela  superestrutura,  é  possível  obter-se  uma 
+
+solução  ótima  ou  muito  próxima  da  ótima.  Nos  métodos  simultâneos,  via  de  regra,  a 
+
+função objetivo a ser minimizada é a custo total anual mínimo. 
+
+Para sintetizar a rede de trocadores de calor, além de conceitos termodinâmicos e 
+
+técnicas  de  programação  matemática,  utilizam-se  métodos  de  otimização.  Em  uma 
+
+definição simples, otimizar consiste em encontrar a melhor solução (o valor ótimo) para 
+
+problemas em que a qualidade de sua resposta pode ser medida por um  número. Estes 
+
+problemas aparecem em praticamente todas as áreas do conhecimento e a quantidade de 
+
+ferramentas  disponíveis  para  auxiliar nesta tarefa é quase tão  grande quanto  o número 
+
+de aplicações. (VIEIRA; BISCAIA, 20022 apud SILVA, 2009). 
+
+Para resolver um problema deste tipo, é preciso considerar dois componentes. O 
+
+primeiro  é  o  espaço  de  busca,  no  qual  são  consideradas  todas  as  possibilidades  de 
+
+solução  de  um  determinado  problema.  O  outro  é  a  função  objetivo,  que é  uma  função 
+
+matemática  que  associa  cada  ponto  no  espaço  de  soluções  a  um  número  real, 
+
+possibilitando  avaliar  os  membros  do  espaço  de  busca.  Este  número  permite  medir  a 
+
+qualidade  de  uma  resposta:  no  problema  de  minimização,  quanto  menor  o  valor  da 
+
+função objetivo, melhor a resposta. No problema de maximização, o inverso ocorre. 
+
+A questão fundamental está no fato de que nem sempre o "ótimo" é encontrado 
+
+facilmente,  num  único  cálculo.  É  necessário  um  processo  sistemático  de  busca.  Um 
+
+procedimento  iterativo  de  cálculos  que,  passo  a  passo,  de  candidato  a  candidato,  seja 
+
+possível ir melhorando a seleção até que o valor ótimo seja encontrado, ou até que  um 
+
+critério de parada esteja satisfeito. Esse procedimento nada mais é do que um método de 
+
+                                                           
+2  VIEIRA,  R.  C.  e  BISCAIA  JR.,  E.  C.,  2002,  Métodos  Heurísticos  de  Otimização.  Notas  de  aula  da 
+Escola Piloto Virtual do PEQ/COPPE/UFRJ, Disponível sob consulta: biscaia@peq.coppe.ufrj.br. 
+
+16 
+
+ 
+
+otimização  descrito  por  um  algoritmo.  A  construção  de  bons  algoritmos  é  uma  das 
+
+principais etapas da otimização. 
+
+Para validar a integridade de um projeto e sua operabilidade prática é necessária 
+
+a simulação de toda a planta industrial com a utilização de modelos rigorosos. À medida 
+
+que um  processo  torna-se mais complexo, é demandado um  número maior de técnicas 
+
+para análise dos problemas associados com seu projeto e operação. Análises modernas 
+
+de  problemas  de  processos  envolvem  alguma  forma  de  modelagem  matemática. 
+
+Existem  vários  modelos  matemáticos  para  um  mesmo  sistema,  cada  um  ajustado  para 
+
+resolver um problema particular associado ao sistema, onde o grau de detalhe requerido 
+
+varia  de  acordo  com  o  problema  a  ser  resolvido  e  a  quantidade  de  dados  disponíveis. 
+
+Quanto  mais  rigorosa  for  a  descrição  de  um  processo,  maior  e  mais  complexo  será  o 
+
+conjunto  de  equações  e  mais  difícil  seu  tratamento.  Neste  caso,  é  possível  reduzir  as 
+
+equações  para  um  conjunto  menos  complexo  que,  em  termos  práticos,  fornecerá 
+
+soluções dentro da precisão dos dados proporcionados. 
+
+As técnicas de otimização e simulação, quando aliadas, podem assegurar que as 
+
+soluções implementadas são ou estão próximas dos resultados ótimos. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+17 
+
+3. Atividades realizadas 
+
+Durante  o  período  coberto  pelo  relatório  em  questão,  foram  estudados  de 
+
+maneira detalhada os seguintes temas: 
+
+  Processos envolvidos na produção de etanol de primeira e segunda geração; 
+
+  Operações unitárias de trocas térmicas; 
+
+ 
+
+Integração energética: principais conceitos envolvidos, métodos utilizados (com 
+
+ênfase nos métodos matemáticos que foram aplicados neste trabalho), síntese de 
+
+uma rede de trocadores de calor; 
+
+  Otimização de processos; 
+
+  Simulação de processos; 
+
+  Estudo  de  processo  específico  e  determinação  das  correntes  a  participarem  da 
+
+integração energética, com suas propriedades, além da definição de qual critério 
+
+seria utilizado para a função objetivo da otimização; 
+
+  Determinação da plataforma utilizada para simulação e estudo da linguagem de 
+
+programação da mesma; 
+
+  Definição da estratégia de programação utilizada. 
+
+O cronograma proposto para o primeiro ano de pesquisa é apresentado na Tabela 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+1. 
+
+ 
+
+18 
+
+Tabela 1 – Cronograma proposto para as atividades a serem realizadas no período a 
+
+que esse relatório se refere. 
+
+ATIVIDADE 
+
+TRIMESTRE 
+
+1º 
+
+2º 
+
+3º 
+
+4º 
+
+Estudo dos processos envolvidos na produção de etanol de 
+primeira e segunda geração 
+
+Estudo das operações unitárias de trocas térmicas 
+
+Estudo dos conceitos envolvidos na integração energética 
+
+Elaboração do Relatório Parcial 
+
+Estudo sobre otimização e simulação de processos 
+
+Determinação das correntes a serem integradas, suas 
+propriedades e definição do critério a ser otimizado 
+
+Determinação da plataforma a ser utilizada e estudo da 
+linguagem de programação da mesma 
+
+Definição da estratégia de otimização a ser utilizada 
+
+Elaboração do Relatório Final 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Nota-se que todas as atividades foram devidamente realizadas e, além disso, foi 
+
+possível iniciar a elaboração do programa, o que estava previsto apenas para o segundo 
+
+ano de pesquisa.  
+
+Determinou-se  que,  inicialmente,  seria  utilizado  o  método  seqüencial  via 
+
+programação  matemática  para  síntese  da  rede  de  trocadores  de  calor  (RTC).  Desta 
+
+maneira, a implementação do programa na plataforma selecionada foi iniciada e a etapa 
+
+que  diz  respeito  à  modelagem  e  otimização  do  primeiro  critério  (mínimo  consumo  de 
+
+utilidades) foi quase concluída. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+19 
+
+4. Materiais e métodos 
+ 
+
+ 
+A plataforma utilizada para elaboração do programa foi o EMSO  (Environment 
+
+for  Modeling,  Simulation,  and  Optimization).  O  termo  EMSO  significa  Ambiente  de 
+
+Modelagem,  Simulação  e  Otimização.  É  um  ambiente  gráfico  completo,  no  qual  o 
+
+usuário  pode  modelar  complexos  processos  dinâmicos  ou  em  estado  estacionário  pela 
+
+simples seleção e conexão de blocos dos modelos. O usuário, ainda, pode desenvolver 
+
+novos modelos utilizando a linguagem de modelagem do EMSO ou utilizar outros que 
+
+foram  feitos  a  partir  do  EMSO  Library  (EML).  A  EML  é  uma  biblioteca  de  código 
+
+aberto de modelos escritos na linguagem de modelagem do EMSO. Dentre as vantagens 
+
+da  utilização  do  EMSO  é  possível  citar:  a  linguagem  de  programação  orientada  a 
+
+objetos,  que  permite  o  usuário  criar  modelos  complexos  ou  específicos  a  partir  dos 
+
+padrões, disponibilidade do simulador em plataformas do Windows®, Linux® e Unix® 
+
+e licença gratuita (OLIVEIRA, 2014). Como será apresentado no item de Resultados e 
+
+Discussão, a plataforma EMSO não se mostrou plenamente adequada para os passos da 
+
+programação. 
+
+Para  obter  a  RTC  ótima  para  a  biorrefinaria,  foi  utilizado  o  método  sequencial 
+
+via  programação  matemática.  Este  método,  como  citado  anteriormente,  apresenta  as 
+
+seguintes  regras  de  prioridade  em  objetivos:  1)  mínimo  consumo  de  utilidades,  2) 
+
+mínimo  número  de  trocadores  de  calor  e  3)  mínimo  custo  fixo  da  rede.  Seguindo  a 
+
+heurística  apresentada  e  sabendo  que  as  regras  possuem  precedência  uma  sobre  as 
+
+outras (regra 1 tem precedência sobre a regra 2, que, por sua vez, tem precedência sobre 
+
+a  regra  3),  o  objetivo  era  considerar  primeiramente  uma  rede  candidata  com  mínimo 
+
+custo de utilidades. Entre as redes com este mínimo custo seriam selecionadas aquelas 
+
+com  mínimo  número  de  unidades  de  troca  térmica  e,  entre  estas,  seria  selecionada 
+
+aquela com menor custo de investimento. 
+
+ 
+
+20 
+
+No período coberto pelo relatório, foi iniciada a implementação do modelo que 
+
+diz  respeito  à  otimização  do  primeiro  critério:  custo  mínimo  de  utilidades.  O  modelo 
+
+utilizado 
+
+foi  proposto  por  Papoulias  e  Grossmann 
+
+(1983) 
+
+(PAPOULIAS; 
+
+GROSSMANN, 19833 apud RAVAGNANI; SUÁREZ, 2012). 
+
+O  programa  foi  implementado  de  maneira  que  se  encontre  a  RTC  ótima 
+
+independente  do  número  de  correntes  fornecidas  pelo  usuário,  que  deve  fornecer  ao 
+
+programa  a  temperatura  inicial,  a  temperatura  final  e  a  capacidade  térmica  de  cada 
+
+corrente, além da variação mínima de temperatura entre as correntes (∆Tmin). Dispondo 
+
+de tais informações e seguindo o modelo já mencionado, a primeira etapa consistiu na 
+
+elaboração  da  tabela  problema  (RAVAGNANI;  SUÁREZ,  2012),  que  mostra  a 
+
+quantidade de energia envolvida para cada corrente, em cada intervalo de temperatura. 
+
+Inicialmente, definiu-se o tipo de corrente: quente (quando a temperatura inicial 
+
+é maior que a final) ou fria (quando a temperatura inicial é menor que a final).  
+
+Para  calcular  os  intervalos  de  temperatura  consideraram-se  as  escalas  de 
+
+temperatura  quentes  e  frias  de  maneira  que  sua  separação  final  fosse  igual  a  ∆Tmin. 
+
+Neste caso, a escala de temperaturas para as correntes quentes foi diminuída em ∆Tmin/2 
+
+e a escala para as correntes frias aumentada em ∆Tmin/2. 
+
+As  quantidades  de  calor  (Qi,k)  que  cada  corrente  (i)  cede  ou  elimina  em  cada 
+
+intervalo de temperatura (k) foram calculadas por: 
+
+                                                
+
+                                                                        (1) 
+
+Onde: 
+
+CPi: capacidade térmica da corrente i; 
+
+∆Tk : incremento de temperatura que forma o intervalo k. 
+                                                           
+3 PAPOULIAS, S. A.; GROSSMANN, I. E. A structural optimization approach in process synthesis. Part 
+II: Heat recovery networks. Computers & Chemical Engineering, New York, v.7, no.6, p. 707, 1983. 
+
+21 
+
+ 
+
+TkCPikQi,Elaborada  a  tabela  problema,  a  etapa  seguinte  consistiu  na  otimização  do 
+
+primeiro critério (custo mínimo de utilidades). Neste caso, é formulado um problema de 
+
+programação linear que  toma a forma de um  problema de transbordo (RAVAGNANI; 
+
+SUÁREZ,  2012),  no  qual  as  correntes  quentes  são  os  nós  fonte,  as  frias  são  os  nós 
+
+destino  e  o  calor  pode  ser  considerado  uma  mercadoria  que  deve  ser  transportada  das 
+
+fontes aos destinos através de armazéns intermediários, que neste caso dizem respeito a 
+
+cada um dos intervalos de temperatura que garantem uma troca de calor.  
+
+Em  determinado  intervalo,  o  calor  que  não  pode  ser  transferido  para  uma 
+
+corrente  fria  (porque  esta  corrente  já  obteve  todo  calor  que  precisava)  é  transferido 
+
+como  calor  residual  (Rk)  ao  intervalo  de  temperatura  seguinte.  Nos  intervalos  em  que 
+
+esteja disponível uma utilidade quente, se as correntes do processo disponíveis não são 
+
+capazes  de  fornecer  o  calor  suficiente  para  satisfazer  termicamente  as  correntes  frias, 
+
+então  a  utilidade  quente  é  quem  deve  fornecer  tal  calor.  Se  no  último  intervalo  de 
+
+temperatura existe um calor residual, este deverá ser transferido para a utilidade fria. 
+
+A Figura 1 mostra a representação matemática do modelo. 
+
+Figura 1: Balanço de energia no intervalo de temperatura k. 
+
+Fonte: Reproduzido de RAVAGNANI; SUÁREZ, 2012. 
+
+ 
+
+22 
+
+ 
+
+O objetivo  é, portanto,  minimizar o custo  das utilidades quentes e frias, sujeito 
+
+aos balanços de energia, como é mostrado nas equações a seguir: 
+
+                                     
+
+                                               (2) 
+
+           
+
+                        
+
+Onde: 
+
+      ∊ INT   (3) 
+
+                                  (4) 
+
+𝑄𝐻𝑖, 𝑘: calor cedido pela corrente quente i no intervalo de temperatura k; 
+
+𝑄𝐶𝑗, 𝑘: calor retirado pela corrente fria j no intervalo de temperatura k; 
+
+𝐶𝑚: custo unitário da utilidade quente m; 
+
+𝐶𝑛: custo unitário da utilidade fria n; 
+
+𝑄𝑆𝑚: calor disponível na utilidade quente m; 
+
+𝑄𝑊𝑛: calor retirado pela utilidade fria n; 
+
+𝑅𝑘: calor residual que abandona o intervalo de temperatura k; 
+
+𝐾: número de intervalos de temperatura. 
+
+ 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+23 
+
+WknSkmCnQWnCmQSmZminCkjCkjHkiWknSkmkkkQCjkQCjkQHiQWnQSmRR,,,1k0;1...1;0;0;0RKKkRkQWnQSm5. Resultados e discussão: 
+
+Para construção da tabela problema deve-se definir o tipo de corrente, deslocar 
+
+as  temperaturas  das  correntes  quentes  e  frias  em  menos  ∆Tmin/2  e  mais  ∆Tmin/2, 
+
+respectivamente,  unir  as  temperaturas  deslocadas  em  um  único  vetor,  eliminar  as 
+
+temperaturas  repetidas  e  ordenar  o  vetor  de  maneira  decrescente.  Desta  maneira,  os 
+
+intervalos de temperatura são definidos e é possível calcular as quantidades de calor que 
+
+cada corrente absorve ou elimina nestes intervalos, a partir da Equação 1. 
+
+Iniciando a implementação no EMSO, foi encontrado um problema. Por ser um 
+
+simulador  orientado  a  equações  (não  ser  uma  linguagem  de  programação),  não  seria 
+
+possível  realizar  a  ordenação  do  vetor,  uma  vez  que  a  ordenação  de  um  vetor  não 
+
+descreve  um  equacionamento.  Por  exemplo,  a  Figura  2  mostra  a  lógica  desenvolvida 
+
+para  ordenar  o  vetor.  Foi  criada  uma  variável  denominada  Contador  A  que  vai  do 
+
+primeiro  elemento  do  vetor  até  o  penúltimo  e  outra  variável  denominada  Contador  B 
+
+que  vai  do  segundo  elemento  do  vetor  até  o  último,  de  maneira  que  seja  possível 
+
+comparar os valores das posições do vetor 1 e 2, 2 e 3, 3 e 4 e assim por diante. Como o 
+
+objetivo  é  ordenar  o  vetor  de  maneira  decrescente,  se  o  valor  presente  na  posição 
+
+superior for menor que o valor presente na posição inferior, então este valor menor será 
+
+atribuído  a  uma  variável  auxiliar,  o  valor  maior  à  posição  superior  e  o  valor  menor  à 
+
+posição inferior. Caso contrário, os valores são mantidos em suas posições originais. O 
+
+EMSO  não  entende  as  relações  de  atribuição,  já  que  não  é  uma  linguagem  de 
+
+programação  propriamente  dita.  Ele  não  consegue  atribuir  valores  a  uma  variável  e 
+
+atualizá-los de acordo com a iteração que está se realizando (isto é, a variável auxiliar – 
+
+aux  na  Figura  2  –  é  uma  variável  de  um  sistema  de  equações  e  as  duas  linhas  de 
+
+equações acima e abaixo do “else” criam um conflito). 
+
+ 
+
+ 
+
+24 
+
+Figura 2: Problema no EMSO. 
+
+Fonte: Acervo pessoal, 2015. 
+
+ 
+
+Desta  maneira,  uma  possível  solução  para  o  problema  seria  utilizar  algum 
+
+programa  que  forneça  Plug  in  ao  EMSO  e  resolver  no  EMSO  apenas  as  etapas  de 
+
+otimização.  Ao  término do  período  a  que  esse  relatório  se  refere  ainda  não  havia  sido 
+
+decidida a solução a ser adotada, mas, para resolver a questão, a lógica de programação 
+
+para  elaboração  da  tabela  problema  foi  desenvolvida  e  deverá  ser  adaptada, 
+
+posteriormente (na continuidade desse trabalho),  para  a linguagem  de programação do 
+
+programa selecionado.  
+
+A  fim  de  verificar  o  funcionamento  da  lógica  desenvolvida,  utilizou-se  o 
+
+programa  Scilab  e  um  exemplo  resolvido  pela  literatura.  Os  dados  fornecidos  pelo 
+
+usuário são apresentados na Tabela 2. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+25 
+
+Tabela 2: Dados fornecidos pelo usuário segundo o exemplo utilizado. 
+
+Corrente  CP (kW/K) 
+
+Ten (K) 
+
+Tsai (K) 
+
+h (kW/m²K) 
+
+Custo ($/kW-
+
+ano) 
+
+H1 
+
+(quente) 
+
+H2 
+
+(quente) 
+
+C1 (fria) 
+
+C2 (fria) 
+
+vapor 
+água 
+
+10 
+
+20 
+
+15 
+
+13 
+
+--- 
+
+--- 
+
+650 
+
+370 
+
+590 
+
+370 
+
+410 
+
+650 
+
+353 
+
+680 
+
+300 
+
+500 
+
+680 
+
+320 
+
+1.0 
+
+1.0 
+
+1.0 
+
+1.0 
+
+5.0 
+
+1.0 
+
+Temperatura de aproximação mínima = 10K 
+
+ 
+
+Fonte: RAVAGNANI; SUÁREZ, 2012. 
+
+ 
+
+---  
+
+---  
+
+ --- 
+
+---  
+
+80 
+
+20 
+
+Na  Figura  3,  observam-se  os  valores  de  temperaturas  de  entrada  (Tin),  saída 
+
+(Tout),  capacidade  térmica  (CP)  e  variação  mínima  de  temperatura  (DeltaTmin) 
+
+fornecidos pelo usuário. Cada posição dos vetores de entrada corresponde aos dados de 
+
+uma  corrente  específica.  Observa-se  que  T,  que  diz  respeito  ao  vetor  de  temperaturas 
+
+deslocadas  ordenadas,  possui  dimensão  8x1  e  a  tabela  envolvendo  as  quantidades  de 
+
+energia é representada por uma matriz 6x4. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+26 
+
+Figura 3: Dados envolvidos no Scilab. 
+
+Fonte: Acervo pessoal, 2015. 
+
+ 
+
+O objetivo é obter a tabela problema que, segundo a referência utilizada, deve 
+
+assumir a seguinte forma: 
+
+Tabela 3: Tabela problema do exemplo utilizado. 
+
+T* 
+
+655 
+
+645 
+
+585 
+
+505 
+
+415 
+
+365 
+
+358 
+
+QH1 
+
+QH2 
+
+  
+
+600 
+
+800 
+
+900 
+
+500 
+
+  
+
+  
+
+  
+
+  
+
+1600 
+
+1800 
+
+1000 
+
+  
+
+  
+ 
+
+QC1 
+
+150 
+
+900 
+
+1200 
+
+1350 
+
+  
+
+  
+
+  
+
+QC2 
+
+  
+
+  
+
+  
+
+1170 
+
+650 
+
+91 
+
+  
+
+Fonte: RAVAGNANI; SUÁREZ, 2012. 
+
+ 
+
+Na tabela acima, T* corresponde ao vetor de temperaturas deslocadas ordenado 
+
+de maneira decrescente, QH as quantidades de energia envolvidas, em cada intervalo de 
+
+temperatura, para as correntes quentes e QC as quantidades de energia envolvidas, em 
+
+cada intervalo de temperatura, para as correntes frias.  
+
+ 
+
+27 
+
+Os resultados obtidos no Scilab são apresentados nas Figuras 4 e 5. 
+
+Figura 4: Vetor temperaturas deslocadas e ordenadas de maneira decrescente. 
+
+ 
+
+Fonte: Acervo pessoal, 2015. 
+
+Figura 5: Tabela problema gerada no Scilab. 
+
+Fonte: Acervo pessoal, 2015. 
+
+ 
+
+ 
+
+Pode-se  verificar  que  a  lógica  desenvolvida  gera  a  tabela  problema  necessária 
+
+para se iniciar as etapas de otimização. 
+
+ 
+
+Para que as atividades não fossem  interrompidas diante da não decisão de qual 
+
+programa  seria  utilizado  para  fornecer  Plug  in  ao  EMSO,  iniciou-se  a  implementação 
+
+neste  ambiente  do  modelo  que  diz  respeito  à  primeira  etapa  de  otimização  (custo 
+
+mínimo  de  utilidades).  O  modelo  implementado  não  apresentou  erros  quanto  à 
+
+ 
+
+28 
+
+linguagem ou sintaxe. Porém, ao executar o programa, o EMSO não consegue resolvê-
+
+lo e acusa que existe um número maior de equações do que de variáveis. Isto acontece 
+
+porque estão faltando dados referentes às utilidades utilizadas (uma tabela semelhante à 
+
+tabela  problema  apresentada  deve  ser  elaborada  para  as  utilidades).  É  válido  ressaltar 
+
+que, neste caso, os dados da tabela problema foram inseridos diretamente no EMSO. 
+
+ 
+
+Não  foi  possível  elaborar  a  tabela  necessária  para  as  utilidades  e  finalizar  a 
+
+primeira etapa de otimização dentro do período que envolve este relatório. Porém, todas 
+
+as atividades planejadas para o exercício de março de 2014 a fevereiro de 2015 foram 
+
+devidamente executadas. 
+
+ 
+
+As etapas seguintes necessárias para que se possa levantar a RTC  ótima para a 
+
+biorrefinaria de cana-de-açúcar consistem em: otimizar o custo mínimo de utilidades via 
+
+modelo  de  transbordo  expandido,  no  qual  é  possível  adicionar  restrições  ao  processo, 
+
+como trocas proibidas (por motivos de localização, manutenção da integridade de cada 
+
+uma  das  seções  da  planta,  risco  de  contaminação)  e  limitar  a  troca  de  calor  entre 
+
+correntes;  minimizar o número de trocadores de  calor; e minimizar o  custo  da rede de 
+
+trocadores de calor. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+29 
+
+6. Considerações finais 
+
+ 
+
+O  consumo  de  energia  não  só  na  indústria  do  etanol,  mas  como  em  qualquer 
+
+outra,  é  um  fator  importante  na  composição  final  dos  custos  dos  produtos.  Por  esse 
+
+motivo, as empresas procuram de forma intensa a redução no seu consumo energético. 
+
+Como  todo  processo  industrial  apresenta  correntes  que  precisam  ser  resfriadas  e 
+
+correntes que precisam ser aquecidas, uma possível solução é a integração energética da 
+
+planta,  de  maneira  que  o  consumo  de  utilidades  quentes  e  frias  seja  reduzido  e  as 
+
+necessidades energéticas da planta sejam supridas pelas próprias correntes do processo, 
+
+a partir de uma rede de trocadores de calor.  
+
+Um dos principais desafios encontrados para se realizar integração energética é a 
+
+escolha  de  quais  correntes  devem  ser  combinadas  e  qual  deve  ser  a  sequência  de 
+
+trocadores na rede (o problema apresenta uma natureza combinatorial). Esta dificuldade 
+
+cresce com o aumento do número de correntes no processo. 
+
+Para  sintetizar  uma  rede  de 
+
+trocadores  de  calor,  utilizam-se  métodos 
+
+matemáticos,  por  meio  de  programações  lineares  e  não  lineares,  ou  métodos  baseados 
+
+em  conceitos  termodinâmicos,  como  a  Tecnologia  Pinch.  A  obtenção  de  uma  rede  de 
+
+trocadores de calor envolve determinar o consumo de utilidades, a área de transferência 
+
+de calor, o número de trocadores e o custo global anual, bem como as combinações de 
+
+correntes de processo em cada trocador de calor. 
+
+O  presente  trabalho  tinha  como  objetivo  final  integrar  energeticamente  uma 
+
+biorrefinaria  de  cana-de-açúcar.  Para  a  síntese  da  RTC,  escolheu-se  a  metodologia 
+
+sequencial via programação matemática. Este método divide o problema de síntese em 
+
+uma  série  de  subproblemas  com  o  objetivo  de  reduzir  o  esforço  computacional  na 
+
+solução  e  apresenta  as  seguintes  regras,  as  quais  possuem  precedência  uma  sobre  as 
+
+ 
+
+30 
+
+outras: 1) mínimo consumo de utilidades, 2) mínimo número de trocadores de calor e 3) 
+
+mínimo custo fixo da rede. 
+
+No  período  coberto  pelo  relatório  em  questão,  foi  iniciada  a  otimização  do 
+
+primeiro critério. As etapas seguintes necessárias para que se possa levantar qual a RTC 
+
+ótima para a biorrefinaria de cana-de-açúcar envolvem otimizar o custo de utilidades via 
+
+modelo  de  transbordo  expandido,  minimizar  o  número  de  trocadores  de  calor;  e 
+
+minimizar o custo fixo da rede. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+31 
+
+Referências Bibliográficas: 
+
+BRASIL. Resolução ANP n.7, de 9.2.2011. [S.l.], 2011. Publicada no diário oficial da 
+
+nação em 10.2.2011. 
+
+ 
+
+OLIVEIRA,  C.  M.  Integração  energética  da  biorrefinaria  de  cana-de-açúcar  para 
+
+produção de etanol de primeira e segunda geração e energia elétrica. 2014. Dissertação 
+
+(Mestrado  em  Engenharia  Química)  -  Programa  de  Pós-Graduação  em  Engenharia 
+
+Química, Universidade Federal de São Carlos, São Carlos, 2014. 
+
+ 
+
+PAN,  X.;  ARATO,  C.;  GILKES,  N.;  GREGG,  D.;  MABEE,  W.;  PYE,  K.;  XIAO  Z.; 
+
+ZHANG,  X.;  SADDLER,  J.  Biorefining  of  softwoods  using  ethanol  organosolv 
+
+pulping:  Preliminary  evaluation  of  process  streams  for  manufacture  of  fuel-grade 
+
+ethanol and co-products. Biotechnology and Bioengineering, v.90, n.4, p.473-481, 2005. 
+
+ 
+
+RAVAGNANI, M. A. S. S.; SUÁREZ, J. A. C. Redes de trocadores de calor. Maringá: 
+
+Eduem, 2012. 471p. 
+
+ 
+
+SILVA,  A.  P.  Projeto  ótimo  de  redes  de  trocadores  de  calor  utilizando  técnicas  não 
+
+determinísticas. 2009. 122p. Tese (Doutorado em  Engenharia Química)  - Programa de 
+
+Pós-Graduação  em  Engenharia  Química,  Universidade  Federal  do  Rio  de  Janeiro,  Rio 
+
+de Janeiro. 2009. 
+
+ 
+
+SUN, Y.; CHENG, J. Hydrolysis of lignocellulosic materials for ethanol  production: a 
+
+review. Bioresource Technology, v.83, n.1, p.1-11, 2002. 
+
+ 
+
+32 
+
+

@@ -1,0 +1,2198 @@
+UNIVERSIDADE FEDERAL DE SÃO CARLOS 
+
+CENTRO DE CIÊNCIAS EXATAS E TECNOLOGIA 
+
+PROGRAMA DE ESPECIALIZAÇÃO EM BIOCOMBUSTÍVEIS (PRH-44) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Simulação da produção de etanol com simulador não comercial. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Fernando da Silva Bautz 
+
+ 
+
+São Carlos, 2015 
+
+UNIVERSIDADE FEDERAL DE SÃO CARLOS 
+
+CENTRO DE CIÊNCIAS EXATAS E TECNOLOGIA 
+
+PROGRAMA DE ESPECIALIZAÇÃO EM BIOCOMBUSTÍVEIS (PRH-44) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Simulação da produção de etanol com simulador não comercial. 
+
+ 
+
+Fernando da Silva Bautz 
+
+ 
+
+Prof. Dr. Luiz Fernando de Moura 
+
+Orientador DEQ/UFSCar 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+São Carlos, 2015 
+
+programa 
+
+Relatório  final  apresentado 
+de 
+ao 
+em 
+especialização 
+biocombustíveis 
+como 
+requisito obrigatório. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Este 
+
+trabalho 
+
+foi  desenvolvido  no  Laboratório  de  Ensino  do 
+
+Departamento de Engenharia Química (DEQ) da Universidade Federal de São Carlos 
+
+(UFSCar)  e  contou  com  o  apoio  financeiro  do  Programa  de  Recursos  Humanos  da 
+
+Agência Nacional do Petróleo, Gás natural e Biocombustíveis (PRH-ANP/MCT Nº 44). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Resumo 
+
+Existe  no  mercado  uma  variedade  de  softwares  comerciais  de  simulação  de  processos  tais 
+como: AspenPlus, AspenHysys, Pro II, etc. Seu alto custo, no entanto, torna-os proibitivos para 
+empresas  de  desenvolvimento  de  pequeno  e  médio  porte.  O  software  ChemSep  é  um 
+simulador gratuito de colunas para destilação, absorção e extração que pode ser integrado a 
+outras  unidades  através  do  software  Cofe,  da  franquia  Cape  Open  to  Cape  Open  (COCO).  O 
+objetivo  do  trabalho  foi  o  de  verificar  se  o  software  de  livre  acesso  estudado  apresentaria 
+resultados  semelhantes  ao  software  AspenPlus.  Para  tal  comparação,  buscou-se  minar  os 
+pontos  de  maiores 
+interferências  de  bancos  de  dados,  mantendo-se  os  parâmetros 
+termodinâmicos iguais em ambos os simuladores. Os resultados apresentados neste trabalho 
+mostram  que nas  simulações realizadas os simuladores divergiram  em  menos de 3% quando 
+comparando-se  as  vazões  de  flegma  obtidas  e  apresentaram  um  ajuste  tendendo  ao  linear 
+quando  plotado  um  gráfico  onde  nas  abcissas  estavam  as  temperaturas  obtidas  à  partir  do 
+perfil  de  temperaturas  obtidos  via  AspenPlus    e  nas  ordenadas  estavam  as  temperaturas 
+obtidas à partir do perfil resultante da simulação via ChemSep. 
+
+ 
+
+ 
+
+Sumário 
+1. 
+
+Introdução ...........................................................................................................................6 
+
+2.  Revisão Bibliográfica .......................................................................................................12 
+
+3.  Metodologia ......................................................................................................................17 
+
+4.  Resultados e Discussão .................................................................................................24 
+
+5.  Conclusão .........................................................................................................................44 
+
+6.  Referências ......................................................................................................................45 
+
+ 
+
+ 
+
+ 
+
+Introdução 
+
+1. 
+ 
+
+Devido  às  incertezas  sobre  disponibilidade  de  combustíveis  fósseis  no 
+futuro,  é  cada  vez  mais  recorrente  em  cenário  mundial  a  busca  por  novas 
+fontes  de  energia  que  possam  substituir  as  tradicionais.  Unindo-se  à  elevada 
+variação do preço de mercado do barril de petróleo e causas ambientais, fontes 
+energéticas  renováveis  atraem  cada  vez  mais  destaque.  Na  figura  1,  pode-se 
+observar o aumento desproporcional do preço do petróleo em relação à outros 
+produtos. 
+
+Figura 1: Preço do produto versus tempo. 
+
+ 
+
+No Brasil, o etanol se apresenta como alternativa para diversificar a matriz 
+energética, diminuindo então sua dependência do petróleo. Desde o início dos 
+anos  30,  com  a  forte  presença  do  Estado,  a  agroindústria  da  cana-de-açúcar 
+passou por um forte desenvolvimento tecnológico. Na década de 70, a indústria 
+do álcool teve um grande impulso com a implantação do Programa Nacional do 
+Álcool  (PRO-ÁLCOOL).  Esse  programa  teve  como  principal  motivação  o 
+grande  impacto  negativo  na  economia  do  país  advindo  com  os  dois  “choques 
+do  petróleo”  que  ocorreram  durante  a  década  de  70.  O  intuito  do  PRO-
+ÁLCOOL  era  diminuir  a  dependência  nacional  da  importação  de  petróleo, 
+incentivando a produção de um combustível alternativo.  
+
+Desde  o  final  da  década  de  70  o  etanol  na  forma  hidratada  vem  sendo 
+empregado  no  Brasil  como  substituto  a  gasolina  em  motores  adaptados  à 
+queima. Segundo a União da Indústria de Cana-de-Açúcar (UNICA) o número 
+de  carros  licenciados  com  motores  adaptados  para  queima  de  etanol  passou 
+de 84 mil para mais de 3 milhões em 10 anos (de 2003 à 2013). Outro uso do 
+etanol é em sua forma anidra, que pode ser utilizada como aditivo à gasolina. 
+
+Atualmente, a  gasolina consumida no Brasil possui  25% (em volume)  de 
+etanol anidro em sua composição (Portaria MAPA n° 105). A adição do etanol à 
+gasolina  é  uma  forma  rápida  e  simples  de  se  reduzir  a  dependência  do 
+petróleo.  A  partir  do  ano  de  2003,  com  início  da  comercialização  em  larga 
+escala de veículos com a tecnologia flex fuel (motores capazes de consumirem 
+gasolina, etanol, ou a mistura em qualquer proporção), novo impulso foi dado à 
+produção de etanol, que se encontrava estagnada até então. 
+
+Como pode ser observado na figura 2, registrou-se também um aumento 
+
+significativo na produção de etanol total (anidro e hidratado). 
+
+Figura 2: Produção total de etanol no Brasil 
+
+ 
+
+O  mercado  brasileiro  é  dominado  pelo  etanol  proveniente  da  cana  de 
+açúcar  e  seu  processamento  consiste  em  esmagar  este  vegetal  de  forma  a 
+extrair seu caldo açucarado. Este caldo é fermentado em dornas por leveduras 
+que  formarão  um  vinho  (teor  de  etanol  de  8°GL),  este  vinho  será  então 
+purificado até que se atinja  a concentração adequada. O mercado  brasileiro é 
+dominado  pelo  etanol  proveniente  da  cana  de  açúcar  e  seu  processamento 
+consiste em esmagar este vegetal de forma a extrair seu caldo açucarado. Este 
+caldo  é  fermentado  em  dornas  por  leveduras  que  formarão  um  vinho  (teor  de 
+etanol  de  8°GL),  este  vinho  será  então  purificado  até  que  se  atinja  a 
+concentração  adequada.  Neste  aspecto  o  Brasil  apresenta  elevada  vantagem 
+competitiva em relação ao resto do mundo, pois a produtividade volumétrica de 
+etanol  de  cana-de-açúcar  por  área  agrícola  é  superior  às  demais  matérias 
+primas produtoras de etanol. Isto pode ser verificado na figura 3. 
+
+Figura 3: Produtividade volumétrica de etanol (m³/ha) comparando-se 
+
+diversas matérias primas. 
+
+ 
+
+“A  discrepância  positiva  da  produtividade  agrícola  do  etanol  de  cana-de-
+açúcar  (brasileiro)  é  fundamental  para  qualificar  as  inúmeras  vantagens  desta 
+matéria-prima, uma vez que maior produtividades implicam em menores custos 
+de produção, maiores eficiências agrícolas e menores impactos ambientais. Ou 
+seja, sobre diversos aspectos, a cana-de-açúcar mostra-se  com 
+maior 
+viabilidade que outras “fontes”, o que assegura a importância em se explorar os 
+vieses  tecnológicos  da  obtenção  de  etanol  deste  vegetal.”(Tonon  Filho,R. 
+J.,2013) 
+
+Outra  vantagem  tecnológica  no  processo  produtivo  brasileiro  está  na 
+eficiência energética em relação ao uso de combustíveis fósseis oferecido pela 
+cana-de-açúcar. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura  4:  Comparativo  entre  quantidades  relativas  de  energia  por 
+
+unidade de energia fóssil de produção no etanol de diversas fontes. 
+
+ 
+
+Fonte: Jank, 2008 
+
+Como pode ser observado, o balanço energético do etanol brasileiro é 4,5 
+vezes melhor do que o etanol de açúcar de beterraba ou trigo, e quase 7 vezes 
+melhor  do  que  o  etanol  de  milho.  Diferentemente  do  trigo  e  do  milho,  a  cana 
+possui  em  sua  composição  açúcares  fermentescíveis,  o  que  simplifica  o 
+processo  de  produção.  Nas  outras  fontes  citadas,  etapas  de  processamento 
+adicionais são necessárias para se obter o açúcar fermentescível, o que torna 
+o  processo  produtivo  mais  complexo  e  caro,  desfavorecendo  o  balanço 
+energético. 
+
+Pode-se  analisar 
+
+também  a  relação  de  energia  utilizada  para  o 
+processamento  das  diferentes  matérias  primas  pela  razão  de  saída  e  entrada 
+de energia. 
+
+Em cenário mundial, o Brasil ocupa o segundo lugar como maior produtor 
+
+de etanol, como pode ser observado na figura 5. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 5: Produção mundial de etanol. 
+
+Contudo, ao relacionarmos a quantidade relativa de energia produzida por 
+quantidade  de  energia  fóssil  utilizada  no  processamento,  percebemos  que  o 
+Brasil apresenta balanço energético mais favorável, gerando maior quantidade 
+de energia disponível à partir do etanol do que qualquer outro país no mundo. 
+
+De  outra  forma,  pode-se  também  relacionar  os  custos  de  produção  de 
+
+etanol. Como ilustrado na figura 6. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 6: Custo mundial de produção de etanol. 
+
+Fonte:http://estudio01.proj.ufsm.br/ (acesso em 14/04/2015) 
+
+ 
+
+Os  dados  apresentados  são  de  2009,  como  não  houveram  grandes 
+valores  devem  estar 
+
+tecnologias  produtivas,  estes 
+
+avanços  nas 
+significativamente parecidos atualmente.  
+
+ 
+
+ 
+
+Revisão Bibliográfica 
+
+2. 
+ 
+
+No  Brasil  o  processo  de  produção  de  etanol  a  partir  da  cana-de-açúcar 
+pode  ser  realizado  em  dois  tipos  de  destilarias:  as  destilarias  autônomas  (só 
+produzem  etanol)  ou  as  destilarias  anexas  (unidades  que  produzem  açúcar  e 
+etanol).  O  processo  de  produção  de  açúcar  e  etanol  (destilaria  anexa)  é 
+ilustrado na forma de diagrama de blocos na Figura 7. 
+
+Figura 7: Fluxograma do processo de produção de açúcar e etanol. 
+
+Fonte: Jardim, 2014 
+
+Usualmente  as  destilarias  autônomas  são  internamente  divididas  em 
+fábrica, unidade produtora de açúcar e destilaria, unidade produtora de etanol. 
+A  maior  parte  destas  usinas  apresentam  flexibilidade  para  produzir  etanol  ou 
+açúcar  conforme  demanda.  Segundo  o  site  novacana,  em  2007  haviam  15 
+
+ 
+
+usinas exclusivamente de açúcar, 104 destilarias autônomas e 251 usinas com 
+destilarias anexas. 
+
+2.1 
+
+Fermentação 
+
+Existem basicamente três vias de obtenção de etanol. Sendo duas delas 
+vias químicas e uma delas fermentativa. Para as vias químicas, em ambas são 
+necessárias o intermediário etileno.  
+
+Figura 8: Reações para obtenção de etanol via química. 
+
+ 
+
+Fonte: Badino Jr, 2015. 
+ 
+Contudo,  a  fermentação  de  carboidratos  é  o  processo  mais  utilizado  no 
+Brasil, nos EUA e de modo geral, nos demais países do mundo. A fermentação 
+consiste na conversão de monossacarídeos em etanol via microorganismos. A 
+fermentação  ocorre  mais  eficientemente  em  condições  anaeróbias, 
+convertendo 1 mol de açúcares fermentescíveis em 2 mols de etanol e 2 mols 
+de gás carbônico. Em  diversos processos, como no  processo de produção de 
+etanol  a  partir  do  milho,  é  necessária  uma  etapa  adicional,  que  consiste  em 
+hidrolisar  o  polímero  de  açúcar,  por  exemplo,  amido  ou  celulose,  em 
+monossacarídeos, para que estes possam ser fermentados. 
+
+No Brasil, como a matéria prima predominante é a cana de açúcar, não é 
+necessário esta etapa de hidrólise, pois o xarope de cana que será fermentado 
+já  é  composto  de  monossacarídeos.  Tradicionalmente  nas  usinas  brasileiras 
+usa-se  Saccharomyces  cerevisiae  como  microorganismo  fermentador,  nesta 
+levedura está presente a enzima invertase, que é responsável por converter a 
+sacarose em glicose e frutose, também chamados de açúcares redutores totais 
+(ART), esta é a primeira etapa da fermentação. 
+
+Em  uma  segunda  etapa,  dentro  do  mesmo  fermentador,  ocorre  a 
+fermentação propriamente dita, onde a levedura converte os ART em etanol e 
+dióxido de carbono. 
+
+Uma  das  grandes  vantagens  do  processo  brasileiro  é  que  isto  ocorre 
+
+dentro de um mesmo reator, reduzindo custos de produção. 
+
+Cabe-se destacar que na fermentação alcoólica não são gerados apenas 
+reações 
+etanol  e  gás  carbônico  como  produtos,  ocorrendo  diversas 
+secundárias,  como  produção  de  ácido  succínico,  álcool  isoamílico,  álcool 
+isobutílico,  entre  outros,  além  da  possibilidade  de  haver  contaminações  que 
+consumam os áçucares. 
+
+Tradicionalmente  os  fermentadores  são  operados  de  forma  batelada 
+
+alimentada, mas já existem também configurações contínuas de operação. 
+
+ 
+
+2.2 Destilação  
+
+“Os  sistemas  modernos  de  destilação  são  multi-estágios,  contínuo, 
+contracorrente  e  sistemas  de  contato  entre  o  vapor  e  o  líquido  que  operam 
+segundo  as  leis  físicas  da  física  que  indicam  que  materiais  diferentes 
+apresentam pontos de ebulição diferentes” ( Katzen R.). 
+
+Nas usinas, a destilação alcoólica tem como objetivo principal concentrar 
+o  vinho  até  teores  alcoólicos  elevados.  O  vinho  entra  nas  colunas  com 
+concentração aproximada de 7% de etanol em massa, e deve ser concentrado 
+até  92,6%  a  93,8%  em  massa,  no  caso  do  hidratado  carburante  (AEHC),  ou 
+teor maior que 99,3% em massa no caso do anidro carburante (AEAC). 
+
+A  configuração  mais  recorrente  nas  usinas  brasileiras  é  a  configuração 
+AA1D/BB1 caso o produto de interesse seja o AEHC, e é adicionada mais uma 
+coluna C caso o produto de interesse seja o AEAC. Na figura 9 é apresentada 
+a configuração destas colunas. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Figura  9:  Configuração  AA1D/BB1  para  Produção  de  Álcool 
+
+Hidratado. 
+
+ 
+
+Fonte: Meirelles, 2006. 
+ 
+A  coluna  A  é  denominada  de  coluna  de  esgotamento  do  vinho,  contém 
+geralmente 16 pratos e é responsável por “esgotar” a vinhaça de quase todo o 
+etanol  que  é  alimentado.  A  coluna  A1  é  chamada  de  coluna  de  epuração  do 
+vinho,  contém  geralmente  6  pratos  e  tem  como  função  purificar  o  vinho  de 
+substâncias  de  maior  volatilidade  e  dos  gases  contaminantes,  além  de 
+complementar  o  seu  aquecimento.  Na  coluna  D,  a  qual  contém  geralmente  6 
+pratos,  é  utilizada  para  concentrar  os  produtos  de  cabeça  (mais  voláteis).  A 
+coluna  B  é  responsável  pela  retificação  do  etanol,  contém  geralmente  42 
+pratos, e é responsável  por fazer com  que a solução seja concentrada até as 
+concentrações de 93% necessárias para o AEHC. 
+
+O vinho é alimentado ao topo da coluna A1, passando anteriormente por 
+trocas de calor com a vinhaça e com os vapores que saem do topo da coluna B 
+até que se atinja temperaturas próximas de 90°C. Do topo da coluna D retira-se 
+etanol de segunda, e parte é direcionada ao refluxo do aparelho de destilação. 
+Do fundo  da coluna A é retirado a vinhaça, que deve ter composição  mássica 
+inferior 0,2% de etanol. Do topo da coluna A é retirada uma corrente de vapor 
+denominada  flegma,  que  contém  aproximadamente  composição  mássica  de 
+40%  de  etanol,  esta  é  então  direcionada  para  a  coluna  de  retificação.  Quase 
+todo o vapor produzido no topo da coluna B é condensado e retorna à coluna, 
+enquanto  a  extração  do  álcool  hidratado  é  realizada  como  retirada  de  líquido 
+em bandeja pouco abaixo do topo. Do fundo da coluna B1 é retirado flegmaça, 
+uma  corrente  extremamente  pobre  em  etanol.  A  energia  necessária  para 
+
+evaporar os voláteis no interior da coluna A e também na Coluna B, é fornecida 
+em sua base na forma de vapor de baixa pressão, este processo é comumente 
+denominado borbotagem. 
+
+ 
+
+2.3 Simulações 
+
+Devido  à  forte  influência  sucroalcooleira  na  economia  nacional,  existem 
+na  literatura  diversos  autores  que  retratam  simulações  do  processo  de 
+produção  de  etanol  à  partir  da  cana-de-açúcar,  ora  propondo  processos  não 
+convencionais,  ora  propondo  métodos  diferenciados.  Existe  também  uma 
+variedade de complexidades  de  modelos simulados, considerando-se  mais ou 
+menos  componentes  no  vinho,  diferentes  arranjos  de  coluna  ou  diferentes 
+modelos termodinâmicos utilizados. 
+
+Batista  por  exemplo  retrata  em  seu  trabalho  “Computational  simulation 
+applied  to  the  investigation  of  industrial  plants  for  bioethanol  distillation”  ter 
+simulado  um  modelo  capaz  de  reproduzir  corretamente  uma  planta  de 
+destilação  de  bioetanol.  Neste  trabalho  o  autor  considera  o  vinho  como  uma 
+mistura  de  19  componentes,  e  utiliza  dois  métodos  de  otimização,  design  de 
+composição central e programação sequencial quadrática. 
+
+Marquini  registrou  em  seu  trabalho  “Simulação  e  análise  de  um  sistema 
+industrial  de  colunas  de  destilação  de  etanol”  desvios  de  2  a  2,5%  de 
+temperaturas  e  concentrações  alcoólicas  simuladas  em  relação  as  obtidas 
+experimentalmente utilizando-se um arranjo tradicional e modelo para previsão 
+de coeficiente na fase líquida NRTL. 
+
+ 
+
+ 
+
+ 
+
+Metodologia 
+
+3. 
+ 
+As  simulações  do  processo 
+
+foram  realizadas  em  dois  diferentes 
+simuladores,  um  comercial:  AspenPlus  v8.0  e  outro  não  comercial:  ChemSep 
+integrado ao Cofe da franquia Cape Open to Cape Open (COCO). 
+
+O processo foi modelado com a corrente de vinho contendo apenas dois 
+componentes,  etanol  e  água.  O  modelo  termodinâmico  utilizado  para  predizer 
+os parâmetros de não idealidade, caso haja, foi o modelo NRTL para líquidos e 
+gases ideias para os gases.  
+
+3.1 AspenPlus 
+
+O  AspenPlus  é  um  simulador  sequencial  modular  da  empresa 
+AspenTech,  neste  ambiente  é  possível  realizar  simulações  no  estado 
+estacionário,  e  nas  colunas  de  destilação  é  considerado  equilíbrio 
+termodinâmico para os cálculos. 
+
+“Aspen Plus é capaz de prever o comportamento de processos utilizando-
+se  de  relações  de  engenharia,  tais  como  balanços  de  massa  e  energia, 
+equilíbrio químico e de fases, e cinética de reações. Com propriedades físicas 
+fiáveis , dados termodinâmicos, condições operacionais realistas e modelos de 
+equipamentos rigorosos .” (Aspentech) 
+
+Diferentes  modelos  de  arranjos  foram  utilizados  na  simulação  do 
+processo  de  produção  de  etanol  a  partir  da  cana-de-açúcar,  em  todos  eles, 
+utilizou-se o bloco já incluído no Aspen, Radfrac, um modelo rigoroso de coluna 
+de  destilação  fracionada  para  2  ou  3  fases  que  se  adequa  muito  bem  às 
+necessidades do trabalho. 
+
+Para  a  retirada  dos  parâmetros  de  Antoine  do  simulador  Aspen,  utilizou-
+se  a  ferramenta  “retrieve  parameters”,  que  carregou  os  parâmetros  binários 
+para  componentes  puros,  que  puderam  ser  acessados  pela  árvore  de 
+navegação à esquerda. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Figura  10:  Retirada  dos  parâmetros  de  Antoine  do  simulador 
+
+AspenPlus. 
+
+Fonte: acervo próprio. 
+ 
+Observou-se ainda as unidades utilizadas pelo simulador ChemSep, bem 
+como  as  equações  utilizadas  pelos  simuladores,  que  foram  acessadas  pelo 
+menu “help”. 
+
+ 
+Figura 11: Equação de Antoine extendida utilizada pelo Aspen. 
+
+ 
+
+Fonte: Menu help contido no próprio simulador. 
+ 
+Figura 12: Equação de Antoine extendida utilizada pelo ChemSep. 
+
+ 
+
+ 
+
+Fonte: ChemSep-help. 
+ 
+
+3.2 COCO Simulator 
+
+3.2.1 ChemSep 
+
+ChemSep  é  um  software  para  modelagem  de  colunas  de  destilação, 
+absorção e extrativas. Este software é um freeware, ou seja, não há custos de 
+licença para sua utilização. O software é baseado em modelos de estágios de 
+equilíbrio e estado estacionário, sendo que sua versão paga inclui modelagens 
+dinâmicas  e  modelos  de  não-equilíbrio.  Assim  como  o  AspenPlus  o  software 
+
+inclui um banco de dados próprio com propriedades termodinâmicas, tais como 
+parâmetros de interação binários entre os componentes. 
+
+Nas  etapas  de  simulação  serão  comparados  dados  obtidos  com 
+parâmetros  do  próprio  banco  de  dados  do  simulador  bem  como  com 
+parâmetros  do  AspenPlus  imputados  para  que  possam  ser  comparados  o 
+modelo  de  resolução  de  cada  simulador  bem  como  as  diferenças  entre  os 
+parâmetros de cada banco de dados. 
+
+Figura 13: Interface do simulador ChemSep. 
+
+Fonte: acervo próprio. 
+
+A  interface  do  simulador  é  amigável  ao  usuário,  este  tendo  que  navegar 
+pelas janelas ao lado esquerdo  que  sinalizarão onde os  ‘inputs’  estão  prontos 
+ou se ainda é necessário inserir mais alguma informação. 
+
+Na  primeira  aba,  o  usuário  deve  inserir  o  título  da  simulação,  e  caso 
+deseje algum comentário adicional. Na aba “componentes” o ChemSep possui 
+um  banco  de  dados  de  componentes  que  podem  ser  adicionados  clicando  no 
+componente e no botão “add”. Todos os componentes que serão utilizados na 
+simulação deverão ser adicionados nesta aba. Ao utilizar a planilha integradora 
+Cofe,  não  é  necessário  adicionar  os  componentes  nesta  janela,  pois  estes 
+serão  adicionados  no  ambiente  Cofe  e  serão  trazidos  para  esta  janela 
+automaticamente. 
+
+Na seguinte aba, o usuário deverá escolher de qual tipo de operação sua 
+coluna se trata, na versão Lite (freeware) do ChemSep só estão disponíveis os 
+modelos flash e coluna de equilíbrio, caso se deseje utilizar a modelagem não 
+baseada  no  equilíbrio  deve-se  obter  a  versão  completa  (não  gratuita).  Caso 
+
+flash,  nenhuma 
+
+informação  adicional  é 
+seja  selecionado  a  operação 
+necessária.  Agora  caso  a  operação  coluna  de  equilíbrio  seja  selecionada, 
+abrirá uma nova aba de configurações. Nesta aba de configurações devem ser 
+especificados  o  número  de  estágios  da  coluna,  o  tipo  de  operação  no 
+condensador  e  reboiler(total,  parcial  ou  sem  equipamento),  os  estágios  de 
+alimentação, as retiradas laterais de produto e possíveis correntes de by-pass. 
+
+Para  adicionar  mais  de  uma  alimentação,  separar  por  vírgulas  os  pratos 
+que  serão  alimentados.  Neste  simulador  o  número  de  estágios  é  inciado  de 
+cima, então caso o seu condensador seja parcial ele será o primeiro estágio, e 
+caso o reboiler também seja parcial, este será o último estágio. As correntes de 
+by-pass  devem  ser  escritas  da  seguinte  maneira:  caso  se  deseje  passar  a 
+corrente  do  estágio  6  para  o  estágio  8  sem  que  este  passe  pelo  7,  escrever 
+6>8. 
+
+Os tipos de operação disponíveis para a coluna de equilíbrio são: 
+
+Coluna  de  destilação  simples:  é  aquela  que  está  equipada  com  um 
+condensador,  um  refervedor,  e  uma  alimentação.  Haverá  duas  correntes  de 
+produtos, o destilado e o produto de fundo. 
+
+Destilação  extractiva:  é  constituída  por  uma  coluna  com  um 
+condensador, um refervedor e necessariamente duas alimentações que podem 
+entrar em qualquer estágio. 
+
+Destilação  azeotrópica:  é  constituído  por  uma  coluna  com  um 
+condensador,  um  refervedor  e  duas  alimentações.  Uma  das  correntes  de 
+alimentação deve ser adicionada no estágio superior da coluna. 
+
+Simple Absorber / Stripper: é uma coluna com correntes de alimentação 
+e de produto fixadas na parte superior e inferior. Apenas o número de estágios 
+varia. 
+
+Reboiled  Absorber  /  Stripper:  é  uma  coluna  com  um  refervedor  e  sem 
+condensador.  Uma  alimentação  pode  ser  inserido  em  qualquer  estágio,  além 
+de uma alimentação de líquido para a fase superior. 
+
+Refluxed  Absorber  /  Stripper:  é  uma  coluna  com  um  condensador  e 
+
+sem refervedor. 
+
+Coluna  de  único  estágio:  é  uma  coluna  com  apenas  um  estágio,  duas 
+
+alimentações fixas, e produtos de fundo e de topo. 
+
+Extractor simples: consiste em uma coluna na qual existe no topo e no 
+fundo  duas  correntes  líquidas  entrando  e  saindo,  somente  o  número  de 
+estágios pode variar. Esta operação requer três ou mais componentes. 
+
+Supercritical  Extractor:  permite  simular  o  extrator  usando  um  modelo 
+
+EOS cúbico para descrever o equilíbrio líquido - líquido. 
+
+Single  Extraction  stage:  é  uma  coluna  com  um  único  estágio,  duas 
+
+alimentações de líquido, e dois produtos líquidos. 
+
+Coluna  Complexa:    A  opção  de  coluna  complexa  permite  que  você  crie 
+uma  coluna  com  vários  fluxos  de  produtos.  A  coluna  pode  ou  não  estar 
+equipada com condensador e refervedor. 
+
+Coluna  Refluxo  total:  não  tem  correntes  de  alimentação  e  produtos.  A 
+coluna  deve ter  um condensador e  um refervedor. Estudos  experimentais  são 
+realizados em refluxo total, a fim de minimizar as perdas materiais. O ChemSep 
+tem a capacidade de modelar tais colunas. 
+
+Caso  a  coluna  não  tenha  condensador,  deve  ser  inserido  no  primeiro 
+prato uma alimentação líquida. Caso a coluna não possua refervedor, deve ser 
+inserido uma alimentação de vapor no último prato. 
+
+Na  aba  propriedades  deverão  ser  inseridos  os  modelos  termodinâmicos 
+utilizados. O próprio simulador apresenta um banco de dados para parâmetros 
+termodinâmicos,  para  carrega-los,  basta  clicar  no  botão  “load”  e  selecionar  o 
+banco  de  dados  correto  para  a  equação  utilizada,  caso  os  parâmetros  não 
+sejam encontrados no banco de dados, é possível também utilizar correlações 
+para se estimar os parâmetros faltantes clicando no botão “correlation”. Todas 
+as  simulações  de  processos 
+fazem  uso  extensivo  de  propriedades 
+termodinâmicas, e estas podem ter profunda influência nos resultados obtidos, 
+portanto  deve-se  escolher  com  critério  quais  modelos  serão  utilizados  para 
+cada  projeto.  Nesta  aba  deve-se  também  informar  caso  algum  produto  esteja 
+sofrendo  reações  químicas  ao  longo  da  coluna,  para  tal  usa-se  a  sub  aba 
+“reactions”. 
+
+Na aba “feeds” deve-se inserir as condições de alimentação das correntes 
+de  entrada.  Ao  utilizar  o  Cofe  não  é  necessário  inserir  manualmente  estes 
+parâmetros,  pois  todos  os  parâmetros  serão  automaticamente  trazidos  das 
+correntes inseridas na planilha integradora. 
+
+Deve-se  ainda  definir  a  qual  pressão  a  coluna  opera,  bem  como  a 
+
+eficiência desta e as perdas de calor para o ambiente associadas. 
+
+3.2.2 Cofe flowsheeting 
+
+ 
+
+Este  software  é  um  dos  componentes  da  franquia  Cape  Open  to  Cape 
+Open  (COCO)  Simulation  Environment.  A  planilha  Cofe  será  responsável  por 
+integrar  operações  unitárias  simuladas,  criando  um  processo  como  um  todo, 
+
+este ambiente tem a capacidade de interagir com o simulador ChemSep, para 
+simulações de colunas de destilação e extração, e também possui modelos de 
+blocos próprios para diversas outras operações. 
+
+Figura 14: Interface Cofe flowsheeting. 
+
+ 
+
+Fonte: acervo próprio. 
+ 
+Para começar a criação de um processo neste ambiente a primeira coisa 
+a se fazer é inserir os componentes que estarão presentes em todas as etapas, 
+para isto deve-se acessar a aba “flowsheet” nos menus disponíveis ao topo da 
+tela,  nesta  aba,  acessar  “configure”,  ou  utilizar  o  atalho  ctrl+k.  Nesta  janela, 
+acessar  a  aba  “property  packs”  e  clicar  no  botão  “add”.  Neste  momento  um 
+outro  componente  da  franquia  COCO  será  acessado,  o  programa  Tea,  que  é 
+responsável  pelas  propriedades  e  parâmetros  físicos  dos  componentes. 
+Escolher qual pacote se adequa melhor às necessidades do projeto e clicar em 
+“select”.  Para  verificar  se  os  compostos  que  serão  utilizados  estão 
+contemplados pelo pacote escolhido, selecionar a aba “compounds”. 
+
+Agora  para  criar  correntes  ou  operações  unitárias,  acessar  o  menu 
+“insert” e construir o processo dejesado. Nota-se que ao criar um processo de 
+separação, é possível criar a unidade ChemSepUO, que recorrerá ao simulador 
+ChemSep. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Figura 15: Exemplo de simulação na planilha Cofe. 
+
+Fonte: Cocosimulator.org (acesso em 11/04/2015) 
+
+ 
+
+ 
+
+ 
+
+Resultados e Discussão 
+
+4. 
+ 
+
+inicialmente  utilizar  os  mesmos 
+
+Com  o  intuito  de  verificar  os  métodos  de  resolução  utilizados  por  cada 
+simulador,  propôs-se 
+parâmetros 
+termodinâmicos  em  ambos  os  simuladores,  de  modo  a  diminuir  qualquer 
+interferência de diferenças  entre os bancos de dados. Deste  modo, utilizou-se 
+os parâmetros NRTL e de Antoine fornecidos pelo Aspen no CheSep. De modo 
+a  estudar  ainda  se  as  variáveis  de  processo  causariam  diferenças  nos 
+resultados  apresentados  com  o  caso  base,  alterou-se  também  algumas 
+variáveis de processo. 
+
+As  variáveis  de  processo  utilizadas  nas  simulações  foram  obtidas  como 
+referência do livro “Conservação de energia na indústria do açúcar e do Álcool”. 
+As principais variáveis que ficaram constantes ao longo do trabalho podem ser 
+observadas na tabela 1. 
+
+Tabela 1: principais variáveis de processo do trabalho. 
+
+vazão de vinho (kg/h) 
+
+fração mássica de etanol no vinho 
+
+n° de pratos da coluna 
+
+condição da coluna 
+
+estágio com retirada lateral 
+estágio alimentação vinho 
+estágio alimentação vapor 
+
+vazão molar de flegma (kmol/h) 
+
+pressão na coluna (bar) 
+
+perda de carga na coluna (bar) 
+
+63797 
+0,0661 
+
+22 
+
+sem condensador e sem refervedor 
+
+6 (vapor) 
+
+1 
+22 
+
+490,05 
+
+1,32 
+
+0,007 (por estágio) 
+
+ 
+A  vazão  molar  de  flegma  foi  obtida  à  partir  da  composição  da  flegma 
+retirada da literatura e de sua vazão mássica, sendo utilizada em vazão molar 
+pois no simulador ChemSep só é possível inserir este tipo de variável. 
+
+Tabela 2: variáveis que foram alteradas para estudo. 
+
+ 
+
+vazão de vapor 
+
+pressão do vapor 
+
+Temp de alimentação (°C) 
+
+Planejamento das simulações 
+
+caso base 
+
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+
+(kg/h) 
+12538,63 
+
+20000 
+
+12538,63 
+
+20000 
+
+12538,63 
+
+20000 
+
+12538,63 
+
+20000 
+
+(bar) 
+
+1,47 
+1,47 
+2,5 
+2,5 
+1,47 
+1,47 
+2,5 
+2,5 
+
+90 
+90 
+90 
+90 
+80 
+80 
+80 
+80 
+
+O  arranjo  utilizado  para  a  simulação  foi  um  arranjo  simples,  buscando 
+
+contemplar apenas a coluna A A1 de uma destilaria tradicional de etanol.  
+
+Figura 16.1: arranjo utilizado na simulação (simulador Aspen). 
+
+Fonte: acervo próprio. 
+ 
+Figura 16.2: arranjo utilizado na simulação (simulador COCO) 
+
+ 
+
+Fonte: acervo próprio. 
+ 
+ 
+
+ 
+
+Caso  base:  As  variáveis  de  processo  utilizadas  podem  ser  observadas 
+
+nas tabelas 1 e 2. 
+
+Na  tabela  3  é  possível  comparar  os  resultados  das  variáveis  estudadas 
+
+obtidos com cada simulador. 
+
+ 
+Tabela 3: Resultados das correntes obtidos, caso base. 
+
+Aspen 
+
+Coco 
+
+Vinhaça  2Etanol  Flegma 
+
+ 
+
+Vinhaça  2Etanol  Flegma 
+
+62980 
+
+2643 
+
+10712 
+
+ 
+1,000 
+0,000 
+
+ 
+0,575 
+0,425 
+
+ 
+0,711 
+0,289 
+
+ 
+Vazão 
+
+mássica kg/hr 
+Fração molar 
+
+63703 
+
+1723 
+
+10910 
+
+Vazão mássica 
+
+kg/hr 
+
+ 
+
+ 
+
+ 
+
+Fração molar 
+
+ÁGUA 
+
+ETANOL 
+
+1,000 
+0,000 
+
+0,536 
+0,464 
+
+0,687 
+0,313 
+
+ÁGUA 
+
+ETANOL 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+De  forma  a  analisar  mais  profundamente  os  resultados  obtidos  e 
+intermediários, plotou-se os perfis de composição de líquido e de vapor e perfil 
+de temperatura da coluna, os resultados podem ser observados nas figuras 17, 
+18 e 19. 
+
+ 
+Figura 17: Perfil de temperaturas, caso base. 
+
+Fonte: acervo próprio. 
+ 
+ 
+ 
+
+ 
+
+Figura  18:  Perfil  de  composição  etanol  na  fase  líquida  (base  molar), 
+
+caso base. 
+
+Fonte: acervo próprio. 
+ 
+ 
+Figura  19:  Perfil  de  composição  etanol  na  fase  vapor  (base  molar), 
+
+caso base. 
+
+Fonte: acervo próprio. 
+ 
+ 
+ 
+ 
+
+Caso  1:  variou-se  então  exclusivamente  a  vazão  mássica  de 
+alimentação  de  vapor  para  20000  kg/h,  e  os  resultados  obtidos  podem  ser 
+observados na tabela 4. 
+
+ 
+
+ 
+
+ 
+Tabela 4: Resultados das correntes obtidos, caso 1. 
+
+ 
+Vazão 
+
+mássica kg/hr 
+Fração molar 
+
+ÁGUA 
+
+ETANOL 
+
+Aspen 
+
+Vinhaça  2Etanol  Flegma 
+
+63681 
+
+11242 
+
+8874 
+
+ 
+
+1,000 
+0,000 
+
+ 
+0,631 
+0,369 
+
+ 
+0,992 
+0,008 
+
+ 
+Vazão 
+
+mássica kg/hr 
+Fração molar 
+
+ÁGUA 
+
+ETANOL 
+
+Coco 
+
+Vinhaça  2Etanol  Flegma 
+
+62963 
+
+11926 
+
+8906 
+
+ 
+1,000 
+0,000 
+
+ 
+0,657 
+0,343 
+
+ 
+0,985 
+0,015 
+
+ 
+Os perfis para este caso podem ser observados nas figuras 20,21 e 22. 
+ 
+
+Figura 20: Perfil de temperaturas, caso 1. 
+
+ 
+
+Fonte: acervo próprio. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Figura  21:  Perfil  de  composição  etanol  na  fase  líquida  (base  molar), 
+
+caso 1.  
+
+Fonte: acervo próprio. 
+ 
+ 
+Figura  22:  Perfil  de  composição  etanol  na  fase  vapor  (base  molar), 
+
+caso 1.  
+
+Fonte: acervo próprio. 
+ 
+ 
+
+Caso  2:  retornou-se  a  vazão  de  vapor  para  12538,63  kg/h  e 
+alterou-se  a  pressão  deste  vapor  alimentado  para  2,5  bar.  Os  resultados 
+obtidos podem ser verificados na tabela 5. 
+
+ 
+ 
+
+ 
+
+ 
+
+Tabela 5: Resultados das correntes obtidos, caso 2. 
+
+Aspen 
+
+Coco 
+
+Vinhaça  2Etanol  Flegma 
+
+ 
+
+Vinhaça  2Etanol  Flegma 
+
+63525 
+
+1900 
+
+10909 
+
+Vazão mássica 
+
+kg/hr 
+
+63079 
+
+2403 
+
+10852 
+
+ 
+1,000 
+0,000 
+
+ 
+
+ 
+
+Fração molar 
+
+ 
+
+ 
+
+ 
+
+0,536 
+0,464 
+
+0,694 
+0,306 
+
+ÁGUA 
+
+ETANOL 
+
+1,000 
+0,000 
+
+0,580 
+0,420 
+
+0,705 
+0,295 
+
+ 
+Vazão 
+
+mássica kg/hr 
+Fração molar 
+
+ÁGUA 
+
+ETANOL 
+
+ 
+
+Os perfis para este caso podem ser observados nas figuras 23,24 e 25. 
+
+ 
+Figura 23: Perfil de temperaturas, caso 2. 
+
+ 
+
+Fonte: acervo próprio. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Figura  24:  Perfil  de  composição  etanol  na  fase  líquida  (base  molar), 
+
+caso 2.  
+
+Fonte: acervo próprio. 
+ 
+ 
+Figura  25:  Perfil  de  composição  etanol  na  fase  vapor  (base  molar), 
+
+caso 2.  
+
+Fonte: acervo próprio. 
+ 
+ 
+
+Caso 3: Mantendo-se o vapor com pressão de 2,5 bar, alterou-se 
+a alimentação para 20000 kg/h. Os resultados podem ser observados na tabela 
+6. 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+Tabela 6: Resultados das correntes obtidos, caso 3. 
+
+Aspen 
+
+ 
+
+Vinhaça  2Etanol  Flegma 
+
+Vazão mássica 
+
+kg/hr 
+
+Fração molar 
+
+ÁGUA 
+
+ETANOL 
+
+ 
+
+63398 
+
+11533 
+
+8866 
+
+ 
+
+1,000 
+0,000 
+
+ 
+0,64 
+0,36 
+
+ 
+0,993 
+0,007 
+
+ 
+Vazão 
+
+mássica kg/hr 
+Fração molar 
+
+ÁGUA 
+
+ETANOL 
+
+Coco 
+
+Vinhaça  2Etanol  Flegma 
+
+62684 
+
+12217 
+
+8895 
+
+ 
+1,000 
+0,000 
+
+ 
+0,664 
+0,336 
+
+ 
+0,988 
+0,012 
+
+Os perfis para este caso podem ser observados nas figuras 26, 27 e 28. 
+
+ 
+Figura 26: Perfil de temperaturas, caso 3.  
+
+ 
+
+Fonte: acervo próprio. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Figura  27:  Perfil  de  composição  etanol  na  fase  líquida  (base  molar), 
+
+caso 3.  
+
+Fonte: acervo próprio. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Figura  28:  Perfil  de  composição  etanol  na  fase  vapor  (base  molar), 
+
+caso 3.  
+
+Fonte: acervo próprio. 
+
+ 
+
+ 
+
+ 
+ 
+
+Caso 4: Retornando-se a vazão mássica de alimentação de vapor 
+para  12538,63  kg/h  e  a  pressão  deste  vapor  para  1,47  bar,  estudou-se  a 
+influência da variação da temperatura de alimentação do vinho, colocada agora 
+em 80°C. 
+
+ 
+Tabela 7: Resultados das correntes obtidos, caso 4. 
+
+Aspen 
+
+Coco 
+
+Vinhaça  2Etanol  Flegma 
+
+ 
+
+Vinhaça  2Etanol  Flegma 
+
+64921 
+
+255 
+
+6940 
+
+Vazão mássica 
+
+kg/hr 
+
+64400 
+
+643 
+
+11292 
+
+ 
+1,000 
+0,000 
+
+ 
+
+ 
+
+Fração molar 
+
+ 
+
+ 
+
+ 
+
+0,507 
+0,493 
+
+0,636 
+0,364 
+
+ÁGUA 
+
+ETANOL 
+
+1,000 
+0,000 
+
+0,652 
+0,348 
+
+0,553 
+0,447 
+
+ 
+Vazão 
+
+mássica kg/hr 
+Fração molar 
+
+ÁGUA 
+
+ETANOL 
+
+ 
+
+Os perfis para este caso podem ser observados nas figuras 29, 30 e 31. 
+
+ 
+Figura 29: Perfil de temperaturas, caso 4.  
+
+ 
+
+Fonte: acervo próprio. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Figura  30:  Perfil  de  composição  etanol  na  fase  líquida  (base  molar), 
+
+caso 4.  
+
+Fonte: acervo próprio. 
+ 
+ 
+Figura  31:  Perfil  de  composição  etanol  na  fase  vapor  (base  molar), 
+
+caso 4.  
+
+Perfil de composição etanol (vapor) 
+
+l
+
+ 
+)
+r
+a
+o
+m
+e
+s
+a
+b
+(
+ 
+y
+
+ 
+
+0,300
+
+0,250
+
+0,200
+
+0,150
+
+0,100
+
+0,050
+
+0,000
+
+Aspen
+
+Coco
+
+1
+
+6
+
+11
+
+Estágios 
+
+16
+
+21
+
+Fonte: acervo próprio. 
+ 
+ 
+
+Caso 5: mantendo-se as variáveis utilizadas no caso 4, alterou-se 
+
+exclusivamente a vazão de vapor alimentada para 20000 kg/h. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Tabela 8: Resultados das correntes obtidos, caso 5. 
+
+Aspen 
+
+ 
+
+Vinhaça 
+
+2Etanol 
+
+Flegma 
+
+Vazão mássica 
+
+kg/hr 
+
+Fração molar 
+
+ÁGUA 
+
+ETANOL 
+
+64898 
+
+10000 
+
+8897 
+
+ 
+1,000 
+0,000 
+
+ 
+
+ 
+
+0,59 
+0,41 
+
+0,987 
+0,013 
+
+ 
+Vazão 
+
+mássica kg/hr 
+Fração molar 
+
+ÁGUA 
+
+ETANOL 
+
+Coco 
+
+Vinhaça  2Etanol  Flegma 
+
+64002 
+
+10862 
+
+8932 
+
+ 
+1,000 
+0,000 
+
+ 
+0,628 
+0,372 
+
+ 
+0,981 
+0,019 
+
+ 
+ 
+Os perfis para este caso podem ser observados nas figuras 32,33 e 34. 
+ 
+ 
+Figura 32: Perfil de temperaturas, caso 5.  
+
+ 
+
+Fonte: acervo próprio. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Figura  33:  Perfil  de  composição  etanol  na  fase  líquida  (base  molar), 
+
+caso 5.  
+
+Fonte: acervo próprio. 
+ 
+ 
+ 
+Figura  34:  Perfil  de  composição  etanol  na  fase  vapor  (base  molar), 
+
+caso 5.  
+
+Fonte: acervo próprio. 
+ 
+ 
+
+Caso  6:  retornando-se  a  vazão  de  vapor  para  12538,63  kg/h,  e 
+mantendo-se a temperatura de alimentação do vinho em 80°C, aumentou-se a 
+pressão de vapor alimentado para 2,5 bar. 
+
+ 
+
+ 
+
+ 
+
+Tabela 9: Resultados das correntes obtidos, caso 6. 
+
+Aspen 
+
+Coco 
+
+ 
+
+Vinhaça  2Etanol  Flegma 
+
+ 
+
+Vinhaça  2Etanol  Flegma 
+
+Vazão mássica 
+
+kg/hr 
+
+Fração molar 
+
+ÁGUA 
+
+ETANOL 
+
+ 
+
+64744 
+
+279 
+
+11312 
+
+ 
+1,000 
+0,000 
+
+ 
+0,507 
+0,493 
+
+ 
+0,639 
+0,361 
+
+Vazão mássica 
+
+kg/hr 
+
+Fração molar 
+
+ÁGUA 
+
+ETANOL 
+
+63848 
+
+1506 
+
+10980 
+
+ 
+1,000 
+0,000 
+
+ 
+0,547 
+0,453 
+
+ 
+0,678 
+0,322 
+
+Os perfis para este caso podem ser observados nas figuras 35, 36 e 37. 
+ 
+ 
+Figura 35: Perfil de temperaturas, caso 6.  
+
+ 
+
+Fonte: acervo próprio. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Figura  36:  Perfil  de  composição  etanol  na  fase  líquida  (base  molar), 
+
+caso 6.  
+
+Fonte: acervo próprio. 
+
+ 
+
+ 
+ 
+Figura  37:  Perfil  de  composição  etanol  na  fase  vapor  (base  molar), 
+
+caso 6.  
+
+Fonte: acervo próprio. 
+ 
+ 
+
+Caso  7:  utilizando-se  agora  vazão  de  vapor  20000  kg/h,  pressão 
+
+de vapor 2,5 bar e temperatura de alimentação de vinho 80°C. 
+
+ 
+
+ 
+
+ 
+
+ 
+Tabela 10: Resultados das correntes obtidos, caso 7. 
+
+Aspen 
+
+Coco 
+
+ 
+
+Vinhaça  2Etanol  Flegma 
+
+Vazão mássica 
+
+kg/hr 
+
+Fração molar 
+
+ÁGUA 
+
+ETANOL 
+
+64616 
+
+10298 
+
+8884 
+
+ 
+1,000 
+0,000 
+
+ 
+0,599 
+0,401 
+
+ 
+0,99 
+0,01 
+
+ 
+Vazão 
+
+mássica kg/hr 
+Fração molar 
+
+Vinhaça  2Etanol  Flegma 
+
+64091 
+
+10674 
+
+9031 
+
+ 
+
+ 
+
+ 
+
+ÁGUA 
+
+ETANOL 
+
+1,000 
+0,000 
+
+0,625 
+0,375 
+
+0,976 
+0,024 
+
+ 
+Os perfis para este caso podem ser observados 38, 39 e 40. 
+ 
+ 
+Figura 38: Perfil de temperaturas, caso 7.  
+
+ 
+
+Fonte: acervo próprio. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Figura  39:  Perfil  de  composição  etanol  na  fase  líquida  (base  molar), 
+
+caso 7.  
+
+Fonte: acervo próprio. 
+ 
+ 
+Figura  40:  Perfil  de  composição  etanol  na  fase  vapor  (base  molar), 
+
+caso 7.  
+
+Fonte: acervo próprio. 
+ 
+ 
+ 
+De maneira a apresentar de outra forma os resultados obtidos, utilizou-se o caso 
+base  para  plotar  um  gráfico  onde  no  eixo  das  abcissas  utilizou-se  os  resultados  do 
+perfil  de  temperatura  fornecido  pelo  AspenPlus,  e  no  eixo  das  ordenadas,  utilizou-se 
+os resultados obtidos pelo simulador ChemSep. 
+
+ 
+
+ 
+
+ 
+Figura 41: Gráfico comparativo para os resultados do perfil de temperatura 
+
+simulados no Aspen contra os resultados obtidos pelo ChemSep. 
+
+ 
+
+Fonte: acervo próprio. 
+ 
+Esperava-se  obter  um  ajuste  linear  com  coeficiente  angular  igual  a  1  e 
+coeficiente  linear  zero,  isto  é:  y=x,  de  modo  que  as  temperaturas  fossem  iguais 
+independentemente do simulador utilizado. 
+
+Tabelou-se  também  as  vazões  de  flegma  obtidas  para  cada  simulador, 
+calculando-se  os  desvios  obtidos  pelo  ChemSep  em  relação  ao  AspenPlus.  Os 
+resultados podem ser observados na tabela 11. 
+
+ 
+Tabela  11:  Comparativo  entre  as  vazões  de 
+
+flegma  obtidas  nos 
+
+simuladores. 
+
+caso/simulador 
+
+base 
+
+desvio (%) 
+
+1,81 
+0,36 
+1,77 
+0,33 
+3,00 
+0,39 
+2,94 
+0,36 
+
+Aspen 
+10910 
+8874 
+10839 
+8866 
+11389 
+8898 
+11312 
+8884 
+
+COCO 
+10712 
+8906 
+10647 
+8895 
+11047 
+8932 
+10980 
+8916 
+
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+Fonte: acervo próprio. 
+ 
+ 
+ 
+Como  era  esperado,  os  valores  não  divergiram  muito  obtendo-se  desvios 
+máximos de 3%, pois a vazão de flegma estava fixada em 490,05 kmol/h em ambos os 
+simuladores. 
+
+Observando-se  os  gráficos  de  perfil  de  temperatura  para  todos  os  casos 
+analisados,  foi  possível  perceber  que  nos  casos  1,  3,  5  e  7  os  perfis  obtidos  pelos 
+
+simuladores  foram  mais  parecidos,  e  foram  justamente  nestes  casos  que  se  usou 
+vazão mássica de vapor igual à 20000 kg/h. Quando utilizada vazão mássica de vapor 
+em nível mais baixo (nos casos base, 2 ,4 e 6) os perfis de temperatura foram menos 
+ajustados  entre  si.  Ou  seja,  quanto  menor  a  vazão  de  vapor  na  coluna,  maior  foi  a 
+diferença nos perfis obtidos. 
+
+Notou-se  também  que  o  perfil  de  composição  de  etanol  em  fase  vapor 
+acompanhou  a  tendência  do  perfil  de  temperaturas,  sendo  que  nos  mesmos  casos 
+onde  o  perfil  de  temperaturas  foi  bem  ajustado  entre  os  simuladores  o  perfil  de 
+composição  em  fase vapor  também  o  foi,  e  ainda,  do  mesmo modo  que  no  perfil  de 
+temperaturas, percebeu-se que o início do “descolamento” dos perfis se dava por volta 
+do sexto estágio da coluna, ficando bastante próximos nos estágios finais. 
+
+Por fim, os perfis de composição de etanol em fase líquida obtidos por ambos 
+
+ 
+os simuladores foram bastante análogos para todos os casos. 
+
+ 
+
+ 
+
+5.  Conclusão 
+
+ 
+
+Analisando-se os resultados obtidos, pode-se concluir que os simuladores apresentaram 
+resultados  similares.  Ao  observarmos  os  perfis  da  coluna,  percebemos  uma  diferença  mais 
+enfática nos primeiros estágios, onde havia a retirada da corrente de etanol de segunda e uma 
+diferença  bem  menos  significativa  nos  estágios  mais  abaixo,  onde  em  todas  as  simulações 
+obteve-se fração mássica de etanol bastante próxima a zero em ambos os simuladores. 
+
+Ao observarmos a tabela 11, percebemos que os desvios dos resultados da corrente de 
+flegma previstos pelo ChemSep em relação aos previstos pelo AspenPlus não superaram 3% e 
+ao  compararmos  o  perfil  de  temperatura  do  caso  base  pudemos  quase  aproximar  uma  reta 
+com coeficiente angular próximo à 1, sendo este de 0,8932. 
+
+Analisando-se por uma perspectiva de usuários que não tenham condição de acesso ao 
+simulador AspenPlus por seu elevado custo, o ambiente COCO se mostrou neste trabalho uma 
+boa  alternativa  para  ser  utilizado  como  software  de  simulação  de  processos  devido  ao  seu 
+baixo  desvio  dos  resultados  constatados  em  relação  à  um  software  citado  anteriormente,  e 
+por ser um software de livre acesso. 
+
+Como  continuidade  do  trabalho,  pretendia-se  simular  uma  coluna  de  destilação  real, 
+este trabalho  já  havia  sido  iniciado, contudo, o  cronograma do  trabalho  que estava pautado 
+em  um  projeto  para  dois  anos  teve  que  ser  alterado  para  ser  finalizado  em  um  ano.  Desta 
+forma, não foi possível concluir o trabalho da forma que se gostaria. 
+
+ 
+
+ 
+
+6.  Referências 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+USHIMA, A. H. et al. Conservação de Energia Na indústria do Açúcar e do Álcool. 
+São Paulo: Instituto de Pesquisas Tecnológicas do Estado de São Paulo 1990. 
+BATISTA, R. M. F. e MEIRELLES, A.J.A., Computer simulation applied to studying 
+continuous spirit distillation and product quality control. 2010. Artigo publicado na 
+revista ELSEVIER. 
+BATISTA,  R.  M.  F.  ,  Computational  simulation  applied  to  the  investigation  of 
+industrial plants for bioethanol distillation. Aceito em 01/06/2012. Artigo publicado 
+na revista ELSEVIER. 
+MEIRELLES, A.J.A,  Expansão da Produção de Bioetanol e Melhoria Tecnológica 
+da  Destilação  Alcoólica.  Preparado  para  o  Workshop  "Produção  de  Etanol" 
+10/11/2006. 
+TONON  FILHO,  R.J.  Modelagem  e  simulação  em  plantas  de  etanol:  uma 
+abordagem técnico-econômica. 2013. 94 f. Dissertação (Mestrado)  - Departamento 
+de Engenharia Química, Universidade Federal de São Carlos, São Carlos, 2013. 
+MARQUINI,  M.F.  Simulação  e  análise  de  um  sistema  industrial  de  colunas  de 
+destilação  de  etanol.  2007.  Programa  de  pós  graduação  em  Engenharia  Química, 
+Universidade Estadual de Maringá. 
+JARDIM, H. A. S. P. M.  Projeto, construção e desenvolvimento metodológico de 
+um  aparelho  de  destilação.  Estudo  de  caso:  produção  de  etanol  anidro  via 
+destilação  extrativa  utilizando  glicerol.  2014.  130  f.  Dissertação  (Mestrado)  - 
+Departamento  de  Engenharia  Química,  Universidade  Federal  de  São  Carlos,  São 
+Carlos, 2014. 
+JUNQUEIRA,  Tassia  Lopes.  SIMULAÇÃO  DE  COLUNAS  DE  DESTILAÇÃO  CONVENCIONAL, 
+EXTRATIVA  E  AZEOTRÓPICA  NO  PROCESSO  DE  BIOETANOL  ATRAVÉS  DA  MODELAGEM  DE 
+NÃO  EQUILÍBRIO  E  DA  MODELAGEM  DE  ESTÁGIOS  DE  EQUILÍBRIO  COM  EFICIÊNCIA.  2010. 
+187  f. Dissertação  (Mestrado)  –  Faculdade de Engenharia Química, Universidade Estadual de 
+Campinas, Campinas, 2010. 
+http://estudio01.proj.ufsm.br/cadernos/ifgo/tecnico_acucar_alcool/tecnologia_fabricaca
+o_alcool.pdf (acesso em 11/04/2015) 
+http://www.novacana.com/dados-plataforma/acucar/exportacao/principais-
+exportadores-de-acucar-brasileiro (acesso em 11/04/2015) 
+http://www.anp.gov.br/ (último acesso em 25/04/2015) 
+
+

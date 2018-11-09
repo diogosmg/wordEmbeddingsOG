@@ -1,0 +1,4521 @@
+VALIDAÇÃO DE UM ALGORITMO NÃO LINEAR PARA SIMULAÇÕES
+
+NUMÉRICAS NO DOMÍNIO DO TEMPO DE MOVIMENTOS DE CORPOS EM
+
+PRESENÇA DE ONDAS
+
+Julio César Fernández Polo
+
+Dissertação  de  Mestrado  apresentada  ao  Programa
+de Pós-graduação em Engenharia Oceânica, COPPE,
+da  Universidade  Federal  do  Rio  de  Janeiro,  como
+parte dos requisitos necessários à obtenção do título
+de Mestre em Engenharia Oceânica.
+
+Orientador: Marcelo de Almeida Santos Neves
+
+Rio de Janeiro
+
+Fevereiro de 2013
+
+VALIDAÇÃO DE UM ALGORITMO NÃO LINEAR PARA SIMULAÇÕES
+
+NUMÉRICAS NO DOMÍNIO DO TEMPO DE MOVIMENTOS DE CORPOS EM
+
+PRESENÇA DE ONDAS
+
+Julio César Fernández Polo
+
+DISSERTAÇÃO  SUBMETIDA  AO  CORPO  DOCENTE  DO  INSTITUTO  ALBERTO
+LUIZ COIMBRA DE PÓS-GRADUAÇÃO E PESQUISA DE ENGENHARIA (COPPE)
+DA  UNIVERSIDADE  FEDERAL  DO  RIO  DE  JANEIRO  COMO  PARTE  DOS
+REQUISITOS  NECESSÁRIOS  PARA  A  OBTENÇÃO  DO  GRAU  DE  MESTRE  EM
+CIÊNCIAS EM ENGENHARIA OCEÂNICA.
+
+Examinada por:
+
+________________________________________________
+
+Prof. Marcelo de Almeida Santos Neves, Ph.D.
+
+________________________________________________
+
+Prof. Claudio Alexis Rodríguez Castillo, D.Sc.
+
+________________________________________________
+
+Dr. Mauro Costa de Oliveira, D.Sc.
+
+RIO DE JANEIRO, RJ - BRASIL
+
+FEVEREIRO DE 2013
+
+Fernández Polo, Julio César
+
+Validação de um algoritmo não linear para simulações
+numéricas no domínio do tempo de movimentos de corpos
+em presença de ondas / Julio César Fernández Polo. – Rio
+de Janeiro: UFRJ/COPPE, 2013.
+
+XI, 122 p.: il.; 29,7 cm.
+Orientador: Marcelo de Almeida Santos Neves
+Dissertação (mestrado) – UFRJ/ COPPE/ Programa de
+
+Engenharia Oceânica, 2013.
+
+Referências Bibliográficas: p. 103-108.
+1. Simulação  de  movimentos  de  navios.  2. Dinâmica
+não linear. 3. Instabilidades dinâmicas. I. Neves, Marcelo
+de  Almeida  Santos.  II.  Universidade  Federal  do  Rio  de
+Janeiro,  COPPE,  Programa  de  Engenharia Oceânica.  III.
+Título.
+
+iii
+
+A mi familia
+
+iv
+
+AGRADECIMENTOS
+
+Ao  Prof.  Marcelo  Neves, pela  orientação,  amizade  e  apoio durante  o
+
+desenvolvimento de minha dissertação e nesta etapa da minha vida acadêmica.
+
+Aos professores do Programa de Engenharia Oceânica, em especial aos professores
+da  área  de  Hidrodinâmica,  pelos conhecimentos  e  conselhos  oferecidos na  minha
+formação acadêmica.
+
+Ao pessoal da Tecgraf-PUC e o CENPES da PETROBRAS, pelos valiosos debates
+
+que contribuíram grandemente no meu enriquecimento acadêmico.
+
+Aos meus amigos e colegas do PENO e DENO, em especial a Miguel A. Celis, pela
+
+ajuda e conselhos dados durante esta etapa da minha formação.
+
+Ao Programa de Recursos Humanos (prh) da Agência Nacional do Petróleo (ANP),
+a Fundação Coordenação de Projetos, Pesquisas e Estudos Tecnológicos (COPPETEC)
+e  ao  Conselho  Nacional  de  Desenvolvimento  Cientifico  e  Tecnológico  (CNPq)  pelo
+suporte financeiro.
+
+v
+
+Resumo  da  Dissertação  apresentada  à  COPPE/UFRJ  como  parte  dos  requisitos
+necessários para a obtenção do grau de Mestre em Ciências (M.Sc.)
+
+VALIDAÇÃO DE UM ALGORITMO NÃO LINEAR PARA SIMULAÇÕES
+
+NUMÉRICAS NO DOMÍNIO DO TEMPO DE MOVIMENTOS DE CORPOS EM
+
+PRESENÇA DE ONDAS
+
+Julio César Fernández Polo
+
+Fevereiro/2013
+
+Orientadores: Marcelo de Almeida Santos Neves
+
+Programa: Engenharia Oceânica
+
+No  presente  trabalho  é  apresentado  um  algoritmo  não  linear  para  simulações
+numéricas  de  movimentos  no  domínio  do  tempo  em  seis  graus  de  liberdade  de
+embarcações  em  presença  de  ondas.  A  modelação  matemática  do  algoritmo  foi
+desenvolvida com ênfase na representação das não linearidades decorrentes da inércia
+do  corpo,  da  geometria  exata  submersa  do  corpo,  a  consideração  dos  movimentos
+instantâneos do corpo na avaliação das forças externas e os efeitos da inclusão de um
+sistema de ancoragem. Posteriormente, foram discutidas as capacidades não lineares do
+algoritmo. Mostra-se que essas capacidades permitem a representação de movimentos
+de deriva e instabilidades dinâmicas. E finalmente, o algoritmo foi validado através de
+comparações  entre  testes  experimentais  e  simulações  numéricas  com  um  navio  tipo
+FPSO ancorado em ondas de través e de proa. Em geral, obteve-se boa concordância nas
+comparações.
+
+vi
+
+Abstract  of  Dissertation  presented  to  COPPE/UFRJ  as  a  partial  fulfillment  of  the
+requirements for the degree of Master of Science (M.Sc.)
+
+VALIDATION OF AN ALGORITHM FOR TIME-DOMAIN NUMERICAL
+SIMULATIONS OF VESSEL MOTION IN THE PRESENCE OF WAVES
+
+Julio César Fernández Polo
+
+February/2013
+
+Advisors: Marcelo de Almeida Santos Neves
+
+Department: Ocean Engineering
+
+In the present work, a non linear algorithm for numerical simulation of vessel
+motion in the presence of waves is presented. The mathematical model of this algorithm
+was developed with special focus on the representation of the non linearities arisen from
+inertia, the submerged part of the body, the computation of the external forces taking
+into  account  the  vessel  motions  and  the  effects  of  a  mooring  system.  The  non  linear
+capabilities of the algorithm were discussed. It was pointed out that these capabilities
+allow  the  representation  of  drift  motions  and  dynamical  instabilities.  Finally,  the
+algorithm  was  validated  with  comparisons  between  experimental  tests  and  numerical
+simulations with a FPSO vessel moored in the presence of beam and head waves.  In
+general, good agreement was found between the comparisons.
+
+vii
+
+ÍNDICE
+
+1. INTRODUÇÃO ........................................................................................ 1
+
+1.1 MOTIVAÇÃO ....................................................................................
+
+1
+
+1.2 SIMULAÇÕES DOS MOVIMENTOS DE SISTEMAS
+
+FLUTUANTES NO DOMÍNIO DO TEMPO ..................................... 3
+
+1.3 ESTADO DA ARTE ............................................................................ 4
+
+1.4 OBJETIVO E ORGANIZAÇÃO DA DISSERTAÇÃO ...................... 10
+
+2. FORMULAÇÃO MATEMÁTICA ......................................................... 12
+
+2.1 DEFINIÇÕES BÁSICAS ..................................................................... 12
+
+2.2 SISTEMAS DE REFERÊNCIA ........................................................... 13
+
+2.2.1 Transformação de eixos ............................................................ 14
+
+2.2.2 Relação entre a velocidade angular e a taxa de variação dos
+
+ângulos de Euler ....................................................................... 18
+
+2.2.3 Passeio lento ...........................................................................
+
+20
+
+2.2.4 Freqüência de encontro ............................................................ 22
+
+2.3 SEGUNDA LEI DE NEWTON ........................................................... 22
+
+2.4 FORÇAS EXTERNAS ......................................................................... 25
+
+2.4.1 Forças de gravidade ................................................................. 28
+
+2.4.2 Forças de restauração .............................................................. 28
+
+viii
+
+2.4.3 Forças hidrodinâmicas ............................................................. 29
+
+2.4.3.1 Forças de Froude-Krylov ............................................. 30
+
+2.4.3.1.1 Método de expansão do perfil da onda ............. 32
+
+2.4.3.1.2 Extensão da teoria linear de ondas ................... 33
+
+2.4.3.2 Força de onda irradiada ............................................... 35
+
+2.4.3.2.1 Amortecimento não linear de roll ...................... 37
+
+2.4.3.3 Força de onda difratada ............................................... 38
+
+2.4.3.4 Amarrações ................................................................... 38
+
+2.4.3.5 Equação de movimento ................................................. 40
+
+3. IMPLEMENTAÇÃO NUMÉRICA ........................................................ 43
+
+3.1 GENERALIDADES ............................................................................. 43
+
+3.2 IMPLEMENTAÇÃO NUMÉRICA ..................................................... 45
+
+3.2.1 Esquema de integração numérica ............................................. 45
+
+3.2.2 Intercepção onda-casco e cômputo das pressões ..................... 47
+
+3.2.3 Função rampa ........................................................................... 48
+
+3.2.4 Interpolação da força de difração ............................................ 48
+
+3.3 Código computacional DSSTAB .......................................................... 49
+
+3.3.1 MeshGenerator ......................................................................... 50
+
+3.3.2 SSTAB ....................................................................................... 50
+
+3.3.3 WAMIT ...................................................................................... 50
+
+3.3.4 DYNASIM-TPN ......................................................................... 51
+
+3.4 SIMULAÇÕES DE MOVIMENTOS NO DSSTAB ........................... 51
+
+ix
+
+3.4.1 Influência do passo do tempo ................................................... 52
+
+3.4.2 Influência da função rampa ...................................................... 53
+
+3.4.3 Influência da malha................................................................... 54
+
+3.5 DESCRIÇÕES DAS NÃO LINEARIDADES DO DSSTAB .............. 56
+
+3.5.1 Descrição das não linearidades devido à força hidrostática ... 56
+
+3.5.2 Descrição das não linearidades devido à força de Froude-
+
+Krylov ........................................................................................ 60
+
+3.5.3 DERIVA NO DSSTAB ............................................................ 62
+
+3.5.3.1 Deriva horizontal .......................................................... 64
+
+3.5.3.2 Deriva vertical .............................................................. 68
+
+3.5.4 Amarrações ............................................................................... 71
+
+4. VALIDAÇÃO COM TESTES EXPERIMENTAIS .............................. 75
+
+4.1 GENERALIDADES ............................................................................. 75
+
+4.2 NAVIO FPSO P-50 ...........................................................................
+
+75
+
+4.3 TESTES EXPERIMENTAIS NO LABOCEANO ............................... 77
+
+4.4 SIMULAÇÕES NUMÉRICAS ............................................................ 78
+
+4.4.1 Simulações em ondas de través ................................................ 79
+
+4.4.2 Simulações em ondas de proa ................................................... 88
+
+5. CONCLUSÕES E RECOMENDAÇÕES ............................................... 97
+
+5.1 GENERALIDADES ............................................................................. 97
+
+5.2 CONCLUSÕES E RECOMENDAÇÕES GERAIS ............................. 98
+
+5.2.1 Sobre a modelação matemática ................................................ 98
+
+5.2.2 Sobre a implementação numérica ............................................. 99
+
+x
+
+5.2.3 Sobre as validações com testes experimentais ......................... 100
+
+5.3 TRABALHOS FUTUROS ................................................................... 100
+
+REFERÊNCIAS BIBLIOGRÁFICAS .................................................... 103
+
+APÊNDICE ................................................................................................ 109
+
+xi
+
+CAPÍTULO 1
+
+INTRODUÇÃO
+
+Nos anos recentes distintos fenômenos experimentados com navios em ondas e testes experimentais em
+laboratórios  especializados  no  estudo  da  dinâmica  de  sistemas  flutuantes  têm  alertado  a  comunidade
+cientifica sobre a necessidade de contar com ferramentas que possam predizer fenômenos que escapam
+às modelações lineares. Por tal motivo, muitos esforços em diversas instituições de pesquisa estão sendo
+feitos  por  introduzir  modelações  não  lineares  nas  teorias  que  descrevem  os  movimentos  dos  corpos
+flutuantes.  Pode  ser  percebida  essa  atenção  nas  modelações  da  dinâmica  de  sistemas  flutuantes  em
+ondas  nos  diversos  trabalhos  apresentados  em  diversos  congressos  e  simpósios  internacionais,  nos
+diversos  programas  de  benchmarkings  que  estão  sendo  efetuados  e  nas  novas  regras  e  normas  de
+diversas  instituições  reguladoras  e  sociedades  classificadoras.  Neste  capítulo  serão  apresentadas  as
+motivações do presente estudo, assim como um breve resumo dos estudos que antecedem este trabalho,
+que mostram quais são os distintos caminhos que esta considerando a comunidade internacional para
+afrontar  o  desafio  de  entender  melhor  os  distintos  fenômenos  que  governam  a  dinâmica  dos  corpos
+flutuantes.
+
+1.1 Motivação
+
+Na  atualidade,  diversos  trabalhos  estão  focados  em  conseguir  compreender  mais
+detalhadamente as respostas de sistemas flutuantes em presença de grandes ondas e em
+condições de ressonância. Sob essas condições extremas, as ferramentas lineares atuais
+de avaliação da estabilidade dinâmica não são suficientemente acuradas para predizer
+apropriadamente esses movimentos extremos dos sistemas flutuantes em ondas.
+
+No estudo clássico de navios e sistemas oceânicos em ondas, é comum considerar
+os flutuantes como sistemas dinâmicos lineares, os quais se movimentam com pequenas
+amplitudes.  Nessa  modelagem  os  graus  de  liberdade  dos  flutuantes  estão  ou
+linearmente.  As  reações
+desacoplados  ou, no  melhor  dos  casos,  acoplados 
+
+1
+
+hidrodinâmicas são modeladas com base na teoria potencial linear (2D ou 3D). As ações
+de restauração são levadas em conta como lineares (estabilidade estática inicial). E o
+mar  pode  ser  modelado  como  regular  ou  como  aleatório,  com  a  ajuda  da  teoria
+espectral. Mas, os flutuantes seguem sofrendo de movimentos indesejados e perigosos,
+tanto  em  mares  fortemente  agitados  ou  relativamente  calmos.  Isso  é  devido  a  que  os
+flutuantes  podem  sofrer  grandes  movimentações que estão sob  a  influência  de
+fenômenos que escapam da modelação da teoria linear.
+
+Por esses motivos os investigadores a nível mundial fazem grandes esforços para
+passar  a  um  nível  mais  avançado  de  critérios  e  regulamentos  da  estabilidade  dos
+flutuantes,  considerando a  dinâmica  das  embarcações.  Mas, é  necessário  descrever  a
+dinâmica dos flutuantes com modelos mais realistas considerando ações não lineares e
+modelando o mar de forma realista, sempre no intuito de poder garantir a estabilidade
+dos mesmos. O desafio está em desenvolver uma ferramenta detalhada e eficiente em
+termos  computacionais  que  permita  a  avaliação  direta  das  respostas  de  um corpo
+flutuante. Essa ferramenta deveria contribuir para melhorar a avaliação de projetos de
+navios.  Como  também  poderia  ajudar  no  planejamento  de  baterias  de  testes
+experimentais em ondas extremas em laboratórios especializados.
+
+Foi com esses objetivos que começou-se o desenvolvimento do algoritmo descrito
+neste trabalho. O algoritmo, nomeado como DSSTAB, é um modelo numérico em seis
+graus  de  liberdade  para  a  simulação  de  sistemas  flutuantes  em  ondas  no  domínio  do
+tempo, o qual é baseado em um método de panelização em três dimensões. No modelo,
+as ações inerciais do casco, as forças e momentos de Froude-Krylov e restauração são
+consideradas como não lineares, sendo que as pressões são computadas considerando a
+superfície molhada instantânea do navio em cada passo do tempo, a qual depende dos
+movimentos  do  corpo  e  da  passagem  da  onda.  Por  outro  lado, por  limitações
+computacionais, as  forças  e  momentos  hidrodinâmicos  de  radiação  e  difração  são
+avaliados  considerando-se  o  corpo  na  superfície  média  constante.  O  momento  de
+amortecimento de roll também é considerado como não linear, ele pode ser introduzido
+no modelo baseado em metodologias semi-empíricas, ou, alternativamente, a partir de
+estimativas decorrentes  de testes  experimentais de decaimento. Finalmente, os efeitos
+não lineares de um sistema de ancoragem são levados em conta resolvendo-se a equação
+da catenária em cada passo do tempo.
+
+2
+
+O  principal  objetivo  é  contar  com  um  algoritmo  suficientemente  sofisticado  que
+permita simular realisticamente movimentos com grandes amplitudes em seis graus de
+liberdade. O algorítmo poderia ser usado para economizar tempo importante gasto em
+testes  experimentais  de  estabilidade  de  navios ou  plataformas em  ondas,  assim  como
+também  poderia  ser  empregado  na  avaliação  direta  da  estabilidade  para  o  critério  de
+estabilidade intacta de segunda geração da IMO, para os modos de falha da estabilidade
+relacionados com variação do braço restaurador, como são a perda pura da estabilidade
+e o roll paramétrico, vide Polo e Neves (2012).
+
+1.2 Simulações dos movimentos de sistemas flutuantes no domínio do tempo
+
+Atualmente,  as simulações  numéricas  no  domínio  da  freqüência  são  amplamente
+difundidas  no  estudo  dos  movimentos  de  sistemas  flutuantes,  devido  a  sua  fácil
+implementação  e  a  relativa  pouca  dificuldade  no  momento  de  fazer  análises  das
+respostas dos sistemas flutuantes. Mas nos últimos anos, devido a diversos fenômenos
+ocorridos com embarcações que não podem ser explicados com metodologias lineares,
+vide Pérez  Rojas et  al.  (2008), se  tem  reconhecido  a  necessidade  de  introduzir  não
+linearidades  no  estudo  do  comportamento  dos  sistemas  flutuantes.  Sendo  que  a
+introdução  de  fenômenos  não  lineares  pode  ser  complicada  em  metodologias
+desenvolvidas no domínio da freqüência. É por isso que diversas pesquisas atuais estão
+favorecendo  o  uso  de  metodologias  no  domínio  do  tempo  para  realizar  estudos de
+movimentos de sistemas flutuantes.
+
+Diversas  metodologias  têm  sido  propostas  na  literatura  para  introduzir  não
+linearidades  na  simulação  dos  movimentos  dos sistemas  flutuantes.  Alguns  misturam
+cálculos  lineares  conjuntamente  com  cálculos  não  lineares,  e  outros  empregam
+metodologias  de  escoamento  potencial  não  linear.  Outros  estudos  tentam  resolver  o
+problema  do  escoamento  viscoso  nos  movimentos  de  sistemas  flutuantes  em  ondas,
+solucionando  a  equação  promediada  de  Navier-Stokes  (conhecida  como  RANS)  no
+domínio  do  tempo.  Os  métodos  de  simulação  de  movimentos  no  domínio  do  tempo
+podem ser classificados segundo sua metodologia numérica. Na Tabela 1.1 mostram-se
+os distintos métodos conjuntamente com suas vantagens e desvantagens, como foram
+apresentados no relatório do comitê de Seakeeping do ITTC no ano de 2011.
+
+3
+
+Tabela 1.1 Metodologias numéricas de abordagem no domínio do tempo
+
+Método numérico
+
+Vantagem
+
+Desvantagem
+
+Função resposta
+
+impulsiva
+
+Fácil de implementar,
+Calculo rápido
+
+Teoria das faixas
+
+Calculo rápido
+
+Função transiente
+
+de Green
+
+Painéis de Rankine
+
+CFD
+
+Métodos híbridos
+
+Condição de radiação
+automaticamente satisfeita,
+Distribuição de painéis só
+na superficie do corpo
+Praticidade boa,
+Fácil extensão ao análise
+não linear,
+Em geral boa precisão
+Capacidade para movimentos
+extremos de navios,
+Inclusão de efeitos viscosos
+Aproveita vantagens
+dos métodos combinados
+
+Precisa coeficientes hidrodinâmicos
+computados com anterioridade,
+Aplicabilidade limitada
+Limitações como método de secções em 2D,
+Pouca precisão em baixas frequencias
+Dificuldade para calcular a função de
+Green para velocidade de avanço
+diferente de zero,
+Aplicabilidade limitada
+Dificuldade na modelação em 3D
+e a geração dos painéis,
+Precisa um método numérico
+para a condição de radiação
+Grande tempo e esforço computacional,
+Pouca precisão em memória fluida
+
+Nenhum beneficio em muitas combinações,
+esforço adicional para as combinações
+
+Capacidade
+e tempo
+
+computacional
+
+Mínima
+
+Mínima
+
+Moderada
+
+Moderada
+
+Forte
+
+Variante
+
+Dos métodos mencionados na tabela 1.1, são as metodologias híbridas as que estão
+sendo  consideradas  atualmente  na  comunidade  internacional  para  o  estudo  de
+fenômenos não lineares na dinâmica dos sistemas flutuantes, devido à sua rapidez, boa
+precisão  em  termos  de  engenharia  e  a  possibilidade  de  incorporar  com  relativa
+facilidade  vários  aspectos  de projeto,
+tanques
+estabilizadores, efeitos de água no convés, entre outros.
+
+como  sistema  de  ancoragen, 
+
+O  modelo  do  DSSTAB  que  será  descrito  e  utilizado  neste  trabalho  pode  ser
+
+classificado como um método híbrido.
+
+1.3. Estado da arte
+
+Devido  a  que o foco do  trabalho  foi validar um algoritmo  desenvolvido  para  ser
+capaz  de capturar instabilidades  decorrentes  da  variação  da  geometria submersa do
+casco, não são mencionados os trabalhos que empregam  a teoria da perturbação, que
+favorece  o  desenvolvimento  de  metodologias  que  dão  solução  aos  problemas  dos
+potenciais de segunda ou terceira ordem, que são muito utilizadas na área offshore. Mas
+no  terceiro  capítulo,  durante a  descrição  das  não  linearidades  do  DSSTAB,  serão
+comentadas brevemente algumas equivalências assim como diferenças entre um modelo
+baseado no método das perturbações e o modelo do DSSTAB.
+
+4
+
+A  origem do  estudo  moderno  dos  movimentos  dos  corpos  flutuantes  tem  origem
+bem conhecida no trabalho de Froude, no século dezenove, que motivado pelo famoso
+engenheiro Brunell começou seus estudos de estabilidade de navios em ondas, sendo ele
+o  primeiro a  relatar instabilidades  em  roll  em  ondas  longitudinais  (ressonância
+paramétrica). Por outro lado, o trabalho de St. Denis & Pierson (1953) foi um trabalho
+pioneiro que propôs uma metodologia para estimar os movimentos de corpos flutuantes
+empregando metodologias espectrais, relacionando a densidade espectral das respostas
+de  um  navio  com  o  espectro  do  mar  atuante  no  navio,  mediante  os  RAO’s  de
+movimento do corpo. Pode-se considerar que esses trabalhos foram os que começaram o
+estudo  científico  dos  movimentos  de  corpos  flutuantes em  ondas. Ao  longo  dos  anos
+seguintes diversos  pesquisadores  têm continuado  o  estudo do  comportamento  dos
+sistemas  flutuantes  em  ondas.  A  seguir  mencionam-se  e  descrevem-se  brevemente
+alguns  dos  trabalhos  que  contribuíram  no  entendimento  do  comportamento  em  ondas
+das  embarcações  e  alguns  dos  modelos  mais  relevantes no  estudo  das instabilidades
+dinâmicas.
+
+Kerwin (1955) observou que em ondas longitudinais podem existir freqüências de
+encontro que originam oscilações instáveis no roll. Em seu trabalho, a variação da altura
+metacêntrica transversal em ondas longitudinais foi abordada do ponto de vista quase-
+hidrostático,  em  outras  palavras,  os  efeitos  hidrodinâmicos  ocasionados  pelos
+movimentos do navio em ondas foram descartados. No entanto a restauração em roll foi
+expressa como uma função periódica no tempo, desta forma a equação desacoplada do
+movimento de roll fica na forma de uma equação bem conhecida como é a equação de
+Mathieu.
+
+Paulling e Rosenberg (1959) acoplaram não linearmente os movimentos de heave,
+roll e pitch. Neste acoplamento de segunda ordem introduziu-se dependência no tempo
+nas ações de restauração, o que pode gerar instabilidades em qualquer um dos graus de
+liberdade. A análise foi feita empregando a equação de Mathieu, demonstrando-se que o
+roll  paramétrico  pode  acontecer  se  a  freqüência  de  excitação  é  o  dobro  ou  igual à
+freqüência natural de roll, para a primeira e segunda zonas de instabilidade da equação
+de Mathieu, respectivamente.
+
+5
+
+Paulling (1961) demonstrou que a estabilidade em ondas difere significativamente
+da  estabilidade  em  águas  calmas,  a  qual,  nessas  condições, pode  ser  diminuída
+perigosamente.  No  caso  de  pequenos  ângulos  de  inclinação  (estabilidade inicial),  foi
+proposta uma expressão analítica para o momento restaurador em ondas que considera o
+efeito dos movimentos do navio em heave e pitch (afundamento e arfagem), assim como
+o perfil da onda.
+
+Cummins (1962) foi o primeiro a apresentar uma formulação para a determinação
+dos movimentos do navio no domínio do tempo, fazendo uso do principio da função
+resposta impulsiva, tal que o movimento do navio pode ser desdobrado em uma série
+contínua de pequenos impulsos de deslocamento. Assim, pode-se incluir a dependência
+do tempo nas forças hidrodinâmicas por meio de integrais de convolução.
+
+Ogilvie (1964) introduziu o conceito de memória fluida. Nesse trabalho, se derivam
+expressões para os potenciais de velocidade dependentes do tempo para um navio com
+velocidade de avanço constante.
+
+Himeno  (1981)  fez  um  análise dos  diversos  aspectos  do  amortecimento  em  roll
+fazendo  uma  série  de  testes  experimentais  com  modelos,  com  o  objetivo de
+compreender melhor o amortecimento em roll. O estudo de Himeno teve como base o
+trabalho  de  Ikeda  et  al.  (1978)  no  qual  se  propõem  diversos  métodos  empíricos  para
+estimar  as  distintas  componentes  do  amortecimento  em  roll,  que  no  trabalho  são:
+formação de ondas no casco, fricção, formação de vórtices, sustentação e bolinas.
+
+De  Kat  (1988)  desenvolveu  um  modelo  numérico  em  seis  graus  de  liberdade
+baseado  na  teoria  das  faixas para  simular  movimentos  com  grandes  amplitudes  em
+condições  de  mar  severo  que  poderiam incorrer  em emborcamento de  navios.  O
+objetivo  do  estudo  foi  identificar  numericamente  modos  de  falha  da  estabilidade
+dinâmica,  e  estudar  seus  mecanismos  e  condições.  O  modelo  está  baseado  na
+combinação  da  teoria  potencial  conjuntamente  com  termos  viscosos  no  domínio  do
+tempo  considerando  os  efeitos  do  cômputo  das  pressões  até  a  superfície  molhada
+instantânea  e  a  memória  fluida.  Foram  identificadas  as  instabilidades  de  perda  de
+estabilidade transversal em mar de popa e de través, e guinada brusca (broaching) em
+
+6
+
+ondas oblíquas, ambas para ondas regulares. Ademais, foi identificada a instabilidade de
+roll paramétrico em mar de popa para ondas regulares e irregulares.
+
+Lin  e  Yue  (1990,  1993) deram  início  ao desenvolvimento  do  LAMP,  um  código
+tridimensional no domínio do tempo para estudar movimentos de grandes amplitudes e
+cargas de navios em ondas. O problema é resolvido empregando-se uma distribuição de
+fontes transientes da função de Green na superfície submersa do casco. Em Lin et al.
+(1999)  foi  implementada  uma  metodologia  potencial  híbrida  que  combina  as
+metodologias  de  fontes  de  Rankine  e  as  funções  transientes  de  Green.  Nessa
+metodologia  o  domínio  fluido  é  dividido  em  duas  regiões,  a  região  mais  externa  ao
+corpo  é  solucionada  empregando  funções  transientes  de  Green,  enquanto  a região
+interior mais próxima ao corpo é resolvida mediante fontes de Rankine. Em Shin et al.
+(1997)  foi  desenvolvida  uma  interface  entre  o  LAMP  e  um  código  de  análise  por
+elementos  finitos  no  intento  de  estudar  cargas  em  navios  devido às  ondas  do  mar.
+Baseado no trabalho de Youssef et al. (2002) foi implementado um modelo de tanque
+tipo U-tube anti-roll passivo no código LAMP no intento de estudar a influência desse
+tipo  de  tanques  no  fenômeno  de  ressonância  paramétrica.  O  modelo  calcula  o
+movimento de fluido no tanque e determina as  forças não lineares acopladas em seis
+graus de liberdade. Essas forças são adicionadas ao cálculo dos movimentos do LAMP
+como forças externas. Baseados nos trabalhos de Buchner (1995), Zhou et al. (1999),
+Belenky et al. (2002) e Liut et al. (2002) tem sido integrado um modelo de green water
+no código LAMP, permitindo introduzir os efeitos de água no convés nas simulações
+não lineares no domínio do tempo. O código LAMP tem sido empregado para avaliar o
+risco de impacto de uma onda extrema na parte de baixo da estrutura principal de uma
+plataforma  semi-submersível em  Weems  et  al.  (1999),  assim  como  para  o  estudo  de
+distintas configurações de navios multicorpos, como um trimaran em Harris (1999).
+
+Na  tese  doutoral  de  Kring  (1994)  foi  apresentado  um  modelo  numérico,
+denominado  SWAN-2,  para  simular  movimentos  de  navios  no  domínio  do  tempo
+empregando uma metodologia baseada em painéis de Rankine. Em Kring et al. (1997)
+foi  apresentada  uma  extensão  não  linear  do  codigo  SWAN-2  incluindo  efeitos  não
+lineares nas forças hidrostáticas e de Froude-Krylov, e o tratamento dos fenômenos de
+radiação  e  difração  de  ondas  com  a  hipótese  de  weak  scatterer.  O  trabalho  também
+
+7
+
+discutiu  o  problema  de  como  determinar  valores  extremos  de  respostas  em  mar
+irregular, a partir de códigos não lineares.
+
+Fonseca e Soares (1998a, b) apresentaram uma formulação não linear no domínio
+do  tempo.  O  método é uma  combinação  da  teoria  linear  das  faixas  e  o  cômputo  não
+linear das forças de restauração; também, o método leva em conta os efeitos da memória
+fluida devido às ondas irradiadas. Esse modelo tem sido principalmente empregado para
+análises de movimentos verticais e momentos de flexão produzidos por ondas do mar.
+Em Fonseca et al. (2006) foi aplicado a um navio tipo portacontentor, em Vasquez et al.
+(2011)  para  um  navio  tipo  Bulk  Carrier,  e  em  Rajendra  et  al. para  um  navio
+portacontentor.  Nesses  trabalhos  tem-se  registrado  boas  comparações  entre  testes
+experimentais e simulações numéricas dos movimentos verticais e momentos de flexão
+dos navios estudados.
+
+Matusiak (2000b, 2001) apresentou o método numérico denominado  Laidyn para
+avaliar  os  movimentos  e  manobras  de  navios  no  domino  do  tempo.  O  método está
+baseado  na  combinação  da  teoria  linear  das  faixas,  para  o  cômputo  dos  termos  de
+radiação,  e  uma  metodologia  não  linear  para  o  computo  da  força  de  restauração.
+Também  são  incluídos  efeitos  de  resistência  ao  avanço,  propulsor  e  leme  mediante
+modelos semi-empíricos. Assim, podem ser avaliados movimentos extremos produzidos
+pela atuação simultânea de ondas e ventos tempestuosos. Em Matusiak (2003) o Laidyn
+foi validado com testes experimentais de um navio tipo Ro-Pax; nesse estudo o modelo
+teve a capacidade de reproduzir o roll paramétrico registrado nos testes experimentais.
+Em Matusiak (2005) o  Laidyn foi  empregado para avaliar o  cumprimento do critério
+climatológico da  IMO para um navio de passageiros. As conclusões do estudo foram
+que o critério climatológico não foi elaborado para avaliar as capacidades de um navio
+em condições de mar real. Apesar disso, deve ser mencionado que o critério leva em
+conta importantes elementos que afetam a segurança de navios.
+
+Ballard et al. (2003), apresentaram um modelo matemático dos movimentos (heave
+e pitch) do navio no domínio do tempo para a predição do comportamento do navio em
+mares regulares. O modelo incluiu efeito da memória fluida nas ações hidrodinâmicas,
+usando uma análise tridimensional do escoamento potencial para as funções impulsivas.
+A onda incidente é considerada como não linear, e as forças e momentos de restauração
+
+8
+
+são computadas considerando o volume submerso instantâneo em cada passo do tempo.
+Nesse trabalho se estudaram dois cascos: um casco do tipo série 60 e um casco do tipo
+portacontentor S175, ambos foram estudados em mar de proa. O modelo foi capaz de
+reproduzir tendências similares às obtidas em ensaios experimentais. Em Temarel et al.
+(2010) o modelo foi ampliado a quatro graus de liberdade (sway, heave, roll e pitch). O
+modelo incluiu o efeito da memória fluida nas ações hidrodinâmicas incluindo as ações
+de difração, por meio de integrais de convolução referidas à posição media da superfície
+livre.  A  ação  da  onda  incidente  é  considerada  como  não  linear  mediante  uma
+extrapolação até a superfície instantânea. Esse modelo foi empregado para o estudo do
+roll paramétrico, demonstrando ter uma boa concordância qualitativa e quantitativa com
+ensaios experimentais para um portacontentor tipo post-Panamax C11, o portacontentor
+ITTC-A1 e uma embarcação pesqueira com popa tipo tramson.
+
+Rodríguez (2004) propôs um modelo analítico não linear do movimento do navio
+(heave, roll e pitch) para o estudo da ressonância paramétrica. Esse modelo considera
+heave, roll e pitch acoplados não linearmente nas ações restaurativas com termos de até
+terceira ordem mediante expansões de Taylor. Esse trabalho mostra que o modelo de
+terceira ordem apresenta características dinâmicas próprias como a existência de rigidez
+não linear e a excitação paramétrica bi-harmônica, que tem relevância nos casos de roll
+paramétrico intenso. Ademais, deixou claro que para uma melhor análise da estabilidade
+deve ser empregada uma equação do tipo Hill em lugar duma equação do tipo Mathieu.
+Em Rodríguez (2010) o modelo foi ampliado a seis graus de liberdade e ademais foi
+incluído o efeito Smith, o qual aborda a influência da atenuação da pressão da onda com
+a profundidade. Ademais, apresentou uma metodologia para a obtenção da restauração
+até a terceira ordem onde é feito um ajuste por polinômios da curva de restauração para
+várias posições do  navio.  Para  simular  os  movimentos  do  navio em mar  irregular,  o
+autor propôs uma metodologia mista, a qual representa bem o caráter não ergódico do
+movimento de roll paramétrico.
+
+Bulian  (2006)  propôs  dois  modelos analíticos  não  lineares  para  simular  o
+movimento de roll desacoplado; nesses modelos foram incluídos os efeitos dos modos
+de  heave  e  pitch  assim  como  a  variação  do  volume  submerso  devido  à  onda  com
+hipóteses  quase  estáticas  na  obtenção  da  curva  GZ. Também, o  amortecimento  não
+linear  em  roll  para  os  dois  modelos  foi  obtido  de  testes  de  decaimento  de  roll  com
+
+9
+
+modelos em escala reduzida dos navios estudados. O primeiro modelo foi desenvolvido
+para  simular  o  roll  desacoplado  em  mar  regular,  fazendo-se  análises  numéricas  no
+domínio do tempo e análises analíticas no domínio da freqüência. O outro modelo usa o
+conceito  da  onda  efetiva  de  Grim,  para  simular  o  roll  desacoplado  em  mar  irregular.
+Simulações  do  modelo  para  mar  regular  foram  feitas  e  comparadas  com  ensaios
+experimentais de quatro navios distintos: um navio tipo destroyer, um navio tipo fragata
+e  dois  navios  tipo  RoRo. Simulações  do  modelo  para  mar  irregular  foram  feitas  e
+comparadas  com  ensaios  experimentais  dos dois  navios  tipo  RoRo. No  trabalho  foi
+registrado o caráter não gaussiano do movimento de roll em mar irregular.
+
+Além  dos  trabalhos  mencionados,  o Autor  reconhece  os  trabalhos  de  diversos
+pesquisadores e professores como Beck, Blocki, Faltinsen, Francescutto, Fossen, Guo,
+Hua, Liapis, Liaw,  Lorca,  Nakos,  Nayfeh,  Neves,  Newman, Oortemersen,  Pawloski,
+Pinkster,  Sanchez,  Sclavounos,  Stoker,  Spyrou,  Tuck,  Umeda,  Ursell,  Valerio  entre
+muitos outros, como fundamentais para o desenvolvimento dos trabalhos anteriormente
+mencionados, assim como inspiração do presente trabalho.
+
+1.4 Objetivo e organização da dissertação
+
+Este trabalho visa fazer simulações numéricas dos movimentos de um navio com o
+propósito de validar o algoritmo denominado como DSSTAB, desenvolvido em parceria
+entre a COPPE, o Centro de Pesquisas da PETROBRAS (CENPES) e a TECGRAF-
+PUC. A principal  característica  do  algoritmo  é  a  capacidade  de  reproduzir
+realisticamente  os  fenômenos  decorrentes  da  variação  da  geometria  instantaneamente
+submersa  de  corpos  flutuantes  em  presencia  de  ondas. O presente trabalho  é  uma
+documentação de comparações  entre simulações  numéricas para um navio tipo FPSO
+testado experimentalmente no  LabOceano. As  comparações são  mostradas  com  a
+intenção  de  ilustrar  as  capacidades  e  deficiências  do algoritmo.  Neste  trabalho,  os
+resultados numéricos são avaliados com velocidade de avanço zero, em ondas de través
+e de proa considerando o mar regular.
+
+10
+
+No  capítulo  2  se  descreve  de  maneira  breve  a  modelação  das  equações  do
+movimento no domínio do tempo dos flutuantes, se mostra a implementação do passeio
+lento e a incorporação de amarrações no sistema de equações.
+
+No  capítulo  3  se descreve a  implementação  numérica  do  código  DSSTAB,  são
+mencionadas  as  considerações  numéricas  levadas  em  conta  no  desenvolvimento  do
+código.  Também  neste  capítulo,  são  discutidas  as  não  linearidades  introduzidas  no
+código.
+
+No  capítulo  4 são  descritas  as  condições  dos  ensaios  e  o  corpo  estudado.  São
+mostradas as comparações feitas entre ensaios experimentais com um modelo em escala
+reduzida e o código DSSTAB, na intenção de validar o código.
+
+Finalmente,  no  capítulo  5  são  apresentadas  as  conclusões  obtidas  do presente
+estudo,  assim  como  recomendações  para  trabalhos  futuros  relacionados  ao  código
+computacional DSSTAB.
+
+11
+
+CAPÍTULO 2
+
+MODELAÇÃO MATEMÁTICA
+
+Neste capítulo é apresentada a formulação matemática implementada no algoritmo numérico utilizado neste
+trabalho. São descritas as equações de movimento que comportam a dinâmica dos sistemas flutuantes, assim
+como a modelação das forças externas atuantes consideradas no modelo matemático.
+
+2.1 Definições Básicas
+
+É necessário definir alguns conceitos básicos antes de iniciar o estudo dos movimentos
+
+dos sistemas flutuantes.
+
+Neste  trabalho  os  sistemas  flutuantes  são  considerados  como  corpos  rígidos  intactos
+sem velocidade de avanço ou rumo definido. Ademais, qualquer efeito não produzido pelas
+ondas do mar e as linhas de ancoragem serão desprezados, tais como efeitos de sloshing e
+outras  cargas  internas,  ventos  ou  correntezas.  Assim  como  cargas  devido  a  slamming  e
+cargas devido ao ingresso de água no convés.
+
+A  seguir  serão definidos  os  conceitos  relacionados  aos movimentos  translacionais  e
+
+angulares do flutuante, o ângulo de incidência, e a elevação da onda.
+
+Movimentos dos sistemas flutuantes
+
+Os movimentos translacionais de um sistema flutuante na direção dos eixos X, Y, Z
+são  denominados  surge,  sway,  e  heave,  respectivamente. Os  movimentos  angulares
+definidos  em  torno de  um  sistema  fixo  no  flutuante  são chamados de roll,  pitch  e  yaw,
+
+12
+
+respectivamente.  Vide  figura  2.1.  No  trabalho  os  sub  índices  1,  2  e  3  referem-se  aos
+movimentos de surge, sway e heave, respectivamente, e os sub índices 4, 5 e 6 referem-se
+aos movimentos de roll, pitch e yaw, respectivamente.
+
+Ângulo de incidência
+
+Elevação da onda
+
+O ângulo de incidência da onda
+
+, definido em um sistema inercial fixo, é o ângulo
+entre o curso do navio e a direção de propagação da onda, vide figura 2.1. Portanto, para
+
+mar de popa tem-se = °, e para mar de través no sentido de bombordo, = °.
+A elevação de uma onda com incidênciaχ é definida pela teoria linear de Airy como:
+( ,
+é  o  numero  de  onda,  eA é  a  amplitude  da  onda.  Essa  equação  é  usada  para
+
+onde
+modelar  o  mar  como  regular,  descrevendo  as  ondas  do  mar  como  harmônicos como
+percebidos pelo corpo.
+
+( )− ]
+
+,
+
+, )=
+
+[
+
+( )+
+
+(1)
+
+2.2 Sistemas de referência
+
+Adotam-se três sistemas de referência dextrógiros, ver figura 2.1, para uma apropriada
+modelação  da  dinâmica  de  sistemas  flutuantes  em  ondas.  Assim é possível simular  os
+movimentos destes com amplitudes consideráveis e descrever o sistema dinâmico de uma
+forma elaborada.
+
+as incidências das ondas atuantes no corpo flutuante e a velocidade de avanço do mesmo.
+
+Um sistema inercialAXYZ fixo no espaço; em relação a este sistema são definidas
+Um sistema inercial móvelCXYZ que acompanha o movimento do corpo. Este sistema
+é definido a partir da posição de repouso inicial do navio, e tem sua origemC na interseção
+
+da vertical que passa pelo centro de gravidade com o plano
+. Neste sistema são definidos
+os movimentos translacionais que atualizam a posição relativa do corpo em relação à onda.
+
+13
+
+Um sistema não inercial móvel Oxyz fixo no corpo; quando o corpo está em repouso
+
+este sistema coincide com o sistema inercial móvel. Neste sistema é definida a geometria
+do corpo e também são definidos os movimentos angulares deste.
+
+Fig. 2.1 Sistemas de referência, movimentos do navio e onda incidente
+
+2.2.1 Transformação de eixos
+
+É possível determinar a orientação de um sistema ortogonal móvel em torno de outro
+sistema ortogonal (geralmente fixo) mediante uma sucessão de rotações em  yaw, pitch e
+roll.  Essa  seqüência  de  rotações  é  bem  conhecida  no  estudo  de  navios  e  aeronaves  e
+corresponde a uma forma modificada dos ângulos de Euler. Assim, um vetor definido no
+sistema não inercial fixo ao corpo pode ser representado por um vetor definido no sistema
+inercial fixo no espaço.
+
+No  instante  em que  o  navio  está  em  repouso,  o  sistema inercial  fixo  no  espaço  e  o
+sistema não inercial fixo no corpo são paralelos, figura 2.2a. Assim, nesse instante o vetor
+
+velocidade deO pode ser expresso no sistema inercial como:
+
+(2)
+
+()= ̇
+
++ ̇
+
++ ̇
+
+14
+
+Nesse  mesmo  instante, o  vetor  velocidade  de
+
+,  pode  ser  expresso  no  sistema  não
+
+̂ +
+̂ +
+
+:
+
+no sistema
+
+velocidade de
+
+Aplicando  a  primeira  rotação
+
+inercial fixo no corpo como:()=
+()=
+=
+
+Sendo a relação entre
+
+e
+
+ou em forma abreviada como:
+
+Seguidamente aplicamos a rotação
+
+vetor velocidade de
+
+no sistema
+
+Sendo a relação entre
+
+ou de forma reduzida como:
+
+em torno do eixo
+como:
+
+:
+
+e
+
+()=
+̂ +
+= −
+
+(3)
+
+(figura  2.2b),  temos  o  vetor
+
+(4)
+
+(figura 2.2c), e temos o
+
+(5)
+
+em  torno  do  eixo
+expresso como:
+
+̂ +
+̂ +
+−
+= (
+̂ +
+
+)
+
+= ( )
+
+15
+
+Finalmente, aplicamos a rotação
+
+em torno do eixo
+
+assume  a  orientação  desejada  do  sistema  não  inercial
+
+(figura 2.2d), sendo que o
+.  A
+
+sistema
+velocidade de
+
+é:
+
+:
+
+e
+
+()= ̂+ ̂+
+=
+
+Sendo a relação entre
+
+e
+
+ou de forma reduzida como:
+
+Sendo que no repouso os vetores
+
+−
+= ( )
+= (
+)
+= (
+) ( )
+e efetuando o produto obtemos:̇
+= (
+)
+,
+,
+Sendo a matriz de transformação (
+):
+,
+,
+)= ( ) ( )
+( ) ( )( )− ( ) ( )
+( )( )( )+ ( ) ( )
+( ) ( )
+( ,
+,
+( ) ( )
+−( )
+
+são iguais, assim temos que:
+
+= (
+
+) ( ) ( )
+
+()
+
+( ) ( )( )+ ( )( )
+( )( )( )− ( ) ( )
+
+( )( )
+
+onde c e s representam uma abreviação de coseno e seno respectivamente.
+
+(6)
+
+(7)
+
+(8)
+
+(a)
+
+(b)
+
+16
+
+̇
+̇
+̇
+̇
+̇
+(c)
+
+(d)
+
+Fig. 2.2 Esquema da realização dos ângulos modificados de Euler. (a) sistema não
+inercial paralelo ao sistema inercial fixo. (b) rotação em torno de z. (c) rotação em
+
+torno de y. (d) rotação em torno de x.
+
++
+
++
+
+definido  no  sistema
+
+mediante  a  matriz  de
+
+no  sistema
+
+Desta  forma  um vetor qualquer
+
+pode ser definido como
+transformação:
+
+De igual forma pode-se definir a relação inversa como
+
+̂+
+,
+
+̂+
+= (
+(
+=
+
+,
+
+)
+)
+,
+,
+( )( )( )+ ( ) ( )
+( )( )( )− ( ) ( )
+−
+
+( ) ( )
+
+−
+
+−
+
+17
+
+(9)
+
+(10)
+
+(11)
+
+(12)
+
+−( )
+( )( )
+( )( )
+
+a matriz inversa da matriz ortogonal
+
+, definida como:
+
+sendo
+
+=
+
+( ) ( )
+( ) ( )( )− ( )
+( ) ( )( )+ ( )
+( ,
+,
+
+( )
+( )
+)=
+
+Em particular, linearizando-se a matriz
+
+para pequenos deslocamentos, obtém-se:
+
+Para dar solução à equação de movimento do navio é preciso relacionar, mediante a
+matriz  de  transformação  e  sua  inversa, os  vetores  de  velocidades  lineares,  velocidades
+angulares, forças e momentos nos sistemas inercial fixo no espaço e não inercial fixo no
+corpo. Com esse propósito define-se a seguinte nomenclatura:
+
+J+Ż K=uı̂+v̂+wk
+I+Ẏ
+velocidade de translação do ponto :U =Ẋ
+velocidade angular:Ω =Ω I+Ω J+Ω K=pı̂+q̂+rk
+̂+fk
+forças externas:F=F I+F J+F K=fı̂+f
+momentos externos:M=M I+M J+M K=mı̂+m ̂+mk
+
+2.2.2. Relação entre a velocidade angular e a taxa de variação dos ângulos de Euler
+
+Apesar  de  as  quantidades  angulares  não  serem  vetores,  a  velocidade  angular  é  um
+
+vetor. A velocidade angular pode ser definida no sistema não inercial como:
+
+Seguindo a seqüência dos ângulos de Euler, temos que a velocidade angular é dada por:
+
+(13)
+
+e
+
+(14)
+
+em  função de ,
+
+,
+
+.
+
+= ̂+ ̂+
+= ̇
+̂+ ̇
+̂ + ̇
+,
+,
+̂ = ̂+ ̂+
+= ( )
+
+18
+
+Para  obter  expressões  para
+
+deve-se  expressar
+
+Assumimos que:
+
+ou seja:
+
+então:
+
+̂
+e agora:
+
+temos que:
+
+então
+
+=(̇− ̇
+
+Ou em notação matricial:
+
+Sendo a matriz
+
+)̂+(̇
+= ̂+ ̂+
+=
+−
+=
+
+Obtém-se a velocidade angular no sistema inercial como:
+
+= −
+= ̂+ ̂+
+( )
+= ( )
+= −
++ ̇
+−
+
+)̂+( ̇
+̇ =
+
+−
+−
+
+19
+
+−
+=
+
+−
+
+− ̇
+
+)
+
+(15)
+
+(16)
+
+(17)
+
+e sua forma linear para pequenos deslocamentos angulares é
+
+̇
+̇
+̇
+̇
+̇
+2.2.3. Passeio Lento
+
+e  eixos  horizontais
+
+e
+
+Se a embarcação é obrigada a fazer um passeio lento no plano horizontal, seja por
+(estação
+ação propulsiva ou devido às ondas, é necessário distinguir o sistema
+de rastreamento) que registre as atualizações sucessivas de
+(sistema de referência
+de passeio lento, ver figura 2.3) a partir das obtenções das novas coordenadas horizontais
+de translação e das possíveis mudanças de rumo da embarcação, vide figura 2.3. Seja então
+o  sistema  de  passeio com  origem
+
+. No  instante = ,
+= e
+= . Considerando-se  posições  consecutivas da  origem
+= ,
+}, poderá existir a seqüência
+,
+,
+em intervalos de tempo∆ , definidas como{
+,
+,…} e{
+,
+,
+, definidos como {
+,…},
+,
++
+,+ ,
++
+,
+sendo a seqüência dos ângulos de aproamento definida como {
+,…}, enquanto que os deslocamentos translacionais que possam
++
+,
+= :
+= :
+
+ocorrer serão registrados através das atualizações definidas pelo seguinte algoritmo:
+
+de eixos do plano horizontal
+
+= ,
++
+
++
+
+=
+=
+
+= :
+= :
+=
+
++
++
+
+=
+=
+
++
+
+= :
+
+, tal que
+
+, tal que
+
+, tal que
+
+⋮
+
+=
+=
+=
+
+,
+
+×
+×
+
+×
+
+−
+−
+
+−
+
+No  trabalho  a  única  ação  que  vai  obrigar  o  corpo  desenvolver  um  passeio no  plano
+horizontal é ação das ondas incidentes, por tanto o plano de passeio ficara alinhado com o
+ângulo  da  incidência  das  ondas  através  da  seqüência  de  ângulos  de  aproamento  descrita
+acima.  Sendo  que  em  cada  etapa  do  desenvolvimento  será  calculada  a  freqüência  de
+encontro.
+
+20
+
+Fig. 2.3 Referencial de passeio da embarcação
+
+Note-se  que  para  a  execução  do  passeio  lento,  as  forças  de excitação  devem  ser
+previamente calculadas para várias incidências, de forma a permitir, dentro do processo de
+integração, a atualização das forças e momentos de ondas.
+
+Devido  ao  procedimento  anteriormente  descrito,  o  sistema  de  referência
+submetido a rotações sucessivas em yaw por médio do sistema de passeio lento
+
+motivo, a matriz de transformação a cada atualização fica dada como:
+
+que a matriz de transformação ( ,
+( )
+( )
+
+)=
+
+( ,
+
+−
+
+) não deve incluir a rotação em yaw (
+,
+( )
+( )
+( )
+( )
+( )
+
+( )
+( )
+( )
+
+( )
+( )
+
+está
+, tal
+). Por esse
+
+(18)
+
+2.2.4. Freqüência de encontro
+
+A freqüência de encontroω é a freqüência com a qual um navio, com velocidade de
+avanço  constante U,
+encontra  as  ondas  de  freqüência ω com  incidência χ. Essa
+
+velocidade  pode  ser  induzida  por  seu  sistema  propulsivo  e/ou  pelo  efeito  não  linear  das
+
+21
+
+ondas. A velocidade
+como:
+
+será definida a seguir em 2.2. A freqüência de encontro define-se
+
+ondeg é a aceleração da gravidade,∆ é o deslocamento do sistema de passeio no sentido
+
+da direção da onda, sendo que a velocidade do sistema de passeio na direção da onde pode
+ser definida como:
+
+(19)
+
+=
+
+−(
+
+)∆→ ∆∆
+∆→ ∆∆ =
+
+̇ + ̇
+
+e
+
+onde
+anterior.
+
+são  os  eixos do  plano  horizontal  de  passeio
+
+,  definidos no  item
+
+2.3. Segunda Lei de Newton
+
+A segunda lei Newton estabelece que a resultante das ações externas sobre um corpo é
+igual  à  taxa  de  variação  da  quantidade  de  movimento; para  movimentos  translacionais  e
+
+Expandindo-se as  duas  equações,  com  a  posição  do  centro  de  gravidade  (C.G.)
+
+com respeito ao eixo fixo, tem-se, respectivamente:
+
+rotacionais temos, respectivamente:=
+=
+
++
+
+=
++
+
+=
+
++
+
+=
+
+Ω×
+×
+
+22
+
+(20)
+
+(21)
+
+(22)
+
+(23)
+
+Considerando  que  um  corpo rígido esta  composto  por  um determinado  número  de
+,  pode  ser  definida  a  quantidade  de
+
+e  posição
+
+elementos  pequenos  com  massa
+movimento angular no sistema inercial como:
+
+=
+
+(
+
+sendo:
+
+Da dinâmica de corpos rígidos temos que:
+
+e
+
+Substituindo na equação (25) temos:
+
+onde
+
+se define como:
+
+= −
+×(Ω× )
+
+=
+
+Expandindo a equação (26) para o caso geral onde =
+
+)×
+= −
++
+=
+=Ω×
+×(Ω× )
+
+23
+
+(25)
+
+(26)
+
+, temos:
+
+̂+
+
+̂+
+
+=
++ −
++ −
+
+−
+
+( + )
++
+−
+
+( + )
++
+
+−
+−
+
+( + )
+
+Empregando os conceitos de momentos e produtos de inércia e ordenando em forma de
+
+matriz temos:
+
+onde:
+
+=
+
+−
+−
+
+= Ω
+
+×
+−
+−
+
+−
+−
+−
+=
+−
+( Ω)+
+
+=
+
+−
+−
+−
+−
+
+×
+
+Substituindo finalmente na equação 23 temos que:
+
+(27)
+
+Empregando-se  os  conceitos  da  mecânica  clássica,  junto  com  as  definições  não-
+lineares  da  matriz  de  transformação  de  eixos  e  a  matriz  de  relação  entre  a  velocidade
+angular  e  a  taxa  de  variação  dos  ângulos  modificados  de  Euler,  e  ademais  ordenando
+adequadamente  as  expressões,  chega-se,  para  o  equilíbrio.  O  procedimento  se  encontra
+detalhado em Rodríguez (2010). Para o equilíbrio das forças temos:
+
+=
+
+=
+
+onde
+
+=
+
+̈ +
+
+̇ +
+
+24
+
+̇ +
+
++
+
+(28)
+
+̂
+̂
+̈
+̈
+̇
+̇
+̇
+̇
+̇
+̇
+̇
+,
+
+,
+
+=
+-cosθ
+
+−
+0
+0
+-senϕ -senθsenϕ cosθcosϕ
+-cosϕ -senθcosϕ -cosϕsenϕ
++
+
+̇ +
+−
+(
+−
+
++
+) , =
+
+−
+R=
+̈ +
+(
+
+− )
+
+=
+
+,
+
+(29)
+
+× ̈
+−
+
+, =
+
+=
+
+−
+
+e para o equilíbrio de momentos:
+
+=
+
+onde
+
+=
+= ( −
+
+)
+
+O  lado  direito  dos  sistemas  de  equações (28) e (29) definem  as  inércias  do  sistema
+
+flutuante, note-se que são não lineares de segunda ordem.
+
+2.4. Forças Externas
+
+As ações externas atuando num corpo flutuante podem ser divididas em parcelas que
+dependem da sua origem: forças de  gravidade, forças de origem  fluida, forças devido às
+superfícies de controle, forças devido ao sistema de ancoragem, entre outras.
+
+As forças de gravidade são levadas em conta junto com as forças de restauração devido
+à sua dependência do deslocamento. No entanto, as forças fluidas podem ser decompostas
+em  forças  hidrostáticas  e  forças  hidrodinâmicas,  sendo  as forças hidrodinâmicas  as de
+modelação mais complexa.
+
+Para fazer o cálculo das forças fluidas, é necessário primeiro modelar o domínio fluido
+em  que  o  corpo  está submerso. Considerando  o  fluido  como incompressível, invíscido
+
+25
+
+̈
+̈
+̇
+̇
+̇
+̇
+̇
+̈
+̈
+(fluido  ideal) e  irrotacional  (escoamento  potencial),  podemos  definir a equação  de
+movimento a partir da equação geral de movimento dos fluidos reais (Eq. Navier-Stokes):
+
+(30)
+
+=
+
++
+
++
+
+−
+Consideramos o fluido como incompressível( . = ), invíscido(ν=0), e também
+como fluxo irrotacional(∇×V=0),  podendo ser  definido  um  potencial  de  velocidade
+= ). Introduzindo as considerações
+), que satisfaz a equação de Laplace(
+( =
++
+
+na  equação (30),  pode  ser  definida  a  equação  conhecida  como  a  integral  da  equação  de
+Euler ou equação de Bernoulli:
+
++ |
+
+| +
+
+=
+
+é  a  função  potencial de  velocidade total. Sendo  que a  força  e  momento  fluido
+
+onde
+ficam determinados respectivamente por:
+
+(31)
+
+(32)
+
+(33)
+
+=
+=
+
+.
+× .
+
+A força calculada com o termo
+
+força e momento calculados com as expressões que contém o potencial de velocidade(
+
+é a parte hidrostática da força fluida. Portanto, a
+
+é a parte hidrodinâmica.
+
+),
+
+O  problema  hidrodinâmico  pode  ser  abordado  como  a  soma  de  dois  fenômenos:  o
+primeiro como um corpo parado sujeito à ação de ondas gravitacionais, as quais incidem
+nele e são difratadas por ele, sendo a força devido à onda incidente denominada como força
+de  Froude-Krylov. E  o  segundo  como  um  corpo  em  águas  calmas  oscilando
+harmonicamente com pequena amplitude e gerando ondas. Cada um desses fenômenos gera
+
+um  potencial  de  onda; por  superposição  linear o  potencial  total(
+) e onda irradiada(
+potenciais de onda incidente(
+
+), onda difratada(
+
+) será  a  soma  dos
+).
+
+26
+
+Também é necessário definir as condições de contorno do domínio fluido na superfície
+livre  e  no  fundo, assim  como  a  condição  de  contorno  na  superfície  do  corpo, como  se
+mostra na figura 2.4.
+
+Fig. 2.4 Modelação do fluido. Equação governante e condições de contorno
+
+Em resumo,  as forças e  momentos  considerados  são: Froude-Krylov,  difração,
+
+irradiação, peso, hidrostática e forças de amarração.
+
+=
+=
+
++
++
+
++
++
+
++
++
+
++
++
+
+27
+
+(34)
+
+(35)
+
+2.4.1. Forças de gravidade
+
+A força peso no sistema inercial fixo no espaço é
+
+Portanto, o momento desta força no mesmo sistema é definido como
+
+3.4.2. Forças de restauração
+
+obter
+
+A  força  de empuxo pode  ser  obtida  da  integral  da  equação  de  Euler,  onde  pode-se
+
+onde o volume
+, é o volume submerso instantâneo do corpo calculado até a superfície
+livre instantânea,  o que é feito interceptando-se a geometria do sistema flutuante com a
+onda incidente. No repouso, é satisfeito o equilíbrio entre a força peso e empuxo:
+
+Onde
+
+é volume submerso do corpo no estado de repouso.
+
+Sendo a força de restauração a resultante entre o empuxo instantâneo e a força de peso,
+
+o momento desta força se define como:
+
+Agora são conhecidas as ações restaurativas até a superfície livre em cada instante de
+tempo. Isto permite a captação de fenômenos não lineares devido à variação da geometria
+submersa do corpo, fato que é omitido completamente nas considerações lineares.
+
+(36)
+
+(37)
+
+(38)
+
+(39)
+
+=−
+=
+
+=
+
+=
+
+=
+
+×
+
+(
+
+()− )
+
+28
+
+2.4.3 Forças hidrodinâmicas
+
+harmônicas
+
+são  determinados
+
+As  forças  e  momentos  de  reação  hidrodinâmicas  de  um  sistema  flutuante  devido  às
+oscilações
+através  dos  denominados  coeficientes
+hidrodinâmicos. As  ações hidrodinâmicas abrangem  os  coeficientes  de  massa  adicional,
+amortecimento  e  excitação  de  onda.  Essas ações  hidrodinâmicas
+são  calculadas
+classicamente empregando-se a teoria potencial linear, onde os deslocamentos, velocidades,
+acelerações e as pressões das partículas fluidas guardam uma relação linear com a elevação
+da superfície livre.
+
+As  forças  de  excitação  de  onda  são  oriundas  do  campo  de  pressões  atuantes  na
+superfície do corpo e estão compostas pela força de onda incidente e a força de difração,
+dependentes  do  potencial  de  onda 
+incidente  e  o  potencial  de  onda  difratada
+respectivamente,  os  quais  estão  relacionados  mediante  a  relação  Haskind-Newmann
+(Salvesen et al., 1970).
+
+Para o caso das forças e momentos de Froude-Krylov, vamos estender a aplicabilidade
+da teoria potencial linear, a qual faz o cálculo das forças só até o nível médio da superfície
+livre; aqui, dentro de um modelo de cálculo no domínio do tempo, as forças e momentos
+serão computadas até a superfície livre instantânea e na posição media do corpo. Porém, o
+cálculo  da  força  de  difração  da  onda  será  feito  considerando  a diferença  entre  a  força
+excitatriz linear e a força de Froude-Krylov linear (ou seja, computada até o nível médio da
+superfície livre).
+
+Para o cálculo dos coeficientes hidrodinâmicos e forças de difração empregada-se uma
+abordagem  tridimensional  baseada no  método  dos  painéis,  devido  ao  fato de que  os
+resultados  obtidos por  essa metodologia são bastante  acurados  para  corpos  estacionários
+com  geometrias diversas em  uma  faixa  ampla de  freqüências.  No  trabalho  é usado  o
+software comercial WAMIT® para a obtenção dos coeficientes hidrodinâmicos potenciais.
+Exceto  para o  coeficiente  de  amortecimento  em  roll que pode ser  obtido  com  outra
+metodologia (experimental ou empírica), devido  a que o  fenômeno de amortecimento na
+direção de roll em geral não é representado corretamente pela teoria potencial linear, por
+sua forte dependência da viscosidade.
+
+29
+
+Da integral da equação de Bernoulli e da teoria potencial linear de Airy tem-se:
+
+Ф =
+=−
++
+)=(−
+=
+
+−
+
+)
+
+(
+
++
+
+(
+
++
+
+−
+)
+positivo (0<
+)
++
+
+(40)
+
+(41)
+
+< ) em torno da
++
+
+(42)
+
+2.4.3.3. Forças de Froude-Krylov
+
+A  força  de  Froude-Krylov,  devida  à  incidência  da  onda  na  superfície  do  corpo,
+considera  que  as  ondas  transpassam  a  superfície do  corpo  sem sofrerem nenhuma  ação
+devida à presença dele, em outras palavras, esta força é a integral da pressão da onda na
+superfície  submersa  do  corpo,  sem  que  a  onda  incidente  seja  afetada  pela  presença  do
+corpo.
+
+Considerando  águas  profundas,  a  parcela  real  do  potencial  de  velocidades  da  onda
+
+incidente será:
+
+Então a pressão de Froude-Krylov linear até o nível médio da superfície livre é
+
+Expandindo em série de Taylor para um valor
+
+superfície livre média:
+
+)
+
+(
+
++
+−
+
++
+(−
+,−∞≤ ≤
+pressão no ponto = , como se mostra na figura 2.5.
+
+linear da equação de Bernoulli:
+
+30
+
+Pode-se  notar  que  a  pressão  linear  é  apenas  de  natureza hidrostática  sob  a  crista  da
+onda até o nível médio. Já abaixo desse nível a pressão é a soma da pressão hidrostática e a
+pressão  da  onda.  Por  tal  motivo  a  formulação linear apresenta  uma  descontinuidade  na
+
+Além de usar a parcela linear da pressão dinâmica, empregaremos a componente não
+
+|
+
+−
+|= (
+−
+
+|
+) +(
+∙
+
+)
+) +(
+,−∞≤ ≤
+
+(43)
+
+(44)
+
+Considerando:
+
+Então a pressão total será:
+
+|
++
+
+=−
+
+Fig. 2.5 variação da pressão sob a crista e o cavado da onda seguindo a teoria
+
+linear. Fonte Faltinsen (2005).
+
+A  equação  (44)  expressa  à  pressão  total  computada  até  a  superfície  média. Com  o
+propósito de capturar as não linearidades produzidas pela interação entre a onda e o corpo
+flutuante, o presente modelo estende o cálculo da pressão da onda e da pressão hidrostática
+até  a  superfície  livre  instantânea.  Por  tal  motivo,  distinguiremos duas  metodologias  para
+estender o cálculo da pressão de onda até a superfície livre instantânea: a primeira é um
+método de expansão do perfil da onda baseado no método proposto por Wheeler (1970). O
+segundo é um método de extensão da teoria linear até a superfície livre, o qual foi proposto
+
+31
+
+Onde:
+
+= elevação vertical da superfície livre (m)
+
+por de Kat (1988). Uma grande vantagem desses métodos é que devido ao fato de estarem
+baseados  na  teoria  linear, podem  ser  utilizados  em  ondas  irregulares  sem  nenhuma
+limitação.
+
+2.4.3.3.1. Método de expansão do perfil da onda
+
+O  método  de expansão  de  Wheeler  consiste  em  esticar  o  perfil  da  onda  desde  a
+
+superfície instantânea ate o fundo marinho substituindo
+
+por
+
+(45)
+
+(46)
+
+=
+
+(
+
+Nesse caso a pressão dinâmica de primeira ordem ficará como:
+
+′= −
+′ = coordenada vertical computacional (m):-h≤Z'≤ζ
+= coordenada vertical real (m):− ≤ ≤
++
+(
+)
+) −(
+)+(
+tal que se forem assumidas ondas longas,(
+)→ , então o erro tende a ser pequeno.
+Na verdade o método calcula a pressão em ′ mas o resultado é considerado como se
+
+fosse em . Portanto, a pressão pode ser calculada até a superfície livre garantindo pressão
+nula sobre o perfil da onda, o que pode ser facilmente comprovado na crista, cavado e zeros
+da onda. Mas, o resultado no nível médio, fora do perfil da onda, próximo da superfície
+média será calculado incluindo um pequeno erro, ver figura 2.6.
+
+)
+) + (
+
+o que  equivale  a  multiplicar  a  pressão  linear  pelo  termo
+
+.  O  qual expande-se
+
+como:
+
+≈ −(
+
+−
+
+)
+
+32
+
+Fig. 2.6 Distribuição das pressões sob a crista da onda no método de expansão do
+
+perfil da onda.
+
+2.4.3.3.2. Extensão da teoria linear de ondas
+
+O método consiste em estender sem outras correções a aplicabilidade da teoria linear
+
+até o perfil instantâneo da onda. Desta forma a pressão dinâmica de primeira ordem será
+
+=
+
++
+
+−
+
+,
+
+−∞≤ ≤
+
+Como  se  mostra  na  figura  2.7,  não  há  descontinuidade  na  pressão total  em = .
+
+Porém a pressão no perfil da onda não será exatamente nula, mas será pequena, de ordem
+menor que a da onda.
+
+(47)
+
+33
+
+Fig. 2.7 Distribuição da pressão sob a crista da onda no método da extensão
+
+linear.
+
+Em  concordância  com  a  teoria  linear,  a  amplitude  da  onda  é  menor  que  sua
+
+comprimento,
+
+) + (
+
+≪ , portanto o termo exponencial pode se expandir como:
+≈ +(
+=
+
+) +(
+)+(
+−∞≤ ≤
+
+) ≅
+
+,
+
+O que significa que para termos de ordens pequenas, a pressão dinâmica de primeira
+
+ordem em torno à superfície média é
+
+Portanto, na superfície livre em = , a pressão é praticamente nula, pelo menos para
+
+termos de pequena ordem.
+
+(48)
+
+34
+
+2.4.3.1 Força de onda irradiada
+
+A força de onda irradiada é produzida pelas ondas que o corpo  gera quando ele faz
+alguma movimentação, neste caso vão-se considerar movimentos harmônicos de pequena
+amplitude.  O  potencial  destas  ondas  pode  ser  expresso  como  a somatória  dos potenciais
+gerados por cada um dos graus de liberdade do corpo, cada um destes potenciais pode ser
+expresso  como  um  potencial  em  função  da  geometria  e  freqüência,  multiplicado  por  sua
+velocidade:
+
+=
+
+( ,
+
+,
+
+,
+
+)
+
+()
+
+(49)
+
+Considerando os acoplamentos lineares de movimento, um movimento em um grau de
+liberdade  pode  induzir  movimento  em  outro  grau  de  liberdade  acoplado  ao  primeiro,  e
+portanto também induzirá um potencial de irradiação no segundo grau de liberdade. Devido
+a  que  a  maioria  dos  corpos  flutuantes  apresenta  simetria  longitudinal,  só  existem
+acoplamentos  entre  os  graus  de  liberdade  com  índices  1,3,5  e  com  índices  2,4,6  por
+separado.
+
+],
+
+̇;
+
+Fazendo  a  integração  da pressão  devido  ao  potencial  de  irradiação,  para  corpos
+têm-se  duas  quantidades,  uma
+
+flutuando  num  domínio  fluido  com  superfície  livre,
+proporcional à aceleração e outra proporcional à velocidade:
+
+), =−[ ],
+
+, = …,
+a matriz de 6x6[A], é denominada matriz dos coeficientes de massas adicionais, e a matriz
+de 6x6[B], é chamada matriz de amortecimentos. Sendo
+)
+[ ], =
+)
+)
+
+̈−[
+(
+(
+(
+
+(
+
+)
+)
+)
+
+(
+(
+(
+
+)
+)
+)
+
+(
+(
+(
+
+)
+)
+)
+
+(
+(
+(
+
+)
+)
+)
+
+(50)
+
+(51)
+
+(
+(
+(
+
+)
+)
+)
+
+(
+(
+(
+
+35
+
+(
+(
+(
+
+)
+)
+)
+
+(
+(
+(
+
+)
+)
+)
+
+(52)
+
+(
+(
+(
+
+)
+)
+)
+
+(
+(
+(
+
+)
+)
+)
+(
+(
+
+[
+
+], =
+
+(
+(
+(
+
+)
+)
+)
+
+(
+(
+(
+(
+(
+(
+
+)
+)
+)
+)
+)
+)
+
+onde:
+
+)
+)
+)
+
+(
+(
+(
+)
+)
+
+A expressão da força devido ao potencial de irradiação em forma reduzida será:
+
+=−
+
+(
+(
+
+(
+(
+
+)
+)
+
+−
+
+)
+)
+
+(
+(
+
+)
+)
+
+(53)
+
+(
+(
+(
+(
+
+)=
+)=
+)=
+)=
+
+(
+(
+(
+(
+(
+(
+
+)
+)
+)
+)
+)
+)
+
+(
+(
+(
+(
+(
+(
+
+)
+)
+)
+)
+)
+)
+
+(
+(
+(
+(
+(
+(
+
+)
+)
+)
+)
+)
+)
+
+36
+
+̈
+̈
+̈
+̈
+̈
+̈
+̇
+̇
+̇
+̇
+̇
+̇
+(
+
+)=
+
+(
+(
+
+)
+)
+
+(
+
+)
+
+(
+(
+
+)
+)
+
+2.4.3.1.1. Amortecimento não linear de roll
+
+A metodologia a ser empregada neste trabalho será o método empírico de extrapolação
+de dados de ensaios de decaimento em roll. Sendo que alternativamente também poderá ser
+usado o método semi-empírico de Ikeda.
+
+O método empírico de extrapolação de dados de ensaios de decaimento em roll é um
+método bem geral e não tem nenhuma limitação devido à geometria dos flutuantes, porém é
+necessário contar com um modelo em escala reduzida do navio e fazer testes de decaimento
+num  tanque  de  experiências  hidrodinâmicas.  O  método  consiste  em  deslocar  o  modelo
+desde sua posição de equilíbrio para obter as amplitudes de oscilação de roll depois de ser
+liberado e em seguida fazer um ajuste por mínimos quadrados da função das amplitudes do
+roll versus o tempo. Vários métodos existem para a aproximação das amplitudes de roll, os
+quais utilizam um modelo analítico da equação do movimento em roll, onde o momento de
+roll  é  aproximado  usualmente  como  uma  função  polinomial  de  segunda ordem.  Os
+coeficientes deste polinômio são os coeficientes hidrodinâmicos de amortecimento de roll.
+Os  métodos  mais  conhecidos  são: o método  de  Krilov-Bogoliubov,  o  método  das
+perturbações e o método da energia, ver Oliveira (2003).
+
+A expressão geral do momento de amortecimento em roll será definida como:
+
+e
+
+Sendo que os termos
+
+da equação 54 são os coeficientes linear, quadrático
+e  cúbico  do  amortecimento  em  roll,  obtidos  da  regressão  por  mínimos  quadrados.
+Desprezando  o  termo
+,  o  modelo  da  equação será  quadrático.  A  ordem  do  modelo
+dependerá da ordem da função polinomial empregada na regressão.
+
+Por outro lado, no método de Ikeda o amortecimento em roll é decomposto em cinco
+componentes:  amortecimento  de  fricção,  amortecimento  devido  à  formação  de  vórtices,
+
+37
+
+̇ =
+
+,
+
+̇+
+
+̇ +
+
+(54)
+
+̇
+̇
+amortecimento  devido  à  sustentação,  amortecimento  devido  à  formação  de  ondas  e
+amortecimento devido as bolinas. Para obter o amortecimento total para uma condição de
+carregamento  do  flutuante, cada  componente  pode  ser  calculada  usando  as  formulações
+propostas por  Ikeda (Himeno, 1981). O amortecimento ficará determinado em função do
+número de Froude, frequência e a amplitudede da oscilação. Na verdade, o método de Ikeda
+é um amálgama de vários trabalhos de diversos investigadores, e está limitado a geometrias
+dos navios estudados para cada formulação.
+
+2.4.3.2. Força de onda difratada
+
+A força de onda difratada é gerada pela presença do corpo no meio fluido, onde ondas
+estão incidindo nele. Este potencial deve satisfazer à condição de contorno cinemática na
+superfície do  corpo  onde a  componente  normal  da  velocidade  é  assumida  satisfazendo  à
+relação:
+
+Integrando este potencial com a ajuda do segundo teorema de Green, pode-se expressar
+a força de difração para cada grau de liberdade em função do potencial da onda incidente e
+da geometria do corpo
+
+) =−
+
+(
+
+; = ,…
+
+(56)
+
+No presente trabalho essas forças serão computadas com o código comercial WAMIT®.
+
+2.4.4. Amarrações
+
+Na modelação do sistema de ancoragem empregaremos uma abordagem quase estática
+usando  a  equação  da  catenária.  Na  figura  2.8  se  mostra  o  problema  em  duas  dimensões
+empregando  a  representação  e  nomenclatura  clássica  da equação  da  catenária  para  uma
+linha  de  ancoragem.  Aqui,  a  cada  passo  do  tempo  a  posição  do  ponto  B  é  atualizada
+seguindo  o  movimento  do  sistema  flutuante.  Portanto,  a  cada passo  do  tempo  são
+
+38
+
+=−
+
+(55)
+
+=
+
+(57)
+
+é a coordenada vertical do
+
+conhecidas  as  posições  dos  pontos  de  apoio, assim  como o comprimento da  linha  de
+ancoragem  e  suas  propriedades  físicas,  desta  forma  pode  ser  resolvida  a  equação  da
+catenária a cada passo do tempo.
+
+Da teoria da catenária a tensão do ponto B pode ser calculada da seguinte expressão:
+
+onde
+
+é o peso por unidade de comprimento da linha e
+
+ponto B no sistema de referência da catenária.
+
+Como  foi  comentado  anteriormente,  a  abordagem  descrita  acima  é  uma  abordagem
+quase  estática,  portanto  a  dinâmica  da  linha  de  ancoragem  não  é  considerada  nas
+simulações dos movimentos.
+
+Fig. 2.8 Linha de ancoragem.
+
+No  sistema  inercial,  a  linha  de  ancoragem  está ancorada  no  ponto
+
+estrutura  do  flutuante  no  ponto
+respectivamente, ver Figura 2.9. Se a tensão da linha no ponto
+flutuante experimenta será:
+
+,  com  coordenadas (
+
+,
+
+,
+
+é
+
+e  suspensa  na
+
+),
+
+) e (
+
+,
+
+,
+
+então a força que o
+
+= −
+
+(58)
+
+onde
+
+é um valor entre 0 e
+
+e é determinado como:
+
+39
+
+=
+
+sendo que o momento da forca
+
+(59)
+
+(60)
+
+−−
+×(− )
+
+é definido como:
+
+=
+
+Desta maneira é possível introduzir as ações de uma ou mais linhas de ancoragem no
+
+sistema de equações (28) e (29).
+
+Fig. 2.9 Linha de amarração no sistema inercial fixo. Fonte Journée & Massie,
+
+2001
+
+2.5. Equação de Movimento
+
+Pode-se agora unificar as equações de movimentos translacionais e rotacionais com as
+
+expressões das forças externas nos itens anteriores.
+
+Unificando as equações 28, 29 e 53 em uma só expressão, e ademais considerando as
+contribuições do peso, das forças hidrostática, de Froude-Krylov, de difração e as forcas
+das linhas de ancoragem, a equação de movimento de sistemas flutuantes será:
+
+40
+
+(
+(
+
++
++
+
+)
+)
+=−
+−
++
+× ̈=− × ̇−
+−
+
+ou
+
+onde
+
++
++
+
+)
+)
+
+(
+
+(
+
+)
+
+)
+(
+(
+
+)
+)
+
+−
+
++
+
++
+
+−
+
++
+
++
++
+
+(
+(
+
+)
+)
+
+41
+
+(
+(
+
++
+
++
+̈=[̈
+× =
+
++
+
+−
+̇ −
+
+−
++
+
+(61)
+
+(62)
+
+̈]
++
++
+
+(
+
+(
+
+)
+
+)
+
+O sistema de equações (62) do tipo diferencial descreve um modelo em seis graus de
+liberdade robusto e pesado para análises da dinâmica de sistemas flutuantes estacionários
+com linhas de ancoragem em ondas regulares no domínio do tempo.
+
+̈
+̈
+̈
+̈
+̈
+̈
+̇
+̇
+̇
+̇
+̇
+̇
+̇
+̇
+̇
+̇
+̇
+̇
+̇
+̇
+̇
+̇
+̇
+̈
+̈
+̈
+̈
+A  grande  vantagem  desta  formulação  é  que  permite  uma inclusão  rápida  e  fácil  de
+qualquer outra força externa atuante no sistema flutuante. Porém, sua principal limitação é
+a grande capacidade computacional requerida para avaliar as expressões das forças externas
+em cada passo do tempo, fazendo qualquer tipo de análise determinística das respostas dos
+sistemas a estudar com esta metodologia muito penosa em termos de tempo computacional
+necessário. Mas o modelo descrito neste capítulo é ideal para estudar o comportamento de
+um corpo flutuante numa condição especifica em mares regulares. Sendo que para poder ser
+feito um estudo mais completo do comportamento em ondas de corpos flutuantes, deverá
+ser  integrada  na  modelação  do  algoritmo  considerações  que  permitam  desenvolver
+simulações  numéricas  em  mares  irregulares.  Assim,  o  estudo  do  comportamento  dos
+movimentos de corpos flutuantes poderá ser feito mediante metodologias estocásticas.
+
+42
+
+CAPÍTULO 3
+
+IMPLEMENTAÇÃO NUMÉRICA
+
+Neste capitulo se apresenta o código computacional DSSTAB, que é a ferramenta numérica que resolve a
+equação  do  movimento  do  navio,  apresentada no  capítulo  anterior.  São  descritas  as  não  linearidades
+levadas em conta pelo DSSTAB. Adicionalmente, são feitas algumas comparações entre as modelações
+não lineares e seus pares lineares no intuito de ilustrar as diferenças e vantagens da inclusão das não
+linearidades no código do DSSTAB.
+
+3.1 Generalidades
+
+As respostas dinâmicas dos sistemas flutuantes podem ser conhecidas resolvendo a
+equação  de  movimento, equação (62)  do  capítulo  anterior.  Porém, essa  equação  é  de
+natureza não linear e sem solução analítica conhecida, portanto a solução só pode ser
+obtida através de métodos numéricos.
+
+A primeira etapa para dar solução à equação de movimento consiste em mudar a
+forma  da  equação,  para  depois  resolve-la mediante  um esquema  numérico  de
+
+integração. Multiplicando a equação (62) pela matriz inversaM ×-
+̈= − × ̇−
++
+
++
+
+−
+
+ou
+
+×
+
+×
+
+, obtemos:
+
+̇ −
+
+(63)
+
+(64)
+
+−
++
++
+̈= (̇, )
+
+43
+
+̇
+̇
+̇
+̇
+̇
+O  método  mais  simples  de  resolver  numericamente  uma  equação diferencial não
+linear de segunda ordem como a equação (63) é reduzí-la a uma equação diferencial de
+primeira ordem. O procedimento é o seguinte:
+
+Primeiro é introduzida uma nova função, definida como:
+
+Agora, pode-se expressar a equação (63) como o seguinte sistema:
+
+Passando a uma forma vetorial mais favorável tem-se:
+
+(65)
+
+(̇)
+(̈)
+
+( ̇)
+( ̈)
+
+= ̇;→ ̇= ̈
+̇= ( , )
+̇=
+̇= ( , )
+̇= ̇
+= ̇
+=
+=
+, = (
+(̇ )
+(̈ )
+
+, )
+(̇)
+(̈)
+
+44
+
+onde:
+
+e
+
+Sendo:
+
+̇ =
+̇ =
+e os vetores ̇ e
+
+(̇ )
+(̈ )
+
+(̇ )
+(̈ )
+
+são respectivamente:
+
+̇
+̇
+̇=
+
+(̈ )
+(̈ )
+(̈ )
+(̈)(̈)( ̈)
+(̇ )
+(̇ )
+(̇ )(̇)(̇)( ̇)
+
+; e =
+
+(̇ )
+(̇ )
+(̇ )
+(̇)(̇)( ̇)
+(
+)
+(
+)
+)( )( )(
+(
+)
+
+3.2 Implementação numérica
+
+Para  determinar  os  valores  instantâneos  dos  deslocamentos  translacionais  e
+rotacionais de um sistema flutuante, é preciso resolver a equação diferencial (65) por
+meio de um algoritmo numérico. Esse algoritmo deve estar baseado em um esquema de
+integração numérica. Também, o algoritmo deve poder avaliar todas as forças externas
+atuantes  no  corpo.  No  caso  do  cálculo  das  pressões,  devido  à  natureza  da  sua
+formulação, é preciso achar a interceptação entre o perfil da onda e o corpo submerso a
+cada passo do tempo. Para isso ser feito, é necessário contar com uma discretização em
+painéis  do corpo  e  da  onda,  para  poder  avaliar  as  pressões  até  a  superfície  livre
+instantânea. Além de tudo isso, para poder realizar uma adequada e coerente simulação
+numérica,  é  preciso  que  o  código  possa  introduzir  uma  função  rampa  nos  momentos
+iniciais da simulação.
+
+A seguir serão descritas brevemente as considerações numéricas implementadas no
+
+algoritmo numérico empregado neste trabalho.
+
+3.2.1 Esquema de integração numérica
+
+Um dos esquemas numéricos mais populares para resolver equações diferenciais de
+primeira  ordem  como  a  equação (65) é  o  método  numérico  de  integração  de  Runge-
+
+Kutta de quarta ordem (RK-4). O método consiste em aproximar a funçãoFY,t por:
+
+45
+
+, =
+
+, +
+
+onde:
+
+, +
+
+, +
+, =
+, + .
++ . ∆ ∙
+, + .
++ . ∆ ∙
+, +∆
++∆ ∙
+( + )= ()+∆ ∙
+
+,
+,
+
+;
+
+,
+
+,
+
+, =
+, =
+, =
+̇()=
+(),
+
+= ∙∆;
+
+,
+
+(66)
+
+∙∆
+∙∆
+̇(); = ,…
+
+sendo o esquema de marcha no tempo ordenado como:
+
+Para dar solução  à equação (65) no intervalo de tempo de zero até t, precisamos
+conhecer as condições iniciais de todos os movimentos translacionais e angulares, assim
+como  também  de  suas  velocidades,  ou  seja, deve-se informar  o  vetor de  condições
+
+partindo do repouso,  as  componentes do vetor de condições iniciais são  consideradas
+nulas.  Porém, se  a  simulação  numérica  precisa  de  alguma  condição  inicial  de
+deslocamento ou velocidade em seus seis graus de liberdade, essa condição inicial pode
+
+iniciaisY(t=0). Normalmente, se o navio ou sistema flutuante começa uma simulação
+ser introduzida no vetorY(t=0).
+
+O  método  RK-4  é  amplamente  utilizado  devido  a  que  sua  região  de  estabilidade
+numérica  é  comumente  maior  do que  a  região  de  estabilidade  de  muitos  outros
+algoritmos explícitos de integração (os algoritmos explícitos são aqueles algoritmos que
+empregam dados de instantes anteriores e/ou dados atuais do tempo para predizer dados
+
+em instantes futuros do tempo). Isso permite considerar valores de∆t que não sejam
+ser feito um estudo de convergência para determinar um∆t ótimo, que não comprometa
+
+o tempo de duração da simulação numérica e que garanta a estabilidade numérica do
+sistema.
+
+demasiado pequenos sem tornar o sistema numericamente instável. Ainda assim, deve
+
+46
+
+3.2.2 Interceptação onda – casco e cômputo das pressões
+
+Antes de fazer o cômputo das pressões é preciso encontrar a superfície molhada do
+corpo  submerso  em  cada  passo  do  tempo. Isso  é  feito  interceptando  o  perfil  da  onda
+incidente  (equação  (2))  e  o  casco  do  navio. O  procedimento para  obter  a  superfície
+molhada é brevemente comentado a seguir.
+
+Primeiro é determinada a posição relativa de cada painel com respeito à superfície
+livre instantânea. Os painéis que estão completamente submersos no mar (embaixo do
+perfil  de  onda)  são  considerados  para  o  cômputo  das  pressões.  Já  para  os painéis
+parcialmente  submersos,  é  preciso  reconstruir  esses painéis só  considerando  apenas  a
+parcela submersa. Ver figura 3.1 onde a cor verde indica a parcela submersa do corpo.
+Com os painéis completamente submersos e os painéis reconstruídos tem-se a superfície
+molhada  exata  do  navio  em  um  instante  do  tempo.  No  seguinte  passo  do  tempo  a
+interceptação é feita novamente considerando o avanço da onda e o deslocamento dos
+painéis, os quais acompanham o movimento do corpo. Assim, é possível ter em cada
+passo do tempo a superfície molhada instantânea.
+
+Fig. 3.1 Esquema da interceptação onda – casco
+
+No  cálculo  da  integral  das  pressões  é  empregada  a  coordenada  do  baricentro  de
+cada painel submerso ou painel  reconstruído, ver figura 3.1. Portanto,  a pressão total
+
+47
+
+será a resultante da somatória da contribuição das pressões avaliadas nos baricentros de
+cada painel.
+
+3.2.3 Função rampa
+A função rampa implementada no presente algoritmo é definida como:
+
+(67)
+
+()=
+()= ,
+
+, ≤
+>
+
+Essa  função  é  empregada  para  introduzir gradualmente  no  sistema  flutuante a
+energia da onda incidente que depende da amplitude da onda ao quadrado, ver figura
+3.2. Isso é feito para minimizar o efeito da posição inicial do corpo com respeito à onda,
+o  que  pode  produzir  respostas  transientes  muito  fortes  ou  incompatíveis  com  a  física
+modelada.
+
+Fig. 3.2 Função rampa e o desenvolvimento do perfil da onda
+
+3.2.4 Interpolação da força de difração
+
+A força de difração depende da posição relativa da onda incidente num corpo. Os
+movimentos horizontais de um sistema flutuante fazem com que a incidência da onda
+
+48
+
+mude e portanto a freqüência de encontro também muda. A força de difração utilizada
+no algoritmo é computada no código WAMIT para determinadas incidências de onda
+definidas  previamente.  Um  procedimento  mais  acurado  será  introduzir  a  força  de
+difração  correspondente à posição  relativa  instantânea  da  onda  incidente  num  corpo.
+Essa  força  pode  ser  conhecida  fazendo-se uma  interpolação  dos  valores  obtidos  pelo
+WAMIT, sendo que a incidência instantânea da onda é conhecida através do sistema de
+referência de passeio lento.
+
+A  principal  vantagem  de  incluir  esta  metodologia  está  na  possibilidade  de  poder
+fazer  simulações  numéricas  de  corpos  flutuantes  onde  o  corpo  é  obrigado  a  fazer
+mudanças  de  aproamentos,  mediante  um  passeio  lento  devido  às  ações  das  ondas
+incidentes.
+
+3.3 Código Computacional DSSTAB
+
+O código computacional DSSTAB é um programa para simulação de movimentos
+de sistemas flutuantes em geral, como plataformas flutuantes, navios, bóias e outros. O
+DSSTAB  integra  as  equações  de  movimento  dos  sistemas  flutuantes  no  domínio  do
+tempo utilizando o método de integração numérica de Runge-Kutta de 4a ordem com
+passo  constante. Para determinar  a  superfície  molhada  instantânea  do casco, utiliza  a
+metodologia descrita no item 3.2.2. Também, utiliza a função rampa descrita no item
+3.2.3.
+
+O  DSSTAB  faz  parte  de  um  projeto  para  gerar  um  código  computacional  de
+incorporação  de  não
+simulação  dos  movimentos de sistemas  flutuantes  com 
+linearidades.  O  Projeto  vem 
+entre  o
+LabOceano/COPPE, o Centro de Pesquisas (CENPES) da PETROBRAS e a Tecnologia
+em Computação Gráfica (TECGRAF) da PUC-RIO.
+
+sendo  desenvolvido 
+
+em  parceira 
+
+Para  poder  executar  o  DSSTAB,  é  preciso  gerar  seus  arquivos  de  entrada  nos
+
+programas MeshGenerator, SSTAB, WAMIT e DYNASIM-TPN.
+
+49
+
+3.3.1 MeshGenerator
+No  programa  MeshGenerator  (MG)  são  geradas  as  malhas  dos  corpos  a  serem
+testados  no  DSSTAB,  assim  como  a  malha  do  corpo  submerso  até  a  superfície  livre
+média a ser rodada no programa WAMIT.
+
+No MG, é desenhada a geometria computacional do corpo para ser discretizada em
+painéis, sendo eleição do usuário o refinamento da malha do corpo; em outras palavras,
+é escolhido o tamanho e número de painéis.
+
+Fig. 3.3 Malha de um cilindro de paredes verticais gerada no MeshGenerator
+
+3.3.2 SSTAB
+No programa SSTAB são definidos os dados inerciais dos corpos a serem testados
+no  DSSTAB,  como  posição  do  centro de  gravidade,  massa,  matriz  de  inércia, assim
+como a posição dos sistemas de referência do navio e seu calado.
+
+3.3.3 WAMIT
+Como  foi  mencionado  no capítulo  anterior, o  código  computacional  WAMIT  é
+empregado para obter as forças devido aos potencias lineares de radiação e difração. O
+WAMIT  emprega  o modelo  baseado  no teorema  de  Green  para  derivar  equações
+integrais  dos  potenciais  de  velocidades  de  radiação  e  difração  no  contorno  da  parte
+
+50
+
+submersa  de um  corpo.  Maiores  detalhes  podem  ser  encontrados  no capítulo  12  do
+manual do usuário do WAMIT.
+
+Porém no  caso da força  de  difração  computada  pelo  WAMIT,  ele  não  fornece
+diretamente a força de difração atuante num corpo; no seu lugar, ele fornece a soma das
+forças de Froude-Krylov e de difração, e chama essa soma de força de difração. É por
+isso que é preciso empregar uma metodologia especial para obter a força de difração.
+
+A  metodologia da  obtenção  da  força  de  difração consiste  em  retirar  a  parcela  da
+força de Froude-Krylov linear do valor de força de excitação fornecido pelo WAMIT.
+Isso  pode  ser  feito  computando  a  força  de  Froude-Krylov linear, como  é  feito  no
+WAMIT,  ou  seja,  computando  a  força  de  onda  até  a  superfície  livre  média  e
+desprezando  os  movimentos  do  corpo.  Assim  a  força  de  Froude-Krylov  linear
+computada pode ser retirada do valor soma fornecido pelo WAMIT, deixando apenas o
+valor  da  força  de  difração. O  DSSTAB  faz  essa  operação  automaticamente  antes  do
+inicio de cada simulação.
+
+3.3.4 DYNASIM – TPN
+
+No DYNASIM-TPN são modeladas as linhas de ancoragem dos sistemas flutuantes
+a serem testados no DSSTAB. Os dados de entrada requeridos são as coordenadas dos
+fairleads e das âncoras, o comprimento, o diâmetro, o módulo de rigidez, o peso das
+linhas, dentre outros.
+
+3.4 Simulações de movimento no DSSTAB
+
+Carregados  os  arquivos  de  entrada  no  DSSTAB,  é  preciso  selecionar  a  onda
+requerida  para  a  simulação.  Sendo  que  os  parâmetros  de  entrada  para  onda  são:
+amplitude,  freqüência  e  a  direção  de  incidência.  Depois  são  definidos o  tempo  de
+duração da função rampa, o passo do tempo da integração numérica e o tempo total da
+simulação.  Finalmente, são  selecionados  os  graus  de  liberdade  a  serem considerados
+durante a simulação numérica.
+
+Os  dados  de  saída  do  DSSTAB  são  as  séries  temporais  dos  movimentos
+translacionais  e  rotacionais do  corpo,  assim  como  as  séries  temporais  de  suas
+
+51
+
+velocidades. Adicionalmente, o DSSTAB fornece as séries temporais de todas as forças
+avaliadas durante a simulação numérica.
+
+Deve  ser  mencionado que  as  respostas  do  DSSTAB  podem  sofrer  uma  grande
+influência  do  passo  do  tempo,  da  função  rampa  e da  malha utilizadas  durante  a
+simulação,  apesar  do  fato de que  esses  parâmetros  não  têm  nenhuma  relação  com  a
+física que governa os movimentos dos sistemas flutuantes e serem somente parâmetros
+numéricos.
+
+No intuito de ilustrar a influência desses parâmetros nas respostas das simulações,
+vai-se  utilizar  um  corpo de  geometria  simples,  como  é  uma  caixa retangular.  A
+geometria desse corpo pode ser observada na figura 3.1. Também será empregado um
+navio  tipo  VLCC, cujos dados  podem  ser  achados  no  seguinte  capítulo.  Os  dados
+inerciais  da  caixa  retangular,  assim  como seus RAO’s  de  movimento  podem  ser
+encontrados no apêndice.
+
+3.4.1 Influência do passo do tempo
+
+A seleção do passo do tempo pode comprometer grandemente os resultados de uma
+simulação  numérica.  O  passo  do  tempo  é  um  parâmetro  do  esquema  numérico  de
+integração e quanto menor seja ele o sistema dinâmico será mais estável.
+
+Especial  cuidado  deve  ser  tomado  nos  modos  de  movimento  onde  as  forças  que
+governam o movimento são pequenas, devido a que eles tendem a ser mais instáveis que
+os outros modos. Por exemplo, para a caixa retangular em mar de popa, as forças na
+direção de surge são produzidas principalmente pela força da onda incidente, a difração
+e o amortecimento potencial. Nas regiões onde a influência do amortecimento potencial
+é mínima, o equilíbrio de forças gera uma força resultante pequena que pode alterar o
+comportamento  em  surge  se  o  passo  do  tempo  não  é  escolhido  apropriadamente.  Na
+figura 3.4 a única diferença entre as simulações foi o passo do tempo, sendo que para o
+período  em  que  foram  feitos  essas  simulações,  a  força  do  amortecimento  potencial  é
+praticamente nula. A simulação com menor passo de tempo representou corretamente o
+comportamento em surge da caixa retangular, uma pequena deriva média para a frente.
+No  outro  lado,  a  simulação  com  um  passo  relativamente  grande  deu  uma  deriva  em
+surge na direção contrária à incidência das ondas.
+
+52
+
+Fig. 3.4 Influência do passo do tempo na deriva em surge, mar de popa.
+
+Pode-se concluir que antes de se fazer alguma simulação numérica, deve ser feita
+uma análise de convergência para garantir a coerência das respostas de todos os modos
+de movimento.
+
+3.4.2 Influência da função rampa
+As  conseqüências  de  não  usar  uma  função  rampa  em  uma  simulação  podem  ser
+observadas  na  figura  3.5.  Nessa  figura,  a  simulação  que  não  utilizou  uma  rampa,
+experimentou  a  ação  da  onda  incidente  desde  o  primeiro  instante  da  simulação,
+decorrendo em uma força resultante na direção x negativa, devido à posição relativa do
+corpo com respeito à onda. Isso produz um movimento inicial no sentido à ré do corpo.
+Depois de um determinado tempo, o efeito da onda corrigiu a deriva do movimento em
+surge.
+
+Fig. 3.5 Influencia da função rampa nas simulações
+
+53
+
+Da  figura  3.5  pode  ser  apreciado  que  o  efeito  da  função  rampa  é  minimizar os
+resultados  transientes  no  início  das  simulações  e  que  geralmente  não  altera  o
+comportamento final da velocidade de deriva em surge.
+
+3.4.3 Influência da malha
+A discretização em painéis da superfície do corpo é fundamental para o cálculo das
+pressões  hidrostáticas  e  hidrodinâmicas.  Porém,  a  discretização deve  ser  feita  com
+muito  cuidado,  garantindo  a  criação  de  uma  malha  adequada  para  as  simulações
+numéricas. É comumente aceito que o tamanho dos painéis deve ter uma relação com o
+comprimento da onda incidente, para garantir uma adequada simulação. Neste caso não
+vamos considerar um valor limite para esta relação, mas sim vamos considerar que o
+perfil da onda não pode interceptar duas vezes um só painel, vide figura 3.1. Esse fato já
+garante uma boa relação do tamanho dos painéis e o comprimento da onda incidente.
+Por outro lado, além de considerar um tamanho adequado dos painéis, deve-se garantir a
+correta distribuição dos painéis na superfície do corpo, e ademais essa distribuição deve
+representar  de  uma  forma  acurada  a  curvatura  da  geometria  do  corpo  em  toda  sua
+superfície. Na figura 3.6 tem-se duas malhas distintas de um mesmo navio. Na figura
+3.6b  pode-se  notar  um  pequeno  problema,  quase  imperceptível,  na  representação  da
+curvatura da superfície do corpo, assim como na união dos painéis.
+
+O  problema  da união  dos painéis pode incorrer  em  um  desequilíbrio  das  forças
+hidrostáticas,  devido  a  que  estas  forças  são  computadas  mediante  uma  integral  de
+volume. Na figura 3.7 se mostra um teste feito com as duas malhas da figura 3.6. O teste
+consistiu  em  simular  os movimentos  do  navio  com  uma  onda  com  amplitude  zero.
+Devido ao desequilíbrio de forças originado por uma errada discretização da malha da
+figura  3.6b,  foi  gerada  uma  força  hidrostática  resultante  na  direção  x  negativa, e
+portanto o navio desenvolveu um movimento a ré. No entanto, para a malha da figura
+3.6a não resultou nenhum movimento espúrio.
+
+54
+
+(a)
+
+(b)
+
+Fig. 3.6 Malha do navio P-50. (a) malha corretamente discretizada. (b) malha
+
+discretizada de forma incorreta.
+
+Fig. 3.7 Influência da malha nas simulações
+
+55
+
+3.5 Descrições das não linearidades do DSSTAB
+
+As  não  linearidades no  DSSTAB  são produzidas  pela consideração de  termos
+inerciais do casco de segunda ordem, do termo de velocidade quadrática na equação de
+Bernoulli,  o cômputo  das  pressões  até  a  superfície  livre  instantânea, a  influência  dos
+movimentos  do  corpo na  integração  das  pressões  sobre  a  superfície  dele, e  o  efeito
+produzido pelo sistema de ancoragem. Sendo que os últimos três fenômenos são os mais
+relevantes.
+
+Com a intenção de ilustrar a importância das não linearidades nas simulações dos
+movimentos de sistemas flutuantes, será utilizada a caixa retangular do item anterior,
+assim como um corpo cilíndrico de paredes verticais, ver figura 3.3. Além desses corpos
+também será utilizada a geometria de um navio tipo portacontentor. As características
+de todos esses corpos podem ser encontradas no apêndice.
+
+3.5.1 Descrição das não linearidades devido à força hidrostática
+Essa  força denominada  no  DSSTAB  como  FK0,  é  resultante  da  integração  da
+pressão hidrostática sobre a superfície molhada instantânea. Na teoria linear, as forças
+de restauração são consideradas como funções harmônicas nos modos restaurativos de
+movimento; e  nula  nos outros  modos  de  movimento.  As  expressões  das principais
+forças e momentos de restauração hidrostática na teoria linear são:
+
+=
+=∆
+=∆
+
+∙
+∙
+∙
+
+A seguir mostram-se algumas comparações entre as forças de restauração lineares e
+
+as forças de restauração computadas pelo DSSTAB para a caixa retangular.
+
+56
+
+Fig. 3.8 Força de restauração em z
+
+Fig. 3.9 Momento de restauração em x
+
+Fig. 3.10 Momento de restauração em y
+
+57
+
+As  principais  diferenças  dos  resultados  do  cômputo  da força  hidrostática  entre  a
+teoria linear e a não linear do DSSTAB são: diferença entre as amplitudes da força, essa
+diferença  está presente  na  força  hidrostática  computada  em  todos  os  modos  de
+movimento restaurativos, sendo que a magnitude dessa diferença pode ser de um valor
+mínimo no caso de um corpo de geometria simples, até um valor considerável para um
+corpo de geometria mais complexa. No caso das forças computadas nos modos de heave
+e pitch, a força hidrostática apresenta um período que muda lentamente com o tempo,
+ver  figuras 3.8  e  3.10,  esse  tipo  de  comportamento  é  característico  de  um  sistema
+dinâmico não linear. Também, no caso da força hidrostática em heave, a resposta não
+linear se encontra deslocada verticalmente com respeito à força hidrostática linear, isso
+é devido a que o corpo desenvolveu uma deriva vertical, esse aspecto será comentado
+nas seguintes seções. Finalmente, no modo de roll, o momento hidrostático computado
+pelo DSSTAB é diferente de zero, sendo que a força hidrostática linear para uma onda
+de proa é nula. Porém o momento obtido não é suficientemente grande para iniciar o
+movimento na direção de roll.
+
+Agora serão mostradas algumas comparações entre as forças de restauração lineares
+e as forças de restauração computadas pelo DSSTAB para o navio tipo portacontentor.
+Deve  ser  mencionado  que  esse  corpo  apresenta  uma  diferença  significativa  em  sua
+geometria na proa e popa quando comparado com a caixa retangular, onde sua proa e
+popa têm as mesmas características geométricas.
+
+Fig. 3.11 Força de restauração em z
+
+58
+
+Fig. 3.12 Momento de restauração em x
+
+Fig. 3.13 Momento de restauração em y
+
+Devido  à acurada representação  do  volume  submerso,  a  força  hidrostática
+computada num corpo com assimetria longitudinal pode apresentar maiores diferenças
+com respeito à teoria linear; nos modos de movimento de heave e pitch pode-se notar
+assimetrias nas respostas com respeito às forças hidrostáticas, vide figuras 3.11 e 3.13.
+Novamente  a  resposta  não  linear  em  heave  se  encontra  deslocada  verticalmente  com
+respeito  à  força  hidrostática  linear.  Também  de  novo  a  resposta  em  roll  não  é  nula,
+diferentemente da  resposta  linear,  mas  agora  o  desenvolvimento  do  momento
+hidrostático  em  roll  é  característico  do  fenômeno  conhecido  como  ressonância
+paramétrica (a ressonância paramétrica é um fenômeno caracterizado pelo incremento
+periódico  de  um  modo  de  movimento  que  não  é  diretamente  excitado; no  caso  de
+sistemas  flutuantes  a  causa  mais  comum  da  ressonância  paramétrica  é  a  variação
+
+59
+
+periódica  do  momento  restaurativo  hidrostática  em  roll).  Sendo  que  a  magnitude  do
+momento  obtido  atinge  magnitudes  suficientemente  grandes  como  para  iniciar  o
+movimento na direção de roll.
+
+3.5.2 Descrição das não linearidades devido à força de Froude-Krylov
+A  não  linearidade  produzida  no  computo da  pressão  da  onda  tem três origens:
+cômputo da pressão incidente da onda até a superfície livre instantânea, a inclusão do
+termo  de velocidade  quadrática na  equação  de  Bernoulli  e  ao  fato  do  corpo  possuir
+deslocamentos relativos à onda.
+
+No  entanto, na  teoria  linear  a  força  devido  à  integração  da  pressão da onda
+incidente, ou força de Froude-Krylov, é calculada só apenas até a superfície livre média
+e desprezando o movimento do corpo.
+
+Como  foi  mencionado  no  segundo  capítulo,  o  DSSTAB  tem  duas  metodologias
+para o cálculo das pressões de onda. A primeira metodologia, chamada no DSSTAB de
+PT,  emprega a  equação (46) para  o  cálculo  da  pressão  de  onda.  Já  a  segunda
+metodologia, chamada de MASN, emprega a equação (47) para o cálculo da pressão de
+onda.
+
+Na  nomenclatura  do  DSSTAB,  a  força  devido  à  integral  da  pressão  da  onda
+incidente é chamada de FK1; e o termo de segunda ordem da equação de Bernoulli é
+chamado FK2. Ademais, a força de Froude-Krylov linear é chamada como FK linear.
+
+Vai-se  mostrar algumas comparações  entre  a  força  FKlinear  e  as  duas  FK1
+
+computadas pelo DSSTAB para a caixa retangular.
+
+60
+
+Fig. 3.14 Força de Froude-Krylov em x
+
+Fig. 3.15 Força de Froude-Krylov em z
+
+Fig. 3.16 Momento de Froude-Krylov em y
+
+A  principal  característica  entre  as  forças  consideradas  como  não  lineares  e  as
+lineares está na defasagem das séries temporais, sendo que a força de Froude-Krylov
+
+61
+
+calculada com as duas metodologias tem a mesma defasagem com respeito à FK Linear,
+ver figuras 3.14, 3.15 e 3.16. As forças de Froude-Krylov computadas em x com as duas
+metodologias  não  lineares  se  encontram levemente  deslocadas  verticalmente  (vide
+figura 3.14), o que significa que existe uma força média na direção x positiva, maiores
+detalhes serão discutidos nas seguintes secções empregando o mesmo teste. No caso da
+força computada em z, as forças computadas com as duas metodologias não lineares se
+encontram  deslocadas  verticalmente  na  direção  z  negativa.  Sendo  que  a  força
+computada  com  o  método  de  PT  tem  uma  diferença  maior  com  a  força  linear  com
+respeito  à  força  computada com  o  método  de  MASN,  isso  é  devido à diferença na
+condição de contorno na superfície livre decorrente de cada metodologia. Porém, sendo
+o deslocamento distinto em ambas metodologias, pode-se notar que existe uma deriva
+média na direção z negativa, essa deriva será discutida na secção 3.6.3.2. Já no caso do
+momento de Froude-Krylov calculado em pitch, os momentos computados com ambas
+metodologias tem as mesmas características e apresentam a mesma assimetria na série
+temporal, com uma pequena diferença entre suas amplitudes.
+
+3.5.3 Deriva no DSSTAB
+Na  teoria  linear,  os  movimentos  horizontais  não  possuem  deriva,  eles  oscilam
+harmonicamente com média zero devido a que só são excitados com forças harmônicas
+de primeira ordem.
+
+Um  dos  estudos  mais  completos  do  fenômeno  da  deriva  foi  apresentado  por
+Pinkster  (1980).  No  modelo  não  linear  de  segunda  ordem  de  Pinkster,  as  forças  são
+integradas  a  partir  da  equação  de  Bernoulli,  incluindo  o  termo  de  segunda  ordem.
+Também, é definido e calculado o potencial de segunda ordem, esse potencial tem que
+satisfazer  a  equação  governante  do  fluido  e  as  mesmas  condições  de  contorno  que  o
+potencial de primeira ordem. Além disso, o domínio de integração, ou seja, a superfície
+molhada do corpo, é considerada móvel e dividida em duas partes: uma parte constante,
+que é a superfície molhada do navio até o calado médio, e uma parte oscilatória, que
+envolve o perfil instantâneo da onda até o calado médio. O modelo descrito por Pinkster
+descreve  as quantidades como uma somatória de contribuições de distintas ordens de
+grandeza, uma metodologia conhecida como método das perturbações, onde a força será
+
+62
+
+a resultante da integração das pressões de zero, primeira e segunda ordens, e se define
+como:
+
+= ( )+ ( )+
+
+( )
+
+Onde,
+
+é um número pequeno, tal queε≪1 ,F( ) representa a força hidrostática,
+
+F( ) a força fluida de primeira ordem, eF( ) a força fluida de segunda ordem.
+
+Por seu lado, a força fluida de segunda ordem é a resultante da somatória de todas
+as forças de segunda ordem, que incluem as seguintes contribuições: da altura relativa
+do  perfil  da  onda  incidente,  o  termo  de  segunda  ordem  da  equação  de  Bernoulli,  o
+produto  entre  o  gradiente  do  potencial  de  primeira ordem  e  movimentos  de  primeira
+
+ordem, o acoplamento inercial, e a contribuição do potencial de segunda ordemФ( ).
+
+São  essas  contribuições  da  força  de  segunda  ordem  que  produzem  a  deriva  no
+modelo  descrito  por  Pinkster.  No  entanto,  no  DSSTAB essas  contribuições  estão
+intrinsecamente  definidas  em  seu  algoritmo,  devido  ao  cômputo  das  pressões  até  a
+superfície  livre  instantânea  e  a  inclusão  dos  efeitos  do  movimento  do  corpo  nesse
+cálculo.    A  única  contribuição  que  não  é  levada  em  conta  no  DSSTAB são  as
+contribuições dos potenciais de segunda ordem associados a onda incidente, irradiação e
+difração.
+
+É  devido  a  essa  inclusão  intrínseca  das  componentes  descritas  no  modelo  de
+Pinkster,  que  o  DSSTAB desenvolve  movimentos  de  deriva,  apesar  de  só  computar
+diretamente  o  termo  de  segunda  ordem  da  equação  de  Bernoulli correspondente  ao
+potencial  de  onda  incidente.  Pode-se  afirmar  que  devido  ao  fato  de  que  as  forças  de
+onda  computadas  pelo  DSSTAB  não  são  funções  harmônicas  simétricas,  devido  à
+formulação  não linear  delas,  elas  criam  uma  força  média  resultante  que  faz  o  corpo
+derivar numa determinada direção. Essa assimetria pode ser observada no item anterior
+nas  figuras 3.14  e  3.15, onde  existem  médias  resultantes  na  força  FK1  na  direção  x
+positiva e z negativa, respectivamente.
+
+63
+
+3.5.3.1 Deriva horizontal
+Nas  figuras  3.17  e  3.18  se  mostram  a  derivas  na  direção  de  surge  e  sway
+figuras  pode-se  notar  que  para  o  período  menor,
+respectivamente.  Nessas 
+correspondente  a  um  período  onde  os  movimentos  verticais  são  significativos  (ver
+RAO’s  de  movimentos no  anexo  I),  a  deriva  nos  dois  sentidos  tem  um  valor
+consideravelmente  elevado.  Por  outro  lado, no  período  maior,  correspondente  a  um
+período  onde  os  movimentos  verticais  são  quase  nulos,  a  deriva  nos  dois sentidos  é
+pequena comparada com a deriva obtida no período menor. Desses resultados pode-se
+notar  que  a  deriva  horizontal  tem  uma  forte  dependência  dos  modos  verticais  de
+movimento.
+
+Fig. 3.17 Deriva em sway
+
+Fig. 3.18 Deriva em surge
+
+64
+
+Nas figuras 3.19 e 3.20 se mostram as séries temporais das médias das forças FK0,
+FK1 e FK2 para uma onda longitudinal de popa. Nessas figuras pode-se se notar que a
+força FK1 é a força que determina a direção da deriva em surge do corpo. Sendo que o
+valor  da  média  de  FK1 para  o  período  menor  tem  claramente  um  valor  positivo,
+portanto o corpo experimenta uma força resultante na direção da média da força FK1.
+Por outro lado, a média da força FK1 para o período maior tem um valor quase nulo,
+portanto a deriva do corpo será igualmente quase nula.
+
+Fig. 3.19 Médias das forças em x, onda de popa
+
+Fig. 3.20 Médias das forças em x, onda de popa
+
+Nas figuras 3.21 e 3.22 mostram- se as séries temporais das médias das forças FK0,
+
+FK1 e FK2 para uma onda de través, com χ=90°. Note-se que o comportamento da
+
+65
+
+média da força FK1 é semelhante ao caso com onda longitudinal, sendo que no período
+menor onde ocorre deriva em sway, a média da força FK1 é positiva, e para o caso do
+período maior a média é quase nula.
+
+Fig. 3.21 Médias das forças em y, onda de través
+
+Fig. 3.22 Médias das forças em y, onda de través
+
+66
+
+Fig. 3.23 RAO’s das forças de deriva média de surge e sway
+
+As  respostas  de  deriva  em  surge  e  sway  mostradas nesta  secção  têm certa
+equivalência  com  a  teoria  não  linear  das  pequenas  perturbações.  Na  figura  3.23  se
+mostra os RAO’s das forças de deriva média calculadas no WAMIT, na figura pode-se
+notar que para o período T=12s, ambas forças de deriva média em surge e sway têm um
+valor distinto de zero, sendo que para esse período o algoritmo prediz movimentos de
+deriva tanto em surge como em sway. Também é mostrado que a força de deriva média
+em surge é maior que a força de deriva média em sway, o que esta em concordância
+com as simulações numéricas obtidas com o algoritmo. Já para o caso com o período
+T=50s, o WAMIT prediz uma força de deriva média muito próxima a zero tanto para
+surge como para sway, sendo que as simulações numéricas com o algoritmo predizem
+um pequeno movimento de deriva nos dois graus de liberdade. Por exemplo, dando uma
+inspeção  detalhada  a  velocidade  em  surge obtida da  simulação  feita  para  o  período
+T=50s,  ver  figura  3.24,  temos  que  a  velocidade em  surge num  ciclo  do  movimento
+experimenta uma pequena média positiva com um valor aproximado de 0.01m/s. O que
+significa que o corpo se desloca lentamente com uma velocidade de 0.01m/s, sendo que
+a  caixa  atinge  depois  de  1000s  um  deslocamento  próximo  aos  10m  o  que  representa
+cerca de 3% de seu comprimento.
+
+O  resultado  do  algoritmo  para  os  períodos  maiores  deve  ser  avaliado  com  maior
+rigorosidade considerando que o modelo desenvolvido no algoritmo não linear não esta
+focado  em  descrever  tão  acuradamente  os  fenômenos  não  lineares que  governam  os
+
+67
+
+movimentos de  deriva  como  os  fenômenos  não  lineares  decorrentes  da  geometria
+submersa instantânea do corpo.
+
+Fig. 3.24 Velocidade em surge H=7.0m e T=50s
+
+3.5.3.2 Deriva vertical
+A  inclusão  do  termo  de  segunda  ordem  da  equação  do  Bernoulli, assim  como  o
+cômputo  das  pressões de  onda  até  a  superfície  livre  geram  uma  deriva  vertical  no
+sistema flutuante para os períodos onde os movimentos verticais são mais intensos, ver
+figura 3.25. Já para períodos com movimentos verticais menos intensos a deriva vertical
+é desprezível, ver figura 3.26.
+
+Fig. 3.25 Movimento em heave, onda de popa H=7.0m e T=10s
+
+68
+
+Fig. 3.26 Movimento em heave, onda de popa H=7.0m e T=20s
+
+Nas figuras 3.27 e 3.28 mostram-se a média das forças FK1 e FK2 no DSSTAB da
+simulação da figura 3.25 para os métodos de PT e MASN, respectivamente. Nas duas
+figuras pode-se notar que a média da força FK2 tem muito mais relevância que a média
+da força FK1.
+
+A  influência  do  termo  de  segunda  ordem  da  equação  de  Bernoulli  pode  ser
+observado na figura 3.29, onde esses efeitos foram descartados na simulação numérica
+com as mesmas condições que a simulação mostrada na figura 3.25. Pode-se notar que a
+única simulação que apresentou deriva vertical foi a simulação feita com o método PT.
+O que é compatível com a média da força FK1 do método PT da figura 3.27, onde a
+FK1  do método  PT  tem  uma  pequena  média  negativa. Novamente  isso  é  devido à
+diferença na condição de contorno na superfície livre decorrente de cada metodologia.
+
+69
+
+Fig. 3.27 Médias das forças em z, metodologia PT
+
+Fig. 3.28 Médias das forças em z, metodologia MASN
+
+Fig. 3.29 Movimento em heave sem FK2, onda de popa H=7.0m e T=10s
+
+70
+
+3.5.4 Amarrações
+O principal objetivo de introduzir um sistema de ancoragem é anular ou limitar o
+movimento  de  deriva  dos  sistemas  flutuantes.  Isso  é  feito  introduzindo  forças
+restaurativas que se opõem ao movimento de deriva. As linhas de ancoragem são as que
+fornecem essas forças de restauração aos movimentos não restaurativos, principalmente
+aos movimentos planares de surge e sway.
+
+Na  figura  3.30 podem  ser  apreciados  os  efeitos  de  um  sistema  de  ancoragem  na
+deriva  de  um  corpo  cilíndrico  de  paredes  verticais. Na  figura  3.30 se mostram  duas
+séries temporais do movimento de surge, a série de cor azul foi simulada com o corpo
+livre sem sistema de ancoragem, e a série de cor vermelha foi simulada com um sistema
+de ancoragem.
+
+Fig. 3.30 Influência do sistema de ancoragem nas simulações
+
+Em sistemas lineares desacoplados, as forças restaurativas produzidas pelas linhas
+de ancoragem não interferem com os outros modos de movimento. No entanto, no caso
+do  modelo  matemático  do  DSSTAB,  além  de interferir  com  a deriva  dos  sistemas
+flutuantes, a inclusão de um sistema de ancoragem poderia introduzir forças adicionais
+desfavoráveis  nos  outros graus  de movimento  diferentes  aos  planares,  como poderia
+acontecer na realidade.
+
+Na figura 3.31 se mostra a influência do sistema de ancoragem no movimento de
+roll do corpo cilíndrico. Nessa figura, se mostram as séries temporais do movimento em
+roll  para  duas  condições:  a  primeira  é  o corpo  cilíndrico  livre  sem  sistema  de
+ancoragem, e a segunda é o corpo cilíndrico com um sistema de ancoragem.
+
+71
+
+Fig. 3.31 Momento em roll, onda de proa H=10m e T=15s
+
+Pode-se notar que a mera inclusão do sistema de ancoragem modifica a resposta em
+roll,  criando  uma  resposta  ressonante  em  um  modo  que  não  está sendo  excitado
+diretamente pela onda incidente (ressonância paramétrica).
+
+Nas  figuras  3.32  e  3.33 se  mostram  as  séries  temporais dos  momentos  de
+restauração, de onda e a resultante do momento devido às linhas de ancoragem para as
+simulações sem sistema de ancoragem e com sistema de ancoragem, respectivamente.
+
+Fig. 3.32 Momento em roll, onda de proa H=10m e T=15s
+
+72
+
+Fig. 3.33 Momento em roll sem linhas de ancoragem, onda de proa H=10m e
+
+T=15s
+
+Na figura 3.32 pode-se notar que o desenvolvimento dos momentos na direção de
+roll quando o corpo se encontra livre é desprezível e por tanto o corpo não desenvolve
+nenhuma movimentação na direção de roll, ver figura 3.31.  No entanto na figura 3.33 é
+evidente  que  o  desenvolvimento  dos  momentos  na  direção  de  roll  tem  um  caráter
+fortemente ressonante, o que faz que o corpo se movimente na direção de roll. Fazendo
+uma inspeção mais detalhada dos momentos, ver figura 3.34, numa faixa do tempo onde
+o  movimento  de  roll  se  encontra  estabelecido,  queda  em  evidencia  uma  interação  do
+momento devido à onda incidente e o momento resultante das linhas de ancoragem. O
+fenômeno de instabilidade (neste caso a amplificação do movimento em roll) parece ser
+especialmente  forte  para  o  período  de  onda  testado,  assim  como  para  a  rigidez  e
+configuração  das  linhas  de  ancoragem  testadas,  o  que  significaria  que  essas
+características são as que governam esse fenômeno.
+
+Fig. 3.34 Momento em roll com linhas de ancoragem, onda de proa H=10m e
+
+T=15s
+
+73
+
+O  fenômeno  de instabilidade apresentado  nesta  secção  é  parte  de  um  estudo
+preliminar  feito  com  o  código  do  DSSTAB.  Apesar  do  fato  de se ter  testes
+experimentais  que  apóiem  a  existência  desse  fenômeno,  ainda  deve  ser  efetuado  um
+estudo mais detalhado do mesmo.
+
+Baseado no que foi descrito neste capítulo, a incorporação das não linearidades no
+modelo do DSSTAB permite simulações numéricas de movimentos de corpos flutuantes
+de forma  realista. Mas  ainda  assim  deve-se  manter sempre  presente  as  limitações  e
+restrições numéricas que  o  modelo apresenta.  Porém, o  modelo  implementado  no
+DSSTAB permite um estudo de estabilidade em ondas mais completo levando em conta
+diversos  aspectos  da  dinâmica de  navios  comumente  ignorados,  especialmente
+fenômenos ressonantes não lineares decorrentes da variação da geometria submersa do
+corpo e a fenômenos decorrentes da interação do corpo com linhas de ancoragem.
+
+74
+
+CAPÍTULO 4
+
+VALIDAÇÃO COM TESTES EXPERIMENTAIS
+
+Neste  capítulo  se  mostram  comparações  entre  as  respostas  dos  movimentos  de  um  corpo  obtidas  com  o
+código DSSTAB e uma bateria de testes experimentais com um modelo em escala reduzida de um casco de
+um FPSO.
+
+4.1 Generalidades
+
+O  código  computacional  descrito  no  capitulo  três  foi  empregado  para  simular  os
+movimentos de um navio tipo VLCC (do inglês Very Large Crude Carrier) transformado
+em  uma  unidade FPSO (do  inglês  Floating  Production  Storage  and  Offloading)  com  um
+sistema de ancoragem em ondas regulares de través e de proa. Os resultados das simulações
+com  o  DSSTAB  foram  comparados  com  testes  experimentais feitos  previamente  no
+LabOceano, no intuito de validar o algorítmo. Também foram feitas comparações com o
+código comercial WAMIT® para as respostas no mar de través.
+
+4.2 Navio FPSO P-50
+
+O navio P-50 é uma plataforma do tipo FPSO conhecida como “a plataforma da auto
+suficiência” que opera ancorada no campo petrolífero da Albacora Leste, no norte da Bacia
+de  Campos  (RJ).  A  transformação  da  P-50  consistiu  de  duas  fases:  A  primeira  fase
+
+75
+
+consistiu na conversão do petroleiro tipo VLCC Felipe Camarão em uma unidade FPSO, a
+segunda  fase    consistiu  na  instalação  e  implementação  de  diversos  módulos  no  estaleiro
+Mauá-Jurong em Niterói (RJ), concluído em dezembro de 2005. A entrada em operação da
+unidade foi em janeiro de 2006, começando sua produção no dia 21 de abril de 2006.
+
+As  principais  características  e  a  vista  transversal  das  linhas  de  forma  do  navio  são
+mostradas  na  tabela 4.1  e  na  figura  4.1, respectivamente. As  curvas  dos  coeficientes
+hidrodinâmicos e RAO’s de movimento podem ser encontrados no apêndice.
+
+Tabela 4.1 Características do navio P-50
+
+Propriedade
+Comprimento
+Boca
+Pontal
+Calado
+Deslocamento
+Altura metacêntrica transversal
+Momento de inércia em roll
+Momento de inércia em pitch
+Momento de inércia em yaw
+Período natural de heave
+Período natural de roll
+Período natural de pitch
+
+Símbolo
+
+Valor (Unidade)
+
+337.06 (m)
+54.5 (m)
+31.82 (m)
+21.0 (m)
+
+310972.80 (ton)
+
+8.51 (m)
+
+1.10x108 (ton m²)
+1.67x109 (ton m²)
+1.71x109 (ton m²)
+
+12.5 (s)
+15.5 (s)
+10.7 (s)
+
+Fig. 4.1 Linhas de forma do navio P-50
+
+76
+
+4.3 Testes experimentais no LabOceano
+
+Um modelo em escala reduzida do navio P-50 foi submetido previamente a uma bateria
+de  testes experimentais  no  LabOceano,  como  parte  de  um  projeto de  pesquisa  para  a
+PETROBRAS. A  escala do ensaio foi 1:70, vide figura 4.2.  Os resultados desses testes
+foram tomados para validar o código computacional DSSTAB
+
+As informações dos testes experimentais são mostradas nas tabelas 4.2 e 4.3 para ondas
+de  través  e  de  proa, respectivamente.  Nas  tabelas 4.2 e 4.3,  a  primeira  coluna  indica  o
+número da figura que mostra a comparação, e a segunda coluna indica o código de cada
+teste experimental, como foi definido no LabOceano.
+
+Fig. 4.2 Modelo da P-50 empregado nos testes experimentais
+
+FIG.
+
+4.4
+4.5
+4.6
+4.7
+4.8
+4.9
+4.10
+4.11
+
+Tabela 4.2 Testes em mar de través
+H (m)
+3.5
+7.0
+7.0
+3.5
+7.0
+3.5
+5.6
+8.4
+
+TEST
+T18_400
+T18_500
+T18_800
+T18_900
+T18_1000
+T18_1100
+T301_040
+T301_060
+
+T (s)
+10.04
+10.04
+11.71
+12.97
+12.97
+15.05
+15.05
+15.05
+
+77
+
+FIG.
+
+4.13
+4.14
+4.15
+4.16
+4.17
+4.18
+4.18
+4.20
+
+Tabela 4.3 Testes em mar de proa
+H (m)
+3.5
+7.0
+10.5
+7.0
+3.5
+7.0
+3.5
+7.0
+
+TEST
+T17_400
+T17_500
+T17_600
+T17_800
+T17_900
+T17_1000
+T17_1100
+T17_1200
+
+T (s)
+10.04
+10.04
+10.04
+11.71
+12.97
+12.97
+15.05
+15.05
+
+4.4 Simulações numéricas
+
+Todas as simulações numéricas foram feitas com um passo de tempo de 0.2 segundos e
+com tempo  de  duração  da  função  rampa  de  30  segundos.  Na  figura 4.3  se  mostra  um
+esquema do navio e o sistema de ancoragem utilizado nas simulações numéricas.
+
+Fig. 4.3 Esquema do sistema de ancoragem
+
+78
+
+4.4.1 Simulações em ondas de través
+
+Nas  Figuras  4.4  a  4.11 são  mostradas  comparações  entre  resultados  numéricos  e
+experimentais  para  ondas  de través  correspondentes  à  tabela 4.2.  Só  são  mostradas
+comparações para os movimentos de sway, heave e roll devido a que são os modos mais
+relevantes em ondas de través. As figuras 4.10 e 4.11 correspondem a uma bateria de testes
+mais nova realizada com o mesmo navio, com as mesmas condições de carga para ondas
+com período igual ao período natural de roll do navio.
+
+Deve-se notar que nenhum esforço foi feito para considerar os efeitos transientes nas
+comparações, devido a que o principal objetivo nesta validação foi comparar as respostas
+permanentes do navio.
+
+Pode-se observar em todos os casos um movimento não oscilatório em sway. Em geral,
+as  amplitudes  de  primeira  ordem  têm  boa  correlação,  assim  como  a  tendência  final  da
+deriva média em sway do modelo. Porém, as oscilações com grandes períodos observadas
+nos testes experimentais não foram replicadas nas simulações numéricas.
+
+Em geral, os movimentos em heave têm boa concordância. As simulações numéricas
+do movimento em roll para ondas de pequena amplitude têm tendência a serem maiores do
+que  o  roll  experimental,  possivelmente  devido  a  uma  deficiência  no  momento  de
+amortecimento de roll. Resultados lineares do código WAMIT também são incluídos nas
+comparações;  eles  seguem  a  mesma  tendência  do  DSSTAB.  Para  condições de  grandes
+amplitudes de roll (figuras 4.9 a 4.11), existe uma boa concordância entre os resultados do
+DSSTAB e os experimentais, mostrando melhoras significativas com respeito ao WAMIT.
+Pode-se observar nas figuras 4.4 a 4.6 que as séries temporais do movimento experimental
+de  roll  para  os  períodos  menores  testados,  afastados  da  ressonância,  tem  uma  pequena
+média negativa  que  sugere  a influência de  pequenos  efeitos  de  segunda  ordem.  Essas
+assimetrias  não  estão  presentes  nas  figuras 4.7  a  4.11.  As  médias  obtidas  a  partir  do
+DSSTAB são iguais a zero.
+
+79
+
+Fig. 4.4 Sway, heave e roll, onda de través. H=3.5m. T=10.04s.
+
+80
+
+Fig. 4.5 Sway, heave e roll, onda de través. H=7.0m. T=10.04s.
+
+81
+
+Fig. 4.6 Sway, heave e roll, onda de través. H=7.0m. T=11.71s.
+
+82
+
+Fig. 4.7 Sway, heave e roll, onda de través. H=3.5m. T=12.97s.
+
+83
+
+Fig. 4.8 Sway, heave e roll, onda de través. H=7.0m. T=12.97s.
+
+84
+
+Fig. 4.9 Sway, heave e roll, onda de través. H=3.5m. T=15.05s.
+
+85
+
+Fig. 4.10 Sway, heave e roll, onda de través. H=5.6m. T=15.06s.
+
+86
+
+Fig. 4.11 Sway, heave e roll, onda de través. H=8.4m. T=15.06s.
+
+87
+
+4.4.2 Simulações em ondas de proa
+
+Nas  figures 4.13  a  4.20 se  mostram  comparações  entre  resultados  numéricos  e
+experimentais para ondas de proa correspondentes às ondas da tabela 4.3; na figura 4.12 se
+mostra  um  instante  de  uma  simulação  em  mar  de  proa.  Novamente,  devido  à  sua  maior
+relevância em ondas de proa, só são mostradas comparações para os movimentos em surge,
+heave e pitch.
+
+Os  comentários  prévios  sob  o  comportamento  das  respostas  em  sway  para  ondas  de
+través agora  podem  ser  observados  nas  respostas  em  surge  para  ondas  de  proa.  Como
+previsto  para  condições  de  ondas  de  proa  o  movimento  lento  em  surge  é  pequeno,
+oscilações na freqüência natural de surge ocorrem nos testes experimentais. Na maioria dos
+casos  é  possível  observar  que  essas  oscilações  têm  tendência  a  desaparecer,  mas
+infelizmente os testes não têm a duração necessária para se poder verificar isso de forma
+conclusiva.
+
+As simulações numéricas dos movimentos de heave e pitch têm boa concordância com
+os resultados experimentais. Porém, deve ser mencionado que quase todas as respostas do
+navio testado têm pequenas amplitudes para ondas de proa.
+
+Fig. 4.12 Simulação em mar de proa do navio P50
+
+88
+
+Aw=3.5; T=10.04s; ksi=180°
+
+Aw=3.5; T=10.04s; ksi=180°
+
+Aw=3.5; T=10.04s; ksi=180°
+
+Fig. 4.13 Surge, heave e pitch, onda de proa. H=3.5m. T=10.04s.
+
+89
+
+FIG. 4.14 Surge, heave e pitch, onda de proa. H=7.0m. T=10.04s.
+
+90
+
+Fig. 4.15 Surge, heave e pitch, onda de proa. H=10.5m. T=10.04s.
+
+91
+
+Fig. 4.16 Surge, heave e pitch, onda de proa. H=7.0m. T=11.71s
+
+92
+
+Fig. 4.17 Surge, heave e pitch, onda de proa. H=3.5m. T=12.97s.
+
+93
+
+Fig. 4.18 Surge, heave e pitch, onda de proa. H=7.0m. T=12.97s.
+
+94
+
+Fig. 4.19 Surge, heave e pitch, onda de proa. H=3.5m. T=15.05s.
+
+95
+
+Fig. 4.20 Surge, heave e pitch, onda de proa. H=7.0m. T=15.05s.
+
+96
+
+CAPÍTULO 5
+
+CONCLUSÕES E RECOMENDAÇÕES
+
+5.1 Generalidades
+
+No  presente  trabalho  foi  apresentado e  discutido  o  modelo  do  DSSTAB,  que  é  um
+algoritmo numérico de simulação de movimentos em seis graus de liberdade. Apenas
+simulações sem  velocidade  de  avanço de  sistemas  flutuantes  foram  aqui  tratadas.  O
+algoritmo soluciona as equações de movimento de sistemas flutuantes no domínio do
+tempo. Com o propósito de dar solução às equações de movimento, o algoritmo avalia
+todas  as  forças  consideradas  como  atuantes  no  corpo  em  cada  passo  do  tempo.  O
+algoritmo calcula  as  forças  de  restauração  mediante  integração  do  volume  submerso,
+determinado pela interseção do perfil da onda incidente e o corpo. Para o cômputo da
+força  de  Froude-Krylov  até  a  superfície  livre  instantânea, foram apresentadas duas
+metodologias:  a  primeira  metodologia  proposta  por  Wheeler,  que é  um  método  de
+streching (estiramento) do perfil de pressões até a superfície livre instantânea; a segunda
+metodologia  proposta  por de  Kat é  um  método de  extrapolação  da  teoria  linear  até  a
+superfície  livre  instantânea.  Por  outro  lado,  as  forças  hidrodinâmicas  de  radiação  e
+difração  são  avaliadas  considerando-se  o  corpo  na  superfície  média  constante
+empregando o código comercial WAMIT®. Já o momento de amortecimento de roll é
+considerado como não linear, sendo que neste trabalho ele foi introduzido a partir de
+coeficientes  obtidos  mediante  testes  experimentais  de  decaimento. O algoritmo  pode
+incluir os efeitos de um sistema de ancoragem solucionando a equação da catenária em
+
+97
+
+cada passo do tempo. Finalmente, deve ser mencionado que o algoritmo avalia todas as
+forças descritas considerando o movimento instantâneo do corpo.
+
+Foram  feitas  simulações  numéricas  com  três  corpos  distintos  no  intuito  de  fazer
+uma  descrição  das  capacidades  não  lineares  do  algoritmo.  Foi  empregada  uma  caixa
+retangular no intento de ilustrar as vantagens do cálculo da força hidrostática mediante
+integração  do  volume  exato  da  geometria  submersa  do  corpo,  sendo  que  além  desse
+corpo  foi  empregado  um  navio  tipo  portacontentor  para  ilustrar  as  diferenças  do
+cômputo da geometria exata submersa entre um corpo com geometria simples (caixa) e
+um  corpo  com  geometria  complexa  (portacontentor).  A  mesma  caixa  retangular  foi
+estudada  com  o  propósito  de  descrever  como  o  código  consegue  desenvolver
+movimentos de deriva horizontais e verticais. E finalmente foi empregado um cilindro
+de  paredes  verticais  (monocoluna)  com  a  intenção  de  mostrar  a  influência  de  um
+sistema de ancoragem nas simulações dos movimentos de corpos flutuantes.
+
+Por  último,  o  algoritmo  foi  validado  através  de  comparações  entre  testes
+experimentais e simulações numéricas com um navio tipo FPSO ancorado em ondas de
+través e de proa.
+
+Como  comentário  final,  o  autor  deseja  mencionar  que  o  desenvolvimento  do
+algoritmo apresentado no presente trabalho está em constante evolução até a atualidade.
+E  é  preciso  mencionar que  durante  a  elaboração  do  mesmo,  o  algoritmo  tem
+experimentado alterações  e  aprimoramentos  significativos na  sua  formulação  e
+implementação.
+
+6.2 Conclusões e recomendações gerais
+
+As conclusões gerais do trabalho são as seguintes:
+
+6.2.1 Sobre a modelação matemática
+
+ O modelo apresentado é capaz de fazer simulações de movimentos em seis
+graus de liberdade de sistemas flutuantes em presença de ondas regulares.
+As  características  principais  do  modelo são:  consideração  de  termos
+inerciais de segunda ordem, a representação exata da geometria submersa do
+corpo, o cômputo das pressões hidrostática e da onda até a superfície livre
+
+98
+
+instantânea, inclusão dos efeitos de um sistema de ancoragem, e ademais a
+consideração  do  movimento instantâneo do  corpo no  cômputo  das  forças.
+Essas características permitem a modelação de fenômenos não lineares.
+
+ A  representação  exata  da  geometria  submersa  do  corpo  permite  o  cálculo
+mais acurado da força hidrostática de restauração com respeito à modelação
+linear. No trabalho foi ressaltada a capacidade do modelo de representar o
+fenômeno  de  ressonância  paramétrica  em  um  corpo  suscetível  a  essa
+instabilidade.
+
+ O  cômputo  da  pressão  de  onda  até  a  superfície  livre  instantânea,  assim
+como a consideração dos movimentos do corpo no cômputo da pressão de
+onda, permite ao modelo desenvolver movimentos de deriva horizontais e
+verticais.  Sendo  que  o  movimento  de  deriva  horizontal  está  fortemente
+associado  aos  movimentos  verticais  de  heave  e  pitch.  Por  outro  lado, o
+movimento  de  deriva  vertical  se  encontra  ligado ao  termo  não  linear  de
+segunda ordem da equação de Bernoulli.
+
+ A inclusão na modelação dos efeitos de um sistema de ancoragem através
+da  equação  da  catenária  permite  a  simulação  de  movimentos  de  sistemas
+ancorados.  Foi  comentada a capacidade  do  modelo  de  representar
+instabilidades de sistemas ancorados em presença de ondas, decorrentes da
+interação  entre  as  forças  externas  e  as  forças  restaurativas  das  linhas  de
+ancoragem.
+
+6.2.2 Sobre a implementação numérica
+
+ No  trabalho  foram  apresentadas  as  principais  considerações  numéricas
+implementadas  no  algoritmo  e  foram  discutidas  suas  influências  nas
+simulações dos movimentos.
+
+ Foi apontado que o passo do tempo do esquema de integração de Runge-
+Kutta de quarta ordem tem uma forte influência na simulação do movimento
+de surge, podendo alterar a direção desse movimento se não for escolhido
+um passo de tempo adequado.
+
+ Foi  discutida  a  influência  da  função  rampa  nas  simulações  numéricas,
+determinando-se que esta tem sua influência restrita ao estado transiente do
+
+99
+
+movimento,  não  alterando significativamente o  desenvolvimento  final  dos
+movimentos  do  corpo.  A  função  rampa  minimiza  os  efeitos  da  posição
+inicial do corpo na onda incidente.
+
+ No  trabalho  se  mostrou  que  se  uma  malha  tem  problemas  com  algumas
+uniões de faces adjacentes, é gerada uma força  hidrostática resultante que
+altera  as  simulações  numéricas,  devido ao  cálculo  errado  do  volume  do
+corpo.
+
+6.2.3 Sobre as validações com testes experimentais
+
+• O  modelo  apresentado  neste trabalho  foi  avaliado  por  meio  de  comparações
+entre testes experimentais e simulações numéricas dos movimentos de um navio
+tipo  FPSO  ancorado  em  ondas  de  través  e  de  proa.  Em  geral foi obtida boa
+concordância, particularmente nos movimentos em heave, roll e pitch.
+
+• No caso dos movimentos horizontais, a tendência final da deriva experimental
+tende  a  estar  em  conformidade  com  os  movimentos  de  deriva  do  DSSTAB.
+Lamentavelmente os testes experimentais não tiveram a suficiente duração para
+fazer uma melhor comparação. Já para os movimentos horizontais de primeira
+ordem,  as  amplitudes  obtidas  com  o  DSSTAB  são  coerentes  com  os  ensaios
+experimentais.
+
+• Nos  casos  das  ondas  de  través,  nas  quais  o  navio  FPSO  desenvolve  fortes
+amplificações em roll, as simulações feitas no DSSTAB têm boa concordância
+com  os  testes  experimentais,  mostrando  uma  melhoria  com  respeito  aos
+resultados  de  uma  metodologia  que  considera  os  termos  hidrostáticos  e  de
+Froude-Krylov como lineares (resultados do WAMIT).
+
+6.3 Trabalhos futuros
+
+Recomenda-se a realização dos seguintes trabalhos futuros:
+
+100
+
+•
+
+Fazer um estudo de estabilidade numérica para determinar qual é o esquema de
+integração numérica mais apropriado para as simulações, e que não comprometa
+demasiado o tempo de duração das simulações.
+
+• Validar o  algoritmo  com  testes  experimentais  para  diferentes  geometrias  e
+condições de ondas. Esses testes deverão permitir aos corpos a serem estudados
+desenvolver movimentos complexos com características não lineares.
+
+• Validar o algoritmo com outros códigos não lineares que tenham características
+similares com o DSSTAB, como: AQWA-NAUT, FREDYN, LAIDYN, LAMP,
+WASIM, entre outros.
+
+•
+
+•
+
+•
+
+•
+
+•
+
+Implementação  de  simulações  numéricas  com  velocidade  de  avanço,  e  incluir
+forças  produzidas  por  superfícies  de  controle  como  leme,  assim como  forças
+produzidas por propulsores.
+
+Implementar o modelo de integral de convolução para levar em conta efeitos de
+memória fluida nas ações hidrodinâmicas.
+
+Implementar a modelação de risers, e investigar sua influência nos movimentos
+de corpos flutuantes em presença de ondas.
+Implementar  a  inclusão  de  um  ou mais  corpos  flutuantes  nas  simulações
+numéricas,  com  o  propósito  de  estudar  distintas  configurações  de  navios
+empregadas na indústria offshore.
+
+Implementar e validar, experimental e numericamente, simulações numéricas em
+ondas irregulares.
+
+• Desenvolver  um  estudo  de  estabilidade  de  corpos  ancorados  em  presença  de
+ondas,  com  o  propósito  de  determinar  qual  é  a  influência  do  sistema  de
+ancoragem  nos  movimentos  desses  corpos  e  quais  tipos  de  geometrias  são
+suscetíveis a desenvolver instabilidades.
+
+• Desenvolver uma metodologia de estudo das respostas de corpos flutuantes em
+
+mares irregulares.
+
+• Desenvolver  uma  metodologia  de  análise de  estabilidade  dinâmica  em
+problemas  relacionados  com  variação  do  GM,  tais  como  a  ressonância
+
+101
+
+paramétrica e  a  perda  pura  da  estabilidade em  mares  regulares  e  irregulares  a
+partir das respostas obtidas das simulações numéricas com o DSSTAB.
+
+•
+
+Investigar a influência de efeitos de cargas externas, como as cargas devido ao
+ingresso de água no convés. Assim como também a influência de cargas internas
+como  o  movimento  de  fluido  em  tanques  (sloshing).  Essas  forças  podem  ser
+modeladas por metodologias de CFD e serem introduzidas no algorítmo como
+forças externas.
+
+102
+
+REFERÊNCIAS BIBLIOGRÁFICAS
+
+ABKOWITZ,  M.  A.,  1969,  Stability  and  Motion  Control  of  Ocean  Vehicles.
+Massachusetts, The United States of America, The M. I. T. Press.
+
+AHMED,  T.  M.,  HUDSON,  D.  A.,  TEMAREL,  P.,  2010,  “An  Investigation  into
+Parametric  Roll  Resonance  in  Regular  Waves  Using  a  Partly  Non-Linear  Numerical
+Model”, Ocean Engineering.
+
+BALLARD, E. J., HUDSON, D. A., PRICE, W. G., TEMAREL, P., 2003, “Time Domain
+Simulation  of  Symmetric  Ship  Motions  in  Waves”, International  Journal  of  Maritime
+Engineering.
+
+BECK, R., REED, A., 2001, “Modern Seakeeping Computations for Ships”, Proceedings
+of the 23th Symposium on Naval Hydrodynamics, Val de Reuil, France, pp. 1-45.
+
+BELENKY,  V.  L., SEVASTIANOV,  N.  B.,  2007, Stability  and  Safety  of  Ships:  Risk  of
+Capsizing. SNAME, Jersey City, ISBN 0-939773-61-9.
+
+BHATTACHARYYA, R., 1978, Dynamics of Marine Vehicles. New York, United States
+of America, John Wiley & Sons, Inc.
+
+CUMMINS,  W.  E.,  1962,  “The  Impulse  Response  Function  and  Ship  Motions”.  In:
+International Symposium on Ship Theory, no. 8, Hamburg, Germany, pp. 101-109, Jun.
+
+103
+
+DEAN, R., DALRYMPLE R., 1991, Water Wave Mechanics for Engineers and Scientists,
+Advance  Series  on Ocean  Engineering.,  Volume  2,  World  Scientific,  Washington  D.C.,
+U.S.A.
+
+FALTINSEN,  O., 2005, Hydrodynamics  of  High-Speed  Marine  Vehicles,  Cambridge
+University Press.
+
+FONSECA, N., GUEDES, C. 1998a, “Time Domain Analysis of Large Amplitude Vertical
+Motions and Wave Loads”, Journal of Ship Research, Vol. 42, No2, pp. 100-113.
+
+FONSECA, N., GUEDES, C. 1998b, “Non-Linear Wave  Induced Responses of Ships in
+Irregular  Seas”, Proceedings  of  17th the  International  Conference  on  offshore  mechanics
+and arctic engineering (OMAE 98), Lisbon. New York: ASME; Vol II.
+
+FONSECA,  N., GUEDES,  C., PASCOAL,  R.,  2006,  “Ship  Structural  Loads  Induced  by
+Abnormal  Wave  Conditions  on  a  Containership”, Journal  of  Marine  Science  and
+Technology, Vol. 11, pp. 245-259.
+
+HASLUM, H., FALTINSEN, O., “Alternative Shape of Spar Platforms for Use in Hostile
+Areas”, 1999, Offshore Technology Conference, Houston, U.S.A.
+
+HIMENO,  Y.,  1981,  Prediction  of  Ship  Roll  Damping – State  of  the  Art.  Dept.  Naval
+Architecture and Marine Engineering, The University of Michigan, Report no. 239.
+
+HOOFT,  J.  P.,  1982, Advanced  Dynamics  of  Marine  Structures.  New  York,  The  United
+States of America, John Wiley & Sons, Inc.
+
+INGLIS, R.B.,1980, A Three Dimensional Analysis of the Motion of a Rigid Ship in Waves,
+Ph.D. Thesis, Dep of Mech Eng. University College London, London, United Kingdom.
+
+104
+
+ITTC, 2011, “Seakeeping Committee Report”, Proceedings of the 26th International
+Towing Tank Conference, Rio de Janeiro, Brazil.
+
+JOURNÉE, J.M.J., MASSIE, W.W., 2001, Offshore Hydromechanics. Delft University of
+Technology, Delft.
+
+de  KAT, J.  O., 1988,  “Large  Amplitude  Ship  Motions  and  Capsizing  in  Severe  Sea
+Conditions”, Ph. D. Thesis, University of California, Berkeley.
+
+KERWIN,  J.  E.,  1955,  “Notes  on  Rolling  in  Longitudinal  Waves”,
+Shipbuilding Progress, vol. 2, no. 16, pp. 597-614.
+
+International
+
+KRING, D., HUANG, Y., SCLAVOUNOS, P., 1997, “Nonlinear Ship Motions and Wave-
+Induced  Loads  by  a  Rankine  Method”, Proceedings  of  the  21th Symposium  on  Naval
+Hydrodynamics, Trondheim , Norway, pp. 45-63
+
+KRING,  D.,  1994, Time  Domain  Ship  Motions  by  a  Three-Dimensional  Rankine  Panel
+Method,  Ph.  D.  Thesis,  Department  of  Ocean  Engineering, Massachusetts  Institute  of
+Technology, Massachusetts.
+
+LEWANDOWSKI,  E.,  2004, The Dynamics  of  Marine  Craft:  Maneuvering  and
+Seakeeping, Advance  Series  on  Ocean  Engineering,  Volume  22,  World  Scientific,
+Washington D.C., U.S.A.
+
+LIN, W.M., YUE, D.K.P., 1990, “Numerical Solutions for Large-Amplitude Ship Motions
+in the Time Domain”, Proceedings of the 18th Symposium on Naval Hydrodynamics, The
+University of Michigan, U.S.A., pp. 41-66.
+
+105
+
+LIN,  W.M., YUE,  D.K.P.,  1993,  “Time-Domain  Analysis  for  Floating  Bodies  in  Mild-
+Slope Waves of Large Amplitude”, Proceedings of the 8th International Worshop on Water
+Waves and Floating Bodies, Newfoundland, Canada.
+
+MAFRA,  S.A.R.S.,  ALVES,  G.T.M.,  COELHO,  L.C.G., OLIVEIRA,  M.C.,  2006,  “A
+Sequential Linear Program for the Automatic Loading of Vessels”. Proceedings of STAB
+2006 Conference, Rio de Janeiro, Brazil, 2006.
+
+MATUSIAK, J., 2000, “Two-stage approach to determination of non-linear motions of ship
+in waves”, 4th Osaka Collouqium on Seakeeping Perfomance of Ships, Osaka, Japan, 17-21
+October 2000.
+
+MATUSIAK,  J.,  2007, “On  certain  types  of  ships responses  disclosed  by  two-stage
+approach to ship dynamics”, Archives of Civil and Mechanical Engineering, 7(4), pp. 151-
+166.
+
+NEVES,  M.  A.  S.,  2002,  “On  the  Excitation  of  Combination  Modes  Associated  with
+Parametric  Resonance  in  Waves”. Proceedings  of  the 6th  International  Ship  Stability
+Workshop (ISSW’2002), Webb Institute, New York.
+
+NEVES,  M.  A.  S.,  RODRIGUEZ,  C.  A.,  2006a,  “On  Unstable  Ship  Motions  Resulting
+form Strong Non-Linear Coupling”. Ocean Engineering, vol. 33, no. 14 (Oct), pp. 1853-
+1883.
+
+NEVES,  M.  A.  S.,  SPHAIR,  S.,  MATTOSO,  B.,  RODRIGUEZ,  C.  A.,  SANTOS,  A.,
+VILETI, V., TORRES, F., 2008, “On the Occurrence of Mathieu Instabilities of Vertical
+Cylinders”, Proceedings of 27th the International Conference on offshore mechanics and
+arctic engineering (OMAE 20088), Estoril, Portugal.
+
+106
+
+OLIVEIRA,  A.  C.,  2003, Investigações  sobre  a  Teoria  Biliniar  na  Análise  do  Balanço
+Transversal de FPSOs. Tese de M.Sc., COPPE - Eng. Oceânica, Universidade Federal do
+Rio de Janeiro, Rio de Janeiro, RJ, Brasil.
+
+PAULLING, J. R., 1961, “The Transverse Stability of a Ship in a Longitudinal Seaway”.
+Journal of Ship Research, vol. 4, no. 4 (Mar.), pp. 37-49.
+
+PAULLING,  J.  R.,  ROSENBERG,  R.  M,  1959,  “On  Unstable  Ship  Motions  Resulting
+From Non-Linear Coupling”, Journal of Ship Research, vol. 3, no. 1 (Jun.), pp. 36-46.
+
+PINKSTER,  J.,  1980, Low  Frequency  Second  Order  Wave  Exciting  Forces  on  Floating
+Structures.  Ph.D.  Thesis,  Ocean  Engineering  Deparment,  Delft  University  of
+Technology, Delft, Netherlands.
+
+POLO,  J.  C.,  NEVES,  M.  A.  S.,  2012,  “Desarrollos  Recientes  de  Nuevos  Criterios  de
+Estabilidad  Intacta  de  Buques  en  Olas”, I  Simposio  Panamericano  de  Ingeniería  Naval,
+Transporte Marítimo e Ingeniería Portuaria, Lima, Perú.
+
+RAO, S., 1995, Mechanical Vibrations. 3rd Ed. New York, The United States of America,
+Addison-Wesley Publishing Company, Inc.
+
+RODRIGUEZ, C.A., 2004, Estabilidade Dinâmica do Navio: Um Modelo Não-Linear de
+Terceira Ordem. Tese de M.Sc., COPPE - Eng. Oceânica, Universidade Federal do Rio de
+Janeiro, Rio de Janeiro, RJ, Brasil.
+
+RODRIGUEZ, C.A., 2010, Sobre a Dinâmica Não Linear do Balanço Paramétrico. Tese
+de D.Sc., COPPE - Eng. Oceânica, Universidade Federal do Rio de Janeiro, Rio de Janeiro,
+RJ, Brasil.
+
+SHIN,  Y., BELENKY,  V., LIN,  W., WEEMS,  K., ENGLE,  A.,  2003, “Nonlinear  Time
+Domain  Simulations  Technology  for  Seakeeping  and  Wave-Load  Analysis  for  Modern
+Ship Design”, ABS Technical Papers.
+
+107
+
+SPYROU,  K.  J.,  2000,  “Designing  Against  Parametric  Instability  in  Following  Seas”,
+Ocean Engineering, vol. 27, no. 6 (Jun), pp. 625-653.
+
+WAMIT INC., 2006, WAMIT® USER MANUAL. WAMIT Inc. & Massachusetts Institute
+of Technology, Massachusetts.
+
+WHEELER,  J.D., 1970, “Method  for  Calculating  Forces  Produced  by  Irregular  Waves”,
+Journal of  Petroleum Technology, Vol 249 pp. 359-367.
+
+108
+
+Apêndice
+
+Características e operadores de respostas dos corpos
+
+analisados
+
+Generalidades
+
+Nesta secção são apresentadas as principais características geométricas assim como os
+operadores  de  resposta (RAO) dos  corpos  empregados  no  presente  trabalho. Foram
+omitidos os RAO’s de movimento em yaw devido a eles serem desprezíveis em todos
+os corpos testados numericamente neste trabalho.
+
+Caixa retangular
+
+Este corpo  é  um  simples  paralelepípedo  e  não  representa  nenhuma  embarcação
+construída,  sendo  este corpo desenhado para  se  aproximar  as  características  do  navio
+FPSO P-50. O propósito da criação desse corpo foi avaliar algumas características do
+DSSTAB  em  uma  geometria  simples. As  principais  características do  corpo são
+mostradas na tabela A.1, e uma representação tridimensional do corpo é  mostrada na
+figura A.1.
+
+109
+
+Tabela A1. Características da Caixa retangular
+
+Propriedade
+Comprimento
+Pontal
+Calado
+Deslocamento
+Altura metacêntrica transversal
+Momento de inércia em roll
+Momento de inércia em pitch
+
+Símbolo
+
+Valor (Unidade)
+
+330 (m)
+28 (m)
+21 (m)
+
+8.56 (m)
+
+387127.12 (ton)
+
+2.13x108 (ton×m²)
+3.94x109 (ton×m²)
+
+Fig. A.1 Representação tridimensional da caixa retangular
+
+A  seguir  são  mostrados  os operadores  de  respostas lineares do  corpo  em  surge,
+
+sway, heave, roll e pitch.
+
+Fig. A.2 RAO de surge da caixa retangular
+
+110
+
+Fig. A.3 RAO de sway da caixa retangular
+
+Fig. A.4 RAO de heave da caixa retangular
+
+111
+
+Fig. A.5 RAO de roll da caixa retangular
+
+Fig. A.6 RAO de pitch da caixa retangular
+
+112
+
+Monocoluna
+
+Este corpo caracterizado por ser um cilindro de seção circular constante foi objeto
+do  estudo  experimental em  Neves et  al. (2008). Nesse  trabalho  foi  reportado  o
+fenômeno  de  ressonância  paramétrica  em ondas  regulares 
+longitudinais  para
+determinadas  configurações  do  sistema  de  ancoragem.  As  principais  características
+geométricas do corpo são mostradas na tabela A.2, e uma representação tridimensional
+do corpo é mostrada na figura A.7.
+
+Tabela A2. Características da Monocoluna
+
+Propriedade
+Comprimento
+Pontal
+Calado
+Deslocamento
+Altura metacêntrica transversal
+Momento de inércia em roll
+Momento de inércia em pitch
+
+Símbolo
+
+Valor (Unidade)
+
+110 (m)
+65 (m)
+43 (m)
+
+3.82 (m)
+
+418859.0 (ton)
+
+3.43x108 (ton×m²)
+3.43x108 (ton×m²)
+
+Fig. A.7 Representação tridimensional da monocoluna
+
+A  seguir são  mostrados  os  operadores  de  respostas lineares do  corpo  em  surge,
+
+sway, heave, roll e pitch.
+
+113
+
+Fig. A.8 RAO de surge da monocoluna
+
+Fig. A.9 RAO de sway da monocoluna
+
+114
+
+Fig. A.10 RAO de heave da monocoluna
+
+Fig. A.11 RAO de roll da monocoluna
+
+115
+
+Fig. A.12 RAO de pitch da monocoluna
+
+Portacontentor NTU
+
+Este navio é um típico portacontentor de grande porte, caracterizado principalmente
+por ter uma  grande variação de sua  geometria  em torno da proa (ângulos de flare de
+proa pronunciados). O  corpo  foi  objeto  de  estudo  em  Rodriguez  (2010).  Na  tese  de
+doutorado  de  Rodriguez  foi  estudado  o  fenômeno  de  ressonância  paramétrica  em
+distintas  geometrias  incluindo  este  navio. As  características  principais  do  navio  são
+mostradas  na  tabela A.3 e uma  representação tridimensional  do corpo é  mostrada na
+figura A.13.
+
+Tabela A3. Características do Portacontentor NTU
+
+Propriedade
+Comprimento
+Pontal
+Calado
+Deslocamento
+Altura metacentrica transversal
+Momento de inércia em roll
+Momento de inércia empitch
+
+116
+
+Símbolo
+
+Valor (Unidade)
+
+293.51 (m)
+24.51 (m)
+11.71 (m)
+
+1.84 (m)
+
+76332.29 (ton)
+
+1.77x107 (ton×m²)
+4.47x108 (ton×m²)
+
+Fig. A.13 Representação tridimensional do Portacontentor NTU
+
+A seguir são mostrados os operadores de resposta linear do corpo em surge, sway,
+
+heave, roll e pitch.
+
+Fig. A.14 RAO de surge do portacontentor NTU
+
+117
+
+Fig. A.15 RAO de sway do portacontentor NTU
+
+Fig. A.16 RAO de heave do portacontentor NTU
+
+118
+
+Fig. A.17 RAO de roll do portacontentor NTU
+
+Fig. A.18 RAO de pitch do portacontentor NTU
+
+119
+
+Navio FPSO P-50
+
+As características principais do navio já foram discutidas no capítulo 4. Na figura
+
+A.19 se mostra uma representação tridimensional do navio.
+
+Fig. A.19 Representação tridimensional do FPSO P-50
+
+A  seguir  são  mostrados  os  operadores  de  respostas lineares do  corpo  em  surge,
+
+sway, heave, roll e pitch.
+
+Fig. A.20 RAO de surge do FPSO P-50
+
+120
+
+Fig. A.21 RAO de sway do FPSO P-50
+
+Fig. A.22 RAO de heave do FPSO P-50
+
+121
+
+Fig. A.23 RAO de roll do FPSO P-50
+
+Fig. A.24 RAO de pitch do FPSO P-50
+
+122
+
+

@@ -1,0 +1,5808 @@
+ 
+
+ 
+
+ 
+
+PROGRAMA EQ-ANP 
+
+ 
+
+Processamento, Gestão e Meio Ambiente na 
+
+Indústria do Petróleo e Gás Natural 
+
+ 
+ 
+ 
+ 
+ 
+
+Análise de Vazamento de Óleo em Águas 
+a Grandes Profundidades: um Estudo com 
+
+Fluidodinâmica Computacional  
+
+ 
+
+Marcus Vinícius Salles Falcão 
+
+ 
+
+Projeto de Final de Curso 
+
+ 
+ 
+
+Orientador(es) 
+
+ 
+
+Prof. Ricardo de Andrade Medronho, Ph. D 
+
+Prof.a Tânia Suaiden Klein, Ph. D 
+
+ 
+
+ 
+
+Março de 2015 
+
+ 
+
+ANÁLISE DE VAZAMENTO DE ÓLEO EM ÁGUAS A 
+
+GRANDES PROFUNDIDADES: UM ESTUDO COM 
+
+FLUIDODINÂMICA COMPUTACIONAL 
+
+ 
+
+Marcus Vinícius Salles Falcão 
+
+Projeto  de  Final  de  Curso  submetido  ao  Corpo  Docente  do  Programa  Escola  de 
+Química/Agência  Nacional  de  Petróleo,  Gás  Natural  e  Biocombustíveis  –  Processamento, 
+Gestão  e  Meio  Ambiente  na  Indústria  de  Petróleo  e  Gás  Natural,  como  parte  dos  requisitos 
+necessários para a obtenção do grau de Engenharia Química com ênfase na área de Petróleo e 
+Gás Natural – Tratamento de Resíduos e Meio Ambiente. 
+
+ 
+
+Aprovado por: 
+ 
+
+ 
+                                                                               Luiz Fernando Lopes Rodrigues Silva, D.Sc. 
+ 
+ 
+
+________________________________________ 
+
+________________________________________ 
+
+                                                                                        Alexandre Castro Leiras Gomes, D.Sc. 
+ 
+ 
+
+________________________________________ 
+
+                                                                                                             Jovani Luiz Favero, D.Sc. 
+
+ 
+
+ 
+Orientado por: 
+ 
+
+________________________________________ 
+
+                                                                                          Ricardo de Andrade Medronho, Ph.D. 
+ 
+ 
+
+________________________________________ 
+
+                                                                                                           Tânia Suaiden Klein, Ph.D. 
+ 
+
+ 
+
+Rio de Janeiro, RJ –Brasil 
+
+ 
+
+Março de 2015 
+
+ 
+
+ 
+
+i 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+
+Falcão, Marcus Vinícius Salles. 
+Análise  de  vazamento  de  óleo  em  águas  a  grandes  profundidades:  Um  estudo  com 
+Fluidodinâmica  Computacional/  Marcus  Vinícius  Salles  Falcão.  Rio  de  Janeiro:  UFRJ/EQ, 
+2015. 
+ix, 91p.; il. 
+(Monografia)  –  Universidade  Federal  do  Rio  de  Janeiro,  Escola  de  Química, 
+2015.Orientador(es): Ricardo de Andrade Medronho e Tânia Suaiden Klein.  
+    1.  CFD.  2.  Vazamentos.  3.  Óleo.  4.  Monografia.  (Graduação  –  UFRJ/EQ).  5.  Ricardo  de 
+Andrade Medronho e Tânia Suaiden Klein.  I. Título. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ii 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+A minha família, amigos e a todos que estiveram comigo presentes me dando apoio e 
+
+força nos momentos difíceis. 
+
+ 
+
+iii 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+“A verdadeira medida de um homem não se vê na forma como se comporta em 
+
+momentos de conforto e conveniência, mas em como se mantém em tempos de controvérsia e 
+
+desafio.”  
+
+Martin Luther King Jr. 
+
+iv 
+
+ 
+
+AGRADECIMENTOS 
+
+ 
+
+ 
+
+Ao apoio  financeiro da  Agência  Nacional  do  Petróleo –  ANP  – e da  Financiadora 
+
+de Estudos e Projetos – FINEP – por meio do Programa de Recursos Humanos da ANP para 
+
+o Setor de Petróleo e Gás – PRH-ANP/MCT, em particular ao PRH 13, da Escola de Química 
+
+- Processamento, Gestão e Meio Ambiente na Indústria do Petróleo e Gás Natural.   
+
+Agradeço  enormemente  a  minha  família  pelo  grande  apoio  e  carinho  que  é  me  dado 
+
+desde sempre. Penso que sem  eles não seria capaz de conseguir chegar  aonde estou.  A meu 
+
+pai  pela  força  e  sabedoria  de  sempre;  a  minha  mãe  pelo  carinho  e  compreensão  sempre;  a 
+
+minha  irmã  pela  grande  ajuda,  brincadeiras  e  amor  em  todos  os  momentos;  a  minha 
+
+namorada,  meu  amor,  e  que  sempre  me  deu  grande  suporte;  a  Dedé,  minha  segunda  mãe,  e 
+
+que sempre esteve do meu lado; ao Tchocou, meu grande amigo canino, por todo o carinho de 
+
+sempre,  e aos meus primos,  que são como  irmãos para mim.  Obrigado  a todos eles que são 
+
+meus maiores tesouros na vida.  
+
+A  meus  orientadores,  professora  Tânia  e  professor  Medronho,  por  toda  a  paciência, 
+
+dedicação  e  amizade  que  me  foi  dado  durante  todo  o  meu  trajeto  no  Laboratório  de 
+
+Fluidodinâmica Computacional. A meus colegas de faculdade e do LABCFD por todo o apoio 
+
+e ajuda. 
+
+ 
+
+ 
+
+v 
+
+ 
+
+Resumo  do  Projeto  Final  apresentado  à  Escola  de  Química  como  parte  dos  requisitos 
+necessários para obtenção do grau de Engenharia Química com ênfase na área Petróleo e Gás 
+Natural – Tratamento de Resíduos e Meio Ambiente. 
+
+ 
+ 
+
+ANÁLISE DE VAZAMENTO DE ÓLEO EM ÁGUA A GRANDES 
+
+PROFUNDIDADES: UM ESTUDO COM FLUIDODINÂMICA COMPUTACIONAL 
+
+ 
+
+Marcus Vinícius Salles Falcão 
+
+Março, 2015 
+
+ 
+
+Orientadores: Prof. Ricardo de Andrade Medronho, Ph. D. 
+
+  Profa. Tânia Suaiden Klein, Ph. D. 
+
+ 
+ 
+A  preocupação  com  o  ambiente  e  a  necessidade  de  suprir  a  crescente  demanda 
+energética  da  sociedade  humana  levam  a  estudos  que  visam  manter  o  equilíbrio  entre  a 
+exploração  de  fontes  energéticas  naturais  e  a  preservação  da  vida  e  dos  ecossistemas.  O 
+presente trabalho trata da simulação com fluidodinâmica computacional (CFD) de vazamento 
+de óleo. Para isso, foram escolhidos dois diferentes domínios, um representando um pequeno 
+tanque com água e o outro representando uma região de alta profundidade marinha (mais de 
+800 m). As simulações do tanque com água serviram como teste para as diferentes condições 
+de  contorno  empregadas  necessárias  para  reproduzir  o  vazamento  de  óleo  a  grandes 
+profundidades. Dessa forma, o trabalho objetiva prover mais informações sobre como o óleo 
+se comporta nessas condições extremas, como se dá a sua dispersão em gotas, e se uma pluma 
+de  óleo  é  efetivamente  formada.  O  conhecimento  acerca  destes  acidentes  pode  minimizar 
+impactos  sobre  a  vida  marinha  e  aumentar  a  segurança  dos  que  trabalham  nas  operações  de 
+exploração.  Nesse  sentido,  o  trabalho  se  detém  na  utilização  de  um  software  computacional 
+para,  assim,  gerar  novos  e  diferenciados  dados  acerca  deste  tipo  de  problema.  O  simulador 
+escolhido  é  o  ANSYS  CFX  versão  15.0,  que  utiliza  volumes  finitos  para  solucionar  as 
+equações diferenciais relacionadas à equação da continuidade e à equação do movimento que 
+regem o transporte do óleo. Ambas as abordagens Euleriana e Lagrangeana foram utilizadas. 
+Para  ambas,  foram  testados  modelos  de  turbulência,  modelos  de  forças  de  dissipação 
+turbulenta, modelos de quebra de gotas, dentre outros. O resultado que mais se aproximou do 
+caso  real  no  tanque  foi  a  configuração  com  abordagem  Lagrangeana  e  com  um  modelo  de 
+dispersão turbulenta. Para a simulação do vazamento em alta profundidade em grande escala, 
+a  abordagem  Lagrangeana  também  foi  empregada,  porém  os  resultados  mostraram  que  a 
+presença de um modelo de dispersão turbulenta não gerou os efeitos esperados. 
+
+ 
+ 
+ 
+ 
+
+ 
+
+vi 
+
+ 
+
+Abstract of a Final Project presented to Escola de Química/UFRJ as partial fulfillment of the 
+requirements  for  the  degree  of  Chemical  Engineering  with  emphasis  on  Petroleum  and 
+Natural Gas – Environment and Waste Treatment. 
+
+ 
+ 
+
+OIL SPILLS ANALYSIS IN DEEPWATER: A STUDY OF COMPUTATIONAL 
+
+FLUID DYNAMICS. 
+
+ 
+
+Marcus Vinícius Salles Falcão 
+
+March, 2015 
+
+ 
+
+Supervisors: Prof. Ricardo de Andrade Medronho, Ph. D. 
+
+Prof a. Tânia Suaiden Klein, Ph. D. 
+
+ 
+ 
+
+Concerns  about  the  environment  and  the  necessity  of  meeting  the  growing  energy 
+demand  of  human  society  lead  to  studies  designed  to  maintain  the  balance  between  the 
+exploitation of natural energy sources and the preservation of life and ecosystems. This work 
+deals with the simulation of an oil spill, through computational fluid dynamics (CFD). Hence 
+two  different  domains  have  been  chosen:  one  representing  a  small  tank  with  water,  and 
+another  representing  a  region  of  high  sea  depths  (over  800  meters).  The  simulations  in  the 
+tank  filled  with  water  served  as  a  test  to  validate  several  different  modeling  set-ups,  which 
+may reproduce the oil spill at great depths. The purpose of this work is thus to provide more 
+information  about  how  oil  behaves  in  these  extreme  conditions,  how  their  drops  dispersion 
+works,  and  whether  or  not  an  oil  plume  is  indeed  formed.  A  good  knowledge  about  these 
+accidents  can  minimize  impacts  on  marine  life  and  boost  the  safety  of  those  who  work  in 
+exploration operations. In this sense, this paper uses a computer software to generate new and 
+differentiated data on this kind of situation. The chosen software was ANSYS CFX, version 
+15.0,  using  the  finite  volume  method  to  solve  the  differential  equations  related  to  the 
+continuity  and  momentum  equations,  which  describes  the  oil  flow.  Both  Eulerian  and 
+Lagrangian  approaches  have  been  tested.  For  both  approaches,  turbulence  models,  turbulent 
+dissipation force models, drop-breaking models, among other modeling, have been assessed. 
+The  closest  simulation  results  related  to  the  experimental  data  of  the  water  tank  have  been 
+achieved  with  the  Lagrangian  approach  and  with  a  turbulent  dispersion  model.  The 
+Lagrangian approach was also used for the simulations of oil spill in high sea depth, however 
+the results have indicated that the presence of a turbulent dispersion model has not generated 
+the expected effects on the oil behavior. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+vii 
+
+ 
+
+ 
+
+SUMÁRIO 
+
+1. INTRODUÇÃO .................................................................................................................... 1 
+
+1.1. OBJETIVO ........................................................................................................................ 3 
+
+2. REVISÃO BIBLIOGRÁFICA ............................................................................................ 4 
+
+2.1. TEORIA DAS PLUMAS E JATOS DE ÓLEO .............................................................. 5 
+
+2.1.1. PLUMAS MULTIFÁSICAS .......................................................................................... 5 
+
+2.1.2. QUEBRA DOS JATOS DE ÓLEO EM GOTAS ........................................................ 6 
+
+2.2. MODELOS COMPUTACIONAIS PARA VAZAMENTOS DE ÓLEO ..................... 8 
+
+2.2.1. MODELO CDOG ........................................................................................................... 8 
+
+2.2.2. MODELO DEEPBLOW ................................................................................................ 9 
+
+2.3. MODELOS DE DISTRIBUIÇÃO DE GOTAS DE ÓLEO ........................................... 9 
+
+2.4. VISÃO GERAL DO ÓLEO ............................................................................................ 11 
+
+2.4.1. CARACTERÍSTICAS GERAIS DOS ÓLEOS DE EXPLORAÇÃO ..................... 11 
+
+2.4.2. PROPRIEDADES FÍSICAS DO ÓLEO .................................................................... 11 
+
+2.5. ACIDENTES OCORRIDOS EM CAMPOS OFF-SHORE ........................................ 13 
+
+3. FLUIDODINÂMICA COMPUTACIONAL .................................................................... 15 
+
+3.1. DEFINIÇÕES E APLICAÇÕES DA MODELAGEM CFD ....................................... 15 
+
+3.2. DISCRETIZAÇÃO DO DOMÍNIO .............................................................................. 17 
+
+3.2.1. MALHA ......................................................................................................................... 17 
+
+3.2.2. QUALIDADE DA MALHA ......................................................................................... 19 
+
+3.3. MÉTODOS DE DISCRETIZAÇÃO ............................................................................. 19 
+
+3.4. EQUAÇÕES DE TRANSPORTE .................................................................................. 20 
+
+3.5. ABORDAGEM EULERIANA E LAGRANGEANA ................................................... 21 
+
+3.5.1. ABORDAGEM EULERIANA .................................................................................... 21 
+
+3.5.2. ABORDAGEMLAGRANGEANA ............................................................................. 22 
+
+3.6. TURBULÊNCIA E SEUS MODELOS ......................................................................... 23 
+
+3.6.1. MODELOS DE VISCOSIDADE TURBULENTA .................................................... 27 
+
+3.6.2. MODELOS DOS TENSORES DE REYNOLDS ...................................................... 29 
+
+viii 
+
+ 
+
+4. MATERIAIS E MÉTODOS .............................................................................................. 32 
+
+4.1. TANQUE .......................................................................................................................... 32 
+
+4.1.1. GEOMETRIA – TANQUE .......................................................................................... 33 
+
+4.1.2. MALHA – TANQUE .................................................................................................... 34 
+
+4.1.3. CONDIÇÕES DE CONTORNO – SIMULAÇÕES – TANQUE ............................. 35 
+
+4.1.4. ABORDAGEM EULERIANA – TANQUE ............................................................... 36 
+
+4.1.5. ABORDAGEM LAGRANGEANA – TANQUE ....................................................... 41 
+
+4.2. GRANDE ESCALA (GRE) ............................................................................................ 43 
+
+4.2.1. GEOMETRIA – GRANDE ESCALA ........................................................................ 43 
+
+4.2.2. MALHA – GRANDE ESCALA .................................................................................. 44 
+
+4.2.3. CONDIÇÕES DE CONTORNO – SIMULAÇÕES– GRE ...................................... 45 
+
+4.2.4. ABORDAGEM EULERIANA – GRANDE ESCALA .............................................. 46 
+
+4.2.5. ABORDAGEM LAGRANGEANA – GRANDE ESCALA ...................................... 49 
+
+5. RESULTADOS E DISCUSSÃO ....................................................................................... 52 
+
+5.1. RESULTADOS – TANQUE ........................................................................................... 52 
+
+5.1.1. TESTE DE MALHA – TANQUE ............................................................................... 52 
+
+5.1.2. RESULTADOS – ABORDAGEM EULERIANA – TANQUE ................................ 54 
+
+5.1.3. RESULTADOS – ABORDAGEM LAGRANGEANA – TANQUE ........................ 61 
+
+5.2. RESULTADOS – GRANDE ESCALA ......................................................................... 65 
+
+5.2.1. TESTE DE MALHA – GRANDE ESCALA .............................................................. 65 
+
+5.2.2. RESULTADOS – ABORDAGEM EULERIANA – GRANDE ESCALA ............... 68 
+
+5.2.3. RESULTADOS – ABORDAGEM LAGRANGEANA – GRANDE ESCALA ....... 80 
+
+6. CONCLUSÕES ................................................................................................................... 86 
+
+7. REFERÊNCIAS BIBLIOGRÁFICAS ............................................................................. 88 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ix 
+
+ 
+
+1. INTRODUÇÃO 
+
+ 
+
+A dependência humana do uso de combustíveis ainda é muito significativa, apesar dos 
+
+esforços  para  investir  em  energias  renováveis.  A  demanda  por  óleo  e  gás  permanece 
+
+extremamente alta, as empresas petrolíferas tendem a expandir seus territórios de exploração 
+
+para  áreas  de  difícil  acesso,  como  regiões  extremamente  frias  ou  mares  de  grande 
+
+profundidade. Uma das tecnologias mais avançadas da engenharia de exploração de óleo e gás 
+
+em  águas  profundas  são  as  plataformas  de  extração,  que  viabilizam  este  tipo  de  operação 
+
+(CHAN, 2013). 
+
+No entanto, este tipo de procedimento de exploração está sujeito a diversos acidentes, 
+
+como o vazamento desses materiais em grandes profundidades oceânicas, o que pode colocar 
+
+em  perigo  a  vida  dos  que  trabalham  na  plataforma  e  pode  lançar  grandes  quantidades  de 
+
+poluentes no meio ambiente marítimo. Um exemplo de tal ocorrência foi o que aconteceu no 
+
+ano de 2010 com a companhia British Petroleum, BP, que causou diversos danos ambientais e 
+
+sociais na região do Golfo do México (CHAN, 2013). Eventos desastrosos como esse levam a 
+
+estudos para entender plumas de óleo formadas por vazamentos no fundo de oceanos. 
+
+A compreensão do comportamento do óleo e do gás é crucial para prever o resultado 
+
+de  um  possível  vazamento.  Deve-se  responder,  então,  como  se  comportará  a  pluma  de  óleo 
+
+vazado  e  para  onde  este  material  irá.  Muitas  dessas  perguntas  já  foram  respondidas  e 
+
+implementadas  em  modelos  específicos  para  a  simulação  destes  tipos  de  vazamentos  a 
+
+pequenas profundidades(LINDERSEN, 2013). Os experimentos e os modelos para acidentes 
+
+em águas rasas são bem documentados na literatura, contudo, para grandes profundidades, os 
+
+dados  ainda  são  escassos.  Johansen  (2003)  desenvolveu  um  modelo  de  vazamento  em  alta 
+
+profundidade  marítima,  assim  como  uma  verificação  do  modelo  a  partir  de  dados 
+
+experimentais. 
+
+Recentemente,  os  modelos  computacionais  vêm  ganhando  destaque  na  área  de 
+
+segurança  por  apresentarem  alta  precisão  em  determinados  casos.  Existem  cada  vez  mais 
+
+modelos que podem simular esse tipo de vazamento, com alguns deles simulando a mudança 
+
+de  propriedades  e  fase  do  óleo  e  do  gás  (CHEN  e  YAPA,  2003).  O  modelo  computacional 
+
+CDOG,  Comprehensive  Deepwater  Oil  and  Gas  Blowout  Model,  desenvolvido  por  Yapa 
+
+(2001),  é  um  modelo  tridimensional  que  pode  simular  o  comportamento  de  óleo  e  gás  em 
+
+condições  extremas  de  pressão  e  temperatura,  que  é  o  caso  de  um  vazamento  a  grandes 
+
+profundidades.  
+
+1 
+
+ 
+
+Além  destes  modelos  desenvolvidos  especificamente  para  este  tipo  de  acidente,  os 
+
+softwares  de  fluidodinâmica  computacional  apresentam  resultados  eficazes  para  vários 
+
+problemas  de  escoamentos  multifásicos,  como  os  vazamentos.  Entretanto,  a  falta  de  dados 
+
+experimentais  para  a  verificação  das  simulações  ainda  representa  um  impasse  no  estudo 
+
+destes  casos.  A  formação  das  gotas  de  óleo  após  a  sua  liberação  ainda  não  é  muito  bem 
+
+documentada  (LINDERSEN,  2013).  Uma  descrição  da  distribuição  das  gotas  de  óleo  em 
+
+vazamentos  pode  ser  encontrada  em  Chen  e  Yapa  (2007).  A  Figura  1.1  mostra  um 
+
+experimento de um óleo sendo liberado em meio com água (BRANDVIK, 2013). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 1.1 – Ilustração de uma pluma de óleo do experimento realizado por Brandvik (2013). 
+
+ 
+
+ 
+
+ 
+
+2 
+
+ 
+
+1.1. OBJETIVO 
+
+ 
+
+O objetivo principal do presente trabalho é simular um vazamento de óleo em grandes 
+
+profundidades  com  Fluidodinâmica  Computacional  (CFD),  através  do  programa  comercial 
+
+ANSYS  CFX  versão  15.0.  O  vazamento  simulado  em  águas  profundas  foi  considerado  em 
+
+grande escala e baseou-se no experimento conduzido no mar da Noruega em junho de 2000. 
+
+Estes dados estão documentados no relatório SINTEF (JOHANSEN et al. 2000). O presente 
+
+trabalho  focou  inicialmente  em  reproduzir,  por  simulação  com  CFD  (Fluidodinâmica 
+
+Computacional), o experimento de Adams e Masutani (2001) sobre vazamento controlado de 
+
+óleo em água em um tanque, para assim estender essas configurações de simulação para um 
+
+caso de vazamento de óleo em águas profundas. 
+
+O  teste  de  diversas  modelagens  também  foi  o  escopo  do  trabalho,  no  intuito  de  se 
+
+obter  uma  configuração  de  simulação  que  melhor  representasse  os  dados  experimentais  de 
+
+Adams  e  Masutani  (2001).  Para  isto,  fez-se  uso  das  abordagens  Euleriana  e  Lagrangeana, 
+
+onde para cada uma delas foram testadas modelos de forças de dispersão turbulenta, modelos 
+
+de turbulência, modelos de quebra de gotas (apenas Lagrangeana), dentre outros. 
+
+Pretende-se  com  isso,  estender  essas  configurações  para  um  domínio  que  represente 
+
+uma  situação  em  grande  profundidade  para  se  ter  uma  ideia  de  que  tipo  de  respostas  estas 
+
+gerariam em condições de profundidades marítimas grandes. 
+
+Assim,  este  projeto  objetiva  verificar  se  a  simulação  por  CFD  é  capaz  de  gerar  as 
+
+quebras e a dispersão das gotas de óleo, bem como a esperada formação e comportamento da 
+
+pluma de óleo. 
+
+ 
+
+ 
+
+3 
+
+ 
+
+2. REVISÃO BIBLIOGRÁFICA 
+
+ 
+
+As  mudanças  climáticas  que  estão  ocorrendo  no  planeta  recentemente  são  um  fator 
+
+importante  no  aumento  das  preocupações  com  o  meio  ambiente  durante  a  exploração  das 
+
+matrizes energéticas necessárias para a vida da moderna sociedade. 
+
+Estudos cada vez mais complexos e relevantes estão aparecendo a cerca de contenção 
+
+de acidentes, em que o comportamento do material e as condições do lançamento são pouco 
+
+conhecidos.  Entretanto,  com  uma  produção  cada  vez  mais  necessária  de  óleo  e  gás  pela 
+
+sociedade humana, a busca por locais de exploração menos acessíveis aumenta, levando a um 
+
+risco maior de vazamentos em grande escala. 
+
+Atualmente, a indústria de óleo estende a exploração e a produção para a profundidade 
+
+de 3.000m (CHEN e YAPA, 2003). Todavia, a literatura não é muito precisa acerca de águas 
+
+profundas. A indústria petrolífera tende a considerar como águas profundas a profundidade de 
+
+1.000m, ou mais. Nessas profundidades, a pressão e a salinidade são elevadas e a temperatura 
+
+é  baixa,  condições  estas  suficientes  para  representar  uma  diferença  qualitativa  em  alguns 
+
+aspectos,  comparativamente  a  liberações  em  águas  relativamente  rasas  -  até  300m  de 
+
+profundidade (JOHANSEN, RYE e COOPER, 2003). 
+
+Além disso, não existe um modelo universal adotado pela literatura para a modelagem 
+
+e a simulação do comportamento da pluma e das gotas de óleo formados após o lançamento. 
+
+Na  realidade,  os  modelos  e  as  simulações  para  o  comportamento  da  pluma  e  da  quebra  das 
+
+gotas de óleo são geralmente encontrados na literatura na forma de trabalhos empíricos que se 
+
+adequam  a  determinados  experimentos  realizados  em  grande  ou  em  pequenas  escalas  de 
+
+vazamento. 
+
+Os  modelos  empíricos  CDOG,  Comprehensive  Deepwater  Oil  and  Gas  (ZHENG, 
+
+YAPA  e  CHEN,  2002),  e  DeepBlow  (JOHANSEN,  2000)  são  os  mais  encontrados  na 
+
+literatura  por  considerarem  com  relevância  as  condições  extremas  das  altas  profundidades. 
+
+Simulações por fluidodinâmica computacional (CFD) são mais raras de se encontrar, todavia, 
+
+foi utilizada neste trabalho a fim de prover informações de uma abordagem pouco explorada 
+
+na literatura para os vazamentos de óleo em águas de grandes e pequenas profundidades. 
+
+ 
+
+ 
+
+4 
+
+ 
+
+2.1. TEORIA DAS PLUMAS E JATOS DE ÓLEO 
+
+ 
+
+2.1.1. PLUMAS MULTIFÁSICAS 
+
+ 
+
+Uma pluma é, por definição, uma “nuvem” alongada de fluido, por exemplo, óleo ou 
+
+gás,  se  espalhando  na  forma  de  uma  pena  a  partir  do  seu  ponto  de  origem  (OXFORD 
+
+DICTIONARY, 2014). As plumas de óleo podem se estender desde o leito do oceano, onde 
+
+geralmente ocorre o vazamento, até a superfície do mesmo.  
+
+As plumas podem ser classificadas em monofásicas e em multifásicas. Define-se uma 
+
+pluma de apenas uma fase quando ambos meio e fase dispersão são o mesmo material, como 
+
+por  exemplo,  vazamento  de  água  em  água  ou  óleo  em  óleo.  Já  uma  pluma  multifásica  é 
+
+caracterizada quando o meio e as fases dispersas são materiais diferentes, como por exemplo 
+
+um  vazamento  de  óleo  em  água,  sendo  neste  caso  ocorrendo  uma  formação  de  uma  pluma 
+
+bifásica. Essa diferença pode ser visualizada pela Figura 2.1. 
+
+O  caso  das  gotas  de  óleo  é  um  caso  de  pluma  multifásica  em  que  o  movimento  de 
+
+ascensão é dado pelas diferenças de densidade e/ou dado por um movimento inicial (um jato, 
+
+por exemplo). 
+
+ 
+
+ 
+
+Figura 2.1 – Comparação entre uma pluma de uma fase e outra de duas fases. Adaptado de Chan (2012). 
+
+ 
+
+ 
+
+ 
+
+5 
+
+ 
+
+2.1.2. QUEBRA DOS JATOS DE ÓLEO EM GOTAS 
+
+ 
+
+O  óleo,  ao  ser  liberado  do  fundo  do  oceano,  passa  por  um  processo  de  quebra  em 
+
+gotas. A maneira como este se quebrará dependerá da vazão com que este está sendo lançado. 
+
+O  tamanho  típico  dos  diâmetros  das  gotas  é  entre  1  e  10  mm  (LINDERSEN,  2013),  e  a 
+
+formação dessas gotas é devido principalmente à alta turbulência gerada no ponto de descarga 
+
+do  material,  ou  até  mesmo  pela  presença  de  algum  tipo  de  dispersante  químico  (YAPA  et 
+
+al.2012). 
+
+O tamanho das gotas de óleo não afeta o movimento inicial da pluma, a quantidade de 
+
+movimento  inicial  do  óleo  é  dominante  e  assim,  todas  as  gotas  e  uma  quantidade  de  água 
+
+sobem  juntas  formando  a  pluma  multifásica.  Dessa  maneira,  as  fases  estão  inicialmente 
+
+movendo-se com a mesma velocidade. 
+
+No entanto, depois de uma determinada altura, quando água e óleo já estão com uma 
+
+menor  velocidade,  a  pluma  se  dispersa.  A  partir  desse  ponto,  a  água  que  estava  sendo 
+
+carregada  deixa  de  subir  e  cada  gota  de  óleo  subirá  individualmente  com  velocidades  de 
+
+acordo  com  seu  tamanho.  Assim,  pequenas  gotas  se  movimentarão  mais  lentamente  do  que 
+
+gotas de maior tamanho e correntes laterais de água poderão dispersá-las facilmente. A altura 
+
+no qual isso passa a ocorrer é definida como altura de término da pluma.  A Figura 2.2 ilustra 
+
+uma pluma multifásica subaquática.  
+
+Figura 2.2 – Ilustração de uma pluma subaquática multifásica. Adaptado de 
+
+Lindersen (2013). 
+
+ 
+
+ 
+
+As  forças  de  dispersão  turbulenta  e  a  difusão  das  gotas  de  óleo  são  outros  fatores 
+
+importantes na modelagem de uma pluma desta natureza (YAPA, 2012).  
+
+6 
+
+ 
+
+Diversas simulações mostram que a altura característica de término da pluma de óleo e 
+
+água pode ser calculada baseada na velocidade de ascensão das gotas de óleo, que tem relação 
+
+com seu diâmetro médio (DASANAYAKA e YAPA, 2009). 
+
+Dasanayaka e Yapa (2009) demonstraram por uma série de experimentos que, após a 
+
+pluma atingir a altura de término, a relação entre velocidade de ascensão e diâmetro de cada 
+
+gota  poderia  ser  representada  graficamente,  considerando  constantes  a  densidade  da  água 
+
+salgada  (1024  kg/m3)  e  a  densidade  do  óleo  (873  kg/m3).  A  Figura  2.3  apresenta  a  relação 
+
+entre a velocidade de ascensão de uma gota e seu diâmetro de partícula.  
+
+ 
+
+Figura 2.3 – Variação da velocidade de ascensão do óleo em função do seu diâmetro de partícula. Adaptado de 
+
+ 
+
+Dasanayaka e Yapa (2009) 
+
+ 
+
+Na realidade, o tamanho do orifício e a vazão do vazamento determinarão se realmente 
+
+haverá  formação  de  uma  pluma  ou  se  o  jato  de  óleo  se  quebrará  em  pequenas  gotas.  O 
+
+trabalho  de  Masutani  e  Adams  (2001)  no  laboratório  da  Universidade  do  Hawaii,  UH, 
+
+mostrou a influência da vazão de saída do óleo quando este é liberado por um orifício de 2,0 
+
+mm  de  diâmetro  em  um  tanque  com  água  de  1,3  m  de  altura  aberto  para  a  atmosfera.  Esse 
+
+experimento é mostrado na Figura 2.4 a seguir. 
+
+ 
+
+7 
+
+ 
+
+ 
+Figura 2.4 – Experimento com vazões de óleo crescentes da esquerda para a direita (MASUTANI e 
+
+ADAMS, 2001) 
+
+ 
+
+Este  experimento  mostra  que,  para  um  orifício  na  escala  de  milímetros,  para  vazões 
+
+pequenas, não há efetivamente a formação de uma pluma de óleo, enquanto que, para vazões 
+
+mais significativas, ocorre uma dispersão maior, maior quebra do óleo em gotas e a formação 
+
+de uma pluma. 
+
+ 
+
+2.2. MODELOS COMPUTACIONAIS PARA VAZAMENTOS DE ÓLEO 
+
+ 
+
+2.2.1. MODELO CDOG 
+
+ 
+
+O  modelo  CDOG  foi  desenvolvido  na  Universidade  de  Clarkson  para  simular  o 
+
+comportamento de óleo e gás lançados acidentalmente em águas marítimas profundas. Este é 
+
+um modelo tridimensional e foi construído considerando as mudanças de fase do gás com as 
+
+respectivas  mudanças  termodinâmicas  e  hidrodinâmicas  do  jato/pluma,  dissolução  do  gás  e 
+
+comportamento não ideal deste (LINDERSEN, 2013). 
+
+CDOG  foi  utilizado  para  estudar  diversos  acidentes  em  profundidades  marítimas 
+
+grandes. Um resumo dos resultados foi documentado por Yapa e Chen (2004). 
+
+ 
+
+ 
+
+ 
+
+8 
+
+ 
+
+2.2.2. MODELO DEEPBLOW 
+
+ 
+
+O DeepBlow é um modelo de pluma baseado em métodos que se aplicam diretamente 
+
+a vazamentos multifásicos de óleo, gás e água em  meio aquoso com  correntes marítimas. O 
+
+comportamento não ideal do gás é incluído no modelo pelo uso do fator de compressibilidade. 
+
+Johansen  (2000)  apresenta  resultados  que  incluem  a  dissolução  do  gás  e  estão  de 
+
+acordo com dados experimentais e com a teoria de distribuição de gotas de óleo. Esse modelo 
+
+descreve adequadamente acidentes reais ocorridos em profundidades de 100 m. 
+
+ 
+
+2.3. MODELOS DE DISTRIBUIÇÃO DE GOTAS DE ÓLEO 
+
+ 
+
+A quebra do óleo em gotas é um fenômeno importante na modelagem e no estudo do 
+
+comportamento  da  pluma  formada  durante  o  vazamento.  Uma  forma  de  rastrear  essas 
+
+partículas de óleo e, assim, tentar modelar o escoamento destas, é pelo estudo da distribuição 
+
+das gotas de óleo. 
+
+ 
+
+Não  há  muitos  experimentos  para  lançamentos  de  jatos  de  óleo  em  grande  volume, 
+
+contudo  é  possível  fazer  uma  analogia  com  escoamentos  de  óleo  em  tubos,  cujo  estudo  de 
+
+distribuição  de  partículas  é  bem  desenvolvido.  O  tamanho  máximo  de  partícula  está 
+
+relacionado  ao  número  adimensional  de  Weber  (We),  nas  condições  de  saída  do  tubo 
+
+(JOHANSEN, 2003). 
+
+ 
+
+ 
+
+                                        (2.1) 
+ 
+
+ 
+
+ 
+
+Onde  ρ  é  a  densidade  do  óleo,  U  é  a  velocidade  inicial  do  óleo  no  jato,  d  é  o  diâmetro  do 
+
+orifício por onde o jato é lançado e σ é a tensão interfacial entre água (fase contínua) e óleo 
+
+(fase dispersa). 
+
+Uma relação empírica entre o tamanho de partícula abaixo do qual se encontram 95% 
+
+das  gotas, 𝑑95,  e  o  número  de  Weber  em  um  escoamento  turbulento  de  um  líquido  disperso 
+
+em outro em um tubo pode ser representada pela seguinte equação (2.2). 
+
+ 
+
+ 
+
+ 
+                                  (2.2) 
+
+ 
+
+ 
+
+9 
+
+ 
+
+6.095cdWeddUWe2Em que c é um coeficiente empírico e 𝑑 é o diâmetro do orifício. Entre os possíveis valores 
+
+para c, o valor que melhor se adequa experimentalmente é 20 (JOHANSEN, 2003). 
+
+Entre  os  métodos  mais  recentes  de  determinação  de  uma  distribuição  dos  tamanhos 
+
+das  gotas  de  óleo  está  o  desenvolvido  pelo  relatório  SINTEF  (JOHANSEN,  BRANDVIK  e 
+
+FAROOQ, 2012).  
+
+De  acordo  com  estudos  e  testes  anteriores  para  vazamentos  em  profundidades  de 
+
+aproximadamente  1000  m,  pequenas  gotas,  com  diâmetro  menor  do  que  0,5  mm,  levam 
+
+aproximadamente  um  dia  inteiro  para  chegar  à  superfície.  Gotas  maiores,  com  diâmetros 
+
+acima de 5 mm, alcançam a superfície em algumas horas.  
+
+Jatos de óleo com quebra de gotas podem ser representados, também, com outros dois 
+
+números adimensionais, o número de Reynolds, Re, e o número de Ohnesorge, Oh. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+               (2.3) 
+
+ 
+
+ 
+
+ 
+
+                                           (2.4) 
+
+Sendo 𝜌 a  densidade  do  óleo, 𝑈  a  sua  velocidade  de  saída, 𝑑  o  diâmetro  do  orifício, 𝜇  a 
+
+viscosidade dinâmica do óleo e 𝜎 a tensão interfacial entre a água e o óleo. 
+
+Outra  relação  de  distribuição  das  partículas  de  óleo  é  a  que  considera  um  diâmetro 
+
+máximo que pode ser calculado pela equação (2.5). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                 
+
+                                                  
+
+(2.5) 
+
+Em que 𝑎 é uma constante de proporcionalidade, 𝜎 é a tensão interfacial entre a água e o óleo, 
+
+𝜌 é a densidade da água e 𝜀 é a taxa de dissipação de energia cinética turbulenta. 
+
+ 
+
+ 
+
+ 
+
+10 
+
+ 
+
+UdRe5/25/3max)(ad2/1)(dOh2.4. VISÃO GERAL DO ÓLEO 
+
+ 
+
+2.4.1. CARACTERÍSTICAS GERAIS DOS ÓLEOS DE EXPLORAÇÃO 
+
+ 
+
+Um  óleo  de  exploração  ou  óleo  cru,  como  é  também  conhecido  na  indústria  do 
+
+petróleo,  é  uma  complexa  mistura  de  diversos  compostos  químicos.  Em  geral  os  óleos  crus 
+
+são  totalmente  diferentes  um  do  outro.  Eles  são  divididos  em  grupos  dependendo  dos 
+
+compostos  químicos  presentes  na  mistura,  em  que  os  principais  dois  grupos  são  os 
+
+hidrocarbonetos  e os orgânicos não hidrocarbonetos.  Esses dois  grupos podem  ser divididos 
+
+em grupos menores como se segue (LINDERSEN, 2013): 
+
+ 
+
+ 
+
+Hidrocarbonetos 
+
+- Alifáticos: Parafinas e Naftenos 
+
+- Aromáticos 
+
+ 
+
+ 
+
+Orgânicos não-hidrocarbonetos 
+
+- Resinas 
+
+- Asfaltenos 
+
+ 
+
+Um típico óleo cru contém em sua maioria hidrocarbonetos, com 85 a 90% de carbono 
+
+e de 10 a 15% de hidrogênio. Os hidrocarbonetos encontrados nesses óleos vão da mais leve e 
+
+simples molécula até as mais pesadas e complexas.  
+
+Já  os  orgânicos  não-hidrocarbonetos  são  compostos  que,  além  de  carbono  e 
+
+hidrogênio,  contém em sua estrutura outros átomos, na maioria das vezes oxigênio, enxofre, 
+
+nitrogênio e alguns metais como níquel. 
+
+ 
+
+ 
+
+2.4.2. PROPRIEDADES FÍSICAS DO ÓLEO 
+
+ 
+
+Quando  pensamos  em  vazamentos  de  óleo  em  água  em  grandes  profundidades,  as 
+
+características físicas mais importantes são: 
+
+ 
+
+11 
+
+ 
+
+Viscosidade 
+
+Ponto de chama 
+
+Ponto de fluidez 
+
+Densidade 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Viscosidade  é  a  medida  da  resistência  do  fluido  ao  escoamento  dependente  de 
+
+temperatura. Para líquidos, esta se reduz como uma função logarítmica quando a temperatura 
+
+aumenta.  Para  fluidos  Newtonianos,  a  viscosidade  é  independente  da  taxa  de  cisalhamento 
+
+(LINDERSEN, 2013). 
+
+Para fluidos não-Newtonianos, em geral, a viscosidade diminui à medida que a tensão 
+
+cisalhante aumenta. Óleos mais leves podem ser considerados fluidos Newtonianos com uma 
+
+boa aproximação.  
+
+Ponto de chama ou ponto de fulgor é a menor temperatura em que vapor começa a ser 
+
+gerado,  o  que  pode  levar  à  ignição  do  óleo  por  uma  chama  ou  faísca.  O  ponto  de  chama  é 
+
+dependente  da  composição  química  do  óleo  cru  e  geralmente  é  menor  para  os  óleos  que 
+
+tiverem em sua composição componentes mais leves. 
+
+Já o ponto de fluidez é definido como a temperatura em que o óleo não consegue mais 
+
+escoar, em condições definidas. O ponto de fluidez é dependente da composição química do 
+
+óleo e da quantidade de compostos do tipo cera.  
+
+Densidade  é  a  massa  de  uma  substância  por  unidade  de  volume.  Existem  outras 
+
+representações  da  densidade  do  óleo  como  a  densidade  relativa  e  o  grau  API.  A  densidade 
+
+relativa é a relação entre as densidades do óleo e água destilada, em  geral  a 15,5°C. O grau 
+
+API é calculado pela equação (2.6) a seguir (LINDERSEN, 2013). 
+
+ 
+
+  𝐴𝑃𝐼 =
+
+141,5
+
+𝑑𝑒𝑛𝑠𝑖𝑑𝑎𝑑𝑒 𝑟𝑒𝑙𝑎𝑡𝑖𝑣𝑎
+
+− 131,5                                           (2.6) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Óleos  de  baixa  densidade  em  geral  possuem  componentes  de  peso  molecular  baixo, 
+
+como  parafinas,  enquanto  aqueles  que  possuem  uma  quantidade  maior  de  moléculas  mais 
+
+pesadas, como asfaltenos, serão mais densos.  
+
+ 
+
+ 
+
+ 
+
+12 
+
+ 
+
+ 
+
+2.5. ACIDENTES OCORRIDOS EM CAMPOS OFF-SHORE 
+
+ 
+
+ 
+
+A  exploração  de  petróleo  e  gás  natural  em  águas  profundas  contém  um  apreciável 
+
+potencial  de  vazamentos  acidentais  desses  produtos,  seja  pela  ruptura  de  poços  ou  de 
+
+tubulações  de  transporte,  seja  pelo  naufrágio  de  uma  embarcação.  Esses  acidentes  podem 
+
+gerar  três  riscos  de  grande  preocupação  no  desenvolvimento  de  campos  off-shore  de 
+
+produção:  dano  ambiental  massivo  devido  a  grande  vazamento  de  petróleo;  perda  da 
+
+plataforma de produção ou o naufrágio de um navio contendo petróleo ou gás natural; grande 
+
+risco para associado à vida dos que trabalham nessas estruturas.  
+
+ 
+
+É  necessário  realizar  uma  avaliação  de  riscos  no  projeto  da  embarcação  e  no 
+
+dimensionamento de procedimentos para que se garanta a segurança, a proteção ambiental e a 
+
+confiabilidade operacional. Um estágio importante para essa avaliação é o estabelecimento de 
+
+cenários  de  acidentes  possíveis  a  serem  examinados  com  relação  a  um  elenco  de  causas 
+
+plausíveis e às consequências que tais acidentes poderão acarretar (HERTZOG, 2003). 
+
+A  primeira  grande  plataforma  a  se  perder  foi  a  Alexander  Keilland,  na  Noruega,  em 
+
+1980  (Figura  2.9).  Uma  fratura  por  estresse  levou  ao  seu  afundamento  durante  uma 
+
+tempestade no Mar do Norte, afogando 123 trabalhadores. 
+
+ 
+
+Figura 2.9 – Ilustração do acidente da plataforma Alexander Keilland, 1980. Fonte: Página da NEWS BBC. 
+Disponível em: http://news.bbc.co.uk/onthisday/hi/dates/stories/march/27/newsid_2531000/2531091.stm.   
+
+Acesso em: 10 set. 2014. 
+
+ 
+
+13 
+
+ 
+
+Em 1982, uma onda gigante destruiu uma janela na sala de controle da plataforma de 
+
+petróleo Ocean Ranger na costa leste do Canadá durante uma tempestade. A invasão de água 
+
+danificou os controles e a plataforma rapidamente naufragou, matando 84 tripulantes. 
+
+Em  1998,  no  Mar  do  Norte,  a  plataforma  Piper  Alpha  incendiou-se  provocando  a 
+
+morte de 167 membros da tripulação. 
+
+Em março de 2001, a plataforma brasileira P-36, a maior plataforma semissubmersível 
+
+do  mundo,  explodiu  e  afundou  no  campo  de  produção  off-shore  em  Roncador,  na  Bacia  de 
+
+Campos.  Onze  trabalhadores  morreram  e  mais  de  1,5  milhão  de  litros  de  óleo  cru  e  uma 
+
+quantidade desconhecida de gás natural foram sepultados no oceano (HERTZOG, 2003). 
+
+No caso do naufrágio de uma plataforma, além das perdas humanas, os seus destroços 
+
+podem  danificar  as  cabeças  de  poços  ou  a  rede  de  tubulações  que  conectam  poços  à 
+
+plataforma, liberando petróleo e gás natural no ambiente marinho. Ademais, hidrocarbonetos 
+
+líquidos,  como  petróleo,  misturas  de  petróleo  com  água  e  condensado  de  gás,  são 
+
+frequentemente  transportados  em  plataformas  off-shore  de  produção.  Outros  compostos 
+
+químicos  de  alta  toxicidade,  como  o  metanol,  são  muitas  vezes  armazenados  em  grandes 
+
+tanques  submersos  que  podem  romper-se  no  evento  de  incêndio  ou  perda  da  plataforma, 
+
+descarregando todo o seu conteúdo no oceano (HERTZOG, 2003). 
+
+O evento  de um  vazamento  por ruptura em  tubulações pode ter origem  em  inúmeros 
+
+fatores, tais como corrosão, súbita mudança de pressão interna, choques mecânicos externos, 
+
+entre outros (SILVA et al. 1996). 
+
+Além  dos  problemas  ambientais,  a  liberação  maciça  de  petróleo  e  gás  natural 
+
+apresenta outros riscos como incêndio, explosão e a perda da flutuabilidade de embarcações, 
+
+caso estas estejam no caminho do cone de borbulhamento. 
+
+As principais preocupações da indústria química e de petróleo são incêndio, explosões 
+
+e  liberação  de  material  tóxico  (KHAN  e  ABBASI,  1999).  Desses  três,  incêndio  é  o  mais 
+
+comum,  mas  explosões  podem  ser  mais  significativas  em  termos  de  dano  potencial,  muitas 
+
+vezes levando a fatalidades e danos materiais. A descarga de componentes tóxicos tem maior 
+
+potencial de matar um grande número de pessoas e tornar uma área tóxica por meses a anos. 
+
+ 
+
+ 
+
+14 
+
+ 
+
+3. FLUIDODINÂMICA COMPUTACIONAL 
+
+ 
+
+3.1. DEFINIÇÕES E APLICAÇÕES DA MODELAGEM CFD 
+
+ 
+
+Um problema de Engenharia pode ser abordado de duas maneiras distintas: a teórica e 
+
+a experimental. 
+
+A abordagem teórica implica em solução de equações através de métodos analíticos ou 
+
+métodos  numéricos.  A  diferença  está  apenas  na  complexidade  da  equação  que  cada  método 
+
+pode  atacar.  O  emprego  de  métodos  analíticos  exige,  geralmente,  hipóteses  simplificadoras 
+
+que  podem  se  desviar  demasiadamente  do  fenômeno  físico  real.  Uma  de  suas  importantes 
+
+aplicações é a de validar casos limites de modelos numéricos e auxiliar no desenvolvimento 
+
+de  métodos  numéricos  mais  robustos.  Se  um  método  analítico  for  suficiente  para  resolver  o 
+
+problema  de  interesse  dentro  dos  níveis  de  precisão  e  exigência  necessários,  ele  deve  ser 
+
+preferido. 
+
+A  grande  vantagem  da  abordagem  experimental  é  devido  ao  fato  de  se  tratar  da 
+
+configuração real. Porém, muitas vezes, ela é muito difícil de ser realizada, devido a questões 
+
+como  altos  custos,  segurança  ou  simplesmente  pela  dificuldade  de  reprodução  de  condições 
+
+reais. 
+
+Dessa  maneira,  a  abordagem  computacional  surge  como  uma  alternativa  para  a 
+
+obtenção de dados sobre diversos problemas e, dependendo do caso, pode gerar informações 
+
+significativas.      
+
+A  fluidodinâmica  computacional  ou  CFD  é  a  análise  de  sistemas  envolvendo 
+
+escoamentos de fluidos, troca térmica e outros fenômenos, como reações químicas, por meio 
+
+de  simulações  computacionais  (MALALASEKERA  e  VERSTEEG,  1995).  A  técnica 
+
+possibilita  a  redução  de  custos  com  experimentos  caros  ou  muitas  vezes  inviáveis,  além  de 
+
+permitir a análise minuciosa de detalhes de um determinado equipamento, de forma a detectar 
+
+problemas operacionais. 
+
+A  fluidodinâmica  computacional  foi  inserida  no  mercado  em  torno  de  1960  na 
+
+indústria  aeronáutica  a  fim  de  aperfeiçoar  o  projeto  de  aeronaves.  A  partir  de  1990,  com  o 
+
+crescimento  da capacidade computacional, do barateamento da produção  de computadores  e 
+
+inserção  de  softwares  com  interface  amigável,  a  fluidodinâmica  computacional  se  difundiu 
+
+por outras áreas (MALALASEKERA e VERSTEEG, 1995). 
+
+15 
+
+ 
+
+Além das equações de balanço de massa, momento e energia aplicadas ao volume de 
+
+controle, fenômenos como reação e turbulência devem também ser modelados. Por isso, uma 
+
+das  dificuldades  encontradas  na  aplicação  desta  ferramenta  é  a  definição  dos  modelos  que 
+
+serão utilizados para descrever o fenômeno em estudo. 
+
+Outra  dificuldade  é  a  discretização  do  domínio.  A  solução  numérica  para  problemas 
+
+fluidodinâmicos  só  é  viável  pela  divisão  do  domínio  geométrico  estudado  em  um  número 
+
+finito de partes, nas quais serão aplicadas as equações de conservação e fenomenológicas que 
+
+representam o problema. Nesta fase, é importante que os volumes estabelecidos representem 
+
+bem  o  domínio,  pois  a  representatividade  dos  resultados  irá  depender  diretamente  da 
+
+qualidade da discretização realizada. 
+
+As  equações  que  descrevem  fenômenos  físicos  de  problemas  reais  raramente 
+
+apresentam  soluções  analíticas.  Assim,  métodos  numéricos,  precisam  ser  utilizados  para 
+
+transformar  o  sistema  de  equações  diferenciais  definidos  num  domínio  contínuo  em  um 
+
+grande  sistema  de  equações  algébricas,  relativas  aos  pontos  discretizados  deste  mesmo 
+
+domínio. Dessa forma, quanto maior a qualidade da discretização, mais acurado é o resultado 
+
+(FERZIGER e PERIC, 2002). 
+
+Dessa  maneira,  os  problemas  resolvidos  por  fluidodinâmica  computacional  são 
+
+divididos  nas  seguintes  etapas:  geração  da  geometria,  a  qual  representa  o  domínio 
+
+especificado  pelo  problema;  geração  da  malha,  onde  ocorre  a  divisão  do  domínio  total  em 
+
+volumes de controle discretos; especificação da física do problema, bem como suas condições 
+
+de contorno; e, por fim, resolução das equações. 
+
+A solução obtida deve ser analisada e interpretada. Eventualmente, pode ser necessário 
+
+ajustar o modelo de modo a gerar um resultado confiável, através do qual será possível extrair 
+
+as variáveis de interesse e visualizar a solução do problema. 
+
+Os  resultados  podem  apresentar  dois  níveis  de  erros  quando  comparados  com  a 
+
+realidade  de  um  problema  físico:  no  primeiro  nível,  estão  os  erros  numéricos  propriamente 
+
+ditos,  resultados  da  má  solução  das  equações  diferenciais  (MALISKA,  1995).  Para  detectá-
+
+los, os resultados devem ser comparados com experimentos reais e outras soluções, analíticas 
+
+ou numéricas, verificando se a equação diferencial foi corretamente resolvida. Aspectos como 
+
+precisão  da  solução  e  convergência  do  algoritmo  são  testados  nesta  fase,  que  pode  ser 
+
+chamada  de  validação  numérica.  Esse  processo  atesta  a  qualidade  do  modelo  numérico;  no 
+
+segundo nível, estão os erros resultantes do uso de equações diferenciais que não representam 
+
+adequadamente o fenômeno.  
+
+16 
+
+ 
+
+3.2. DISCRETIZAÇÃO DO DOMÍNIO 
+
+ 
+
+Os  métodos  analíticos  fornecem  uma  solução  exata  e  fechada  para  as  equações 
+
+diferenciais  de  interesse  em  qualquer  ponto  do  domínio.  Já  os  métodos  numéricos  resolvem 
+
+essas equações em um número finito de pontos. A malha é a divisão do domínio analisado. 
+
+ 
+
+3.2.1. MALHA 
+
+ 
+
+Uma boa solução numérica para um escoamento depende da qualidade da malha, isto 
+
+é, uma malha refinada em regiões nas quais os gradientes das variáveis são elevados levará a 
+
+melhores resultados. O problema da geração de malha não é trivial, principalmente em regiões 
+
+tridimensionais. A obtenção de uma malha adequada pode se tornar, então, um problema mais 
+
+complexo do que calcular o escoamento do fluido. 
+
+A  malha  consiste  em  um  conjunto  de  sub-regiões,  ou  elementos,  que  dividem  o 
+
+domínio geométrico do problema. As equações são resolvidas gerando variáveis com valores 
+
+discretos,  para  cada  elemento,  e  a  solução  de  um  elemento  está  relacionada  com  as  dos 
+
+elementos adjacentes. Isso gera a necessidade do refinamento em regiões cujos gradientes das 
+
+variáveis em estudo são mais elevados. Em outras palavras, o tipo de malha adequado para o 
+
+escoamento depende de sua complexidade e da geometria do domínio. 
+
+As malhas se dividem em dois grupos: estruturadas ou estruturadas em blocos, e não 
+
+estruturadas. A malha estruturada, ou regular, consiste em um conjunto de famílias de linhas 
+
+de  malha  em  que  membros  de  uma  mesma  família  não  se  cruzam,  cruzando  apenas  com 
+
+membros de outras famílias apenas uma vez (Figura 3.1). Este fato permite que vértices de um 
+
+mesmo  arranjo  sejam  numerados  consecutivamente  (FERZIGER  e  PERIC,  2002).  Por  sua 
+
+vez, na malha estruturada em blocos há dois ou mais níveis de subdivisão do domínio, como 
+
+mostra a Figura 3.2. 
+
+ 
+
+17 
+
+ 
+
+Figura 3.1 – Malha estruturada (FERZIGER e PERIC, 2002) 
+
+ 
+
+Figura 3.2 – Malha estruturada em blocos (FERZIGER e PERIC, 2002) 
+
+ 
+
+ 
+
+ 
+
+Nas  malhas  não  estruturadas  (Figura  3.3),  os  elementos  podem  ter  os  mais  diversos 
+
+formatos  e  números  de  vizinhos,  sendo  as  mais  apropriadas  para  geometrias  bastante 
+
+complexas.  Em  teoria,  podem  ser  aplicadas  para  qualquer  tipo  de  método  de  discretização, 
+
+porém  são  mais  bem  adaptadas  para  os  métodos  dos  volumes  finitos  e  elementos  finitos. 
+
+Embora  sejam  de  fácil  implementação,  as  malhas  não  estruturadas  apresentam  como  ponto 
+
+negativo a irregularidade da estrutura dos dados obtidos. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 3.3 – Malha não estruturada (FERZIGER e PERIC, 2002) 
+
+ 
+
+18 
+
+ 
+
+3.2.2. QUALIDADE DA MALHA 
+
+ 
+
+A  geração  de  uma  malha  robusta  é  de  fundamental  importância  para  minimizar 
+
+possíveis fontes de erros numéricos. Nesse contexto, malhas uniformes seriam consideradas o 
+
+ideal, uma vez que, por apresentarem distâncias iguais entre os nós, os erros de interpolação 
+
+seriam  menores.  Porém,  para  que  seja  possível  captar  de  forma  efetiva  as  zonas  com 
+
+gradientes  acentuados,  faz-se  necessária  a  utilização  de  elementos  muito  pequenos  nessas 
+
+regiões,  tornando  inviável  tal  método  para  geometrias  maiores.  Um  procedimento  muito 
+
+comum  é  a  construção  de  malhas  não-uniformes  com  um  refinamento  em  regiões  onde  os 
+
+gradientes são maiores (ANSYS THEORY GUIDE). 
+
+No  entanto,  o  refinamento  não  pode  ocorrer  desordenadamente,  já  que  uma  das 
+
+maiores fontes de erro são malhas de com baixa qualidade. Dessa maneira, é preciso utilizar 
+
+parâmetros  para  averiguar  se  a  malha  está  com  boa  qualidade  a  fim  de  permitir  uma  maior 
+
+robustez aos resultados. 
+
+Alguns parâmetros que podem ser avaliados em malhas tetraédricas, que foram usadas 
+
+no  projeto,  estão  na  Tabela  4.1  junto  com  seus  valores  aceitáveis  para  uma  malha  de  boa 
+
+qualidade. 
+
+ 
+
+Tabela 4.1 – Parâmetros para avaliação da malha e seus valores desejados. (ANSYS THEORY GUIDE). 
+
+Parâmetros  
+
+Assimetria 
+
+Proporção 
+
+Qualidade do Elemento 
+
+ 
+
+   Faixa 
+
+   Valor Médio Ideal 
+
+0-1 
+
+ 
+
+0-∞ 
+
+ 
+   0-1 
+
+0-0,5 
+
+0-100 
+
+0,3-1 
+
+ 
+
+ 
+  
+
+3.3. MÉTODOS DE DISCRETIZAÇÃO 
+
+ 
+
+Os métodos numéricos são uma grande ferramenta para a resolução por aproximação 
+
+das equações diferenciais em equações algébricas para um conjunto de pontos no espaço e no 
+
+tempo. Os métodos de discretização com mais destaque são: 
+
+ 
+
+ 
+
+ 
+
+Diferenças Finitas; 
+
+Volumes Finitos; 
+
+19 
+
+ 
+
+Elementos Finitos. 
+
+ 
+
+ 
+
+O  método  de  diferenças  finitas  realiza  a  aproximação  das  equações  em  sua  forma 
+
+derivada  nos  pontos  da  malha.  No  método  de  volumes  finitos  a  aproximação  é  realizada  na 
+
+forma integral nas superfícies e nos volumes de controle e, por fim, no método dos elementos 
+finitos devem-se escolher funções de formato e peso (FERZIGER e PERIC, 2002). 
+
+ 
+
+3.4. EQUAÇÕES DE TRANSPORTE 
+
+ 
+
+As  equações  de  transporte  são  as  que  descrevem  a  conservação  das  quantidades  que 
+
+estão  variando  ao  longo  do  escoamento,  como  massa,  energia  e  momento.  Assim,  essas 
+
+equações de balanço são desenvolvidas para um volume de controle que seja representativo da 
+
+geometria.  As  equações  serão  apresentadas  em  sua  forma  diferencial  completa,  mas  serão 
+
+aproximadas para o problema. 
+
+ 
+
+– Transporte de massa 
+
+ 
+
+ 
+
+                   (3.1) 
+
+ 
+
+Onde ρ é a massa específica do fluido, Ûi  as velocidades nos três sentidos, t é o tempo e xj  são 
+
+as coordenadas do sistema.  
+
+O  primeiro  termo,  tanto  para  o  lado  esquerdo  quanto  para  o  direito,  representa  o 
+
+acúmulo  no  sistema  e  o  segundo,  também  para  ambos  os  lados  da  equação,  a  convecção. 
+
+Além  disso,  para  fluidos  incompressíveis,  a  equação  de  transporte  de  massa  pode  ser 
+
+simplificada para: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                                              (3.2) 
+
+20 
+
+ 
+
+0)().(jjxÛtÛt0jjxÛ– Transporte de momento 
+
+ 
+
+                           
+
+ 
+
+(3.3) 
+
+                          
+
+Sendo P, a pressão sobre o fluido e gi o componente gravitacional. 
+
+Os  termos  à  esquerda  do  sinal  de  igualdade  são  referentes  às  forças  inerciais  e  os 
+
+termos  ao  lado  direito  são  referentes  às  forças  de  pressão,  forças  viscosas  e  de  campo, 
+
+respectivamente.  O  tensor  tensão,
+
+que  representa  o  fluxo  de  momento  devido  às  forças 
+
+viscosas, é dado pela lei de Navier-Poisson, para um fluido incompressível newtoniano: 
+
+ 
+
+ 
+
+ 
+
+           (3.4) 
+
+ 
+
+Onde μ é a viscosidade dinâmica do fluido. 
+
+Como  o  problema  estudado  no  projeto  não  apresenta  trocas  térmicas,  não  será 
+
+analisada  a  equação  de  balanço  de  energia,  e  as  propriedades  dos  fluidos  são  consideradas 
+
+constantes. 
+
+ 
+
+3.5. ABORDAGEM EULERIANA E LAGRANGEANA 
+
+ 
+
+3.5.1. ABORDAGEM EULERIANA 
+
+ 
+
+A descrição Euleriana é uma abordagem em que se pode registrar a evolução das 
+
+propriedades  do  escoamento  em  cada  ponto  no  espaço  em  função  do  tempo.  O  método 
+
+Euleriano  é  uma  descrição  de  campos.  Em  outras  palavras,  as  propriedades  de  um 
+
+escoamento em uma determinada região dependem de sua localização e do tempo (Figura 
+
+3.4).  Por  exemplo,  variáveis  como  velocidade,  densidade  e  pressão  podem  ser 
+
+matematicamente representadas como: 𝑣⃗(𝑥⃗, 𝑡), 𝜌(𝑥⃗, 𝑡), 𝑝(𝑥⃗, 𝑡). 
+
+ 
+
+ 
+
+ 
+
+21 
+
+ 
+
+ijijijijigxxPxÛÛtÛij)(jiijijxÛxÛFigura 3.4 – Descrição Euleriana; malha cartesiana. Fonte: Department of Ocean Engineering.
+
+  Disponível em: 2.20 – Marine Hydrodynamics Lecture 2. Disponível em: 
+
+http://web.iitd.ac.in/~pmvs/courses/aml715/lgeul.pdf. Acesso em: 11 dez. 2014. 
+
+ 
+
+ 
+
+Para  a  modelagem  Euleriana  partículas  individuais  não  podem  ser  identificadas.  Em 
+
+vez disso, define-se um volume de controle e todas as propriedades do escoamento são vistas 
+
+como  campos  dependentes  do  vetor  espaço  e  tempo.  Esta  abordagem  não  se  preocupa  em 
+
+mostrar  a  localização  ou  a  velocidade  de  qualquer  partícula,  mas  sim  em  determinar  a 
+
+velocidade,  aceleração,  etc.  para  os  fluidos  como  um  todo  (2.20  –  Marine  Hydrodynamics 
+
+Lecture2.  Disponível  em:  http://web.iitd.ac.in/~pmvs/courses/aml715/lgeul.pdf.  Acesso  em: 
+
+11 dez. 2014). 
+
+ 
+
+3.5.2. ABORDAGEM LAGRANGEANA 
+
+ 
+
+A  descrição  Lagrangeana  consiste  na  descrição  do  escoamento  inteiro  registrando  o 
+
+que  ocorre  com  cada  partícula  do  fluido  (Figura  3.5).  As  propriedades  das  partículas  do 
+
+fluido,  como  densidade,  velocidade  e  pressão,  podem  ser  representadas  matematicamente 
+
+apenas como função do tempo.  
+
+ 
+
+ 
+
+Figura 3.5 – Descrição Lagrangeana. Fonte: Department of Ocean Engineering.   Disponível em: 
+
+2.20 – Marine HydrodynamicsLecture2. Disponível em: 
+
+http://web.iitd.ac.in/~pmvs/courses/aml715/lgeul.pdf. Acesso em: 11 dez. 2014. 
+
+ 
+
+22 
+
+ 
+
+ 
+
+As  leis  físicas,  como  as  leis  de  Newton  e  as  conservações  de  massa  e  energia  são 
+
+aplicadas  diretamente  a  cada  partícula.  Se  houver  poucas  partículas  a  serem  consideradas,  o 
+
+modelo Lagrangeano é bem indicado para ser usado, contudo o custo computacional pode ser 
+
+muito  grande  para  rastrear  cada  partícula  de  um  fluido  em  um  escoamento  complexo  e/ou 
+
+com alta concentração de partículas. 
+
+ 
+
+3.6. TURBULÊNCIA E SEUS MODELOS 
+
+ 
+
+Escoamentos  turbulentos  são  caracterizados  por  estados  de  movimentos  randômicos, 
+
+nos  quais  a  velocidade  e  a  pressão  variam  constantemente  com  o  tempo.  Essa  característica 
+
+torna difícil a descrição dos violentos movimentos de flutuação, como, por exemplo, prever o 
+
+local  onde  se  formará  um  turbilhão  ou  vórtice  turbulento,  ou  de  descrever  o  campo  de 
+
+velocidades com precisão. 
+
+Um  dos  parâmetros  que  indica  o  caráter  turbulento  ou  não  de  um  escoamento  é  o 
+
+número  adimensional  de  Reynolds,  Re,  que  pode  ser  usado  para  escoamentos  internos  e 
+
+externos. Este é definido como a razão entre as forças de inércia e viscosas, de modo que, em 
+
+escoamentos  laminares,  que  apresentam  altos  efeitos  viscosos  e  baixas  velocidades,  o  Re  é 
+
+baixo e, em escoamentos turbulentos, o Re é alto; quanto mais alto, mais turbulento. 
+
+Devido  aos  movimentos  caóticos,  um  escoamento  tipicamente  turbulento  apresenta 
+
+grandes e bruscas variações de velocidade em função da transferência de energia das grandes 
+
+para  as  pequenas  escalas  (FREIRE,  2006).  Devido  a  essa  característica  a  descrição  dos 
+
+violentos  movimentos  de  flutuação  ou  dos  campos  de  velocidade  se  torna  uma  tarefa  muito 
+
+complexa.  
+
+Para facilitar a modelagem do escoamento turbulento é possível decompor as variáveis 
+
+em duas componentes, uma média e uma flutuante, e aplicar o operador média temporal sobre 
+
+essas  variáveis.  A  Figura  3.6  exemplifica  a  operação  mencionada,  onde  Û,  U  e  𝑢(𝑡) 
+
+representam as velocidades instantânea, média e flutuante respectivamente. 
+
+ 
+
+23 
+
+ 
+
+Figura 3.6 – Operador média temporal sobre o espectro de velocidade (MALALASEKERA e VERSTEEG, 
+
+ 
+
+1995) 
+
+ 
+
+Após  o  tratamento  matemático  mencionado,  as  equações  assumem  as  seguintes 
+
+formas: 
+
+ 
+
+– Transporte de massa 
+
+ 
+
+– Transporte de momento 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+             (3.5)      
+
+(3.6) 
+
+               
+
+Uma  das  propriedades  do  operador  média  temporal  é  que,  ao  ser  aplicado  na 
+
+multiplicação de duas variáveis flutuantes, o resultado não será zero, a menos que as variáveis 
+
+não  estejam  correlacionadas  de  forma  alguma,  o  que  é  raro  no  caso  de  um  escoamento 
+
+turbulento  (MALALASEKERA  e  VERSTEEG,  1995).  Com  o  operador  matemático  média 
+
+temporal  sendo  aplicado  no  termo  convectivo  surge  o  termo 
+
+que  multiplicado  pela 
+
+densidade é chamado de tensor de Reynolds. 
+
+Uma modelagem adequada dos efeitos turbulentos dentro de um escoamento é muito 
+
+importante, pois é um fenômeno que acarreta bons efeitos de mistura por promover o contato 
+24 
+
+ 
+
+ijijiijjijijiguuxUxUxxPxUUtU])([jiuu0)(jjxUentre  parcelas  de  fluidos  com  diferentes  concentrações  de  propriedades  que  se  conservam, 
+
+processo chamado de difusão turbulenta. E também, a turbulência é um fenômeno altamente 
+
+dissipativo,  onde  fluidos  com  diferentes  momentos  entram  em  contato  e  a  energia  dissipada 
+
+devido  aos  efeitos  viscosos,  é  convertida  irreversivelmente  em  energia  interna  do  fluido 
+
+(FERZIGER e PERIC, 2002). 
+
+Podem-se  citar  duas  maneiras  de  se  modelar  os  efeitos  turbulentos  de  um  dado 
+
+sistema: aplicação da média temporal nas equações de transporte com utilização do modelo de 
+
+Boussinesq  para  modelar  os  termos  turbulentos que  surgem  e  por  resolução  numérica  direta 
+
+da equação de conservação de momento para as variáveis instantâneas.  
+
+A  resolução  numérica  direta  das  equações  de  conservação  para  as  variáveis 
+
+instantâneas é a abordagem conceitualmente mais simples, por não promover a aplicação do 
+
+operador média temporal e não utilizar modelos de turbulência, apresentando apenas os erros 
+
+inerentes  à  discretização  das  equações,  os  quais  podem  ser  controlados  pela  utilização  de 
+
+métodos  de  ordens  superiores  e  refinamento  da  malha.  Entretanto,  para  descrever  com  mais 
+
+precisão  os  fenômenos  turbulentos  do  escoamento,  é  necessária  uma  malha  muito  refinada. 
+
+Segundo  Ferziger  e  Peric  (2002),  para  um  estudo  conciso  dos  fenômenos  físicos,  faz-se 
+
+necessária  uma  malha  onde  o  maior  elemento  tenha,  no  máximo,  o  tamanho  do  maior 
+
+turbilhão. Contudo,  para capturar os efeitos nas  pequenas escalas, necessita-se de elementos 
+
+do  tamanho  dos  menores  turbilhões.  Tamanha  precisão  inviabiliza  a  simulação  numérica 
+
+direta para fins de engenharia prática, sendo utilizado em casos onde se desejam níveis altos 
+
+de detalhamento do escoamento em regiões exatas. 
+
+Outra  maneira  de  modelagem  é  a  aplicação  da  média  temporal  na  equação  de 
+
+transporte, a partir da qual surge o tensor de Reynolds. Com isso, tomando como exemplo um 
+
+escoamento sem trocas térmicas, faz-se necessário resolver um sistema com quatro equações 
+
+(continuidade  e  as  três  equações  de  Navier-Stokes,  todas  para  as  variáveis  médias)  e  dez 
+
+incógnitas (P,U,V,W, 𝑢̅2, 𝑣̅ 2, 𝑤̅ 2, 𝑢𝑣̅̅̅̅, 𝑢𝑤̅̅̅̅, 𝑣𝑤̅̅̅̅), sendo seis delas, os componentes do tensor de 
+
+Reynolds,  que  necessitam  de  modelagem,  uma  vez  que  são  desconhecidos  no  sistema.  A 
+
+tentativa de controle do grau de liberdade do sistema a ser resolvido é chamada de “problema 
+
+de  fechamento”  e,  para  estimar  os  componentes  do  tensor  de  Reynolds,  utilizam-se  os 
+
+modelos de turbulência. 
+
+Os  componentes  do  tensor  de  Reynolds  podem  ser  calculados  por  meio  de  sete 
+
+equações de transporte, em que seis são referentes aos componentes do tensor e uma referente 
+
+25 
+
+ 
+
+à  dissipação  viscosa  turbulenta.  Esses  modelos  são  conhecidos  como  modelos  dos  Tensores 
+
+de Reynolds.    
+
+Mesmo existindo nove componentes no tensor de Reynolds (Equação 3.7), vale frisar 
+
+que  esse  é  simétrico  e,  portanto,  conhecendo-se  os  valores  dos  componentes  acima  da 
+
+diagonal, também se conhecem os termos abaixo da mesma. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+             (3.7) 
+
+A abordagem  de modelagem  dos componentes do tensor de Reynolds pela utilização 
+
+do modelo de Boussinesq se dá de forma análoga à lei da viscosidade de Newton. No entanto, 
+
+tal  abordagem  define  mais  uma  incógnita,  a  viscosidade  turbulenta,  a  qual  é  então  estimada 
+
+através dos modelos de turbulência do tipo viscosidade turbulenta linear. Embora a utilização 
+
+do modelo de viscosidade turbulenta tenha limitações físicas intrínsecas, como a previsão de 
+
+isotropia dos componentes normais  do tensor de  Reynolds em  escoamentos cisalhantes, este 
+
+possui fácil implementação e, com correta utilização, produz resultados bastante consistentes 
+
+(FERZIGER  e PERIC, 2002), principalmente para escoamentos cisalhantes onde  apenas um 
+
+componente  do  tensor  de  Reynolds  é  dominante  (ANSYS  THEORY  GUIDE).  Para  estes 
+
+modelos, os componentes do tensor de Reynolds podem ser calculados pela expressão (3.8). 
+
+ 
+
+ 
+
+                                     (3.8) 
+
+ 
+
+Onde 𝜇𝑡 é a viscosidade turbulenta, 𝑘𝑡 é a energia cinética turbulenta e 𝛿𝑖𝑗 é o delta de 
+
+Kronecker.  A  viscosidade  turbulenta  pode  ser  genericamente  representada  pelo  produto  de 
+
+uma escala de velocidade e uma escala de comprimento da turbulência: 
+
+ 
+
+                                                   
+
+                                                         (3.9)
+
+ 
+
+26 
+
+ 
+
+Ct232313322212312121uuuuuuuuuuuuuuuij)(32ijjitijtjixUxUkuuA  seguir  o  presente  trabalho  discutirá  os  principais  modelos  de  turbulência  dos 
+
+tensores de Reynolds utilizados no projeto: o modelo k-ε, modelo de viscosidade turbulenta, e 
+
+o modelo LRR (Launder-Reece-Rodi), modelo dos tensores de Reynolds. 
+
+ 
+
+3.6.1. MODELOS DE VISCOSIDADE TURBULENTA 
+
+ 
+
+Os  modelos  mais  simples  de  turbulência  são  os  de  zero  equações  ou  modelos  de 
+
+comprimento  de  mistura,  sendo  denominados  assim  por  não  resolverem  equações  de 
+
+transporte adicionais além das equações da continuidade e Navier-Stokes (KLEIN, 2012) para 
+
+determinar a viscosidade turbulenta. O modelo mais representativo dessa categoria é o modelo 
+
+de Prandtl. 
+
+Seguindo  o  mesmo  conceito  aplicado  à  nomenclatura  “modelos  de  zero  equações”, 
+
+compreende-se que os modelos de uma equação resolvam apenas uma equação de transporte 
+
+para  modelar  o  valor  de 
+
+.Como  a  viscosidade  turbulenta  é  definida  por  duas  variáveis 
+
+(escala de velocidade e comprimento), uma é determinada por uma equação de transporte e a 
+
+outra  permanece  sendo  calculada  por  correlações  empíricas.  No  modelo  mais  utilizado,  a 
+
+escala de velocidade passa a ser dada pela raiz quadrada da energia cinética turbulenta, kt,. 
+
+Por fim, ao resolver duas equações de transporte para determinação de μt, os modelos 
+
+de duas equações tendem a minimizar a utilização de correlações empíricas e semi-empíricas 
+
+para determinação da escala de velocidade e comprimento, sendo o modelo mais comumente 
+
+usado  o  k-ε.  A  equação  (3.9)  continua  a  ser  usada  para  o  cálculo  da  viscosidade  turbulenta, 
+
+contudo  as  escalas  de  velocidade  e  comprimento  são  obtidas  em  função  de  quantidades 
+
+escalares, as quais são resolvidas por equações de transporte. 
+
+ 
+ 
+ 
+ 
+
+                                                         
+ 
+ 
+
+                                                         
+ 
+ 
+
+ 
+
+ 
+
+             (3.10) 
+
+           (3.11) 
+
+27 
+
+ 
+
+t2/1tk2/3tk 
+De modo que a equação de transporte para a energia cinética turbulenta é dada por: 
+ 
+
+ 
+
+           (3.12) 
+
+ 
+
+O  primeiro  termo  do  lado  direito  da  equação  de  transporte  da  energia  cinética 
+
+turbulenta  representa  a  taxa  de  produção  de  energia  cinética  turbulenta  por  unidade  de 
+
+volume, denominado Pk. Pode-se chegar a essa conclusão sobre esse termo, porque o mesmo 
+
+aparece  na  equação  de  transporte  da  energia  cinética  média,  porém  com  o  sinal  positivo, 
+
+indicando  haver  transferência  da  energia  cinética  do  escoamento  médio  para  as  escalas 
+
+turbulentas.  O  segundo  termo  representa  a  taxa  de  dissipação  da  energia  cinética  turbulenta 
+
+por unidade de volume, processo quese dá por meio dos efeitos viscosos presentes no meio, 
+
+sendo denominado de ε. O terceiro termo representa a difusão viscosa e turbulenta. 
+
+A  taxa  de  dissipação  da  energia  cinética  turbulenta  por  unidade  de  volume,  ε,  é 
+
+normalmente calculada pela equação de transporte abaixo: 
+
+ 
+
+ 
+Dessa  forma,  as  escalas  de  velocidade  e  comprimento  são  obtidas  em  função  das 
+
+quantidades  escalares  kt  e  ε,  conforme  pode-se  ver  abaixo,  as  quais  são  resolvidas  pelas 
+
+(3.13) 
+
+  
+
+equações de transporte acima. 
+
+ 
+
+ 
+
+ 
+
+          (3.14) 
+
+          (3.15) 
+
+ 
+A possibilidade de se modelar a escala de comprimento utilizando as variáveis kt e ε é 
+
+proveniente do fato  de que, sob condições de escoamentos com  altos números de Reynolds, 
+
+há  uma  cascata  de  energia  sendo  transferida  das  grandes  escalas  para  as  pequenas  escalas, 
+
+sendo, então, dissipada (MALALASEKERA e VERSTEEG, 1995).  
+
+Dessa maneira, o modelo k-ε apresenta sua validade na região plenamente turbulenta, a 
+
+partir da qual a lei logarítmica da parede é válida, ou seja, onde o parâmetro y+=yuτ/ν (sendo 
+
+28 
+
+ 
+
+jtktjjijijijitxkxxuxuxUuuDtDk)()()()(221jetjjjtjijitxxxxkCxUuukCDtD2/1tk2/3tkuτ  a  velocidade  de  atrito,  y  a  distância  efetiva  até  a  parede  e  ν  a  viscosidade  cinemática)  no 
+
+primeiro nó a partir da parede for maior ou igual a 30. 
+
+Uma  vez  que  o  modelo  tem  sua  validade  para  altos  números  de  Reynolds,  faz-se 
+
+necessária  a  obtenção  de  uma  forma  mais  apropriada  de  descrever  o  valor  de  variáveis  em 
+
+regiões  próximas  à  parede,  onde  o  número  de  Reynolds  turbulento  é  mais  baixo.  Para  tal 
+
+tarefa, utilizam-se funções de parede, as quais são fórmulas empíricas que estimam os valores 
+
+das  variáveis  para  camadas  limite  com  gradiente  de  pressão  nulo,  sem  resolver  equações  de 
+
+transporte  para  a  região  da  camada  viscosa.  Por  mais  que  o  procedimento  agregue  algum 
+
+empirismo, ele também proporciona a redução do esforço computacional, uma vez que não se 
+
+faz  necessária  a  utilização  de  malhas  refinadas  próximo  a  paredes  (ANSYS  THEORY 
+
+GUIDE). 
+
+ 
+
+3.6.2. MODELOS DOS TENSORES DE REYNOLDS 
+
+ 
+
+O  modelo  dos  tensores  de  Reynolds,  diferentemente  dos  modelos  de  viscosidade 
+
+turbulenta, resolve seis equações de transporte para cada um dos seis componentes do tensor 
+
+de Reynolds e para a dissipação viscosa de energia  turbulenta, pois ε surge nas equações de 
+
+transporte dos tensores de Reynolds. 
+
+Dessa maneira, resolve-se, além das equações de Navier-Stokes e Continuidade, as 7 
+
+equações  de  transporte  extras.  Por  causa  disso,  os  modelos  dos  tensores  de  Reynolds 
+
+demandam  um  maior  esforço  computacional,  porém  são  mais  precisos  quando  os 
+
+escoamentos  são  mais  complexos,  eliminando  problemas  de  isotropia  que  modelos  de 
+
+viscosidade turbulenta como o k-ε não conseguem eliminar. 
+
+Pode-se considerar utilizar os modelos dos tensores de Reynolds em  escoamentos do 
+
+tipo: 
+
+ 
+
+Escoamentos  com  anisotropia  dos  tensores  de  Reynolds,  como  escoamentos 
+
+com fluido em rotação. 
+
+ 
+
+ 
+
+Escoamentos com mudanças repentinas nas taxas de tensão média. 
+
+Escoamento  em  que  os  campos  de  tensão  são  complexos  e  reproduzem  a 
+
+anisotropia natural da turbulência do problema. 
+
+ 
+
+Escoamentos flutuantes. 
+
+ 
+
+29 
+
+ 
+
+As  equações  de  transporte  para  os  componentes  do  tensor  de  Reynolds  podem  ser 
+
+escritas na seguinte forma: 
+
+Onde  os  termos  do  lado  direito  serão  descritos  abaixo.  Dentre  esses  termos,  o  único 
+
+que dispensa modelagem é o termo de produção: 
+
+                                       
+
+(3.16) 
+
+ 
+
+ 
+
+                                    
+
+(3.17) 
+
+Os demais termos são modelados conforme abaixo no modelo LRR de Launder et al.  
+
+(1975). O termo difusivo é dado por: 
+
+ 
+
+ 
+
+                      
+
+(3.18)
+
+ 
+
+Em  que  Cs  é  uma  constante,  kt  é  a  energia  cinética  turbulenta  e  ε  é  a  dissipação 
+
+turbulenta total. 
+
+O termo de redistribuição de energia é dado por: 
+
+ 
+
+ 
+
+(3.19) 
+
+Onde os Ci são constantes dependentes do modelo, os bij são tensores de anisotropia, 
+
+Sij são os tensores da taxa de deformação e Wij são os tensores de rotação. 
+
+ 
+
+ 
+
+                                                     
+
+(3.20) 
+
+30 
+
+ 
+
+ijkijijijjidPDtuuD)(kkjkjkiijxUiuuxUuuP)())((kjikljilktskijkxuuxxuuuukCxd)()32()31(432´11ikjkjkiktijmnmnikjkjkiktijtijmnmnkjikijijWbWbkCSbSbSbkCSkCbbbbCbCijtjiijkuub312 
+
+ 
+
+                                                   
+
+(3.21) 
+
+                                                  
+
+(3.22) 
+
+Finalmente, o termo de dissipação é modelado como: 
+
+                                                          
+
+(3.23) 
+
+ 
+
+Tanto  no  termo  difusivo  como  no  de  dissipação,  aparece  a  taxa  de  dissipação  da 
+
+energia cinética, ε. Por esse motivo, precisa-se de uma equação para essa variável. Poder-se-ia 
+
+utilizar  a  equação  3.13,  porém  para  levar  em  consideração  a  vantagem  de  calcular  por 
+
+equações de transporte os componentes do tensor de Reynolds, ela assume a forma: 
+
+ 
+
+ 
+
+(3.24) 
+
+    
+
+Valores  típicos  para  as  constantes  das  equações  acima  para  o  modelo  LRR  são 
+
+apresentados na Tabela 3.2. 
+
+ 
+
+Tabela 3.2 – Coeficientes para três modelos de tensores de Reynolds. Adaptado de Nichols (2008). 
+
+ 
+
+ 
+
+ 
+
+31 
+
+ 
+
+)(21ijjiijxUxUS)(21ijjiijxUxUWijij32)()(221klktkkktktkkxuukCxxxkCPkCxUt4. MATERIAIS E MÉTODOS 
+
+ 
+
+Dois casos de vazamento de óleo em água foram simulados neste trabalho: o primeiro 
+
+foi  a  liberação  controlada  de  óleo  em  um  tanque  de  água,  onde  a  vazão  do  óleo  foi  sendo 
+
+aumentada gradualmente, para a qual tem-se alguns dados experimentais para comparação. A 
+
+ideia de se fazer essa simulação era justamente tentar validar a modelagem da simulação para 
+
+então realizar o segundo caso: um vazamento de óleo “no mar”, ou seja, num grande domínio 
+
+de água, com velocidade de corrente diferente de zero. 
+
+As simulações para cada caso foram executadas pelo pacote computacional fornecido 
+
+pela  ANSYS  versão  15.0,  o  Workbench,  que  agrupa  todos  os  programas  de  fluidodinâmica 
+
+computacional,  como  o  Design  Modeler,  que  permite  gerar  a  geometria;  o  Meshing,  para 
+
+gerar a malha; o CFX, que é o software onde se configura a simulação (modelos, condições de 
+
+contorno, etc) e que realiza os cálculos do problema; e o CFD-Post, que permite visualizar os 
+
+resultados gerados pelo CFX. 
+
+A descrição detalhada dos casos, bem como todos os testes de configuração estudados, 
+
+serão descritos nas seções a seguir. 
+
+ 
+
+4.1. TANQUE 
+
+ 
+
+ 
+
+O caso referente à liberação de óleo em um tanque de água é o experimento realizado 
+
+por  Adams  e  Masutani  (2001).  Os  autores  reproduziram  em  um  tanque  cheio  com  água  e 
+
+aberto  para  a  atmosfera  de  1,3  m  de  altura  e  0,55  m  por  0,55  m  de  seção  transversal,  um 
+
+vazamento de óleo para cinco vazões diferentes, para terem uma ideia do comportamento da 
+
+quebra e da dispersão do mesmo. 
+
+As simulações com CFD realizadas neste trabalho sobre este caso adotaram as mesmas 
+
+condições  do  experimento  real,  porém  a  geometria  foi  simplificada.  As  comparações  dos 
+
+resultados  foram  realizadas  de  forma  visual,  com  as  fotos  do  experimento  apresentadas  por 
+
+Adams e Masutani (2001). 
+
+ 
+
+ 
+
+ 
+
+32 
+
+ 
+
+ 
+
+4.1.1. GEOMETRIA – TANQUE 
+
+ 
+
+Como  foi  mencionado  anteriormente,  a  geometria  do  caso  Tanque  será  baseada  nos 
+
+experimentos de Adams e Masutani (2001). No entanto, a geometria ou o domínio desse caso 
+
+não  será  dado  pelas  dimensões  exatas  do  tanque  utilizado  por  Adams  e  Masutani  (2001),  e 
+
+sim por um  domínio  menor, restrito  a uma região mais próxima ao orifício  por onde o óleo 
+
+sai.  Dessa  forma,  a  geometria  que  define  o  domínio  de  simulação  do  presente  projeto  é  um 
+
+volume  prismático  de  0,35m  de  altura  e  seção  retangular  de  0,1x0,1m  e  com  um  pequeno 
+
+orifício de 2 mm de diâmetro, igual ao experimento de Adams e Masutani (2001), localizado 
+
+na base do tanque, por onde sai o óleo. Nota-se que o domínio foi reduzido para diminuir o 
+
+custo computacional da simulação. Embora os efeitos de parede ainda possam influenciar nos 
+
+resultados estes foram desprezados. A Figura 4.1 ilustra a geometria utilizada. 
+
+Isso foi adotado porque a parte de maior interesse, onde há efetivamente interação do 
+
+óleo com a água, encontra-se nessa região, conforme medido nas fotos do experimento. 
+
+ 
+
+ 
+
+                                                                   (a)                                           (b) 
+
+Figura 4.1 – Geometria do tanque 0,1m x 0,1m e 0,35 m de altura, com um orifício central de 2 mm de diâmetro. 
+
+  
+
+Geometria do Tanque (a); Vista inferior do Tanque (b). 
+
+ 
+
+33 
+
+ 
+
+ 
+
+4.1.2. MALHA – TANQUE 
+
+ 
+
+Foram construídas inicialmente três malhas para que se pudesse conduzir um teste de 
+
+malha e determinar a menor cujos resultados eram independentes da mesma. 
+
+Para o caso do tanque, é necessário que haja um bom refinamento na região próxima 
+
+do  lançamento  de  óleo,  perto  do  orifício,  já  que  é  lá  que  estão  os  maiores  gradientes  do 
+
+escoamento. 
+
+A  Figura  4.2  apresenta  as  malhas  geradas  e  a  Tabela  4.1,  os  parâmetros  médios  de 
+
+qualidade das malhas e o número de elementos de cada uma. Todos os parâmetros encontram-
+
+se dentro dos valores considerados ideais. 
+
+ 
+
+Figura 4.2 – Interior das malhas 1, 2 e 3, da esquerda para a direita, da menos para a mais refinada. Cortes na 
+
+vista frontal da geometria, a região mais refinada das malhas é a do orifício. 
+
+ 
+
+ 
+
+Tabela 4.1 – Características principais de cada malha. 
+
+Qualidade do 
+
+Malhas 
+
+Número de elementos 
+
+Elemento 
+
+Assimetria 
+
+Proporção 
+
+1 
+
+2 
+
+3 
+
+255322 
+
+570389 
+
+707826 
+
+             0,808 
+
+0,826 
+
+0,835 
+
+0,230 
+
+0,223 
+
+0,222 
+
+2,522 
+
+2,135 
+
+1,856 
+
+ 
+
+ 
+
+ 
+
+34 
+
+ 
+
+4.1.3. CONDIÇÕES DE CONTORNO – SIMULAÇÕES – TANQUE 
+
+ 
+
+Todas as simulações do caso Tanque foram realizadas no estado estacionário. Abaixo 
+
+seguem as descrições das condições de contorno: 
+
+A  região  do  orifício  por  onde  será  lançado  o  óleo  foi  definido  como  inlet,  onde  a 
+
+velocidade  foi  especificada  como  normal  à  superfície  e,  dependendo  do  caso  simulado, 
+
+assumiu os valores de: 0,281 m/s; 0,340 m/s; 0,435 m/s; 0,716 m/s; 0,966 m/s, de acordo com 
+
+o experimento de (ADAMS e MASUTANI, 2001). 
+
+A superfície do topo do tanque é uma região por onde pode sair óleo. Teoricamente, a 
+
+água  que  está  no  tanque  está  parada  e  não  entra  e  nem  deixa  o  domínio.  Numericamente,  a 
+
+condição  de  contorno  opening,  que  permite  que  algum  fluido  entre  ou  saia  do  domínio,  de 
+
+acordo  com  uma  pressão  de  referência  especificada,  é  mais  estável,  e  por  isso  foi  utilizada, 
+
+especificando-se o óleo como fluido a entrar ou sair. Porém, como o problema é estacionário e 
+
+não há no domínio óleo no topo do tanque, o balanço de massa não estava fechando. Decidiu-
+
+se então especificar uma pequena camada de óleo no topo  do domínio  para que os balanços 
+
+materiais  da  água  e  do  óleo  fechassem  corretamente.  Isso  seria  uma  idealização  da  situação 
+
+em que haveria acúmulo de óleo no topo do tanque, uma vez que não há uma saída contínua 
+
+para o mesmo. Determinou-se então uma camada de óleo de 10 cm no topo. 
+
+As  superfícies  das  paredes  laterais  do  Tanque  foram  definidas  como  symmetry,  ou 
+
+seja, gradiente nulo na direção normal às mesmas. Essa consideração é consistente com ter-se 
+
+reduzido o volume de simulação, considerando que a partir dessas fronteiras, não haveria mais 
+
+influência do óleo na água e nada mudaria a partir dali, ou seja, haveria apenas água parada. 
+
+A base do Tanque foi definida como uma parede com condições de aderência, ou seja, 
+
+velocidade nula de qualquer espécie na mesma. 
+
+As  propriedades  da  água  e  do  óleo  foram  assumidas  como  constantes.  A  Tabela  4.2 
+
+apresenta  os  valores  de  densidade  e  viscosidade  dinâmica.  A  tensão  superficial  entre  estes 
+
+dois materiais é 25.10-3N.m-1 (ADAMS e MASUTANI, 2001). 
+
+ 
+
+Tabela 4.2 – Propriedades do óleo e da água no Tanque (ADAMS e MASUTANI, 2001). 
+
+Material  Densidade(kg/m3)  Viscosidade(Pa.s) 
+
+Água 
+
+Óleo 
+
+997 
+
+877 
+
+        8.89x10-4 
+
+        1.8x10-2 
+
+35 
+
+ 
+
+4.1.4. ABORDAGEM EULERIANA – TANQUE 
+
+ 
+
+Conforme  mencionado  anteriormente,  diversas  modelagens  foram  testadas.  Os  casos 
+
+das simulações utilizando a abordagem Euleriana serão discutidos nesta seção. Cada caso será 
+
+nomeado e suas principais configurações serão descritas a seguir. 
+
+ 
+
+  Caso 1 – Tanque_EU_1 
+
+ 
+
+Neste caso, a velocidade de injeção do óleo no Tanque foi a maior, 0,966 m/s. 
+
+O óleo foi configurado como fluido disperso, com diâmetro médio das gotas igual ao 
+
+do orifício, 2 mm. A água foi considerada como um fluido contínuo. Dessa maneira, o Solver 
+
+do CFX utiliza o modelo de mistura não homogêneo.  
+
+Para  modelar  a  interface  entre  estas  fases,  foi  utilizado  o  modelo  de  superfície  livre 
+
+como standard, Free Surface Model, que é necessário para simular a separação entre as duas 
+
+fases. 
+
+Para o modelo de mistura não homogêneo as equações de momento e continuidade são 
+
+expressas a seguir pelas equações (4.1) e (4.2), respectivamente (ANSYS THEORY GUIDE):  
+
+ 
+
+(4.1) 
+
+ 
+Em  que  a  representa  uma  das  fases,  U  são  as  velocidades,  ρ  é  a  densidade,  μ  a  viscosidade 
+dinâmica, r a fração volumétrica, t o tempo, p a pressão, Np o número de fases, b representa 
+outras  fases,  caso  existam,  SMa  termos  fontes  de  massa,  Ma  descreve  as  forças  interfaciais 
+
+agindo na fase a devidas à presença de outras fases e o termo 
+
+representa a 
+
+transferência de momento entre as fases (ANSYS THEORY GUIDE).  
+
+ 
+
+                             
+ 
+
+                                 
+
+(4.2) 
+
+Onde 
+
+ 
+
+é a taxa de fluxo de massa por unidade de volume da fase b para a fase a (ANSYS 
+
+THEORY GUIDE). 
+
+Para a turbulência, considerou-se inicialmente o modelo k-ε tanto para a água e para o 
+
+óleo, por ser o modelo mais amplamente utilizado. 
+
+36 
+
+ 
+
+aMaabaaaaaMSUUUUUUU)()))((.())(.()(1baNpbabTaaaaaaarrrrtap)(1abaNpbbabUUNpbabMSaaaaaSrrt1).()(aUabCom a tensão superficial entre a água e o óleo é possível incluir modelos de interface 
+
+entre  a  água  e  o  óleo,  de  forças  de  arraste  de  um  fluido  em  outro  e  de  transferência  de 
+
+turbulência entre os fluidos. 
+
+O modelo de interface utilizado foi o Particle Model, que assume um fluido contínuo 
+
+contendo partículas de outro fluido disperso, em outras palavras, é uma modelagem ideal para 
+
+simular  as  gotas  do  óleo  na  fase  contínua,  a  água.  Para  esse  modelo,  considera-se  a  área  de 
+
+densidade interfacial, que serve para modelar as transferências de massa e momento entre as 
+
+fases a e b, Aab. 
+
+No Particle Model tem-se que a área de densidade interfacial pode ser calculada pela 
+
+equação (4.3). 
+
+                                                             
+
+(4.3) 
+
+ 
+Em que b é a fase dispersa, rb é a fração volumétrica desta fase e db é o diâmetro médio 
+
+das partículas do fluido disperso (ANSYS THEORY GUIDE).  
+
+Já  para  simular  as  forças  de  arraste  utilizou-se  o  modelo  de  Ishii-Zuber,  que  é 
+
+aplicável  quando  existe  um  ou  mais  fluidos  particulados  no  domínio,  como  gotas  ou  bolhas 
+
+(ANSYS  THEORY  GUIDE).  Este  modelo  parece  ser  o  mais  ideal  para  o  problema  do 
+
+escoamento do óleo, por isso foi o único utilizado em todas as simulações. Em geral, usa-se a 
+
+forma da equação (4.4) para representar a força de arraste entre as fases, a e b. 
+
+ 
+
+ 
+
+                                                 
+
+(4.4) 
+
+Sendo  cab
+
+(d)  um  coeficiente  que  pode  ser  calculado  conhecendo-se  constantes 
+
+adimensionais de arraste e Ub e Ua velocidades das fases a e b. Já a força de arraste total pode 
+
+ser escrita pelo coeficiente adimensional, CD, coeficiente de arraste. 
+
+ 
+
+ 
+
+                                              
+
+(4.5) 
+
+37 
+
+ 
+
+bbabdrA6)()(abdabaUUcMAUUDCbaaD2)(21Em  que  a  é  a  fase  contínua  e  b  é  a  fase  dispersa,  ρ  é  a  densidade  de  a,  Ub  e  Ua 
+
+velocidades  das  fases  a  e  b,  A  é  a  área  projetada  do  corpo  da  partícula  na  direção  do 
+
+escoamento e D é a magnitude da força de arraste. 
+
+O  modelo  de  Ishii-Zuber  considera  o  coeficiente  de  arraste  dependente  da  forma  da 
+
+partícula (ANSYS THEORY GUIDE).    
+
+Acredita-se que a turbulência é um fator importante a ser considerado no problema do 
+
+presente trabalho, porque as partículas óleo na fase dispersa tendem a aumentar a turbulência 
+
+da fase contínua, água. Como o óleo possui uma turbulência considerável, e o único modelo 
+
+existente  no  CFX  é  o  Sato  Enhanced  Eddy  Viscosity,  este  foi  utilizado  para  simular  esses 
+
+efeitos.  Na  realidade,  este  modelo  adiciona  uma  viscosidade  turbulenta  induzida  para  cada 
+
+partícula no cálculo da viscosidade turbulenta da fase contínua. 
+
+ 
+
+                                                  
+
+(4.6)
+
+ 
+
+ 
+
+Sendo  μtc  a  viscosidade  turbulenta  da  fase  contínua,  μts  a  viscosidade  turbulenta 
+
+induzida cisalhante e μtp a viscosidade turbulenta de partícula. 
+
+A simulação foi então rodada com um esquema de advecção de segunda ordem (High 
+
+Resolution)  para  as  equações  de  momento  e  continuidade  e  de  primeira  ordem  para  as 
+
+equações das quantidades turbulentas (ANSYS THEORY GUIDE). 
+
+Embora  a  simulação  esteja  no  modo  estacionário,  o  CFX  sempre  roda  um  estado 
+
+pseudo-estacionário,  onde  um  passo  de  tempo  é  utilizado  para  aumentar  a  relaxação  das 
+
+variáveis a convergirem. Neste caso, foi escolhida uma escala de tempo física para representar 
+
+a escala de tempo, o Physical Time Scale e utilizou-se um valor aproximadamente dez vezes 
+
+menor que o tempo de residência estimado para promover mais robustez à convergência. 
+
+Por  fim,  como  critério  de  convergência,  definiu-se  que  o  resíduo  médio  RMS  (Root 
+
+Mean Square) deveria ser menor que 10-5. 
+
+As configurações deste caso encontram-se resumidas na Tabela 4.3 abaixo. 
+
+ 
+
+ 
+
+ 
+
+38 
+
+ 
+
+tptstcTabela 4.3 – Configuração do caso Tanque_EU_1 
+
+                      Caso 
+
+                1 
+
+            Nome da simulação 
+
+      Tanque_EU_1 
+
+            Modo da simulação 
+
+    Estado estacionário 
+
+        Velocidade inicial do óleo 
+
+            0,966 m/s 
+
+                  Abordagem 
+
+                 Turbulência 
+
+           Modelo de interface 
+
+   Euleriana não homogênea 
+
+       Homogênea/k-ε 
+
+       Particle model 
+
+       Modelo de força de arraste 
+
+          Ishii-Zuber 
+
+         Modelo de transferência de Turbulência 
+
+   Sato Enhanced Eddy Viscosity 
+
+         Esquema de Advecção para P, U, V e W 
+
+       High Resolution 
+
+    Esquema de Advecção para k e ε 
+
+          First Order 
+
+           Escala de tempo- Physical time scale(s) 
+
+                 0,1 
+
+    Convergência: RMS menor que 
+
+                 10-5 
+
+Esta  configuração  de  simulação  foi  a  utilizada  para  o  teste  de  malha,  porém  com  a 
+
+ 
+
+menor velocidade de injeção do óleo, 0,281 m/s. 
+
+ 
+
+  Caso 2 – Tanque_EU_2 
+ 
+Para  o  caso  2,  chamado  de  Tanque_EU_2,  utilizou-se  a  configuração  do  caso 
+
+Tanque_EU_1, e acrescentou-se um modelo de dispersão turbulenta. Isso pode ser feito incluindo 
+
+uma força extra, além da força de arraste já considerada pelo modelo Ishii-Zuber. 
+
+Nesse caso, utilizou-se o modelo de dispersão turbulenta Favre Avareged Drag Force, que 
+
+funciona bem para fases dispersas bem mais leves que a contínua. Apesar de esse não ser o caso 
+
+da água e do óleo, este será usado para servir de comparação. Neste modelo, tem-se uma força de 
+
+arraste entre as interfaces: 
+
+ 
+
+ 
+
+                                         
+
+(4.7) 
+
+Onde  os  índices  c  e  d  representam  as  fases,  contínua  e  dispersa,  respectivamente,  Ccd  é  o 
+
+coeficiente de transferência de momento,  σtc é o número de Schmidt para a fase contínua,  νtc é a 
+
+39 
+
+ 
+
+)(ccddtctccdTDdTDcrrrrCFFviscosidade  cinemática  da  fase  contínua  e  ri  é  a  fração  volumétrica  de  cada  fase  (ANSYS 
+
+THEORY GUIDE).    
+
+ 
+
+  Caso 3 – Tanque_EU_3 
+
+ 
+
+ 
+
+O  caso  Tanque_EU_3  é  o  mesmo  que  o  Tanque_EU_2,  porém  usando  o  modelo  de 
+
+dispersão turbulenta Lopez de Bertodano. Em geral, este modelo é utilizado mais para casos 
+
+onde  a  fase  dispersa  são  bolhas  de  gás,  contudo  considerou-se  este  modelo  para  servir  de 
+
+comparação com a simulação Tanque_EU_1e Tanque_EU_2. 
+
+Nesta  abordagem  tem-se  um  termo  fonte  de  dispersão  turbulenta  dado  pela  equação 
+
+(4.8) a seguir. 
+
+ 
+
+ 
+
+ 
+
+                                       
+
+(4.8)
+
+Em que os parâmetros são os mesmo da equação (4.7) e kc é a energia cinética turbulenta para 
+
+a fase contínua (ANSYS THEORY GUIDE). 
+
+ 
+
+  Caso 4 – Tanque_EU_4 
+
+ 
+
+Para este caso considerou-se as configurações do caso do Tanque_EU_1, acrescentado 
+
+do Buoyancy Turbulence para o termo de produção de energia cinética turbulenta no modelo 
+
+turbulento k-ε. Essa configuração acrescenta um termo de produção na equação de kt devido a 
+
+efeitos  de  flutuabilidade/gravitacionais  que  podem  aparecer.  Este  termo  é  apresentado  pela 
+
+equação (4.9): 
+
+ 
+
+ 
+
+                                                     (4.9) 
+
+Onde  μt  é  a  viscosidade  turbulenta,  ρ  é  a  densidade,  σρ  é  o  número  turbulento  de 
+
+Schmidt, gi componente da aceleração da gravidade e xi coordenada referente à componente da 
+
+gravidade no sistema (ANSYS THEORY GUIDE).  
+
+ 
+
+40 
+
+ 
+
+cccTDdTDcrkMMiitkbxgP  Caso 5 – Tanque_EU_5 
+
+ 
+
+Esta  simulação  acrescenta  à  configuração  do  caso  Tanque_EU_1  a  opção  Solver 
+
+Multiphase Coupled à variável fração volumétrica dos dois materiais, água e óleo. Essa opção 
+
+é mais ideal para escoamentos com efeitos gravitacionais e resolve as equações de velocidade, 
+
+pressão e fração volumétrica de forma acoplada, em outras palavras, utiliza-se um algoritmo 
+
+com apenas uma matriz. 
+
+Os  casos  da  abordagem  Euleriana  para  o  domínio  do  Tanque  podem  então  ser 
+
+resumidos pela Tabela 4.4. 
+
+ 
+
+Tabela 4.4 – Todas as simulações da abordagem Euleriana – Tanque 
+
+Tanque_EU_1 
+
+Tabela 4.3 
+
+Tanque_EU_2  Tanque_EU_1+dispersão turbulenta Favre Avareged Drag Force 
+
+Tanque_EU_3 
+
+Tanque_EU_1+dispersão turbulenta Lopez de Bertodano 
+
+Tanque_EU_4 
+
+Tanque_EU_1+Turbulence Buoyancy na produção de kt 
+
+Tanque_EU_5 
+
+Tanque_EU_1+Solver Multiphase Coupled 
+
+ 
+
+4.1.5. ABORDAGEM LAGRANGEANA – TANQUE 
+
+ 
+
+  Caso 1 – Tanque_LG_1 
+
+ 
+
+ 
+
+Para  este  caso,  as  condições  de  contorno  como  velocidade  de  injeção  do  óleo, 
+
+diâmetro das gotas e modelos de turbulência e força de arraste são os mesmos que os do caso 
+
+Tanque_EU_1 da abordagem Euleriana. 
+
+Para  a  abordagem  Lagrangeana,  foi  utilizada  a  opção  de  Fully  Coupled,  que  permite 
+
+incluir os efeitos das partículas do fluido disperso na fase contínua. 
+
+O modelo Lagrangeano as partículas são rastreadas durante o escoamento, toda a fase 
+
+particulada é simulada por amostras de partículas individuais. O rastreamento é realizado por 
+
+um  conjunto  de  equações  para  cada  partícula,  onde  a  posição,  a  velocidade,  temperatura  e 
+
+massa de cada uma é calculada. 
+
+Dessa maneira, a equação de movimento para uma determinada partícula movendo-se 
+
+através de um meio de um fluido contínuo pode ser escrita da forma dada pela equação (4.10). 
+
+ 
+
+41 
+
+ 
+
+       
+
+ 
+
+                           
+
+(4.10)
+
+ 
+
+Em  que  mp é  a  massa  da  partícula,  Up  é  a  velocidade  da  partícula  e  t  é  o  tempo.  Quanto  as 
+
+forças, tem-se que FD é uma força devida ao arraste na partícula; FB é uma força gravitacional; 
+
+FR é uma força devida a efeitos rotacionais; FVM  uma força de empuxo; Fp força proveniente 
+
+de gradientes de pressão aplicados no fluido onde a partícula está inserida (ANSYS THEORY 
+
+GUIDE). 
+
+A tabela 4.5 sumariza a configuração da simulação Tanque_LG_1. 
+
+ 
+
+Tabela 4.5 – Configuração da simulação Tanque_LG_1 
+
+                     Caso 
+
+                 1 
+
+            Nome da simulação 
+
+       Tanque_LG_1 
+
+           Modo da simulação 
+
+    Estado estacionário 
+
+       Velocidade inicial do óleo 
+
+            0,966 m/s 
+
+                  Abordagem 
+
+                 Turbulência 
+
+       Lagrangeana 
+
+                  k-ε 
+
+              Particle Coupling 
+
+        Fully Coupled 
+
+        Modelo de força de arraste 
+
+           Ishii-Zuber 
+
+         Esquema de Advecção para P, U, V e W 
+
+        High Resolution 
+
+Esquema de Advecção para k e ε 
+
+          First Order 
+
+          Escala de tempo- Physical time scale(s) 
+
+                0,1 
+
+   Convergência: RMS menor que 
+
+                10-5 
+
+ 
+
+ 
+
+  Caso 2 – Tanque_LG_2 
+
+O caso Tanque_LG_2 é o caso Tanque_LG_1 acrescido do modelo de quebra de gotas 
+
+de  Schmehl  para  o  óleo.  A  quebra  em  gotas  de  um  jato  de  líquido  é  devida  a  vários 
+
+mecanismos como turbulência dentro da fase líquida e forças aerodinâmicas externas agindo 
+
+no  jato.  Os  regimes  de  quebra  estão  geralmente  ligados  aos  números  adimensionais  We, 
+
+Weber, e Oh, Ohnesorge. Acima de um certo valor do número de Weber, as deformações nas 
+
+gotas levam a quebra das mesmas. 
+
+42 
+
+ 
+
+PVMRBDppFFFFFdtdUmO  modelo  de  Schmehl  foi  o  único  modelo  utilizado  nas  simulações  por  ser  o  mais 
+
+utilizado  na  literatura.  A  modelagem  de  quebra  de  gotas  é  determinada  principalmente  pelo 
+
+número  adimensional,  Weber,  We,  já  que  as  gotas  se  dividem  quando  este  o  número 
+
+adimensional  para  cada  partícula  excede  o  seu  valor  crítico.  Para  o  modelo  de  Schmehlesse 
+
+valor é dado pela equação (4.11) abaixo (ANSYS THEORY GUIDE). 
+
+ 
+
+                                              
+
+(4.11) 
+
+Onde Oh é o número adimensional de Ohnesorge. 
+
+ 
+
+  Caso 3 – Tanque_LG_3 
+
+ 
+
+A simulação Tanque_LG_3 utilizou a configuração novamente do caso Tanque_LG_1,  
+
+com mais um modelo de dispersão turbulenta, causado por forças extras, além das de arraste: 
+
+o Particle Dispersion.  Esse modelo acrescenta a  dispersão das partículas  de regiões de altas 
+
+frações  volumétricas  para  regiões  de  baixas,  causada  por  flutuações  turbulentas.  Essa  opção 
+
+pode rastrear um número maior de partículas, o que torna o custo computacional muito maior 
+
+(ANSYS THEORY GUIDE). 
+
+Resumindo, pode-se escrever uma tabela que relacione adequadamente as simulações 
+
+da abordagem Lagrangeana para o domínio do Tanque. 
+
+ 
+
+ 
+
+Tabela 4.6 – Todas as simulações do caso Lagrangeana – Tanque 
+
+Tanque_LG_1                                    Tabela 4.5 
+
+Tanque_LG_2  Tanque_LG_1+modelo de quebra de gotas de Schmehl 
+
+Tanque_LG_3       Tanque_LG_1+ modelo de dispersão turbulenta 
+
+4.2. GRANDE ESCALA (GRE) 
+
+ 
+
+4.2.1. GEOMETRIA – GRANDE ESCALA 
+
+ 
+
+Para  o  caso  em  grande  escala,  foi  escolhido  para  representar  o  domínio,  um  volume 
+
+cilíndrico de 10 m de altura e com seção circular de 10 m de diâmetro e com um orifício de 
+
+43 
+
+ 
+
+)077,11(126,1OhWecrit0,1  m  de  diâmetro,  localizado  na  base  do  volume,  por  onde  o  óleo  é  lançado,  conforme  se 
+
+pode ver na Figura 4.3 abaixo: 
+
+ 
+
+                                                            (a)                                                       (b) 
+
+Figura 4.3 - Geometria dos casos GRE: 10 m de altura, 10 m de diâmetro e orifício com 10cm de diâmetro. (a) 
+
+Geometria GRE; (b) Vista inferior. 
+
+ 
+
+ 
+4.2.2. MALHA – GRANDE ESCALA 
+ 
+
+Cada  malha  foi  construída  utilizando  tamanhos  de  elementos  mais  de  10  vezes 
+
+menores  que  as  dimensões  da  geometria  e  métodos  de  refino  para  regiões  de  grandes 
+
+gradientes. 
+
+Novamente, foram construídas três malhas com refinos diferentes para que se fizesse o 
+
+teste de malha. 
+
+A  tabela  a  seguir  apresenta  os  valores  dos  parâmetros  e  o  número  de  elementos  de 
+
+cada malha. Todos os parâmetros estão na faixa do considerado ideal. 
+
+A  Figura  4.4  apresenta  as  malhas  geradas  e  a  Tabela  4.7,  os  parâmetros  médios  de 
+
+qualidade das malhas e o número de elementos de cada uma. Todos os parâmetros encontram-
+
+se dentro dos valores considerados ideais. 
+
+ 
+
+44 
+
+ 
+
+Figura 4.4 – Interior das malhas 1, 2 e 3, da esquerda para a direita, da menos para a mais refinada. Cortes na 
+
+vista frontal da geometria, a região mais refinada das malhas é a do orifício. 
+
+ 
+
+ 
+
+ 
+
+Tabela 4.7 – Parâmetros de qualidade e número de elementos de cada malha 
+
+Qualidade do 
+
+Malhas  Número de elementos 
+
+elemento 
+
+Assimetria  Proporção 
+
+1 
+
+2 
+
+3 
+
+921545 
+
+         0,831 
+
+   0,216 
+
+   1,889 
+
+1370017 
+
+         0,836 
+
+   0,216 
+
+   1,856 
+
+1978152 
+
+         0,838 
+
+   0,216 
+
+   1,848 
+
+ 
+4.2.3. CONDIÇÕES DE CONTORNO –SIMULAÇÕES – GRE 
+
+ 
+
+ 
+
+A  simulação  em  grande  escala  usou  basicamente  as  mesmas  condições  de  contorno 
+
+que as simulações do caso Tanque, com exceção das “superfícies” laterais, que neste caso não 
+
+mais podem ser colocadas como symmetry, gradiente nulo. 
+
+Dessa forma, as condições de contorno para os casos de vazamento em grande escala 
+
+podem ser descritos como abaixo. 
+
+Uma  vez  que  o  domínio  em  questão  é  um  grande  cilindro,  sua  superfície  lateral  foi 
+
+dividida em duas metades. Uma delas, foi especificada como inlet, com entrada de água a 0,1 
+
+m/s, representando a corrente marítima (ADAMS e SOCOLOFSKY, 2004). 
+
+A  outra  metade  da  lateral  do  cilindro,  bem  como  o  topo  do  mesmo,  foram 
+
+especificados como opening, ou seja, são regiões onde pode haver entrada ou saída de fluido, 
+
+de acordo com a pressão especificada. Nesse caso, claramente, há saída de água na lateral do 
+
+cilindro, pois é a corrente marítima que está passando pelo domínio. Caso a corrente marítima 
+
+consiga arrastar a pluma de óleo até a fronteira do domínio, também pode haver saída de óleo 
+
+45 
+
+ 
+
+nessas superfícies. Não se espera entrada nem  de óleo nem  de água nessas regiões, mas por 
+
+questões  numéricas,  caso  seja  necessário  para  que  a  convergência  seja  atingida,  deixou-se 
+
+apenas  a  água  retornar.  Vale  ressaltar  que  o  domínio  representa  os  10  metros  finais  de  uma 
+
+profundidade de mais de 800 metros, conforme o experimento de Adams e Socolofsky (2004), 
+
+e  dessa  forma,  uma  pressão  constante  de  valor  8.17  MPa  foi  utilizada  como  pressão  de 
+
+referência para o opening. Esse valor de pressão corresponde às somas da pressão atmosférica 
+
+local  com  a  pressão  devida  à  altura  de  água  considerada  nas  simulações.  Essa  pressão  é  a 
+
+esperada no topo do cilindro, mas em sua lateral, poder-se-ia considerar ainda a variação dos 
+
+últimos 10m de altura, o que foi inicialmente desprezado. 
+
+O orifício de 0,1 m de diâmetro pelo qual o óleo entra no domínio é também definido 
+
+como inlet, mas apenas para o óleo, com velocidade normal constante de 2,0 m/s (ADAMS e 
+
+SOCOLOFSKY, 2004). 
+
+A base do domínio cilíndrico, o chão, é considerada como uma parede, com aderência, 
+
+ou seja, velocidade nula nessa superfície. 
+
+A  Tabela  4.8  apresenta  as  propriedades  físicas  do  óleo  e  da  água  utilizados  nas 
+
+simulações, de acordo com os valores apresentados por Adams e Socolofsky, (2004) . Essas 
+
+propriedades  foram  consideradas  constantes  ao  longo  de  todo  o  domínio  para  todas  as 
+
+simulações  do  caso  GRE.A  tensão  superficial  entre  estes  dois  materiais  é  de  25.10-3N.m-1 
+
+(ADAMS e SOCOLOFSKY, 2004). 
+
+ 
+
+ 
+
+Tabela 4.8 – Propriedades da água e do óleo– GRE (ADAMS e SOCOLOFSKY, 2004) 
+
+Material 
+
+Densidade(kg/m3)  Viscosidade(Pa.s) 
+
+Água Salgada 
+
+Óleo 
+
+1027 
+
+850 
+
+1.48x10-3 
+
+0.8x10-1 
+
+4.2.4. ABORDAGEM EULERIANA – GRANDE ESCALA 
+ 
+
+Da mesma maneira que foi feito no domínio do Tanque, no domínio GRE definiu-se 
+
+um  caso  como  padrão  e  posteriormente  se  acrescentaram  modelos,  criando,  assim,  algumas 
+
+simulações  testes.  Cada  caso  da  simulação  do  GRE  na  abordagem  Euleriana  será  descrita  a 
+
+seguir. 
+
+ 
+
+ 
+
+46 
+
+ 
+
+  Caso 1 –GRE_EU_1 
+
+ 
+
+Este  é  o  caso  que  se  considerou  como  o  padrão,  e  inclusive  foi  a  configuração  de 
+
+simulação utilizada para o teste de malha. 
+
+Nesta simulação, foi considerado um modelo de turbulência para cada material. Como 
+
+a água entra por uma região muito maior do que a do óleo, foi considerado o modelo k-ε para 
+
+a água e o modelo de zero equações para o óleo, para simplificar a simulação. 
+
+Para o tamanho das gotas médias do óleo disperso, escolheu-se um diâmetro de 3 mm 
+
+e  não  o  diâmetro  do  orifício,  pois  considerou-se  o  tamanho  deste  muito  grande  para  o 
+
+diâmetro médio das gotas de óleo. 
+
+Assim, pode-se resumir a configuração desta simulação pela Tabela 4.9 abaixo 
+
+Tabela 4.9 – Configuração da simulação GRE_EU_1 
+Caso 
+
+1 
+
+Nome da simulação 
+
+Modo da simulação 
+
+Velocidade inicial do óleo 
+
+Velocidade inicial da corrente de água 
+
+Diâmetro médio das gotas de óleo 
+
+GRE_EU_1 
+
+Estado estacionário 
+
+2,0 m/s 
+
+0,1 m/s 
+
+3 mm 
+
+Abordagem 
+
+Turbulência 
+
+Euleriana Não Homogênea 
+
+água (k-ε) e óleo (zero equações) 
+
+Modelo de interface 
+
+Modelo de força de arraste 
+
+Particle Model 
+
+Ishii-Zuber 
+
+Modelo de transferência de Turbulência 
+
+Sato Enhanced Eddy Viscosity 
+
+Esquema de Advecção para P, U, V e W 
+
+High Resolution 
+
+Esquema de Advecção para k e ε 
+
+First Order 
+
+Escala de tempo - Physical time scale (s) 
+
+Critério de convergência – RMS menor que 
+
+0,01 
+
+10-5 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+47 
+
+ 
+
+  Caso 2 – GRE_EU_2 
+
+ 
+
+O caso GRE_EU_2 é igual ao GRE_EU_1, porém com o diâmetro médio das gotas de 
+
+óleo igual ao diâmetro do orifício, ou seja, 0,1 m. A ideia aqui é apenas comparar a influência 
+
+do diâmetro das gotas de óleo. 
+
+ 
+
+  Caso 3 – GRE_EU_3 
+
+ 
+
+No caso GRE_EU_3, a simplificação do modelo de turbulência assumida para a fase 
+
+dispersa foi eliminada e aplicou-se para ambas as fases o modelo k-ε. 
+
+ 
+
+  Caso 4 – GRE_EU_4 
+
+ 
+
+Este caso é idêntico ao GRE_EU_3, ou seja, mas com o modelo de turbulência LRR. 
+
+A ideia é investigar a influência de um modelo mais complexo e completo. 
+
+ 
+
+  Caso 5 – GRE_EU_5 
+
+ 
+
+Este caso é o GRE_EU_1 com a adição da força de dispersão turbulenta com o modelo 
+
+de Favre. 
+
+ 
+
+  Caso 6 – GRE_EU_6 
+
+ 
+
+Este caso é o GRE_EU_1 com a adição da força de dispersão turbulenta com o modelo 
+
+de Lopez de Bertodano. 
+
+ 
+
+  Caso 7 – GRE_EU_7 
+
+ 
+
+O caso 7, de acordo com os resultados das simulações GRE_EU_5 e GRE_6, utilizou-
+
+se a configuração da GRE_EU_3 com o modelo de Lopez para a dispersão turbulenta. 
+
+ 
+
+  Caso 8 – GRE_EU_8 
+
+ 
+
+Este  caso  é  idêntico  ao  GRE_EU_3,  com  a  adição  de  um  termo  de  produção  de 
+
+turbulência, devido aos efeitos da flutuabilidade, na equação da energia cinética turbulenta. 
+
+48 
+
+ 
+
+ 
+
+  Caso 9 – GRE_EU_9 
+
+ 
+
+Este caso é idêntico ao GRE_EU_1, com a opção do Solver Multiphase Coupled para 
+
+a fração volumétrica da água e do óleo. 
+
+ 
+
+  Caso 10 – GRE_EU_10 
+
+ 
+
+Por fim, este caso é idêntico ao GRE_EU_3, com a opção Solver Multiphase Coupled 
+
+para a fração volumétrica dos materiais do domínio. 
+
+A Tabela 4.10 resume as simulações e suas configurações para o domínio de GRE na 
+
+abordagem Euleriana. 
+
+ 
+
+             Tabela 4.10 – Configuração de todas as simulações do caso Euleriano – GRE 
+
+GRE_EU_1 
+
+Tabela 4.9 
+
+GRE_EU_2 
+
+GRE_EU_1, com diâmetro de gota de óleo igual a 0,1 m 
+
+GRE_EU_3 
+
+GRE_EU_4 
+
+           GRE_EU_1, com modelo homogêneo k-ε 
+
+         GRE_EU_1, com modelo homogêneo LRR 
+
+GRE_EU_5 
+
+GRE_EU_1+ modelo de dispersão turbulenta de Favre 
+
+GRE_EU_6  GRE_EU_1+ modelo de dispersão turbulenta de Lopez de Bertodano 
+
+GRE_EU_7 
+
+GRE_EU_3+ modelo de dispersão turbulenta de Lopez 
+
+GRE_EU_8 
+
+GRE_EU_9 
+
+         GRE_EU_3+Turbulence Buoyancy Prod. 
+
+          GRE_EU_1+Solver Multiphase Coupled 
+
+GRE_EU_10 
+
+GRE_EU_3+Solver Multiphase Coupled 
+
+ 
+
+4.2.5. ABORDAGEM LAGRANGEANA – GRANDE ESCALA 
+
+ 
+
+As  simulações  Lagrangeanas  tiveram  as  mesmas  configurações  gerais  que  as 
+
+simulações para os casos do Tanque. A seguir estarão os casos e suas configurações. 
+
+A configuração GRE_LG_1 é considerada a padrão para as simulações Lagrangeanas 
+
+para o domínio do GRE. O diâmetro das gotas de óleo é considerado como 3 mm, o modelo 
+
+49 
+
+ 
+
+de turbulência para o escoamento é o k-ε. E a pressão nas regiões de contorno tipo opening do 
+
+domínio é constante e igual a 8,17 MPa. 
+
+A Tabela 4.11 resume a configuração da simulação GRE_LG_1. 
+
+Tabela 4.11 – Configuração da simulação GRE_LG_1 
+Caso 
+
+1 
+
+Nome da simulação 
+
+Modo da simulação 
+
+Velocidade inicial do óleo 
+
+Velocidade inicial da corrente de água 
+
+Diâmetro médio das gotas de óleo 
+
+Abordagem 
+
+Turbulência 
+
+Particle Coupling 
+
+Modelo de força de arraste 
+
+GRE_LG_1 
+
+Estado estacionário 
+
+2,0 m/s 
+
+0,1 m/s 
+
+3 mm 
+
+Lagrangeana 
+
+k-ε 
+
+Fully Coupled 
+
+Ishii-Zuber 
+
+Esquema de Advecção para P, U, V e W 
+
+High Resolution 
+
+Esquema de Advecção para k e ε 
+
+First Order 
+
+Escala de tempo - Physical time scale(s) 
+
+Critério de convergência – RMS menor que 
+
+0,01 
+
+10-5 
+
+ 
+
+ 
+ 
+
+  Caso 2 – GRE_LG_2 
+
+ 
+
+Este  caso  trata-se  do  caso  GRE_LG_1  acrescentando-se  o  termo  de  produção  dos 
+
+efeitos da flutuabilidade na equação da energia cinética turbulenta no modelo k-ε. 
+
+ 
+
+  Caso 3 – GRE_LG_3 
+
+ 
+
+Este caso trata-se do caso GRE_LG_1, com a adição do modelo de força de dispersão 
+
+turbulenta, Particle Dispersion. 
+
+ 
+
+  Caso 4 – GRE_LG_4 
+
+ 
+
+50 
+
+ 
+
+Este caso trata-se do caso GRE_LG_1 com a adição do modelo Schmehl de quebra de 
+
+gotas de óleo. 
+
+ 
+
+  Caso 5 – GRE_LG_5 
+
+ 
+
+Por fim, este caso trata-se do caso GRE_LG_1, trocando-se o modelo de turbulência k-
+
+ε para o modelo do tensor de Reynolds, LRR. 
+
+A  Tabela  4.12  abaixo  possui  todas  as  simulações  da  abordagem  Lagrangeana  para  o 
+
+domínio do GRE. 
+
+ 
+
+GRE_LG_1 
+
+GRE_LG_2 
+
+Tabela 4.12 – Todas as simulações para a abordagem Lagrangeana – GRE 
+
+Tabela 4.11 
+
+GRE_LG_1+Turbulence Buoyancy Prod. 
+
+GRE_LG_3 
+
+GRE_LG_1+força de dispersão turbulenta ParticleDispersion 
+
+GRE_LG_4 
+
+GRE_LG_5 
+
+GRE_LG_1+modelo Schmehl de quebra de gotas 
+
+GRE_LG_1, com modelo LRR 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+51 
+
+ 
+
+5. RESULTADOS E DISCUSSÃO 
+ 
+
+Os resultados das simulações foram visualizados com o auxílio do software CFD-Post, 
+
+também  da  ANSYS  versão  15.  Como  o  objetivo  do  trabalho  é  tentar  reproduzir  o 
+
+comportamento  do  óleo  escoando,  as  principais  variáveis  analisadas  foramas  frações 
+
+volumétricas e as velocidades das fases. 
+
+ 
+
+5.1. RESULTADOS – TANQUE 
+
+ 
+
+5.1.1. TESTE DE MALHA – TANQUE 
+
+ 
+
+Os resultados obtidos com  cada malha para a dispersão de óleo  e os perfis da fração 
+
+volumétrica deste são apresentados a seguir. 
+
+A  figura  5.1  abaixo  apresenta  o  resultado  da  simulação  com  configuração 
+
+Tanque_EU_1 com velocidade de saída de óleo de 0,281 m/s para as três malhas. 
+
+ 
+
+          (a)                                                                        (b)                                                                      (c) 
+
+ 
+
+Figura 5.1 – Respostas das malhas (a)1, (b) 2 e (c) 3. Legenda: Fração volumétrica variando de 0 a 0,5. 
+
+ 
+
+Percebe-se  que  as  malhas  têm  influência  no  resultado.  A  malha  1  (menos  refinada) 
+
+possui um resultado bem diferente das outras duas, mais refinadas. Para se fazer uma análise 
+
+melhor  dos  resultados  e  comparar-se  os  resultados  das  malhas  apropriadamente,  criaram-se 
+
+linhas em determinadas alturas do domínio do Tanque (Figura 5.2) para se construir perfis de 
+
+ 
+
+fração volumétrica de óleo. 
+
+ 
+ 
+
+52 
+
+ 
+
+Figura 5.2 – Alturas onde o perfil de óleo foi avaliado. 
+
+ 
+
+ 
+
+A linha mais próxima do chão do domínio, menor coordenada z, é a linha 1, a próxima 
+
+é a linha 2 e, assim por diante. As Figura 5.3 e 5.4 mostram a fração volumétrica de óleo nas 
+
+linhas 1 (a), 2 (b), 3(a) e 4(b). 
+
+ 
+
+(a) 
+
+(b) 
+
+Figura 5.3 – Fração volumétrica de óleo contra a coordenada x; (a) linha 1(Z=0,025m); (b) linha 2 (Z= 0,05m); 
+
+Malha 1 (vermelho), Malha 2 (azul), Malha 3 (verde). Linhas 1 e 2 da Figura (5.2). 
+
+ 
+
+53 
+
+ 
+
+(a) 
+
+(b) 
+
+ 
+
+Figura 5.4 – Fração volumétrica de óleo contra a coordenada x; (a) linha 3(Z=0,125m); (b) linha 4 (Z=0,200m); 
+
+Malha 1 (vermelho), Malha 2 (azul), Malha 3 (verde). Linhas 3 e 4 da Figura (5.2). 
+
+ 
+
+Observa-se que os resultados das malhas 2 e 3 são bem próximos e bem diferentes dos 
+
+da  malha  1.  Como  os  resultados  das  malhas  2  e3  ainda  estão  um  pouco  diferentes,  o 
+
+procedimento correto a ser seguido seria fazer mais uma malha, mais refinada que a 3, com 50 
+
+%  ou  mais  elementos  do  que  esta,  porém,  dada  a  proximidade  dos  resultados  este 
+
+procedimento foi postergado e, por hora, resolveu-se utilizar a malha mais refinada das três. 
+
+Dessa  maneira,  para  as  demais  simulações,  tanto  para  a  abordagem  Euleriana  como 
+
+Lagrangeana, usou-se a malha 3, a mais refinada, com 707826 elementos. 
+
+ 
+
+5.1.2. RESULTADOS – ABORDAGEM EULERIANA – TANQUE 
+
+Os  resultados  de  todos  os  casos  serão  apresentados  e  discutidos  a  seguir,  a  luz  dos 
+
+resultados experimentais de Adams e Masutani (2001) para injeção de óleo em um tanque de 
+
+água a diferentes vazões, apresentados na Figura 5.5. 
+
+ 
+
+54 
+
+ 
+
+Figura 5.5 – Resultados dos experimentos de Adams e Masutani (2001). Vazões de óleo vão aumentando da 
+
+esquerda para a direita; 0,281 m/s; 0,340 m/s; 0,435 m/s; 0,716 m/s; 0,966 m/s. 
+
+ 
+
+  Caso 1 – Tanque_EU_1 
+
+ 
+
+ 
+
+Os resultados do caso 1 podem ser encontrados a seguir pela Figura 5.6. 
+
+                           (a)                                                                                       (b) 
+
+Figura 5.6 –(a) Fração volumétrica do óleo variando de 0 a 1,0; (b) Superfície com fração volumétrica 
+
+constante e igual a 0,01;Tanque_EU_1. 
+
+ 
+
+Para  este  primeiro  caso  simulado,  observa-se  que,  a  princípio,  uma  pluma  de  óleo  é 
+
+formada. Percebe-se que o óleo atravessa o tanque e segue para acumular no topo do tanque, 
+
+ 
+
+55 
+
+ 
+
+conforme previsto. No entanto, a dispersão e as gotas não apareceram, há apenas a formação 
+
+de uma pluma. 
+
+A isosuperfície representada pela Figura 5.6(b) mostra o aspecto que a pluma de óleo 
+
+possui. Esta função representa uma superfície de fração volumétrica constante e igual a 0,01, 
+
+indicando o contorno da pluma formada. 
+
+ 
+
+  Caso 2 – Tanque_EU_2 
+
+ 
+A Figura 5.7 apresenta o resultado desta simulação.  
+ 
+
+ 
+
+Figura 5.7–Superfície com fração volumétrica constante e igual a 0,01.Tanque_EU_2. 
+
+ 
+
+Pelos  resultados,  constata-se  que  a  pluma  de  óleo  fica  presa  para  uma  determinada 
+
+altura.  Na  realidade,  para  essa  simulação  os  resíduos  para  as  variáveis  foram  um  pouco 
+
+maiores do que da Tanque_EU_1, contudo todos abaixo de 10-3. Já o balanço de massa fechou 
+
+para  ambos  os  componentes.  É  provável  que  esse  resultado  seja  devido  aos  efeitos  da 
+
+dispersão  turbulenta  extra  incluídos  nessa  simulação.  Não  se  espera  que  uma  pluma 
+
+constituída de água e óleo deixe de subir, uma vez que o óleo tem velocidade e é mais leve 
+
+que a água. Dessa forma, conclui-se que o modelo Favre não é adequado para esta simulação, 
+
+como esperado por sua descrição. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+56 
+
+ 
+
+  Caso 3 – Tanque_EU_3 
+
+ 
+
+Assim como o caso Tanque_EU_2, a simulação Tanque_EU_3 utilizou um modelo de 
+
+dispersão  turbulenta,  porém  o  modelo  considerado  neste  caso  foi  o  de  Lopez.  Resultado 
+
+apresentado na Figura 5.8. 
+
+ 
+
+Figura 5.8–Superfície com fração volumétrica constante e igual a 0,01. Tanque_EU_3. 
+
+ 
+
+ 
+
+Pelas respostas, percebe-se que o óleo também  fica aprisionado  em  uma  certa  altura, 
+
+um  pouco menor que a do caso  Tanque_EU_2. Novamente, os resíduos das variáveis  foram 
+
+um pouco maiores do que os do caso Tanque_EU_1, porém todos foram menores do que 10-3 
+
+e o balanço de massa de componentes foi fechado.  Como já descrito, não tem sentido físico o 
+
+óleo ficar aprisionado nesse tipo de escoamento, indicando também a inadequação do modelo 
+
+Lopez Bertodano para esse tipo de simulação. 
+
+ 
+
+  Caso 4 – Tanque_EU_4 
+
+ 
+
+Para a simulação Tanque_EU_4 tem-se o resultado abaixo na Figura 5.9. 
+
+57 
+
+ 
+
+ 
+
+Figura 5.9 – Superfície com fração volumétrica de óleo constante e igual a 0,01. Tanque_EU_4. 
+
+ 
+
+De  acordo  com  esses  resultados,  observa-se  que  uma  pluma  de  óleo  efetivamente  é 
+
+formada e que o óleo deixa o domínio conforme o esperado.  
+
+Aparentemente,  os  resultados  das  simulações  Tanque_EU_1  e  Tanque_EU_2  são 
+
+muito parecidos. Isso é comprovado ao se comparar os perfis de frações volumétricas do óleo 
+
+em duas alturas diferentes (linha 2 (Z=0,050m) e linha 4(Z= 0,200m) na Figura 5.10) para os 
+
+casos  Tanque_EU_1  e  Tanque_EU_4,  conforme  pode-se  ver  na  Figura  5.10  abaixo.  Esse 
+
+resultado mostra que o termo extra de produção, devido a efeitos da flutuação, na equação da 
+
+energia cinética turbulenta é realmente desprezível. 
+
+ 
+
+ 
+
+58 
+
+ 
+
+               (a)                                                                                                                (b)  
+
+Figura 5.10 – Perfil de fração volumétrica de óleo (a) linha 2 (Z=0,050m); (b) linha 4 (Z=0,200m); 
+
+Tanque_EU_1 (azul); Tanque_EU_4 (vermelho). Linhas 2 e 4 da Figura (5.2).  
+
+ 
+
+ 
+
+ 
+
+  Caso 5 – Tanque_EU_5 
+
+ 
+A Figura 5.11 apresenta o resultado desta simulação. 
+
+ 
+
+Figura 5.11 – Superfície com fração volumétrica constante e igual a 0,01.Tanque_EU_5. 
+
+ 
+
+59 
+
+ 
+
+ 
+
+Essa  simulação  e  as  Tanque_EU_2  e  Tanque_EU_3,  embora  pareçam  que  tiveram  o 
+
+balanço  material  de  óleo  e  água  não  fechado,  convergiram  para  o  balanço  de  massa  e 
+
+apresentaram resíduos menores que 10-3 para todas as variáveis. No entanto, todas mostraram 
+
+esse  tipo  de  resultado  em  que  o  óleo  aparece  aprisionado  e  sem  subir  mais  pelo  domínio,  o 
+
+que representa uma inconsistência física. 
+
+Este fato mostra que as opções escolhidas nesses casos,  resumidas na Tabela4.4, não 
+
+foram consideradas adequadas para reproduzir o escoamento de óleo através da água. 
+
+ 
+
+  Resultados das simulações para as outras vazões 
+
+ 
+
+Como  a  configuração  do  Tanque_EU_1  foi  considerada  a  mais  adequada  por 
+
+reproduzir  melhor  o  experimento  real  de  Adams  e  Masutani  (2001)  para  a  maior  vazão 
+
+(0,966m/s)  na  abordagem  Euleriana,  esta  foi  escolhida  para  simular  as  outras  vazões  do 
+
+experimento destes autores. 
+
+Dessa forma, os resultados de cada vazão é mostrada a seguir na Figura 5.12 abaixo. 
+
+ 
+
+                   (a)                                   (b)                                   (c)                                    (d)                                    (e) 
+
+Figura 5.12 - Superfície com fração volumétrica de óleo constante e igual a 0,01.Vazões 
+
+aumentando da esquerda para a direita; (a) 0,281 m/s; (b) 0,340 m/s; (c) 0,435 m/s; (d) 0,716 m/s; (e) 
+
+0,966 m/s. Configuração Tanque_EU_1. 
+
+ 
+
+Por  esses  resultados  pode-se  dizer  que  com  a  abordagem  Euleriana  não  foi  possível, 
+
+pelo  menos  para  o  conjunto  de  configurações  testadas,  identificar  clara  diferença  no 
+
+espalhamento  da  pluma,  conforme  esperado  de  acordo  com  os  experimentos  Adams  e 
+
+Masutani (2001), mostrados na Figura (5.5). 
+
+ 
+
+ 
+
+60 
+
+ 
+
+5.1.3. RESULTADOS – ABORDAGEM LAGRANGEANA – TANQUE 
+
+ 
+
+Os  resultados  das  simulações  com  abordagem  Lagrangeana  serão  apresentados  a 
+
+seguir com sua devida discussão. 
+
+ 
+
+  Caso 1 – Tanque_LG_1 
+
+ 
+
+Os resultados deste caso encontram-se na Figura 5.13 abaixo. Percebe-se que existe no 
+
+jato  de  óleo  regiões  discretas  de  maior  fração  volumétrica  o  que  pode  caracterizar  uma 
+
+dispersão em gotas da pluma. No entanto, ainda não é possível ver gotas de óleo escapando da 
+
+pluma de óleo formada. Além disso, analisando a pluma não se nota o mesmo espalhamento 
+
+da  mesma  como  ocorre  no  experimento  de  Adams  e  Masutani  (2001),  mostrados  na  Figura 
+
+5.5 para a maior vazão. 
+
+ 
+
+                                                   (a)                                                                           (b) 
+
+Figura 5.13 –(a) Fração volumétrica de óleo variando de 0 a 1,0; (b) Superfície de fração volumétrica de 
+
+óleo constante e igual a 0,01.Tanque_LG_1. 
+
+ 
+
+ 
+
+  Caso 2 – Tanque_LG_2 
+
+ 
+
+Resultado da simulação apresentado a seguir na Figura 5.14. 
+
+61 
+
+ 
+
+ 
+
+Figura 5.14 – Fração volumétrica de óleo variando de 0 a 1,0.Tanque_LG_2. 
+
+ 
+
+ 
+
+ 
+
+De  acordo  com  esses  resultados,  concluiu-se  que  a  adição  do  modelo  de  quebra  de 
+
+gotas para o óleo não influenciou muito nos resultados do caso  Tanque_LG_1, os resultados 
+
+foram  essencialmente  os  mesmos,  sem  um  espalhamento  apreciável  da  pluma  e  sem  o 
+
+desprendimento de gotas de óleo da pluma. 
+
+ 
+
+ 
+
+  Caso 3 – Tanque_LG_3 
+
+O caso Tanque_LG_3 apresentou os melhores resultados e se aproximou bem do caso 
+
+real, visualmente (Figura 5.15). 
+
+ 
+
+62 
+
+ 
+
+ 
+
+                                                                     (a)                                                                                 (b) 
+
+Figura 5.15 – (a) Fração volumétrica de óleo variando de 0 a 0,25; (b) Superfície de fração volumétrica 
+
+de óleo constante e igual a 0,01.Tanque_LG_3. 
+
+ 
+
+Pelos  resultados  podemos  dizer  que  a  inclusão  de  uma  força  extra  de  dispersão 
+
+turbulenta  mostra  uma  boa  reprodutibilidade  do  sistema,  pois  é  possível  ver  a  dispersão  da 
+
+pluma e o desprendimento de gotas de óleo da pluma como é observado no experimento. 
+
+Dessa  forma,  como  esses  resultados  foram  os  que  se  apresentaram  mais  adequados 
+
+para  se  reproduzir  o  experimento,  simularam-se  as  menores  vazões  utilizando  essa 
+
+configuração.  
+
+ 
+
+  Resultados das simulações para as outras vazões 
+
+ 
+
+Os resultados são apresentados para cada vazão na Figura 5.16.  
+
+ 
+
+63 
+
+ 
+
+ 
+
+                (a)                               (b)                                (c)                                (d)                               (e) 
+
+Figura 5.16 - Fração volumétrica de óleo constante e igual a 0,01. Vazões aumentando da esquerda para 
+a direita; (a) 0,281 m/s; (b) 0,340 m/s; (c) 0,435 m/s; (d) 0,716 m/s; (e) 0,966 m/s. Configuração Tanque_LG_3. 
+
+ 
+
+De  acordo  com  as  Figuras  5.15  e  5.16,  vê-se  que  a  dispersão  da  pluma  e  o 
+
+desprendimento  das  gotas  vão  aumentando  à  medida  que  a  vazão  de  saída  do  óleo  vai 
+
+aumentando. 
+
+No entanto, não é isso que é observado no experimento de Adams e Masutani (2001), 
+
+pois,  observando-se  os  dados  experimentais  na  Figura  5.5,  vê-se  que  para  baixas  vazões  de 
+
+injeção de óleo, nem se chega a ver uma pluma, mas gotas isoladas subindo, o que não se vê 
+
+nas  simulações.  A  inclusão  de  uma  força  extra  de  dispersão  turbulenta  com  a  abordagem 
+
+Lagrangeana mostrou-se adequada apenas para os casos onde há uma vazão suficientemente 
+
+alta de óleo para se formar a pluma. 
+
+Para efeito de comparação, a  Tabela 5.1 abaixo relaciona a largura da pluma de óleo 
+
+para  determinadas  alturas  desde  o  ponto  de  lançamento  para  o  experimento  de  Adams  e 
+
+Masutani (2001) e para a pluma reproduzida pela simulação Tanque_LG_3. 
+
+ 
+
+ 
+
+ 
+ 
+
+64 
+
+ 
+
+Tabela 5.1 – Comparação entre as larguras das plumas. 
+
+Alturas (cm) 
+
+    1,11 
+
+    3,19 
+
+    6,53 
+
+   10,14 
+
+CFD, Tanque_LG_3 - Larguras (cm) 
+
+0,53 
+
+    0,65 
+
+    0,79 
+
+     1,31 
+
+Experimento - Larguras (cm) 
+
+    0,83 
+
+    1,39 
+
+    3,61 
+
+     4,72 
+
+ 
+
+Percebe-se  que  as  medidas  da  simulação  e  do  experimento  de  Adams  e  Masutani 
+
+(2001) estão diferentes umas das outras, indicando que na simulação com CFD obtém-se um 
+
+espalhamento mais lento da pluma. 
+
+ 
+
+5.2. RESULTADOS – GRANDE ESCALA 
+
+ 
+
+5.2.1. TESTE DE MALHA – GRANDE ESCALA 
+
+ 
+
+Da  mesma  maneira  que  no  domínio  do  Tanque,  o  teste  de  malha  do  caso  GRE  foi 
+
+visualizado através de perfis de fração volumétrica para diferentes alturas no domínio. 
+
+A  Figura  5.17apresenta  os  resultados  das  três  malhas  testadas  para  a  configuração  do  caso 
+
+GRE_EU_1. 
+
+ 
+
+           (a)                                                                        (b)                                                                          (c) 
+
+Figura 5.17 – Respostas das malhas (a) 1, (b) 2 e (c) 3. Fração volumétrica variando de 0 a 0,5. 
+
+ 
+
+Esses resultados mostram que o refino da malha influencia nas respostas. O resultado 
+
+da  malha  3  é  bem  diferente  dos  resultados  das  malhas  mais  refinadas.  Quatro  linhas  foram 
+
+ 
+
+65 
+
+ 
+
+criadas  (Figura  5.18)  para  se  construir  perfis  de  fração  volumétrica  de  óleo  para  diferentes 
+
+alturas. 
+
+ 
+
+Figura 5.18 – Alturas onde o perfil de óleo foi avaliado. 
+
+ 
+
+ 
+
+As Figuras 5.19 e 5.20 a seguir mostram os perfis de fração volumétrica para as três 
+
+diferentes malhas. 
+
+ 
+
+ 
+
+66 
+
+ 
+
+                                                       (a)                                                                                                   (b) 
+
+Figura 5.19 – Fração volumétrica de óleo contra a coordenada x; (a) linha 1(Z= 0,10m); (b) linha 2 (Z= 0,30m); 
+
+Malha 1 (verde), Malha 2 (vermelho), Malha 3 (azul). Linhas 1 e 2 da Figura (5.18). 
+
+ 
+
+                                                       (a)                                                                                                     (b) 
+
+Figura 5.20 – Fração volumétrica de óleo contra a coordenada x; (a) linha 3(Z=4,0m); (b) linha 4 (Z= 7,7m); 
+
+Malha 1 (verde), Malha 2 (vermelho), Malha 3 (azul). Linhas 3 e 4 da Figura (5.18). 
+
+ 
+
+67 
+
+ 
+
+Percebe-se que as respostas se aproximam bastante para a região próxima ao orifício, 
+
+contudo para as regiões mais acima do domínio, pode-se ver a diferença entre os perfis. 
+
+No  entanto,  como  o  tempo  de  simulação  foi  um  fator  limitante  no  trabalho,  foi 
+
+utilizada  para  as  demais  simulações  dos  casos  GRE  a  malha  4,  a  de  refino  intermediário. 
+
+Mesmo que se saiba que a malha ainda influencia na resposta quando se afasta do orifício, o 
+
+objetivo  do  trabalho  é  obter  resultados  que  possam  servir  como  base  para  se  obter  uma 
+
+modelagem  que  seja  capaz  de  reproduzir  o  comportamento  da  pluma  de  óleo  em  grandes 
+
+profundidades.  E  a  malha  utilizada,  de  1.370.017  elementos,  é  capaz  de  gerar  respostas  que 
+
+cumpram com este objetivo. 
+
+ 
+
+5.2.2. RESULTADOS – ABORDAGEM EULERIANA – GRE 
+
+ 
+
+Os casos Eulerianos para a simulação em grande escala foram realizados seguindo as 
+
+condições do experimento DeepSpill (ADAMS e SOCOLOFSKY, 2004). Como o trabalho do 
+
+relatório  DeepSpill  apresenta  apenas  resultados  e  análises  para  outros  modelos  que  não  são 
+
+CFD, a análise dos resultados se deu pela visualização da formação de uma pluma de óleo, da 
+
+dispersão  e  o  desprendimento  das  gotas  de  óleo  e  se  a  corrente  marítima  de  fato  carregou  a 
+
+pluma de óleo. 
+
+ 
+
+ 
+
+ 
+
+  Caso 1 – GRE_EU_1 
+
+Para a configuração GRE_EU_1obteve-se os seguintes resultados (Figura 5.21 e 5.22): 
+
+68 
+
+ 
+
+(a)                                                                                                 (b) 
+
+Figura 5.21 – (a) Fração volumétrica de óleo variando de 0 a 0,80; (b) Superfície de fração volumétrica 
+
+de óleo constante e igual a 0,01.GRE_EU_1. 
+
+ 
+
+ 
+
+ 
+
+Figura 5.22 – Vetores-velocidade no domínio.GRE_EU_1. 
+
+ 
+
+ 
+
+ 
+
+Esses resultados mostram que de fato uma pluma de óleo é formada e carregada pela 
+
+corrente  marítima.  É  razoável  que  a  pluma  não  seja  muito  desviada,  pois  a  velocidade  da 
+
+corrente é bem menor do que a velocidade inicial do óleo. Os resultados deste caso condizem 
+
+com este fato físico. 
+
+69 
+
+ 
+
+Pela Figura 5.22 nota-se que parte da água da corrente marítima que atravessa a pluma 
+
+é carregada pelo óleo em ascensão, o que está de acordo com a teoria das plumas multifásicas 
+
+em que água e não apenas óleo constituem a pluma nesse tipo de escoamento. 
+
+Embora  uma  pluma  seja  formada,  por  essa  configuração  não  é  possível  reproduzir  a 
+
+dispersão e o desprendimento das gotas de óleo da pluma, conforme esperado. 
+
+ 
+ 
+
+ 
+
+ 
+
+  Caso 2 – GRE_EU_2 
+
+Resultados na Figura 5.23. 
+
+                                (a)                                                                                     (b) 
+Figura 5.23 – (a) Fração volumétrica de óleo variando de 0 a 0,80; (b) Superfície de fração volumétrica 
+
+de óleo constante e igual a 0,01.GRE_EU_2. 
+
+ 
+
+ 
+
+Nota-se  por  esses  resultados,  que  alterando  o  diâmetro  médio  das  gotas  de  óleo, 
+
+aumentando o seu valor de 3 mm para 100 mm, a pluma de óleo é menos influenciada pelas 
+
+correntes, mostrado pela Figura 5.23 como é de se esperar para gotas de tamanho maior. 
+
+No  entanto,  o  resultado  foi  pouco  influenciado  de  forma  geral,  a  pluma  continua  no 
+
+mesmo formato e a dispersão em gotas de óleo e seu desprendimento da pluma também não 
+
+ocorreu para essa configuração. 
+
+  Caso 3 – GRE_EU_3 
+
+ 
+
+ 
+
+A Figura 5.24 apresenta o resultado desta simulação. 
+
+ 
+
+70 
+
+ 
+
+Figura 5.24 – Fração volumétrica de óleo variando de 0 a 0,80. GRE_EU_3. 
+
+ 
+
+ 
+
+A diferença entre este caso e a simulação GRE_EU_1 foi bem pequena. Na realidade, 
+
+a  única  diferença  um  pouco  mais  perceptível  foi  no  perfil  da  fração  volumétrica  de  óleo  na 
+
+região  mais  próxima  (de  maior  coordenada  z)  do  topo  do  domínio.  Essa  diferença  pode  ser 
+
+vista na Figura 5.25. 
+
+ 
+
+Figura 5.25 – Fração volumétrica de óleo contra a coordenada x; linha 4 (Z=7,7m). GRE_EU_1 (azul) e 
+
+GRE_EU_3 (vermelho). Linha 4 da Figura 5.18. 
+
+ 
+
+71 
+
+ 
+
+Esse  gráfico  mostra  que,  utilizando  um  modelo  de  turbulência  homogêneo  k-ϵpara  a 
+
+água e o óleo, a pluma é mais afetada pelas correntes. 
+
+ 
+
+  Caso 4 – GRE_EU_4 
+
+ 
+
+As Figuras 5.26 e 5.27 mostram os resultados da simulação GRE_EU_4. 
+
+ 
+
+Figura 5.26 – Fração volumétrica de óleo variando de 0 a 0,80. GRE_EU_4. 
+
+ 
+
+ 
+
+Figura 5.27 – Fração volumétrica de óleo contra a coordenada x; linha 4 (Z= 7,7m). GRE_EU_1(azul) e 
+
+ 
+
+GRE_EU_4 (vermelho). Linha 4 da Figura (5.18). 
+
+ 
+
+72 
+
+ 
+
+Os  resultados  desta  simulação  ficaram  muito  semelhantes  aos  do  caso  GRE_EU_3, 
+
+que por sua vez foram bastante semelhantes aos do caso GRE_EU_1, não indicando ganhos 
+
+em se utilizar um modelo de turbulência mais complexo como o LRR. Assim, pode-se dizer 
+
+que o modelo k-ϵ pode ser utilizado para simular esse tipo de problema. 
+
+ 
+
+ 
+
+  Caso 5 – GRE_EU_5 
+
+As Figuras 5.28 e 5.29 apresentam os resultados desta simulação. 
+
+ 
+
+Figura 5.28 – Superfície de fração volumétrica constante e igual a 0,01.GRE_EU_5. 
+
+ 
+
+ 
+
+Figura 5.29 – Fração volumétrica de óleo contra a coordenada x; linha 4 (Z=7,7m). GRE_EU_1(azul) e 
+
+ 
+
+GRE_EU_5 (vermelho). Linha 4 da Figura (5.18). 
+
+73 
+
+ 
+
+A simulação GRE_EU_5 mostra que mesmo com a adição do modelo de Favre não foi 
+
+possível  reproduzir  a  dispersão  do  óleo  e  o  desprendimento  das  gotas  de  óleo.  Além  disso, 
+
+pouco se mudou em relação aos resultados do caso GRE_EU_1. 
+
+A Figura 5.29 apresenta um perfil de fração volumétrica para uma região bem afastada 
+
+do ponto de lançamento. Vê-se que a diferença entre as curvas é bem pequena e que o perfil é 
+
+essencialmente o mesmo. 
+
+ 
+
+  Caso 6 – GRE_EU_6 
+
+ 
+
+Para  o  caso  GRE_EU_6  as  análises  e  as  respostas  serão  apresentadas  a  seguir  pelas 
+
+Figuras 5.30 e 5.31. 
+
+ 
+
+Figura 5.30 – Fração volumétrica de óleo variando de 0 a 0,80. GRE_EU_6. 
+
+ 
+
+ 
+
+Para  essa  configuração,  o  modelo  de  Lopez  também  não  mostrou  a  dispersão  e  o 
+
+desprendimento das gotas que se espera observar. As diferenças com os casos GRE_EU_1 e 
+
+caso GRE_EU_6 são bem pequenas e os perfis de fração volumétrica de óleo ainda é a mesma 
+
+para todos esses resultados. 
+
+ 
+
+74 
+
+ 
+
+Figura 5.31 – Fração volumétrica de óleo contra a coordenada x; linha 4 (Z=7,7m). GRE_EU_1 (verde), 
+
+GRE_EU_5 (vermelho) e GRE_EU_6 (azul). Linha 4 da Figura (5.18). 
+
+ 
+
+Dessa maneira, percebe-se que a adição de modelos de forças de dispersão turbulenta 
+
+na abordagem Euleriana pouco influencia nos resultados. 
+
+ 
+
+ 
+
+  Caso 7 – GRE_EU_7 
+
+ 
+
+Para esta simulação tem-se os resultados pelas Figuras 5.32 e 5.33. 
+
+ 
+
+Figura 5.32 – Fração volumétrica de óleo variando de 0 a 0,80. GRE_EU_7. 
+
+ 
+
+ 
+
+75 
+
+ 
+
+As respostas para essa simulação foram muito parecidas com caso  GRE_EU_3, onde 
+
+se  acrescentou  o  modelo  de  Lopez,  tanto  na  forma  da  pluma  quanto  no  perfil  das  frações 
+
+volumétricas  do  óleo.  Mais  uma  vez,  não  se  conseguiu  reproduzir  o  desprendimento  e  a 
+
+dispersão das gotas de óleo. Pode-se dizer que para a configuração da simulação GRE_EU_3 
+
+não  foi  preciso  se  adicionar  um  modelo  de  força  de  dispersão  turbulenta,  pois  os  resultados 
+
+quase não foram influenciados pelo acréscimo desse modelo. 
+
+ 
+
+Figura 5.33 – Fração volumétrica de óleo contra a coordenada x; linha 4 (Z= 7,7m). GRE_EU_3 (verde) e 
+
+GRE_EU_7 (vermelho). Linha 4 da Figura 5.18. 
+
+ 
+
+  Caso 8 – GRE_EU_8 
+
+ 
+
+ 
+ 
+
+Nas Figuras 5.34 e 5.35 apresentam-se os resultados deste caso. 
+
+76 
+
+ 
+
+Figura 5.34 – Fração volumétrica de óleo variando de 0 a 0,80. GRE_EU_8. 
+
+ 
+
+ 
+
+O acréscimo do termo de produção devido aos efeitos de flutuabilidade à equação da 
+
+energia cinética turbulenta não alterou muito o resultado do caso GRE_EU_3. Na verdade, a 
+
+pluma  se  mostrou  a  mesma  e  o  comportamento  da  velocidade  do  óleo  enquanto  este  sobe  é 
+
+quase que o mesmo nos dos casos. Diferenças podem ser vistas no gráfico do perfil da fração 
+
+volumétrica para uma região afastada do ponto de lançamento. 
+
+ 
+
+Figura 5.35 – Fração volumétrica de óleo contra a coordenada x; linha 4 (Z= 7,7m). GRE_EU_3 (verde) e 
+
+GRE_EU_8 (vermelho). Linha 4 da Figura 5.18. 
+
+ 
+
+77 
+
+ 
+
+  Caso 9 – GRE_EU_9 
+
+ 
+
+Os resultados do caso GRE_EU_9 são apresentados nas Figuras 5.36 e 5.37. 
+
+Figura 5.36 – Fração volumétrica de óleo variando de 0 a 0,80. GRE_EU_9. 
+
+ 
+
+ 
+
+De  acordo  com  esses  resultados,  pode-se  dizer  que,  mais  uma  vez,  não  se  obteve 
+
+dispersão da pluma em gotas e nem o desprendimento destas da pluma. Comparando-se com 
+
+os resultados do caso GRE_EU_1, observa-se que a diferença também é muito sutil. O gráfico 
+
+abaixo mostra essa comparação entre os perfis de fração volumétrica de cada caso. 
+
+Figura 5.37 – Fração volumétrica de óleo contra a coordenada x; linha 4 (Z= 7,7 m). GRE_EU_1 (azul) e 
+
+GRE_EU_9 (vermelho). Linha 4 da Figura (5.18). 
+
+ 
+
+ 
+
+78 
+
+ 
+
+  Caso 10 – GRE_EU_10 
+
+ 
+Por fim, o caso GRE_EU_10 apresenta os seguintes resultados (Figuras 5.38 e 5.39). 
+
+ 
+
+Figura 5.38– Fração volumétrica de óleo variando de 0 a 0,80. GRE_EU_10. 
+
+ 
+
+ 
+
+Essa configuração se mostrou também muita parecida com as demais, sem a dispersão 
+
+e  o  desprendimento  das  gotas  de  óleo  da  pluma.  E  em  termos  de  comparação  com  o  caso 
+
+GRE_EU_3, não houve nenhuma diferença significativa, é o que mostra o gráfico do perfil da 
+
+fração volumétrica para uma região afastada do lançamento. 
+
+Figura 5.39 – Fração volumétrica de óleo contra a coordenada x; linha 4 (Z= 7,7m). GRE_EU_3 (verde)e 
+
+GRE_EU_10(vermelho). Linha 4 da Figura (5.18). 
+
+ 
+
+ 
+
+79 
+
+ 
+
+Assim,  não  há  diferença  significativa  para  a  resposta  do  caso  GRE_EU_3  quando  se 
+
+inclui a opção de Solver Multiple Control para as frações volumétricas. 
+
+Nota-se,  portanto,  que  para  os  casos  Eulerianos  nesse  domínio  de  grande  escala,  foi 
+
+possível se reproduzir a pluma de óleo e o seu possível comportamento ao ser carregado pelas 
+
+correntes  e  como  a  água  salgada  que  constitui  o  domínio  também  forma  a  pluma,  além  do 
+
+óleo.  No  entanto,  não  se  observou  em  nenhum  caso  a  presença  de  gotas  de  óleo  e  uma 
+
+dispersão e desprendimento delas da pluma nessas simulações. 
+
+ 
+
+5.2.3. RESULTADOS – ABORDAGEM LAGRANGEANA – GRE 
+
+ 
+
+ 
+
+  Caso 1 – GRE_LG_1 
+
+O  primeiro  caso  da  abordagem  Lagrangeana  apresentou  os  seguintes  resultados 
+
+(Figuras 5.40 e 5.41): 
+
+ 
+
+ 
+
+Figura 5.40 – Superfície de fração volumétrica constante e igual a 0,01. GRE_LG_1 
+
+ 
+
+80 
+
+ 
+
+Figura 5.41 – Fração volumétrica de óleo variando de 0 a 0,50. GRE_LG_1. 
+
+ 
+
+ 
+
+Pelas Figuras 5.40 e 5.41 pode-se ver a grande diferença entre as abordagens Euleriana 
+
+e Lagrangeana. Para essa simulação, observa-se uma abertura da pluma em dois, em que cada 
+
+pedaço sobe  com  velocidades diferentes, o que  pode caracterizar a quebra da pluma quando 
+
+diferentes tamanhos de gotas de óleo possuem diferentes velocidades de ascensão.  
+
+Parece que a pluma está se dividindo à medida que sobe e é carregada pelas correntes 
+
+de  formas  diferentes.  No  entanto,  ainda  não  foi  possível  visualizar  as  gotas  de  óleo  se 
+
+desprendendo da pluma. 
+
+ 
+
+  Caso 2 – GRE_LG_2 
+
+ 
+
+Resultados apresentados nas Figuras 5.42, 5.43 e 5.44. 
+
+81 
+
+ 
+
+Figura 5.42 – Fração volumétrica de óleo variando de 0 a 0,50. GRE_LG_2. 
+
+ 
+
+ 
+
+Pelas respostas desta simulação, nota-se que esta apresenta os mesmos resultados que 
+
+o caso GRE_LG_1. Há a separação da pluma em regiões de diferentes velocidades, mas ainda 
+
+não foi possível visualizar as gotas de óleo se dispersão e se desprendendo da pluma.   
+
+De acordo com as Figuras 5.43 e 5.44 tem-se que pequena diferença é mostrada entre 
+
+os  perfis  de  fração  volumétrica  de  óleo  para  uma  região  próxima  ao  ponto  de  lançamento  e 
+
+uma afastada deste ponto, respectivamente. Porém, não há diferença considerável. 
+
+Figura 5.43 – Fração volumétrica de óleo contra a coordenada x; linha 2 (Z= 0,30m). GRE_LG_1 (verde) e 
+
+GRE_LG_2 (vermelho). Linha 2 da Figura 5.18. 
+
+ 
+
+ 
+
+82 
+
+ 
+
+Figura 5.44 – Fração volumétrica de óleo contra a coordenada x; linha 3 (Z= 4,0m). GRE_LG_1 (verde) e 
+
+GRE_LG_2 (vermelho). Linha 2 da Figura 5.18. 
+
+ 
+
+Por  isso,  pode-se  concluir  que  a  inclusão  do  termo  de  produção  extra  de  energia 
+
+cinética turbulenta não é necessária para o caso GRE_LG_1. 
+
+ 
+
+ 
+
+  Caso 3 – GRE_LG_3 
+
+ 
+
+Resultados na Figura 5.45 abaixo. 
+
+ 
+
+Figura 5.45 – Fração volumétrica de óleo variando de 0 a 0,50. GRE_LG_3. 
+
+ 
+
+83 
+
+ 
+
+ 
+
+Esses resultados mostram um comportamento diferente dos dois primeiros casos. A pluma de 
+
+óleo fica presa em uma certa altura do domínio. Na realidade, pela literatura é conhecido que 
+
+este fenômeno não ocorre para o óleo e apenas para a água que pode ficar presa devido  aos 
+
+efeitos  de  estratificação  ambiente.  Todavia,  o  óleo  não  pode  ficar  preso,  pois  sempre  terá  o 
+
+empuxo para levá-lo para cima. 
+
+Ainda não é possível visualizar gotas e a pluma separa-se em regiões como nos casos 
+
+GRE_LG_1 e GRE_LG_2, porém não é fisicamente possível que esta pare de subir pela água, 
+
+já que as propriedades do óleo são constantes. 
+
+Pode-se  pensar  que  esta  é  uma  simulação  não  convergida,  contudo  os  resíduos  das 
+
+variáveis desta foram os mesmos que os dos casos GRE_LG_1 e GRE_LG_2.  
+
+Isso mostra que o modelo de dispersão turbulenta não foi adequado. 
+
+ 
+
+  Caso 4 – GRE_LG_4 
+
+ 
+
+O  caso  GRE_LG_4  considera  um  modelo  de  quebra  para  o  óleo  e  apresentou  as 
+
+seguintes respostas (Figura 5.46): 
+
+ 
+
+Figura 5.46 – Fração volumétrica de óleo variando de 0 a 0,50. GRE_LG_4. 
+
+ 
+
+ 
+
+84 
+
+ 
+
+Assim  como  no  caso  GRE_LG_3,  as  respostas  para  essa  simulação  mostram  que  o 
+
+óleo está preso em uma certa altura. Embora tenha se conseguido uma boa ideia da dispersão, 
+
+com  a pluma se dividindo à medida que sobe, sabe-se que o óleo não pode parar de subir o 
+
+que invalida esta simulação. E da mesma maneira, os resíduos das variáveis foram os mesmos 
+
+das simulações anteriores. 
+
+ 
+
+  Caso 5 – GRE_LG_5 
+
+ 
+
+Finalmente para o último teste tem-se as respostas apresentadas pela Figura 5.47. 
+
+Figura 5.47 – Fração volumétrica de óleo variando de 0 a 0,50. GRE_LG_5. 
+
+ 
+
+ 
+
+Esse caso também  apresenta o problema em que a pluma é arrastada pelas correntes, 
+
+mas fica presa em um certa altura do domínio. Esse resultado invalida a simulação, pois em 
+
+casos reais o óleo alcança a superfície. 
+
+Portanto, percebe-se que a melhor resposta que se obteve para esta abordagem foi a da 
+
+simulação GRE_LG_1 em  que o óleo continuou em  seu movimento de ascensão, sem  parar, 
+
+mas onde não houve a aparição das gotas de óleo, mesmo a pluma mostrando certa dispersão 
+
+em regiões com velocidades diferentes. 
+
+Além  disso, incluir um  termo de produção extra  para a  energia cinética turbulenta, o 
+
+caso GRE_LG_2, quase não influenciou na resposta da simulação GRE_LG_1 . 
+
+ 
+
+ 
+
+ 
+
+85 
+
+ 
+
+6. CONCLUSÕES 
+
+ 
+
+O presente trabalho procurou reproduzir um escoamento de óleo em água em pequena 
+
+e  grande  profundidade,  utilizando  para  isso  condições  de  experimentos  disponíveis  na 
+
+literatura. 
+
+Os  experimentos  de  injeção  de  óleo  em  água  de  Adams  e  Masutani  (2001)  foram 
+
+reproduzidos com CFD. Para a abordagem Euleriana, percebeu-se através dos resultados, que 
+
+a pluma de óleo era efetivamente formada, assim como nos experimentos para a maior vazão; 
+
+entretanto não foi possível, em nenhum dos testes, visualizar a dispersão em pequenas gotas 
+
+da  pluma  como  ocorria  no  caso  real.  Isso  pode  ser  justificado  pelo  fato  da  modelagem 
+
+Euleriana,  mesmo  considerando  o  óleo  como  um  fluido  disperso,  não  ser  capaz  de  rastrear 
+
+cada partícula que possa vir a se desprender da pluma. 
+
+Na modelagem Lagrangeana, dois resultados mostraram o centro de suas plumas com 
+
+um comportamento discreto, em outras palavras, mostraram regiões que poderiam indicar as 
+
+gotas  de  óleo.  Entretanto,  não  houve  um  desprendimento  de  gotas  como  é  observado  nos 
+
+dados  experimentais.  O  caso  Tanque_LG_3  foi  considerado  o  que  o  mais  se  aproximou  do 
+
+caso  real,  pois  além  de  apresentar  uma  pluma  formada,  apresentou  o  desprendimento  das 
+
+gotas de óleo. 
+
+No  entanto,  para  as  menores  vazões  de  óleo,  que  nos  experimentos  levaram  a 
+
+escoamento na forma de jatos ou em gotas, a simulação Tanque_LG_3não reproduziu bem os 
+
+fenômenos observados. 
+
+Já na simulação em grande escala, GRE, com a modelagem Euleriana, foi possível, na 
+
+maioria das simulações, formar uma pluma; incluindo o arraste da água, formando a pluma de 
+
+duas fases;  e o desvio na pluma provocado pelas correntes marítimas. Contudo, assim como 
+
+nos  casos  Eulerianos  do  Tanque,  não  foi  possível  visualizar  as  gotas  de  óleo  e  seu 
+
+desprendimento da pluma. 
+
+No  caso  em  grande  escala  com  a  abordagem  Lagrangeana,  apenas  as  configurações 
+
+GRE_LG_1 e GRE_LG_2 foram consideradas fisicamente possíveis.  
+
+Portanto,  acredita-se  que  a  abordagem  Lagrangeana  seja  a  mais  adequada  para 
+
+representar  esse  tipo  de  escoamento  com  dispersão  de  gotas,  pois  é  capaz  de  rastrear  as 
+
+partículas e assim reproduzir as duas fases da pluma, antes e depois da altura de término. A 
+
+modelagem Euleriana pode ser capaz de prever bem o comportamento da fase de pluma, antes 
+
+86 
+
+ 
+
+da  altura  de  término,  quando  as  gotas  de  óleo  sobem  juntas  formando  uma  pluma  única. 
+
+Todavia, o comportamento das gotas quando sobem com velocidades diferentes, de acordo o 
+
+tamanho de cada uma, se distancia muito do comportamento de subida de uma pluma única, o 
+
+que torna a metodologia Euleriana pouco eficiente. 
+
+Acredita-se  que  para  melhorar  a  qualidade  dos  resultados  e,  assim,  conseguir  uma 
+
+reprodução  mais  fiel  da  realidade,  pode-se  mudar  o  tipo  de  malha  tetraédrica  utilizada  no 
+
+trabalho  para  uma  malha  hexaédrica,  o  que  pode  levar  a  respostas  mais  precisas.  Por  fim, 
+
+quanto  aos  modelos  disponíveis  na  ferramenta  de  CFD  empregada,  pode-se  testar  outros 
+
+modelos de quebra de gotas, utilizando-o sem conjunto com as forças de dispersão turbulenta 
+
+para produzir resultados com uma maior dispersão das gotas, como ocorre nos casos reais. 
+
+ 
+
+ 
+
+ 
+
+87 
+
+ 
+
+7. REFERÊNCIAS BIBLIOGRÁFICAS 
+ 
+2.20 
+
+Hydrodynamics 
+
+Marine 
+
+– 
+
+Lecture 
+
+2. 
+
+Disponível 
+
+em: 
+
+http://web.iitd.ac.in/~pmvs/courses/aml715/lgeul.pdf . Acesso em: 11/12/2014. 
+
+em: 
+
+North 
+
+Sea 
+
+platform 
+
+NEWS. 1980: 
+
+collapses. Disponível 
+
+ 
+ADAMS, E.E. e SOCOLOFSKY, S.A. Deep Oil Spill Modeling Activity Supported By The 
+Deepspill Jip And Offshore Operators Committee, 2004. 
+ 
+ANSYS THEORY GUIDE. (n.d.). NEAR-WALL TREATMENTS FOR WALL-BOUNDED 
+TURBULENT FLOWS. 
+ 
+BBC 
+http://news.bbc.co.uk/onthisday/hi/dates/stories/march/27/newsid_2531000/2531091.stm  
+Acesso em: 10/09/2014. 
+ 
+BRANDVIK,  Per  Johan  et  al.  Droplet  breakup  in  subsurface  oil  releases  –  Part  1: 
+Experimental  study  of  droplet  breakup  and  effectiveness  of  dispersant  injection. Marine 
+Pollution Bulletin. Noruega, p. 319-326. set. 2013. 
+ 
+CHAM. CHAM  Your  Gateway  to  CFD  Success. Disponível  em:  http://www.cham.co.uk/ 
+Acesso em: 22 out. 2014. 
+ 
+CHAN, Godine. Effects of Droplets Size on Intrusion of Sub-Surface Oil Spills. 2013. 90 
+f. Dissertação (Mestrado) - Curso de Engenharia de Meio Ambiente, Massachusetts  Institute 
+Of Technology, Massachusetts, 2013. 
+ 
+CHEN,  Fanghui;  YAPA,  Poojitha.  Three-dimensional  visualization  of  multi-phase 
+(oil/gas/hydrate)  plumes. Environmental  Modelling&  Software. Estados  Unidos,  p.  751-
+760. abr. 2003. 
+ 
+CHEN, Fanghui; YAPA, Poojitha. Estimating the Oil Droplet Size Distributions in Deepwater 
+Oil Spills. Journal of Hydraulic Engineering. Estados Unidos, p. 197-207. fev. 2007. 
+ 
+DASANAYAKA, Lalith K.; YAPA, Poojitha. Role of plume dynamics phase in a deepwater 
+oil  and  gas  release  model. Journal  of  Hydro-environment  Research.  EstadosUnidos,  p. 
+243-253.jan. 2009. 
+ 
+Descriptions 
+http://www.mne.psu.edu/cimbala/Learning/Fluid/Introductory/descriptions_of_fluid_flows.ht
+m. Acesso em: 25/11/2014. 
+ 
+FERZIGER,  J.,  &  PERIC,  M.  (2002).  COMPUTATIONAL  METHODS  FOR  FLUID 
+DYNAMICS. Springer. 
+ 
+FREIRE, A. P. (2006). TURBULÊNCIA. 
+ 
+
+Disponível 
+
+of 
+
+Fluid 
+
+Flows. 
+
+em: 
+
+88 
+
+ 
+
+JOHANSEN,  Øéistein.  DeepBlow  -  a  Lagrangian  Plume  Model  for  Deep  Water 
+Blowouts. Spill Science & Technology Bulletin. Grã-bretanha, p. 103-111.fev. 2000. 
+ 
+JOHANSEN,  Øistein;  RYE,  Henrik;  COOPER,  Cortis.  DeepSpill––Field  Study  of  a 
+
+Simulated Oil and Gas Blowout in Deep Water. Spill Science  & Technology  Bulletin. Grã-
+
+bretanha, p. 433-443.mar. 2003. 
+
+ 
+
+JOHANSEN, Øistein.  Development  and verification  of deep-water blowout  models. Marine 
+
+Pollution Bulletin. Noruega, p. 360-368. jun. 2003. 
+
+ 
+
+JOHANSEN,  Øistein;  DALING,  Per;  MOLDESTAD,  Merete;  LEWIS,  Alun;  JON,  Rodal. 
+
+Norwegian Testing of Emulsion Properties at Sea––The Importance of Oil Type and Release 
+
+Conditions. Spill Science & Technology Bulletin. Noruega, p. 123-136. set. 2003. 
+
+ 
+
+JOHANSEN, Øistein; BRANDVIK, Per Johan; FAROOQ, Umer. Droplet breakup in subsea 
+
+oil  releases  –  Part  2:  Predictions  of  droplet  size  distributions  with  and  without  injection  of 
+
+chemical dispersants. Marine Pollution Bulletin. Noruega, p. 327-335. mar. 2013. 
+
+ 
+
+KHAN,  F.I.;  ABBASI,  S.A.  MAJOR  ACCIDENTS  IN  PROCESS  INDUSTRIES  AND  AN 
+
+ANALYSIS  OF  CAUSES  AND  CONSEQUENCES.  Journal  of  Loss  Prevention  in  the 
+
+Process Industries, p. 361-378, 1999. 
+
+ 
+
+KLEIN, T. S. The Development and Application of Two-Time-Scale Turbulence Models For 
+Non-Equilibrium Flows. Manchester, 2012. 
+ 
+LAUNDER,  B.  E.;  REECE,  G.  J.;  RODI,  W.  Progress  in  the  Development  of  a  Reynolds-
+Stress Turbulent Closure. Journal of Fluid Mechanics, Vol. 68(3), pp. 537-566,1975. 
+ 
+LI,  Wei;  PANG,  Yongjie;  LIN,  Jianguo;  LIANG,  Xiao.  Computational  Modeling  of 
+Submarine  Oil  Spill  with  Current  and  Wave  by  FLUENT. Research  Journal  Of  Applied 
+Sciences, Engineering And Technology. EstadosUnidos, p. 5077-5082. dez. 2012. 
+ 
+
+LINDERSEN, Peter Johan Bergh. Modelling of Subsurface Releases of Oil and Gas. 2013. 
+
+104  f.  Dissertação  (Mestrado)  -  Curso  de  EngenhariaQuímica,  Norwegian  University  Of 
+
+Science And Technology, Noruega, 2013. 
+
+ 
+
+89 
+
+ 
+
+MALALASEKERA, M., & VERSTEEG, H. Introduction to Computational Fluid Dynamics - 
+The Finite Volume Method. Longman Scientific and Technical ,1995. 
+ 
+
+MALISKA,  C.  R.  Transferência  de  Calor  e  Mecânica  dos  Fluidos  Computacional: 
+
+Fundamentos, Coordenadas Generalizadas, LTC Editora, 1995. 
+
+ 
+
+MASUTANI, Stephen M.; ADAMS, E. Eric. Experimental study of multi-phase plumes with 
+
+application  to  deep  ocean  oil  spills. Hawaii:  U.S.  Department  Of  The  Interior  Minerals 
+
+Management Service. 2001. 88 p. 
+
+ 
+
+OXFORD  Dictionaries.  Disponível  em:  http://www.oxforddictionaries.com/us/.  Acesso  em: 
+
+15/12/2014. 
+
+ 
+
+NICHOLS,  R.  H.. Turbulence  Models  and  Their  Application  to  Complex  Flows. 2008. 
+
+214 f. Monografia (Especialização) - Curso de Engenharia Química, University Of Alabama, 
+
+Alabama, 2008. 
+
+ 
+
+OIL SPILL CONFERENCE, 1983, Rhode Island. A REVIEW OF THE STATE-OF-THE-
+ART  OF  OIL  SPILL  FATE/BEHAVIOR  MODELS. Rhode  Island:  Submarine  Signal 
+Division, 1983. 10 p. 
+ 
+
+SEVENTH  INTERNATIONAL  CONFERENCE  ON  CFD  IN  THE  MINERALS  AND 
+PROCESS INDUSTRIES, 2009, Melbourne. CFD  MODELLING  OF  LIQUID  JET  AND 
+CASCADE  BREAKUP  IN  CROSSFLOWS. Clayton  South:  Process  Science  And 
+Engineering, Commonwealth Scientific And Industrial Research Organisation, 2009. 6 p. 
+ 
+
+SILVA,  R.A.;  BUIATTI,  C.M;  CRUZ,  S.L.;  PEREIRA,  J.A.F.R.  Pressure  Wave  Behavior 
+
+and  Leak  Detenction  in  Pipelines.  Computers  &  Chemical  Engeneering,  20,  p.  491-496, 
+
+1996. 
+
+ 
+WANG,  S.d.;  SHEN,  Y.m.;  ZHENG,  Y.h..  Two-dimensional  numerical  simulation  for 
+transport  and  fate  of  oil  spills  in  seas. Ocean  Engineering. Estados  Unidos,  p.  1556-1571. 
+mar. 2005. 
+ 
+XIE,  Hao;  YAPA,  Poojitha  D.;  NAKATA,  Kisaburo.  Modeling  emulsification  after  an  oil 
+spill in the sea. Journal Of Marine Systems. Estados Unidos, p. 489-506. fev. 2007. 
+ 
+YAPA,  Poojitha  D.;  ZHENG,  Li.  Modelling  Oil  and  Gas  Releases  from  Deep  Water:  A 
+Review. Spill Science & Technology Bulletin. Grã-bretanha, p. 189-198.ago. 1998. 
+
+90 
+
+ 
+
+ 
+YAPA,  Poojitha  D.;  ZHENG,  Li;  CHEN,  Fanghui.  A  Model  for  Deepwater  Oil/Gas 
+Blowouts. Marine Pollution Bulletin. Grã-bretanha, p. 234-241.jan. 2001. 
+ 
+YAPA, Poojitha D.; XIE, Hao. Modeling Underwater Oil/Gas Jets and Plumes: Comparison 
+with Field Data. Journal Of Hydraulic Engineering. Estados Unidos, p. 855-860. set. 2002. 
+ 
+YAPA,  Poojitha  D.;  WIMALARATNE,  Malinda  R.;  DISSANAYAKE,  Anusha  L.; 
+DEGRAFF  JR.,  Jeffrey  A.  How  does  oil  and  gas  behave  when 
+in 
+deepwater? Journal  Of  Hydro-environment  Research. Estados  Unidos,  p.  275-285.  maio 
+2012. 
+ 
+ZHENG,  Li;  YAPA,  Poojitha  D.  Modeling  gas  dissolution 
+spills. Journal Of Marine Systems. Estados Unidos, p. 299-309. set. 2001. 
+ 
+ZHENG, Li; YAPA, Poojitha D.; CHEN, Fanghui. A model for simulating deepwater oil and 
+gas  blowouts  –  Part 
+formulation. Journal  Of  Hydraulic 
+Research. Estados Unidos, p. 339-351. dez. 2003 
+ 
+ 
+ 
+ 
+ 
+
+I:  Theory  and  model 
+
+ 
+
+released 
+
+in  deepwater  oil/gas 
+
+91 
+
+ 
+
+

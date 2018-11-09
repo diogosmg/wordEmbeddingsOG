@@ -1,0 +1,6533 @@
+UNIVERSIDADE FEDERAL DO RIO DE JANEIRO 
+
+Departamento de Engenharia Mecânica 
+
+DEM/POLI/UFRJ 
+
+ 
+
+ 
+
+ 
+ 
+
+TERMOECONOMIA APLICADA À ANÁLISE E OTIMIZAÇÃO DE SISTEMAS DE 
+
+COGERAÇÃO A BIOGÁS 
+
+ 
+
+HUGO RODOLFO DE CARVALHO COSTERMANI 
+
+ 
+ 
+
+ENGENHARIA  MECÂNICA  DA 
+
+PROJETO  FINAL  SUBMETIDO  AO  CORPO  DOCENTE  DO  DEPARTAMENTO 
+DE 
+POLITÉCNICA  DA 
+UNIVERSIDADE  FEDERAL  DO  RIO  DE  JANEIRO  COMO  PARTE  DOS 
+REQUISITOS  NECESSÁRIOS  PARA  A  OBTENÇÃO  DO  GRAU  DE 
+ENGENHEIRO MECÂNICO. 
+
+ESCOLA 
+
+Aprovado por: 
+
+ 
+
+ 
+
+________________________________________________ 
+Prof. Manuel Ernani de Carvalho Cruz (Orientador) 
+
+ 
+ 
+
+________________________________________________ 
+Dr. Leonardo dos Santos Reis Vieira (Orientador) 
+
+ 
+ 
+
+________________________________________________ 
+Prof. Marcelo José Colaço 
+
+ 
+ 
+
+________________________________________________ 
+Prof. Nísio de Carvalho Lobo Brum 
+
+ 
+ 
+ 
+
+RIO DE JANEIRO, RJ - BRASIL 
+
+FEVEREIRO DE 2012 
+
+ 
+
+ 
+
+Índice 
+
+1.  Introdução .................................................................................................................... 7 
+
+1.1. Relevância do tema .............................................................................................. 10 
+
+1.2. Objetivo ................................................................................................................ 10 
+
+2.  Estado da Arte ............................................................................................................ 12 
+
+2.1. Cogeração ............................................................................................................. 12 
+
+2.2. Biogás ................................................................................................................... 13 
+
+2.3. Termoeconomia ................................................................................................... 14 
+
+3.  Estudo de caso ........................................................................................................... 18 
+
+3.1. Descrição da planta de cogeração ........................................................................ 19 
+
+3.2. Descrição do problema de otimização ................................................................. 21 
+
+3.3. Descrição dos métodos utilizados ........................................................................ 25 
+
+3.4. Descrição das rotinas implementadas .................................................................. 30 
+
+3.4.1. Programaprincipal.m ..................................................................................... 30 
+
+3.4.2. Criterios.m ..................................................................................................... 31 
+
+3.4.3. Melhoraauto.m .............................................................................................. 35 
+
+3.4.4. Otimizaauto.m ............................................................................................... 38 
+
+3.5. Descrição da execução das rotinas e avaliações realizadas ................................. 39 
+
+4.  Resultados .................................................................................................................. 42 
+
+4.1. Método OM .......................................................................................................... 42 
+
+4.2. Método ME1 ........................................................................................................ 44 
+
+4.3. Método ME2 ........................................................................................................ 48 
+
+4.4. Comparação dos resultados obtidos ..................................................................... 54 
+
+5.  Conclusões e Sugestões ............................................................................................. 58 
+
+6.  Referências bibliográficas .......................................................................................... 60 
+
+ 
+
+2 
+
+7.  Anexo 1 – Resultados parciais do método OM ......................................................... 66 
+
+8.  Anexo 2 – Resultados parciais do método ME1 ........................................................ 67 
+
+9.  Anexo 3 – Resultados parciais do método ME2 ........................................................ 71 
+
+10.  Anexo 4 – Rotina “Programaprincipal.m” .......................................................... 77 
+
+11.  Anexo 5 – Rotina “Criterios.m” .......................................................................... 78 
+
+12.  Anexo 6 – Rotina “Melhoraauto.m” .................................................................... 86 
+
+13.  Anexo 7 – Rotina “Otimizaauto.m” .................................................................... 88 
+
+14.  Anexo 8 – Sub-rotina “Calculodentrootimizacao.m” .......................................... 89 
+
+15.  Anexo 9 – Sub-rotina “Calculoforaotimizacao.m” ............................................ 104 
+
+ 
+
+ 
+
+ 
+
+3 
+
+Índice de Figuras 
+
+Figura 1 – Diagrama da planta utilizada na modelagem (VIEIRA, 2009). .................... 20 
+
+Figura 2 – Fluxogramas dos métodos utilizados neste trabalho ..................................... 25 
+
+Figura  3  –  Fluxograma  das  estapas  do  método  exergoeconômico,  válido  para  ME1  e 
+
+ME2 ................................................................................................................................ 29 
+
+Figura 4 – Fluxograma dos processos dos métodos ME1 e ME2 .................................. 35 
+
+Figura 5 – Representação do fluxograma das rotinas dos métodos ME1 e ME2. .......... 40 
+
+Figura 6 – Resultado gráfico do método OM ................................................................. 44 
+
+Figura 7 – Resultado gráfico do método ME1. .............................................................. 47 
+
+Figura 8 – Resultado gráfico do método ME2. .............................................................. 53 
+
+Figura 9 – Gráfico comparativo do comportamento da função objetivo durante o tempo 
+
+na execução dos métodos de otimização. ....................................................................... 54 
+
+ 
+
+ 
+
+ 
+
+ 
+
+4 
+
+Índice de Tabelas 
+
+Tabela 1 – Composição do biogás utilizado na modelagem do sistema de cogeração. . 20 
+
+Tabela 2 – Valores dos parâmetros constantes do sistema adotados na modelagem. .... 23 
+
+Tabela 3 – Características das variáveis de decisão. ...................................................... 24 
+
+Tabela 4 – Parâmetros adotados na configuração do algoritmo genético no método OM.
+
+ ........................................................................................................................................ 26 
+
+Tabela 5 – Parâmetros de entrada dos métodos ME1 e ME2. ........................................ 27 
+
+Tabela 6 - Parâmetros adotados na configuração do algoritmo genético no método ME1 
+
+e ME2. ............................................................................................................................ 29 
+
+Tabela 7 – Exemplo de Matriz D obtida na execução do método EIS para o sistema de 
+
+cogeração utilizado. ........................................................................................................ 33 
+
+Tabela  8  –  Exemplo  de  Vetor  O  obtido  na  execução  do  método  de  melhoramento 
+
+exergoeconômico. ........................................................................................................... 34 
+
+Tabela  9  –  Exemplo  de  Matriz  D  onde  é  possível  notar  repetições  seguidas  de 
+
+subgrupos de variáveis de decisão. ................................................................................. 37 
+
+Tabela 10 – Definição dos métodos que foram utilizados na comparação de desempenho
+
+ ........................................................................................................................................ 41 
+
+Tabela 11 – Resultado final do método OM................................................................... 43 
+
+Tabela 12 – Resultado do método ME1 para cada iteração. .......................................... 46 
+
+Tabela  13  –  Vetor  O  e  Matriz  D  resultantes  da  primeira  iteração  de  ME1:  oito 
+
+otimizações são realizadas. ............................................................................................. 49 
+
+Tabela  14  –  Vetor  O  e  Matriz  D  resultantes  da  primeira  iteração  de  ME2,  quatro 
+
+otimizações são realizadas. ............................................................................................. 50 
+
+Tabela 15 – Resultado do método ME2 para cada iteração. .......................................... 52 
+
+ 
+
+5 
+
+Tabela 16 – Comparação de resultados finais dos métodos OM, ME1 e ME2. ............. 55 
+
+Tabela 17 – Resultados parciais do método OM ............................................................ 66 
+
+Tabela 18 – Resultado da iteração 1 do método ME1. ................................................... 67 
+
+Tabela 19 – Resultado da iteração 2 do método ME1. ................................................... 68 
+
+Tabela 20 – Resultado da iteração 3 do método ME1. ................................................... 69 
+
+Tabela 21 – Resultado da iteração 4 do método ME1. ................................................... 70 
+
+Tabela 22 – Resultado da iteração 1 do método ME2. ................................................... 71 
+
+Tabela 23 – Resultado da iteração 2 do método ME2. ................................................... 72 
+
+Tabela 24 – Resultados da iteração 3 do método ME2. ................................................. 73 
+
+Tabela 25 – Resultado da iteração 4 do método ME2. ................................................... 74 
+
+Tabela 26 – Resultado da iteração 5 do método ME2. ................................................... 75 
+
+Tabela 27 – Resultado da iteração 4 do método ME2. ................................................... 76 
+
+ 
+
+ 
+
+ 
+
+6 
+
+1. 
+
+ Introdução 
+
+ 
+
+O presente trabalho faz parte do Programa de Recursos Humanos 37 (PRH-37) 
+
+da Agência Nacional do Petróleo (ANP). O mesmo forneceu o suporte necessário para a 
+
+realização deste trabalho. 
+
+ 
+
+A  necessidade  de  racionalização  do  uso  de  combustíveis  e  de  se  reduzir  as 
+
+emissões de poluentes vêm incentivando a busca de sistemas térmicos mais eficientes. 
+
+A maior parte da energia contida nos combustíveis é perdida para o meio ambiente em 
+
+forma  de  calor  e  radiação,  mesmo  nas  máquinas  térmicas  mais  modernas.  As 
+
+irreversibilidades  presentes  devidas  às  limitações  físicas  e  tecnológicas  não  permitem 
+
+um rendimento elevado. Atualmente, em um ciclo térmico convencional somente entre 
+
+25% e 40% da energia do combustível são transformados em eletricidade. 
+
+ 
+
+Uma das alternativas para a obtenção de eficiências mais elevadas é a adoção de 
+
+sistemas  de  cogeração.  A  cogeração  é  a  produção  simultânea  de  energia  térmica  e 
+
+energia  mecânica/elétrica,  a  partir  do  uso  de  um  único  combustível.  Na  cogeração,  
+
+energia  térmica  rejeitada  para  o  ambiente  em  um  ciclo  de  geração  convencional  é 
+
+parcialmente  recuperada  na  forma  de  calor,  podendo  eventualmente  ser  convertida  em 
+
+eletricidade, o que resulta em uma maior eficiência total. 
+
+ 
+
+Além  da  maior  eficiência,  outra  questão  que  envolve  o  uso  da  cogeração  é  a 
+
+descentralização  da  produção  de  energia  elétrica.  A  produção  de  energia  elétrica 
+
+descentralizada com o uso da cogeração pode também aumentar a eficiência do sistema 
+
+elétrico mediante a redução  nas  perdas elétricas na transmissão, pois  reduz a distância 
+
+entre a produção e o consumidor de energia elétrica. A descentralização da produção de 
+
+energia  é  uma  tendência  mundial.  No  Brasil,  esta  alternativa  vem  sendo  considerada 
+
+visto  que  as  grandes  reservas  hidrelétricas  estão  se  esgotando  e  as  que  ainda  existem 
+
+estão localizadas em regiões distantes dos centros de consumo de energia elétrica. Com 
+
+ 
+
+7 
+
+características  de  projeto  semelhantes  às  de  termelétricas  convencionais,  as  usinas  de 
+
+cogeração podem ser instaladas próximas dos consumidores finais, adiando ou evitando 
+
+investimentos adicionais em sistemas de transmissão e distribuição de energia elétrica, 
+
+além de reduzirem o impacto ambiental da instalação de grandes linhas de transmissão. 
+
+ 
+
+Usualmente  as  plantas  de  cogeração  utilizam  como  fonte  quente  motores  de 
+
+combustão interna ou turbinas a gás. A escolha dos equipamentos e da configuração da 
+
+planta  dependem  do  produto  final  que  se  pretende  obter,  se  é  a  energia  térmica  em 
+
+conjunto  com  energia  elétrica  ou  se  é  somente  a  energia  elétrica.  Nos  sistemas  cujo 
+
+objetivo final é apenas geração de energia elétrica os sistemas de cogeração se reduzem 
+
+aos  sistemas  denominados  de  ciclo  combinado,  nos  quais  toda  a  energia  térmica 
+
+rejeitada  na  queima  de  combustível  em  uma  turbina  a  gás  é  utilizada  para  geração  de 
+
+eletricidade  em  um  ciclo  de  turbina  a  vapor.  A  busca  por  maiores  eficiências  em 
+
+sistemas de cogeração se traduzem também em menores índices de emissões. A busca 
+
+pela  redução  de  emissões  e  pela  sustentabilidade  nos  processos  de  geração  vem 
+
+incentivando  a  substituição  do  petróleo  pelo  uso  do  biogás.  Além  disso,  o  preço  do 
+
+petróleo é instável e depende do equilíbrio geopolítico das regiões produtoras, o que não 
+
+ocorre com o biogás. 
+
+ 
+
+As  plantas  de  biogás  tipicamente  utilizam  digestores  para  processar  a  matéria 
+
+orgânica que provêm de resíduos animais, esgoto e lixo urbano. A digestão anaeróbica 
+
+dos resíduos por microrganismos resulta em um gás com características semelhantes ao 
+
+gás natural e composto principalmente por metano e dióxido de carbono. 
+
+ 
+
+O uso do biogás na produção de energia elétrica significa que parte do carbono 
+
+emitido em sua queima é resgatada no ciclo da matéria orgânica utilizada na produção 
+
+do biogás, resultando em uma menor emissão global de poluentes. 
+
+ 
+
+8 
+
+ 
+
+Em função dos motivos expostos acima, o desenvolvimento de novas plantas de 
+
+geração de energia elétrica está se tornando uma tarefa cada vez mais desafiadora, pois 
+
+devem levar em consideração simultaneamente aspectos ambientais, de eficiência e de 
+
+custos, os quais muitas vezes são conflitantes. 
+
+ 
+
+Para  facilitar  a  tomada  de  decisão  foram  desenvolvidos  métodos  de  análises  e 
+
+simulações que  mostram  não  só  a  viabilidade de  um  projeto,  mas  buscam  o  equilíbrio 
+
+entre os aspectos de custo e de eficiência nos projetos. Tais métodos utilizam conceitos 
+
+da termoeconomia. 
+
+ 
+
+A  termoeconomia  tem  o  objetivo  de  investigar,  por  meio  de  métodos 
+
+matemáticos  de  otimização  e  simulações  computacionais,  qual  é  a  melhor  escolha  de 
+
+equipamentos,  combustível  e  modo  de  operação  que  tornem  as  plantas  térmicas  mais 
+
+eficientes  e  mais  economicamente  viáveis.  Estes  métodos,  quando  fazem  uso  dos 
+
+conceitos  da  primeira  e  da  segunda  leis  da  termodinâmica,  ou  seja,  da  energia  e  da 
+
+exergia, são denominados de métodos exergoeconômicos. 
+
+ 
+
+A otimização exergoeconômica consiste na solução de problemas de otimização 
+
+fazendo  uso  de  métodos  exergoeconômicos.  Neste  trabalho  são  avaliados  métodos 
+
+exergoeconômicos  aplicados  ao  projeto  de  plantas  de  cogeração  utilizando  o  biogás 
+
+como combustível. 
+
+ 
+
+Dentro  do  setor  de  óleo,  gás  e  biocombustíveis,  os  métodos  de  otimização  e 
+
+modelos  desenvolvidos  neste  trabalho  podem  ser  utilizados  tanto  para  testar  o  uso  de 
+
+um  combustível  alternativo  (no  caso  foi  utilizado  o  biogás)  em  plantas  já  existentes, 
+
+quanto  para  o  desenvolvimento  de  novas  usinas  de  geração  de  energia  elétrica  ou 
+
+plantas de produção de combustível. 
+
+ 
+
+9 
+
+1.1.  Relevância do tema 
+
+ 
+
+A necessidade de se obter cada vez mais energia de forma eficiente e a crescente 
+
+preocupação com o  meio ambiente vem sido  discutidas  e estudadas mundialmente nas 
+
+últimas décadas. Novas formas e novos métodos de melhor utilizar os combustíveis vêm 
+
+sendo desenvolvidos principalmente com o uso dos algoritmos de otimização. Contudo 
+
+tais  métodos  de  otimização  ainda  esbarram  em  obstáculos  tecnológicos  em  função  da 
+
+elevada complexidade dos modelos e do grande número de variáveis envolvidas em um 
+
+sistema  real.  Uma  solução  que  vem  sendo  proposta  é  a  utilização  de  simuladores 
+
+termodinâmicos profissionais de forma integrada a algoritmos de otimização (VIEIRA, 
+
+2003). 
+
+ 
+
+Com relação à questão ambiental, atualmente há uma permanente discussão com 
+
+relação aos biocombustíveis. Tais combustíveis são derivados da biomassa existente no 
+
+planeta e são renováveis. O carbono emitido para a atmosfera decorrente da queima dos 
+
+biocombustíveis  não  representa  um  dano  significativo  ao  planeta,  ao  contrário  da 
+
+queima  dos  combustíveis  fósseis,  na  qual  há  uma  introdução  de  carbono  adicional  na 
+
+atmosfera sem que haja posteriormente o seu sequestro. 
+
+ 
+
+Dessa  forma,  o  desenvolvimento  de  algoritmos  de  otimização  de  processos 
+
+térmicos  aplicados  a  sistemas  de  cogeração  com  biocombustíveis  e  integrados  à 
+
+simulação  computacional  forma  uma  combinação  promissora  para  o  desenvolvimento 
+
+de sistemas com melhores desempenhos e com menores impactos ambientais. 
+
+ 
+
+1.2.  Objetivo 
+
+ 
+
+O objetivo principal deste trabalho é a implementação de métodos de otimização 
+
+exergoeconômica  aplicados  a  sistemas  de  cogeração  a  biogás  utilizando  de  forma 
+
+integrada  um  simulador  de  processo  termodinâmico  comercial  e  um  programa  de 
+
+ 
+
+10 
+
+otimização  matemática  profissional.  O  simulador  de  processos  é  o  IPSEpro  na  versão 
+
+4.0  e  o  método  de  otimização  matemática  é  um  Algoritmo  Genético,  disponível  no 
+
+programa MATLAB. 
+
+ 
+
+O  método  matemático  de  otimização  com  algoritmos  genéticos  foi  aplicado 
+
+diretamente  para  minimização  da  função  objetivo  e  também  na  abordagem  para  a 
+
+otimização exergoeconômica denominada EIS (Iterative Exergoeconomic Improvement 
+
+integrated  with  a  Simulator)  desenvolvida  por  VIEIRA  (2009).  Neste  estudo  foi 
+
+desenvolvida  a  “Alternativa  1”  do  método  EIS.  Na  abordagem  EIS  foram 
+
+implementados  novos  procedimentos  computacionais  visando  à  redução  do  tempo  de 
+
+otimização. Dessa forma, o estudo tratado trabalha com duas variantes do método EIS. 
+
+A  primeira  será  chamada  de  ME1,  que  utiliza  os  mesmos  cálculo  e  procedimentos  do 
+
+método EIS aplicados em conjunto com o MATLAB. A segunda será chamada de ME2, 
+
+que  implementa  não  só  o  uso  do  MATLAB,  mas  também  um  novo  procedimento 
+
+computacional que visa reduzir o tempo de execução da análise. 
+
+ 
+
+Como  objetivo  secundário  foi  feita uma  comparação  dos  métodos ME1  e  ME2 
+
+com um método de otimização tradicional. Nesse caso o algoritmo genético presente na 
+
+biblioteca  do  MATLAB  foi  aplicado  diretamente  no  problema  de  otimização,  tal 
+
+abordagem foi denominada de OM. 
+
+ 
+
+ 
+
+ 
+
+11 
+
+2.  Estado da Arte 
+
+2.1.  Cogeração 
+
+ 
+
+A  cogeração  não  é  uma  novidade  do  ponto  de  vista  tecnológico.  No  início  do 
+
+século  XX, devido  à escassez de grandes fornecedoras  de energia elétrica a cogeração 
+
+era  aplicada  como  a  solução  mais  adequada  para  a  geração  de  energia  elétrica.  Por  se 
+
+tratar  de  um  modelo  de  geração  distribuída  eficiente  e  econômico  do  ponto  de  vista 
+
+financeiro por ter um custo com combustível mais baixo do que plantas convencionais 
+
+de  geração  de  energia  elétrica.  Essa  situação  se  manteve  até  a  década  de  1940,  sendo 
+
+que nos Estados Unidos a cogeração chegou a ser responsável por 50% do fornecimento 
+
+de energia, (TITO,1993). 
+
+ 
+
+A partir de 1950 as reservas de combustíveis fósseis, antes usadas na guerra, se 
+
+tornaram  finalmente  disponíveis  para  a  sociedade  e,  com  isso,  foram  desenvolvidos 
+
+grandes sistemas de geração e distribuição de energia elétrica. 
+
+ 
+
+Durante a década de 1970, mesmo durante as crises do petróleo a cogeração não 
+
+era  vista  como  uma  alternativa  viável  para  a  produção  de  energia  elétrica  em  grande 
+
+escala.  A  tecnologia  nuclear  era  apontada  como  o  futuro  energético  da  humanidade  e 
+
+recrutava  grandes  investimentos  e  esperanças.  Contudo,  devido  a  acidentes,  aos  altos 
+
+custos  de  instalação  e  a  pressões  políticas  envolvendo  principalmente  a  questão 
+
+ambiental  o  uso  da  energia  nuclear  perdeu  força.  A  partir  da  década  de  1980,  com  a 
+
+reestruturação  da  indústria  do  petróleo,  notou-se  um  crescimento  da  geração 
+
+descentralizada  e  em  modelos  de  plantas  mais  eficientes,  reabilitando  a  tecnologia  de 
+
+cogeração (OLIVEIRA, 1995). 
+
+ 
+
+No final da década de 1970 e início de 1980 foram implementados centenas de 
+
+projetos,  destacando-se  países  como  Dinamarca,  Holanda,  Itália  e  Alemanha.  Nos 
+
+Estados  Unidos  foi  editado  o  National  Energy  Act  -  NEA,  composto  de  cinco  blocos 
+
+ 
+
+12 
+
+independentes.  Dentre  estes,  destaca-se  o  Power  Utilities  Regulatory  Policies  Act  - 
+
+PURPA,  legislação  que  restringiu  o  monopólio  aos  segmentos  de  transmissão  e 
+
+distribuição  elétrica, 
+
+incentivando  a  geração  descentralizada,  principalmente  a 
+
+cogeração. (VIANA JÚNIOR, L., 1999). 
+
+ 
+
+No  Brasil  o  uso  da  cogeração  vem  sendo  impulsionado  nas  últimas  décadas 
+
+devido às altas taxas de energia elétrica imposta pelas operadoras. A alta do preço  das 
+
+tarifas  elétricas  estimula  modelos  de  geração  distribuída,  como  plantas  de  cogeração, 
+
+(POLITO,  2009).  O  uso  de  cogeração  principalmente  pelo  setor  sucroalcooleiro  vem 
+
+ganhando força, “velhas usinas estão partindo para o “retrofit”, ou seja, modernizando 
+
+seu  parque  industrial  e  as  novas  não  começam  uma  obra  se  na  planta  não  estiver 
+
+incluído  o  item  cogeração,  ainda  que  ele  exija  altos  investimentos,  nem  sempre 
+
+disponíveis”, (MONTANINI, 2010). 
+
+ 
+
+Segundo a Associação Paulista de Cogeração de Energia (Cogen/SP), estão em 
+
+operação  376  projetos  de  cogeração  no  Brasil,  principalmente  sucroalcooleiros  e 
+
+indústrias do setor químico, petroquímico e de papel e celulose. Outros 47 sistemas de 
+
+cogeração foram desenvolvidos por prestadoras de serviços para indústrias alimentícias, 
+
+shopping centers, edifícios corporativos, hotéis e outros, (POLITO, 2009). 
+
+ 
+
+2.2.  Biogás 
+
+ 
+
+O  biogás  foi  descoberto  no  século  XVII  nos  pântanos.  No  entanto,  nenhuma 
+
+aplicação prática foi desenvolvida entorno da então nova descoberta. Somente no século 
+
+XIX, Ulysse Gayon, aluno de Louis Pasteur, desenvolveu um trabalho no qual por meio 
+
+de  fermentação  de  dejetos  animais  obteve  um  gás  que  poderia  ter  aplicações  para 
+
+aquecimento  e  iluminação,  (PECORA,  2006).  Contudo,  apenas  com  o  advento  da  II 
+
+Guerra  Mundial,  que  gerou  escassez  de  combustíveis  fósseis,  o  biogás  voltou  a  ser 
+
+ 
+
+13 
+
+utilizado,  agora  não  só  para  o  aquecimento  e  iluminação,  mas  também  para  cozinhar 
+
+alimentos e como combustível para motores de combustão interna. 
+
+ 
+
+Com  o  final  da  segunda  grande  guerra,  as  fontes  de  combustíveis  tradicionais 
+
+voltaram  a  ser  abundantes,  e  o  uso  do  biogás  tornou-se  reduzido.  Porém  a  partir  de 
+
+1970,  com  a  crise  do  petróleo,  biodigestores  anaeróbicos  voltaram  a  ser  utilizados  em 
+
+algumas  partes  do  mundo.  No  Brasil  diversos  programas  de  difusão  da  utilização  do 
+
+biogás foram implantados no nordeste, porém os resultados não foram satisfatórios e os 
+
+benefícios  obtidos  não  foram  suficientes  para  dar  continuidade  a  estes  programas. 
+
+(COELHO, 2001). 
+
+ 
+
+Até a década de 1990 o biogás era visto como um subproduto sem muito valor 
+
+comercial.  Essa  situação  mudou  atualmente  devido  à  preocupação  com  a  questão 
+
+ambiental e às instabilidades na produção de combustíveis fósseis (PINHEIRO, 2004). 
+
+Atualmente, o biogás se mostrou uma alternativa de combustível viável, em substituição 
+
+ao petróleo (AVELLAR et al., 2000) em determinadas aplicações. 
+
+ 
+
+Estudos ao em torno do mundo vêm sendo feitos para melhorar a tecnologia dos 
+
+biodigestores  e  todo  o  processo  de  produção  do  biogás.  No  Brasil  tem  se  estudado  a 
+
+produção  de  biogás  a  partir  de  resíduos  urbanos,  resíduos  bovinos  e  suínos,  e  vinhaça 
+
+(resíduo da produção sucroalcooleira) (SALOMON et al, 2005). 
+
+ 
+
+2.3.  Termoeconomia 
+
+ 
+
+A Termoeconomia pode ser definida como a combinação das análises exergética 
+
+e  econômica  a  fim  de  possibilitar  ao  engenheiro  projetista um  maior  conhecimento  do 
+
+sistema, não alcançado em avaliações energéticas e econômicas convencionais, BEJAN 
+
+et  al.  (1996).  A  ideia  de  aliar  o  conceito  de  exergia  com  os  custos  dos  fluxos  de  um 
+
+sistema surgiu em 1932 com Keenan (ABUSOGLU e KANOGLU, 2009).  
+
+ 
+
+14 
+
+ 
+
+Somente a partir do início da década de 1960, com uma grande participação de 
+
+TRIBUS  e  EVANS  (1962),  GAGGIOLI  (1961a,  1961b)  e  EL-SAYED  e  EVANS 
+
+(1970),  foram  realizados  estudos  mais  detalhados  envolvendo  a  utilização  da  segunda 
+
+lei da termodinâmica no cálculo dos custos dos fluxos de um sistema.  
+
+ 
+
+A primeira citação do termo “Termoeconomia” foi feita em TRIBUS e EVANS 
+
+(1962). A ideia desenvolvida por TRIBUS e EVANS (1962) de associar o custo com o 
+
+combustível, o custo com a operação, e o custo de capital à exergia de cada fluxo, foi a 
+
+base  do  desenvolvimento  de  El-Sayed  em  1970,  que  realizou  uma  primeira 
+
+fundamentação  matemática  para  otimização  de  sistemas  térmicos  (ABUSOGLU  e 
+
+KANOGLU, 2009). Tal metodologia otimiza um sistema térmico através da otimização 
+
+individual  de  cada  um  de  seus  componentes  baseada  nos  conceito  matemático  dos 
+
+multiplicadores de Lagrange (COSTA, 2008). 
+
+ 
+
+As  crises  energética  e  econômica  da  década  de  1970, 
+
+impulsionadas 
+
+principalmente  pelos  choques  do  petróleo,  serviram  de  incentivo  para  a  aplicação 
+
+prática  da  termoeconomia  no  início  da  década  de  1980.  Um  dos  trabalhos  mais 
+
+importantes  publicados  na  época  e  que  ainda  serve  como  referência  básica  na  área  de 
+
+análise  exergética  é  o  trabalho  de  KOTAS  (1985),  o  qual  reúne  alguns  trabalhos 
+
+publicados até então sobre termoeconomia (ABUSOGLU e KANOGLU, 2009). Ainda 
+
+na  década  de  1980,  podem-se  citar  outros  trabalhos  de  grande  relevância  como  os  de 
+
+TSATSARONIS  et  al. 
+
+(1985),  VALERO  et  al. 
+
+(1986a,  1986b,  1986c), 
+
+FRANGOPOULOS (1987) e BEJAN (1988). 
+
+ 
+
+Na  década  de  1990  vieram  grandes  contribuições  na  área  termoeconômica. 
+
+Como resultado dessas contribuições foi definido o termo “Exergoeconomia”, proposto 
+
+por  Tsatsaronis  para  representar  metodologias  de  contabilidade  baseadas  em  custos 
+
+exergéticos. A expressão “Termoeconomia” seria usada para representar uma interação 
+
+ 
+
+15 
+
+geral  entre  variáveis  termodinâmicas  e  econômicas  (TSATSARONIS,  1996)  não 
+
+envolvendo necessariamente o conceito de exergia. Além disso, foi criado  um problema 
+
+padrão  com  a  finalidade  de  estabelecer  um  modelo  de  referência  para  comparação  de 
+
+diferentes  metodologias.  Este  problema  foi  denominado  de  CGAM  (VALERO  et  al., 
+
+1994a), e é um dos trabalhos de maior importância deste período. A década de 1990 foi 
+
+também marcada pela busca da formalização das metodologias exergoeconômicas e da 
+
+aplicação  da  termoeconomia  em  sistemas  de  cogeração  (ABUSOGLU  e  KANOGLU, 
+
+2009).  
+
+ 
+
+No  Brasil,  na  década  de  2000,  podem-se  citar  alguns  trabalhos  visando  à 
+
+otimização  termoeconômica  dos  sistemas  como  o  de  BALESTIERI  (2002),  BORBA 
+
+(2002), VIEIRA (2003), VIEIRA et al. (2004, 2005, 2006), MOTHCI (2005), SANTOS 
+
+(2005),  RÜCKER  (2005),  PADILHA  (2006),  PALMA  (2007),  CORDEIRO  (2007)  e 
+
+COSTA  (2008).  Boa  parte  destes  trabalhos  utiliza  metodologias  auxiliadas  por 
+
+simuladores  de  processos 
+
+termodinâmicos.  Novas  metodologias  vêm  sendo 
+
+progressivamente aplicadas no mundo a instalações já existentes de geração de energia e 
+
+de  cogeração  utilizando  estratégias  estocásticas  como  em  MANOLAS  et  al.  (1997), 
+
+TOFFOLO  et  al.  (2002)  e  SAHOO  (2008).  A  integração  de  estratégias  de  otimização 
+
+estocásticas  ou  de  busca  direta  juntamente  com  simuladores  de  processos  tem  se 
+
+mostrado uma ferramenta poderosa como apresentado, por exemplo, pelos trabalhos de 
+
+VIEIRA  et  al.  (2004,  2009),  KVARNSTRÖM  et  al.  (2005),  CORDEIRO  (2007), 
+
+KOCH et al. (2007) e (PÍRES, 2010). 
+
+ 
+
+A utilização de simuladores termodinâmicos na otimização de sistemas tem por 
+
+objetivo  reduzir  o  número  de  variáveis  que  são  simultaneamente  utilizadas  nos 
+
+algoritmos  de  otimização  matemática  convencionais.  Desta  forma,  o  problema  de 
+
+otimização  passa  a  se  restringir  apenas  às  variáveis  de  decisão  (as  variáveis  de 
+
+ 
+
+16 
+
+simulação  não  são  incorporadas  ao  problema  de  otimização).  Alguns  exercícios  de 
+
+integração destas técnicas a algoritmos profissionais de otimização matemática já foram 
+
+implementados  (PIRES,  2010),  em  sistemas  de  cogeração  com  gás  natural.  Em 
+
+alternativa  aos  métodos  de  otimização,  VIEIRA,  DONATELLI  E  CRUZ  (2008) 
+
+propuseram  a  utilização  de  métodos  de  melhoramento  exergoeconômico  (abordagem 
+
+EIS)  visando  à  aplicação  em  sistemas  complexos,  nos  quais  as  técnicas  convencionais 
+
+de otimização matemática nem sempre são satisfatórias em função do elevado número 
+
+de  variáveis  de  decisão  envolvidas  e  da  complexidade  termodinâmica  do  sistema.  O 
+
+método  de  melhoramento  exergoeconômico  faz  uso  sucessivo  de  algoritmos 
+
+matemáticos  de  otimização  em  subgrupos  de  componentes  e  de  variáveis  de  decisão, 
+
+escolhidos com base em uma análise exergoeconômica prévia do sistema. A integração 
+
+de métodos de melhoramento exergoeconômico com simuladores de processos também 
+
+já  foi  implementadas  –  abordagem  EIS  (VIEIRA,  DONATELLI  e  CRUZ,  2009). 
+
+Porém,  em  seu  trabalho,  não  foram  utilizados  algoritmos  de  otimização  matemática 
+
+profissionais  (comercialmente  disponíveis).  Assim,  neste  trabalho,  além  da  integração 
+
+com  um  simulador  termodinâmico  profissional  já  empregado  em  trabalhos  anteriores 
+
+(VIEIRA, 2003), propõe-se a utilização simultânea de um otimizador profissional para a 
+
+solução do problema de otimização termoeconômica aplicado a sistemas com biogás. 
+
+ 
+
+ 
+
+ 
+
+17 
+
+3. 
+
+ Estudo de caso 
+
+ 
+
+Neste  trabalho  foi  desenvolvido  um  estudo  de  caso  que  teve  como  objetivo 
+
+principal  comparar  dois  procedimentos  de  otimização  aplicados  a  um  sistema  de 
+
+geração  de  energia  elétrica,  que  utiliza  a  tecnologia  de  cogeração  e  biogás  como 
+
+combustível.  Os  procedimentos  escolhidos  foram  os  seguintes: 
+
+i)  otimização 
+
+matemática  integrada  ao  simulador  de  processos  IPSEpro  4.0  utilizando  o  método  dos 
+
+algoritmos  genéticos  disponível  na  biblioteca  do  MATLAB;  ii)  melhoramento 
+
+exergoeconômico  (EIS),  também  integrado  ao  simulador  de  processos  IPSEpro  4.0 
+
+utilizando  o  mesmo  método  dos  algoritmos  genéticos  disponível  na  biblioteca  do 
+
+MATLAB. As otimizações, via o algoritmo genético e via o método de melhoramento 
+
+exergoeconômico, tiveram como objetivo encontrar o custo mínimo da energia elétrica 
+
+gerada pelo sistema de cogeração. 
+
+ 
+
+A  implementação  do  estudo  foi  feita  em  três  etapas.  Primeiramente  foi 
+
+desenvolvida  a  modelagem  computacional  do  sistema  de  cogeração  de  energia  com 
+
+biogás  e  dos  cálculos  termoeconômicos.  Tal  modelagem  foi  feita  no  simulador  de 
+
+processos  termodinâmicos.  O  simulador  de  processos  termodinâmicos  adotado  foi  o 
+
+IPSEpro  4.0  (SIMTECH,  2003),  uma  versão  mais  nova  do  mesmo  programa  utilizado 
+
+com sucesso por VIEIRA (2003). 
+
+ 
+
+A  segunda  etapa  consistiu  na  programação  das 
+
+rotinas  de  cálculos 
+
+exergoeconômicos  no  ambiente  do  programa  MATLAB  2010b  (MATHWORKS, 
+
+2010). Com base nos resultados obtidos da simulação termodinâmica e nas rotinas dos 
+
+cálculos  exergoeconômicos  é  possível  calcular  a  função  objetivo  do  problema  de 
+
+otimização.  
+
+ 
+
+Por  fim,  a  terceira  etapa  foi  a  solução  do  problema  de  otimização.  Conforme 
+
+citado  anteriormente  a  função  objetivo  foi  otimizada  utilizando-se  os  dois  métodos 
+
+ 
+
+18 
+
+citados no início desta seção. Uma descrição das rotinas de cálculos pode ser encontrada 
+
+na seção 3.4 deste documento. 
+
+ 
+
+O  uso  do  MATLAB  como  ferramenta  de  cálculo  e  otimização  integrado  a  um 
+
+simulador  de  processos  profissional  (IPSEpro)  confere  aos  resultados  uma  maior 
+
+confiabilidade  na  prática,  pois  se  trata  do  uso  de  dois  programas  profissionais 
+
+renomados e validados pela comunidade técnico-científica. 
+
+3.1.  Descrição da planta de cogeração 
+
+ 
+
+O sistema de cogeração modelado, apresentado na Figura 1, é composto por 24 
+
+componentes,  incluindo  duas  turbinas  a  gás  (GT01,  GT01a),  uma  turbina  a  vapor  de 
+
+extração  (ST01),  uma  turbina  a  vapor  de  condensação  (ST02),  duas  caldeiras  de 
+
+recuperação de calor (HRSG01, HRSG01a), dois aquecedores de água (H01, H01a), um 
+
+desarerador,  um  condensador,  uma  torre  de  resfriamento,  e  várias  bombas  (P01,  P02, 
+
+P02a, P03), misturadores (M1, M2), splitters (S1, S2, S3, S4) e válvulas (V1, V2, V3). 
+
+O sistema possui 52 fluxos de massa, incluindo entradas e saídas de água. O sistema de 
+
+cogeração  tem  como  produtos,  a  eletricidade  das  turbinas  a  gás  e  a  vapor,  o  vapor  de 
+
+processo, e a água quente de processo. O combustível para as turbinas a gás é o biogás. 
+
+ 
+
+19 
+
+Figura 1 – Diagrama da planta utilizada na modelagem (VIEIRA, 2009). 
+
+ 
+
+O biogás utilizado na modelagem tem sua composição apresentada na Tabela 1 e 
+
+poder calorífero inferior (PCI) igual a 30000 kJ/kg, (SALOMON et al, 2005). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Tabela 1 – Composição do biogás utilizado na modelagem do sistema de cogeração. 
+
+A modelagem desse sistema térmico foi feita utilizando o programa IPSEpro 4.0, 
+
+ 
+
+com  base  nos  modelos  desenvolvidos  em  VIEIRA  (2003),  exceto  pelo  combustível 
+
+ 
+
+20 
+
+ComponenteMássicaVolumétricaMetano (CH4)42,29%64,50%Monóxido de carbono (CO)1,13%1,00%Dióxido de carbono(CO2)54,32%30,00%Hidrogênio (H2)0,27%3,00%Ácido Sulfídrico (H2S)0,68%0,50%Nitrogênio (N2)0,61%0,50%Oxigênio (O2)0,70%0,50%COMPOSIÇÃO DA MISTURA GASOSA DO BIOGÁS utilizado. Assim, para facilitar a comparação, foi adotada a mesma notação utilizada por 
+
+VIEIRA (2003). 
+
+3.2.  Descrição do problema de otimização 
+
+ 
+
+A  função  objetivo  do  problema  de  otimização  é  a  soma  dos  custos  específicos 
+
+dos  produtos  do  sistema,  que  inclui  o  investimento  de  capital  nos  equipamentos  da 
+
+planta, o custo de combustível e operação e os custos de manutenção. A função objetivo 
+
+  pode ser expressa por (1), (VIEIRA et al, 2004, 2006): 
+
+  
+
+           
+
+ 
+
+   
+
+ 
+
+                    
+  
+
+   
+
+  
+   
+      
+
+  
+   
+
+ 
+
+(1) 
+
+ 
+
+ 
+
+Em  (1)      e      correspondem  ao  custo  específico  de  produto  e  combustível, 
+
+respectivamente,      e      são  os  números  totais  de  produtos  e  combustíveis  do 
+
+sistema,  respectivamente,  e        é  a  taxa  de  fluxo  de  exergético  do  combustível  para  o 
+
+componente de índice  . O termo    corresponde ao número do componente presente 
+
+na planta. 
+
+ 
+
+A  determinação  dos  custos  exergéticos  dos  combustíveis  e  produtos  dos 
+
+componentes obedecem às mesmas expressões propostas por VIEIRA (2003). 
+
+ 
+
+A  soma  do  capital  investido  em  equipamentos  e  custos  de  operação  e 
+
+manutenção para o componente    é (2): 
+
+  
+     
+   
+
+  
+
+     
+
+   
+
+                
+
+ 
+
+ 
+
+(2) 
+
+ 
+
+ 
+
+Em (2),                 é o investimento de capital total,          
+
+      
+
+        
+
+ é o 
+
+fator de recuperação de capital,   é o número de horas operacionais em um ano,   é o 
+
+fator de manutenção, assumido como constante, e   e   são, respectivamente, a vida útil 
+
+do sistema e taxa de juros. Os valores dos parâmetros econômicos usados em todos os 
+
+cálculos são:   = 2,   = 12,7%,   = 10 anos,   = 8000 horas, e   = 1,06, onde,      é o 
+
+21 
+
+ 
+
+custo de cada componente utilizado no sistema de cogeração tratado. Maiores detalhes 
+
+podem ser encontrados em VIEIRA (2003). 
+
+ 
+
+O problema de otimização envolve nove variáveis de decisão escolhidas por se 
+
+mostrarem  como  sendo  as  variáveis  de  maior  importância  em  estudos  anteriores,  as 
+
+mesmas  utilizadas  em  VIEIRA  (2003)  e  PIRES  (2010).  As  nove  variáveis  de  decisão 
+
+são apresentadas mais adiante na  Tabela 3. As demandas de vapor de processo e água 
+
+quente  são  consideradas  constantes.  No  processo  de  otimização  foi  aplicada  uma 
+
+penalidade  que  faz  a  função  objetivo  retornar  um  valor  constante  de  100  unidades 
+
+monetárias caso ocorra uma inviabilidade termodinâmica nos cálculos do simulador de 
+
+processos. Este valor é muito superior ao valor final esperado da função objetivo. 
+
+ 
+
+A  Tabela  2  apresenta  os  valores  adotados  para  os  parâmetros  constantes  do 
+
+sistema.  
+
+ 
+
+A Tabela 3 apresenta as variáveis de decisão do sistema, seus limites superior e 
+
+inferior, e seus valores iniciais, ponto inicial do processo de otimização. 
+
+ 
+
+22 
+
+ 
+.
+
+ 
+
+m
+e
+g
+a
+l
+e
+d
+o
+m
+a
+n
+ 
+s
+o
+d
+a
+t
+o
+d
+a
+a
+m
+e
+t
+s
+i
+s
+ 
+
+ 
+
+o
+d
+ 
+s
+e
+t
+n
+a
+t
+s
+n
+o
+c
+ 
+s
+o
+r
+t
+e
+m
+â
+r
+a
+p
+ 
+s
+o
+d
+ 
+s
+e
+r
+o
+l
+a
+V
+–
+2
+
+ 
+
+ 
+
+ 
+
+a
+l
+e
+b
+a
+T
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+23 
+
+Fluxo ou ComponenteParâmetroValorEficiência volumétrica0,85                  Eficiência mecânica0,90                  MotoresEficiência mecânica e elétrica0,98                  Queda de pressão - circuito quente(bar)0,01                  Queda de pressão - circuito frio(bar)0,01                  Tranferência de calor (kW)50,00                Queda de temperatura do vapor (°C)11,00                Queda de pressão (bar)0,10                  Queda de temperatura da água quente (°C)100,00             Queda de pressão (bar)0,00                  Pressão da água de retorno (bar)21,00                Temperatura da água quente (°C)170,00             Fluxo de água quente (kg/s)100,00             Poder colorífero (kJ/kg)30.000,00       Pressão(bar)12,00                Tempratura (°C)20,00                Eficiência mecânica1,00                  Eficiência isentropica0,79                  Eficiência mecânica1,00                  Eficiência isentropica0,80                  CondesadorSub-resfriamento (°C)1,00                  Queda de pressão - circuito HRSG01 (bar)0,10                  Queda de pressão - circuito  HRSG01a (bar)0,10                  Torre de resfriamentoTemperatura da água de entrada (°C)40,00                Turbina de condensaçãoMixer  M1CombustívelÁgua quente de processoVapor de ProcessoCondensador e trocadores de calorBombasTurbina de extração 
+.
+
+o
+ã
+s
+i
+c
+e
+d
+ 
+e
+d
+ 
+s
+i
+e
+v
+á
+i
+r
+a
+v
+
+ 
+s
+a
+d
+ 
+s
+a
+c
+i
+t
+s
+í
+r
+e
+t
+c
+a
+r
+a
+C
+–
+3
+
+ 
+
+ 
+
+ 
+
+a
+l
+e
+b
+a
+T
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+24 
+
+Descrição da variávelNúmero da variávelSimobolo da varávelLimite InferiorLimite SuperiorValor inicialPotência nominal da turbina GT01 (MW-ISO)1GT014010070Potência nominal da turbina GT01a (MW-ISO)2GT01a4010070Fator de carga de operação da turbina GT01 (%)3GT01.f5010090Fator de carga de operação da turbina GT01a (%)4GT01a.f5010090Pressão de vapor no HRSG01 (bar)5S08.p2012060Pressão de vapor no HRSG01a (bar)6S08a.p2012060Temperatura do vapor no HRSG01 (°C)7S08.t350600400Temperatura do vapor no HRSG01a (°C)8S08a.t350600400Pressão de extração de vapor na ST01 (bar)9S14.p31023.3.  Descrição dos métodos utilizados 
+
+ 
+
+Neste estudo de caso foram aplicados trêz métodos ao problema de otimização. 
+
+Todos  utilizaram  o  algoritmo  genético  já  presente  no  toolbox  de  otimização  do 
+
+MATLAB,  contudo  existe  uma  pequena  diferença  na  configuração  do  algoritmo 
+
+genético utilizado diretamente no problema de otimização,método OM, e nas variantes 
+
+do método EIS, métodos ME1 e ME2. 
+
+ 
+
+A  Figura  2  mostra  os  fluxogramas  dos  métodos  desenvolvidos  neste  trabalho. 
+
+Note que no método OM, o algoritmo genético é utilizado diretamente ao problema de 
+
+otimização.  No  método  ME1,  o  algoritmo  genético  é  acrescentado  ao  método  EIS  e 
+
+depois  aplicado  ao  problema  de  otimização.  O  método  ME1  não  só  foi  aplicado  ao 
+
+problema de otimização, mas também sofreu uma modificação feita pela implementação 
+
+do  “Código  Acelerador”  (será  tratado  nos  capítulos  seguintes),  resultando  no  método 
+
+ME2 e então aplecano na solução do problema de otimização. 
+
+ 
+
+ 
+
+ 
+
+Figura 2 – Fluxogramas dos métodos utilizados neste trabalho 
+
+ 
+
+As  configurações  dos  parâmetros  dos  algoritmos  genéticos  usados  neste  estudo 
+
+foram  estabelecidas  de  forma  empírica.  Foram  executados  diversos  testes  para 
+
+ 
+
+25 
+
+dimensionar  os  parâmetros  do  método  tratado  a  fim  de  evitar  que  o  método  seja 
+
+interrompido  por  um  critério  de  parada  antes  de  convergir  para  o  ponto  ótimo.  Tal 
+
+cuidado garante a validade da comparação, pois se tem a certeza que ambos os métodos 
+
+utilizados então operando em sua capacidade plena de otimização. 
+
+ 
+
+No  primeiro  método,  o  algoritmo  genético 
+
+foi  aplicado  alterando-se 
+
+simultaneamente  as  nove  variáveis  de  decisão  da  função  objetivo.  Este  método  foi 
+
+denominado  de  OM  (Otimização  Matemática).  A  Tabela  4  mostra  os  parâmetros 
+
+adotados: 
+
+ 
+
+Tabela 4 – Parâmetros adotados na configuração do algoritmo genético no método OM. 
+
+ 
+
+ 
+
+Na  Tabela  4,  “Nvar”  é  o  número  de  variáveis  a  serem  otimizadas,  no  caso 
+
+“Nvar” é igual a 9; “Tamanho da população” é o tamanho do vetor população de cada 
+
+geração;  “Gerações”  é  o  número  máximo  de  gerações  que  o  método  pode  alcançar; 
+
+“Gerações  sem  melhoria”  é  o  número  máximo  de  gerações  consecutivas  onde  não  há 
+
+nenhuma redução da função objetivo que o método pode alcançar. Note que, os valores 
+
+de “Geração” e “Geração sem melhoria” são parâmetros de parada do método, ou seja 
+
+ao atingir uma dessa condições, a otimização é interrompida. Outros critérios de parada, 
+
+como:  mutação,  variação  da  média  da  população,  numero  de  chamadas  da  função 
+
+objetivo,  entre  outros;  não  foram  alterados  e  permaneceram  com  a  configuração 
+
+original, defaut, do toolbox do MATLAB. 
+
+ 
+
+Nos métodos ME1 e ME2 o algoritmo genético foi utilizado internamente e de 
+
+forma sucessiva em uma das etapas do método. Tal método corresponde a “Alternativa 
+
+ 
+
+26 
+
+Tamanho da população5 x NvarGerações5 x NvarGerações sem melhoria2 x NvarParâmetros do algoritmo genético1” descrita com detalhes em (VIEIRA et al, 2004, 2006). Neste trabalho este método foi 
+
+denominado  de  ME  (Melhoramento  Exergoeconômico)  1  e  2.  Os  parágrafos  seguintes 
+
+apresentam  uma  breve  descrição  dos  métodos,  lembrando  que  a  diferença  entre  os 
+
+métodos  ME1  e  ME2  está  somente  na  implementação  computacional,  mas  os  mesmo 
+
+seguem os mesmos parâmetros e etapas de cálculo. 
+
+ 
+
+Cada  iteração  do  método  consiste  de  seis  etapas.  A  etapa  1  consiste  em  uma 
+
+análise  exergoeconômica,  em  que  os  custos  exergéticos  e  a  eficiência  exergética  dos 
+
+componentes do sistema são calculados. Nessa etapa, alguns parâmetros de entrada são 
+
+especificados:    , incremento para avaliação numérica da sensibilidade do custo total 
+
+do  sistema  e  eficiência  exergética  com  relação  à  variável  de  decisão    ;   ,   ,   , 
+
+parâmetros para, respectivamente, a identificação de variáveis que afetam o custo total, 
+
+a  classificação  hierárquica  dos  componentes,  e  a  seleção  de  variáveis  de  decisão 
+
+principais. Nesse estudo de caso os parâmetros               foram configurados com os 
+
+valores apresentados na Tabela 5. 
+
+Tabela 5 – Parâmetros de entrada dos métodos ME1 e ME2. 
+
+ 
+
+ 
+
+Em seguida, na etapa 2, uma análise de sensibilidade numérica é realizada para 
+
+quantificar  o  efeito  de  cada  variável  de  decisão  no  custo  total  do  sistema  e  eficiência 
+
+exergética. As variáveis de decisão são, então, agrupadas em quatro classes diferentes: 
+
+afeta apenas o custo total do sistema, afeta apenas a eficiência do sistema, afeta o custo 
+
+e eficiência, não afeta o sistema. 
+
+ 
+
+A  etapa  3  consiste  em  uma  classificação  hierárquica  dos  componentes  do 
+
+sistema.  Eles  são  classificados  em  ordem  decrescente  em  função  da  soma  do  custo  de 
+
+27 
+
+ 
+
+ ∆xi0,1 %p0,03t0,1q0,667Parâmetros do método EISinvestimento  com  a  taxa  do  custo  de  destruição  de  exergia,  ou  seja,  componentes  que 
+
+possuem  um  custo  elevado  e  são  energeticamente  ineficientes  são  classificados 
+
+primeiro.  Os  componentes  são  então  agrupados  em  principais,  secundários,  e 
+
+remanescentes.  Os  componentes  principais  exercem  as  maiores  influências  sobre  o 
+
+custo  total  do  sistema,  e  são  considerados  em  primeiro  lugar  no  processo  de 
+
+melhoramento.  Os  componentes  remanescentes  são  ignorados  no  primeiro  momento. 
+
+Nota-se que a classificação de um componente pode variar no decorrer do processo. 
+
+ 
+
+Na  etapa  4,  para  cada  componente  principal  e  secundário,  a  variável  de  custo 
+
+(investimento ou destruição de exergia) que exerce maior influência sobre o custo total 
+
+do componente é identificada. 
+
+ 
+
+Na etapa 5, são calculados os coeficientes de ligação estrutural, VIEIRA (2003), 
+
+com base no custo de destruição de exergia e do custo total (investimento mais custo de 
+
+destruição de exergia) do componente  ,              . 
+
+ 
+
+A etapa 6 é a otimização matemática dos componentes principais e secundárias 
+
+identificadas na etapa 3, para as variáveis de decisão principais (selecionadas na etapa 
+
+5)  que  afetam  o  custo  total  do  sistema  e  /  ou  eficiência  exergética;  as  variáveis  de 
+
+decisão  que  afetam  o  custo  total  do  sistema  apenas  são  consideradas  no  final  da 
+
+iteração.  No  processo  de  otimização,  as  variáveis  de  decisão  são  limitadas,  e  são 
+
+modificadas  dentro  dos  limites  de  validade  das  equações  de  custo  do  componente.  A 
+
+princípio  qualquer  método  matemático  pode  ser  utilizado.  Em  VIEIRA  (2003)  foi 
+
+utilizado o método dos poliedros flexíveis. No presente estudo foi escolhido o algoritmo 
+
+genético já presente na biblioteca do software MATLAB. 
+
+ 
+
+Na  Figura  3  está  exposto  o  fluxograma  das  etapas  dos  métodos  ME1  e  ME2, 
+
+também  é  possível  observar  que  o  resultado  de  uma  iteração  serve  de  entrada  para  a 
+
+iteração seguinte. 
+
+ 
+
+28 
+
+ 
+
+Figura 3 – Fluxograma das estapas do método exergoeconômico, válido para ME1 e ME2 
+
+ 
+
+ 
+
+A  Tabela  6  mostra  os  parâmetros  utilizados  na  configuração  do  algoritmo 
+
+genético  utilizado  internamente  aos  métodos  ME1  e  ME2.  Nota-que  os  parâmetros  do 
+
+algoritmo genético utilizados nos métodos ME1 e ME2 são semelhantes aos parâmetros 
+
+do  algoritmo  genético  utilizado  diretamente  no  problema  de  otimização  das  nove 
+
+variáveis.  Contudo  nota-se  que  o  parâmetro  “NumVar”  não  é  constante  como  o 
+
+parâmetro  “Nvar”,  tratado  anteriormente.  O  parâmetro  “NumVar”  é  o  número  de 
+
+variáveis a serem otimizadas, esse valor é modificado em função do numero de varáveis 
+
+a serem otimizadas associadas a cada componente do sistema e pode variar de 0 a 9. 
+
+Tabela 6 - Parâmetros adotados na configuração do algoritmo genético no método ME1 e 
+
+ME2. 
+
+ 
+
+ 
+
+29 
+
+Tamanho da população5 x NumVarGerações5 x NumVarGerações sem melhoria2 x NumVarParâmetros do algoritmo genético 
+
+Relembrando, “Tamanho da população” é o tamanho do vetor população de cada 
+
+geração;  “Gerações”  é  o  número  máximo  de  gerações  que  o  método  pode  alcançar; 
+
+“Gerações  sem  melhoria”  é  o  número  máximo  de  gerações  consecutivas  onde  não  há 
+
+nenhuma redução da função objetivo que o método pode alcançar. Como os valores de 
+
+“Geração”  e  “Geração  sem  melhoria”  variam  de  acordo  com  “NumVar”,  tais  critérios 
+
+de  parada  do  método  não  são  constantes  durante  os  métodos  ME1  e  ME2,  mas 
+
+obedecem a mesma proporção em função do número de variáveis que o algoritmo usado 
+
+no primeiro método descrito. Dessa forma, é possível uma comparação do desempenho 
+
+entre os métodos. 
+
+ 
+
+3.4.  Descrição das rotinas implementadas 
+
+ 
+
+Para  o  desenvolvimento  do  estudo  de  caso  foram  desenvolvidas  rotinas  (com 
+
+extensão  .m)  que  são  compiladas  no  software  MATLAB.  Segue  uma  breve  descrição 
+
+das mesmas. 
+
+ 
+
+3.4.1.  Programaprincipal.m 
+
+ 
+
+Tal rotina tem o papel de carregar os parâmetros iniciais dos procedimentos de 
+
+otimização, tais como: i) os valores iniciais das nove varáveis de decisão, ii) os limites 
+
+inferior  e  superior  das  variáveis  de  decisão,  iii)  os  parâmetros  financeiros  e  das 
+
+equações  de  custo  dos  componentes,  iv)  os  parâmetros  requeridos  para  utilização  do 
+
+algoritmo  genético,  v)  os  parâmetros  requeridos  para  utilização  dos  métodos  ME1  e 
+
+ME2. 
+
+Além  de  carregar  os  parâmetros  iniciais,  a  rotina  tratada  também  é  responsável  pela 
+
+comunicação com o IPSEpro e fornece o resultado dos cálculos exergoeconômicos para 
+
+ 
+
+30 
+
+o método de otimização escolhido, seja o algoritmo genético ou  os métodos derivados 
+
+do método EIS. 
+
+3.4.2.  Criterios.m 
+
+ 
+
+A rotina “Criterios.m” é utilizada apenas nos métodos ME1 e ME2. Nela que são 
+
+realizadas  as  etapas  de 1  a  5  mencionadas  na  seção  3.3.  Tal  rotina  calcula,  a  partir  da 
+
+análise  exergoeconômica 
+
+resultante  do  “Programaprincipal.m”,  as  variáveis 
+
+exergoeconômicas exigidas pelo método e determina, ainda, a matriz de decisão (Matriz 
+
+D)  e  o  vetor  de  ordem  de  componentes  (Vetor  O),  descritos  a  seguir  para  o  sistema 
+
+considerado. 
+
+ 
+
+A matriz de decisão, Matriz D, indica as variáveis associadas aos componentes 
+
+principais  e  secundários  (ordenados  no  Vetor  O  que  será  descrito  posteriormente)  que 
+
+devem  ser  modificadas  durante  a  otimização.  Cada  linha  da  matriz  representa  um 
+
+subgrupo de variáveis de decisão associado a um componente. As variáveis de decisão 
+
+deste  subgrupo  influenciam  no  desempenho  do  componente  associado.  No  caso  em 
+
+estudo,  existem  24  componentes.  Dessa  forma  a  matriz  de  decisão  deve  ter  uma  linha 
+
+para cada componente do sistema. A última linha da matriz de decisão está associada ao 
+
+subgrupo  de  variáveis  que  afeta  apenas  o  custo  global  do  sistema,  não  afetando  a  sua 
+
+eficiência, Portanto, a matriz de decisão totaliza 25 linhas. 
+
+ 
+
+A  matriz  tem  nove  colunas,  as  quais  representam  as  nove  variáveis  iniciais 
+
+passíveis de serem escolhidas no processo de otimização. A matriz é composta de 0 e 1, 
+
+onde  1  indica  que  a  variável  de  decisão  foi  escolhida  para  participar  do  subgrupo  que 
+
+será otimizado e 0 indica que a variável não faz parte do processo de otimização. 
+
+ 
+
+Dessa  forma,  a  Matriz  D  representa  quais  variáveis  de  decisão  do  sistema  são 
+
+interessantes  otimizar  para  que  o  componete  tenha  seu  melhor  desempenho,  onde  0 
+
+ 
+
+31 
+
+significa  que  a  variável  não  afeta  o  componente  e  portanto  não  será  utilizada  e  1 
+
+representa que a variável é interessante e será utilizada no processo de otimização. 
+
+ 
+
+A Tabela 7 mostra a matriz de decisão no início do processo iterativo. Note que 
+
+nem todas as variáveis são otimizadas em cada componente. 
+
+ 
+
+ 
+
+ 
+
+32 
+
+ 
+
+ 
+.
+
+ 
+
+o
+d
+a
+z
+i
+l
+i
+t
+u
+o
+ã
+ç
+a
+r
+e
+g
+o
+c
+ 
+e
+d
+a
+m
+e
+t
+s
+i
+s
+ 
+
+ 
+
+o
+
+ 
+
+ 
+
+ 
+
+ 
+
+a
+r
+a
+p
+S
+I
+E
+o
+d
+o
+t
+é
+m
+o
+d
+o
+ã
+ç
+u
+c
+e
+x
+e
+ 
+a
+n
+a
+d
+
+ 
+
+ 
+
+ 
+
+i
+t
+b
+o
+D
+ 
+z
+i
+r
+t
+a
+M
+
+ 
+
+ 
+e
+d
+o
+l
+p
+m
+e
+x
+E
+–
+7
+
+ 
+
+ 
+
+ 
+
+a
+l
+e
+b
+a
+T
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+33 
+
+Componentes/ Variáveis123456789GT01111101000GT01a111101000ST01111100000ST02000000000HRSG01111100000HRSG01a111101000H01000000000H01a000000000Torre de resfriamento111101000Condensador111101000Desaerador000000000V1000000000V2000000000V3000000000M1000000000M2000000000S1000000000S2000000000S3000000000S4000000000P02000000000P02a000000000P03000000000P01000000000Sistema global000010000Matriz D 
+
+Com  base  na  matriz  de  decisão,  observa-se  que  o  método  trabalha  com 
+
+subgrupos  de  tamanho  diferenciado  do  número  total  de  variáveis  de  decisão.  Além 
+
+disso, os subgrupos têm tamanhos diferentes. O objetivo do método é sempre efetuar a 
+
+otimização  com  um  número  de  variáveis  de  decisão  reduzido,  e  desta  forma,  buscar  a 
+
+redução do tempo computacional e simplificação do problema de otimização. 
+
+ 
+
+O vetor de ordem de componentes, Vetor O, é resultado da etapa 3 do método de 
+
+melhoramento  exergoeconômico.  Tal  vetor  mostra  a  ordem  de  importância  em  que  os 
+
+componentes devem ser considerados no processo de otimização, ou seja, a ordem em 
+
+que as linhas da Matriz D são executadas. Nota-se que dos 24 componentes do sistema 
+
+mais  o  “Sistema  global”(compoenete  que  representa  o  custo  global  do  sistema), 
+
+somente  oito  componentes  foram  selecionados  para  o  processo  de  melhoramento, 
+
+Tabela 8. 
+
+ 
+
+ 
+
+Tabela 8 – Exemplo de Vetor O obtido na execução do método de melhoramento 
+
+exergoeconômico. 
+
+Observando  a  Tabela  7  é  possível  notar  que  somente  as  linhas  que  possuem 
+
+ 
+
+variáveis a serem otimizadas, ou seja, que possuem pelo menos um valor igual a 1, são 
+
+ordenadas no Vetor O Tabela 8. 
+
+ 
+
+A Figura 4 mostra o fluxograma dos métodos ME1 e ME2, é possível visualizar 
+
+como  a  Matriz  D  e  o  Vetor  O  são  utilizados.  Novamente  a  Matriz  D  apresenta  as 
+
+varíaves  que  seram  modificadas  no  processo  de  otimização,  e  o  Vetor  O  apresenta  a 
+
+ordem dos compoenentes em que a otimização referente ao sistema será executada. 
+
+ 
+
+34 
+
+Ordem de execução1º2º3º4º5º6º7º8ºNº da linha da Matriz D1235691025Vetor O 
+
+Figura 4 – Fluxograma dos processos dos métodos ME1 e ME2 
+
+ 
+
+3.4.3.  Melhoraauto.m 
+
+ 
+
+Para  completar  as  seis  etapas  do  método  ME,  foi  desenvolvida  a  rotina 
+
+“Melhoraauto.m”.  Essa  rotina  tem  o  papel  de  executar  a  otimização  matemática  do 
+
+sistema utilizando as variáveis de decisão dos subgrupos associados aos  componentes 
+
+ordenados  no  Vetor  O.  Tal  otimização  matemática  é  correspondente  à  etapa  6  do 
+
+método  de  melhoramento  exergoeconômico.  A  otimização  matemática  foi  feita 
+
+utilizando-se o algoritmo genético disponível no programa MATLAB, como já foi dito. 
+
+ 
+
+Foi  observado  em  estudos  anteriores  que  muitos  componentes,  seguidamente 
+
+ordenados,  partilham  dos  mesmos  subgrupos  de  variáveis  de  decisão,  conforme 
+
+mostrado na Tabela 9. 
+
+ 
+
+35 
+
+Análise de Sensibilidade (MATLAB)Ponto InicialAlgoritmo Genético (MATLAB)Xx,Xy,Xz,...Resultado ParcialComponente XAlgoritmo Genético (MATLAB)Xx,Xy,Xz,...Resultado ParcialComponente YAlgoritmo Genético (MATLAB)Xx,Xy,Xz,...Resultado ParcialComponente ZAlgoritmo Genético (MATLAB)Xx,Xy,Xz,...Resultado FinalCusto Global do SistemaModelo Termodinâmico (IPSEpro)Modelo Econômico (MATLAB)Aplicação da Matriz DAplicação do Vetor O 
+
+Note que as linhas em cinza da Matriz D, Tabela 9, correspondem a subgrupos 
+
+de  variáveis  que  estão  se  repetindo  seguidamente,  linhas  em  negrito.  É  importante 
+
+lembrar  que  a  ordem  seguida  é  definida  pelo  Vetor  O  e,  por  coincidência  no  exemplo 
+
+tratado,  a  ordem  do  Vetor  O  segue  a  ordem  numérica.  Contudo  isso  não  é  uma  regra 
+
+geral. 
+
+ 
+
+O fato de existirem subgrupos de variáveis que se repetem seguidamente indica 
+
+que na aplicação sucessiva do método matemático as mesmas variáveis de decisão são 
+
+escolhidas e, portanto, teoricamente não há reduções adicionais na função objetivo se o 
+
+método matemático convergir corretamente. Essa ocorrência não é um problema para o 
+
+método ME1, porém aumenta o seu tempo computacional. Neste estudo, na escolha dos 
+
+parâmetros  adotados  para  o  algoritmo  genético  houve  a  preocupação  para  que  se 
+
+garantisse  uma  convergência  adequada,  ou  seja,  modificações  adicionais  nas  variáveis 
+
+de decisão não reduziam mais a função objetivo. 
+
+ 
+
+ 
+
+ 
+
+36 
+
+ 
+e
+d
+ 
+s
+o
+p
+u
+r
+g
+b
+u
+s
+ 
+e
+d
+ 
+s
+a
+d
+
+i
+
+u
+g
+e
+s
+ 
+s
+e
+õ
+ç
+i
+t
+e
+p
+e
+r
+ 
+r
+a
+t
+o
+n
+
+ 
+l
+e
+v
+í
+s
+s
+o
+p
+ 
+é
+ 
+e
+d
+n
+o
+D
+ 
+z
+i
+r
+t
+a
+M
+
+ 
+
+ 
+.
+
+o
+ã
+s
+i
+c
+e
+d
+ 
+e
+d
+ 
+s
+i
+e
+v
+á
+i
+r
+a
+v
+
+ 
+e
+d
+o
+l
+p
+m
+e
+x
+E
+–
+9
+
+ 
+
+ 
+
+ 
+
+ 
+
+a
+l
+e
+b
+a
+T
+
+ 
+
+ 
+
+ 
+
+37 
+
+Componentes/ Variáveis123456789GT01111101000GT01a111101000ST01111100000ST02000000000HRSG01111100000HRSG01a111101000H01000000000H01a000000000Torre de resfriamento111101000Condensador111101000Desaerador000000000V1000000000V2000000000V3000000000M1000000000M2000000000S1000000000S2000000000S3000000000S4000000000P02000000000P02a000000000P03000000000P01000000000Sistema global000010000Matriz D 
+
+Ressalta-se que a otimização de subgrupos de variáveis repetidos pode ter efeito 
+
+na função objetivo quando ocorre de forma não sucessiva.  
+
+ 
+
+Para  acelerar  o  processo  de  otimização  no  método  ME1  nos  casos  em  que  são 
+
+escolhidos  subgrupos  de  variáveis  de  decisão  idênticos  e  sucessivos  foi  desenvolvido 
+
+um  código,  “Código  Acelerador”,  dentro  da  rotina  “Melhoraatou.m”,  que  impede 
+
+repetições  seguidas  de  subgrupos  de  variáveis.  O  “Código  Acelerador”  pode  ser 
+
+desabilitada  permitindo  a  execução  do  método  de  melhoramento  exergoeconômico 
+
+original.  Por  se  tratar  de  uma  nova  implementação  seu  impacto  sobre  método  de 
+
+melhoramento exergoeconômico será estudado posteriormente, na seção 4. 
+
+ 
+
+Os  detalhes  sobre  a  execução  das  iterações  dos  métodos  ME1  e  ME2,  e  do 
+
+“Código Acelerador” são descritos na seção 3.5. 
+
+3.4.4.  Otimizaauto.m 
+
+ 
+
+A  rotina  que  executa  a  otimização  pelo  método  matemático  (OM)  é  a 
+
+“Otimizaauto.m”. Essa rotina chama a toolbox de otimização por algoritmo genético do 
+
+MATLAB  e  aplica  tal  método  considerando  todas  as  nove  variáveis  do  problema  de 
+
+otimização. 
+
+ 
+
+Nesse método não são distinguidos nenhum componente nem variável de maior 
+
+importância.  Não  se  trata  de  um  método  iterativo,  somente  uma  execução  da  rotina  é 
+
+necessária para a obtenção do resultado final. Deve-se lembrar também que há somente 
+
+uma chamada do método matemático que corresponde à otimização de  todo o sistema. 
+
+ 
+
+O  algoritmo  genético  usado  possui  as  configurações  conforme  a  Tabela  4  e  é 
+
+aplicado  na  minimização  simultânea  das  nove  variáveis  de  decisão.  A  execução  do 
+
+método matemático tratado é descrita na seção 3.5. 
+
+ 
+
+38 
+
+3.5.  Descrição da execução das rotinas e avaliações realizadas 
+
+ 
+
+Conforme  já  tratado  anteriormente,  cada  método  requer  a  execução  de  rotinas 
+
+em uma seqüência específica. É possível dividir a execução dos métodos em uma etapa 
+
+de  preparação  onde  é  compilada  a  rotina  “Programaprincipal.m”  e  uma  segunda  etapa 
+
+que consiste na execução propriamente dita do método escolhido. 
+
+Para  execução  da  otimização  pelo método  matemático  baseado  no,  algoritmo  genético 
+
+(OM), após a etapa de preparação é compilada a rotina “Otimizaauto.m” 
+
+ 
+
+Para  execução  dos  métodos  ME1  e  ME2  após  a  etapa  de  preparação  são 
+
+compiladas  as  rotinas  “Criterios.m”  e  “Melhoraauto.m”  na  respectiva  ordem.  Os 
+
+métodos  derivados  do  método  EIS  são  um  métodos  iterativos,  e  a  execução  de  suas 
+
+rotinas  equivale a uma iteração  conforme indicado na  Figura  5. Caso o resultado final 
+
+da  função  objetivo,  referente  à  última  iteração,  não  apresente  grande  variação  em 
+
+relação  ao  resultado  final  da  iteração  anterior,  é  um  indicativo  que  mais  iterações  não 
+
+são  necessárias.  Neste  estudo  foi  considerado  que,  se  a  iteração  não  propiciar  mais  de 
+
+0,5% de melhora em relação à iteração anterior, o método deve ser interrompido. Mais 
+
+detalhes podem ser encontrados em VIEIRA (2003). 
+
+ 
+
+ 
+
+ 
+
+39 
+
+ 
+
+ 
+
+ 
+
+Figura 5 – Representação do fluxograma das rotinas dos métodos ME1 e ME2. 
+
+ 
+
+Este estudo de caso teve como objetivo comparar o desempenho da aplicação do 
+
+método matemático baseado no algoritmo genético aplicado simultaneamente a todas as 
+
+variáveis decisão (OM) frente aos métodos derivados do método EIS utilizando também 
+
+o  algoritmo  genético  aplicado  a  subgrupos  sucessivos  das  variáveis  de  decisão. 
+
+Contudo, como foi implementada uma nova contribuição para o método  ME1. A nova 
+
+contribuição já foi tradada na seção 3.4.3 e se trata do “Código Acelerador” que impede 
+
+ 
+
+40 
+
+a  repetição  da  otimização  de  subgrupos  de  variáveis  idênticos  e  seqüenciais.  Esta 
+
+contribuição encontra-se presente no método ME2. O “Código Acelerador” é um código 
+
+presente  em  “Melhoraauto.m”  e  pode  ser  desativado  ou  ativado,  para  rodar  ME1  o 
+
+“Código  Acelerador”  deve  ser  “comentada”,  para  rodar  ME2  o  “Código  Acelerador” 
+
+deve estar ativa. 
+
+ 
+
+A Tabela 10 indica os métodos utilizados para comparação.Os resultados dessa 
+
+comparação serão tratados no capítulo seguinte. 
+
+Tabela 10 – Definição dos métodos que foram utilizados na comparação de 
+
+desempenho 
+
+ 
+
+ 
+
+ 
+
+ 
+
+41 
+
+OMMétodo matemático/algoritmo genético aplicado diretemente ao problema de otimização de 9 varáveisME1Método do melhoramento exergoeconômico/EIS aplicado sem o uso da Sub-rotina SME2Método do melhoramento exergoeconômico/EIS aplicado com o uso da Sub-rotina SMétodos utilizados4.  Resultados 
+
+ 
+
+Neste  capítulo  serão  apresentados  os  resultados  dos  métodos  e  modelos 
+
+desenvolvidos, onde os mesmos foram executados em um computador  com a seguinte 
+
+configuração:  Processador,  Intel  8300p  2,53  GHz;  Memória  RAM,  4  Gb  DDR3  1333 
+
+MHz;  Vídeo,  ATI  HD  6530  Mobility  512  Mb  DDR3;H.D.,  250  Gb  5400  RPM;  S.O., 
+
+Windows 7 Home Edition. 
+
+4.1.  Método OM 
+
+ 
+
+Os resultados finais obtidos com o método OM, podem ser observados na Tabela 
+
+11  e  na  Figura  6.  Note  que  os  valores  referentes  às  potências  ISO  das  turbinas  a  gás, 
+
+GT01 e GT01a, são diferentes. O mesmo fato acontece com as pressões das caldeiras de 
+
+recuperação  de  calor  (S08.p  e  S08a.p)  Tal  fato  é  um  indício  que  o  resultado  final  do 
+
+processo de otimização não é confiável. No sistema tratado é esperado que os pares de 
+
+elementos  semelhantes  (GT01  e  GT01a;  HRSG01  e  HRSG01a;  H01  e  H01a;  P02  e 
+
+P02a)  trabalhem  com  as  mesmas  configurações.  Caso  contrário,  pode  ocorrer  um 
+
+desbalanceamento do sistema, causando danos ou perda de eficiência. É possível notar 
+
+também  que  todas  as  variáveis  foram  alteradas  em  relação  aos  seus  valores  iniciais 
+
+durante  o  processo.  Lembrando  que  os  valores  iniciais  e  a  simbologia  das  variáveis 
+
+estão em Tabela 3. 
+
+ 
+
+42 
+
+ 
+.
+
+ 
+
+M
+O
+o
+d
+o
+t
+é
+m
+o
+d
+
+ 
+
+ 
+l
+a
+n
+i
+f
+ 
+
+o
+d
+a
+t
+l
+
+u
+s
+e
+R
+–
+
+ 
+
+ 
+
+ 
+
+1
+1
+a
+l
+e
+b
+a
+T
+
+ 
+
+ 
+
+ 
+
+ 
+
+43 
+
+GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.tInício048,86-70.000,00 70.000,00 0,90       0,90       60,00     60,00     2,00       400,00   400,00   Final (xi*)3.48140,3217,47%90.114,68 41.443,09 0,53       0,50       98,95     117,48   5,46       594,78   560,20   IteraçãoTempo (s)Função objetivo (f)MelhoriaValores das variáveis de decisão (xi) 
+
+ 
+
+ 
+
+Figura 6 – Resultado gráfico do método OM 
+
+ 
+
+Foi  observado  que  o  método  OM  obteve  17,5%  de  redução  da  função  objetivo 
+
+em  um  tempo  de  aproximadamente  3.500  segundos  e  que  após  1500  segundos  não 
+
+ocorre uma grande redução da função objetivo. 
+
+ 
+4.2.  Método ME1 
+
+ 
+
+ 
+
+O  método  ME1  é  uma  variação  do  método  EIS  em  sua  forma  original,  sem  a 
+
+implementação do “Código Acelerador”. Lembrando que a diferença entre ME1 e EIS é 
+
+o  uso  de  um  método  de  otimização  profissional,  o  algoritmo  genético  presente  no 
+
+MATLAB. O ME1 forneceu os resultados apresentados na Tabela 12 para cada iteração 
+
+e em forma de gráfico na Figura 7. Cada iteração consiste em uma execução da rotina 
+
+“Criterios.m”  e  uma  execução  da  rotina  “Melhoraauto.m”,  seção  3.5.  O  critério  de 
+
+ 
+
+44 
+
+parada  adotado  foi:  caso  a  iteração  não  proporcione  mais  de  0,5%  de  melhora  em 
+
+relação à iteração anterior, o método deve ser interrompido, não havendo mais iterações. 
+
+ 
+
+ 
+
+45 
+
+ 
+.
+
+o
+ã
+ç
+a
+r
+e
+t
+i
+ 
+a
+d
+a
+c
+ 
+
+ 
+
+ 
+
+a
+r
+a
+p
+1
+E
+M
+o
+d
+o
+t
+é
+m
+o
+d
+o
+d
+a
+t
+l
+
+ 
+
+ 
+
+u
+s
+e
+R
+–
+2
+1
+
+ 
+
+ 
+
+ 
+
+a
+l
+e
+b
+a
+T
+
+ 
+
+ 
+
+ 
+
+46 
+
+GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.tInício048,86-70.000,00   70.000,00   0,90       0,90       60,00      60,00       2,00          400,00                     400,00                     11.97644,598,73%80.836,54   84.543,35   0,82       0,70       108,42    119,99     2,00          400,00                     400,00                     298240,8016,49%40.084,26   79.896,82   0,52       0,56       108,42    119,99     2,00          575,61                     585,51                     33.64438,7320,72%40.078,88   40.680,51   0,52       0,50       108,42    119,99     2,00          599,96                     600,00                     41.40438,6220,94%40.075,76   40.679,95   0,50       0,50       109,92    119,99     2,00          599,96                     600,00                     Final (xi*)8.00538,6220,94%40.075,76   40.679,95   0,50       0,50       109,92    119,99     2,00          599,96                     600,00                     IteraçãoTempo (s)Função objetivo (f)MelhoriaValores das variáveis de decisão (xi) 
+
+ 
+
+ 
+
+Figura 7 – Resultado gráfico do método ME1. 
+
+ 
+
+É possível notar na Tabela 12 que nem todas as variáveis foram alteradas com a 
+
+aplicação de ME1. A variável S14.p não teve seu valor alterado em relação a seu valor 
+
+inicial,  tal  variável  não  foi  escolhida  como  interessante  tanto  do  ponto  de  vista 
+
+exergético,  quanto  do  ponto  de  vista  do  custo.  Além  disso,  observa-se  que  os  valores 
+
+finais  das  variáveis  simétricas  (GT01  e  GT01a;  GT01.f  e  GT01a.f;  S08.p  e  S08a.p; 
+
+S08.t e S08a.t) são semelhantes, indicando que o sistema permanece bem balanceado ao 
+
+final do processo iterativo. 
+
+ 
+
+Foi  observado  também  que  em  quatro  iterações  o  método  ME1  obteve  20,94% 
+
+de  redução  da  função  objetivo  em  um  tempo  de  8005  segundos.  O  período  onde  o 
+
+método conseguiu uma maior redução na função objetivo foi entre 0 e 5500 segundos. 
+
+ 
+
+ 
+
+ 
+
+47 
+
+4.3.  Método ME2 
+
+ 
+
+ 
+
+Como já tratado na seção 3.4.3, foi desenvolvida uma sub-rotina dentro da rotina 
+
+“Melhoraauto.m”  que  modifica  a  execução  do  método  ME1.  O  “Código  Acelerador” 
+
+impede otimizações desnecessárias no método de melhoramento exergoeconômico. 
+
+ 
+
+É possível notar, observando a “Matriz D” e o “Vetor O” resultantes da primeira 
+
+iteração  de  ME1  e  ME2  não  são  diferentes,  Tabela  13  e  Tabela  14  respectivamente. 
+
+Contudo,  o  número  de  otimizações  realizadas  na  iteração  é  diferente.  Em  ME1  o 
+
+algoritmo genético, usado internamente ao método de melhoramento exergoeconômico, 
+
+é  executado  oito  vezes  e  em  ME2  o  algoritmo  é  executado  apenas  quatro  vezes.  A 
+
+última coluna destas tabelas mostra se a otimização deve ser realizada ou não. 
+
+ 
+
+48 
+
+ 
+.
+s
+a
+d
+a
+z
+i
+l
+a
+e
+r
+ 
+
+o
+ã
+s
+ 
+s
+e
+õ
+ç
+a
+z
+i
+m
+
+i
+t
+o
+
+ 
+
+o
+t
+i
+o
+
+ 
+:
+1
+E
+M
+
+ 
+
+ 
+e
+d
+o
+ã
+ç
+a
+r
+e
+t
+i
+ 
+
+ 
+
+a
+r
+i
+e
+m
+i
+r
+p
+a
+d
+ 
+s
+e
+t
+n
+a
+t
+l
+
+u
+s
+e
+r
+ 
+D
+ 
+z
+i
+r
+t
+a
+M
+
+ 
+e
+ 
+O
+ 
+r
+o
+t
+e
+V
+–
+3
+1
+
+ 
+
+ 
+
+ 
+
+a
+l
+e
+b
+a
+T
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+49 
+
+Ordem de execução1º2º3º4º5º6º7º8ºNº da linha da Matriz D1235691025Componentes/ Variáveis123456789GT01111101000SimGT01a111101000SimST01111100000SimST02000000000--HRSG01111100000SimHRSG01a111101000SimH01000000000--H01a000000000--Torre de resfriamento111101000SimCondensador111101000SimDesaerador000000000--V1000000000--V2000000000--V3000000000--M1000000000--M2000000000--S1000000000--S2000000000--S3000000000--S4000000000--P02000000000--P02a000000000--P03000000000--P01000000000--Sistema global000010000SimVetor OMatriz DOtimiza 
+.
+s
+a
+d
+a
+z
+i
+l
+a
+e
+r
+ 
+
+o
+ã
+s
+ 
+s
+e
+õ
+ç
+a
+z
+i
+m
+
+ 
+
+i
+t
+o
+o
+r
+t
+a
+u
+q
+
+ 
+,
+
+2
+E
+M
+
+ 
+
+ 
+e
+d
+o
+ã
+ç
+a
+r
+e
+t
+i
+ 
+
+ 
+
+a
+r
+i
+e
+m
+i
+r
+p
+a
+d
+ 
+s
+e
+t
+n
+a
+t
+l
+
+u
+s
+e
+r
+ 
+D
+ 
+z
+i
+r
+t
+a
+M
+
+ 
+e
+ 
+O
+ 
+r
+o
+t
+e
+V
+–
+4
+1
+a
+l
+e
+b
+a
+T
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+50 
+
+Ordem de execução1º2º3º4º5º6º7º8ºNº da linha da Matriz D1235691025Componentes/ Variáveis123456789GT01111101000SimGT01a111101000NãoST01111100000SimST02000000000--HRSG01111100000NãoHRSG01a111101000SimH01000000000--H01a000000000--Torre de resfriamento111101000NãoCondensador111101000NãoDesaerador000000000--V1000000000--V2000000000--V3000000000--M1000000000--M2000000000--S1000000000--S2000000000--S3000000000--S4000000000--P02000000000--P02a000000000--P03000000000--P01000000000--Sistema global000010000SimVetor OMatriz DOtimiza 
+
+A  conseqüência  de  um  menor  número  de  otimizações  realizadas  pode  ser 
+
+observado no resultado final  da iteração conforme será mostrado  adiante. Também foi 
+
+notado que nas iterações seguintes, a “Matriz D” e o “Vetor O” resultantes em ME1 e 
+
+ME2 são diferentes (ver Anexos 2 e 3), embora os métodos compartilhem dos mesmos 
+
+parâmetros. 
+
+ 
+
+Os  resultados  obtidos  com  a  aplicação  do  método  ME2  são  apresentados  na 
+
+Tabela 15 e na Figura 8. 
+
+ 
+
+ 
+
+ 
+
+51 
+
+ 
+
+ 
+
+ 
+
+ 
+.
+
+o
+ã
+ç
+a
+r
+e
+t
+i
+ 
+
+a
+d
+a
+c
+ 
+
+ 
+
+ 
+
+a
+r
+a
+p
+2
+E
+M
+o
+d
+o
+t
+é
+m
+o
+d
+o
+d
+a
+t
+l
+
+ 
+
+ 
+
+u
+s
+e
+R
+–
+
+ 
+
+ 
+
+ 
+
+5
+1
+a
+l
+e
+b
+a
+T
+
+ 
+
+ 
+
+52 
+
+GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.tInício048,86-70.000,00 70.000,00 0,90       0,90       60,00     60,00     2,00       400,00    400,00    11.31744,688,55%84.196,48 81.628,41 0,83       0,72       96,43     119,98    2,00       400,00    400,00    264141,3115,44%40.652,55 86.914,87 0,51       0,60       96,43     119,98    2,00       594,03    525,29    31.25639,6718,80%40.649,80 40.926,40 0,51       0,60       96,43     119,98    2,00       599,89    599,99    442039,2119,75%40.649,34 40.926,34 0,51       0,54       98,18     119,98    2,00       599,89    599,99    556738,9320,31%40.647,28 40.924,22 0,51       0,51       105,27    119,92    2,00       599,89    599,99    630938,8920,40%40.647,16 40.924,22 0,51       0,51       111,71    119,58    2,00       599,89    599,99    Final (xi*)4.51038,8920,40%40.647,16 40.924,22 0,51       0,51       111,71    119,58    2,00       599,89    599,99    MelhoriaIteraçãoTempo (s)Função objetivo (f)Valores das variáveis de decisão (xi) 
+
+ 
+
+ 
+
+Figura 8 – Resultado gráfico do método ME2. 
+
+ 
+
+Nota-se  na  Tabela  15  que  o  método  ME2  convergiu  para  o  valor  final  em  seis 
+
+iterações e que a variável S14p não foi alterada de seu valor inicial, pois foi considerada 
+
+sem  importância  do  ponto  de  vista  exergético  e  do  ponto  de  vista  do  custo  total  do 
+
+sistema.  Foi  observado  também  que  o  sistema  ao  final  da  otimização  manteve-se 
+
+balanceado, pois as configurações finais dos componentes semelhantes foram próximas. 
+
+O  método  conseguiu  reduziu  em  20,4%  a  função  objetivo,  em  relação  ao  seu  valor 
+
+inicial,  em  um  intervalo  de  tempo  de  aproximadamente  4.500  segundos.  O  critério  de 
+
+parada  do  método  foi  o  mesmo  utilizado  no  método  ME1,  lembrando:  caso  a  iteração 
+
+não proporcione mais de 0,5% de melhora em relação à iteração anterior, o método deve 
+
+ser  interrompido,  não  havendo  mais  iterações.  Observando  a  Figura  8,  nota-se  que  o 
+
+método ME2 proporciona uma grande redução da função objetivo ate o tempo de 4000 
+
+segundos, praticamente se estagnando depois desse período. 
+
+ 
+
+ 
+
+ 
+
+53 
+
+4.4.  Comparação dos resultados obtidos 
+
+ 
+
+Como  apresentado  nas  seções  anteriores,  é  notado  que  o  método  OM  gerou 
+
+resultados  bem  diferentes  dos  métodos  ME1  e  ME2  tanto  na  função  objetivo  como 
+
+também nos valores finais das variáveis de decisão.  
+
+Figura 9 – Gráfico comparativo do comportamento da função objetivo durante o 
+
+tempo na execução dos métodos de otimização. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+54 
+
+ 
+.
+
+2
+E
+M
+
+ 
+e
+ 
+
+1
+E
+M
+
+ 
+,
+
+M
+O
+
+ 
+s
+o
+d
+o
+t
+é
+m
+
+ 
+s
+o
+d
+ 
+s
+i
+a
+n
+
+i
+f
+ 
+s
+o
+d
+a
+t
+l
+
+ 
+
+u
+s
+e
+r
+ 
+e
+d
+o
+ã
+ç
+a
+r
+a
+p
+m
+o
+C
+–
+
+ 
+
+ 
+
+ 
+
+6
+1
+a
+l
+e
+b
+a
+T
+
+ 
+
+ 
+
+ 
+
+55 
+
+GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.tInício048,86-70.000,00 70.000,00 0,90       0,90       60,00     60,00     2,00       400,00    400,00    OM3.48140,3217,47%90.114,68 41.443,09 0,53         0,50         98,95       117,48    5,46         594,78    560,20    ME18.00538,6220,94%40.075,76 40.679,95 0,50       0,50       109,92    119,99    2,00       599,96    600,00    ME24.51038,8920,40%40.647,16 40.924,22 0,51       0,51       111,71    119,58    2,00       599,89    599,99    MétodoTempo (s)Função objetivo final (f*)MelhoriaValor final das variáveis (xi*) 
+
+Pode ser constatado, observando os resultados  finais  dos métodos apresentados 
+
+na  Tabela  16  e  na  Figura  9,  que  o  método  OM,  embora  seja  o  método  que  converge 
+
+inicialmente  mais  rapidamente,  é  o  método  que  teve  o  pior  desempenho  no  final  da 
+
+otimização, com uma redução somente de 17,5% em relação ao ponto inicial na função 
+
+objetivo.  Por  ser  um  modelo  puramente  matemático,  o  algoritmo  genético  é  aplicado 
+
+diretamente à solução do problema de otimização sem uma análise prévia do sistema. O 
+
+método OM não tem sensibilidade para notar que a falta de balanceamento do sistema 
+
+gera perda de eficiência e conseqüentemente um custo final/função objetivo maior. 
+
+ 
+
+Os  métodos  ME1  e  ME2  utilizam  os  procedimentos  exergoeconômicos,  e  com 
+
+isso conseguem ter uma maior sensibilidade do sistema como um todo, obtendo assim 
+
+resultados finais melhores e mais equilibrados. 
+
+ 
+
+Os  métodos  derivados  do  método  EIS  não  só  garantiram  resultados  estáveis 
+
+quando aplicados, mas também tiveram um desempenho de otimização de até 21% em 
+
+relação  ao  ponto  inicial,  3,5%  superior  a  OM.  Contudo  ME1  e  ME2  demandam  um 
+
+tempo  computacional  maior.  ME1  demora  quase  2,3  vezes  mais  para  convergir  em 
+
+relação à OM. 
+
+ 
+
+O  uso  do  “Código  Acelerador”  em  ME2  reduziu  o  tempo  computacional  em 
+
+cerca de 44% em relação ao método de melhoramento exergoeconômico original, ME1. 
+
+Comparando  os  resultados  obtidos  com  ME2  com  os  obtidos  com  ME1  não  é  notada 
+
+uma grande discrepância na função objetivo. O valor final da função objetivo é cerca de 
+
+0,5%  superior.  No  entanto,  ME2  mesmo  com  a  nova  implementação  demora 
+
+aproximadamente 1000 segundos a mais do que OM. 
+
+ 
+
+Observando  as  tabelas  dos  resultados  parciais  presntes  Anexo  2  (referentes  ao 
+
+método ME1) e Anexo 3 (referentes ao método ME2), foi possível notar que o método 
+
+ME1 utiliza menos variáveis de decisão em suas iterações que o método ME2, contudo 
+
+ 
+
+56 
+
+o fator que prevaleceu para que o método ME2 fosse mais rápido do que o método ME1 
+
+foi  a  questão  da  repetitividade  de  otimizações.  Embora,  o  método  ME2  execute  o 
+
+algoritimo  genético  englobando  um  maior  número  de  variáveis,  em  suas  iterações 
+
+ocorrem  menos  execuções  do  algorítimo  genético,  fato  que  provou  ser  decisivo  no 
+
+tempo computacinal. 
+
+ 
+
+ 
+
+ 
+
+57 
+
+5.  Conclusões e Sugestões 
+
+ 
+
+Neste  trabalho  foram  desenvolvidas  duas  inovações  a  cerca  do  método  de 
+
+melhoramento  exergoeconômico.  A  primeira  inovação  foi  a  utilização  de  métodos 
+
+matemáticos  de  otimização  profissionais  no  processo  iterativo.  O  algoritmo  genético 
+
+usado  na  modelagem  do  método  EIS  é  uma  ferramenta  do  software  comercial 
+
+MATLAB.  A  segunda  inovação  foi  o  desenvolvimento  do  “Código  Acelerador”  que 
+
+impede otimizações desnecessárias durante a execução do método. 
+
+ 
+
+Os resultados obtidos mostraram que o métodos derivados do método EIS, ME1 
+
+e  ME2,  são  poderosas  ferramentas  de  otimização.  Ao  contrario  de  métodos 
+
+matemáticos,  como  o  algoritmo  genético,  que  utilizam  somente  poder  computacional 
+
+para  otimização,  os  métodos  de  melhoramento  exergoeconômicos,  embora  sejam  mais 
+
+lentos, conta com cálculos exergoeconômicos que possibilitam uma maior sensibilidade 
+
+,ou  “compreensão”,  da  situação  do  sistema.  Dessa  forma  os  métodos  ME1  e  ME2 
+
+apresentaram  resultados  mais  condizentes  com  a  realidade,  de  melhor  qualidade  e 
+
+menor valor da função objetivo. 
+
+ 
+
+Com  relação  ao  uso  do  “Código  Acelerador”,  foi  possível  concluir  que  tal 
+
+código  desempenhou  bem  seu  papel  em  reduzir  o  tempo  computacional  em  44%  em 
+
+relação  ao  método  ME1,  sendo  assim,  uma  contribuição  importante  para  o  método  de 
+
+melhoramento exergoeconômico. 
+
+ 
+
+Os  métodos  desenvolvidos  nesse  trabalho  podem  ser  adaptados  para  o  uso  em 
+
+qualquer sistema termodinâmico, sendo assim um avanço dentro do setor de óleo, gás e 
+
+biocombustíveis,  onde  é  possível  aplicar  os  métodos  apresentados  amplamente  em 
+
+diversas instalações já existentes e no desenvolvimento de novas instalações, seja para a 
+
+produção de energia elétrica ou refino de combustível. 
+
+ 
+
+58 
+
+ 
+
+É  possível  sugerir  para  estudos  futuros  a  investigação  de  outros  métodos 
+
+computacionais  a  serem  utilizados 
+
+internamente  ao  método  de  melhoramento 
+
+exergoeconômico.  Este  trabalho  foi  baseado  na  “Alternativa  1”  do  método  EIS, 
+
+(VIEIRA,  2003).  A  “Alternativa  2”  ainda  não  foi  investigada  em  conjunto  com  as 
+
+inovações desenvolvidas neste estudo. Sugere-se também avaliar o efeito da utilização 
+
+de novos valores nos parâmetros nos métodos ME1 e ME2. Por fim, sugere-se avaliar a 
+
+possibilidade  de  relaxar  o  critério  de  convergência  do  método  de  algoritmo  genético 
+
+visando uma redução adicional do tempo computacional no método ME2. 
+
+ 
+
+ 
+
+ 
+
+59 
+
+6.  Referências bibliográficas 
+
+ABUSOGLU A. KANOGLU M., 2009, “Exergoeconomic analysis and optimization of 
+
+combined  heat  and  power  production:  A  review”  Renewable  and  Sustainable  Energy 
+
+Reviews, v. 13, n. 9 (Ago.), pp. 2295-2308. 
+
+AVELLAR, L. H. N., CARROCCI, L. R., SILVEIRA, J. L., 2000, Biogás na Cogeração 
+
+–  A  utilização  de  subprodutos  agro-industriais  na  geração  de  energia  em  unidades  co-
+
+geradoras, Biotecnologia Ciência & Desenvolvimento, pp. 46-49, Março, 2000. 
+
+BALESTIERI, J. A. P., 2002, Cogeração: geração combinada de eletricidade e calor. 1ª 
+
+ed. Florianópolis, Editora da Universidade Federal de Santa Catarina. 
+
+BEJAN,  A.,  1988,  Advanced  engineering  thermodynamics.  1  ed.  New  York,  John 
+
+Wiley & Sons. 
+
+BEJAN,  A.,  TSATSARONIS,  G.,  MORAN,  M.,  1996,  “Thermal  Design  and 
+
+Optimization”. 1 ed. New York, John Wiley & Sons. 
+
+BORBA,  R.  A.  P.,  2002,  Avaliação  Térmica  e  Econômica  de  Sistemas  de  Cogeração 
+
+Aplicados  à  Indústria  de  Cerâmica  de  Revestimento.  Dissertação  de  M.Sc,  UFSC, 
+
+Florianópolis, SC, Brasil. 
+
+COELHO, S. T.; SILVA, O. C.; VARKULYA, A. Jr.; AVELLAR, L. H. N.; FERLING, 
+
+2001, F. F. Estado da arte do biogás. Relatório de acompanhamento. CENBIO – Centro 
+
+Nacional de Referência em Biomassa. São Paulo, 2001. 
+
+CORDEIRO, A.  S., 2007, Otimização e Melhoramento Exergoeconômico de Sistemas 
+
+Térmicos  Modelados  em  um  Simulador  de  Processos  Utilizando  Métodos  de  Busca 
+
+Direta e Estocástico. Dissertação de M.Sc., COPPE/UFRJ, Rio de Janeiro, RJ, Brasil.  
+
+COSTA,  A.  N.,  2008,  Otimização  da  Lucratividade  de  Plantas  de  Cogeração: 
+
+Modelagem do Problema PCLM. Dissertação de M.Sc., COPPE/UFRJ, Rio de Janeiro, 
+
+RJ, Brasil. 
+
+ 
+
+60 
+
+EL-SAYED  Y.  M  EVANS  R.  B.  1970  “Thermoeconomics  and  the  design  of  heat 
+
+systems”. ASME Journal of Engineering for Power, v. 92, n. 1 (Jan.), pp. 27-35. 
+
+FRANGOPOULOS,  C.  A.,  1987,  “Thermoeconomic 
+
+functional  analysis  and 
+
+optimization” Energy, v. 12, n. 7 (Jul.), pp. 563-571.  
+
+FRANGOPOULOS  C.  A.,  1994,  “Application  of  the  Thermoeconomic  Functional 
+
+Approach to the CGAM Problem” Energy, v. 19, n. 3 (Mar.), pp. 323-342. 
+
+GAGGIOLI,  R.  A.,  1961a.  “The  concept  of  available  energy”  Chemical  Engineering 
+
+Science, v. 16, n. 1-2 (Dez.), pp. 87-96.  
+
+GAGGIOLI,  R.  A.,  1961b,  Thermodynamics  and  Nonequilibrium  System.  Ph.D. 
+
+dissertation, University of Wisconsin, Madison, Wisconsin, USA. 
+
+MANOLAS, D. A., FRANGOPOULOS, C. A., GIALAMAS, T. P., TSAHALIS, D. T., 
+
+1997,  “Operation  Optimization  of  an  Industrial  Cogeneration  System  by  a  Genetic 
+
+Algorithm”  Energy  Conversion  and  Management,  v.  38,  n.  15-17  (Nov.),  pp.  1625-
+
+1636. 
+
+MONTANINI,  L.,  2010,  “Cogeração  está  se  tornando  o  3º  produto  do  setor”,  Jornal 
+
+Cana, Agosto, 2010. 
+
+MOTHCI,  G.  E.,  2005,  Otimização  e  Melhoramento  Exergoeconômicos  de  Sistemas 
+
+Térmicos  Utilizando  Operadores  Genéticos  e  um  Simulador  de  Processos.  Dissertação 
+
+de M.Sc., COPPE/UFRJ, Rio de Janeiro, RJ, Brasil. 
+
+KOCH  C.  CZIESLA  F.  TSATSARONIS  G.,  2007,  “Optimization  of  combined  cycle 
+
+power  plants  using  evolutionary  algorithms”  Chemical  Engineering  and  Processing,  v. 
+
+46, n. 11 (Nov.), pp. 1151-1159. 
+
+KOTAS,  T.  J.,  1985,  The  exergy  method  of  thermal  plant  analysis.  1  ed.  London, 
+
+Butterworths. 
+
+ 
+
+61 
+
+KVARNSTRÖM A. DAHLQUIST E.,2005, “Process optimization utilizing an external 
+
+simulation  model”.  In:  Proceedings  of  SIMS  2005  46th  Scandinavian  Conference  on 
+
+Simulation and Modeling, Trondheim, Out. 
+
+OLIVEIRA,  A.,  1995,  “Cogeração  no  Estado  do  Rio  de  Janeiro:  Oportunidades  e 
+
+Desafios”, Instituto de Economia Industrial, UFRJ, Rio de Janeiro 
+
+PADILHA,  R.  S.,  2006,  Otimização  de  um  Sistema  de  Cogeração  de  Referência 
+
+Utilizado  Métodos  de  Gradiente,  Evolucionário  e  Híbrido:  Um  Estudo  Comparativo. 
+
+Dissertação de M.Sc., COPPE/UFRJ, Rio de Janeiro, RJ, Brasil.  
+
+PALMA, S. R., 2007, Análise Exergética, Termoeconômica e Ambiental de um Sistema 
+
+de  Geração  de  Energia.  Estudo  de  Caso:  Usina  Termoelétrica  UTE  –  Rio  Madeira. 
+
+Dissertação de M.Sc., Universidade de Brasília, Brasília, DF, Brasil. 
+
+PECORA,  V.,  (2006),  “Implantação  de  uma  Unidade  Demostrativa  de  Geração  de 
+
+Energia  Elétrica  a  partir  de  biogás  de  estação  de  tratamento  de  esgoto  residencial  da 
+
+USP – Estudo de Caso”, 152 p. (Dissertação de Mestrado). Programa Interunidades de 
+
+Pós Graduação em Energia (PIPGE) da Universidade de São Paulo, São Paulo. 
+
+PIRES,  T.S.,2010,”Método  de  Superfície  de  Resposta  Aplicado  à  Otimização 
+
+Termoeconômica  de  Sistemas  de  Cogeração  Modelados  em  um  Simulador  de 
+
+Processos”, Dissertação de M.Sc., COPPE/UFRJ, Rio de Janeiro, RJ, Brasil, setembro, 
+
+2010. 
+
+PINEIRO, P. C. C., 2004 “Notas de Aula – Sistemas Térmicos I UFMG 2004”, 
+
+[Acessado em 7 de Dezembro de 2011], 
+
+[http://www.demec.ufmg.br/disciplinas/ema003/gasosos/biogas/biogas.htm]. 
+
+POLITO,  R.,  2009,  Geração  Distribuída  -  Fôlego  renovado,  Brasil  Energia,  março, 
+
+2009. 
+
+ 
+
+62 
+
+RÜCKER,  C.  P.  R.,  2005,  Análise  Exergoeconômica  de  uma  Planta  de  Cogeração 
+
+baseada  em  Microturbina  a  Gás  Natural  e  Refrigeração  por  Absorção  pela  Teoria  do 
+
+Custo Exergético. Dissertação de M.Sc., UFSC, Florianópolis, SC, Brasil. 
+
+SAHOO  P.  K.,  1997,  “Exergoeconomic  analysis  and  optimization  of  a  cogeneration 
+
+system  using  evolutionary  programming”  Applied  Thermal  Engineering,  v.  28,  n.  13 
+
+(Set.), pp. 1580-1588. 
+
+SALOMON,  K.  R.,  LORA,  E.  E.  S.,  Estimativa  do  Potencial  de  Geração  de  Energia 
+
+Elétrica para Diferentes Fostes de Biogás no Brasil, Biomassa & Energia, v. 2, n. 1 pp. 
+
+57-67, 2005. 
+
+SANTOS, J. C. A. S., 2005, Análise Energética e Exergética de Plantas de Cogeração. 
+
+Dissertação de M.Sc, UFRGS, Porto Alegre, RS, Brasil. 
+
+SPAKOVSKY  M.  R.,  1994,  “Application  of  engineering  functional  analysis  to  the 
+
+analysis and optimization of the CGAM problem”, Energy, v. 19, n. 3 (Mar.), pp. 343-
+
+364. 
+
+TITO, E., 1993, “O que é Cogeração, Brasil Energia”, agosto, n° 158 
+
+TOFFOLO, A., LAZZARETTO, A., 2002, “Evolutionary algorithms for multi-objective 
+
+energetic  and  economic  optimization  in  thermal  system  design”  Energy,  v.  27,  n.  6 
+
+(Jun.), pp. 549-567. 
+
+TRIBUS,  M.,  EVANS,  R.  B.,  1962,  Thermoeconomics.  In:  Report  52-63,  UCLA 
+
+Department of Engineering, California. 
+
+TSATSARONIS G. WINHOLD M, 1985,. “Exergoeconomic analysis and evaluation of 
+
+energy  conversion  plants.  Part  I.  A  new  general  methodology.  Part  II.  Analysis  of  a 
+
+coal-fired steam power plant” Energy, v. 10, n. 1 (Jan.), pp. 69-94.  
+
+TSATSARONIS,  G.,  1996,  “Exergoeconomics:  Is  It  Only  a  New  Name?”  Chemical 
+
+Engineering Technology, v. 19, n. 2 (Abr.), pp. 163-169.  
+
+ 
+
+63 
+
+TSATSARONIS  G.  PISA  J.,1994,  “Exergoeconomic  Evaluation  and  optimization  of 
+
+Energy Systems – Application to the CGAM Problem.” Energy, v. 19, n. 3 (Mar.), pp. 
+
+287-322.  
+
+TSATSARONIS,  G.,  2007,  “Definitions  and  nomenclature  in  exergy  analysis  and 
+
+exergoeconomics”, Energy, Vol. 32, No. 4,pp. 249-253. 
+
+VALERO  A.  LOZANO  M.  A.  MUNOZ  M.,1986  a,  “A  General  Theory  of  Exergy 
+
+Saving  -  I.  On  the  Exergetic  Cost”.  In:  Computer-Aided  Engineering  of  Energy 
+
+Systems,  v.  3,  ASME  Advanced  Energy  Systems  Division,  ed.  R.  A.  Gaggioli,  New 
+
+York, pp. 1-8. 
+
+VALERO  A.  LOZANO  M.  A.  MUNOZ  M.  1986b,  “A  General  Theory  of  Exergy 
+
+Saving - II. On the Thermoeconomic Cost”. In: Computer-Aided Engineering of Energy 
+
+Systems,  v.  3,  ASME  Advanced  Energy  Systems  Division,  ed.  R.  A.  Gaggioli,  New 
+
+York, pp. 9-16.  
+
+VALERO  A.  LOZANO  M.  A.  MUNOZ  M.  1986c,  “A  General  Theory  of  Exergy 
+
+Saving – III. Energy Saving and Thermoeconomics”. In: Computer-Aided Engineering 
+
+of  Energy  Systems,  v.  3,  ASME  Advanced  Energy  Systems  Division,  ed.  R.  A. 
+
+Gaggioli, New York, pp. 17-22.  
+
+VALERO,  A.,  LOZANO,  M.  A.,  SERRA,  L.,  et  al.,  1994a,  “CGAM  Problem: 
+
+Definition and Conventional Solution” Energy, v. 19, n. 3 (Mar.), pp. 279-286.  
+
+VALERO,  A.,  LOZANO,  M.  A.,  SERRA,  L.,  et  al.,  1994b,  “Application  of  the 
+
+Exergetic Cost Theory to the CGAM Problem” Energy, v. 19, n. 3 (Mar.), pp. 365-381. 
+
+VALERO,  A., 2006, “Exergy  Accounting:  Capabilities and Drawbacks”,  Energy,  Vol. 
+
+31, No. 1, pp. 164-180. 
+
+ 
+
+64 
+
+VIANA  JÚNIOR,  L.,  1999,  “Cogeração  –  Desenvolvimento  de  Metodologia  para 
+
+Avaliação Energética: Estudo de Caso Aplicado a Industria de Papel e Celulose” Tese 
+
+de M.Sc., PUC-MG, Minas Gerais, MG, Brasil. 
+
+VIEIRA, L. S. R., 2003, Modelo Exergoeconômico Iterativo para Melhoria de Sistemas 
+
+Térmicos  Complexos  Integrado  a  um  Simulador  de  Processos  Profissional.  Tese  de 
+
+D.Sc., COPPE/UFRJ, Rio de Janeiro, RJ, Brasil.  
+
+VIEIRA, L. S. R., DONATELLI J. L. CRUZ  M. E., 2004, “Integration of an Iterative 
+
+Methodology  for  Exergoeconomic  Improvement  of  Thermal  Systems  with  a  Process 
+
+Simulator” Energy Conversion and Management, v. 45, n. 15-16 (Set.), pp. 2495-2523.  
+
+VIEIRA,  L.  S.  R.,  DONATELLI,  J.  L.,  CRUZ  M.  E.,  2005,  “Integration  of  a 
+
+mathematical  exergoeconomic  optimization  procedure  with  a  process  simulator: 
+
+application to the cgam system” Revista da Engenharia Térmica – RETERM , v. 4, n. 2.  
+
+VIEIRA,  L.  S.  R.,  DONATELLI,  J.  L.,  CRUZ,  M.  E.,  2006,  “Mathematical 
+
+exergoeconomic optimization  of a complex cogeneration plant aided by a professional 
+
+process simulator” Applied Thermal Engineering, v. 26, n. 5-6 (Abr.), pp. 654–662. 
+
+VIEIRA,  L.  S.  R.,  DONATELLI,  J.  L.,  CRUZ,  M.  E.,  2009,  “Exergoeconomic 
+
+improvement of a complex cogeneration system integrated with a professional process 
+
+simulator” Energy Conversion and Management, v. 50, n. 8 (Ago.), pp. 1955–1967. 
+
+ 
+
+ 
+
+ 
+
+65 
+
+7.   Anexo 1 – Resultados parciais do método OM 
+
+ 
+
+Abaixo, consta a tabela de resultados parciais do método OM. 
+
+Tabela 17 – Resultados parciais do método OM 
+
+ 
+
+ 
+
+ 
+
+ 
+
+66 
+
+GeraçãoFunção objetivo (f)142,22242,04341,63441,52541,1641,1740,92840,92940,921040,921140,921240,811340,811440,811540,811640,811740,811840,811940,812040,382140,382240,382340,382440,322540,322640,322740,322840,322940,323040,32Tempo (s)3.4818.   Anexo 2 – Resultados parciais do método ME1 
+
+Abaixo, consta as tabelas de resultados parciais do método ME1. 
+
+Tabela 18 – Resultado da iteração 1 do método ME1, note que tal resultado é semelhante a 
+
+primeira iteração de ME2, ver Tabela 22. 
+
+ 
+
+67 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Tempo (s)1.976              44,59Melhoria 8,73%1235691025111101000111101000111100000000000000111100000111101000000000000000000000111101000111101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.t80.836,54   84.543,35     0,82                0,70            108,42      119,99      2,00           400,00      400,00      xi* Matriz DFunção objetivo (f)Vetor OME1 - Iteração 1Tabela 19 – Resultado da iteração 2 do método ME1, note que a partir da segunda iteração os 
+
+resultados de ME1 se diferenciam dos resultados de ME2, ver Tabela 23. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+68 
+
+Tempo (s)982              40,80Melhoria 16,49%1235691025111000000111000000111000000000000000111000000111000000000000000000000000111000000111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100011GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.t40.084,26     79.896,82  0,52           0,56           108,42      119,99      2,00           575,61      585,51      xi* Matriz DFunção objetivo (f)Vetor OME1 - Iteração 2Tabela 20 – Resultado da iteração 3 do método ME1. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+69 
+
+Tempo (s)3.644             38,73Melhoria 20,72%23651910111100011111100011111100011000000000111100011110100001000000000000000000111100011111100011000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.t40.078,88     40.680,51     0,52           0,50           108,42      119,99      2,00           599,96      600,00      xi* Matriz DFunção objetivo (f)Vetor OME1 - Iteração 3Tabela 21 – Resultado da iteração 4 do método ME1. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+70 
+
+Tempo (s)1.404             38,62Melhoria 20,94%3561291025111100000111100000111100000000000000111100000111100000000000000000000000111100000111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011000GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.t40.075,76   40.679,95     0,50           0,50           109,92      119,99      2,00           599,96      600,00      xi* Matriz DFunção objetivo (f)Vetor OME1 - Iteração 49.   Anexo 3 – Resultados parciais do método ME2 
+
+  Abaixo, consta as tabelas de resultados parciais do método ME2. 
+
+ 
+
+ 
+
+ 
+
+Tabela 22 – Resultado da iteração 1 do método ME2, note que é semelhante a primeira 
+
+iteração do método ME1, ver Tabela 18. 
+
+ 
+
+ 
+
+71 
+
+Tempo (s)1.317             44,68Melhoria 8,55%1235691025111101000111101000111100000000000000111100000111101000000000000000000000111101000111101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.t84.196,48   81.628,41     0,83                0,72            96,43       119,98    2,00         400,00    400,00    xi* ME2 - Iteração 1Função objetivo (f)Vetor OMatriz DTabela 23 – Resultado da iteração 2 do método ME2, note que a partir da segunda iteração os 
+resultados das iterações de ME2 são diferentes dos resultados das iterações do método ME1, 
+
+ver Tabela 19. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+72 
+
+Tempo (s)641             41,31Melhoria 15,44%1235691025111100000111100000111100000000000000111000000111100000000000000000000000111100000111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.t40.652,55     86.914,87 0,51         0,60         96,43       119,98    2,00         594,03    525,29    Função objetivo (f)ME2 - Iteração 2Vetor OMatriz Dxi* Tabela 24 – Resultados da iteração 3 do método ME2. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+73 
+
+Tempo (s)1.256             39,67Melhoria 18,80%23651910111100011111100011111100011000000000111100011010100011000000000000000000111100011111100011000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.t40.649,80     40.926,40     0,51         0,60         96,43       119,98    2,00         599,89    599,99    xi* Função objetivo (f)Matriz DME2 - Iteração 3Vetor OTabela 25 – Resultado da iteração 4 do método ME2. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+74 
+
+Tempo (s)420                 39,21Melhoria 19,75%2356191025111100000111100000111100000000000000111100000111100000000000000000000000111100000111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011000GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.t40.649,34  40.926,34     0,51         0,54         98,18      119,98    2,00         599,89    599,99    Vetor OMatriz Dxi* Função objetivo (f)ME2 - Iteração 4Tabela 26 – Resultado da iteração 5 do método ME2. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+75 
+
+Tempo (s)567                 38,93Melhoria 20,31%3562191025111100000111100000111100000000000000111100000111100000000000000000000000111100000111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011000GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.t40.647,28     40.924,22     0,51         0,51         105,27    119,92    2,00         599,89    599,99    Vetor Oxi* Função objetivo (f)ME2 - Iteração 5Matriz DTabela 27 – Resultado da iteração 4 do método ME2. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+76 
+
+Tempo (s)309                 38,89Melhoria 20,40%3561291025111100000111100000111100000000000000111100000111100000000000000000000000111100000111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011000GT01GT01aGT01.fGT01a.fS08.pS08a.pS14.pS08.tS08a.t40.647,16     40.924,22     0,51         0,51         111,71    119,58    2,00         599,89    599,99    ME2 - Iteração 6Função objetivo (f)Vetor OMatriz Dxi* 10.  Anexo 4 – Rotina “Programaprincipal.m” 
+
+ 
+
+clear all; 
+format long; 
+%clc; 
+warning off all 
+ feature('COM_ActxProgidCheck',0) 
+  
+  
+global A AF Afeta alt anos AP Bk C CDesthor CDesthorold cespec cf cF CFhor 
+Chor coef_beta COEFC COEFCDest comp cont cP CPhor CRF    Ctotalhor    
+global Ctotalhorold CTotalhorordem Custocomphor Custocomphorold 
+Custogeralhor Custogeralhorold Decisao  Decisao1 Decisao2 deltaefic 
+deltaeficold     
+global deltar deltarold DesvioCTotalhor Dominante e E ED Efex Efexold 
+EfexOPT Efextotal Efextotalold eQuim EQuim error Etot f fatorcusto 
+fatorotimiz     
+global fatorvar fexerg fexergold FI Fk fOPT Fuel fun incremento LI  LS  M 
+MediaCTotalhor mk N Ncompotimiz   nk  numvar Nvar Nvarotimiz1 Nvarotimiz2 
+Ordemotimiz  
+global Otindividual Prod Ptotal r rold  rOPT SomaCtotalhor 
+SomaCtotalhorold SomaDesthor SomaDesthorold taxa  Variacao x x0 y y0 Zhor 
+Zhorold 
+  
+  
+global app ProjPath 
+  
+        fun = str2func('Calculodentrootimizacao'); 
+        numvar = 9; 
+        % Start IPSEpro 
+        app = actxserver('PSE.Application'); 
+        % Open the simulation model ".pro" in IPSEpro 
+        ProjPath = 'C:\IPSEwork\Sistema Complexo\SistemaComplexo9v.pro'; 
+        proj = invoke(app,'openProject',ProjPath); 
+%% 
+Parametrosiniciais 
+%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% LIMITES SUPERIOR E INFERIOR DAS VARIÁVEIS 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+%Tomar Limites Automaticamente das funcoes 
+  
+  
+% Limites das variáveis: 
+%      Wgt1     Wgt1a   LOADgt1  LOADgt1a  P08  P08a    P14  T08(oC) 
+T08a(oC)  
+LI = [  40000    40000    0.5      0.5      20    20     2    350      
+350]; 
+LS = [ 100000   100000    1.0      1.0     120   120     10   600      
+600]; 
+  
+fileName = 'C:\Users\HUGO-Mobile\Documents\MATLAB\Entrada.xlsx'; 
+dummy = xlsread (fileName,'In','A3:A11'); 
+x0 = dummy'; 
+      
+Calculoforaotimizacao(x0) 
+      
+
+ 
+
+77 
+
+11.  Anexo 5 – Rotina “Criterios.m” 
+
+ 
+
+function Criterios 
+  
+global A AF Afeta alt anos AP Bk C CDesthor CDesthorold cespec cf cF CFhor 
+Chor coef_beta COEFC COEFCDest comp cP CPhor CRF Ctotalhor    
+global Ctotalhorold CTotalhorordem Custocomphor Custocomphorold 
+Custogeralhor Custogeralhorold Decisao  Decisao1 Decisao2 deltaefic 
+deltaeficold     
+global deltar deltarold DesvioCTotalhor Dominante e E ED Efex Efexold 
+EfexOPT Efextotal Efextotalold eQuim EQuim error Etot f fatorcusto 
+fatorotimiz     
+global fatorvar fexerg fexergold FI Fk fOPT Fuel fun incremento LI  LS  M 
+MediaCTotalhor mk N Ncompotimiz   nk  numvar Nvar Nvarotimiz1 Nvarotimiz2 
+Ordemotimiz  
+global Otindividual Prod Ptotal r rold  rOPT SomaCtotalhor 
+SomaCtotalhorold SomaDesthor SomaDesthorold taxa  Variacao x x0 y y0 Zhor 
+Zhorold 
+  
+  
+global app ProjPath 
+  
+  
+  
+%'Critério para seleção de componentes a serem otimizados individualmente' 
+%'custo de destruição de exergia + custo de investimento deve ser elevado' 
+  
+MediaCTotalhor = mean(Ctotalhor); 
+DesvioCTotalhor = std(Ctotalhor); 
+  
+Otindividual = zeros(1,24); 
+for i = 1:24 
+    if Ctotalhor(i) > (MediaCTotalhor + fatorotimiz * DesvioCTotalhor)  
+                Otindividual(i) = 1; %"Otim.individual prioritária." 
+    else 
+            if Ctotalhor(i) > (MediaCTotalhor - fatorotimiz * 
+DesvioCTotalhor)  
+                Otindividual(i) = 2; %"Otim.individual secundária." 
+            else 
+                Otindividual(i) = 0; %"Não Otimiz.individual." 
+            end 
+    end 
+end 
+  
+%'Identificação das variáveis que afetam simultaneamente custo e 
+eficiência exergética total 
+% 'Incrementos nas variáveis de incremento%% 
+% 'Matriz 3D- Variação (i,j,k), onde i=variável de decisão associada 
+% %                                  j=componente   OBS:j=25 - sistema 
+global 
+% %                                  k- variação calculada para cada 
+componente j 
+% %                                     1 - Efex        2 - Zhor 3 - 
+CDesthor 
+% %                                     4 - Ctotalhor=Zhor+CDesthor 
+% %                                     5 - r    6 -fexerg 
+% %                                     7 - deltar      8 -  deltaefic 
+  
+    Efexold = zeros(1,24); 
+
+ 
+
+78 
+
+    Ctotalhorold = zeros(1,24); 
+    CDesthorold = zeros(1,24); 
+    Zhorold = zeros(1,24); 
+    rold = zeros(1,24); 
+    fexergold = zeros(1,24); 
+    deltarold = zeros(1,24); 
+    deltaeficold = zeros(1,24); 
+  
+for j = 1:24 
+    Efexold(j) = Efex(j); 
+    Ctotalhorold(j) = Ctotalhor(j); 
+    CDesthorold(j) = CDesthor(j); 
+    Zhorold(j) = Zhor(j); 
+    rold(j) = r(j); 
+    fexergold(j) = fexerg(j); 
+    deltarold(j) = deltar(j); 
+    deltaeficold(j) = deltaefic(j); 
+end 
+Custogeralhorold = Custogeralhor; %%(soma dos custos c/j=1 to 52) 
+SomaDesthorold = SomaDesthor; 
+SomaCtotalhorold = SomaCtotalhor; %%(soma dos custos c/j=1 to 24) 
+Efextotalold = Efextotal; 
+Custocomphorold = Custocomphor; 
+  
+  
+  
+Decisao = x0; 
+Variacao = zeros(numvar,24,25); 
+  
+for i = 1:numvar %'para cada variável de decisão 
+    %'Alterando o valor da variável de decisão no valor do incremento 
+especificado' 
+    Decisao(i) = (1 + incremento / 100) * Decisao(i); 
+     
+    x0(i) = Decisao(i); 
+  
+    Calculoforaotimizacao(x0); 
+  
+     
+    %'Calculando as variações para cada componente 
+    for j = 1:24 %'para cada componente 
+        Variacao(i, j, 1) = (Efex(j) - Efexold(j)) / Efexold(j) * 100; 
+        Variacao(i, j, 2) = (Zhor(j) - Zhorold(j)) / Zhorold(j) * 100; 
+        Variacao(i, j, 3) = (CDesthor(j) - CDesthorold(j)) / 
+CDesthorold(j) * 100; 
+        Variacao(i, j, 4) = (Ctotalhor(j) - Ctotalhorold(j)) / 
+Ctotalhorold(j) * 100; 
+        Variacao(i, j, 5) = (r(j) - rold(j)) / rold(j) * 100; 
+        Variacao(i, j, 6) = (fexerg(j) - fexergold(j)) / fexergold(j) * 
+100; 
+         
+        if deltarold(j) ~= 0  
+            Variacao(i, j, 7) = (deltar(j) - deltarold(j)) / deltarold(j) 
+* 100; 
+            else 
+            Variacao(i, j, 7) = -999; 
+        end 
+        if deltaeficold(j) ~= 0  
+           Variacao(i, j, 8) = (deltaefic(j) - deltaeficold(j)) / 
+deltaeficold(j) * 100; 
+           else 
+            Variacao(i, j, 8) = -999; 
+
+ 
+
+79 
+
+        end 
+     
+    end 
+     
+%     'Calculando as variações para o sistema global 
+%     'j=25 sistema global 
+         
+if error == 0  
+        Variacao(i, 25, 10) = (Custogeralhor - Custogeralhorold) / 
+Custogeralhorold * 100; 
+     else 
+        Variacao(i, 25, 10) = incremento; %'neste caso a variável afeta 
+custo global 
+end 
+        Variacao(i, 25, 11) = (SomaDesthor - SomaDesthorold) / 
+SomaDesthorold * 100; 
+        Variacao(i, 25, 12) = (SomaCtotalhor - SomaCtotalhorold) / 
+SomaCtotalhorold * 100; 
+        Variacao(i, 25, 13) = (Custocomphor - Custocomphorold) / 
+Custocomphorold * 100; 
+if error == 0  
+        Variacao(i, 25, 14) = (Efextotal - Efextotalold) / Efextotalold * 
+100; 
+    else 
+%        'Variacao(i, 25, 14) = incremento 'neste caso a variável afeta 
+eficiência global 
+        Variacao(i, 25, 14) = 0; %'neste caso a variável não afeta 
+eficiência global 
+end 
+         
+  
+%     'retornando a variável de decisão para seu valor original' 
+    Decisao(i) = Decisao(i) / (1 + incremento / 100); 
+    x0(i) = Decisao(i); 
+  
+end 
+  
+%'retornando as matrizes para seu valor original 
+ Calculoforaotimizacao(x0); 
+  
+%'Stop 
+  
+%'Identificação das variáveis que afetam eficiência e custo de cada 
+componente' 
+% 'for i = 1 : 5 'para cada variável de decisão' 
+% %    for j = 1 : 5 'para cada componente' 
+% %        if abs(Variacao(i, j, 1)) >= fatorvar * incremento & 
+abs(Variacao(i, j, 2)) >= fatorvar * incremento  
+% %           Afeta(i, j) = "afeta os dois" 
+% %        end 
+% %        if abs(Variacao(i, j, 1)) >= fatorvar * incremento & 
+abs(Variacao(i, j, 2)) <= fatorvar * incremento  
+% %           Afeta(i, j) = "afeta apenas eficiência" 
+% %        end 
+% %        if abs(Variacao(i, j, 1)) <= fatorvar * incremento & 
+abs(Variacao(i, j, 2)) >= fatorvar * incremento  
+% %           Afeta(i, j) = "afeta apenas custo" 
+% %        end 
+% %        if abs(Variacao(i, j, 1)) <= fatorvar * incremento & 
+abs(Variacao(i, j, 2)) <= fatorvar * incremento  
+% %           Afeta(i, j) = "não afeta" 
+% %        end 
+% %    end 
+
+ 
+
+80 
+
+% 'end 
+%  
+% 'Identificação das variáveis que afetam eficiência e/ou custo geral 
+  
+  
+Afeta = zeros(numvar,25); 
+for i = 1:numvar %'para cada variável' 
+    if abs(Variacao(i, 25, 10)) >= fatorvar * incremento && 
+abs(Variacao(i, 25, 14)) >= fatorvar * incremento  
+       Afeta(i, 25) = 1; %"afeta os dois" 
+    end 
+    if abs(Variacao(i, 25, 10)) >= fatorvar * incremento && 
+abs(Variacao(i, 25, 14)) <= fatorvar * incremento  
+       Afeta(i, 25) = 2; %"afeta apenas custo" 
+    end 
+    if abs(Variacao(i, 25, 10)) <= fatorvar * incremento && 
+abs(Variacao(i, 25, 14)) >= fatorvar * incremento  
+       Afeta(i, 25) = 3; %"afeta apenas eficiência" 
+    end 
+    if abs(Variacao(i, 25, 10)) <= fatorvar * incremento && 
+abs(Variacao(i, 25, 14)) <= fatorvar * incremento  
+       Afeta(i, 25) = 4; %"não afeta" 
+    end 
+end 
+  
+  
+Dominante = zeros(1,24); 
+% 'Identificação dos principais elementos de custo para cada componente 
+for j = 1:24 %'para cada componente' 
+    if abs(CDesthor(j) / Ctotalhor(j)) >= fatorcusto  
+           Dominante(j) = 1; %"custo destruição é dominante" 
+    end 
+    if abs(Zhor(j) / Ctotalhor(j)) >= fatorcusto  
+           Dominante(j) = 2; %"custo investimento é dominante" 
+    end 
+     if abs(CDesthor(j) / Ctotalhor(j)) < fatorcusto && abs(Zhor(j) / 
+Ctotalhor(j)) < fatorcusto  
+           Dominante(j) = 3; %"não há termo dominante" 
+    end 
+end 
+  
+  
+% 'ALTERNATIVA 1 
+%  
+% 'Coeficientes de Ligação Estrutural modificado: 
+deltacomponente/deltatotal' 
+%  
+% 'Coeficientes de ligação em função da eficiência exergética COEFef(i,j)% 
+  
+COEFCDest = zeros(numvar,24); 
+  
+for i = 1:numvar %'para cada variável de decisão' 
+    for j = 1:24 %'para cada componente 
+        if Variacao(i, j, 3) ~= 0 && isnan(Variacao(i, j, 3))~=1 
+           COEFCDest(i, j) = Variacao(i, 25, 11) / Variacao(i, j, 3); 
+          else 
+           COEFCDest(i, j) = 999; 
+        end 
+    end 
+end 
+  
+%'Coeficientes de ligação em função da soma Zhor dos componentes 
+(invest.+O&M) COEFInv(i,j)% 
+
+ 
+
+81 
+
+%'for i = 1 : 5 'para cada variável de decisão' 
+%    for j = 1 : 5 'para cada componente 
+%        COEFInv(i, j) = Variacao(i, 6, 10) / Variacao(i, j, 2) 
+%    end 
+%'end 
+  
+%'Coeficientes de ligação em função da soma (Zinv+Cdestruição horário) 
+COEFC(i,j)% 
+  
+COEFC = zeros(numvar,24); 
+  
+for i = 1 : numvar %'para cada variável de decisão% 
+    for j = 1 : 24 %para cada componente 
+        if Variacao(i, j, 4) ~= 0  
+           COEFC(i, j) = Variacao(i, 25, 12) / Variacao(i, j, 4); 
+           else 
+           COEFC(i, j) = 999; 
+        end 
+    end 
+end 
+  
+  
+%ALTERNATIVA 2 
+  
+    %Variações para cada componente já calculadas na análise de 
+sensibilidade 
+    % Variacao(i, j, 7) = (deltar(j) - deltarold(j)) / deltarold(j) * 100 
+    % Variacao(i, j, 8) = (deltaefic(j) - deltaeficold(j)) / 
+deltaeficold(j) * 100 
+  
+  
+%MATRIZES DE DECISAO 
+  
+%Determinação das matrizes de Decisao1 (alternativa 1 - coeficiente de 
+ligação estrutural) 
+%e Decisao2 (alternativa 2 - variações em deltar e delta efic). 
+%Estas matrizes apresentam as variáveis escolhidas a serem usadas no 
+processo de otimização 
+%quando o valor for 0, a variável disposta na coluna respectiva não é 
+escolhida 
+%quando o valor for 1, a variável é escolhida 
+%O número de linhas da matriz é igual ao número de componentes acrescido 
+da otimizaçào individual 
+%O número de colunas é igual ao número de veriáveis de decisão 
+  
+  
+%Identificação das variáveis a serem otimizadas isoladamente 
+Decisao1 = zeros(25,numvar); 
+Decisao2 = zeros(25,numvar); 
+  
+for i = 1 : numvar 
+    if Afeta(i, 25) == 2 %"afeta apenas custo"  
+       Decisao1(25, i) = 1; 
+       Decisao2(25, i) = 1; 
+       else 
+       Decisao1(25, i) = 0; 
+       Decisao2(25, i) = 0; 
+    end 
+end 
+  
+  
+
+ 
+
+82 
+
+%Deterninação da matriz Decisao1(j,i)- alternativa 1 coeficientes de 
+ligação 
+%Determinação dos  elementos da matriz 
+for j = 1 : 24 %para cada componente 
+     if Otindividual(j) == 0 %"Não Otimiz.individual."  
+        for i = 1 : numvar 
+            Decisao1(j, i) = 0; 
+        end 
+     end 
+     if Otindividual(j) == 1 || Otindividual(j) == 2 %"Otim.individual 
+prioritária." Or Otindividual(j) = "Otim.individual secundária." 
+        for i = 1 : numvar %para cada variável 
+            if Afeta(i, 25) == 4; %"não afeta"  
+               Decisao1(j, i) = 0; 
+            end 
+            if Afeta(i, 25) == 2; %"afeta apenas custo"  
+               Decisao1(j, i) = 0; 
+            end 
+            if Afeta(i, 25) == 1 || Afeta(i, 25) == 3 %"afeta os dois" Or 
+Afeta(i, 25) = "afeta apenas eficiência"  
+               if Dominante(j) == 1 %"custo destruição é dominante"  
+                  if COEFCDest(i, j) > 0  
+                     Decisao1(j, i) = 1; 
+                     else 
+                         Decisao1(j, i) = 0; 
+                  end 
+               end 
+               if Dominante(j) == 3 || Dominante(j) == 2 %"não há termo 
+dominante" Or Dominante(j) = "custo investimento é dominante"  
+                  if COEFC(i, j) > 0  
+                     Decisao1(j, i) = 1; 
+                     else 
+                         Decisao1(j, i) = 0; 
+                  end 
+               end 
+            end 
+        end 
+     end 
+end 
+  
+  
+  
+%Deterninação da matriz Decisao2(j,i) - alternativa 2 - variações 
+%Determinação dos elementos da matriz 
+for j = 1 : 24 %para cada componente 
+     if Otindividual(j) == 0 %"Não Otimiz.individual."  
+        for i = 1 : numvar 
+            Decisao2(j, i) = 0; 
+        end 
+     end 
+     if  Otindividual(j) == 1 || Otindividual(j) == 2 %"Otim.individual 
+prioritária." Or Otindividual(j) = "Otim.individual secundária." 
+        for i = 1 : numvar %para cada variável 
+            if Afeta(i, 25) == 4 %"não afeta"  
+               Decisao2(j, i) = 0; 
+            end 
+            if Afeta(i, 25) == 2 %"afeta apenas custo"  
+               Decisao2(j, i) = 0; 
+            end 
+            if Afeta(i, 25) == 1 || Afeta(i, 25) == 3%"afeta os dois" Or 
+Afeta(i, 25) = "afeta apenas eficiência"   
+               if Dominante(j) ==1  %"custo destruição é dominante"  
+                  if Variacao(i, j, 8) < 0  
+                     Decisao2(j, i) = 1; 
+
+ 
+
+83 
+
+                     else 
+                         Decisao2(j, i) = 0; 
+                  end 
+               end 
+               if Dominante(j) == 3 || Dominante(j) == 2 %"não há termo 
+dominante" Or Dominante(j) = "custo investimento é dominante"   
+                  if Variacao(i, j, 7) < 0  
+                     Decisao2(j, i) = 1; 
+                     else 
+                         Decisao2(j, i) = 0; 
+                  end 
+               end 
+            end 
+        end 
+     end 
+end 
+  
+%Ordenação do processo de otimização 
+%Ordemotimiz(6) - vetor que armazena a ordem de otimização 
+%Ncompotimiz - número de componentes a otimizar 
+%Nvarotimiz1(j) - número de variáveis a serem otimizadas para o 
+componente(j) alternativa 1 
+%Nvarotimiz2(j) - número de variáveis a serem otimizadas para o 
+componente(j) alternativa 2 
+  
+%% 
+%Número de componentes a otimizar 
+Ncompotimiz = 0; 
+for j = 1 : 24 
+    if Otindividual(j) == 1 || Otindividual(j) == 2 %"Otim.individual 
+prioritária." Or Otindividual(j) = "Otim.individual secundária." 
+       Ncompotimiz = Ncompotimiz + 1; 
+    end 
+end 
+    k = 0; 
+for i = 1 : numvar; %%%Diferente do Código do Leonardo 
+    if Decisao1(25, i) == 1  
+       k = 1; 
+    end 
+end 
+Ncompotimiz = Ncompotimiz + k; 
+  
+  
+Nvarotimiz1 = zeros(1,25); 
+Nvarotimiz2 = zeros(1,25); 
+  
+%Número de variáveis a serem otimizadas para o componente(j) 
+for j = 1 : 25 
+    Nvarotimiz1(j) = 0; %numero de vatiáveis p/ alternativa 1 
+    Nvarotimiz2(j) = 0; %número de variáveis p/alternativa 2 
+    for i = 1 : numvar 
+        if Decisao1(j, i) == 1  
+           Nvarotimiz1(j) = Nvarotimiz1(j) + 1; 
+        end 
+        if Decisao2(j, i) == 1  
+           Nvarotimiz2(j) = Nvarotimiz2(j) + 1; 
+        end 
+    end 
+end 
+  
+%Ordenação dos componentes Ordemotimiz(25) - vetor que armazena a ordem de 
+otimização 
+  
+
+ 
+
+84 
+
+    CTotalhorordem = sort(Ctotalhor,'descend'); 
+  
+  
+Ordemotimiz = zeros (1,25); 
+%k = 24; 
+i = 0; 
+for j = 1 : 24 
+    k = 1; 
+    i = i + 1; 
+    if Otindividual(j) ~= 0 && CTotalhorordem(j) == Ctotalhor(i)%"Não 
+Otimiz.individual"  
+    Ordemotimiz(j) = i;     
+    else 
+        if Otindividual(j) ~= 0 
+        while Ctotalhor(j) ~= CTotalhorordem(k) 
+        k = k + 1; 
+        end 
+        Ordemotimiz(k) = j; 
+        end 
+         
+    end 
+      
+end 
+for i = 1 : numvar 
+    if Decisao1(25, i) == 1  
+       Ordemotimiz(Ncompotimiz) = 25; 
+    end 
+end 
+Ordemotimiz 
+Decisao1 
+ 
+
+ 
+
+ 
+
+85 
+
+12.  Anexo 6 – Rotina “Melhoraauto.m” 
+
+ 
+
+function MelhoraAutoGA 
+  
+global A AF Afeta alt anos AP Bk C CDesthor CDesthorold cespec cf cF CFhor 
+Chor coef_beta COEFC COEFCDest comp cont cP CPhor CRF    Ctotalhor    
+global Ctotalhorold CTotalhorordem Custocomphor Custocomphorold 
+Custogeralhor Custogeralhorold Decisao  Decisao1 Decisao2 deltaefic 
+deltaeficold     
+global deltar deltarold DesvioCTotalhor Dominante e E ED Efex Efexold 
+EfexOPT Efextotal Efextotalold eQuim EQuim error Etot f fatorcusto 
+fatorotimiz     
+global fatorvar fexerg fexergold FI Fk fOPT Fuel fun incremento LI  LS  M 
+MediaCTotalhor mk N Ncompotimiz   nk  numvar  Nvarotimiz1 Nvarotimiz2 
+Ordemotimiz  
+global Otindividual Prod Ptotal r rold  rOPT SomaCtotalhor 
+SomaCtotalhorold SomaDesthor SomaDesthorold taxa  Variacao x0 y0 y Zhor 
+Zhorold 
+  
+  
+global app ProjPath 
+  
+  
+  
+  
+for j = 1 : Ncompotimiz 
+    comp = j  
+    Ordemotimiz(comp) 
+if Ordemotimiz(comp)~= 0 
+      Nvar = Nvarotimiz1(Ordemotimiz(comp)) 
+      if Nvar ~= 0              
+            YI = zeros(1,Nvar); 
+            YS = zeros(1,Nvar); 
+            y0 = zeros(1,Nvar); 
+           cont = 0; 
+           for k = 1 : numvar 
+           var = k;      
+               if Decisao1(Ordemotimiz(comp), var) == 1   %'variável deve 
+ser modificada 
+                   cont = cont+1; 
+                   y0(cont)= x0(var); 
+                   YI(cont) = LI(var); 
+                   YS(cont) = LS(var); 
+               end    
+           end            
+      end 
+%% Decisão de otimizar ou não o elemento "Código Acelerador" 
+     rep = 0; 
+     if comp ~=1 
+     rep = 0; 
+     compold =  comp-1; 
+     r1 = Decisao1(Ordemotimiz(comp),:); 
+     r2 = Decisao1(Ordemotimiz(compold),:); 
+     for i = 1 : 9 
+        if r1(i)==r2(i) 
+        rep = rep + 1; 
+        end 
+     end 
+     end 
+
+ 
+
+86 
+
+%%      
+     if comp == 1 || rep < 9 
+%Genetic Algorithm - Toolbox 
+         
+        IR = [YI;YS]; 
+        PopulationSize = 5*Nvar; 
+        Generations = 5*Nvar; 
+        StallGenLimit = 2*Nvar; 
+        IP = y0 
+         
+        options = 
+gaoptimset('Display','iter','PlotFcns',@gaplotbestf,'PopulationSize',Popul
+ationSize,'PopInitRange',IR,'Generations',Generations,'StallGenLimit',Stal
+lGenLimit,'InitialPopulation',IP); 
+        otimizacao = str2func('ga'); 
+        [y,f,reason, output, finalpopulation, finalscores] = 
+otimizacao(fun,Nvar,[],[],[],[],IR(1,:),IR(2,:),[],options); 
+  
+%Atualização das variáveis de decisão após a otimização     
+    Atualizacao 
+     
+    end          
+end 
+end 
+end 
+ 
+
+ 
+
+ 
+
+87 
+
+13.  Anexo 7 – Rotina “Otimizaauto.m” 
+
+ 
+
+function OtimizaAutoGA 
+  
+global A AF Afeta alt anos AP Bk C CDesthor CDesthorold cespec cf cF CFhor 
+Chor coef_beta COEFC COEFCDest comp cont cP CPhor CRF    Ctotalhor    
+global Ctotalhorold CTotalhorordem Custocomphor Custocomphorold 
+Custogeralhor Custogeralhorold Decisao  Decisao1 Decisao2 deltaefic 
+deltaeficold     
+global deltar deltarold DesvioCTotalhor Dominante e E ED Efex Efexold 
+EfexOPT Efextotal Efextotalold eQuim EQuim error Etot f fatorcusto 
+fatorotimiz     
+global fatorvar fexerg fexergold FI Fk fOPT Fuel fun incremento LI  LS  M 
+MediaCTotalhor mk N Ncompotimiz   nk  numvar  Nvarotimiz1 Nvarotimiz2 
+Ordemotimiz  
+global Otindividual Prod Ptotal r rold  rOPT SomaCtotalhor 
+SomaCtotalhorold SomaDesthor SomaDesthorold taxa  Variacao x x0 y y0 Zhor 
+Zhorold 
+  
+  
+global app ProjPath 
+ti = tic; 
+%Genetic Algorithm - Toolbox 
+        fun2 = str2func('Calculoforaotimizacao'); 
+        IR = [LI;LS]; 
+        PopulationSize = 5*numvar; 
+        Generations = 5*numvar; 
+        StallGenLimit = 2*numvar; 
+        IP = x0; 
+        options = 
+gaoptimset('Display','iter','PlotFcns',@gaplotbestf,'PopulationSize',Popul
+ationSize,'PopInitRange',IR,'Generations',Generations,'StallGenLimit',Stal
+lGenLimit,'InitialPopulation',IP); 
+        otimizacao = str2func('ga'); 
+        [x,f,reason, output, finalpopulation, finalscores] = 
+otimizacao(fun2,numvar,options); 
+toc(ti) 
+x 
+end 
+ 
+
+ 
+
+ 
+
+88 
+
+14.  Anexo 8 – Sub-rotina “Calculodentrootimizacao.m” 
+
+ 
+
+ 
+
+ 
+
+Tal sub rotina é utilizada internamente a rotina “Melhoraauto.m”. 
+
+function [f] = Calculodentrootimizacao (y) 
+  
+  
+  
+global A AF Afeta alt anos AP Bk C CDesthor CDesthorold cespec cf cF CFhor 
+Chor coef_beta cont COEFC COEFCDest comp cP CPhor CRF    Ctotalhor    
+global Ctotalhorold CTotalhorordem Custocomphor Custocomphorold 
+Custogeralhor Custogeralhorold Decisao  Decisao1 Decisao2 deltaefic 
+deltaeficold     
+global deltar deltarold DesvioCTotalhor Dominante e E ED Efex Efexold 
+EfexOPT Efextotal Efextotalold eQuim EQuim error Etot f fatorcusto 
+fatorotimiz     
+global fatorvar fexerg fexergold FI Fk fOPT Fuel fun incremento LI  LS  M 
+MediaCTotalhor mk N Ncompotimiz   nk  numvar Nvar Nvarotimiz1 Nvarotimiz2 
+Ordemotimiz  
+global Otindividual Prod Ptotal r rold  rOPT SomaCtotalhor 
+SomaCtotalhorold SomaDesthor SomaDesthorold taxa  Variacao x x0 y0 Zhor 
+Zhorold 
+  
+  
+global app ProjPath 
+  
+  
+%% 
+x = x0;     
+if Ordemotimiz(comp)~= 0 
+cont = 0;  
+         for k = 1 : numvar 
+           var = k;      
+               if Decisao1(Ordemotimiz(comp), var) == 1   %'variável deve 
+ser modificada 
+               cont = cont+1; 
+               x(var) = y(cont); 
+               end    
+         end            
+end 
+     
+%% 
+%%%%%Parametrosiniciais%%%%% 
+  
+  
+  
+TesteLS = 0; 
+TesteLI = 0; 
+for k=1:length(x), 
+    if x(k)>LS(k) 
+        TesteLS = TesteLS + 1; % Se (x > LS) entao (TesteLS > 0) 
+    end 
+    if x(k)<LI(k) 
+        TesteLI = TesteLI + 1; % Se (x < LI) entao (TesteLI > 0) 
+    end 
+end 
+
+ 
+
+89 
+
+  
+skip = 0; 
+  
+if TesteLS > 0 || TesteLI > 0 %se x está fora dos limites então vou pular 
+o cálculo de f  
+    skip = 1; 
+end 
+  
+if skip == 1 
+    f = 1.0E+2; 
+else 
+  
+  
+warning off all 
+  
+error = 0; 
+  
+%% 
+%%%%%Enviarrodar%%%%% 
+  
+  
+proj = invoke(app,'openProject',ProjPath); 
+  
+% Colhe as propriedades termodinâmicas do IPSEpro e gera os vetores M, E, 
+EQuim e Etot 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+%                        Modelo Termodinamico                             
+%                                       
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+%                       Dados Nao Obtidos Pelo IPSE                       
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  
+warning off all 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+%                                IPSE                                    % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+  
+% error = 0; % Dirá qdo o IPSE nao converge 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Objetos: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Correntes:     
+    stream01  = invoke(proj,'findObject','stream01'); 
+    stream01a  = invoke(proj,'findObject','stream01a'); 
+    stream02  = invoke(proj,'findObject','stream02'); 
+    stream02a  = invoke(proj,'findObject','stream02a'); 
+    stream03  = invoke(proj,'findObject','stream03'); 
+
+ 
+
+90 
+
+    stream03a  = invoke(proj,'findObject','stream03a'); 
+    stream06  = invoke(proj,'findObject','stream06'); 
+    stream06a  = invoke(proj,'findObject','stream06a'); 
+    stream07  = invoke(proj,'findObject','stream07'); 
+    stream07a  = invoke(proj,'findObject','stream07a'); 
+    stream08  = invoke(proj,'findObject','stream08'); %variavel de decisao 
+    stream08a  = invoke(proj,'findObject','stream08a'); %variavel de 
+decisao 
+    stream09  = invoke(proj,'findObject','stream09'); 
+    stream10  = invoke(proj,'findObject','stream10'); 
+    stream11  = invoke(proj,'findObject','stream11'); 
+    stream13  = invoke(proj,'findObject','stream13'); 
+    stream14  = invoke(proj,'findObject','stream14'); %variavel de decisao 
+    stream15  = invoke(proj,'findObject','stream15'); 
+    stream16  = invoke(proj,'findObject','stream16'); 
+    stream17  = invoke(proj,'findObject','stream17'); 
+    stream18  = invoke(proj,'findObject','stream18'); 
+    stream19  = invoke(proj,'findObject','stream19'); 
+    stream20  = invoke(proj,'findObject','stream20'); 
+    stream21  = invoke(proj,'findObject','stream21'); 
+    stream22  = invoke(proj,'findObject','stream22'); 
+    stream23  = invoke(proj,'findObject','stream23'); 
+    stream24  = invoke(proj,'findObject','stream24'); 
+    stream25  = invoke(proj,'findObject','stream25'); 
+    stream25a = invoke(proj,'findObject','stream25a'); 
+    stream26  = invoke(proj,'findObject','stream26'); 
+    stream26a = invoke(proj,'findObject','stream26a'); 
+    stream27  = invoke(proj,'findObject','stream27'); 
+    stream28  = invoke(proj,'findObject','stream28'); 
+    stream29  = invoke(proj,'findObject','stream29'); 
+    stream29a = invoke(proj,'findObject','stream29a'); 
+    stream30  = invoke(proj,'findObject','stream30'); 
+    stream30a = invoke(proj,'findObject','stream30a'); 
+    stream36  = invoke(proj,'findObject','stream36'); 
+    stream38  =  invoke(proj,'findObject','stream38'); 
+    stream39  =  invoke(proj,'findObject','stream39'); 
+    stream43  =  invoke(proj,'findObject','stream43'); 
+% Equipamentos: 
+    TG01          = invoke(proj,'findObject','TG01');  %variavel de 
+decisao 
+    TG01a         = invoke(proj,'findObject','TG01a'); %variavel de 
+decisao 
+    TV01          = invoke(proj,'findObject','TV01'); 
+    TV01a         = invoke(proj,'findObject','TV01a'); 
+    bomba02       = invoke(proj,'findObject','bomba02'); 
+    bomba02a      = invoke(proj,'findObject','bomba02a'); 
+    bomba03       = invoke(proj,'findObject','bomba03'); 
+    bomba04       = invoke(proj,'findObject','bomba04'); 
+    condensador01 = invoke(proj,'findObject','condensador01'); 
+    evap01        = invoke(proj,'findObject','evap01'); 
+    evap01a       = invoke(proj,'findObject','evap01a'); 
+    superaq01     = invoke(proj,'findObject','superaq01'); 
+    preaq01       = invoke(proj,'findObject','preaq01'); 
+    aquec01       = invoke(proj,'findObject','aquec01'); 
+    superaq01a    = invoke(proj,'findObject','superaq01a'); 
+    preaq01a      = invoke(proj,'findObject','preaq01a'); 
+    aquec01a      = invoke(proj,'findObject','aquec01a'); 
+    Torre         = invoke(proj,'findObject','Torre'); 
+% Eixos: 
+    shaft01   = invoke(proj,'findObject','shaft01'); 
+    shaft01a  = invoke(proj,'findObject','shaft01a'); 
+    shaft02   = invoke(proj,'findObject','shaft02'); 
+    shaft02a  = invoke(proj,'findObject','shaft02a'); 
+    shaft03   = invoke(proj,'findObject','shaft03'); 
+    shaft04   = invoke(proj,'findObject','shaft04'); 
+
+91 
+
+ 
+
+    shaft05   = invoke(proj,'findObject','shaft05'); 
+    shaftTV01 = invoke(proj,'findObject','shaftTV01'); 
+    shaftTV02 = invoke(proj,'findObject','shaftTV02'); 
+     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Variaveis de Decisao: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  
+% 1. Potência ISO - turbina a gás "TG01" (kW): 
+    TG01_power = invoke(TG01,'findItem',0,'power_el0'); 
+    invoke(TG01_power,'value',x(1)); 
+     
+% 2. Potência ISO - turbina a gás "TG01a" (kW): 
+    TG01a_power = invoke(TG01a,'findItem',0,'power_el0'); 
+    invoke(TG01a_power,'value',x(2)); 
+     
+% 3. Carga turbina a gás "TG01":  
+    TG01_load = invoke(TG01,'findItem',0,'load'); 
+    invoke(TG01_load,'value',x(3)); 
+     
+% 4. Carga turbina a gás "TG01a":  
+    TG01a_load = invoke(TG01a,'findItem',0,'load'); 
+    invoke(TG01a_load,'value',x(4)); 
+  
+% 5. Pressao do vapor gerado na caldeira "HRSG001": 
+    stream08_p = invoke(stream08,'findItem',0,'p'); 
+    invoke(stream08_p,'value',x(5)); 
+     
+% 6. Pressao do vapor gerado na caldeira "HRSG001a": 
+    stream08a_p = invoke(stream08a,'findItem',0,'p'); 
+    invoke(stream08a_p,'value',x(6)); 
+  
+% 7. Pressao na saída da turbina a vapor de extraçao "TV01": 
+    stream14_p = invoke(stream14,'findItem',0,'p'); 
+    invoke(stream14_p,'value',x(7)); 
+     
+% 8. Temperatura do vapor gerado na caldeira "HRSG001": 
+    stream08_t = invoke(stream08,'findItem',0,'t'); 
+    invoke(stream08_t,'value',x(8));  
+  
+% 9. Temperatura do vapor gerado na caldeira "HRSG001a": 
+    stream08a_t = invoke(stream08a,'findItem',0,'t'); 
+    invoke(stream08a_t,'value',x(9)); 
+     
+  
+     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Run the simulation in IPSEpro: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+    run = invoke(proj,'runSimulation',0); 
+    %erro = invoke(proj,'CheckAndInsertError',0); 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+%                              Resultados - IPSE: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Correntes: vazao mássica (kg/s); exergia (kJ/kg) 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Corrente1: 
+
+ 
+
+92 
+
+    temp = invoke(stream01,'findItem',0,'mass');   m01 = 
+invoke(temp,'value'); 
+    temp = invoke(stream01,'findItem',0,'exergy'); e01 = 
+invoke(temp,'value'); 
+% Corrente1a: 
+    temp = invoke(stream01a,'findItem',0,'mass');   m01a = 
+invoke(temp,'value'); 
+    temp = invoke(stream01a,'findItem',0,'exergy'); e01a = 
+invoke(temp,'value'); 
+% Corrente2: 
+    temp = invoke(stream02,'findItem',0,'mass');   m02 = 
+invoke(temp,'value'); 
+    temp = invoke(stream02,'findItem',0,'exergy'); e02 = 
+invoke(temp,'value'); 
+% Corrente2a: 
+    temp = invoke(stream02a,'findItem',0,'mass');   m02a = 
+invoke(temp,'value'); 
+    temp = invoke(stream02a,'findItem',0,'exergy'); e02a = 
+invoke(temp,'value'); 
+% Corrente3: 
+    temp = invoke(stream03,'findItem',0,'mass');   m03 = 
+invoke(temp,'value'); 
+    temp = invoke(stream03,'findItem',0,'exergy'); e03 = 
+invoke(temp,'value');     
+% Corrente3a: 
+    temp = invoke(stream03a,'findItem',0,'mass');   m03a = 
+invoke(temp,'value'); 
+    temp = invoke(stream03a,'findItem',0,'exergy'); e03a = 
+invoke(temp,'value'); 
+% Corrente6: 
+    temp = invoke(stream06,'findItem',0,'mass');   m06 = 
+invoke(temp,'value'); 
+    temp = invoke(stream06,'findItem',0,'exergy'); e06 = 
+invoke(temp,'value'); 
+% Corrente6a: 
+    temp = invoke(stream06a,'findItem',0,'mass');   m06a = 
+invoke(temp,'value'); 
+    temp = invoke(stream06a,'findItem',0,'exergy'); e06a = 
+invoke(temp,'value'); 
+% Corrente7: 
+    temp = invoke(stream07,'findItem',0,'mass');   m07 = 
+invoke(temp,'value'); 
+    temp = invoke(stream07,'findItem',0,'exergy'); e07 = 
+invoke(temp,'value'); 
+% Corrente7a: 
+    temp = invoke(stream07a,'findItem',0,'mass');   m07a = 
+invoke(temp,'value'); 
+    temp = invoke(stream07a,'findItem',0,'exergy'); e07a = 
+invoke(temp,'value'); 
+% Corrente8: 
+    temp = invoke(stream08,'findItem',0,'mass');   m08 = 
+invoke(temp,'value'); 
+    temp = invoke(stream08,'findItem',0,'exergy'); e08 = 
+invoke(temp,'value'); 
+% Corrente8a: 
+    temp = invoke(stream08a,'findItem',0,'mass');   m08a = 
+invoke(temp,'value'); 
+    temp = invoke(stream08a,'findItem',0,'exergy'); e08a = 
+invoke(temp,'value'); 
+% Corrente9: 
+    temp = invoke(stream09,'findItem',0,'mass');   m09 = 
+invoke(temp,'value'); 
+    temp = invoke(stream09,'findItem',0,'exergy'); e09 = 
+invoke(temp,'value'); 
+% Corrente10: 
+
+ 
+
+93 
+
+    temp = invoke(stream10,'findItem',0,'mass');   m10 = 
+invoke(temp,'value'); 
+    temp = invoke(stream10,'findItem',0,'exergy'); e10 = 
+invoke(temp,'value'); 
+% Corrente11: 
+    temp = invoke(stream11,'findItem',0,'mass');   m11 = 
+invoke(temp,'value'); 
+    temp = invoke(stream11,'findItem',0,'exergy'); e11 = 
+invoke(temp,'value'); 
+% Corrente13: 
+    temp = invoke(stream13,'findItem',0,'mass');   m13 = 
+invoke(temp,'value'); 
+    temp = invoke(stream13,'findItem',0,'exergy'); e13 = 
+invoke(temp,'value'); 
+% Corrente14: 
+    temp = invoke(stream14,'findItem',0,'mass');   m14 = 
+invoke(temp,'value'); 
+    temp = invoke(stream14,'findItem',0,'exergy'); e14 = 
+invoke(temp,'value'); 
+% Corrente15: 
+    temp = invoke(stream15,'findItem',0,'mass');   m15 = 
+invoke(temp,'value'); 
+    temp = invoke(stream15,'findItem',0,'exergy'); e15 = 
+invoke(temp,'value'); 
+% Corrente16: 
+    temp = invoke(stream16,'findItem',0,'mass');   m16 = 
+invoke(temp,'value'); 
+    temp = invoke(stream16,'findItem',0,'exergy'); e16 = 
+invoke(temp,'value'); 
+% Corrente17 
+    temp = invoke(stream17,'findItem',0,'mass');   m17 = 
+invoke(temp,'value'); 
+    temp = invoke(stream17,'findItem',0,'exergy'); e17 = 
+invoke(temp,'value'); 
+% Corrente18: 
+    temp = invoke(stream18,'findItem',0,'mass');   m18 = 
+invoke(temp,'value'); 
+    temp = invoke(stream18,'findItem',0,'exergy'); e18 = 
+invoke(temp,'value'); 
+% Corrente19: 
+    temp = invoke(stream19,'findItem',0,'mass');   m19 = 
+invoke(temp,'value'); 
+    temp = invoke(stream19,'findItem',0,'exergy'); e19 = 
+invoke(temp,'value'); 
+% Corrente20: 
+    temp = invoke(stream20,'findItem',0,'mass');   m20 = 
+invoke(temp,'value'); 
+    temp = invoke(stream20,'findItem',0,'exergy'); e20 = 
+invoke(temp,'value'); 
+% Corrente21: 
+    temp = invoke(stream21,'findItem',0,'mass');   m21 = 
+invoke(temp,'value'); 
+    temp = invoke(stream21,'findItem',0,'exergy'); e21 = 
+invoke(temp,'value'); 
+% Corrente22: 
+    temp = invoke(stream22,'findItem',0,'mass');   m22 = 
+invoke(temp,'value'); 
+    temp = invoke(stream22,'findItem',0,'exergy'); e22 = 
+invoke(temp,'value'); 
+% Corrente23: 
+    temp = invoke(stream23,'findItem',0,'mass');   m23 = 
+invoke(temp,'value'); 
+    temp = invoke(stream23,'findItem',0,'exergy'); e23 = 
+invoke(temp,'value'); 
+% Corrente24: 
+
+ 
+
+94 
+
+    temp = invoke(stream24,'findItem',0,'mass');   m24 = 
+invoke(temp,'value'); 
+    temp = invoke(stream24,'findItem',0,'exergy'); e24 = 
+invoke(temp,'value'); 
+% Corrente25: 
+    temp = invoke(stream25,'findItem',0,'mass');   m25 = 
+invoke(temp,'value'); 
+    temp = invoke(stream25,'findItem',0,'exergy'); e25 = 
+invoke(temp,'value'); 
+% Corrente25a: 
+    temp = invoke(stream25a,'findItem',0,'mass');   m25a = 
+invoke(temp,'value'); 
+    temp = invoke(stream25a,'findItem',0,'exergy'); e25a = 
+invoke(temp,'value'); 
+% Corrente26: 
+    temp = invoke(stream26,'findItem',0,'mass');   m26 = 
+invoke(temp,'value'); 
+    temp = invoke(stream26,'findItem',0,'exergy'); e26 = 
+invoke(temp,'value'); 
+% Corrente26a: 
+    temp = invoke(stream26a,'findItem',0,'mass');   m26a = 
+invoke(temp,'value'); 
+    temp = invoke(stream26a,'findItem',0,'exergy'); e26a = 
+invoke(temp,'value'); 
+% Corrente27: 
+    temp = invoke(stream27,'findItem',0,'mass');   m27 = 
+invoke(temp,'value'); 
+    temp = invoke(stream27,'findItem',0,'exergy'); e27 = 
+invoke(temp,'value'); 
+% Corrente28: 
+    temp = invoke(stream28,'findItem',0,'mass');   m28 = 
+invoke(temp,'value'); 
+    temp = invoke(stream28,'findItem',0,'exergy'); e28 = 
+invoke(temp,'value'); 
+% Corrente29: 
+    temp = invoke(stream29,'findItem',0,'mass');   m29 = 
+invoke(temp,'value'); 
+    temp = invoke(stream29,'findItem',0,'exergy'); e29 = 
+invoke(temp,'value'); 
+% Corrente29a: 
+    temp = invoke(stream29a,'findItem',0,'mass');   m29a = 
+invoke(temp,'value'); 
+    temp = invoke(stream29a,'findItem',0,'exergy'); e29a = 
+invoke(temp,'value'); 
+% Corrente30: 
+    temp = invoke(stream30,'findItem',0,'mass');   m30 = 
+invoke(temp,'value'); 
+    temp = invoke(stream30,'findItem',0,'exergy'); e30 = 
+invoke(temp,'value'); 
+% Corrente30a: 
+    temp = invoke(stream30a,'findItem',0,'mass');   m30a = 
+invoke(temp,'value'); 
+    temp = invoke(stream30a,'findItem',0,'exergy'); e30a = 
+invoke(temp,'value'); 
+% Corrente36: 
+    temp = invoke(stream36,'findItem',0,'mass');   m36 = 
+invoke(temp,'value'); 
+    temp = invoke(stream36,'findItem',0,'exergy'); e36 = 
+invoke(temp,'value'); 
+% Corrente38: 
+    temp = invoke(stream38,'findItem',0,'mass');   m38 = 
+invoke(temp,'value'); 
+    temp = invoke(stream38,'findItem',0,'exergy'); e38 = 
+invoke(temp,'value'); 
+% Corrente39: 
+
+ 
+
+95 
+
+    temp = invoke(stream39,'findItem',0,'mass');   m39 = 
+invoke(temp,'value'); 
+    temp = invoke(stream39,'findItem',0,'exergy'); e39 = 
+invoke(temp,'value'); 
+% Corrente43: 
+    temp = invoke(stream43,'findItem',0,'mass');   m43 = 
+invoke(temp,'value'); 
+    temp = invoke(stream43,'findItem',0,'exergy'); e43 = 
+invoke(temp,'value'); 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Trabalhos (kW): 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Turbina a gas "TG01":    
+    temp = invoke(TG01,'findItem',0,'power_el'); Wtg01 = 
+invoke(temp,'value');  
+% Turbina a gas "TG01a":    
+    temp = invoke(TG01a,'findItem',0,'power_el');Wtg01a = 
+invoke(temp,'value'); 
+% Eixo "shaft01" 
+    temp = invoke(shaft01,'findItem',0,'power'); Wshaft01 = 
+invoke(temp,'value');  
+% Eixo "shaft01a" 
+    temp = invoke(shaft01a,'findItem',0,'power');Wshaft01a = 
+invoke(temp,'value');  
+% Eixo "shaft02" 
+    temp = invoke(shaft02,'findItem',0,'power'); Wshaft02 = 
+invoke(temp,'value');  
+% Eixo "shaft02a" 
+    temp = invoke(shaft02a,'findItem',0,'power');Wshaft02a = 
+invoke(temp,'value');  
+% Eixo "shaft03" 
+    temp = invoke(shaft03,'findItem',0,'power'); Wshaft03 = 
+invoke(temp,'value');  
+% Eixo "shaft04" 
+    temp = invoke(shaft04,'findItem',0,'power'); Wshaft04 = 
+invoke(temp,'value');  
+% Eixo "shaft05" 
+    temp = invoke(shaft05,'findItem',0,'power'); Wshaft05 = 
+invoke(temp,'value');  
+% Eixo "shaftTV01" 
+    temp = invoke(shaftTV01,'findItem',0,'power'); WshaftTV01 = 
+invoke(temp,'value');  
+% Eixo "shaftTV02" 
+    temp = invoke(shaftTV02,'findItem',0,'power'); WshaftTV02 = 
+invoke(temp,'value');  
+% Turbina a vapor "TV01": 
+    Wtv01 = WshaftTV01; 
+% Turbina a vapor "TV02": 
+    %Wtv02 = WshaftTV02 - WshaftTV01; 
+    Wtv02 = WshaftTV02; 
+     
+% Cálculo do vetor M 
+  
+% Massa dos elementos de potência é igual a zero  
+  
+M = [m01 m02 m03 m06 m07 m08 m09 m10 m11 m13 m14 m15 m16 m17 m18 m19 m20 
+m21 m22 m23 m24 m25 m26 m27 m28 m29 m30 m36 m38 m01a m02a m03a m06a m07a 
+m08a m25a m26a m29a m30a 0 0 0 0 0 0 0 0 0 0 0  m39 m43]; 
+  
+%Cálculo do vetor E 
+  
+%Exergia específica [kJ/kg] 
+
+ 
+
+96 
+
+  
+e = [e01 e02 e03 e06 e07 e08 e09 e10 e11 e13 e14 e15 e16 e17 e18 e19 e20 
+e21 e22 e23 e24 e25 e26 e27 e28 e29 e30 e36 e38 e01a e02a e03a e06a e07a 
+e08a e25a e26a e29a e30a 0 0 0 0 0 0 0 0 0 0 0  e39 e43]; 
+  
+%A exergia dos elementos de potência não depende da massa 
+  
+E = [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 Wtg01 Wtg01a Wtv01 Wtv02 Wshaft01 Wshaft02 Wshaft03 Wshaft04 
+Wshaft05 Wshaft01a Wshaft02a 0 0]; 
+  
+I = 39; 
+  
+for i = 1:I 
+     
+    E(i) = e(i)*M(i); 
+     
+end 
+  
+E(51) = e(51)*M(51); 
+  
+E(52) = e(52)*M(52); 
+  
+%Cálculo da Exergia Química 
+  
+%Exergia Química específica [kJ/kg] 
+  
+eQuim = zeros(1,52); 
+  
+eQuim(1) = 30000; 
+  
+eQuim(30) = 30000; 
+  
+%Exergia Química 
+  
+for k = 1:52 
+     
+    EQuim(k) = eQuim(k)*M(k); 
+     
+end 
+  
+  
+  
+for k = 1:52 
+     
+    EQuim(i) = eQuim(i)*M(i); 
+     
+end 
+  
+Etot = E+EQuim; 
+  
+%% 
+%%%%%Calculomatrizes%%%%% 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Erro: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+if sum(M <= 0) > 11 || sum(e <= 0) > 11 
+    error = 1; 
+
+ 
+
+97 
+
+end 
+  
+  
+%Cálculo do vetor combustível 
+  
+Fuel = (AF*Etot')'; 
+  
+%Cálculo do vetor produto 
+  
+Prod = (AP*Etot')'; 
+  
+%Cálculo do vetor Efex 
+Efex =zeros(1,24); 
+  
+J = 24; 
+  
+for j =1:J 
+   
+    Efex(j) = Prod(j)/Fuel(j); 
+     
+end 
+  
+%Cálculo do vetor destruição de exergia 
+ED = zeros(1,24); 
+  
+J = 24; 
+  
+for j =1:J 
+   
+    ED(j) = Fuel(j)-Prod(j); 
+     
+end 
+  
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Calculo de Custos: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+% PEC (custo de aquisicao, US$) de todos os componentes: 
+    PEC = zeros(1,24);  
+    for i = 1:24, 
+      PEC(i) = Bk(i) * abs((Efex(i) / (1 - Efex(i)))) ^ nk(i) * (Prod(i) / 
+1000) ^ mk(i); 
+    end 
+    %PEC = PEC(:)'; %vetor linha 
+     
+% TCI (capital total de investimento): 
+    TCI = coef_beta*sum(PEC); 
+     
+% Custo por unidade de tempo (US$/h) associado ao investimento: 
+Zin = zeros(1,24); 
+    for j =1:24 
+        Zin(j) = CRF*coef_beta*PEC(j)/N; 
+    end 
+     
+% Custo por unidade de tempo (US$/h) associado a manutencao: 
+Zom = zeros(1,24); 
+    for j =1:24 
+        Zom(j) = FI*coef_beta*PEC(j)/N; 
+    end 
+  
+
+ 
+
+98 
+
+%Construção do Vetor Zhor 
+Zhor = zeros(1,52); 
+  
+  
+  
+for j =1:24 
+  Zhor(j) = -(Zin(j) + Zom(j)); 
+end 
+  
+%   'Custo relativo às entradas - admitido como conhecido e' 
+%   '     calculado com base na exergia química ' 
+Zhor(25) = cf(1) * EQuim(1) * 3600; %'US$/h - combustível TG01' 
+Zhor(26) = cf(2) * EQuim(30) * 3600; %'US$/h - combustível TG01a' 
+Zhor(27) = cf(3) * Etot(2) * 3600; %'(US$/h)' 
+Zhor(28) = cf(4) * Etot(31) * 3600; %'(US$/h)' 
+Zhor(29) = cf(5) * Etot(51) * 3600; %'(US$h) 
+Zhor(30) = cf(6) * Etot(24) * 3600; %'(US$/h)' 
+Zhor(31) = cf(7) * Etot(23) * 3600; %'(US$/h)' 
+Zhor(32) = cf(8) * Etot(44) * 3600; %'(US$/h)' 
+Zhor(33) = cf(9) * Etot(45) * 3600; %'(US$/h)' 
+Zhor(34) = cf(10) * Etot(46) * 3600; %'(US$/h)' 
+Zhor(35) = cf(11) * Etot(47) * 3600; %'(US$/h)' 
+Zhor(36) = cf(12) * Etot(48) * 3600; %'(US$/h)' 
+Zhor(37) = cf(13) * Etot(49) * 3600; %'(US$/h)' 
+Zhor(38) = cf(14) * Etot(50) * 3600; %'(US$/h)' 
+       
+K = 52; 
+   
+for k =39:K 
+  Zhor(k) = 0; 
+end     
+     
+%  'Custo total componentes (investimento + O$M) 
+   Custocomphor = 0; 
+    
+   for i = 1:24 
+       Custocomphor = Custocomphor + abs(Zhor(i)); 
+   end 
+%  'Custo total componentes (investimento + O&M) + insumos' 
+   Custogeralhor = 0; 
+   for i = 1:52 
+       Custogeralhor = Custogeralhor + abs(Zhor(i)); 
+   end 
+   
+ % 'Eficiência exergética total 
+ %  'Exergia total dos produtos - Ptotal(energia elétrica + calor) 
+   P1 = Etot(40) + Etot(41) + Etot(43);% 'eletricidade 
+   P2 = Etot(18) + Etot(24) + Etot(5) + Etot(34) + Etot(52);% 'calor 
+   Ptotal = P1 + P2; 
+ %  'Exergia total dos insumos - Ftotal 
+   F1 = Etot(44) + Etot(45) + Etot(46) + Etot(47) + Etot(48) + Etot(49) + 
+Etot(50);% 'eletricidade 
+   F2 = Etot(1) + Etot(2) + Etot(30) + Etot(31) + E(20) + E(21) + 
+Etot(39);% 'outros 
+   Ftotal = F1 + F2; 
+   Efextotal = Ptotal / Ftotal; 
+  
+% Construcção da matriz de custos 
+C = zeros (52); 
+  
+J = 24; 
+K = 52; 
+
+ 
+
+99 
+
+  
+for j = 1:J 
+  for k = 1:K 
+          C(j,k)= A(j,k); 
+  end 
+end 
+  
+%Custo das Entradas conhecidos 
+C(25, 1) = 1; 
+C(26, 30) = 1; 
+C(27, 2) = 1; 
+C(28, 31) = 1; 
+C(29, 51) = 1; 
+C(30, 21) = 1; 
+C(31, 20) = 1; 
+C(32, 44) = 1; 
+C(33, 45) = 1; 
+C(34, 46) = 1; 
+C(35, 47) = 1; 
+C(36, 48) = 1; 
+C(37, 49) = 1; 
+C(38, 50) = 1; 
+%Equações Auxiliares 
+C(39, 3) = -1 / Etot(3);% 'turbina TG01 
+C(39, 40) = 1 / Etot(40);% 'turbina TG01 
+C(40, 32) = -1 / Etot(32);%  'turbina TG01a 
+C(40, 41) = 1 / Etot(41);%  'turbina TG01a 
+C(41, 10) = 1 / Etot(10);%  'turbina TV01 
+C(41, 11) = -1 / Etot(11);%  'turbina TV01 
+C(42, 8) = 1 / Etot(8);% 'turbina TV02 
+C(42, 13) = -1 / Etot(13);% 'turbina TV02 
+C(43, 3) = 1 / Etot(3);%  'HRSG01' 
+C(43, 4) = -1 / Etot(4);%  'HRSG01' 
+C(44, 32) = 1 / Etot(32);% 'HRSG01a' 
+C(44, 33) = -1 / Etot(33);% 'HRSG01a' 
+C(45, 13) = 1 / Etot(13);% 'condensador' 
+C(45, 14) = -1 / Etot(14);% 'condensador' 
+C(46, 4) = 1 / Etot(4);% 'aquecedor01' 
+C(46, 5) = -1 / Etot(5);% 'aquecedor01' 
+C(47, 33) = 1 / Etot(33);% 'aquecedor01a' 
+C(47, 34) = -1 / Etot(34);% 'aquecedor01a' 
+C(48, 9) = -1 / Etot(9);% 'splitter01' 
+C(48, 19) = 1 / Etot(19);% 'splitter01' 
+C(49, 8) = 1 / Etot(8);% 'splitter02' 
+C(49, 25) = -1 / Etot(25);% 'splitter02' 
+C(50, 26) = 1 / Etot(26);% 'splitter03' 
+C(50, 38) = -1 / Etot(38);% 'splitter03' 
+C(51, 22) = 1 / Etot(22);% 'splitter04' 
+C(51, 36) = -1 / Etot(36);% 'splitter04' 
+C(52, 28) = 1 / Etot(28);% 'torre' 
+C(52, 29) = -1 / Etot(29);% 'torre' 
+  
+  
+%% 
+%%%%%Calculocustos%%%%% 
+  
+ %Construção do vetor Chor 
+   
+  Chor = (C^(-1))*Zhor'; 
+   
+  %Preparação para o cáculo de cespec 
+   
+  cespec = zeros(1,52); 
+
+ 
+
+100 
+
+   
+  %Cáculo de cespec 
+   
+  K = 52; 
+   
+  for k =1:K 
+      cespec(k) = Chor(k)/Etot(k); 
+  end 
+  
+  % Cálculo de CFhor 
+   
+  CFhor = AF*Chor; 
+   
+  
+  % Cálculo de CFhor 
+   
+  CPhor = AP*Chor; 
+   
+  %Preparação para o cálculo de cF 
+   
+  cF = zeros(1,24); 
+   
+  %Cálculo Cf 
+   
+  J = 24; 
+   
+  for j =1:J 
+      cF(j) = CFhor(j)/Fuel(j); 
+  end 
+   
+ %Preparação para o cálculo de cP 
+   
+  cP = zeros(1,24); 
+   
+  %Cálculo cP 
+   
+  J = 24; 
+   
+  for j =1:J 
+      cP(j) = CPhor(j)/Prod(j); 
+  end 
+   
+  %Preparação para o cálculo de CDesthor 
+   
+  CDesthor = zeros(1,24); 
+   
+  %Cálculo CDesthor 
+   
+  J = 24; 
+   
+  for j =1:J 
+      CDesthor(j) = cF(j)*ED(j); 
+  end 
+         
+  %Preparação para o cálculo de  Ctotalhor 
+   
+  Ctotalhor = zeros(1,24); 
+   
+  %Cálculo Ctotalhor 
+
+ 
+
+101 
+
+   
+  J = 24; 
+   
+  for j =1:J 
+      Ctotalhor(j) = CDesthor(j) + abs(Zhor(j)); 
+  end 
+   
+  %Cálculo SomaDesthor 
+   
+  SomaDesthor = sum(CDesthor); 
+   
+  %Cálculo SomaCtotalhor 
+   
+  SomaCtotalhor = sum(Ctotalhor); 
+  
+%%   
+%%%%%Calculofatores%%%%% 
+  
+%'Determinaçào das variáveis exergoeconômicas 
+  
+r = zeros(1,24); 
+fexerg = zeros(1,24); 
+Fk = zeros(1,24); 
+EfexOPT = zeros(1,24); 
+rOPT = zeros(1,24); 
+fOPT = zeros(1,24); 
+deltar = zeros(1,24); 
+deltaefic = zeros(1,24); 
+for i = 1 : 24 
+     r(i) = (cP(i) - cF(i)) / cF(i); 
+     fexerg(i) = abs(Zhor(i)) / (abs(Zhor(i)) + cF(i) * ED(i)); 
+      
+    %'Variáveis utilizadas na otimização pelo método 2 FI esta 
+    %constante!!!!!!!!!!!!!! 
+     numerador = (CRF + FI) * Bk(i) * coef_beta * nk(i); 
+     denominador = N * cF(i) * 1000 * (Prod(i) / 1000) ^ (1 - mk(i)); 
+      
+     Fk(i) = (numerador / denominador) ^ (1 / (nk(i) + 1)); 
+     EfexOPT(i) = 1 / (1 + Fk(i)); 
+     rOPT(i) = (nk(i) + 1) / nk(i) * Fk(i); 
+     fOPT(i) = 1 / (1 + nk(i)); 
+     deltar(i) = (r(i) - rOPT(i)) / rOPT(i); 
+     deltaefic(i) = (Efex(i) - EfexOPT(i)) / EfexOPT(i); 
+end 
+  
+%% 
+%%%%%FuncaoOBJ%%%%% 
+f = (abs(Custogeralhor)/(Ptotal))*1000; 
+  
+  
+if isreal(f) 
+    if f < 0 || error == 1 || sum(Zhor <= 0) > 43 
+  
+            f = 100; 
+  
+       
+    end 
+             
+end 
+  
+
+ 
+
+102 
+
+end % Fim do Se "x" está fora dos limites (definido lá em cima) ou é a 
+primeira vez que roda 
+warning on all 
+ 
+
+ 
+
+ 
+
+103 
+
+15.  Anexo 9 – Sub-rotina “Calculoforaotimizacao.m” 
+
+ 
+
+ 
+
+ 
+
+Tal sub rotina é utilizada internamente a rotina “Programaprincipal.m”. 
+
+function [f] = Calculoforaotimizacao (x) 
+  
+  
+  
+global A AF Afeta alt anos AP Bk C CDesthor CDesthorold cespec cf cF CFhor 
+Chor coef_beta COEFC COEFCDest comp cP CPhor CRF Ctotalhor    
+global Ctotalhorold CTotalhorordem Custocomphor Custocomphorold 
+Custogeralhor Custogeralhorold Decisao  Decisao1 Decisao2 deltaefic 
+deltaeficold     
+global deltar deltarold DesvioCTotalhor Dominante e E ED Efex Efexold 
+EfexOPT Efextotal Efextotalold eQuim EQuim error Etot fatorcusto 
+fatorotimiz   
+global fatorvar fexerg fexergold FI Fk fOPT Fuel fun incremento LI  LS  M 
+MediaCTotalhor mk N Ncompotimiz   nk  numvar Nvar Nvarotimiz1 Nvarotimiz2 
+Ordemotimiz  
+global Otindividual Prod Ptotal r rold  rOPT SomaCtotalhor 
+SomaCtotalhorold SomaDesthor SomaDesthorold taxa  Variacao  x0 y y0 Zhor 
+Zhorold 
+  
+  
+global app ProjPath 
+  
+TesteLS = 0; 
+TesteLI = 0; 
+for k=1:length(x), 
+    if x(k)>LS(k) 
+        TesteLS = TesteLS + 1; % Se (x > LS) entao (TesteLS > 0) 
+    end 
+    if x(k)<LI(k) 
+        TesteLI = TesteLI + 1; % Se (x < LI) entao (TesteLI > 0) 
+    end 
+end 
+  
+skip = 0; 
+  
+if TesteLS > 0 || TesteLI > 0 %se x está fora dos limites então vou pular 
+o cálculo de f  
+    skip = 1; 
+end 
+  
+if skip == 1 
+    f = 1.0E+2; 
+else 
+%% 
+%%%%%Parametrosiniciais%%%%% 
+  
+  
+  
+  
+  
+  
+
+ 
+
+104 
+
+ warning off all 
+  
+error = 0; 
+  
+  
+%Entrada das matrizes de incidência,combustivel e produto 
+fileName = 'C:\Users\HUGO-Mobile\Documents\MATLAB\Entrada.xlsx'; 
+A = xlsread (fileName,'C5:BB28'); 
+AF = xlsread (fileName,'C34:BB57'); 
+AP = xlsread (fileName,'C63:BB86'); 
+  
+% Custos Específico dos Insumos: conhecidos 
+%     CombTG1 CombTG1a ArTG01  ArTG01a ArTorre ÁguaSpliter ÁguaDesaerador 
+bomba1          bomba2           bomba3          bomba4          bomba5         
+bomba1a         bomba2a 
+cf = [0.000004    0.000004     0       0       0       0           0     
+0.00001667       0.00001667      0.00001667      0.00001667      
+0.00001667     0.00001667      0.00001667]; 
+  
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Numero de Horas de Operacao da Planta Por Ano: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+N = 8000; 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Annual Capital Recovery Factor: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+taxa = 12.7/100; % taxa juros 
+anos = 10; 
+  
+CRF = (taxa * (1 + taxa) ^ anos) / ((1 + taxa) ^ anos - 1); 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Fator de Manutencao: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+FI = 0.06; 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Constantes: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Coeficiente Beta: 
+   coef_beta = 2; %'fator multiplicativo de PEC' 
+   fatorotimiz = xlsread (fileName,'In','I2'); %'fator  de necessidade de 
+otimização individual (t) 
+   incremento = xlsread (fileName,'In','I5'); %'incremento para avaliação 
+das variáveis de decisão' 
+   fatorvar = xlsread (fileName,'In','I6'); %'fator de avaliação do efeito 
+das variáveis de decisão (p) 
+   fatorcusto = xlsread (fileName,'In','I7'); %'fator para comparação de 
+custos de cada componente (q)' 
+   alt = xlsread (fileName,'In','I8'); %'Alternativa para otimização: 1, 2 
+ou 3 
+    
+  
+  
+% Coeficientes Bk, nk, mk: 
+Bk = zeros(1,24);          nk = zeros(1,24);            mk = ones(1,24); 
+Bk(1)  = 1033.7970289;     nk(1)  = 0.32579;            mk(1)  = 2.099418;          
+%Turbina a gas "TG01" 
+Bk(2)  = 1033.7970289;     nk(2)  = 0.32579;            mk(2)  = 2.099418;          
+%Turbina a gas "TG01a" 
+
+ 
+
+105 
+
+Bk(3)  = 290591.3;                                      mk(3)  = 0.915738;          
+%Turbina a vapor "TV01" 
+Bk(4)  = 290591.3;                                      mk(4)  = 0.915738;          
+%Turbina a vapor "TV02" 
+Bk(5)  = 244435.878846929; nk(5)  = 0.108443173746608;  mk(5)  = 
+0.961926869719368; %Caldeira de recuperaçao "HRSG01" 
+Bk(6)  = 244435.878846929; nk(6)  = 0.108443173746608;  mk(6)  = 
+0.961926869719368; %Caldeira de recuperaçao "HRSG01a" 
+Bk(7)  = 35147.986576;     nk(7)  = 1.429341;           mk(7)  = 0.376471;          
+%Aquecedor "aquec01" 
+Bk(8)  = 35147.986576;     nk(8)  = 1.429341;           mk(8)  = 0.376471;          
+%Aquecedor "aquec01a" 
+Bk(9)  = 756142.49288;     nk(9)  = 0.911316;           mk(9)  = 0.565512;          
+%Torre de resfriamento "Torre" 
+Bk(10) = 1115819.19658215; nk(10) = 0.0743907738812023; mk(10) = 
+0.961800833393519; %Condensador "condensador01" 
+Bk(11) = 93605.5655659327; nk(11) = 0.0281012092685004; mk(11) = 
+0.790921859374967; %Desaerador "desaerador01" 
+Bk(12) = 100;                                                                       
+%Válvula "valv01" 
+Bk(13) = 100;                                                                       
+%Válvula "valv02" 
+Bk(14) = 100;                                                                       
+%Válvula "valv03" 
+Bk(15) = 50;                                                                        
+%Misturador "mixer01" 
+Bk(16) = 50;                                                                        
+%Misturador "mixer02" 
+Bk(17) = 50;                                                                        
+%Divisor "split01" 
+Bk(18) = 50;                                                                        
+%Divisor "split02" 
+Bk(19) = 50;                                                                        
+%Divisor "split03" 
+Bk(20) = 50;                                                                        
+%Divisor "split03" 
+Bk(21) = 3727.0701288;     nk(21) = 2.032408;           mk(21) = 0.547434;          
+%Bomba de Condensado "MB02" 
+Bk(22) = 3727.0701288;     nk(22) = 2.032408;           mk(22) = 0.547434;          
+%Bomba de Condensado "MB02a" 
+Bk(23) = 23748.998896;     nk(23) = 1.268824;           mk(23) = 0.553543;          
+%Bomba de Condensado "MB03" 
+Bk(24) = 3727.0701288;     nk(24) = 2.032408;           mk(24) = 0.547434;          
+%Bomba de Condensado "MB04" 
+%% 
+%%%%%Enviarrodar%%%%% 
+  
+  
+proj = invoke(app,'openProject',ProjPath); 
+  
+% Colhe as propriedades termodinâmicas do IPSEpro e gera os vetores M, E, 
+EQuim e Etot 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+%                        Modelo Termodinamico                             
+%                                       
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+%                       Dados Nao Obtidos Pelo IPSE                       
+% 
+
+ 
+
+106 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  
+warning off all 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+%                                IPSE                                    % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+  
+% error = 0; % Dirá qdo o IPSE nao converge 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Objetos: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Correntes:     
+    stream01  = invoke(proj,'findObject','stream01'); 
+    stream01a  = invoke(proj,'findObject','stream01a'); 
+    stream02  = invoke(proj,'findObject','stream02'); 
+    stream02a  = invoke(proj,'findObject','stream02a'); 
+    stream03  = invoke(proj,'findObject','stream03'); 
+    stream03a  = invoke(proj,'findObject','stream03a'); 
+    stream06  = invoke(proj,'findObject','stream06'); 
+    stream06a  = invoke(proj,'findObject','stream06a'); 
+    stream07  = invoke(proj,'findObject','stream07'); 
+    stream07a  = invoke(proj,'findObject','stream07a'); 
+    stream08  = invoke(proj,'findObject','stream08'); %variavel de decisao 
+    stream08a  = invoke(proj,'findObject','stream08a'); %variavel de 
+decisao 
+    stream09  = invoke(proj,'findObject','stream09'); 
+    stream10  = invoke(proj,'findObject','stream10'); 
+    stream11  = invoke(proj,'findObject','stream11'); 
+    stream13  = invoke(proj,'findObject','stream13'); 
+    stream14  = invoke(proj,'findObject','stream14'); %variavel de decisao 
+    stream15  = invoke(proj,'findObject','stream15'); 
+    stream16  = invoke(proj,'findObject','stream16'); 
+    stream17  = invoke(proj,'findObject','stream17'); 
+    stream18  = invoke(proj,'findObject','stream18'); 
+    stream19  = invoke(proj,'findObject','stream19'); 
+    stream20  = invoke(proj,'findObject','stream20'); 
+    stream21  = invoke(proj,'findObject','stream21'); 
+    stream22  = invoke(proj,'findObject','stream22'); 
+    stream23  = invoke(proj,'findObject','stream23'); 
+    stream24  = invoke(proj,'findObject','stream24'); 
+    stream25  = invoke(proj,'findObject','stream25'); 
+    stream25a = invoke(proj,'findObject','stream25a'); 
+    stream26  = invoke(proj,'findObject','stream26'); 
+    stream26a = invoke(proj,'findObject','stream26a'); 
+    stream27  = invoke(proj,'findObject','stream27'); 
+    stream28  = invoke(proj,'findObject','stream28'); 
+    stream29  = invoke(proj,'findObject','stream29'); 
+    stream29a = invoke(proj,'findObject','stream29a'); 
+    stream30  = invoke(proj,'findObject','stream30'); 
+    stream30a = invoke(proj,'findObject','stream30a'); 
+    stream36  = invoke(proj,'findObject','stream36'); 
+    stream38  =  invoke(proj,'findObject','stream38'); 
+    stream39  =  invoke(proj,'findObject','stream39'); 
+    stream43  =  invoke(proj,'findObject','stream43'); 
+% Equipamentos: 
+    TG01          = invoke(proj,'findObject','TG01');  %variavel de 
+decisao 
+
+107 
+
+ 
+
+    TG01a         = invoke(proj,'findObject','TG01a'); %variavel de 
+decisao 
+    TV01          = invoke(proj,'findObject','TV01'); 
+    TV01a         = invoke(proj,'findObject','TV01a'); 
+    bomba02       = invoke(proj,'findObject','bomba02'); 
+    bomba02a      = invoke(proj,'findObject','bomba02a'); 
+    bomba03       = invoke(proj,'findObject','bomba03'); 
+    bomba04       = invoke(proj,'findObject','bomba04'); 
+    condensador01 = invoke(proj,'findObject','condensador01'); 
+    evap01        = invoke(proj,'findObject','evap01'); 
+    evap01a       = invoke(proj,'findObject','evap01a'); 
+    superaq01     = invoke(proj,'findObject','superaq01'); 
+    preaq01       = invoke(proj,'findObject','preaq01'); 
+    aquec01       = invoke(proj,'findObject','aquec01'); 
+    superaq01a    = invoke(proj,'findObject','superaq01a'); 
+    preaq01a      = invoke(proj,'findObject','preaq01a'); 
+    aquec01a      = invoke(proj,'findObject','aquec01a'); 
+    Torre         = invoke(proj,'findObject','Torre'); 
+% Eixos: 
+    shaft01   = invoke(proj,'findObject','shaft01'); 
+    shaft01a  = invoke(proj,'findObject','shaft01a'); 
+    shaft02   = invoke(proj,'findObject','shaft02'); 
+    shaft02a  = invoke(proj,'findObject','shaft02a'); 
+    shaft03   = invoke(proj,'findObject','shaft03'); 
+    shaft04   = invoke(proj,'findObject','shaft04'); 
+    shaft05   = invoke(proj,'findObject','shaft05'); 
+    shaftTV01 = invoke(proj,'findObject','shaftTV01'); 
+    shaftTV02 = invoke(proj,'findObject','shaftTV02'); 
+     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Variaveis de Decisao: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  
+% 1. Potência ISO - turbina a gás "TG01" (kW): 
+    TG01_power = invoke(TG01,'findItem',0,'power_el0'); 
+    invoke(TG01_power,'value',x(1)); 
+     
+% 2. Potência ISO - turbina a gás "TG01a" (kW): 
+    TG01a_power = invoke(TG01a,'findItem',0,'power_el0'); 
+    invoke(TG01a_power,'value',x(2)); 
+     
+% 3. Carga turbina a gás "TG01":  
+    TG01_load = invoke(TG01,'findItem',0,'load'); 
+    invoke(TG01_load,'value',x(3)); 
+     
+% 4. Carga turbina a gás "TG01a":  
+    TG01a_load = invoke(TG01a,'findItem',0,'load'); 
+    invoke(TG01a_load,'value',x(4)); 
+  
+% 5. Pressao do vapor gerado na caldeira "HRSG001": 
+    stream08_p = invoke(stream08,'findItem',0,'p'); 
+    invoke(stream08_p,'value',x(5)); 
+     
+% 6. Pressao do vapor gerado na caldeira "HRSG001a": 
+    stream08a_p = invoke(stream08a,'findItem',0,'p'); 
+    invoke(stream08a_p,'value',x(6)); 
+  
+% 7. Pressao na saída da turbina a vapor de extraçao "TV01": 
+    stream14_p = invoke(stream14,'findItem',0,'p'); 
+    invoke(stream14_p,'value',x(7)); 
+     
+% 8. Temperatura do vapor gerado na caldeira "HRSG001": 
+    stream08_t = invoke(stream08,'findItem',0,'t'); 
+
+ 
+
+108 
+
+    invoke(stream08_t,'value',x(8));  
+  
+% 9. Temperatura do vapor gerado na caldeira "HRSG001a": 
+    stream08a_t = invoke(stream08a,'findItem',0,'t'); 
+    invoke(stream08a_t,'value',x(9)); 
+     
+  
+     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Run the simulation in IPSEpro: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+    run = invoke(proj,'runSimulation',0); 
+    %erro = invoke(proj,'CheckAndInsertError',0); 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+%                              Resultados - IPSE: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Correntes: vazao mássica (kg/s); exergia (kJ/kg) 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Corrente1: 
+    temp = invoke(stream01,'findItem',0,'mass');   m01 = 
+invoke(temp,'value'); 
+    temp = invoke(stream01,'findItem',0,'exergy'); e01 = 
+invoke(temp,'value'); 
+% Corrente1a: 
+    temp = invoke(stream01a,'findItem',0,'mass');   m01a = 
+invoke(temp,'value'); 
+    temp = invoke(stream01a,'findItem',0,'exergy'); e01a = 
+invoke(temp,'value'); 
+% Corrente2: 
+    temp = invoke(stream02,'findItem',0,'mass');   m02 = 
+invoke(temp,'value'); 
+    temp = invoke(stream02,'findItem',0,'exergy'); e02 = 
+invoke(temp,'value'); 
+% Corrente2a: 
+    temp = invoke(stream02a,'findItem',0,'mass');   m02a = 
+invoke(temp,'value'); 
+    temp = invoke(stream02a,'findItem',0,'exergy'); e02a = 
+invoke(temp,'value'); 
+% Corrente3: 
+    temp = invoke(stream03,'findItem',0,'mass');   m03 = 
+invoke(temp,'value'); 
+    temp = invoke(stream03,'findItem',0,'exergy'); e03 = 
+invoke(temp,'value');     
+% Corrente3a: 
+    temp = invoke(stream03a,'findItem',0,'mass');   m03a = 
+invoke(temp,'value'); 
+    temp = invoke(stream03a,'findItem',0,'exergy'); e03a = 
+invoke(temp,'value'); 
+% Corrente6: 
+    temp = invoke(stream06,'findItem',0,'mass');   m06 = 
+invoke(temp,'value'); 
+    temp = invoke(stream06,'findItem',0,'exergy'); e06 = 
+invoke(temp,'value'); 
+% Corrente6a: 
+    temp = invoke(stream06a,'findItem',0,'mass');   m06a = 
+invoke(temp,'value'); 
+    temp = invoke(stream06a,'findItem',0,'exergy'); e06a = 
+invoke(temp,'value'); 
+% Corrente7: 
+
+ 
+
+109 
+
+    temp = invoke(stream07,'findItem',0,'mass');   m07 = 
+invoke(temp,'value'); 
+    temp = invoke(stream07,'findItem',0,'exergy'); e07 = 
+invoke(temp,'value'); 
+% Corrente7a: 
+    temp = invoke(stream07a,'findItem',0,'mass');   m07a = 
+invoke(temp,'value'); 
+    temp = invoke(stream07a,'findItem',0,'exergy'); e07a = 
+invoke(temp,'value'); 
+% Corrente8: 
+    temp = invoke(stream08,'findItem',0,'mass');   m08 = 
+invoke(temp,'value'); 
+    temp = invoke(stream08,'findItem',0,'exergy'); e08 = 
+invoke(temp,'value'); 
+% Corrente8a: 
+    temp = invoke(stream08a,'findItem',0,'mass');   m08a = 
+invoke(temp,'value'); 
+    temp = invoke(stream08a,'findItem',0,'exergy'); e08a = 
+invoke(temp,'value'); 
+% Corrente9: 
+    temp = invoke(stream09,'findItem',0,'mass');   m09 = 
+invoke(temp,'value'); 
+    temp = invoke(stream09,'findItem',0,'exergy'); e09 = 
+invoke(temp,'value'); 
+% Corrente10: 
+    temp = invoke(stream10,'findItem',0,'mass');   m10 = 
+invoke(temp,'value'); 
+    temp = invoke(stream10,'findItem',0,'exergy'); e10 = 
+invoke(temp,'value'); 
+% Corrente11: 
+    temp = invoke(stream11,'findItem',0,'mass');   m11 = 
+invoke(temp,'value'); 
+    temp = invoke(stream11,'findItem',0,'exergy'); e11 = 
+invoke(temp,'value'); 
+% Corrente13: 
+    temp = invoke(stream13,'findItem',0,'mass');   m13 = 
+invoke(temp,'value'); 
+    temp = invoke(stream13,'findItem',0,'exergy'); e13 = 
+invoke(temp,'value'); 
+% Corrente14: 
+    temp = invoke(stream14,'findItem',0,'mass');   m14 = 
+invoke(temp,'value'); 
+    temp = invoke(stream14,'findItem',0,'exergy'); e14 = 
+invoke(temp,'value'); 
+% Corrente15: 
+    temp = invoke(stream15,'findItem',0,'mass');   m15 = 
+invoke(temp,'value'); 
+    temp = invoke(stream15,'findItem',0,'exergy'); e15 = 
+invoke(temp,'value'); 
+% Corrente16: 
+    temp = invoke(stream16,'findItem',0,'mass');   m16 = 
+invoke(temp,'value'); 
+    temp = invoke(stream16,'findItem',0,'exergy'); e16 = 
+invoke(temp,'value'); 
+% Corrente17 
+    temp = invoke(stream17,'findItem',0,'mass');   m17 = 
+invoke(temp,'value'); 
+    temp = invoke(stream17,'findItem',0,'exergy'); e17 = 
+invoke(temp,'value'); 
+% Corrente18: 
+    temp = invoke(stream18,'findItem',0,'mass');   m18 = 
+invoke(temp,'value'); 
+    temp = invoke(stream18,'findItem',0,'exergy'); e18 = 
+invoke(temp,'value'); 
+% Corrente19: 
+
+ 
+
+110 
+
+    temp = invoke(stream19,'findItem',0,'mass');   m19 = 
+invoke(temp,'value'); 
+    temp = invoke(stream19,'findItem',0,'exergy'); e19 = 
+invoke(temp,'value'); 
+% Corrente20: 
+    temp = invoke(stream20,'findItem',0,'mass');   m20 = 
+invoke(temp,'value'); 
+    temp = invoke(stream20,'findItem',0,'exergy'); e20 = 
+invoke(temp,'value'); 
+% Corrente21: 
+    temp = invoke(stream21,'findItem',0,'mass');   m21 = 
+invoke(temp,'value'); 
+    temp = invoke(stream21,'findItem',0,'exergy'); e21 = 
+invoke(temp,'value'); 
+% Corrente22: 
+    temp = invoke(stream22,'findItem',0,'mass');   m22 = 
+invoke(temp,'value'); 
+    temp = invoke(stream22,'findItem',0,'exergy'); e22 = 
+invoke(temp,'value'); 
+% Corrente23: 
+    temp = invoke(stream23,'findItem',0,'mass');   m23 = 
+invoke(temp,'value'); 
+    temp = invoke(stream23,'findItem',0,'exergy'); e23 = 
+invoke(temp,'value'); 
+% Corrente24: 
+    temp = invoke(stream24,'findItem',0,'mass');   m24 = 
+invoke(temp,'value'); 
+    temp = invoke(stream24,'findItem',0,'exergy'); e24 = 
+invoke(temp,'value'); 
+% Corrente25: 
+    temp = invoke(stream25,'findItem',0,'mass');   m25 = 
+invoke(temp,'value'); 
+    temp = invoke(stream25,'findItem',0,'exergy'); e25 = 
+invoke(temp,'value'); 
+% Corrente25a: 
+    temp = invoke(stream25a,'findItem',0,'mass');   m25a = 
+invoke(temp,'value'); 
+    temp = invoke(stream25a,'findItem',0,'exergy'); e25a = 
+invoke(temp,'value'); 
+% Corrente26: 
+    temp = invoke(stream26,'findItem',0,'mass');   m26 = 
+invoke(temp,'value'); 
+    temp = invoke(stream26,'findItem',0,'exergy'); e26 = 
+invoke(temp,'value'); 
+% Corrente26a: 
+    temp = invoke(stream26a,'findItem',0,'mass');   m26a = 
+invoke(temp,'value'); 
+    temp = invoke(stream26a,'findItem',0,'exergy'); e26a = 
+invoke(temp,'value'); 
+% Corrente27: 
+    temp = invoke(stream27,'findItem',0,'mass');   m27 = 
+invoke(temp,'value'); 
+    temp = invoke(stream27,'findItem',0,'exergy'); e27 = 
+invoke(temp,'value'); 
+% Corrente28: 
+    temp = invoke(stream28,'findItem',0,'mass');   m28 = 
+invoke(temp,'value'); 
+    temp = invoke(stream28,'findItem',0,'exergy'); e28 = 
+invoke(temp,'value'); 
+% Corrente29: 
+    temp = invoke(stream29,'findItem',0,'mass');   m29 = 
+invoke(temp,'value'); 
+    temp = invoke(stream29,'findItem',0,'exergy'); e29 = 
+invoke(temp,'value'); 
+% Corrente29a: 
+
+ 
+
+111 
+
+    temp = invoke(stream29a,'findItem',0,'mass');   m29a = 
+invoke(temp,'value'); 
+    temp = invoke(stream29a,'findItem',0,'exergy'); e29a = 
+invoke(temp,'value'); 
+% Corrente30: 
+    temp = invoke(stream30,'findItem',0,'mass');   m30 = 
+invoke(temp,'value'); 
+    temp = invoke(stream30,'findItem',0,'exergy'); e30 = 
+invoke(temp,'value'); 
+% Corrente30a: 
+    temp = invoke(stream30a,'findItem',0,'mass');   m30a = 
+invoke(temp,'value'); 
+    temp = invoke(stream30a,'findItem',0,'exergy'); e30a = 
+invoke(temp,'value'); 
+% Corrente36: 
+    temp = invoke(stream36,'findItem',0,'mass');   m36 = 
+invoke(temp,'value'); 
+    temp = invoke(stream36,'findItem',0,'exergy'); e36 = 
+invoke(temp,'value'); 
+% Corrente38: 
+    temp = invoke(stream38,'findItem',0,'mass');   m38 = 
+invoke(temp,'value'); 
+    temp = invoke(stream38,'findItem',0,'exergy'); e38 = 
+invoke(temp,'value'); 
+% Corrente39: 
+    temp = invoke(stream39,'findItem',0,'mass');   m39 = 
+invoke(temp,'value'); 
+    temp = invoke(stream39,'findItem',0,'exergy'); e39 = 
+invoke(temp,'value'); 
+% Corrente43: 
+    temp = invoke(stream43,'findItem',0,'mass');   m43 = 
+invoke(temp,'value'); 
+    temp = invoke(stream43,'findItem',0,'exergy'); e43 = 
+invoke(temp,'value'); 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Trabalhos (kW): 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Turbina a gas "TG01":    
+    temp = invoke(TG01,'findItem',0,'power_el'); Wtg01 = 
+invoke(temp,'value');  
+% Turbina a gas "TG01a":    
+    temp = invoke(TG01a,'findItem',0,'power_el');Wtg01a = 
+invoke(temp,'value'); 
+% Eixo "shaft01" 
+    temp = invoke(shaft01,'findItem',0,'power'); Wshaft01 = 
+invoke(temp,'value');  
+% Eixo "shaft01a" 
+    temp = invoke(shaft01a,'findItem',0,'power');Wshaft01a = 
+invoke(temp,'value');  
+% Eixo "shaft02" 
+    temp = invoke(shaft02,'findItem',0,'power'); Wshaft02 = 
+invoke(temp,'value');  
+% Eixo "shaft02a" 
+    temp = invoke(shaft02a,'findItem',0,'power');Wshaft02a = 
+invoke(temp,'value');  
+% Eixo "shaft03" 
+    temp = invoke(shaft03,'findItem',0,'power'); Wshaft03 = 
+invoke(temp,'value');  
+% Eixo "shaft04" 
+    temp = invoke(shaft04,'findItem',0,'power'); Wshaft04 = 
+invoke(temp,'value');  
+% Eixo "shaft05" 
+
+ 
+
+112 
+
+    temp = invoke(shaft05,'findItem',0,'power'); Wshaft05 = 
+invoke(temp,'value');  
+% Eixo "shaftTV01" 
+    temp = invoke(shaftTV01,'findItem',0,'power'); WshaftTV01 = 
+invoke(temp,'value');  
+% Eixo "shaftTV02" 
+    temp = invoke(shaftTV02,'findItem',0,'power'); WshaftTV02 = 
+invoke(temp,'value');  
+% Turbina a vapor "TV01": 
+    Wtv01 = WshaftTV01; 
+% Turbina a vapor "TV02": 
+    %Wtv02 = WshaftTV02 - WshaftTV01; 
+    Wtv02 = WshaftTV02; 
+     
+% Cálculo do vetor M 
+  
+% Massa dos elementos de potência é igual a zero  
+  
+M = [m01 m02 m03 m06 m07 m08 m09 m10 m11 m13 m14 m15 m16 m17 m18 m19 m20 
+m21 m22 m23 m24 m25 m26 m27 m28 m29 m30 m36 m38 m01a m02a m03a m06a m07a 
+m08a m25a m26a m29a m30a 0 0 0 0 0 0 0 0 0 0 0  m39 m43]; 
+  
+%Cálculo do vetor E 
+  
+%Exergia específica [kJ/kg] 
+  
+e = [e01 e02 e03 e06 e07 e08 e09 e10 e11 e13 e14 e15 e16 e17 e18 e19 e20 
+e21 e22 e23 e24 e25 e26 e27 e28 e29 e30 e36 e38 e01a e02a e03a e06a e07a 
+e08a e25a e26a e29a e30a 0 0 0 0 0 0 0 0 0 0 0  e39 e43]; 
+  
+%A exergia dos elementos de potência não depende da massa 
+  
+E = [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 Wtg01 Wtg01a Wtv01 Wtv02 Wshaft01 Wshaft02 Wshaft03 Wshaft04 
+Wshaft05 Wshaft01a Wshaft02a 0 0]; 
+  
+I = 39; 
+  
+for i = 1:I 
+     
+    E(i) = e(i)*M(i); 
+     
+end 
+  
+E(51) = e(51)*M(51); 
+  
+E(52) = e(52)*M(52); 
+  
+%Cálculo da Exergia Química 
+  
+%Exergia Química específica [kJ/kg] 
+  
+eQuim = zeros(1,52); 
+  
+eQuim(1) = 30000; 
+  
+eQuim(30) = 30000; 
+  
+%Exergia Química 
+  
+
+ 
+
+113 
+
+for k = 1:52 
+     
+    EQuim(k) = eQuim(k)*M(k); 
+     
+end 
+  
+  
+  
+for k = 1:52 
+     
+    EQuim(i) = eQuim(i)*M(i); 
+     
+end 
+  
+Etot = E+EQuim; 
+  
+%% 
+%%%%%Calculomatrizes%%%%% 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Erro: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+if sum(M <= 0) > 11 || sum(e <= 0) > 11 
+    error = 1; 
+end 
+  
+  
+%Cálculo do vetor combustível 
+  
+Fuel = (AF*Etot')'; 
+  
+%Cálculo do vetor produto 
+  
+Prod = (AP*Etot')'; 
+  
+%Cálculo do vetor Efex 
+Efex =zeros(1,24); 
+  
+J = 24; 
+  
+for j =1:J 
+   
+    Efex(j) = Prod(j)/Fuel(j); 
+     
+end 
+  
+%Cálculo do vetor destruição de exergia 
+ED = zeros(1,24); 
+  
+J = 24; 
+  
+for j =1:J 
+   
+    ED(j) = Fuel(j)-Prod(j); 
+     
+end 
+  
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+ 
+
+114 
+
+% Calculo de Custos: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+% PEC (custo de aquisicao, US$) de todos os componentes: 
+    PEC = zeros(1,24);  
+    for i = 1:24, 
+      PEC(i) = Bk(i) * abs((Efex(i) / (1 - Efex(i)))) ^ nk(i) * (Prod(i) / 
+1000) ^ mk(i); 
+    end 
+    %PEC = PEC(:)'; %vetor linha 
+     
+% TCI (capital total de investimento): 
+    TCI = coef_beta*sum(PEC); 
+     
+% Custo por unidade de tempo (US$/h) associado ao investimento: 
+Zin = zeros(1,24); 
+    for j =1:24 
+        Zin(j) = CRF*coef_beta*PEC(j)/N; 
+    end 
+     
+% Custo por unidade de tempo (US$/h) associado a manutencao: 
+Zom = zeros(1,24); 
+    for j =1:24 
+        Zom(j) = FI*coef_beta*PEC(j)/N; 
+    end 
+  
+%Construção do Vetor Zhor 
+Zhor = zeros(1,52); 
+  
+  
+  
+for j =1:24 
+  Zhor(j) = -(Zin(j) + Zom(j)); 
+end 
+  
+%   'Custo relativo às entradas - admitido como conhecido e' 
+%   '     calculado com base na exergia química ' 
+Zhor(25) = cf(1) * EQuim(1) * 3600; %'US$/h - combustível TG01' 
+Zhor(26) = cf(2) * EQuim(30) * 3600; %'US$/h - combustível TG01a' 
+Zhor(27) = cf(3) * Etot(2) * 3600; %'(US$/h)' 
+Zhor(28) = cf(4) * Etot(31) * 3600; %'(US$/h)' 
+Zhor(29) = cf(5) * Etot(51) * 3600; %'(US$h) 
+Zhor(30) = cf(6) * Etot(24) * 3600; %'(US$/h)' 
+Zhor(31) = cf(7) * Etot(23) * 3600; %'(US$/h)' 
+Zhor(32) = cf(8) * Etot(44) * 3600; %'(US$/h)' 
+Zhor(33) = cf(9) * Etot(45) * 3600; %'(US$/h)' 
+Zhor(34) = cf(10) * Etot(46) * 3600; %'(US$/h)' 
+Zhor(35) = cf(11) * Etot(47) * 3600; %'(US$/h)' 
+Zhor(36) = cf(12) * Etot(48) * 3600; %'(US$/h)' 
+Zhor(37) = cf(13) * Etot(49) * 3600; %'(US$/h)' 
+Zhor(38) = cf(14) * Etot(50) * 3600; %'(US$/h)' 
+       
+K = 52; 
+   
+for k =39:K 
+  Zhor(k) = 0; 
+end     
+     
+%  'Custo total componentes (investimento + O$M) 
+   Custocomphor = 0; 
+    
+   for i = 1:24 
+       Custocomphor = Custocomphor + abs(Zhor(i)); 
+
+ 
+
+115 
+
+   end 
+%  'Custo total componentes (investimento + O&M) + insumos' 
+   Custogeralhor = 0; 
+   for i = 1:52 
+       Custogeralhor = Custogeralhor + abs(Zhor(i)); 
+   end 
+   
+ % 'Eficiência exergética total 
+ %  'Exergia total dos produtos - Ptotal(energia elétrica + calor) 
+   P1 = Etot(40) + Etot(41) + Etot(43);% 'eletricidade 
+   P2 = Etot(18) + Etot(24) + Etot(5) + Etot(34) + Etot(52);% 'calor 
+   Ptotal = P1 + P2; 
+ %  'Exergia total dos insumos - Ftotal 
+   F1 = Etot(44) + Etot(45) + Etot(46) + Etot(47) + Etot(48) + Etot(49) + 
+Etot(50);% 'eletricidade 
+   F2 = Etot(1) + Etot(2) + Etot(30) + Etot(31) + E(20) + E(21) + 
+Etot(39);% 'outros 
+   Ftotal = F1 + F2; 
+   Efextotal = Ptotal / Ftotal; 
+  
+% Construcção da matriz de custos 
+C = zeros (52); 
+  
+J = 24; 
+K = 52; 
+  
+for j = 1:J 
+  for k = 1:K 
+          C(j,k)= A(j,k); 
+  end 
+end 
+  
+%Custo das Entradas conhecidos 
+C(25, 1) = 1; 
+C(26, 30) = 1; 
+C(27, 2) = 1; 
+C(28, 31) = 1; 
+C(29, 51) = 1; 
+C(30, 21) = 1; 
+C(31, 20) = 1; 
+C(32, 44) = 1; 
+C(33, 45) = 1; 
+C(34, 46) = 1; 
+C(35, 47) = 1; 
+C(36, 48) = 1; 
+C(37, 49) = 1; 
+C(38, 50) = 1; 
+%Equações Auxiliares 
+C(39, 3) = -1 / Etot(3);% 'turbina TG01 
+C(39, 40) = 1 / Etot(40);% 'turbina TG01 
+C(40, 32) = -1 / Etot(32);%  'turbina TG01a 
+C(40, 41) = 1 / Etot(41);%  'turbina TG01a 
+C(41, 10) = 1 / Etot(10);%  'turbina TV01 
+C(41, 11) = -1 / Etot(11);%  'turbina TV01 
+C(42, 8) = 1 / Etot(8);% 'turbina TV02 
+C(42, 13) = -1 / Etot(13);% 'turbina TV02 
+C(43, 3) = 1 / Etot(3);%  'HRSG01' 
+C(43, 4) = -1 / Etot(4);%  'HRSG01' 
+C(44, 32) = 1 / Etot(32);% 'HRSG01a' 
+C(44, 33) = -1 / Etot(33);% 'HRSG01a' 
+C(45, 13) = 1 / Etot(13);% 'condensador' 
+C(45, 14) = -1 / Etot(14);% 'condensador' 
+C(46, 4) = 1 / Etot(4);% 'aquecedor01' 
+C(46, 5) = -1 / Etot(5);% 'aquecedor01' 
+
+ 
+
+116 
+
+C(47, 33) = 1 / Etot(33);% 'aquecedor01a' 
+C(47, 34) = -1 / Etot(34);% 'aquecedor01a' 
+C(48, 9) = -1 / Etot(9);% 'splitter01' 
+C(48, 19) = 1 / Etot(19);% 'splitter01' 
+C(49, 8) = 1 / Etot(8);% 'splitter02' 
+C(49, 25) = -1 / Etot(25);% 'splitter02' 
+C(50, 26) = 1 / Etot(26);% 'splitter03' 
+C(50, 38) = -1 / Etot(38);% 'splitter03' 
+C(51, 22) = 1 / Etot(22);% 'splitter04' 
+C(51, 36) = -1 / Etot(36);% 'splitter04' 
+C(52, 28) = 1 / Etot(28);% 'torre' 
+C(52, 29) = -1 / Etot(29);% 'torre' 
+  
+  
+%% 
+%%%%%Calculocustos%%%%% 
+  
+ %Construção do vetor Chor 
+   
+  Chor = (C^(-1))*Zhor'; 
+   
+  %Preparação para o cáculo de cespec 
+   
+  cespec = zeros(1,52); 
+   
+  %Cáculo de cespec 
+   
+  K = 52; 
+   
+  for k =1:K 
+      cespec(k) = Chor(k)/Etot(k); 
+  end 
+  
+  % Cálculo de CFhor 
+   
+  CFhor = AF*Chor; 
+   
+  
+  % Cálculo de CFhor 
+   
+  CPhor = AP*Chor; 
+   
+  %Preparação para o cálculo de cF 
+   
+  cF = zeros(1,24); 
+   
+  %Cálculo Cf 
+   
+  J = 24; 
+   
+  for j =1:J 
+      cF(j) = CFhor(j)/Fuel(j); 
+  end 
+   
+ %Preparação para o cálculo de cP 
+   
+  cP = zeros(1,24); 
+   
+  %Cálculo cP 
+   
+
+ 
+
+117 
+
+  J = 24; 
+   
+  for j =1:J 
+      cP(j) = CPhor(j)/Prod(j); 
+  end 
+   
+  %Preparação para o cálculo de CDesthor 
+   
+  CDesthor = zeros(1,24); 
+   
+  %Cálculo CDesthor 
+   
+  J = 24; 
+   
+  for j =1:J 
+      CDesthor(j) = cF(j)*ED(j); 
+  end 
+         
+  %Preparação para o cálculo de  Ctotalhor 
+   
+  Ctotalhor = zeros(1,24); 
+   
+  %Cálculo Ctotalhor 
+   
+  J = 24; 
+   
+  for j =1:J 
+      Ctotalhor(j) = CDesthor(j) + abs(Zhor(j)); 
+  end 
+   
+  %Cálculo SomaDesthor 
+   
+  SomaDesthor = sum(CDesthor); 
+   
+  %Cálculo SomaCtotalhor 
+   
+  SomaCtotalhor = sum(Ctotalhor); 
+  
+%%   
+%%%%%Calculofatores%%%%% 
+  
+%'Determinaçào das variáveis exergoeconômicas 
+  
+r = zeros(1,24); 
+fexerg = zeros(1,24); 
+Fk = zeros(1,24); 
+EfexOPT = zeros(1,24); 
+rOPT = zeros(1,24); 
+fOPT = zeros(1,24); 
+deltar = zeros(1,24); 
+deltaefic = zeros(1,24); 
+for i = 1 : 24 
+     r(i) = (cP(i) - cF(i)) / cF(i); 
+     fexerg(i) = abs(Zhor(i)) / (abs(Zhor(i)) + cF(i) * ED(i)); 
+      
+    %'Variáveis utilizadas na otimização pelo método 2 FI esta 
+    %constante!!!!!!!!!!!!!! 
+     numerador = (CRF + FI) * Bk(i) * coef_beta * nk(i); 
+     denominador = N * cF(i) * 1000 * (Prod(i) / 1000) ^ (1 - mk(i)); 
+      
+
+ 
+
+118 
+
+     Fk(i) = (numerador / denominador) ^ (1 / (nk(i) + 1)); 
+     EfexOPT(i) = 1 / (1 + Fk(i)); 
+     rOPT(i) = (nk(i) + 1) / nk(i) * Fk(i); 
+     fOPT(i) = 1 / (1 + nk(i)); 
+     deltar(i) = (r(i) - rOPT(i)) / rOPT(i); 
+     deltaefic(i) = (Efex(i) - EfexOPT(i)) / EfexOPT(i); 
+end 
+  
+%% 
+%%%%%FuncaoOBJ%%%%% 
+f = (abs(Custogeralhor)/(Ptotal))*1000; 
+  
+  
+if isreal(f) 
+    if f < 0 || error == 1 || sum(Zhor <= 0) > 43 
+  
+            f = 100; 
+  
+       
+    end 
+             
+end 
+  
+end % Fim do Se "x" está fora dos limites (definido lá em cima) ou é a 
+primeira vez que roda 
+warning on all 
+ 
+ 
+
+ 
+
+119 
+
+

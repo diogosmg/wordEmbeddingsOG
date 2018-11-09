@@ -1,0 +1,1405 @@
+RELATÓRIO  
+
+Nº: 
+
+CLIENTE: 
+
+ANP – AGÊNCIA NACIONAL DO PETRÓLEO, 
+
+GÁS NATURAL E BIOCOMBUSTÍVEIS 
+
+PROGRAMA:  MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação do Trecho 1 
+
+do Gasoduto Uruguaiana – Porto Alegre 
+
+Faculdades Católicas – PUC-Rio – SIMDUT 
+
+ÍNDICE DE REVISÕES 
+
+RL-ANP-FPL-020 
+1 
+
+FOLHA: 
+
+de
+
+13 
+
+- 
+- 
+- 
+
+REV. 
+
+DESCRIÇÃO E/OU FOLHAS ATINGIDAS 
+
+0 
+A 
+B 
+
+EMISSÃO ORIGINAL 
+APÓS COMENTÁRIOS DA SCM 
+APÓS COMENTÁRIOS DA SCM 
+ 
+
+ 
+
+REV. 0 
+
+REV. A 
+
+REV. B 
+
+REV. C 
+
+REV. D 
+
+REV. E 
+
+REV. F 
+
+REV. G 
+
+REV. H 
+
+ANP 
+L.Pires 
+
+ANP 
+L.Pires 
+
+03/04/2015 15/05/2015  22/05/2015
+
+DATA 
+PROJETO 
+EXECUÇÃO 
+VERIFICAÇÃO 
+APROVAÇÃO 
+AS INFORMAÇÕES DESTE DOCUMENTO SÃO PROPRIEDADE DA ANP, SENDO PROIBIDA A UTILIZAÇÃO FORA DA SUA FINALIDADE. 
+ 
+
+I.Patrocinio I.Patrocinio 
+P.Krause 
+P.Krause 
+
+ANP 
+L.Pires 
+I.Patrocinio
+P.Krause 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-020 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Trecho 1 do 
+
+Gasoduto Uruguaiana – Porto Alegre 
+
+ÍNDICE 
+
+ 
+
+ 
+ 
+
+FOLHA 
+
+REV.
+
+B 
+
+2  de
+
+13 
+
+- 
+- 
+
+ 
+
+1  OBJETIVO _______________________________________________________________ 3 
+2  DOCUMENTOS DE REFERÊNCIA ____________________________________________ 3 
+3  DESCRIÇÃO GERAL DO MODELO  ___________________________________________ 3 
+4  PREMISSAS DE CÁLCULO __________________________________________________ 4 
+4.1 
+CONDIÇÕES DE REFERÊNCIA ___________________________________________ 4 
+
+4.2 
+
+4.3 
+
+4.4 
+
+4.5 
+
+4.6 
+
+MODELO DE TRANSFERÊNCIA DE CALOR (REF.2.2) _________________________ 4 
+
+TEMPERATURA DO SOLO _______________________________________________ 5 
+
+CORRELAÇÕES ADOTADAS _____________________________________________ 5 
+
+SOFTWARE UTILIZADO _________________________________________________ 5 
+
+CARACTERÍSTICAS DO GÁS (REF. 2.5) ____________________________________ 5 
+
+5  GASODUTO URUGUAIANA – PORTO ALEGRE – TRECHO 1 ______________________ 5 
+5.1 
+DIÂMETRO, ESPESSURA E PMOA ________________________________________ 5 
+
+5.2 
+
+5.3 
+
+5.4 
+
+5.5 
+
+PERFIL ALTIMÉTRICO __________________________________________________ 6 
+
+RUGOSIDADE _________________________________________________________ 7 
+
+PONTOS DE RECEBIMENTO _____________________________________________ 7 
+
+PONTOS DE ENTREGA  _________________________________________________ 7 
+
+6  CONDIÇÕES DE CONTORNO _______________________________________________ 8 
+6.1 
+PERFIL DE CONSUMO __________________________________________________ 8 
+
+6.2 
+
+PRESSÃO MÁXIMA DE OPERAÇÃO ADMISSÍVEL ____________________________ 8 
+
+A  PRESSÃO  MÁXIMA  DE  OPERAÇÃO  ADMISSÍVEL  NO  GASODUTO  É  DE  100  KGF/CM² 
+(REF.2.1). ___________________________________________________________________ 8 
+
+6.3 
+
+6.4 
+
+PRESSÃO DE ENTREGA NOMINAL CONTRATUAL ___________________________ 8 
+
+INTERCONEXÕES ______________________________________________________ 8 
+
+7  RESULTADOS DA SIMULAÇÃO ______________________________________________ 9 
+8  ANEXO – “STEADY STATE REPORT” DO MODELOS  ___________________________ 10 
+ 
+
+ 
+
+ 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA 
+
+REV.
+
+B 
+
+3  de
+
+13 
+
+- 
+- 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-020 
+
+TÍTULO: Documentação do Modelo de Simulação do Trecho 1 do 
+
+Gasoduto Uruguaiana – Porto Alegre 
+
+ 
+
+ 
+1 
+
+ 
+
+OBJETIVO 
+
+Documentar as informações necessárias para a criação do modelo computacional do trecho 
+1  do  gasoduto  Uruguaiana  –  Porto  Alegre  e  apresentar  as  características  físicas  e  valores 
+limites  de  projeto  dos  diversos  elementos  que  compõem  o  modelo.  Permitindo,  assim,  a 
+reprodutibilidade do modelo por qualquer interessado. 
+
+O modelo foi criado para o programa de simulação PipelineStudio versão 3.4.1.0 da Energy 
+
+Solutions. 
+
+ 
+DOCUMENTOS DE REFERÊNCIA 
+
+2 
+
+2.1. 
+
+Características físicas e capacidade, tanto atual quanto projeções, das instalações 
+
+de transporte – http://www.tsb.com.br/repositorio/bibArq000438.pdf, 23/04/2015 
+
+2.2. 
+
+Capacidade  de  Escoamento  no  GASUP  –  Trecho  01  Modelo  Termohidráulico  do 
+
+trecho 1 – http://www.tsb.com.br/repositorio/bibArq000442.pdf 23/04/2015 
+
+2.3. 
+
+DE-6010.10-948-PTC-001  a  DE-6010.10-948-PTC-025  –  Planta  e  Perfil  do 
+
+Gasoduto Uruguaiana-Porto Alegre 
+
+2.4. 
+
+Contrato de Serviço de Transporte firmado entre o Carregador e a Transportadora 
+
+Sulbrasileira de Gás S.A. (TSB) 
+
+2.5. 
+2.6. 
+
+Processo ANP n° 48610.010500/2012-40 
+RL-ANP-FPL-007, rev.A - Análise da Influência de Parâmetros Utilizados no Modelo 
+
+de Cálculo da Capacidade. 
+
+2.7. 
+
+RL-ANP-FPL-21_RC  -  Cálculo  de  Capacidade  do  Trecho  1  do  Gasoduto 
+
+Uruguaiana – Porto Alegre 
+
+ 
+
+3 
+
+DESCRIÇÃO GERAL DO MODELO 
+
+O trecho 1 do gasoduto Uruguaiana – Porto Alegre tem início na fronteira do Brasil com a 
+Argentina sob o leito do Rio Uruguai, é de propriedade da Transportadora Sulbrasileira de Gás 
+S.A. (TSB) e tem comprimento de 25,037 km e diâmetro nominal de 24”. Uma visão geral do 
+sistema está apresentada na Figura 1. 
+
+A Figura 2 apresenta uma visão geral do Trecho 1 do gasoduto e a Figura 2 o fluxograma 
+do  modelo  de  simulação  desenvolvido,  com  o  ponto  de  recebimento  na  fronteira  Argentina  - 
+Brasil e o ponto de entrega de Uruguaiana. 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-020 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Trecho 1 do 
+
+Gasoduto Uruguaiana – Porto Alegre 
+
+FOLHA 
+
+REV.
+
+B 
+
+4  de
+
+13 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+Figura 1 – Visão geral do trecho 1 do gasoduto Uruguaiana-Porto Alegre (fonte: www.tsb.com.br) 
+
+ 
+
+Figura 2 – Fluxograma do modelo do trecho 1 do gasoduto Uruguaiana – Porto Alegre 
+
+ 
+
+ 
+4 
+
+PREMISSAS DE CÁLCULO 
+
+4.1  Condições de Referência 
+
+  Pressão: 1 atm 
+  Temperatura: 20°C 
+
+As vazões apresentadas neste relatório utilizam estes valores de pressão e temperatura 
+como referência. 
+
+ 
+4.2  Modelo de transferência de calor (Ref.2.2) 
+
+  Condução de calor radial para o solo  
+  Coeficiente de transferência de calor global solo-tubo: 2,7 W/m².K  
+  Temperatura ambiente: 28oC 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-020 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Trecho 1 do 
+
+Gasoduto Uruguaiana – Porto Alegre 
+
+FOLHA 
+
+REV.
+
+B 
+
+5  de
+
+13 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+4.3  Temperatura do solo 
+
+  28°C (Ref. 2.2). 
+
+ 
+
+4.4  Correlações Adotadas 
+
+  Equação de Estado: BWRS (Ref. 2.5). 
+  Equação do Fator de Atrito: Colebrook (Ref. 2.6) 
+  Viscosidade: LGE (Ref. 2.6) 
+
+ 
+
+4.5  Software utilizado 
+
+  Pipeline Studio versão 3.4.1.0 
+
+ 
+
+4.6  Características do Gás (Ref. 2.5) 
+
+A  composição  do  gás  natural  utilizado,  com  base  em  abril  de  2015  (Ref.2.5),  está 
+
+apresentada na Tabela 1. 
+
+Tabela 1 - Composição do gás utilizado na simulação 
+
+Componente 
+
+Metano 
+Etano 
+Propano 
+i-Butano 
+Nitrogênio 
+
+Dióxido de Carbono 
+
+Teor Molar (%) 
+
+93,04 
+3,19 
+0,86 
+0,47 
+0,97 
+1,47 
+
+ 
+
+ 
+
+5 
+
+GASODUTO URUGUAIANA – PORTO ALEGRE – TRECHO 1 
+
+5.1  Diâmetro, espessura e PMOA 
+
+O trecho 1 do gasoduto Uruguaiana – Porto Alegre é construído em aço carbono API 5LX-
+70,  com  revestimento  externo  de  polietileno  extrudado  em  tripla  camada  e  espessura  da 
+parede variando ao longo do duto. 
+
+O trecho 1 foi modelado com as seguintes características descritas nas referências 2.1, 2.2 
+
+e 2.3. 
+
+  Diâmetro nominal: 24” 
+  Espessura: variando entre 0,256”, 0,307” e 0,339”  
+  Pressão Máxima Operacional Admissível (PMOA): 76,48 kgf/cm²  
+
+A Tabela 2 apresenta os trechos do gasoduto que foram modelados para refletir o perfil de 
+
+elevação do mesmo. 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-020 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Trecho 1 do 
+
+Gasoduto Uruguaiana – Porto Alegre 
+
+FOLHA 
+
+REV.
+
+B 
+
+6  de
+
+13 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+ 
+
+Tabela 2 - Seguimentos do trecho 1 do gasoduto Uruguaiana – Porto Alegre 
+
+Diâmetro 
+
+Comprimento 
+
+Espessura 
+
+(pol)** 
+0,256 
+0,256 
+0,256 
+0,307 
+0,256 
+0,256 
+0,256 
+0,256 
+0,307 
+0,256 
+0,307 
+0,256 
+0,256 
+0,256 
+0,256 
+0,339 
+
+Cota (m)*** 
+E 48 - D 74 
+E 74 - D 60 
+E 60 - D 43 
+E 43 - D 43 
+E 43 - D 43 
+E 43 - D 57 
+E 57 - D 57 
+E 57 - D 60 
+E 60 - D 60 
+E 60 - D 70 
+E 70 - D 70 
+E 70 - D 70 
+E 70 - D 62 
+E 62 - D 80 
+E 80 - D 96 
+E 96 - D 91 
+
+Trecho 
+Duto1 
+Duto2 
+Duto3 
+Duto4 
+Duto5 
+Duto6 
+Duto7 
+Duto8 
+Duto9 
+Duto10 
+Duto11 
+Duto12 
+Duto13 
+Duto14 
+Duto15 
+Duto16 
+
+(pol) 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+
+(km) * 
+4,132 
+1,734 
+2,913 
+0,112 
+0,524 
+3,379 
+2,89 
+0,209 
+0,928 
+0,834 
+0,708 
+0,347 
+2,653 
+2,275 
+1,009 
+0,353 
+
+* - Comprimento a partir da fronteira Argentina - Brasil; 
+** - Espessura média do segmento; 
+*** - O programa de simulação usado só permite cota nos nós, E significa a cota do lado esquerdo do 
+
+e D do lado direto do segmento. 
+
+Nesse  documento,  as  localizações  e  extensões,  expressas  em  km,  referem-se  ao 
+
+comprimento desenvolvido (real), salvo quando disposto em contrário. 
+
+ 
+
+5.2  Perfil Altimétrico 
+
+A Figura 3 apresenta o perfil de elevação utilizado no modelo, obtido a partir da referência 
+
+2.3. 
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-020 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Trecho 1 do 
+
+Gasoduto Uruguaiana – Porto Alegre 
+
+FOLHA 
+
+REV.
+
+B 
+
+7  de
+
+13 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+Figura 3 – Perfil de elevação 
+
+ 
+
+5.3  Rugosidade 
+
+  Rugosidade: 0,02mm (0,00078”) (Ref. 2.2) 
+
+ 
+
+5.4  Pontos de recebimento 
+
+O  ponto  de  recebimento  considerado  no  modelo  é  localizado  na  fronteira  da  Argentina  e 
+
+Brasil, junto ao Rio Uruguai. As pressões e vazões de projeto estão listadas na Tabela 3. 
+
+Tabela 3 - Ponto de recebimento do trecho 1 do gasoduto Uruguaiana – Porto Alegre 
+Vazão de Projeto 
+
+Pressão de Projeto 
+
+recebimento  Localização Cota 
+Ponto de 
+(m) 
+Rio Uruguai 
+48 
+
+km 0 
+
+(kgf/cm²) 
+
+(Mm³/dia) 
+
+Mínima
+33,65 
+
+Máxima  Mínima  Máxima
+76,48 
+
+* 
+
+* 
+
+* - Informação não obtida; 
+ 
+
+5.5  Pontos de Entrega 
+
+O  ponto  de  entrega  está  localizado  na  extremidade  oposta  do  gasoduto  e  as  pressões  e 
+
+vazões de projeto estão listados na Tabela 4. 
+
+Tabela 4 - Ponto de entrega do trecho 1 do gasoduto Uruguaiana – Porto Alegre 
+
+Ponto de 
+entrega 
+
+Localização 
+
+Uruguaiana 
+
+km 25 
+
+Cota 
+(m) 
+91 
+
+Pressão de Projeto 
+
+Vazão de projeto 
+
+(kgf/cm²) 
+
+(10³m³/dia) 
+
+Mínima Máxima  Mínima  Máxima 
+33,65 
+
+2800 
+
+* 
+
+* 
+
+* - Dados não disponíveis nos documentos de referência; 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-020 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Trecho 1 do 
+
+Gasoduto Uruguaiana – Porto Alegre 
+
+FOLHA 
+
+REV.
+
+B 
+
+8  de
+
+13 
+
+- 
+- 
+
+ 
+
+6  CONDIÇÕES DE CONTORNO 
+6.1  Perfil de Consumo 
+
+De acordo com a Ref.  2.4, não há volumes contratados em base firme. A  vazão utilizada 
+como condição de contorno foi baseada no contrato extraordinário/interruptível (Ref. 2.1 e 2.5) 
+somente para obtenção de um regime permanente convergido. 
+
+Tabela 5 – Vazão Contratual nos PTEs 
+
+Ponto de entrega 
+
+Uruguaiana 
+
+ 
+
+Vazão contratual 
+
+(10³ m³/dia) 
+
+Mínima Máxima
+
+0 
+
+0 
+
+Condição de 
+
+contorno 
+
+2800 10³ m³/dia 
+
+6.2  Pressão Máxima de Operação Admissível 
+
+A pressão máxima de operação admissível no gasoduto é de 76,48 kgf/cm² (Ref. 2.1). 
+
+ 
+
+6.3  Pressão de Entrega Nominal Contratual 
+
+A Tabela 6 apresenta a pressão de entrega nominal, conforme a referência 2.2. 
+ 
+ 
+
+Tabela 6 – Pressão mínima contratual no PTE 
+Pressão contratual 
+
+Ponto de entrega 
+
+(kgf/cm²) 
+
+Uruguaiana 
+
+Mínima 
+32,00* 
+
+Máxima 
+
+** 
+
+* - a pressão mínima contratual é inferior à pressão de projeto do duto / PTE (33,65kgf/cm2) 
+** - Dados não disponíveis nos documentos de referência; 
+
+6.4 
+
+Interconexões 
+A medição de vazão para transferência de custódia é realizada pela EMED de Paso de Los 
+Libres,  a  4  km  da  fronteira,  pertencente  a  Transportadora  de  Gas  del  Mercosur  S.A.  e 
+monitorada pela TSB, porém até o momento da elaboração do presente relatório não existem 
+informações sobre essa EMED. 
+
+As condições de contorno no ponto de interconexão (fronteira Argentina-Brasil) devem ser 
+reguladas  nos  contratos.  Porém,  segundo  a  Ref.  2.4,  essa  informação  não  existe  até  o 
+momento  da  execução  do  presente  relatório.  A  referência  2.2  informa  que  nesse  ponto  a 
+pressão máxima é de 76,48 kgf/cm² (PMOA do duto) e a mínima admissível de 33,65 kgf/cm², 
+sendo  a  mínima  histórica  de  34,48kgf/cm².  Logo,  nesse  ponto  foi  modelado  um  ponto  de 
+recebimento com as seguintes características: 
+
+  Pressão Máxima: 76,48 kgf/cm² 
+  Pressão Mínima: 33,65 kgf/cm² 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-020 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Trecho 1 do 
+
+Gasoduto Uruguaiana – Porto Alegre 
+
+FOLHA 
+
+REV.
+
+B 
+
+9  de
+
+13 
+
+- 
+- 
+
+ 
+
+ 
+
+  Vazão máxima de projeto: não disponível até a data de elaboração desse documento. 
+
+7  RESULTADOS DA SIMULAÇÃO 
+
+As  distribuições  de  vazão  e  pressão  no  trecho  1  do  gasoduto  Uruguaiana-Porto  Alegre 
+
+estão apresentadas na Figura 4. 
+
+ 
+
+Figura 4 – Perfil de pressão e vazão 
+
+ 
+
+ 
+
+Deve-se ressaltar que os resultados das simulações que detalham as capacidades de 
+
+transporte, ociosa e disponível encontram-se na referência 2.7.
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-020 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Trecho 1 do 
+
+Gasoduto Uruguaiana – Porto Alegre 
+
+FOLHA 
+
+REV.
+
+B 
+
+10  de
+
+13 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+ANEXO – “STEADY STATE REPORT” DO MODELOS 
+
+          ******************************************************************************* 
+          *                                  SIMULACAO                                  * 
+          ******************************************************************************* 
+ 
+ 
+ 
+ 
+ 
+ 
+                         * * * * * * * * * * * * * * * * * * * * * * * * * 
+                         *                                               * 
+                         *      Default Initial Values Selected:         * 
+                         *                                               * 
+                         *      Pressure ................    54.240      * 
+                         *      Flow ....................  6129.812      * 
+                         *      Temperature .............    28.000      * 
+                         *                                               * 
+                         * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+ 
+ 
+ 
+ 
+                      * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                      *                                                     * 
+                      *                 Problem Size Report                 * 
+                      *                                                     * 
+                      * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                      *                                                     * 
+                      *                                 Number   Maximum    * 
+                      *                                  Used    Allowed    * 
+                      *                                 ------   -------    * 
+                      *                                                     * 
+                      *     External Regulators             2      5000     * 
+                      *     Equipment Devices               0      3000     * 
+                      *     Drivers/Turbines                0       500     * 
+                      *     Legs                           16     10000     * 
+                      *     Nodes                          17     20000     * 
+                      *     Knots                         277     30000     * 
+                      *     Stations                        0       500     * 
+                      *     Banks                           0      1000     * 
+                      *     Groups                          0      1000     * 
+                      *     Plants                          0        10     * 
+                      *     Compressor Perf Types           0       500     * 
+                      *     Driver/Turb Perf Types          0       500     * 
+                      *     Cylinder Types                  0       500     * 
+                      *     Fluids                          1       100     * 
+                      *     Qualities                      12        26     * 
+                      *                                                     * 
+                      * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+          ******************************************************************************* 
+          *                      Steady State Convergence Summary                       * 
+          ******************************************************************************* 
+ 
+ 
+ 
+           ============================================================================ 
+                                        Greatest       Greatest                 
+           Iteration     Tolerance     Hydraulic      Temperature        Associated 
+            Number       Requested     Adjustment     Adjustment           Device 
+           ---------     ---------     ----------     -----------     ----------------- 
+                0        0.0001000      7.7147026      0.0000000      FLUX  N17 
+                1        0.0001000      2.6317711      0.0000000      FLUX  N1 
+                2        0.0001000      0.2644005      0.0000000      Xreg  RIO_URUGUAI 
+                3        0.0001000      0.0045995      0.0000000      Node  N14 
+                4        0.0001000      0.0000620      0.0000000      Node  N13 
+               --------------------------  Mode Changes  -------------------------- 
+                 5     Xreg   URUGUAIANA     FROM: Min Pres        TO: Max Flow     
+               -------------------------------------------------------------------- 
+                                    DPMX increased to 9764.8564 
+                5        0.0001000     4.8914E+02      0.0000000      FLUX  N17 
+                                Starting over with DPMX = 68.586761 
+ 
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-020 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Trecho 1 do 
+
+Gasoduto Uruguaiana – Porto Alegre 
+
+FOLHA 
+
+REV.
+
+B 
+
+11  de
+
+13 
+
+- 
+- 
+
+ 
+
+ 
+ 
+          ******************************************************************************* 
+          *                                  SIMULACAO                                  * 
+          ******************************************************************************* 
+ 
+ 
+ 
+                6        0.0001000      7.7147026      0.0000000      FLUX  N17 
+                7        0.0001000      2.6317711      0.0000000      FLUX  N1 
+                8        0.0001000      0.2644005      0.0000000      Xreg  RIO_URUGUAI 
+                9        0.0001000      0.0045995      0.0000000      Node  N14 
+               10        0.0001000      0.0000620      0.0000000      Node  N13 
+               --------------------------  Mode Changes  -------------------------- 
+                11     Xreg   URUGUAIANA     FROM: Min Pres        TO: Max Flow     
+               -------------------------------------------------------------------- 
+                                    DPMX increased to 137.17352 
+               11        0.0001000     1.1162E+02      0.0000000      FLUX  N17 
+               12        0.0001000     29.8450356      0.0000000      FLUX  N17 
+               13        0.0001000     10.4729528      0.0000000      Xreg  RIO_URUGUAI 
+               14        0.0001000      0.5363430      0.0000000      Xreg  RIO_URUGUAI 
+                                    DPMX increased to 274.34705 
+               15        0.0001000      0.0049599      0.0000000      Node  N14 
+               16        0.0001000      0.0001555      0.0000000      Node  N17 
+               17        0.0001000      0.0000002      0.0000644      TNODE N16 
+                                    DPMX increased to 548.69409 
+               18        0.0001000      0.0016487      0.0000644      FLUX  N17 
+               19        0.0001000      0.0000004      0.0000321      TNODE N3 
+               20        0.0001000      0.0000042      0.0000020      FLUX  N9 
+ 
+ 
+ 
+ 
+          ******************************************************************************* 
+          *                                  SIMULACAO                                  * 
+          ******************************************************************************* 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+          ******************************************************************************* 
+          *                         Reference Conditions Report                         * 
+          ******************************************************************************* 
+ 
+ 
+ 
+                             Reference Pressure        =     0.00  KG/CM2G 
+                             Reference Temperature     =    20.00 (DEG C ) 
+ 
+ 
+ 
+ 
+          ******************************************************************************* 
+          * Leg Hydraulic Summary Report        -----        Time =      0.000 ( HRS  ) * 
+          ******************************************************************************* 
+ 
+ 
+ 
+     ========================================================================================= 
+                     Pressure                   Flow                Line         Temperature 
+                      KG/CM2G                 (KSM3/D)              Pack           (DEG C ) 
+     Leg ID       Head      Tail          Head        Tail        ( KSM3 )       Head    Tail 
+     ------     --------  --------     ----------  ----------     ---------     ------  ------ 
+     DUTO1         76.48     76.28       2800.000    2800.000       97.1186      28.00   27.87 
+     DUTO10        76.24     76.17       2800.001    2800.000       19.5544      27.93   27.88 
+     DUTO11        76.17     76.16       2800.000    2800.000       16.4492      27.88   27.89 
+     DUTO12        76.16     76.16       2800.000    2800.000        8.1317      27.89   27.89 
+     DUTO13        76.16     76.18       2800.000    2800.000       62.1706      27.89   27.94 
+     DUTO14        76.18     76.04       2800.000    2800.000       53.2754      27.94   27.85 
+     DUTO15        76.04     75.94       2799.999    2799.999       23.5975      27.85   27.78 
+     DUTO16        75.94     75.96       2799.999    2800.000        8.1355      27.78   27.81 
+     DUTO2         76.28     76.35       2800.000    2800.000       40.7218      27.87   27.95 
+     DUTO3         76.35     76.42       2800.000    2800.000       68.4501      27.95   28.03 
+     DUTO4         76.42     76.42       2800.000    2800.000        2.6098      28.03   28.03 
+     DUTO5         76.42     76.41       2800.000    2799.999       12.3164      28.03   28.02 
+     DUTO6         76.41     76.29       2799.999    2800.000       79.3692      28.02   27.95 
+     DUTO7         76.29     76.27       2800.000    2800.000       67.8241      27.95   27.95 
+     DUTO8         76.27     76.25       2800.000    2800.000        4.9034      27.95   27.93 
+     DUTO9         76.25     76.24       2800.000    2800.000       21.5793      27.93   27.93 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-020 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Trecho 1 do 
+
+Gasoduto Uruguaiana – Porto Alegre 
+
+FOLHA 
+
+REV.
+
+B 
+
+12  de
+
+13 
+
+- 
+- 
+
+ 
+
+ 
+ 
+ 
+          ******************************************************************************* 
+          * External Regulator Hydraulic Report    -----     Time =      0.000 ( HRS  ) * 
+          ******************************************************************************* 
+ 
+ 
+ 
+ 
+ 
+                          :::::::::::::::::::::::::::::::::::::::::::::: 
+                          ::  External Regulator Flow Balance Report  :: 
+                          :::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                     ========================================================= 
+                                              Mass Units      Volumetric Units 
+                                               ( KG/H )           (KSM3/D) 
+                     --------------------     -----------     ---------------- 
+                     Total input flow           84269.047          2800.000 
+                     Total output flow          84269.047          2800.000 
+                     Network flow balance           0.000             0.000 
+ 
+ 
+                        ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                        ::  External Regulator Hydraulic Summary Report  :: 
+                        ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+================================================================================================== 
+ External                                                                    Specific     Heating 
+ Regulator        Mode of        Pressure        Flow        Temperature     Gravity       Value 
+    ID            Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+-----------     ------------     --------     ----------     -----------     --------     -------- 
+RIO_URUGUAI     Max Pres            76.48      -2800.000        28.00         0.5999         34.18 
+URUGUAIANA      Max Flow            75.96       2800.000        27.81         0.5999         34.18 
+ 
+ 
+ 
+                    ========================================================== 
+                     External        Current      Accumulated         Timer 
+                     Regulator      Flow Rate        Volume           Value 
+                        ID          (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                    -----------     ---------     ------------     ----------- 
+                    RIO_URUGUAI     -2800.000            0.000           0.000 
+                    URUGUAIANA       2800.000            0.000           0.000 
+ 
+ 
+                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                    ::  Supply External Regulator Hydraulic Summary Report  :: 
+                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+================================================================================================== 
+  Supply                                                                     Specific     Heating 
+   Xreg           Mode of        Pressure        Flow        Temperature     Gravity       Value 
+    ID            Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+-----------     ------------     --------     ----------     -----------     --------     -------- 
+RIO_URUGUAI     Max Pres            76.48      -2800.000        28.00         0.5999         34.18 
+ 
+ 
+ 
+                    =========================================================== 
+                      Supply         Current       Accumulated         Timer 
+                       Xreg         Flow Rate         Volume           Value 
+                        ID           (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                    -----------     ----------     ------------     ----------- 
+                    RIO_URUGUAI      -2800.000            0.000           0.000 
+ 
+ 
+                   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                   ::  Delivery External Regulator Hydraulic Summary Report  :: 
+                   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+ ================================================================================================= 
+  Delivery                                                                   Specific     Heating 
+    Xreg          Mode of        Pressure        Flow        Temperature     Gravity       Value 
+     ID           Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+ ----------     ------------     --------     ----------     -----------     --------     -------- 
+ URUGUAIANA     Max Flow            75.96       2800.000        27.81         0.5999         34.18 
+ 
+ 
+ 
+                    ========================================================== 
+                     Delivery       Current       Accumulated         Timer 
+                       Xreg        Flow Rate         Volume           Value 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-020 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Trecho 1 do 
+
+Gasoduto Uruguaiana – Porto Alegre 
+
+FOLHA 
+
+REV.
+
+B 
+
+13  de
+
+13 
+
+- 
+- 
+
+ 
+
+                        ID          (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                    ----------     ----------     ------------     ----------- 
+                    URUGUAIANA       2800.000            0.000           0.000 
+ 
+ 
+ 
+ 
+          ******************************************************************************* 
+          * Node Mass Balance Error Report       -----       Time =      0.000 ( HRS  ) * 
+          ******************************************************************************* 
+ 
+ 
+ 
+                               Threshold Level =     0.0100 (KSM3/D) 
+                               No Mass Balance Errors above Threshold 
+ 
+ 
+ 
+ 
+                              ::::::::::::::::::::::::::::::::::::::: 
+                              ::  Pressure/Flow Violation Reports  :: 
+                              ::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                              ALL XREGS FALL WITHIN PRESSURE BOUNDS 
+                        ALL INTERNAL LEG KNOTS FALL WITHIN PRESSURE BOUNDS 
+ 
+ 
+ 
+ 
+                           ::::::::::::::::::::::::::::::::::::::::::::: 
+                           ::  Setpoint/Constraint Violation Reports  :: 
+                           ::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                           ALL XREGS COMPLY WITH MONITORED CONSTRAINTS 
+ 
+ 
+                                TRANSIENT GAS NETWORK MODEL (TGNET) 
+                                 RELEASE 7.6  LEVEL 00  30-SEP-2008 
+                               
+                                       STEADY-STATE MODULE 
+                               
+ 
+
+ 
+
+ 
+
+ 
+
+

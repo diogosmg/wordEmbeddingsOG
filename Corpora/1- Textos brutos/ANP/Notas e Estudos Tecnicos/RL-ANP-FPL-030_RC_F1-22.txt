@@ -1,0 +1,2097 @@
+CLIENTE: 
+
+RELATÓRIO  
+ANP – AGÊNCIA NACIONAL DO PETRÓLEO, GÁS NATURAL E 
+
+RL-ANP-FPL-030 
+1 
+
+FOLHA: 
+
+Nº: 
+
+BIOCOMBUSTÍVEIS 
+
+de
+
+22 
+
+PROGRAMA:  MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+Faculdades Católicas – PUC-Rio – SIMDUT 
+
+ÍNDICE DE REVISÕES 
+
+- 
+- 
+- 
+
+REV. 
+
+DESCRIÇÃO E/OU FOLHAS ATINGIDAS 
+
+0 
+A 
+ 
+B 
+C 
+
+EMISSÃO ORIGINAL 
+REVISÃO APÓS COMENTÁRIOS DA ANP/SCM. RELATÓRIO DIVIDO EM 2, 
+SEPARANDO O MODELO DO GASFOR DO GUAMARÉ PILAR 
+REVISÃO APÓS NOVOS COMENTÁRIOS DA ANP/SCM 
+REVISÃO DE TÍTULO INCLUINDO GASMEL E RAMAIS 
+
+ 
+
+REV. 0 
+
+REV. A 
+
+REV. B 
+
+REV. C 
+
+REV. D 
+
+REV. E 
+
+REV. F 
+
+REV. G 
+
+REV. H 
+
+ANP 
+
+ANP 
+
+ANP 
+
+16/04/2015 010/06/2015  15/07/2015 24/08/2015
+
+DATA 
+PROJETO 
+EXECUÇÃO 
+VERIFICAÇÃO 
+APROVAÇÃO 
+AS INFORMAÇÕES DESTE DOCUMENTO SÃO PROPRIEDADE DA ANP, SENDO PROIBIDA A UTILIZAÇÃO FORA DA SUA FINALIDADE. 
+ 
+
+P. Krause  P. Krause  P. Krause 
+I.Patrocinio I.Patrocinio 
+
+P. Krause 
+I.Patrocinio I.Patrocinio
+L. Pires 
+
+L. Pires 
+
+ANP 
+
+L. Pires 
+
+L. Pires 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+ÍNDICE 
+
+ 
+
+FOLHA
+
+REV. C 
+
+2  de
+
+22 
+
+- 
+- 
+
+ 
+
+1  OBJETIVO _______________________________________________________________ 4 
+2  DOCUMENTOS DE REFERÊNCIA ____________________________________________ 4 
+3  DESCRIÇÃO GERAL DO MODELO ___________________________________________ 4 
+4  PREMISSAS DE CÁLCULO  _________________________________________________ 6 
+4.1 
+CONDIÇÕES DE REFERÊNCIA ___________________________________________ 6 
+
+4.2 
+
+4.3 
+
+4.4 
+
+4.5 
+
+4.6 
+
+4.7 
+
+4.8 
+
+MODELO DE TRANSFERÊNCIA DE CALOR _________________________________ 7 
+
+TEMPERATURA DO SOLO _______________________________________________ 7 
+
+CORRELAÇÕES ADOTADAS _____________________________________________ 7 
+
+SOFTWARE UTILIZADO _________________________________________________ 7 
+
+CARACTERÍSTICAS DO GÁS _____________________________________________ 7 
+
+TEMPERATURA AMBIENTE ______________________________________________ 8 
+
+VISCOSIDADE _________________________________________________________ 8 
+
+5  CARACTERÍSTICAS DOS SISTEMAS DE GASODUTOS __________________________ 8 
+DIÂMETRO, ESPESSURA E PMOA ________________________________________ 8 
+5.1 
+
+5.2 
+
+5.3 
+
+5.4 
+
+5.5 
+
+5.6 
+
+5.7 
+
+5.8 
+
+PERFIL ALTIMÉTRICO __________________________________________________ 9 
+
+RUGOSIDADE ________________________________________________________ 11 
+
+ESTAÇÕES DE REDUÇÃO DE PRESSÃO (ERP) ____________________________ 11 
+
+PONTOS DE ENTREGA (PTE) ___________________________________________ 11 
+
+ESTAÇÕES DE COMPRESSÃO __________________________________________ 12 
+
+PONTOS DE RECEBIMENTO (PTR)  ______________________________________ 12 
+
+PONTOS DE INTERCONEXÃO  __________________________________________ 12 
+
+6  CONDIÇÕES DE CONTORNO ______________________________________________ 13 
+6.1 
+PERFIL DE CONSUMO _________________________________________________ 13 
+
+6.2 
+
+6.3 
+
+6.4 
+
+MÁXIMA PRESSÃO ADMISSÍVEL DE OPERAÇÃO ___________________________ 13 
+
+CONDIÇÕES OPERACIONAIS DAS ESTAÇÕES DE COMPRESSÃO ____________ 13 
+
+PRESSÃO DE ENTREGA NOMINAL CONTRATUAL __________________________ 13 
+
+7  RESULTADOS DA SIMULAÇÃO _____________________________________________ 14 
+8  ANEXOS  _______________________________________________________________ 17 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+3  de
+
+22 
+
+TÍTULO: 
+
+Documentação do Modelo de Simulação da Malha 
+
+ 
+“STEADY STATE REPORT” DO MODELO __________________________________ 17 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+ 
+
+8.1 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+FOLHA
+
+REV. C 
+
+4  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+OBJETIVO 
+
+ 
+
+1 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+Documentar  as  informações  necessárias  para  a  criação  dos  modelos  computacionais  de 
+parte  da  rede  de  gasodutos  denominada  pelo  Transportador  como  malha  Nordeste 
+Setentrional,  composta  pelos  gasodutos  GASFOR,  GASMEL  e  Ramais  e  apresentar  as 
+características  físicas  e  valore  limites  de  projeto  dos  diversos  elementos  que  compõe  os 
+modelos de simulação termo-hidráulica. Permitindo, assim, a reprodutibilidade do modelo por 
+qualquer interessado. O modelo foi criado para o programa de simulação PipelineStudio versão 
+3.4.1.0 da Energy Solutions. 
+
+ 
+ 
+DOCUMENTOS DE REFERÊNCIA 
+
+2 
+
+Os  documentos  técnicos  codificados  utilizados  como  referência  para  elaboração  do 
+
+Relatório são: 
+
+ 
+
+2.1.  RL-ANP-FPL-012_Rev.A – Metodologia para Cálculo de Capacidade 
+2.2.  MO-5TP-00079-B – Manual de Operação gasoduto Guamaré/Pecem - GASFOR 12"/10"  
+2.3.  MO-5TP-00083-B – Manual de Operação do gasoduto Açu/Serra do Mel – GASMEL 14" 
+2.4.  RL-ANP-FPL-007_Rev.A – Análise da Influência de Parâmetros Utilizados no Modelo de 
+
+Cálculo da Capacidade 
+
+2.5.  DE-4450.17-6500-200-EAR-001 a 387 – Perfil do Gasoduto GASFOR 
+2.6.  DE-4451.16-6521-948-GBO-001 a 032 – Perfil do Gasoduto GASMEL 
+2.7.  DE-4450.28-6250-111-NOL-002 a 011 – Perfil do Ramal de Aracati 
+2.8.  DE-4450.23-6521-948-DUT-001 a 003 – Perfil do Ramal de Termofortaleza 
+2.9.  Autorização ANP N° 511 de 5.11.2012 – DOU 6.11.2012 
+2.10.  Autorização ANP N° 158 de 16.4.2014 – DOU 17.4.2014 
+2.11.  Processo ANP n° 48610.010500/2012-40 
+2.12.  MD-4450.18-6240-941-PEN-001_Rev.0 – Aluguel de Compressão – Estação Aracati 
+2.13.  RL-ANP-FPL-031_RB  –  Cálculo  de  Capacidade  da  Malha  Nordeste  Setentrional  – 
+
+GASFOR, GASMEL e Ramais 
+
+ 
+ 
+
+3 
+
+DESCRIÇÃO GERAL DO MODELO 
+
+A  rede  de  gasodutos  denominada  pelo  Transportador  como  Nordeste  Setentrional  foi 
+dividida  em  dois  modelos,  de  acordo  com  a  metodologia  apresentada  na  referência  2.1.  O 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+5  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+ 
+
+ponto de corte foi o Ponto de Recebimento (PTR) de Guamaré, gerando então um modelo para 
+os  gasodutos  GASFOR  e  GASMEL  e  outro  modelo  composto  pelos  gasodutos  Nordestão, 
+GASALP e Pilar-Ipojuca. 
+
+De acordo com a referência 2.2, o gasoduto Guamaré-Pecém (GASFOR) foi construído 
+entre os anos de 1997 e 1999, tendo iniciado a operação comercial do trecho A (km 0 ao km 
+213) em janeiro de 1999 e do trecho B (km 213 ao 383) em março de 2000, transportando gás 
+natural  produzido  pelas  UPGN’s  da  UM-RNCE  para  os  estados  do  Rio  Grande  do  Norte  e 
+Ceará. 
+
+O GASFOR possui aproximadamente 383 km de extensão e um diâmetro nominal de 12” 
+da Estação de Guamaré até a Estação de Compressão de Aracati, no km 213, e deste ponto 
+até Pecém, o gasoduto possui um diâmetro de 10”. 
+
+O  Ramal  Aracati  foi  construído  em  2002  e  começou  a  operar  em  2003  e  tem  como 
+finalidade  levar  gás  natural  para  o  Ponto  de  Entrega  de  Aracati.  Se  inicia  no  km  197,1  do 
+GASFOR, tem diâmetro nominal de 4” e 6,5 km de extensão. 
+
+O Ramal TERMOFOR foi construído entre 2003 e 2004 e iniciou sua operação em 2004. 
+Tem  como  finalidade  suprir  de  gás  natural  a  UTE  Termofortaleza.  Se  inicia  na  Estação  de 
+Filtragem  no  km  370  do  GASFOR,  tem  diâmetro  nominal  de  10”  e  1,497  km  de  extensão 
+(referência 2.8). 
+
+Conforme a referência 2.3, a Estação Serra do Mel foi instalada no km 81 do gasoduto e 
+tem  como  finalidade  interligar  o  GASFOR  com  o  gasoduto  Açu-Serra  do  Mel  (GASMEL).  O 
+GASMEL, localizado entre os municípios de Alto dos Rodrigues e Serra do Mel, no estado do 
+Rio Grande do Norte, tem como objetivo transferir o gás natural da UPGN de Guamaré e/ou de 
+Pecém para a termelétrica de Açu (Termoaçu) na região do Vale de Açu. Com uma extensão 
+de aproximadamente 31,4 km e diâmetro nominal de 14”, o gasoduto interliga e Estação Serra 
+do Mel à  Estação de Açu, onde está instalado o ponto de entrega (PTE) da Termoaçu. 
+
+Por  fim,  conforme  a  referência  2.9,  o  sistema  também  é  atendido  por  gás  natural 
+liquefeito  (GNL),  transportado  por  navio  até  o  Terminal  de  GNL  de  Pecém,  onde  é 
+regaseificado  e  transportado  através  de  duto  de  transferência  até  a  estação  de  filtragem  no 
+GASFOR (Ramal GNL Pecém). 
+
+O Sistema GASFOR-GASMEL atende no total a 10 Pontos de Entrega, sendo 1 no Rio 
+Grande do Norte e 9 no Ceará. Todos os PTE´s foram modernizados e adequados a pressão 
+de 100 kgf/cm². Uma visão geral do sistema está apresentada na Figura 1.  
+
+O modelo de simulação desenvolvido compreende todos os dutos e ramais existentes no 
+sistema.  As  pequenas  diferenças  de  quilometragem  encontradas  no  modelo  se  devem  às 
+diferenças  entre  quilometragem  progressiva  (nominal)  e  desenvolvida  (real).  Para  o 
+desenvolvimento  do  modelo  foi  utilizado  o  programa  comercial  Pipeline  Simulator  da 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+6  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+ 
+
+EnergySolutions Inc, versão 3.4.1.0. A representação gráfica do modelo está apresentada na 
+Figura 2. 
+
+ 
+
+ 
+
+ 
+ 
+
+Figura 1 – Visão geral do sistema (fonte: tag.petrobras.com.br) 
+
+Figura 2 – Fluxograma do modelo 
+
+ 
+
+ 
+
+4 
+
+PREMISSAS DE CÁLCULO 
+
+4.1  Condições de Referência 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+7  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+ 
+
+As  vazões  volumétricas  apresentadas  neste  relatório  utilizam  os  seguintes  valores  de 
+
+pressão e temperatura como referência. 
+
+ 
+
+  Pressão: 1 atm 
+  Temperatura: 20°C 
+
+ 
+
+4.2  Modelo de transferência de calor 
+
+  Coeficiente global de transferência de calor solo-tubo: 1,9 Kcal/hm2°C (valor arbitrado, 
+
+não disponível nos documentos de referência) 
+
+ 
+
+4.3  Temperatura do solo 
+
+  30°C (Valor arbitrado, não disponível nos documentos de referência) 
+
+ 
+
+4.4  Correlações Adotadas 
+
+De  forma  a  seguir  as  orientações  gerais  para  construção  de  modelos  de  simulação 
+computacional  de  gasodutos  apresentadas  na  referência  2.4,  as  seguintes  correlações 
+foram adotadas: 
+
+  Equação de Estado: BWRS 
+  Fator de Atrito: Colebrook 
+
+ 
+
+4.5  Software utilizado 
+
+  Pipeline Studio versão 3.4.1.0 
+
+ 
+
+4.6  Características do Gás 
+
+As composições apresentadas na Tabela 1 são referentes ao mês de janeiro de 2015 e 
+foram  obtidas  a  partir  dos  sumários  estatísticos  dos  Certificados  de  Qualidade  do  Gás  (Ref. 
+2.11). 
+ 
+
+Guamaré 
+
+Tabela 1 – Composição do Gás Natural 
+Fonte 
+C1 
+C2 
+C3 
+C4 
+N2 
+CO2 
+
+92,63 
+5,28 
+0,67 
+0,17 
+0,74 
+0,51 
+
+GNL 
+96,82 
+2,74 
+0,31 
+0,1 
+0,03 
+
+0 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+8  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+4.7  Temperatura ambiente 
+
+  O  valor  de  temperatura  do  solo  adotado  para  todo  o  modelo  foi  de  30  oC  (Valor 
+
+arbitrado, não disponível nos documentos de referência) 
+
+ 
+
+4.8  Viscosidade 
+
+  Dado não disponível nos documentos de referência, utilizou-se a equação para cálculo 
+
+de viscosidade LGE (referência 2.4) 
+
+ 
+ 
+
+5 
+
+CARACTERÍSTICAS DOS SISTEMAS DE GASODUTOS 
+
+5.1  Diâmetro, Espessura e PMOA 
+
+A Tabela 2 apresenta a simplificação dos dutos utilizada nos modelos de simulação, de 
+acordo com cada trecho de duto. Foram ignoradas as variações de espessura devido a trechos 
+alagados  e  passagens  de  rios  para  simplificar  a  elaboração  do  modelo,  sem  afetar 
+significativamente o resultado das simulações. As referências utilizadas para a modelagem dos 
+trechos de dutos foram as 2.2, 2.3, 2.5, 2.6, 2.7, 2.8 e 2.9. 
+
+ 
+
+Tabela 2 - Dutos e Ramais do Sistema de Gasodutos GASFOR-GASMEL 
+
+Gasoduto 
+
+Duto 
+
+GASFOR 
+
+Duto 01 
+Duto 02 
+Duto 03 
+Duto 04 
+Duto 05 
+Duto 06 
+Duto 07 
+Duto 08 
+Duto 09 
+Duto 10 
+Duto 11 
+Duto 12 
+Duto 13 
+Duto 14 
+Duto 15 
+Duto 16 
+Duto 17 
+Duto 18 
+Duto 19 
+Duto 20 
+
+Comprimento 
+
+(km) 
+25,4 
+27,95 
+15,15 
+6,58 
+6,12 
+6,3 
+20,43 
+10,92 
+6,65 
+16,2 
+25,7 
+34,4 
+11,5 
+31,04 
+
+33 
+
+16,48 
+20,91 
+16,67 
+15,32 
+9,32 
+
+Diâmetro 
+
+Nominal (pol) 
+
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+10 
+10 
+10 
+10 
+10 
+10 
+10 
+
+Espessura 
+
+(pol) 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,203 
+0,203 
+0,203 
+0,203 
+0,203 
+0,203 
+0,203 
+
+PMOA 
+(kgf/cm²) 
+
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+ 
+
+Gasoduto 
+
+Duto 
+
+Duto 21 
+Duto 22 
+
+GASMEL 
+
+Ramal Aracati 
+
+Ramal GNL Pecem 
+Ramal TERMOFOR 
+
+Comprimento 
+
+(km) 
+15,5 
+11,2 
+31,4 
+6,5 
+19,1 
+1,497 
+
+Diâmetro 
+
+Nominal (pol) 
+
+10 
+10 
+14 
+4 
+20 
+10 
+
+Espessura 
+
+(pol) 
+0,203 
+0,203 
+0,281 
+0,253 
+0,500 
+0,250 
+
+FOLHA
+
+REV. C 
+
+9  de
+
+22 
+
+- 
+- 
+
+PMOA 
+(kgf/cm²) 
+
+100 
+100 
+100 
+100 
+100 
+100 
+
+ 
+Nesse  documento,  as  localizações  e  extensões,  expressas  em  km,  referem-se  ao 
+
+comprimento desenvolvido (real), salvo quando disposto em contrário. 
+
+ 
+
+5.2  Perfil Altimétrico 
+
+Os  perfis  dos  principais  gasodutos  dos  sistemas  se  encontram  apresentados  a  seguir. 
+Estes  perfis  foram  simplificados  para  atender  ao  modelo  de  simulação,  priorizando  o  tempo 
+computacional  e  respeitando  principalmente  as  mudanças  de  espessuras  pertinentes  aos 
+modelos. Não foram modeladas passagens de rios e situações similares. Os perfis levantados 
+foram baseados nas referências 2.5, 2.6, 2.7 e 2.8. Não foi obtido o perfil do Ramal do GNL de 
+Pecém. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 3 - Perfil de elevação do GASFOR 
+
+ 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+Figura 4 - Perfil de elevação do GASMEL 
+
+Figura 5 - Perfil de elevação do Ramal Aracati 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+FOLHA
+
+REV. C 
+
+10  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+11  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+Figura 6 - Perfil de elevação do Ramal Termofortaleza 
+
+ 
+
+ 
+
+5.3  Rugosidade 
+
+Tendo  em  vista  o  tempo  de  operação  dos  dutos  e  falta  de  um  valor  disponível  nos 
+documentos  de  referência,  adotou-se  por  hipótese  e  com  base  na  referência  2.4,  o  valor  de 
+0,04572 mm para todos os gasodutos. 
+ 
+5.4  Estações de Redução de Pressão (ERP) 
+
+A  malha  em  questão  possui  uma  única  ERP,  a  ERP  de  Aracati,  que  serve  o  ramal  de 
+Aracati. Entretanto, de acordo com a referência 2.11, essa ERP não atua como uma redução 
+de pressão e, portanto, não foi modelada. 
+
+ 
+
+5.5  Pontos de Entrega (PTE) 
+
+A Tabela 3 apresenta a localização, e função da linha tronco, e os limites de projeto dos 
+
+pontos de entrega do sistema GASFOR, de acordo com as referências 2.2 e .2.10  
+
+ 
+
+Tabela 3 – Pontos de Entrega 
+
+Ponto de 
+Entrega 
+
+UTE Termoaçu 
+
+Mossoró 
+
+Fazenda Belém 
+
+Aracati 
+
+Localização 
+
+na linha 
+
+tronco (km) 
+
+Vazão Máxima 
+
+(m³/d) 
+
+Pressão Mínima 
+
+(kgf/cm²) 
+
+81,2 
+118,85 
+167,4 
+201,8 
+
+2.740.000 
+300.000 
+202.000 
+40.000 
+
+40 
+32 
+12 
+12 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+12  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+ 
+
+Ponto de 
+Entrega 
+
+Pacajus 
+Aguiraz 
+Fortaleza 
+Caucaia 
+
+UTE TermoCeará 
+
+UTE TermoFortaleza 
+UTE José de Alencar 
+
+Pecém 
+
+ 
+
+5.6  Estações de Compressão 
+
+Localização 
+
+na linha 
+
+tronco (km) 
+
+Vazão Máxima 
+
+(m³/d) 
+
+Pressão Mínima 
+
+(kgf/cm²) 
+
+293,82 
+314,73 
+331,4 
+356,04 
+371,54 
+371,54 
+373,54 
+382,74 
+
+225.000 
+650.000 
+550.000 
+45.000 
+
+1.450.000 
+1.630.000 
+1.800.000 
+
+90.000 
+
+10 
+9 
+9 
+12 
+31,5 
+31,5 
+40 
+12 
+
+A malha apresentada possui uma estação de compressão terceirizada, mais conhecida 
+como SCOMP. O GASFOR possui a SCOMP de Aracati, localizada no km 213, de acordo com 
+a referência 2.2. A Tabela 4 apresenta as características principais da SCOMP, de acordo com 
+a referência 2.12. 
+
+ 
+
+ 
+
+Tabela 4 - Dados das Estações de Compressão 
+
+Dados 
+
+Vazão Mínima (m³/d) 
+Vazão Máxima (m³/d) 
+
+SCOMP Aracati 
+
+* 
+
+1.756.000 
+
+Pressão de sucção mínima (kgf/cm²) 
+Pressão de descarga máxima (kgf/cm²) 
+
+Potência Máxima Requerida (HP) 
+* Dados não obtidos nos documentos de referência 
+
+* 
+100 
+1539 
+
+5.7  Pontos de recebimento (PTR) 
+
+O sistema possuem um único ponto de recebimento, o PTR de Guamaré. Para este caso, 
+foi utilizada como condição de contorno apenas a pressão máxima dos gasodutos, que é de 
+100 kgf/cm², de acordo com as referências 2.1 e 2.2. 
+
+ 
+
+5.8  Pontos de Interconexão 
+
+O  sistema  possui  um  único  ponto  de 
+
+terminal  de 
+regaseificação de Pecém. O terminal é interligado por um ramal de transferência até a estação 
+de filtragem, onde se interliga ao GASFOR. Para este caso, foram utilizadas como condição de 
+contorno tanto a pressão máxima do ramal, 100 kgf/cm², como a vazão máxima da planta de 
+regaseificação, de 7 milhões de m³ por dia, de acordo com as referências  2.1 e 2.9. 
+
+interconexão,  definido  pelo 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+13  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+ 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+6 
+
+CONDIÇÕES DE CONTORNO 
+
+6.1  Perfil de Consumo 
+
+A  Tabela  5  apresenta  a  distribuição  de  demanda  nos  pontos  de  entrega  utilizada  no 
+modelo.  Os  valores  apresentados  representam  a  média  diária  do  mês  de  janeiro  de  2015, 
+conforme apresentado em http://tag.petrobras.com.br/ > Informações à ANP. 
+
+ 
+
+ 
+
+Tabela 5 - Perfil de Consumo 
+Pontos de 
+Entrega 
+Termoaçu 
+Mossoró 
+
+Vazão Média 
+Jan/15 (m3/d) 
+
+2.072.735 
+
+Fazenda Belém 
+
+Aracati 
+Pacajus 
+Aquiraz 
+Fortaleza 
+Caucaia 
+
+UTE TermoCeará 
+
+UTE TermoFortaleza 
+
+Pecém 
+
+UTE José de Alencar 
+
+35.184 
+111.907 
+8.589 
+38.528 
+
+0 
+
+270.032 
+8.247 
+762.351 
+1.462.981 
+
+233 
+0 
+
+6.2  Máxima Pressão Admissível de Operação 
+
+A  PMOA  do  sistema  varia  de  acordo  com  o  duto  e  ramal  que  compõe  cada  sistema. 
+
+Essas variações podem ser observadas na Tabela 2. 
+
+ 
+
+6.3  Condições operacionais das estações de compressão 
+
+Utilizando  os  dados  obtidos  nas  referências  e  explicitados  no  item  5.6,  e  visando 
+maximizar  a  capacidade  de  transporte  do  gasoduto,  adotou-se  como  hipótese  apenas  a 
+pressão máxima de descarga e o limite de vazão da SCOMP.  
+
+ 
+
+6.4  Pressão de Entrega Nominal Contratual 
+
+A Tabela 3, apresentada no item 5.5, apresenta as pressões mínimas de cada ponto de 
+entrega, de acordo com a referência 2.2. Por questões relacionadas a operação do programa 
+utilizado para o desenvolvimento do modelo, quando ocorre mais de um ponto de entrega num 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+14  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+ 
+
+mesmo local (nó), somente é possível fixar o limite de pressão mínima em um deles. Nesse 
+caso, quando diferentes, o limite escolhido foi o de maior pressão mínima contratual. 
+
+ 
+ 
+
+7 
+
+RESULTADOS DA SIMULAÇÃO 
+
+As  pressões  nos  diversos  pontos  de  entrega  estão  apresentadas  na  Tabela  6.  A 
+distribuição de pressão e vazão da linha tronco para a condição média de janeiro de 2015 é 
+apresentada para cada duto na Figura 7, Figura 8 e Figura 10. 
+
+ 
+
+Tabela 6 - Pressões nos PEs - GASFOR 
+
+PE 
+
+Termoaçu 
+Mossoró 
+
+Fazenda Belém 
+
+Aracati 
+Pacajus 
+Aquiraz 
+Fortaleza 
+Caucaia 
+
+UTE TermoCeará 
+
+UTE TermoFortaleza 
+
+Pecém 
+
+UTE José de Alencar 
+
+Localização na 
+linha tronco (km) 
+
+Pressão (kgf/cm²) 
+
+81,2 
+118,85 
+167,4 
+201,8 
+293,82 
+314,73 
+331,4 
+356,04 
+371,54 
+371,54 
+373,54 
+382,74 
+
+89,59 
+92,20 
+92,59 
+93,29 
+95,08 
+95,98 
+96,84 
+98,17 
+99,40 
+99,29 
+99,54 
+99,53 
+
+Deve-se  ressaltar  que  os  resultados  das  simulações  que  detalham  as  capacidades  de 
+
+transporte e disponível encontram-se na referência 2.13. 
+
+ 
+
+ 
+
+ 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+Figura 7 – Perfil de pressão, vazão e elevação – GASFOR 
+
+ 
+
+Figura 8 – Perfil de pressão, vazão e elevação – GASMEL 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+FOLHA
+
+REV. C 
+
+15  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+16  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+Figura 9 – Perfil de pressão, vazão e elevação – Ramal Aracati 
+
+ 
+
+Figura 10 – Perfil de pressão, vazão e elevação – Ramal TERMOFOR 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+FOLHA
+
+REV. C 
+
+17  de
+
+22 
+
+8  ANEXOS 
+8.1  “STEADY STATE REPORT” DO MODELO 
+ 
+                           ******************************************************************************* 
+                           *                                  SIMULACAO                                  * 
+                           ******************************************************************************* 
+ 
+ 
+                                          * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                          *                                               * 
+                                          *      Default Initial Values Selected:         * 
+                                          *                                               * 
+                                          *      Pressure ................   100.000      * 
+                                          *      Flow ....................   477.079      * 
+                                          *      Temperature .............    30.000      * 
+                                          *      % Nitrogen ..............     0.385      * 
+                                          *      % Carbon Dioxide ........     0.255      * 
+                                          *      % Methane ...............    94.725      * 
+                                          *      % Ethane ................     4.010      * 
+                                          *      % Propane ...............     0.490      * 
+                                          *      % i-Butane ..............     0.135      * 
+                                          *                                               * 
+                                          * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                       *                                                     * 
+                                       *                 Problem Size Report                 * 
+                                       *                                                     * 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                       *                                                     * 
+                                       *                                 Number   Maximum    * 
+                                       *                                  Used    Allowed    * 
+                                       *                                 ------   -------    * 
+                                       *                                                     * 
+                                       *     External Regulators            14      5000     * 
+                                       *     Equipment Devices               5      3000     * 
+                                       *     Drivers/Turbines                0       500     * 
+                                       *     Legs                           27     10000     * 
+                                       *     Nodes                          33     20000     * 
+                                       *     Knots                         372     30000     * 
+                                       *     Stations                        0       500     * 
+                                       *     Banks                           0      1000     * 
+                                       *     Groups                          0      1000     * 
+                                       *     Plants                          0        10     * 
+                                       *     Compressor Perf Types           0       500     * 
+                                       *     Driver/Turb Perf Types          0       500     * 
+                                       *     Cylinder Types                  0       500     * 
+                                       *     Fluids                          2       100     * 
+                                       *     Qualities                      12        26     * 
+                                       *                                                     * 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+                           ******************************************************************************* 
+                           *                      Steady State Convergence Summary                       * 
+                           ******************************************************************************* 
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+18  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+                ==================================================================================================== 
+                                             Greatest       Greatest        Greatest                     
+                Iteration     Tolerance     Hydraulic      Temperature     Composition            Associated 
+                 Number       Requested     Adjustment     Adjustment      Adjustment               Device 
+                ---------     ---------     ----------     -----------     -----------     ------------------------- 
+                     0        0.0001000      0.8194875      0.0000000       0.0000000      Xreg  PTR_GNL_PECEM 
+                     1        0.0001000      0.4249339      0.0000000       0.0000000      Equip SCOMP_ARACATI 
+                     2        0.0001000      0.1173238      0.0000000       0.0000000      Equip SCOMP_ARACATI 
+                     3        0.0001000      0.0108233      0.0000000       0.0000000      Equip SCOMP_ARACATI 
+                     4        0.0001000      0.0003471      0.0000000       0.0000000      Xreg  PTR_GUAMARÉ 
+                                                     DPMX increased to 9764.8564 
+                     5        0.0001000      0.0000066      0.0000000       0.0000000      Equip BLKV003 
+                            ------------------------------  Mode Changes  ------------------------------ 
+                              6     Equip  ERP_ARACATI            FROM: Max PD          TO: Bypass       
+                            ---------------------------------------------------------------------------- 
+                     6        0.0001000      0.0709366      0.0000000       0.0000000      Node  NODE2094 
+                     7        0.0001000      0.0000004      0.0000202       0.2462049      QNODE N-16 
+                     8        0.0001000      0.1491079      0.0000202       0.2462049      FLUX  N-14 
+                                                     DPMX increased to 19529.713 
+                     9        0.0001000      0.0113517      0.0000814       0.0000000      Equip BLKV003 
+                    10        0.0001000      0.0926016      0.0000814       0.0000000      FLUX  N-14 
+                    11        0.0001000      0.0003284      0.0000288       0.0000119      Node  NODE0607 
+                                                     DPMX increased to 39059.426 
+                    12        0.0001000      0.0001519      0.0000288       0.0000119      FLUX  NODE0603 
+                    13        0.0001000      0.0000029      0.0000783       0.0000011      TNODE N-13 
+                    14        0.0001000      0.0000118      0.0000014       0.0000000      Pipe  GASFOR_PIPE14 
+ 
+ 
+                           ******************************************************************************* 
+                           *                                  SIMULACAO                                  * 
+                           ******************************************************************************* 
+ 
+ 
+                           ******************************************************************************* 
+                           *                         Reference Conditions Report                         * 
+                           ******************************************************************************* 
+ 
+ 
+                                              Reference Pressure        =     0.00  KG/CM2G 
+                                              Reference Temperature     =    20.00 (DEG C ) 
+ 
+ 
+                           ******************************************************************************* 
+                           * Leg Hydraulic Summary Report        -----        Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                 ================================================================================================== 
+                                          Pressure                   Flow                Line         Temperature 
+                                           KG/CM2G                 (KSM3/D)              Pack           (DEG C ) 
+                     Leg ID            Head      Tail          Head        Tail        ( KSM3 )       Head    Tail 
+                 ---------------     --------  --------     ----------  ----------     ---------     ------  ------ 
+                 GASFOR_PIPE01         100.00     97.69       1646.014    1646.015      223.1426      20.00   26.13 
+                 GASFOR_PIPE02          97.69     95.40       1646.015    1646.015      233.3193      26.13   28.51 
+                 GASFOR_PIPE03          95.40     92.28       1646.015    1646.015      121.9833      28.51   28.13 
+                 GASFOR_PIPE04          92.28     91.31       1646.015    1646.015       51.7378      28.13   28.25 
+                 GASFOR_PIPE05          91.31     90.63       1646.015    1646.015       47.5940      28.25   28.47 
+                 GASFOR_PIPE06          90.63     90.67       -426.720    -426.720       47.7856      29.90   29.72 
+                 GASFOR_PIPE07          90.67     92.35       -426.720    -426.720      156.5788      29.72   30.04 
+                 GASFOR_PIPE08          92.35     92.20       -426.720    -426.720       84.3628      30.04   29.93 
+                 GASFOR_PIPE09          92.20     92.33       -461.904    -461.904       51.3932      29.93   29.90 
+                 GASFOR_PIPE10          92.33     92.85       -461.904    -461.904      125.6578      29.90   30.06 
+                 GASFOR_PIPE11          92.85     92.59       -461.904    -461.904      199.5707      30.06   29.93 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+19  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+                 GASFOR_PIPE12          92.59     93.30       -573.811    -573.811      267.9747      29.93   29.95 
+                 GASFOR_PIPE13          93.30     93.49       -582.400    -582.400       90.0503      29.95   29.95 
+                 GASFOR_PIPE14          93.49     94.25       -582.400    -582.400      174.2790      29.95   29.90 
+                 GASFOR_PIPE15          94.25     95.40       -582.400    -582.400      187.3107      29.90   30.15 
+                 GASFOR_PIPE16          95.40     95.08       -582.400    -582.400       93.9491      30.15   29.83 
+                 GASFOR_PIPE17          95.08     95.98       -620.928    -620.928      119.7509      29.83   29.78 
+                 GASFOR_PIPE18          95.98     96.84       -620.928    -620.928       96.4552      29.78   29.73 
+                 GASFOR_PIPE19          96.84     98.00       -890.960    -890.960       89.6275      29.73   29.92 
+                 GASFOR_PIPE20          98.00     98.17       -890.960    -890.960       54.9269      29.92   29.70 
+                 GASFOR_PIPE21          98.17     99.40       -899.207    -899.207       92.0837      29.70   29.88 
+                 GASFOR_PIPE22          99.40     99.54          0.233       0.233       11.9577      29.88   30.00 
+                 GASFOR_PIPE23          99.54     99.53          0.233       0.233       55.0380      30.00   30.00 
+                 GASMEL                 90.63     89.59       2072.735    2072.735      288.5917      28.76   29.89 
+                 RAMAL_ARACATI          93.30     93.29          8.589       8.589        5.6216      29.95   30.00 
+                 RAMAL_GNL_PECEM       100.00     99.40       3124.772    3124.772      386.3469      30.00   29.88 
+                 RAMAL_TERMOFOR         99.40     99.29       1462.981    1462.981        8.7805      29.88   29.92 
+ 
+ 
+                           ******************************************************************************* 
+                           * Equipment Hydraulic Report         -----         Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+                                             ::  Equipment Hydraulic Summary Report  :: 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+           =============================================================================================================== 
+                                                   Pressure                          Temperature                  Heating 
+             Equipment         Mode of              KG/CM2G             Flow           (DEG C )         Spc        Value 
+                ID             Control           Up       Down        (KSM3/D)        Up     Down       Grv       ( MJ/M3) 
+           -------------     ------------     --------  --------     ----------     ------  ------     ------     -------- 
+           BLKV002           Block Valve         90.63     90.63        2072.74      28.76   28.76     0.5914        38.46 
+           BLKV003           Block Valve         99.40     99.40        -899.44      29.88   29.88     0.5718        38.06 
+           ERP_ARACATI       Bypass              93.30     93.30           8.59      29.95   29.95     0.5718        38.06 
+           EST_FILTRAGEM     Block Valve         99.40     99.40        -899.21      29.88   29.88     0.5718        38.06 
+           SCOMP_ARACATI     Bypass              93.49     93.49         582.40      29.95   29.95     0.5718        38.06 
+ 
+ 
+ 
+                                    ============================================================= 
+                                                       Current       Accumulated         Timer 
+                                      Equipment       Flow Rate         Volume           Value 
+                                         ID            (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                    -------------     ----------     ------------     ----------- 
+                                    BLKV002              2072.74             0.00           0.000 
+                                    BLKV003              -899.44             0.00           0.000 
+                                    ERP_ARACATI             8.59             0.00           0.000 
+                                    EST_FILTRAGEM        -899.21             0.00           0.000 
+                                    SCOMP_ARACATI         582.40             0.00           0.000 
+ 
+ 
+             =========================================================================================================== 
+                                              Actual                    Adiab        Dschrg        Power         Power 
+              Compressor         Head          Flow        Speed        Effic         Temp       Required      Available 
+                  ID           (N.M/KG)      ( M3/H )     (  RPM )     (PERCNT)     (DEG C )     (  MW  )      (  MW  ) 
+             -------------     ---------     --------     --------     --------     --------     ---------     --------- 
+             SCOMP_ARACATI          0.00       235.38                   100.00        29.95           0.00          0.00 
+ 
+ 
+                           ******************************************************************************* 
+                           * External Regulator Hydraulic Report    -----     Time =      0.000 ( HRS  ) * 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+20  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+                           ******************************************************************************* 
+ 
+ 
+                                           :::::::::::::::::::::::::::::::::::::::::::::: 
+                                           ::  External Regulator Flow Balance Report  :: 
+                                           :::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                      ========================================================= 
+                                                               Mass Units      Volumetric Units 
+                                                                (TONN/H)           (KSM3/D) 
+                                      --------------------     -----------     ---------------- 
+                                      Total input flow             138.883          4770.787 
+                                      Total output flow            138.883          4770.787 
+                                      Network flow balance           0.000             0.000 
+ 
+ 
+                                         ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                         ::  External Regulator Hydraulic Summary Report  :: 
+                                         ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+             ========================================================================================================== 
+                  External                                                                        Specific     Heating 
+                  Regulator            Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                     ID                Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+             -------------------     ------------     --------     ----------     -----------     --------     -------- 
+             AQUIRAZ                 Max Flow            95.98          0.000        29.78         0.5718         38.06 
+             ARACATI                 Max Flow            93.29          8.589        30.00         0.5718         38.06 
+             CAUCAIA                 Max Flow            98.17          8.247        29.70         0.5718         38.06 
+             FAZENDA_BELÉM           Max Flow            92.59        111.907        29.93         0.5718         38.06 
+             FORTALEZA               Max Flow            96.84        270.032        29.73         0.5718         38.06 
+             MOSSORÓ                 Max Flow            92.20         35.184        29.93         0.5718         38.06 
+             PACAJUS                 Max Flow            95.08         38.528        29.83         0.5718         38.06 
+             PECÉM                   Max Flow            99.53          0.233        30.00         0.5718         38.06 
+             PTR_GNL_PECEM           Max Pres           100.00      -3124.772        30.00         0.5718         38.06 
+             PTR_GUAMARÉ             Max Pres           100.00      -1646.015        20.00         0.5964         38.57 
+             UTE_JOSÉ_DE_ALENCAR     Max Flow            99.54          0.000        30.00         0.5718         38.06 
+             UTE_TERMOAÇU_-_JSP      Max Flow            89.59       2072.735        29.89         0.5914         38.46 
+             UTE_TERMOCEARÁ          Max Flow            99.40        762.351        29.88         0.5718         38.06 
+             UTE_TERMOFORTALEZA      Max Flow            99.29       1462.981        29.92         0.5718         38.06 
+ 
+ 
+                                 ================================================================== 
+                                      External            Current      Accumulated         Timer 
+                                      Regulator          Flow Rate        Volume           Value 
+                                         ID              (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                 -------------------     ---------     ------------     ----------- 
+                                 AQUIRAZ                     0.000            0.000           0.000 
+                                 ARACATI                     8.589            0.000           0.000 
+                                 CAUCAIA                     8.247            0.000           0.000 
+                                 FAZENDA_BELÉM             111.907            0.000           0.000 
+                                 FORTALEZA                 270.032            0.000           0.000 
+                                 MOSSORÓ                    35.184            0.000           0.000 
+                                 PACAJUS                    38.528            0.000           0.000 
+                                 PECÉM                       0.233            0.000           0.000 
+                                 PTR_GNL_PECEM           -3124.772            0.000           0.000 
+                                 PTR_GUAMARÉ             -1646.015            0.000           0.000 
+                                 UTE_JOSÉ_DE_ALENCAR         0.000            0.000           0.000 
+                                 UTE_TERMOAÇU_-_JSP       2072.735            0.000           0.000 
+                                 UTE_TERMOCEARÁ            762.351            0.000           0.000 
+                                 UTE_TERMOFORTALEZA       1462.981            0.000           0.000 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+21  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+ 
+                                     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                     ::  Supply External Regulator Hydraulic Summary Report  :: 
+                                     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                ==================================================================================================== 
+                   Supply                                                                      Specific     Heating 
+                    Xreg            Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                     ID             Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+                -------------     ------------     --------     ----------     -----------     --------     -------- 
+                PTR_GNL_PECEM     Max Pres           100.00      -3124.772        30.00         0.5718         38.06 
+                PTR_GUAMARÉ       Max Pres           100.00      -1646.015        20.00         0.5964         38.57 
+ 
+ 
+ 
+                                    ============================================================= 
+                                       Supply          Current       Accumulated         Timer 
+                                        Xreg          Flow Rate         Volume           Value 
+                                         ID            (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                    -------------     ----------     ------------     ----------- 
+                                    PTR_GNL_PECEM      -3124.772            0.000           0.000 
+                                    PTR_GUAMARÉ        -1646.015            0.000           0.000 
+ 
+ 
+                                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                    ::  Delivery External Regulator Hydraulic Summary Report  :: 
+                                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+             ========================================================================================================== 
+                  Delivery                                                                        Specific     Heating 
+                    Xreg               Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                     ID                Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+             -------------------     ------------     --------     ----------     -----------     --------     -------- 
+             AQUIRAZ                 Max Flow            95.98          0.000        29.78         0.5718         38.06 
+             ARACATI                 Max Flow            93.29          8.589        30.00         0.5718         38.06 
+             CAUCAIA                 Max Flow            98.17          8.247        29.70         0.5718         38.06 
+             FAZENDA_BELÉM           Max Flow            92.59        111.907        29.93         0.5718         38.06 
+             FORTALEZA               Max Flow            96.84        270.032        29.73         0.5718         38.06 
+             MOSSORÓ                 Max Flow            92.20         35.184        29.93         0.5718         38.06 
+             PACAJUS                 Max Flow            95.08         38.528        29.83         0.5718         38.06 
+             PECÉM                   Max Flow            99.53          0.233        30.00         0.5718         38.06 
+             UTE_JOSÉ_DE_ALENCAR     Max Flow            99.54          0.000        30.00         0.5718         38.06 
+             UTE_TERMOAÇU_-_JSP      Max Flow            89.59       2072.735        29.89         0.5914         38.46 
+             UTE_TERMOCEARÁ          Max Flow            99.40        762.351        29.88         0.5718         38.06 
+             UTE_TERMOFORTALEZA      Max Flow            99.29       1462.981        29.92         0.5718         38.06 
+ 
+ 
+ 
+                                 =================================================================== 
+                                      Delivery            Current       Accumulated         Timer 
+                                        Xreg             Flow Rate         Volume           Value 
+                                         ID               (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                 -------------------     ----------     ------------     ----------- 
+                                 AQUIRAZ                      0.000            0.000           0.000 
+                                 ARACATI                      8.589            0.000           0.000 
+                                 CAUCAIA                      8.247            0.000           0.000 
+                                 FAZENDA_BELÉM              111.907            0.000           0.000 
+                                 FORTALEZA                  270.032            0.000           0.000 
+                                 MOSSORÓ                     35.184            0.000           0.000 
+                                 PACAJUS                     38.528            0.000           0.000 
+                                 PECÉM                        0.233            0.000           0.000 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-030 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV. C 
+
+22  de
+
+22 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação da Malha 
+
+Nordeste Setentrional – GASFOR, GASMEL e Ramais 
+
+- 
+- 
+
+                                 UTE_JOSÉ_DE_ALENCAR          0.000            0.000           0.000 
+                                 UTE_TERMOAÇU_-_JSP        2072.735            0.000           0.000 
+                                 UTE_TERMOCEARÁ             762.351            0.000           0.000 
+                                 UTE_TERMOFORTALEZA        1462.981            0.000           0.000 
+ 
+ 
+                           ******************************************************************************* 
+                           * Node Mass Balance Error Report       -----       Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                                Threshold Level =     0.0100 (KSM3/D) 
+                                                No Mass Balance Errors above Threshold 
+ 
+ 
+                                               ::::::::::::::::::::::::::::::::::::::: 
+                                               ::  Pressure/Flow Violation Reports  :: 
+                                               ::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                               ALL XREGS FALL WITHIN PRESSURE BOUNDS 
+                                             ALL EQUIPMENT FALL WITHIN PRESSURE BOUNDS 
+                                         ALL INTERNAL LEG KNOTS FALL WITHIN PRESSURE BOUNDS 
+ 
+ 
+                                            ::::::::::::::::::::::::::::::::::::::::::::: 
+                                            ::  Setpoint/Constraint Violation Reports  :: 
+                                            ::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                            ALL XREGS COMPLY WITH MONITORED CONSTRAINTS 
+                                          ALL EQUIPMENT COMPLY WITH MONITORED CONSTRAINTS 
+ 
+ 
+                      TRANSIENT GAS NETWORK MODEL (TGNET) 
+                       RELEASE 7.6  LEVEL 00  30-SEP-2008 
+ 
+                             STEADY-STATE MODULE 
+
+ 
+
+ 
+
+ 
+
+

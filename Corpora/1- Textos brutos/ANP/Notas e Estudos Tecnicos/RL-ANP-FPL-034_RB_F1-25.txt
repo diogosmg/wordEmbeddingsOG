@@ -1,0 +1,2592 @@
+CLIENTE: 
+
+RELATÓRIO  
+ANP – AGÊNCIA NACIONAL DO PETRÓLEO, GÁS NATURAL E 
+
+RL-ANP-FPL-034 
+1 
+
+FOLHA: 
+
+Nº: 
+
+BIOCOMBUSTÍVEIS 
+
+de
+
+25 
+
+PROGRAMA:  MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação da 
+Malha Nordeste Setentrional – Guamaré-Pilar 
+Faculdades Católicas – PUC-Rio – SIMDUT 
+
+ÍNDICE DE REVISÕES 
+
+- 
+- 
+- 
+
+REV. 
+
+DESCRIÇÃO E/OU FOLHAS ATINGIDAS 
+
+0 
+ 
+A 
+B 
+
+EMISSÃO ORIGINAL, APÓS COMENTÁRIOS DA ANP/SCM. RELATÓRIO DIVIDO EM 2, 
+SEPARANDO O MODELO DO GASFOR DO GUAMARÉ PILAR 
+REVISÃO GERAL APÓS COMENTÁRIOS DA ANP/SCM 
+PADRONIZAÇÃO DOS RELATÓRIOS 
+
+ 
+
+REV. 0 
+
+REV. A 
+
+REV. B 
+
+REV. C 
+
+REV. D 
+
+REV. E 
+
+REV. F 
+
+REV. G 
+
+REV. H 
+
+ANP 
+
+ANP 
+
+12/06/2015 15/07/2015  07/08/2015
+
+DATA 
+PROJETO 
+EXECUÇÃO 
+VERIFICAÇÃO 
+APROVAÇÃO 
+AS INFORMAÇÕES DESTE DOCUMENTO SÃO PROPRIEDADE DA ANP, SENDO PROIBIDA A UTILIZAÇÃO FORA DA SUA FINALIDADE. 
+ 
+
+P. Krause  P. Krause  P. Krause 
+I.Patrocinio
+I.Patrocinio I.Patrocinio 
+L. Pires 
+
+L. Pires 
+
+L. Pires 
+
+ANP 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+ 
+
+ÍNDICE 
+
+FOLHA
+
+REV.
+
+B 
+
+2  de
+
+25 
+
+- 
+- 
+
+ 
+
+1  OBJETIVO _______________________________________________________________ 3 
+2  DOCUMENTOS DE REFERÊNCIA ____________________________________________ 3 
+3  DESCRIÇÃO GERAL DO MODELO ___________________________________________ 4 
+4  PREMISSAS DE CÁLCULO  _________________________________________________ 7 
+4.1 
+CONDIÇÕES DE REFERÊNCIA ___________________________________________ 7 
+
+4.2 
+
+4.3 
+
+4.4 
+
+4.5 
+
+4.6 
+
+4.7 
+
+4.8 
+
+MODELO DE TRANSFERÊNCIA DE CALOR _________________________________ 7 
+
+TEMPERATURA DO SOLO _______________________________________________ 7 
+
+CORRELAÇÕES ADOTADAS _____________________________________________ 7 
+
+SOFTWARE UTILIZADO _________________________________________________ 7 
+
+CARACTERÍSTICAS DO GÁS _____________________________________________ 7 
+
+TEMPERATURA AMBIENTE ______________________________________________ 8 
+
+VISCOSIDADE _________________________________________________________ 8 
+
+5  CARACTERÍSTICAS DOS SISTEMAS DE GASODUTOS __________________________ 8 
+DIÂMETRO, ESPESSURA E PMOA ________________________________________ 8 
+5.1 
+
+5.2 
+
+5.3 
+
+5.4 
+
+5.5 
+
+5.6 
+
+5.7 
+
+PERFIL ALTIMÉTRICO _________________________________________________ 10 
+
+RUGOSIDADE ________________________________________________________ 12 
+
+ESTAÇÕES DE REDUÇÃO DE PRESSÃO (ERP) ____________________________ 12 
+
+PONTOS DE ENTREGA (PTE) ___________________________________________ 12 
+
+ESTAÇÕES DE COMPRESSÃO (SCOMP)__________________________________ 13 
+
+PONTOS DE RECEBIMENTO (PTR)  ______________________________________ 14 
+
+6  CONDIÇÕES DE CONTORNO ______________________________________________ 14 
+6.1 
+PERFIL DE CONSUMO _________________________________________________ 14 
+
+6.2 
+
+6.3 
+
+6.4 
+
+MÁXIMA PRESSÃO ADMISSÍVEL DE OPERAÇÃO ___________________________ 14 
+
+CONDIÇÕES OPERACIONAIS DAS ESTAÇÕES DE COMPRESSÃO ____________ 15 
+
+PRESSÃO DE ENTREGA NOMINAL CONTRATUAL __________________________ 15 
+
+7  RESULTADOS DA SIMULAÇÃO _____________________________________________ 15 
+8  ANEXOS  _______________________________________________________________ 19 
+8.1 
+“STEADY STATE REPORT” DO MODELO __________________________________ 19 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+FOLHA
+
+REV.
+
+B 
+
+3  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+OBJETIVO 
+
+ 
+
+1 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+Documentar  as  informações  necessárias  para  a  criação  dos  modelos  computacionais  de 
+parte  da  rede  de  gasodutos  denominada  pelo  Transportador  como  malha  Nordeste 
+Setentrional,  composta pelos  gasodutos  Nordestão,  GASALP  e  Pilar-Ipojuca  e  apresentar  as 
+características  físicas  e  valores  limites  de  projeto  dos  diversos  elementos  que  compõe  os 
+modelos de simulação termo-hidráulica. Permitindo, assim, a reprodutibilidade do modelo por 
+qualquer interessado. 
+
+O modelo foi criado para o programa de simulação PipelineStudio versão 3.4.1.0 da Energy 
+
+Solutions. 
+
+ 
+ 
+DOCUMENTOS DE REFERÊNCIA 
+
+2 
+
+Os  documentos  técnicos  codificados  utilizados  como  referência  para  elaboração  do 
+
+Relatório são: 
+
+ 
+
+2.1.  RL-ANP-FPL-012_Rev.A – Metodologia para Cálculo de Capacidade 
+2.2.  RL-ANP-FPL-007_Rev.A – Análise da Influência de Parâmetros Utilizados no Modelo de 
+
+Cálculo da Capacidade 
+
+2.3.  MO-5TP-00078-C – Manual de Operação Gasoduto Guamaré/Cabo - NORDESTÃO 12" 
+2.4.  MO-5TP-00082-A – Manual de Operação do Gasoduto Pilar/Cabo - GASALP 12” 
+2.5.  MO-5TP-00073-A – Manual de Operação Gasoduto Pilar/Ipojuca – GASPIL 24" 
+2.6.  DE-4450.20-6500-200-EAR-001 a 425 – Perfil do Nordestão 
+2.7.  DE-4450.20-6521-942-PEN-001 a 002 – Perfil do Variante do Nordestão 
+2.8.  DE-4450.25-6500-200-EFN-001 a 201 – Perfil do GASALP 
+2.9.  DE-4717.12-6521-948-OAS-001 a 188 – Perfil do Pilar-Ipojuca 
+2.10.  DE-4450.12-6521-948-COR-001 a 011 – Perfil do Ramal de Termopernambuco 
+2.11.  MD-4450.47-6240-941-PEN-001_Rev.0 – Aluguel de Compressão – Estação Macaiba 
+2.12.  MD-4450.48-6240-941-PEN-001_Rev.0 – Aluguel de Compressão – Estação Santa Rita 
+2.13.  Autorização ANP N° 530 de 2.11.2011 – DOU 5.11.2011 
+2.14.  Autorização ANP N° 431 de 17.10.2014 – DOU 20.10.2014 
+2.15.  Processo ANP n° 48610.010500/2012-40 
+2.16.  RL-ANP-FPL-035_RA  -  Cálculo  de  Capacidade  da  Malha  Nordeste  Setentrional  – 
+
+Guamaré-Pilar 
+
+ 
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+4  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+ 
+
+3 
+
+DESCRIÇÃO GERAL DO MODELO 
+
+A  rede  de  gasodutos  denominada  pelo  Transportador  como  malha  de  gasodutos 
+Nordeste Setentrional foi dividida em dois modelos, de acordo com a metodologia apresentada 
+na  referência  2.1.  O  ponto  de  corte  foi  o  Ponto  de  Recebimento  (PTR)  de  Guamaré.  Este 
+relatório  se  refere  ao  trecho  Guamaré-Pilar,  modelo  composto  pelos  gasodutos  Nordestão, 
+GASALP e Pilar-Ipojuca. 
+
+Segundo  a  referência  2.3,  o  gasoduto  Guamaré-Cabo  (NORDESTÃO)  se  inicia  na 
+Estação  de  Guamaré,  Rio  Grande  do  Norte  e  termina  na  Estação  de  Cabo,  Pernambuco, 
+passando pelos Estados do Rio Grande do Norte e da Paraíba, tendo 434 km de extensão e 
+diâmetro de 12”. Foi construído no ano de 1984, sendo o primeiro gasoduto da Malha Nordeste 
+Setentrional e tendo entrado em operação em 1985. 
+
+Foi  projetado  para  operar  com  100  kgf/cm².  Em  face  do  crescimento  populacional  e, 
+consequentemente,  das  mudanças  de  classe  de  locação,  sofreu  diminuição  da  pressão  de 
+operação  e,  inicialmente,  operou  com  75  kgf/cm²  até  conclusão  das  intervenções  e  serviços 
+que  o  habilitaram  a  operar  a  100  kgf/cm².  Destaca-se,  entre  as  obras  de  reabilitação,  a 
+construção da Variante do NORDESTÃO entre os quilômetros 382,5 e 403,5, com extensão de 
+31,8 km, que começou a operar em 2010, incorporando-se ao NORDESTÃO. A implementação 
+da Variante tomou como base as recomendações do Relatório de Reavaliação da Classe de 
+Locação e Distância entre Válvulas (de 2001). 
+
+O antigo trecho de 21 km de extensão e 12” de diâmetro nominal, entre o km 382,5 e o 
+km  403,5,  passou  a  se  chamar  Ramal  Recife.  Nas  extremidades  foram  instaladas  Estações 
+Redutoras  de  Pressão  (ERP’s)  que  reduzem  a  pressão  de  operação  desse  ramal  para  55 
+kgf/cm². 
+
+Em  2005  entrou  em  operação  o  Ramal  Santa  Rita  –  São  Miguel  de  Taipu/Campina 
+Grande de 8” de diâmetro nominal e 120 km de comprimento, sendo que apenas os primeiros 
+25 km são de responsabilidade da TAG. Incluem-se no km 25 uma válvula de bloqueio, que 
+serve para delimitar a  responsabilidade operacional entre a TAG e  a PBGÁS. Este ramal tem 
+início no km 291 do Nordestão. 
+
+O Sistema constituído pelo NORDESTÃO e pelos ramais supracitados atende no total a 
+14 Pontos de Entrega, sendo 3 no Rio Grande do Norte, 4 na Paraíba e 7 em Pernambuco. 
+Todos os PTEs foram modernizados e adequados a pressão de 100 kgf/cm². O gasoduto se 
+interliga  com  o  Gasoduto  Pilar-Cabo  (GASALP)  na  Estação  de  Cabo,  município  de  Cabo  de 
+Santo Agostinho/PE. 
+
+De acordo com a referência 2.4, o GASALP de 12” de diâmetro e 204 km, foi construído 
+entre os anos de 1998 e 1999 e iniciou sua operação comercial em março de 2003, fornecendo 
+gás natural para os estados de Alagoas e Pernambuco. 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+5  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+ 
+
+O Ramal Termopernambuco foi construído entre os anos de 2002 e 2003, iniciando sua 
+operação em 2003. O mesmo inicia-se na EDG Ipojuca, no km 188 do GASALP, e termina no 
+Ponto de Entrega da UTE Termopernambuco, com 16” de diâmetro e 11,6 km de extensão. 
+
+O  Gasoduto  Pilar-Ipojuca  (GASPIL),  conforme  referência  2.5,  foi  construído  na  mesma 
+faixa do GASALP, com 24” de diâmetro nominal, aproximadamente 187 km de extensão e foi 
+projetado  para  escoar  gás  natural  entre  a  EDG  Pilar,  localizada  no  município  de  Marechal 
+Deodoro, no estado de Alagoas, e a área de lançadores e recebedores de PIG localizada no 
+município de Ipojuca, no estado de Pernambuco. Uma visão geral do sistema está apresentada 
+na Figura 1.  
+
+O modelo de simulação desenvolvido compreende todos os dutos e ramais existentes no 
+sistema.  Nesse  documento,  as  localizações  e  extensões,  expressas  em  km,  referem-se  ao 
+comprimento desenvolvido (real), salvo quando disposto em contrário. 
+
+Para o desenvolvimento do modelo foi utilizado o programa comercial Pipeline Simulator 
+da EnergySolutions Inc, versão 3.4.1.0. A representação gráfica do modelo está apresentada 
+na Figura 2. 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+6  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 1 – Visão geral do sistema (fonte: tag.petrobras.com.br) 
+
+ 
+
+Figura 2 – Fluxograma do modelo 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+7  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+ 
+
+ 
+
+4 
+
+PREMISSAS DE CÁLCULO 
+
+4.1  Condições de Referência 
+
+As  vazões  volumétricas  apresentadas  neste  relatório  utilizam  os  seguintes  valores  de 
+
+pressão e temperatura como referência. 
+
+  Pressão: 1 atm 
+  Temperatura: 20°C 
+
+ 
+
+4.2  Modelo de transferência de calor 
+
+  Coeficiente global de transferência de calor solo-tubo: 1,9 Kcal/hm2°C (valor arbitrado, 
+
+não disponível nos documentos de referência) 
+
+ 
+
+4.3  Temperatura do solo 
+
+  30°C (Valor arbitrado, não disponível nos documentos de referência) 
+
+ 
+
+4.4  Correlações Adotadas 
+
+De forma a seguir as orientações gerais para construção de modelos de simulação 
+computacional  de  gasodutos  apresentadas  na  referência  2.2,  as  seguintes  correlações 
+foram adotadas: 
+
+  Equação de Estado: BWRS 
+  Fator de Atrito: Colebrook 
+
+ 
+
+4.5  Software utilizado 
+
+  Pipeline Studio versão 3.4.1.0 
+
+ 
+
+4.6  Características do Gás 
+
+As composições apresentadas na Tabela 1 são referentes ao mês de janeiro de 2015 e 
+foram  obtidas  a  partir  dos  sumários  estatísticos  dos  Certificados  de  Qualidade  do  Gás  (Ref. 
+2.15). 
+ 
+
+Tabela 1 – Composição do Gás Natural 
+Fonte 
+Guamaré 
+C1 
+C2 
+C3 
+C4 
+
+Pilar 
+92,41 
+4,79 
+0,02 
+
+92,63 
+5,28 
+0,67 
+0,17 
+
+0 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+8  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+ 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+Fonte 
+N2 
+CO2 
+
+Pilar 
+1,66 
+1,12 
+
+Guamaré 
+
+0,74 
+0,51 
+
+4.7  Temperatura ambiente 
+
+  O  valor  de  temperatura  do  solo  adotado  para  todo  o  modelo  foi  de  30  oC  (Valor 
+
+arbitrado, não disponível nos documentos de referência) 
+
+ 
+
+4.8  Viscosidade 
+
+  Dado não disponível nos documentos de referência, utilizou-se a equação para cálculo 
+
+de viscosidade LGE (referência 2.2) 
+
+ 
+ 
+
+5 
+
+CARACTERÍSTICAS DOS SISTEMAS DE GASODUTOS 
+
+5.1  Diâmetro, Espessura e PMOA 
+
+A Tabela 2 apresentam a simplificação dos dutos utilizada nos modelos de simulação, de 
+acordo com cada trecho de duto. Foram ignoradas as variações de espessura devido a trechos 
+alagados  e  passagens  de  rios  para  simplificar  a  elaboração  do  modelo,  sem  afetar 
+significativamente o resultado das simulações. As referências utilizadas para a modelagem dos 
+trechos  de dutos  foram  as  2.3,  2.4,  2.5,  2.6,  2.7,  2.8,  2.9  e  2.10.  O  ramal  Santa  Rita  –  São 
+Miguel  de  Taipu/Campina  Grande  não  foi  modelado,  pois  este  ramal  de  120  quilômetros  é 
+compartilhado  com  a  distribuidora,  sendo  apenas  os  primeiros  25  quilômetros  de 
+responsabilidade da TAG. 
+
+ 
+
+Tabela 2 - Dutos e Ramais do Sistema de Gasodutos Nordestão-GASALP 
+
+Gasoduto 
+
+Duto 
+
+Duto 01 
+Duto 02 
+Duto 03 
+Duto 04 
+Duto 05 
+Duto 06 
+Duto 07 
+Duto 08 
+Duto 09 
+Duto 10 
+Duto 11 
+Duto 01 
+
+GASALP 
+
+ 
+
+ 
+
+GASPIL 
+
+Comprimento 
+
+(km) 
+6,59 
+10,34 
+22,81 
+13,94 
+23,28 
+28,22 
+32,93 
+18,72 
+16,47 
+17,34 
+13,36 
+
+3 
+
+Diâmetro 
+
+Nominal (pol) 
+
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+24 
+
+Espessura 
+
+(pol) 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,250 
+0,562 
+
+PMOA 
+(kgf/cm²)
+
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+ 
+
+Gasoduto 
+
+Duto 
+
+Duto 02 
+Duto 03 
+Duto 04 
+Duto 05 
+Duto 06 
+Duto 07 
+Duto 08 
+Duto 09 
+Duto 10 
+Duto 11 
+Duto 12 
+Duto 13 
+Duto 14 
+Duto 15 
+Duto 16 
+Duto 17 
+Duto 18 
+Duto 19 
+Duto 20 
+Duto 21 
+Duto 22 
+Duto 01 
+Duto 02 
+Duto 03 
+Duto 04 
+Duto 05 
+Duto 06 
+Duto 07 
+Duto 08 
+Duto 09 
+Duto 10 
+Duto 11 
+Duto 12 
+Duto 13 
+Duto 14 
+Duto 15 
+Duto 01 
+Duto 02 
+Duto 01 
+Duto 02 
+
+Nordestão 
+
+Variante 
+Nordestão 
+
+Ramal 
+
+Termopernambuco 
+
+ 
+ 
+
+ 
+
+ 
+
+Comprimento 
+
+(km) 
+1,504 
+
+7 
+
+10,136 
+8,36 
+10 
+7,25 
+2,75 
+
+4 
+
+1,503 
+2,002 
+16,505 
+60,064 
+9,856 
+9,77 
+1,5 
+2,5 
+14,8 
+8,96 
+1,04 
+
+1 
+
+3,39 
+21,11 
+31,8 
+3,72 
+7,63 
+4,55 
+31,6 
+24 
+19 
+
+45,46 
+58,26 
+47,58 
+21,29 
+65,37 
+23,56 
+30,48 
+7,1 
+14,22 
+
+5 
+6,6 
+
+Diâmetro 
+
+Nominal (pol) 
+
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+24 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+12 
+16 
+16 
+
+Espessura 
+
+(pol) 
+0,469 
+0,406 
+0,541 
+0,507 
+0,469 
+0,487 
+0,470 
+0,493 
+0,508 
+0,491 
+0,485 
+0,469 
+0,546 
+0,469 
+0,554 
+0,484 
+0,524 
+0,562 
+0,668 
+0,484 
+0,562 
+0,203 
+0,203 
+0,203 
+0,203 
+0,203 
+0,203 
+0,203 
+0,203 
+0,203 
+0,203 
+0,203 
+0,203 
+0,203 
+0,203 
+0,500 
+0,203 
+0,203 
+0,375 
+0,375 
+
+FOLHA
+
+REV.
+
+B 
+
+9  de
+
+25 
+
+- 
+- 
+
+PMOA 
+(kgf/cm²)
+
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+100 
+55 
+55 
+100 
+100 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+10  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+5.2  Perfil Altimétrico 
+
+Os  perfis  dos  principais  gasodutos  dos  sistemas  se  encontram  apresentados  a  seguir. 
+Estes  perfis  foram  simplificados  para  atender  ao  modelo  de  simulação,  priorizando  o  tempo 
+computacional  e  respeitando  principalmente  as  mudanças  de  espessuras  pertinentes  aos 
+modelos. Não foram modeladas passagens de rios e situações similares. Os perfis levantados 
+foram baseados nas referências 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9 e 2.10. 
+
+ 
+
+ 
+
+ 
+
+Figura 3 - Perfil de elevação do GASPIL 
+
+Figura 4 - Perfil de elevação do GASPAL 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+11  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 5 - Perfil de elevação do Nordestão 
+
+Figura 6 - Perfil de elevação do Ramal Termopernambuco 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+12  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+Figura 7 - Perfil de elevação da Variante do Nordestão 
+
+ 
+
+ 
+
+5.3  Rugosidade 
+
+Tendo  em  vista  o  tempo  de  operação  dos  dutos  e  falta  de  um  valor  disponível  nos 
+documentos  de  referência,  adotou-se  por  hipótese  e  com  base  na  referência  2.2,  o  valor  de 
+0,04572 mm para todos os gasodutos. 
+ 
+5.4  Estações de Redução de Pressão (ERP) 
+
+A Tabela 3 apresenta as informações das ERPs dos ramais pertinentes à elaboração do 
+modelo. Como pressão de controle de cada ERP foi considerada uma pressão de ajuste que 
+garantisse  que  a  pressão  no  ramal  se  encontrasse  dentro  do  limite  de  suas  respectivas 
+pressões  máximas  operacionais  admissíveis  (PMOA),  visando  maximizar  a  capacidade  dos 
+mesmos. Foram utilizados como PMOA os valores obtidos na referência 2.3. 
+
+ 
+
+ 
+
+Tabela 3 - ERPs 
+
+ERP / Ramal 
+
+Pressão de Controle 
+Considerada (kgf/cm²) 
+
+Bola na Rede / Recife
+
+Jaboatão / Recife 
+
+54,5 
+54,5 
+
+5.5  Pontos de Entrega (PTE) 
+
+A  Tabela  4  apresenta  os  limites  operacionais  dos  pontos  de  entrega  do  sistema 
+
+Nordestão-GASALP, de acordo com as referências 2.3, 2.4, 2.5, 2.13 e 2.14. 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+FOLHA
+
+REV.
+
+B 
+
+13  de
+
+25 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+TÍTULO: 
+
+ 
+
+ 
+
+ 
+
+Ponto de Entrega (PTE)
+
+Tabela 4 – Pontos de Entrega 
+
+Duto da 
+Linha 
+tronco 
+
+Localização 
+
+na linha 
+tronco (km)
+
+Vazão Máxima 
+
+(m³/d) 
+
+Pressão 
+Mínima 
+(kgf/cm²) 
+
+Ielmo Marinho 
+
+Mamanguape 
+
+Santa Rita 
+
+Macaíba 
+Goianinha 
+
+Campina Grande 
+Pedras de Fogo 
+
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+GASALP 
+UTE Termopernambuco  GASALP 
+GASALP 
+GASALP 
+
+- Goiana II 
+Igarassu I 
+Igarassu II 
+Paulista 
+Recife 
+Jaboatão 
+
+Cabo 
+
+Rio Largo 
+
+Suape 
+RNEST 
+
+119,41 
+140,70 
+188,28 
+246,54 
+292,00 
+292,00 
+311,00 
+335,00 
+366,60 
+371,15 
+378,78 
+414,30 
+414,30 
+435,41 
+16,93 
+190,64 
+190,64 
+190,64 
+
+8.000 
+
+1.010.000 
+
+40.000 
+25.000 
+240.000 
+200.000 
+264.000 
+1000.000 
+129.000 
+93.000 
+202.000 
+389.000 
+358.000 
+1.070.000 
+230.000 
+2.260.000 
+1.200.000 
+2.800.000 
+
+20 
+29 
+30 
+30 
+26 
+35 
+29 
+35,5 
+25 
+25 
+25 
+25 
+35 
+25 
+37 
+32,5 
+25 
+32,5 
+
+ 
+
+5.6  Estações de Compressão (SCOMP) 
+
+A malha apresentada possui duas estações de compressão terceirizada, mais conhecida 
+como SCOMP. O Nordestão possui duas SCOMPs, Macaíba e Santa Rita, nos Km 140 e 269 
+respectivamente,  de  acordo  com  a  referência  2.2.  A  Tabela  5  apresenta  as  características 
+principais da SCOMP, de acordo com as referências 2.11 e 2.12. 
+
+Tabela 5 - Dados das Estações de Compressão 
+Dados 
+
+SCOMP Macaíba 
+
+SCOMP Santa Rita 
+
+Vazão Mínima (m³/d) 
+Vazão Máxima (m³/d) 
+
+Pressão de sucção mínima (kgf/cm²) 
+Pressão de descarga máxima (kgf/cm²) 
+
+Potência Máxima Requerida (HP) 
+
+* 
+
+2.719.000 
+
+* 
+100 
+4251 
+
+* 
+
+2.260.000 
+
+* 
+100 
+2043 
+
+* Dados não obtidos nos documentos de referência 
+
+ 
+
+ 
+ 
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+14  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+ 
+
+5.7  Pontos de recebimento (PTR) 
+
+O sistema possuem dois pontos de recebimento, o PTR de Guamaré, na extremidade do 
+Nordestão, e o PTR de Pilar, na extremidade do GASALP. Para este caso, foi utilizada como 
+condição  de  contorno  apenas  a  pressão  máxima  dos  gasodutos,  que  é  de  100  kgf/cm²,  de 
+acordo com as 2.1, 2.3, 2.4 e 2.5. 
+
+ 
+ 
+
+6 
+
+CONDIÇÕES DE CONTORNO 
+
+6.1  Perfil de Consumo 
+
+A  Tabela  6  apresenta  a  distribuição  de  demanda  nos  pontos  de  entrega  utilizada  no 
+modelo.  Os  valores  apresentados  representam  a  média  diária  do  mês  de  janeiro  de  2015, 
+conforme apresentado em http://tag.petrobras.com.br/ > Informações à ANP. 
+
+ 
+
+ 
+
+Tabela 6 - Perfil de Consumo 
+Pontos de 
+
+Vazão Média 
+Jan/15 (m3/d) 
+
+Entrega (PTE) 
+Ielmo Marinho 
+
+Macaíba 
+Goianinha 
+
+Mamanguape 
+
+Santa Rita 
+
+Campina Grande 
+Pedras de Fogo 
+
+Goiana II 
+Igarassu I 
+Igarassu II 
+Paulista 
+Recife 
+Jaboatão 
+
+Cabo 
+
+Rio Largo 
+
+UTE Termopernambuco 
+
+Suape 
+RNEST 
+
+0 
+
+225.082 
+11.407 
+7.638 
+130.995 
+45.137 
+124.449 
+64.696 
+100.121 
+55.374 
+86.400 
+167.833 
+145.674 
+311.603 
+54.801 
+
+2.086.461 
+267.456 
+739.871 
+
+6.2  Máxima Pressão Admissível de Operação 
+
+A  PMOA  do  sistema  varia  de  acordo  com  o  duto  e  ramal  que  compõe  cada  sistema. 
+
+Essas variações podem ser observadas na Tabela 2. 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+15  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+6.3  Condições operacionais das estações de compressão 
+
+Utilizando  os  dados  obtidos  nas  referências  e  explicitados  no  item  5.6,  e  visando 
+maximizar  a  capacidade  de  transporte  do  gasoduto,  adotou-se  como  hipótese  apenas  a 
+pressão máxima de descarga e o limite de vazão da SCOMP. 
+
+ 
+
+6.4  Pressão de Entrega Nominal Contratual 
+
+A Tabela 6, apresentada no item 5.5, apresenta as pressões mínimas de cada ponto de 
+entrega, de acordo com as referências 2.3, 2.4, 2.5, 2.13 e 2.14. Por questões relacionadas a 
+operação do programa utilizado para o desenvolvimento do modelo, quando ocorre mais de um 
+ponto de entrega num mesmo local (nó), somente é possível fixar o limite de pressão mínima 
+em um deles. Nesse caso, quando diferentes, o limite escolhido foi o de maior pressão mínima 
+contratual. 
+
+ 
+ 
+
+7 
+
+RESULTADOS DA SIMULAÇÃO 
+
+As  pressões  nos  diversos  pontos  de  entrega  estão  apresentadas  na  Tabela  7.  A 
+distribuição de pressão e vazão para a condição média de janeiro de 2015 é apresentada para 
+cada duto da Figura 8 a Figura 12. 
+
+ 
+
+PTE 
+
+Ielmo Marinho 
+
+Macaíba 
+Goianinha 
+
+Mamanguape 
+
+Santa Rita 
+
+Campina Grande 
+Pedras de Fogo 
+
+Goiana II 
+Igarassu I 
+Igarassu II 
+Paulista 
+Recife 
+Jaboatão 
+
+Cabo 
+
+Rio Largo 
+
+UTE Termopernambuco 
+
+Tabela 7 - Pressões nos PEs 
+
+Duto da 
+
+Linha tronco 
+
+Localização na 
+linha tronco (km) 
+
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+Nordestão 
+GASALP 
+GASALP 
+
+119,41 
+140,70 
+188,28 
+246,54 
+292,00 
+292,00 
+311,00 
+335,00 
+366,60 
+371,15 
+378,78 
+414,30 
+414,30 
+435,41 
+16,93 
+190,64 
+
+Pressão 
+(kgf/cm²) 
+94.49 
+93.85 
+92.43 
+90.26 
+89.44 
+89.44 
+88.79 
+89.03 
+88.37 
+88.18 
+88.13 
+54.76 
+54.50 
+88.57 
+98.09 
+91.92 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+16  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+PTE 
+
+Suape 
+RNEST 
+
+Duto da 
+
+Linha tronco 
+
+Localização na 
+linha tronco (km) 
+
+GASALP 
+GASALP 
+
+190,64 
+190,64 
+
+Pressão 
+(kgf/cm²) 
+92.69 
+92.24 
+
+ 
+Deve-se  ressaltar  que  os  resultados  das  simulações  que  detalham  as  capacidades  de 
+
+transporte e disponível encontram-se na referência 2.16. 
+
+ 
+
+ 
+
+ 
+
+Figura 8 – Perfil de pressão, vazão e elevação – Nordestão 
+
+Figura 9 – Perfil de pressão, vazão e elevação – GASALP 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+FOLHA
+
+REV.
+
+B 
+
+17  de
+
+25 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+Figura 10 – Perfil de pressão, vazão e elevação – GASPIL 
+
+ 
+
+ 
+
+Figura 11 – Perfil de pressão, vazão e elevação – Ramal Termopernambuco 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+18  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+Figura 12 – Perfil de pressão, vazão e elevação – Variante Nordestão 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+FOLHA
+
+REV.
+
+B 
+
+19  de
+
+25 
+
+8  ANEXOS 
+8.1  “STEADY STATE REPORT” DO MODELO 
+ 
+                           ******************************************************************************* 
+                           *                                  SIMULACAO                                  * 
+                           ******************************************************************************* 
+ 
+ 
+                                          * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                          *                                               * 
+                                          *      Default Initial Values Selected:         * 
+                                          *                                               * 
+                                          *      Pressure ................    88.375      * 
+                                          *      Flow ....................   432.668      * 
+                                          *      Temperature .............    30.000      * 
+                                          *      % Nitrogen ..............     1.200      * 
+                                          *      % Carbon Dioxide ........     0.815      * 
+                                          *      % Methane ...............    92.520      * 
+                                          *      % Ethane ................     5.035      * 
+                                          *      % Propane ...............     0.345      * 
+                                          *      % i-Butane ..............     0.085      * 
+                                          *                                               * 
+                                          * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                       *                                                     * 
+                                       *                 Problem Size Report                 * 
+                                       *                                                     * 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                       *                                                     * 
+                                       *                                 Number   Maximum    * 
+                                       *                                  Used    Allowed    * 
+                                       *                                 ------   -------    * 
+                                       *                                                     * 
+                                       *     External Regulators            20      5000     * 
+                                       *     Equipment Devices               6      3000     * 
+                                       *     Drivers/Turbines                0       500     * 
+                                       *     Legs                           52     10000     * 
+                                       *     Nodes                          57     20000     * 
+                                       *     Knots                        1852     30000     * 
+                                       *     Stations                        0       500     * 
+                                       *     Banks                           0      1000     * 
+                                       *     Groups                          0      1000     * 
+                                       *     Plants                          0        10     * 
+                                       *     Compressor Perf Types           0       500     * 
+                                       *     Driver/Turb Perf Types          0       500     * 
+                                       *     Cylinder Types                  0       500     * 
+                                       *     Fluids                          2       100     * 
+                                       *     Qualities                      12        26     * 
+                                       *                                                     * 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+                           ******************************************************************************* 
+                           *                      Steady State Convergence Summary                       * 
+                           ******************************************************************************* 
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+20  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+                ==================================================================================================== 
+                                             Greatest       Greatest        Greatest                     
+                Iteration     Tolerance     Hydraulic      Temperature     Composition            Associated 
+                 Number       Requested     Adjustment     Adjustment      Adjustment               Device 
+                ---------     ---------     ----------     -----------     -----------     ------------------------- 
+                     0        0.0001000     1.1815E+02      0.0000000       0.0000000      FLUX  NODE0036 
+                     1        0.0001000     65.6299286      0.0000000       0.0000000      FLUX  NODE0036 
+                     2        0.0001000     88.8885956      0.0000000       0.0000000      FLUX  NODE0035 
+                     3        0.0001000     24.9301682      0.0000000       0.0000000      FLUX  NODE0036 
+                     4        0.0001000      5.3934855      0.0000000       0.0000000      FLUX  NODE0036 
+                                                     DPMX increased to 9764.8564 
+                     5        0.0001000      0.1907921      0.0000000       0.0000000      FLUX  NODE0036 
+                     6        0.0001000      0.0140567      0.0000000       0.0000000      Equip IPOJUCA 
+                     7        0.0001000      0.0004502      0.0000000       0.0000000      Equip IPOJUCA 
+                     8        0.0001000      0.0000082      0.0000000       0.0000000      Equip IPOJUCA 
+                            ------------------------------  Mode Changes  ------------------------------ 
+                              9     Equip  REGU0042               FROM: Closed          TO: Max PD       
+                              9     Equip  SCOMP_MACAÍBA          FROM: Max PD          TO: Closed       
+                            ---------------------------------------------------------------------------- 
+                                                     DPMX increased to 19529.713 
+                     9        0.0001000      0.6432258      0.0000000       0.0000000      Pipe  NORDESTAO_PIPE13 
+                    10        0.0001000      0.1712144      0.0000000       0.0000000      Xreg  PTR_GUAMARÉ 
+                    11        0.0001000      0.0126845      0.0000000       0.0000000      Node  N23-2 
+                                                     DPMX increased to 39059.426 
+                    12        0.0001000      0.0005318      0.0000000       0.0000000      Equip REGU0044 
+                    13        0.0001000      0.0000282      0.0000000       0.0000000      Equip REGU0042 
+                            ------------------------------  Mode Changes  ------------------------------ 
+                             14     Equip  SCOMP_MACAÍBA          FROM: Closed          TO: Bypass       
+                             14     Equip  SCOMP_SANTA_RITA       FROM: Bypass          TO: Closed       
+                            ---------------------------------------------------------------------------- 
+                    14        0.0001000      0.2185669      0.0000000       0.0000000      Node  N12-2 
+                                                     DPMX increased to 48824.281 
+                    15        0.0001000      0.0064664      0.0000000       0.0000000      Node  N23-2 
+                    16        0.0001000      0.0004344      0.0000508       0.0000000      Node  N22-3 
+                    17        0.0001000      0.0610505      0.0000508       0.0000000      Pipe  NORDESTAO_PIPE15 
+                    18        0.0001000      0.0005970      0.0000770       0.0000001      Node  N23-2 
+                    19        0.0001000      0.0007373      0.0000770       0.0000001      Pipe  VARNOR_PIPE02 
+                            ------------------------------  Mode Changes  ------------------------------ 
+                             20     Equip  SCOMP_SANTA_RITA       FROM: Closed          TO: Bypass       
+                            ---------------------------------------------------------------------------- 
+                    20        0.0001000      0.6628562      0.0000328       0.0000000      Equip SCOMP_MACAÍBA 
+                    21        0.0001000      0.1456966      0.0000328       0.0000000      Equip SCOMP_MACAÍBA 
+                    22        0.0001000      0.0206281      0.0000501       0.0000002      Equip SCOMP_MACAÍBA 
+                    23        0.0001000      0.0120638      0.0000501       0.0000002      Pipe  VARNOR_PIPE02 
+                    24        0.0001000      0.0000637      0.0000170       0.0000301      Equip REGU0042 
+                    25        0.0001000      0.0000421      0.0000025       0.0000001      FLUX  NODE0040-3 
+ 
+ 
+                           ******************************************************************************* 
+                           *                                  SIMULACAO                                  * 
+                           ******************************************************************************* 
+ 
+ 
+                           ******************************************************************************* 
+                           *                         Reference Conditions Report                         * 
+                           ******************************************************************************* 
+ 
+ 
+                                              Reference Pressure        =     0.00  KG/CM2G 
+                                              Reference Temperature     =    20.00 (DEG C ) 
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+21  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+                           ******************************************************************************* 
+                           * Leg Hydraulic Summary Report        -----        Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                 =================================================================================================== 
+                                           Pressure                   Flow                Line         Temperature 
+                                            KG/CM2G                 (KSM3/D)              Pack           (DEG C ) 
+                      Leg ID            Head      Tail          Head        Tail        ( KSM3 )       Head    Tail 
+                 ----------------     --------  --------     ----------  ----------     ---------     ------  ------ 
+                 GASALP_PIPE01           99.00     99.59       1045.486    1045.486       55.3033      30.00   30.36 
+                 GASALP_PIPE02           99.59     98.09       1045.486    1045.486       86.4687      30.36   29.61 
+                 GASALP_PIPE03           98.09     97.43        990.685     990.685      188.6722      29.61   29.86 
+                 GASALP_PIPE04           97.43     97.17        990.685     990.685      114.6134      29.86   29.95 
+                 GASALP_PIPE05           97.17     96.16        990.685     990.685      190.0936      29.95   29.82 
+                 GASALP_PIPE06           96.16     95.59        990.685     990.685      228.3090      29.82   29.97 
+                 GASALP_PIPE07           95.59     94.70        990.685     990.685      264.1546      29.97   29.94 
+                 GASALP_PIPE08           94.70     93.89        990.685     990.685      148.7638      29.94   29.83 
+                 GASALP_PIPE09           93.89     93.34        990.685     990.685      129.8652      29.83   29.87 
+                 GASALP_PIPE10           93.34     92.69        990.685     990.685      135.7603      29.87   29.85 
+                 GASALP_PIPE11           92.69     88.57       3093.548    3093.548      102.0623      29.60   28.84 
+                 GASPIL_PIPE01           99.00     98.90       5196.650    5196.651       87.5688      30.00   29.97 
+                 GASPIL_PIPE02           98.90     99.71       5196.649    5196.650       44.7264      29.97   30.50 
+                 GASPIL_PIPE03           99.71     98.45       5196.650    5196.650      210.0800      30.50   29.76 
+                 GASPIL_PIPE04           98.45     98.27       5196.650    5196.650      295.3609      29.76   29.83 
+                 GASPIL_PIPE05           98.27     97.85       5196.650    5196.651      244.2743      29.83   29.71 
+                 GASPIL_PIPE06           97.85     97.73       5196.651    5196.650      293.2400      29.71   29.82 
+                 GASPIL_PIPE07           97.73     97.27       5196.650    5196.651      211.2840      29.82   29.66 
+                 GASPIL_PIPE08           97.27     97.15       5196.650    5196.651       80.1569      29.66   29.65 
+                 GASPIL_PIPE09           97.15     96.98       5196.650    5196.651      115.9510      29.65   29.63 
+                 GASPIL_PIPE10           96.98     97.44       5196.651    5196.650       43.4860      29.63   29.96 
+                 GASPIL_PIPE11           97.44     97.14       5196.650    5196.652       58.1201      29.96   29.79 
+                 GASPIL_PIPE12           97.14     96.29       5196.652    5196.652      477.0962      29.79   29.60 
+                 GASPIL_PIPE13           96.29     94.11       5196.650    5196.650     1712.2142      29.60   29.60 
+                 GASPIL_PIPE14           94.11     94.45       5196.650    5196.651      273.9280      29.60   30.02 
+                 GASPIL_PIPE15           94.45     94.46       5196.651    5196.652      275.3451      30.02   30.13 
+                 GASPIL_PIPE16           94.46     94.39       5196.651    5196.652       41.6292      30.13   30.11 
+                 GASPIL_PIPE17           94.39     93.80       5196.651    5196.650       70.0456      30.11   29.75 
+                 GASPIL_PIPE18           93.80     93.57       5196.651    5196.650      410.0900      29.75   29.88 
+                 GASPIL_PIPE19           93.57     93.48       5196.649    5196.651      246.0143      29.88   29.96 
+                 GASPIL_PIPE20           93.48     93.08       5196.653    5196.651       27.9613      29.96   29.71 
+                 GASPIL_PIPE21           93.08     93.06       5196.652    5196.652       27.7177      29.71   29.72 
+                 GASPIL_PIPE22           93.06     92.69       5196.652    5196.651       92.5259      29.72   29.55 
+                 NORDESTAO_PIPE01        88.19     88.57         18.054      18.054      159.8188      30.00   30.00 
+                 NORDESTAO_PIPE02        88.11     88.19         94.213      94.213      240.0739      29.98   30.00 
+                 NORDESTAO_PIPE03        88.13     88.11        331.561     331.561       28.0788      29.96   29.98 
+                 NORDESTAO_PIPE04        88.18     88.13        417.961     417.961       57.6289      29.88   29.96 
+                 NORDESTAO_PIPE05        88.37     88.18        473.335     473.335       34.4221      29.93   29.88 
+                 NORDESTAO_PIPE06        89.03     88.37        573.456     573.456      240.2473      30.09   29.93 
+                 NORDESTAO_PIPE07        88.79     89.03        638.152     638.152      182.8853      29.86   30.09 
+                 NORDESTAO_PIPE08        89.44     88.79        692.953     692.953      145.2609      29.98   29.86 
+                 NORDESTAO_PIPE09        90.26     89.44        869.084     869.085      350.6490      29.83   29.98 
+                 NORDESTAO_PIPE10        92.43     90.26        876.722     876.722      457.9041      29.89   29.83 
+                 NORDESTAO_PIPE11        93.85     92.43        888.129     888.129      381.9319      29.94   29.89 
+                 NORDESTAO_PIPE12        94.49     93.85       1113.211    1113.211      172.9305      29.95   29.94 
+                 NORDESTAO_PIPE13        96.20     94.49       1113.211    1113.211      538.8493      29.16   29.95 
+                 NORDESTAO_PIPE14        98.07     96.20       1113.211    1113.211      199.4236      28.11   29.16 
+                 NORDESTAO_PIPE15       100.00     98.07       1113.211    1113.211      244.3694      20.00   28.11 
+                 RAMAL_UTE_PIPE01        92.24     92.69      -2826.331   -2826.331       60.3759      29.54   29.60 
+                 RAMAL_UTE_PIPE02        91.92     92.24      -2086.460   -2086.461       79.3337      29.58   29.54 
+                 VARNOR_PIPE01           54.76     54.50         69.515      69.515       31.7500      29.94   29.97 
+                 VARNOR_PIPE02           54.50     54.76        237.348     237.348       64.5453      15.42   29.94 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+22  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+ 
+                           ******************************************************************************* 
+                           * Equipment Hydraulic Report         -----         Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+                                             ::  Equipment Hydraulic Summary Report  :: 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+         ================================================================================================================== 
+                                                    Pressure                          Temperature                  Heating 
+            Equipment           Mode of              KG/CM2G             Flow           (DEG C )         Spc        Value 
+                ID              Control           Up       Down        (KSM3/D)        Up     Down       Grv       ( MJ/M3) 
+         ----------------     ------------     --------  --------     ----------     ------  ------     ------     -------- 
+         IPOJUCA              Block Valve         92.69     92.69        4929.20      29.55   29.60     0.5950        37.37 
+         REGU0042             Max PD              88.11     54.50         237.35      29.98   15.42     0.5964        38.57 
+         REGU0044             Max PD              88.19     54.50          76.16      30.00   22.78     0.5964        38.57 
+         SCOMP_MACAÍBA        Bypass              93.85     93.85        1113.21      29.94   29.94     0.5964        38.57 
+         SCOMP_SANTA_RITA     Bypass              89.44     89.44         869.08      29.98   29.98     0.5964        38.57 
+         SDV-01_PI            Block Valve         99.00     99.00        5196.65      30.00   30.00     0.5950        37.37 
+ 
+ 
+                                  ================================================================ 
+                                                        Current       Accumulated         Timer 
+                                     Equipment         Flow Rate         Volume           Value 
+                                         ID             (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                  ----------------     ----------     ------------     ----------- 
+                                  IPOJUCA                 4929.20             0.00           0.000 
+                                  REGU0042                 237.35             0.00           0.000 
+                                  REGU0044                  76.16             0.00           0.000 
+                                  SCOMP_MACAÍBA           1113.21             0.00           0.000 
+                                  SCOMP_SANTA_RITA         869.08             0.00           0.000 
+                                  SDV-01_PI               5196.65             0.00           0.000 
+ 
+ 
+           ============================================================================================================== 
+                                               Actual                    Adiab        Dschrg        Power         Power 
+              Compressor          Head          Flow        Speed        Effic         Temp       Required      Available 
+                  ID            (N.M/KG)      ( M3/H )     (  RPM )     (PERCNT)     (DEG C )     (  MW  )      (  MW  ) 
+           ----------------     ---------     --------     --------     --------     --------     ---------     --------- 
+           SCOMP_MACAÍBA             0.00       442.26                   100.00        29.94           0.00          0.00 
+           SCOMP_SANTA_RITA          0.00       364.14                   100.00        29.98           0.00          0.00 
+ 
+ 
+                           ******************************************************************************* 
+                           * External Regulator Hydraulic Report    -----     Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                           :::::::::::::::::::::::::::::::::::::::::::::: 
+                                           ::  External Regulator Flow Balance Report  :: 
+                                           :::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                      ========================================================= 
+                                                               Mass Units      Volumetric Units 
+                                                                (TONN/H)           (KSM3/D) 
+                                      --------------------     -----------     ---------------- 
+                                      Total input flow             219.630          7355.347 
+                                      Total output flow            219.630          7355.350 
+                                      Network flow balance           0.000            -0.003 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+23  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+ 
+ 
+                                         ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                         ::  External Regulator Hydraulic Summary Report  :: 
+                                         ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+             ========================================================================================================== 
+                  External                                                                        Specific     Heating 
+                  Regulator            Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                     ID                Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+             -------------------     ------------     --------     ----------     -----------     --------     -------- 
+             CABO                    Max Flow            88.57       3111.603        28.84         0.5950         37.37 
+             CAMPINA_GRANDE          Max Flow            89.44         45.137        29.98         0.5964         38.57 
+             GOIANA_II               Max Flow            89.03         64.696        30.09         0.5964         38.57 
+             GOIANINHA               Max Flow            92.43         11.407        29.89         0.5964         38.57 
+             IELMO_MARINHO           Max Flow            94.49          0.000        29.95         0.5964         38.57 
+             IGARASSU_1              Max Flow            88.37        100.121        29.93         0.5964         38.57 
+             IGARASSU_2              Max Flow            88.18         55.374        29.88         0.5964         38.57 
+             JABOATÃO                Max Flow            54.50        145.674        22.78         0.5964         38.57 
+             MACAÍBA                 Max Flow            93.85        225.082        29.94         0.5964         38.57 
+             MAMANGUAPE              Max Flow            90.26          7.638        29.83         0.5964         38.57 
+             PAULISTA                Max Flow            88.13         86.400        29.96         0.5964         38.57 
+             PEDRAS_DE_FOGO          Max Flow            88.79         54.801        29.86         0.5964         38.57 
+             PTR_GUAMARÉ             Max Pres           100.00      -1113.211        20.00         0.5964         38.57 
+             PTR_PILAR               Max Pres            99.00      -6242.136        30.00         0.5950         37.37 
+             RECIFE                  Max Flow            54.76        167.833        29.94         0.5964         38.57 
+             RIO_LARGO               Max Flow            98.09         54.801        29.61         0.5950         37.37 
+             RNEST                   Max Flow            92.24        739.871        29.54         0.5950         37.37 
+             SANTA_RITA              Max Flow            89.44        130.995        29.98         0.5964         38.57 
+             SUAPE                   Max Flow            92.69        267.456        29.55         0.5950         37.37 
+             UTE_TERMOPERNAMBUCO     Max Flow            91.92       2086.461        29.58         0.5950         37.37 
+ 
+ 
+                                 ================================================================== 
+                                      External            Current      Accumulated         Timer 
+                                      Regulator          Flow Rate        Volume           Value 
+                                         ID              (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                 -------------------     ---------     ------------     ----------- 
+                                 CABO                     3111.603            0.000           0.000 
+                                 CAMPINA_GRANDE             45.137            0.000           0.000 
+                                 GOIANA_II                  64.696            0.000           0.000 
+                                 GOIANINHA                  11.407            0.000           0.000 
+                                 IELMO_MARINHO               0.000            0.000           0.000 
+                                 IGARASSU_1                100.121            0.000           0.000 
+                                 IGARASSU_2                 55.374            0.000           0.000 
+                                 JABOATÃO                  145.674            0.000           0.000 
+                                 MACAÍBA                   225.082            0.000           0.000 
+                                 MAMANGUAPE                  7.638            0.000           0.000 
+                                 PAULISTA                   86.400            0.000           0.000 
+                                 PEDRAS_DE_FOGO             54.801            0.000           0.000 
+                                 PTR_GUAMARÉ             -1113.211            0.000           0.000 
+                                 PTR_PILAR               -6242.136            0.000           0.000 
+                                 RECIFE                    167.833            0.000           0.000 
+                                 RIO_LARGO                  54.801            0.000           0.000 
+                                 RNEST                     739.871            0.000           0.000 
+                                 SANTA_RITA                130.995            0.000           0.000 
+                                 SUAPE                     267.456            0.000           0.000 
+                                 UTE_TERMOPERNAMBUCO      2086.461            0.000           0.000 
+ 
+ 
+                                     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                     ::  Supply External Regulator Hydraulic Summary Report  :: 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+FOLHA
+
+REV.
+
+B 
+
+24  de
+
+25 
+
+- 
+- 
+
+TÍTULO: 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação 
+
+ 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+                                     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                 ================================================================================================== 
+                   Supply                                                                     Specific     Heating 
+                    Xreg           Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                     ID            Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+                 -----------     ------------     --------     ----------     -----------     --------     -------- 
+                 PTR_GUAMARÉ     Max Pres           100.00      -1113.211        20.00         0.5964         38.57 
+                 PTR_PILAR       Max Pres            99.00      -6242.136        30.00         0.5950         37.37 
+ 
+ 
+                                     =========================================================== 
+                                       Supply         Current       Accumulated         Timer 
+                                        Xreg         Flow Rate         Volume           Value 
+                                         ID           (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                     -----------     ----------     ------------     ----------- 
+                                     PTR_GUAMARÉ      -1113.211            0.000           0.000 
+                                     PTR_PILAR        -6242.136            0.000           0.000 
+ 
+ 
+                                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                    ::  Delivery External Regulator Hydraulic Summary Report  :: 
+                                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+             ========================================================================================================== 
+                  Delivery                                                                        Specific     Heating 
+                    Xreg               Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                     ID                Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+             -------------------     ------------     --------     ----------     -----------     --------     -------- 
+             CABO                    Max Flow            88.57       3111.603        28.84         0.5950         37.37 
+             CAMPINA_GRANDE          Max Flow            89.44         45.137        29.98         0.5964         38.57 
+             GOIANA_II               Max Flow            89.03         64.696        30.09         0.5964         38.57 
+             GOIANINHA               Max Flow            92.43         11.407        29.89         0.5964         38.57 
+             IELMO_MARINHO           Max Flow            94.49          0.000        29.95         0.5964         38.57 
+             IGARASSU_1              Max Flow            88.37        100.121        29.93         0.5964         38.57 
+             IGARASSU_2              Max Flow            88.18         55.374        29.88         0.5964         38.57 
+             JABOATÃO                Max Flow            54.50        145.674        22.78         0.5964         38.57 
+             MACAÍBA                 Max Flow            93.85        225.082        29.94         0.5964         38.57 
+             MAMANGUAPE              Max Flow            90.26          7.638        29.83         0.5964         38.57 
+             PAULISTA                Max Flow            88.13         86.400        29.96         0.5964         38.57 
+             PEDRAS_DE_FOGO          Max Flow            88.79         54.801        29.86         0.5964         38.57 
+             RECIFE                  Max Flow            54.76        167.833        29.94         0.5964         38.57 
+             RIO_LARGO               Max Flow            98.09         54.801        29.61         0.5950         37.37 
+             RNEST                   Max Flow            92.24        739.871        29.54         0.5950         37.37 
+             SANTA_RITA              Max Flow            89.44        130.995        29.98         0.5964         38.57 
+             SUAPE                   Max Flow            92.69        267.456        29.55         0.5950         37.37 
+             UTE_TERMOPERNAMBUCO     Max Flow            91.92       2086.461        29.58         0.5950         37.37 
+ 
+ 
+                                 =================================================================== 
+                                      Delivery            Current       Accumulated         Timer 
+                                        Xreg             Flow Rate         Volume           Value 
+                                         ID               (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                 -------------------     ----------     ------------     ----------- 
+                                 CABO                      3111.603            0.000           0.000 
+                                 CAMPINA_GRANDE              45.137            0.000           0.000 
+                                 GOIANA_II                   64.696            0.000           0.000 
+                                 GOIANINHA                   11.407            0.000           0.000 
+                                 IELMO_MARINHO                0.000            0.000           0.000 
+                                 IGARASSU_1                 100.121            0.000           0.000 
+                                 IGARASSU_2                  55.374            0.000           0.000 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-034 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+B 
+
+25  de
+
+25 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação 
+
+da Malha Nordeste Setentrional – Guamaré-Pilar 
+
+- 
+- 
+
+                                 JABOATÃO                   145.674            0.000           0.000 
+                                 MACAÍBA                    225.082            0.000           0.000 
+                                 MAMANGUAPE                   7.638            0.000           0.000 
+                                 PAULISTA                    86.400            0.000           0.000 
+                                 PEDRAS_DE_FOGO              54.801            0.000           0.000 
+                                 RECIFE                     167.833            0.000           0.000 
+                                 RIO_LARGO                   54.801            0.000           0.000 
+                                 RNEST                      739.871            0.000           0.000 
+                                 SANTA_RITA                 130.995            0.000           0.000 
+                                 SUAPE                      267.456            0.000           0.000 
+                                 UTE_TERMOPERNAMBUCO       2086.461            0.000           0.000 
+ 
+ 
+                           ******************************************************************************* 
+                           * Node Mass Balance Error Report       -----       Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                                Threshold Level =     0.0100 (KSM3/D) 
+                                                No Mass Balance Errors above Threshold 
+ 
+ 
+                                               ::::::::::::::::::::::::::::::::::::::: 
+                                               ::  Pressure/Flow Violation Reports  :: 
+                                               ::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                               ALL XREGS FALL WITHIN PRESSURE BOUNDS 
+                                             ALL EQUIPMENT FALL WITHIN PRESSURE BOUNDS 
+                                         ALL INTERNAL LEG KNOTS FALL WITHIN PRESSURE BOUNDS 
+ 
+ 
+                                            ::::::::::::::::::::::::::::::::::::::::::::: 
+                                            ::  Setpoint/Constraint Violation Reports  :: 
+                                            ::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                            ALL XREGS COMPLY WITH MONITORED CONSTRAINTS 
+                                          ALL EQUIPMENT COMPLY WITH MONITORED CONSTRAINTS 
+ 
+ 
+                      TRANSIENT GAS NETWORK MODEL (TGNET) 
+                       RELEASE 7.6  LEVEL 00  30-SEP-2008 
+ 
+                             STEADY-STATE MODULE 
+
+ 
+
+ 
+
+ 
+
+

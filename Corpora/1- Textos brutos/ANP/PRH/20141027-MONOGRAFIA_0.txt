@@ -1,0 +1,4691 @@
+ 
+
+Universidade Federal de São Carlos 
+
+Departamento de Engenharia Química 
+
+Programa de Especialização em Biocombustíveis - PRH 44 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Relatório Final 
+
+ 
+
+ 
+
+“Modelagem e simulação das etapas de hidrólise e fermentação do 
+
+bagaço de cana-de-açúcar no simulador EMSO” 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Aluno: Jorge Augusto Rodrigues Fanton - RA 388807 
+
+Orientador: Prof. Dr. Antonio José Gonçalves da Cruz 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Fevereiro de 2014 
+
+São Carlos, SP 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Este trabalho foi desenvolvido no Laboratório de Desenvolvimento 
+
+e  Automação  de  Bioprocessos  (LaDABio)  do  Departamento  de  Engenharia 
+
+Química  (DEQ)  da  Universidade  Federal  de  São  Carlos  (UFSCar)  e  contou 
+
+com  o  apoio  financeiro  do  Programa  de  Recursos  Humanos  da  Agência 
+
+Nacional do Petróleo, Gás natural e Biocombustíveis (PRH-ANP/MCT Nº 44). 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Resumo 
+
+ 
+
+Com  a  crescente  demanda  por  fontes  de  energia  renovável,  a  produção 
+
+de  etanol  a  partir  de  resíduos  lignocelulósicos,  denominado  de  etanol  de 
+
+segunda  geração  (E2G),  tem  se  tornado  uma  opção  atrativa.  No  Brasil, 
+
+destaca-se  como  matéria-prima  o  bagaço  de  cana-de-açúcar  (BCA),  um 
+
+subproduto do processo de produção de açúcar e etanol, usado pela indústria 
+
+sucroalcooleira para gerar energia para o processo, através de sua queima nas 
+
+caldeiras.  O  excedente  do  BCA  pode  ser  queimado  para  geração  de  energia 
+
+elétrica  ou  vendido  no  mercado.  A  produção  de  etanol  a  partir  deste  BCA 
+
+excedente é alternativa interessante, uma vez que o mesmo já se encontra na 
+
+própria indústria. 
+
+O  objetivo  deste  trabalho  foi  implementar  e  validar,  com  emprego  de 
+
+dados  experimentais,  modelos  matemáticos  que  descrevam  a  cinética  da 
+
+hidrólise  enzimática  do  bagaço  de  cana  pré-tratado  em  diferentes  processos. 
+
+Posteriormente, utilizar os modelos ajustados em estudo de análise econômica 
+
+preliminar  do  processo  de  produção  de  etanol  de  segunda  geração  (E2G). 
+
+Avaliou  também  a  influência  de  parâmetros  econômicos  como  o  custo  do 
+
+etanol e das enzimas no resultado da análise. As simulações foram realizadas 
+
+no  simulador  de  processos  EMSO  (Environment  for  Modeling  Simulation  and 
+
+Optimization).  A  análise  econômica  mostrou  inviabilidade  do  processo  de 
+
+produção  do  E2G  em  relação  à  produção  de  energia  elétrica,  nas  condições 
+
+experimentais  avaliadas  e  no  cenário  econômico  estudado,  devido 
+
+principalmente ao custo do pool enzimático. Contudo, o estudo mostrou que o 
+
+processo  pode  ser  tornar  viável  com  a  diminuição  do  custo  da  enzima  e 
+
+aumento  do  preço  do  etanol.  O  baixo  volume  de  E2G  produzido  é  devido  à 
+
+restrição  entre  a  quantidade  de  BCA  desviada  para  queima  na  caldeira  e  a 
+
+quantidade empregada na rota de produção do E2G a fim de manter o balanço 
+
+energético do processo. O uso da palha de cana-de-açúcar como combustível 
+
+na  caldeira  contribui  positivamente  para  o  aumento  do  volume  de  etanol 
+
+produzido.  Contudo,  no  cenário  avaliado,  a  viabilidade  econômica  tornou-se 
+
+mais distante. Por fim, o trabalho mostrou que é importante o desenvolvimento 
+
+de ferramenta  para simulação do processo. O conhecimento dos mecanismos 
+
+da  etapa  de  hidrólise  e  sua  simulação  contribuem  para  o  desenvolvimento 
+
+tecnológico do processo. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+1. 
+
+Introdução ........................................................................................ 6 
+
+Sumário 
+
+1.1.  Cana-de-açúcar ........................................................................... 6 
+
+1.2.  Bagaço de cana-de-açúcar ......................................................... 6 
+
+1.3.  Material lignocelulósico ............................................................... 6 
+
+1.3.1.  Celulose.................................................................................. 7 
+
+1.3.2.  Hemicelulose .......................................................................... 7 
+
+1.3.3.  Lignina .................................................................................... 8 
+
+1.4.  Pré-Tratamento ........................................................................... 8 
+
+1.4.1.  Pré-tratamento alcalino .......................................................... 9 
+
+1.4.2.  Explosão a vapor .................................................................... 9 
+
+1.4.3.  Hidrotérmico ........................................................................... 9 
+
+1.5.  Hidrólise ...................................................................................... 9 
+
+1.6.  Fermentação ............................................................................. 10 
+
+1.7.  Comparação entre os métodos de hidrólise e fermentação ...... 11 
+
+1.8.  Simulador  EMSO  (Environment  for  Modelling,  Simulation  and 
+
+Optimization) ................................................................................................. 12 
+
+2.  Objetivos ......................................................................................... 12 
+
+3.  Metodologia .................................................................................... 12 
+
+3.1.  Validação cinética ..................................................................... 12 
+
+3.2.  Avaliação econômica preliminar ................................................ 14 
+
+4.  Resultados e Discussão ................................................................ 21 
+
+4.1.  Validação cinética ..................................................................... 21 
+
+4.2.  Análise econômica preliminar .................................................... 29 
+
+4.2.1.  Reologia e escalonamento do reator .................................... 29 
+
+4.2.2.  Análise do cenário presente ................................................. 31 
+
+4.2.3.  Análise de sensibilidade aos parâmetros econômicos ......... 34 
+
+4.2.4.  Análise do cenário presente utilizando a palha da cana ....... 35 
+
+4.2.5.  Análise  de  sensibilidade  aos  parâmetros  econômicos  com  o 
+
+uso da palha 37 
+
+5.  Conclusões ..................................................................................... 39 
+
+6.  Bibliografia ..................................................................................... 40 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Índice de Tabelas 
+
+Tabela  1  -  Lista  de  condições  experimentais  analisadas  na  validação  de 
+
+dados ............................................................................................................... 14 
+
+Tabela 2 - Dados utilizados na simulação do pré-tratamento .................. 16 
+
+Tabela 3 - Dados utilizados na simulação da etapa de concentração ..... 18 
+Tabela  4  -  Parâmetros  cinéticos  ajustados  para  o  modelo  de  Michaelis-
+
+Menten com inibição competitiva para meio pseudo-homogêneo .................... 22 
+
+Tabela  5  -  Parâmetros  cinéticos  ajustados  para  o  modelo  de  Michaelis-
+
+Menten com inibição competitiva para meio heterogêneo ............................... 22 
+Tabela 6 - Parâmetros cinéticos ajustados para o modelo de Chrastil .... 23 
+
+Tabela  7 
+
+-  Comparação  entre  os  modelos  pelo  coeficiente  de 
+
+determinação (r²) .............................................................................................. 29 
+
+Tabela  8  -  Parâmetros  ajustados  do  modelo  hiperbólico  em  relação  aos 
+
+dados reológicos .............................................................................................. 30 
+
+Tabela  9  -  Parâmetros  ajustados  do  modelo  hiperbólico  em  relação  aos 
+
+dados de potência consumida .......................................................................... 31 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Índice de Figuras 
+
+ 
+
+Figura 1 - Estrutura da matriz lignocelulósica ............................................ 7 
+Figura 2  - Representação do processo de pré-tratamento de um material 
+
+lignocelulósico .................................................................................................... 8 
+
+Figura 3 - Sequência de etapas da conversão de celulose a etanol .......... 9 
+
+Figura 4 - Esquema da hidrólise enzimática da celulose ......................... 10 
+Figura 5 - Rota simplificada da fermentação alcoólica da glicose............ 11 
+
+Figura 6 - Fluxograma referente à análise econômica efetuada .............. 15 
+
+Figura 7 - Ajuste aos dados no caso A1 .................................................. 23 
+
+Figura 8 - Ajuste aos dados no caso A2 .................................................. 24 
+Figura 9 - Ajuste aos dados no caso A3 .................................................. 24 
+
+Figura 10 - Ajuste aos dados no caso A4 ................................................ 25 
+
+Figura 11 - Ajuste aos dados no caso A5 ................................................ 25 
+
+Figura 12 - Ajuste aos dados no caso A6 ................................................ 26 
+Figura 13 - Ajuste aos dados no caso B1 ................................................ 26 
+
+Figura 14 - Ajuste aos dados no caso B2 ................................................ 27 
+
+Figura 15 - Ajuste aos dados no caso B3 ................................................ 27 
+
+Figura 16 - Ajuste aos dados no caso B4 ................................................ 28 
+Figura 17 - Ajuste aos dados no caso C1 ................................................ 28 
+
+Figura 18 - Ajuste ao modelo hiperbólico dos dados reológicos .............. 30 
+
+Figura  19  -  Ajuste  ao  modelo  hiperbólico  dos  dados  de  potência 
+
+consumida ........................................................................................................ 31 
+
+Figura 20 - Soma dos Fluxos de Caixa em função do tempo de hidrólise 32 
+
+Figura 21 - Parâmetros relevantes para o caso A5 .................................. 33 
+
+Figura 22 - Soma dos Fluxos de Caixa em função do preço da enzima e 
+
+da conversão para o caso A5 ........................................................................... 34 
+
+Figura 23 - Soma dos Fluxos de Caixa em função do preço do etanol e da 
+
+conversão para o caso A5 ................................................................................ 35 
+
+Figura 24 - Soma dos Fluxos de Caixa em função do tempo de hidrólise 36 
+Figura 25 - Volume de etanol produzido .................................................. 36 
+
+Figura 26 - Soma dos Fluxos de Caixa em função do preço da enzima e 
+
+da conversão para o caso A5 ........................................................................... 37 
+
+Figura 27 - Soma dos Fluxos de Caixa em função do preço do etanol e da 
+
+conversão para o caso A5 ................................................................................ 38 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+1.  Introdução 
+
+ 
+
+1.1. Cana-de-açúcar 
+
+6 
+
+A  cana-de-açúcar  foi  introduzida  no  Brasil  durante  a  colonização 
+
+portuguesa  entre  1515  e  1532,  logo  tornando  o  Brasil  em  um  dos  maiores 
+
+produtores  mundiais.  As  variedades  comerciais  utilizadas  hoje  são  originadas 
+
+de  cruzamentos  entre  Saccharum  offinarum  (rica  em  açúcares,  menos 
+
+resistente)  e  Saccharum  spontaneum  (pobre  em  açúcares,  porém  mais 
+
+resistente) (Alberto, 2010). 
+
+Segundo  CONAB,  2012,  na  safra  brasileira  de  2012-2013  foram  moídas 
+
+cerca  de  590  milhões  de  toneladas  de  cana,  sendo  48,93%  destinada  à 
+
+produção  de  açúcar  e  o  restante  de  etanol.  Nesta  safra  foram  produzidos  38 
+
+milhões de toneladas de açúcar e 23 bilhões de litros de etanol. 
+
+ 
+
+1.2. Bagaço de cana-de-açúcar 
+
+O  bagaço  de  cana-de-açúcar  (BCA)  é  um  subproduto  da  moagem  da 
+
+cana gerado na proporção aproximada de 280 kg de BCA por tonelada de cana 
+
+moída  (Cardona,  et  al.,  2009).  A  indústria  sucroalcooleira  utiliza  o  bagaço  na 
+
+geração  de  energia  para  o  processo,  através  de  sua  queima  e  geração  de 
+
+vapor  nas  caldeiras,  com  um  excedente  médio  (acima  do  necessário  para  o 
+autoconsumo)  de  23,12%1,  na  safra  2009-2012,  em  massa  de  BCA  total 
+(úmido)  (CONAB,  2011).  Este  excedente  é  usado  na  geração  de  energia 
+
+elétrica  ou  vendido diretamente.  Contudo, por  ser  um material  lignocelulósico, 
+
+uma  alternativa  seria  sua  utilização  para  a  produção  de  etanol  de  segunda 
+
+geração  (E2G).  Uma  das  vantagens  do  uso  do  BCA  está  relacionado  com  a 
+
+questão logística, uma vez que o mesmo já se encontra no interior da unidade 
+
+industrial. 
+
+ 
+
+1.3. Material lignocelulósico 
+
+Os  três  principais  componentes  de  um  material  lignocelulósico  são: 
+
+celulose, hemicelulose e lignina. Segundo Rocha et al., 2011, o BCA apresenta 
+
+em média 45,5±1,1 % de celulose, 27,0±0,8 % de hemicelulose, 21,1±0,9 % de 
+
+                                            
+1 47,81% em usinas que comercializam energia elétrica (CONAB, 2011). 
+
+ 
+
+ 
+
+ 
+
+lignina total, 2,2±0,1 % de resíduos minerais (cinzas) e 4,6±0,3% de extrativos. 
+
+A Figura 1 apresenta uma ilustração da estrutura da matriz lignocelulósica. 
+
+7 
+
+ 
+
+Figura 1 - Estrutura da matriz lignocelulósica 
+
+Fonte: Fengel, et al., 1984 
+
+ 
+
+1.3.1.  Celulose 
+
+A  celulose  é  um  biopolímero,  constituinte  da  parede  celular  vegetal, 
+
+formado  por  uma  longa  cadeia  de  glicoses,  associadas  na  forma  de  dímeros, 
+
+celobioses,  ligadas  através  de  ligações  β-1,4  glicosídicas,  apresentando 
+
+ligações  de  hidrogênio  intra  e  intermoleculares,  responsáveis  por  sua  cadeia 
+
+linear  e  ligação  com  a  hemicelulose,  como  se  observa  na  Figura  1.  A 
+
+macromolécula apresenta regiões cristalinas e amorfas, que apresentam taxas 
+
+de hidrólise diferenciadas (Liu, 2010). 
+
+1.3.2.  Hemicelulose 
+
+Hemiceluloses  são  polímeros  amorfos,  heterogêneos,  e  de  cadeia 
+
+relativamente curta. Seus principais constituintes são as pentoses, D-xilose e L-
+
+arabinose,  e  as  hexoses,  D-manose,  D-glicose  e  D-galactose.  Possui  cadeia 
+principal  com  ligações  β  (relativamente  fracas),  o  que  explica  sua  hidrólise 
+
+relativamente rápida na presença de ácidos. Além de servir de conexão entre a 
+
+ 
+
+ 
+
+ 
+
+celulose, hidrofílica, e a lignina, hidrofóbica, sua ligação com a lignina confere 
+
+impermeabilidade e resistência a parasitas (Liu, 2010). 
+
+8 
+
+1.3.3.  Lignina 
+
+Lignina  é  uma  macromolécula  amorfa  composta  principalmente  pelos 
+
+monômeros  p-hidróxi-fenil,  siringil  e  guaiacil.  É  responsável  pela  rigidez  e 
+
+resistência  mecânica,  além  da  defesa  do  vegetal  contra  enzimas  e  parasitas 
+
+(Liu, 2010; Brodeur, et al., 2011). 
+
+ 
+
+1.4. Pré-Tratamento 
+
+A etapa de pré-tratamento tem a finalidade de  desorganizar o arranjo da 
+
+biomassa,  aumentar  a  porosidade  e  reduzir  sua  cristalinade  o  que  torna  mais 
+
+fácil o acesso das enzimas, ou reagentes, ao substrato (via remoção da lignina 
+
+e  da  hemicelulose),  sem  degradar  a  matéria-prima  (a  celulose)  nem  gerar 
+
+resíduos  que  inibam  a  fermentação  (produtos  oriundos  da  degradação  da 
+
+glicose e da xilose). A Figura 2 ilustra  esquematicamente a biomassa antes e 
+
+após a etapa de pré-tratamento. 
+
+ 
+
+ 
+
+Figura 2 - Representação do processo de pré-tratamento de um material 
+
+lignocelulósico 
+
+Fonte: Brodeur, et al., 2011 
+
+ 
+
+ 
+
+ 
+
+Nos  próximos  itens  são  descritos  os  pré-tratamentos  a  que  foram 
+
+submetidas as amostras de bagaço analisadas neste trabalho. 
+
+9 
+
+ 
+
+1.4.1.  Pré-tratamento alcalino 
+
+Apresenta vantagens econômicas por poder ser realizado em temperatura 
+
+e pressão relativamente baixas, em relação aos outros métodos. É um método 
+
+bastante  eficaz  na  remoção  da  lignina  e  na  redução  da  cristalinidade  da 
+
+celulose (de Carli, 2011). 
+
+1.4.2.  Explosão a vapor 
+
+Este  método  consiste  em  manter  a  biomassa  em  contato  com  vapor  a 
+
+alta  pressão  para  promover  a  hidrólise  da  hemicelulose  por  certo  período  de 
+
+tempo.  Após  a  reação,  segue-se  uma  descompressão  repentina  (de  Carli, 
+
+2011). 
+
+1.4.3.  Hidrotérmico 
+
+Baseia-se em manter a biomassa em contato com água, aquecendo a alta 
+
+pressão por determinado tempo, a fim de causar a solubilização e degradação 
+
+da hemicelulose. 
+
+ 
+
+1.5. Hidrólise 
+
+A etapa de hidrólise é a conversão do polímero de carboidratos (celulose 
+
+ou hemicelulose) em açúcares fermentescíveis, através do uso de enzimas ou 
+
+reagentes  como  ácidos  inorgânicos.  Neste  trabalho  só  foi  analisada  a 
+
+sequência  exibida  na  Figura  3,  por  isso  só  será  descrita  a  rota  enzimática  da 
+
+hidrólise da celulose. 
+
+Figura 3 - Sequência de etapas da conversão de celulose a etanol 
+
+Fonte: Bommarius, et al., 2008 
+
+ 
+
+As  enzimas  celulases  se  dividem  em  dois  grupos  principais, 
+
+endoglucanases  e  exoglucanases  ou  celobiohidrolases:  as  primeiras  se 
+
+difundem  da  fase  líquida  até  o  sólido,  tendo  preferência  por  se  adsorver  na 
+
+ 
+
+ 
+
+10 
+
+ 
+
+região amorfa da celulose, e só então reduz  o grau de  polimerização desta; a 
+
+segunda  se  adsorve  nas  extremidades  do  polímero, 
+
+liberando  celo-
+
+oligosacarídeos,  principalmente celobiose, na fase aquosa. Nesta fase, ocorre 
+
+a  conversão  de  celobiose  em  glicose  pela  ação  da  β-glucosidase  (vide 
+
+esquema  na  Figura  4).  Percebe-se  que  a  primeira  etapa  é  a  limitante,  visto  a 
+
+resistência à  transferência  de massa  e  adsorção,  e  nota-se  a necessidade do 
+
+aumento  de  acessibilidade  à  celulose  pelas  enzimas,  realizado  no  pré-
+
+tratamento (de Carli, 2011). 
+
+Segundo Carvalho, 2011, as celulases são inibidas pela celobiose e a  β-
+
+glucosidase  é  inibida  pela  glicose,  o  que  pode  afetar  a  escolha  do  modo  de 
+
+operação do reator de hidrólise. 
+
+ 
+
+Figura 4 - Esquema da hidrólise enzimática da celulose 
+
+ 
+
+ 
+
+Fonte: van Zyl, et al., 2011 
+
+1.6. Fermentação 
+
+A  fermentação  é  um  processo  metabólico,  realizado  anaerobicamente,  e 
+
+para  a  produção  de  etanol  de  segunda  geração,  pode  ser  a  conversão  de 
+
+ 
+
+ 
+
+ 
+
+glicose  ou  xilose  em  etanol.  Como  dito  anteriormente,  neste  trabalho  só  foi 
+
+analisada  a  rota  da  Figura  3,  logo  será  vista  a  fermentação  de  glicose  com 
+
+Saccharomyces cerevisiae, ou seja, esta etapa é idêntica à produção de etanol 
+
+11 
+
+de primeira geração. 
+
+ 
+
+Figura 5 - Rota simplificada da fermentação alcoólica da glicose 
+
+Fonte: Flikweert, 1999 
+
+ 
+
+1.7. Comparação entre os métodos de hidrólise e fermentação 
+
+As etapas de hidrólise e fermentação podem ser realizadas em separado, 
+
+SHF  (Separated  Hydrolysis  and  Fermentation),  ou  simultaneamente,  SSF 
+
+(Simultaneous  Saccharification  and  Fermentation),  ambas  com  vantagens  e 
+
+desvantagens.  
+
+No  primeiro  processo  é  possível  operar  na  temperatura  e  pH  ótimo  de 
+
+cada  etapa,  (40-50°C  na  hidrólise  e  30-37°C  na  fermentação),  diferente  do 
+
+segundo caso, onde pode ocorrer aumento da morte celular, pelo aumento da 
+temperatura  (>  30-32  oC),  e/ou  redução  na  velocidade  de  hidrólise,  pela 
+redução da temperatura (< 55-50 oC). No segundo as inibições por celobiose e 
+glicose  das  enzimas  e  microrganismos  são  minimizadas  pelo  consumo 
+
+imediato,  reduz-se  o  risco  de  contaminação  pela  presença  de  etanol  (apesar 
+
+deste causar redução da atividade enzimática) (de Carli, 2011). 
+
+Os  dados  da  literatura  apontam  para  vantagens  do  processo  SSF,  no 
+
+entanto deve-se avaliar se  este cenário se mantem  após o escalonamento do 
+
+reator,  visto  a  grande  viscosidade  da  suspensão  com  alta  carga  de  sólidos, 
+
+uma  dificuldade  para  agitação  e  aeração  (fundamentais  para  a  sobrevivência 
+
+dos microrganismos). 
+
+Neste trabalho avaliou-se apenas o método SHF. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+12 
+
+1.8. Simulador EMSO (Environment for Modelling, Simulation and 
+
+Optimization) 
+
+EMSO é um simulador brasileiro, capaz realizar simulações dinâmicas ou 
+
+estacionárias,  resolver  equações  algébrico-diferenciais,  otimizar  processos, 
+
+estimar  parâmetros  de  modelos  implementadas,  possui  uma  biblioteca  de 
+
+propriedades físicas (VRTherm) e de modelos de equipamentos (EML - EMSO 
+
+Model  Library),  permite  criação  e  utilização  de  modelos  criados  pelo  usuário 
+
+através  de  uma  linguagem  própria  (EMSO  Modeling  Language),  orientada  a 
+
+objetos.  A  linguagem  de  modelagem  utiliza  uma  abordagem  orientada  a 
+
+equações,  ou  seja,  igualar  ambos  os  lados  de  uma  expressão  em  vez  de 
+
+atribuir o valor de um lado a um termo do outro, o que pode reduzir o número 
+
+de  iterações  até  a  convergência,  comparado  com  um  simulador  modular-
+
+sequencial, mas pode dificultar a convergência para simulações complexas. 
+
+ 
+
+2.  Objetivos 
+
+Os objetivos deste trabalho foram implementar e validar, com emprego de 
+
+dados  experimentais,  modelos  matemáticos  que  descrevam  a  cinética  da 
+
+hidrólise enzimática do bagaço de cana pré-tratado. Posteriormente, utilizar os 
+
+modelos  ajustados  na  análise econômica  preliminar  do  processo de  produção 
+
+de  etanol  de  segunda  geração  (E2G)  a  partir  desta  biomassa  e  avaliar  a 
+
+influência de parâmetros econômicos como o custo do etanol e das enzimas no 
+
+resultado da análise. 
+
+ 
+
+3.  Metodologia 
+
+ 
+
+3.1. Validação cinética 
+
+Para  a  implementação  no  simulador  foram  escolhidos  três  modelos 
+
+matemáticos  da  cinética  da  hidrólise  enzimática,  conforme  apresentado  por 
+
+Carvalho, 2011:  
+
+  Michaelis-Menten para meio pseudo-homogêneo com inibição 
+
+competitiva pelo produto (MMi), Equação (1) (Carvalho, 2011) 
+
+ 
+
+ 
+
+ 
+
+          
+
+(      )
+
+   (   
+
+ 
+  
+
+)   (      )
+
+ 
+
+13 
+
+(1) 
+
+ 
+
+  Michaelis-Menten em meio heterogêneo (           ) com inibição 
+
+competitiva pelo produto (MMh), Equação (2) (Carvalho, 2011) 
+
+ 
+
+      
+
+ 
+
+(      )    
+
+   (   
+
+)     
+
+ 
+  
+
+ 
+
+  Modelo de Chrastil, Equação (3) (Carvalho, 2011; Chrastil, 1987; 
+
+Chrastil, 1988) 
+
+        (       (         ))
+
+ 
+
+ 
+
+(2) 
+
+ 
+
+(3) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Os  parâmetros  cinéticos  (    ,    ,    ,     e/ou   )  foram  obtidos  dos 
+ajustes  aos  dados  experimentais  de:  de  Carli,  2011,  (Souza,  2013  e  Correa, 
+
+2014)  utilizando  o  ambiente  Estimation  do  EMSO  e  algoritmo  Complex 
+
+(baseado no método de poliedros flexíveis, visando minimizar o erro do ajuste 
+
+variando estes parâmetros). As outras variáveis, presentes nas equações (1) a 
+
+(3),  são  calculadas  a  partir  das  variáveis  de  entrada  –  Carga  de  sólidos 
+(        ),  carga  enzimática  (        ),  atividade  enzimática  (        )  e  fração 
+de  celulose  no  bagaço  pré-tratado  (         ).  Considerou-se  a  massa 
+específica do BCA como sendo:            ⁄ . 
+
+                          
+
+                             
+
+⁄
+
+ 
+
+                      
+
+⁄
+
+      ⁄  
+
+(4) 
+
+(5) 
+
+(6) 
+
+Foram  analisados  onze  cenários  com  diferentes  variáveis  de  entrada, 
+
+conforme apresenta a Tabela Tabela 1. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Tabela 1 - Lista de condições experimentais analisadas na validação dos modelos 
+
+14 
+
+Abreviatura 
+
+Pré-
+
+Tratamento 
+
+matemáticos 
+
+Complexo 
+
+enzimático 
+
+(Atividade 
+
+enzimática, 
+
+      ⁄
+
+) 
+
+Carga 
+
+enzimática 
+
+(             
+
+⁄
+
+) 
+
+Carga de 
+
+Sólidos 
+
+A1 
+
+A2 
+
+A3 
+
+A4 
+
+A5 
+
+A6 
+
+B1 
+
+B2 
+
+B3 
+
+B4 
+
+Hidrotérmico 
+
+1 (108) 
+
+Hidrotérmico 
+
+1 (108) 
+
+Hidrotérmico 
+
+1 (108) 
+
+Hidrotérmico 
+
+2 (297,5) 
+
+Hidrotérmico 
+
+2 (297,5) 
+
+Hidrotérmico 
+
+2 (297,5) 
+
+H2SO4 1% e 
+
+NaOH 7% 
+
+H2SO4 1% e 
+
+NaOH 7% 
+
+Explosão a vapor 
+
+e lavagem 
+
+1 (108) 
+
+1 (108) 
+
+1 (108) 
+
+NaOH 7% 
+
+1 (108) 
+
+20 
+
+20 
+
+20 
+
+20 
+
+20 
+
+20 
+
+40 
+
+40 
+
+40 
+
+40 
+
+C1* 
+
+Explosão a vapor 
+
+1 (297,5) 
+
+22,4 
+
+ 
+
+Fontes: (de Carli, 2011), (Correa, 2014) e (Souza, 2013) 
+
+10% 
+
+15% 
+
+20% 
+
+10% 
+
+15% 
+
+20% 
+
+15% 
+
+20% 
+
+20% 
+
+20% 
+
+10% 
+
+O  cenário  C1  utilizou  outro  tipo  de  impelidor  (“orelha  de  elefante”)  na 
+
+etapa  de  hidrólise.  Nos  demais  ensaios  de  hidrólise  foi  empregado  um 
+
+impelidor do tipo turbina de pás planas, (Rushton). Com a finalidade de reduzir 
+
+a  resistência  difusional,  e  devido  à  validação  cinética 
+
+ter  sido 
+
+feita 
+
+posteriormente  aos  demais,  só  foi  realizado  o  ajuste  do  modelo  que  melhor 
+
+representou estes cenários. 
+
+ 
+
+3.2. Avaliação econômica preliminar 
+
+A  análise  econômica  foi  baseada  no  fluxograma  da  Figura  6,  para  o 
+
+método SHF, com simulação rigorosa apenas da cinética enzimática e agitação 
+
+deste reator, logo a variável tempo reflete o tempo de hidrólise apenas. 
+
+ 
+
+ 
+
+ 
+a
+d
+a
+u
+
+t
+
+e
+e
+
+f
+
+ 
+
+i
+
+a
+c
+m
+ô
+n
+o
+c
+e
+
+ 
+
+e
+s
+
+i
+l
+
+á
+n
+a
+à
+
+ 
+
+ 
+
+f
+
+l
+
+t
+
+e
+n
+e
+r
+e
+e
+r
+ 
+a
+m
+a
+r
+g
+o
+x
+u
+F
+ 
+-
+ 
+6
+a
+r
+u
+g
+F
+
+ 
+
+i
+
+ 
+
+ 
+
+ 
+
+15 
+
+ 
+l
+
+a
+o
+s
+s
+e
+P
+o
+v
+r
+e
+c
+A
+
+ 
+
+ 
+:
+
+t
+
+e
+n
+o
+F
+
+ 
+
+ 
+
+16 
+
+ 
+
+A  partir  de  uma  base  de  cálculo  de  uma  tonelada  (1000  kg)  de  bagaço 
+
+úmido  (50%  de  umidade)  in-natura,  procede-se  a  etapa  de  pré-tratamento.  O 
+
+rendimento  mássico  dessa  etapa  é  calculado  pela  Equação  7.  A  composição 
+
+do BCA pré-tratado e a demanda de vapor da etapa, estão disponíveis em: de 
+
+Carli,  2011,  Furlan,  et  al.,  2013  e  Souza,  2013,  e  são  apresentados  na 
+
+TabelaTabela 2. 
+
+                                
+
+⁄
+
+ 
+
+(7) 
+
+Tabela 2 - Dados utilizados na simulação da etapa de pré-tratamento 
+
+Pré-
+
+Tratamento  Celulose  Hemicelulose  Lignina 
+
+Demanda 
+
+Rendimento 
+
+de Vapor 
+
+Mássico 
+
+no PT 
+
+(kg) 
+
+Hidrotérmico 
+
+61,2% 
+
+5,9% 
+
+31,0% 
+
+66% 
+
+3291,5 
+
+H2SO4 1% 
+
+e NaOH 7% 
+
+Explosão a 
+
+vapor e 
+
+lavagem 
+
+75,2% 
+
+13,1% 
+
+12,4% 
+
+35% 
+
+1781,4 
+
+57,4% 
+
+6,1% 
+
+32,8% 
+
+59% 
+
+500,0 
+
+NaOH 7% 
+
+77,9% 
+
+10,9% 
+
+12,0% 
+
+36% 
+
+488,8 
+
+Explosão a 
+
+vapor 
+
+43,6% 
+
+12,5% 
+
+29,0% 
+
+59% 
+
+500,0 
+
+Fontes: de Carli, 2011, Furlan, et al., 2013 e Souza, 2013 
+
+A  separação  das  frações  sólida  e  líquida  é  considerada  ideal:  sem 
+
+perdas,  mantém  a  composição  do  BCA  pré-tratado  e  não  requer  gasto 
+
+energético. 
+
+ 
+
+Na hidrólise a cinética da reação enzimática é representada pelo modelo 
+
+com melhores ajustes na maioria dos casos analisados, considerando o custo 
+
+com  enzimas  para  atingir  a  carga  enzimática  desejada.  A  solução  tem  massa 
+específica considerada constante igual a da água pura a 4°C (          ). 
+
+            
+
+       (          )     
+
+⁄
+
+           
+
+                                     
+
+ 
+
+(8) 
+
+ 
+
+(9) 
+
+ 
+
+Para a agitação, inicialmente foi escolhido o impelidor tipo pitched-blade 
+
+visto  que  apresenta  consumo  de  potência  significativamente  menor  do  que  o 
+
+ 
+
+ 
+
+ 
+
+tipo  Rushton,  ambos  comparados  em  Pereira,  et  al.,  2011.    A  modelagem  do 
+
+consumo de potência para este tipo de impelidor segue as equações (10) a (14) 
+
+(Pereira, et al., 2011; Nagata, 1975), com o cálculo do gasto energético para a 
+
+fração do reator utilizada, representada pelas equações (15) a (17). 
+
+17 
+
+    
+
+ 
+  
+
+    (
+
+                
+                )
+
+ 
+
+ 
+ 
+
+     
+)
+
+(     )    
+
+(
+
+ 
+ 
+
+ 
+
+        
+
+ 
+ 
+
+(    (
+
+ 
+ 
+
+     )
+
+     ) 
+
+                  (
+
+ 
+     )
+
+ 
+ 
+
+      
+
+ 
+ 
+
+ 
+
+         (         ) 
+
+      
+
+    
+
+ 
+
+ 
+
+ 
+
+       ∫   ( )    
+
+ 
+
+ 
+
+                            
+
+⁄
+
+ 
+
+                                    
+
+(10) 
+
+(11) 
+
+(12) 
+
+(13) 
+
+(14) 
+
+(15) 
+
+(16) 
+
+(17) 
+
+Para  isto,  é  necessário  o  conhecimento  da  viscosidade  da  suspensão, 
+
+das  dimensões  do  reator  e  da  frequência  de  rotação  do  impelidor.  As 
+
+dimensões do reator e frequência de rotação são obtidas mantendo as relações 
+geométricas  de  Pereira,  et  al.,  2011  ( 
+ ⁄       ,     
+   ,       ),  utilizando  como  critério  de  escalonamento  a  velocidade  constante 
+na ponta do impelidor (equação (19)), visando um volume de aproximadamente 
+
+ ⁄       ,   
+
+ ⁄    ,   
+
+10  m³  com  rotação  tal  que  houvesse  dados  de  viscosidade  aparente 
+
+disponíveis em Correa, 2014. A viscosidade é obtida por um ajuste hiperbólico 
+
+da viscosidade em função da conversão, a partir de dados de Correa, 2014. 
+
+         
+
+   
+ 
+
+  
+
+   
+
+  
+
+ ⁄      
+
+   (
+
+)     
+
+  
+ 
+     
+⁄
+  
+
+      
+
+ 
+
+ 
+
+ 
+
+(18) 
+
+(19) 
+
+(20) 
+
+(21) 
+
+Para  o  caso  C1,  pela  indisponibilidade  da  viscosidade  aparente  na 
+
+rotação aplicada e de correlações para o número de potência para o impelidor 
+
+ 
+
+ 
+
+ 
+
+utilizado,  decidiu-se  ajustar  o  número  de  potência  em  função  da  conversão 
+
+(equação  (22)),  mantendo  o  reator  nas  dimensões  empregadas  nos  outros 
+
+cenários. 
+
+18 
+
+   (
+
+   
+  
+
+)     
+
+ 
+
+      
+
+ 
+
+(22) 
+
+A  separação  posterior  é  considerada  ideal,  sem  perdas  ou  consumo 
+
+energético  e  sem  alteração  da  composição,  com  umidade  da  fração  sólida 
+
+diferente  do  BCA  in-natura  (suposta  agora  em  80%).  A  fração  sólida  é 
+
+destinada  para  a  caldeira  enquanto  a  fração  líquida  vai  para  a  concentração, 
+
+onde  é fornecida  a massa  de  vapor  necessária  para  concentrar  o  caldo  até o 
+
+necessário  para  a  fermentação,  e  retirada  a  massa  de  vapor  produzido  no 
+
+último  efeito  do  evaporador,  dados  esses  presentes  em  (Furlan,  et  al.,  2013) 
+
+em função do tipo de pré-tratamento, apresentados na Tabela 3. 
+
+Tabela 3 - Dados utilizados na simulação da etapa de concentração 
+
+Pré-Tratamento 
+
+Demanda de vapor 
+
+Quantidade de vapor 
+
+na concentração 
+
+produzido no último 
+
+(kg) 
+
+efeito (kg) 
+
+Hidrotérmico 
+
+4072,0 
+
+H2SO4 1% e NaOH 7% 
+
+9500,1 
+
+3235,4 
+
+8869,9 
+
+Explosão a vapor e 
+
+lavagem 
+
+2369,9 
+
+2167,2 
+
+NaOH 7% 
+
+3103,1 
+
+2819,2 
+
+Fonte: (Furlan, et al., 2013) 
+
+A 
+
+rendimento  em 
+
+fermentação  é  simulada  por  um 
+
+relação  a 
+estequiometria  (               )  de  90%  (ECS,  2007),  ao  invés  de  uma 
+simulação  baseada  na  modelagem  cinética,  por  questão  de  simplicidade. 
+
+Analogamente,  a  destilação  é  simulada  por  uma  fração  recuperada  de  etanol 
+(  ) de 99% (ECS, 2007) e uma demanda de vapor na borbotagem (      ) de 
+                              
+
+ (Furlan, et al., 2013), para etanol hidratado.  
+
+⁄
+
+    ⁄  
+
+           
+         
+
+ 
+
+                                    ⁄  
+
+                  
+
+        
+
+ 
+
+(23) 
+
+(24) 
+
+ 
+
+ 
+
+ 
+
+    
+
+                 
+                  
+
+  
+
+        
+
+                
+                 
+
+ 
+
+                                      
+
+19 
+
+(25) 
+
+(26) 
+
+(27) 
+
+Na  caldeira  a  massa  de  vapor  produzida  é  calculada  pela  equação  (28), 
+
+através  do  rendimento  do  equipamento  (80%  segundo  Turbines  Info,  2011)  e 
+
+da  razão  entre  a  energia  transferida  da  combustão  e  a  variação  da  entalpia 
+
+específica  do  fluido,  realizada  no  equipamento  (água  a  92  bar,  105,7°C  para 
+vapor  a  66  bar,  530°C  (Fiomari,  et  al.,  2006):                 (         
+       )      ⁄
+,  (Smith,  et  al.,  2005)).  A  massa  de  bagaço  alimentada  é 
+calculada  pelo  simulador,  tal  que  o  vapor  produzido  compense  a  massa  de 
+
+vapor  necessária  para  o  resto  do  processo.  A  expressão  para  se  computar  o 
+
+poder calorífico inferior (PCI) a partir do superior (PCS), (31), é obtida de EPA, 
+2007, considerando                      ⁄
+desta  etapa  considera  a  perda  de  massa  e  mudança  de  composição  do 
+
+ (Smith, et al., 2005). A modelagem 
+
+bagaço, devido ao consumo da celulose na hidrólise, (equações (29), (30) e (33)) 
+
+e o bagaço como uma mistura ideal (propriedades da mistura correspondem  à 
+
+média  ponderada,  em 
+
+relação  à  composição,  das  propriedades  dos 
+
+componentes puros (32)). 
+
+                            
+
+                                 (          )
+ 
+
+          
+
+                  (          )       (         ) 
+
+                    
+
+                  
+
+              
+
+    (     ) 
+
+                   (               ) 
+
+       ∑           
+
+ 
+
+ 
+
+            
+
+  
+
+  
+     
+
+  {
+
+(     ) 
+
+               
+
+  
+
+                
+
+ 
+
+       ∑           
+
+ 
+
+ 
+         
+
+   
+
+ 
+
+      
+
+(28) 
+
+(29) 
+
+(30) 
+
+(31) 
+
+(32) 
+
+(33) 
+
+(34) 
+
+(35) 
+
+                                     
+
+                        
+
+Por  fim,  na  turbina  a  energia  produzida  é  calculada  pelo  produto  dos 
+rendimentos da turbina e do gerador (                               (Turbines 
+
+ 
+
+ 
+
+20 
+
+ 
+
+Info, 2011)) e da variação de entalpia no equipamento (vapor a 66 bar, 530°C 
+para  vapor  saturado  a  2,37  bar  (Fiomari,  et  al.,  2006):              
+ (                 )      ⁄
+
+, (Smith, et al., 2005)). 
+
+                                (          )                     
+
+                                  
+
+(36) 
+
+(37) 
+
+O  fluxo  de  caixa  total,  então,  é  a  soma  dos  fluxos  de  caixa  das  outras 
+
+etapas. 
+
+                                                    
+
+(38) 
+
+O fluxo de caixa total da queima direta do bagaço na caldeira é calculado 
+
+com  as  mesmas  equações  da  caldeira  e  da 
+
+turbina,  apresentadas 
+
+anteriormente. 
+
+Os custos de aquecimento do reator de hidrólise e resfriamento e aeração 
+
+da  dorna  de  fermentação,  assim  como  possível  ganho  com  a  venda  da 
+
+levedura excedente são desconsiderados nesta análise. 
+
+Para  converter  os  resultados  (qualquer  variável   )  da  base  em  tonelada 
+de  bagaço  na  alimentação  do  pré-tratamento  para  tonelada  de  cana,  deve-se 
+
+calcular  a  massa  de  bagaço  disponível  para  a  rota  2G  (equação  (39),  com 
+                      (Cardona, et al., 2009) e                       (Furlan, et 
+al.,  2013))  e  a  massa  consumida  (equação  (41),  logo  se  pode  calcular  o 
+
+número de toneladas de cana necessárias para igualar esse resultado. 
+
+                                          
+
+                          
+
+            
+
+ 
+                  (          )
+
+                                         
+
+     
+
+      
+
+              
+
+ 
+
+     
+
+ 
+   
+
+ 
+
+(39) 
+
+(40) 
+
+(41) 
+
+(42) 
+
+(43) 
+
+ 
+
+ 
+
+Também  foi  analisada  a  possibilidade  da  utilização  de  palha  em  conjunto 
+
+com  bagaço  na  alimentação  da  caldeira,  visando  aumentar  a  produção  de 
+
+etanol.  Como  a  palha  é  usada  na  cobertura  do  solo,  deve-se  determinar  a 
+fração  da  palha  disponível  (utilizando             
+            (Martins,  et  al., 
+1999),             
+           (Lamonica, 2007)): 
+
+(CONAB,  2012)  e                 
+
+⁄
+
+⁄
+
+                
+
+ 
+
+ 
+
+ 
+
+                  
+
+      
+
+⁄
+
+          
+    
+
+                
+
+21 
+
+(44) 
+
+A massa de palha alimentada na caldeira, foi atrelada a massa de bagaço 
+
+total utilizado, de acordo com as proporções destes na cana  e disponibilidade 
+
+de uso: 
+
+                                                          
+
+ 
+
+A massa de vapor produzido é calculada pela Equação (6). 
+
+                  
+
+         
+          
+
+                    
+
+(
+
+           (          ) 
+
+) 
+
+                   (             )
+
+(45) 
+
+ 
+
+(46) 
+
+Com          calculado pelas equações (31)-(35), utilizando a composição de 
+44,26% de celulose, 31,10% de hemicelulose, 19,01% de lignina (Santos, et al., 
+
+2013) e 50% de umidade (Lamonica, 2007). 
+
+ 
+
+4.  Resultados e Discussão 
+
+4.1. Validação cinética 
+
+Os  parâmetros  cinéticos  ajustados  para  os  três  modelos  estudados,  e 
+
+para  cada  um  dos  casos  analisados  estão  dispostos  nas  Tabelas  Tabela  4, 
+
+Tabela  5  e  Tabela  6.  As  curvas  ajustadas  foram  plotadas  em  contraste  aos 
+
+dados experimentais nas Figuras Figura 7 a Figura 16. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+22 
+
+Tabela 4 - Parâmetros cinéticos ajustados para o modelo de Michaelis-Menten 
+
+com inibição competitiva para meio pseudo-homogêneo 
+
+Caso 
+
+    (
+
+ 
+⁄
+      
+
+) 
+
+A1 
+
+A2 
+
+A3 
+
+A4 
+
+A5 
+
+A6 
+
+B1 
+
+B2 
+
+B3 
+
+B4 
+
+1,548 
+
+0,933 
+
+0,504 
+
+1,581 
+
+1,209 
+
+0,500 
+
+0,500 
+
+1,610 
+
+1,060 
+
+1,622 
+
+  (
+
+ 
+ ⁄ ) 
+10,481 
+
+10,822 
+
+10,905 
+
+10,264 
+
+10,026 
+
+10,303 
+
+9,591 
+
+9,597 
+
+10,999 
+
+9,586 
+
+  (
+
+ 
+ ⁄ ) 
+0,0096 
+
+0,0095 
+
+0,0095 
+
+0,032 
+
+0,061 
+
+0,097 
+
+1,034 
+
+0,184 
+
+0,186 
+
+0,117 
+
+Fonte: Acervo Pessoal 
+
+Tabela 5 - Parâmetros cinéticos ajustados para o modelo de Michaelis-Menten 
+
+com inibição competitiva para meio heterogêneo 
+
+Caso 
+
+A1 
+
+A2 
+
+A3 
+
+A4 
+
+A5 
+
+A6 
+
+B1 
+
+B2 
+
+B3 
+
+B4 
+
+ ( 
+
+) 
+
+   ⁄
+9,208 
+
+  (
+
+ 
+ ⁄ ) 
+10,466 
+
+  (
+
+ 
+ ⁄ ) 
+0,143 
+
+4,650 
+
+4,466 
+
+9,583 
+
+9,513 
+
+9,138 
+
+9,583 
+
+9,906 
+
+9,894 
+
+9,888 
+
+10,164 
+
+10,498 
+
+10,276 
+
+10,224 
+
+10,058 
+
+10,276 
+
+10,503 
+
+10,733 
+
+10,882 
+
+0,106 
+
+0,045 
+
+1,377 
+
+1,324 
+
+0,616 
+
+1,377 
+
+0,555 
+
+0,438 
+
+0,364 
+
+ 
+
+ 
+
+Fonte: Acervo Pessoal 
+
+ 
+
+ 
+
+Tabela 6 - Parâmetros cinéticos ajustados para o modelo de Chrastil 
+
+Caso 
+
+  ( 
+⁄
+      
+
+)       
+
+  
+
+A1 
+
+A2 
+
+A3 
+
+A4 
+
+A5 
+
+A6 
+
+B1 
+
+B2 
+
+B3 
+
+B4 
+
+C1 
+
+1,231 
+
+0,175 
+
+0,494 
+
+11,390 
+
+12,741 
+
+5,655 
+
+15,929 
+
+6,333 
+
+7,072 
+
+3,231 
+
+26,149 
+
+0,372 
+
+0,344 
+
+0,589 
+
+0,328 
+
+0,426 
+
+0,476 
+
+0,620 
+
+0,597 
+
+0,661 
+
+0,539 
+
+0,492 
+
+Fonte: Acervo Pessoal 
+
+Figura 7 - Ajuste aos dados no caso A1 
+
+Ajuste - MMi
+
+Ajuste - MMh
+
+Ajuste - Chrastil
+
+Experimental
+
+ 
+
+25
+
+20
+
+15
+
+10
+
+5
+
+0
+
+ 
+
+ 
+)
+L
+/
+g
+(
+ 
+e
+s
+o
+c
+i
+l
+g
+e
+d
+o
+ã
+ç
+a
+r
+t
+n
+e
+c
+n
+o
+C
+
+ 
+
+0
+
+10
+
+20
+
+30
+
+40
+
+50
+
+60
+
+70
+
+tempo  (h) 
+
+Fonte: Acervo Pessoal 
+
+ 
+
+ 
+
+ 
+
+23 
+
+  
+
+ 
+
+ 
+
+ 
+)
+L
+/
+g
+(
+ 
+e
+s
+o
+c
+i
+l
+g
+e
+d
+o
+ã
+ç
+a
+r
+t
+n
+e
+c
+n
+o
+C
+
+ 
+
+ 
+
+ 
+)
+L
+/
+g
+(
+ 
+e
+s
+o
+c
+i
+l
+g
+e
+d
+o
+ã
+ç
+a
+r
+t
+n
+e
+c
+n
+o
+C
+
+ 
+
+Figura 8 - Ajuste aos dados no caso A2 
+
+Ajuste - MMi
+Ajuste - MMh
+Ajuste - Chrastil
+Experimental
+
+0
+
+10
+
+20
+
+30
+
+40
+
+50
+
+60
+
+70
+
+tempo  (h) 
+
+Fonte: Acervo Pessoal 
+
+Figura 9 - Ajuste aos dados no caso A3 
+
+Ajuste - MMi
+Ajuste - MMh
+Ajuste - Chrastil
+Experimental
+
+0
+
+10
+
+20
+
+30
+
+40
+
+50
+
+60
+
+70
+
+tempo  (h) 
+
+Fonte: Acervo Pessoal 
+
+ 
+
+ 
+
+ 
+
+30
+
+25
+
+20
+
+15
+
+10
+
+5
+
+0
+
+30
+
+25
+
+20
+
+15
+
+10
+
+5
+
+0
+
+ 
+
+24 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+)
+L
+/
+g
+(
+ 
+e
+s
+o
+c
+i
+l
+g
+e
+d
+o
+ã
+ç
+a
+r
+t
+n
+e
+c
+n
+o
+C
+
+ 
+
+ 
+
+ 
+)
+L
+/
+g
+(
+ 
+e
+s
+o
+c
+i
+l
+g
+e
+d
+o
+ã
+ç
+a
+r
+t
+n
+e
+c
+n
+o
+C
+
+ 
+
+ 
+
+60
+
+50
+
+40
+
+30
+
+20
+
+10
+
+0
+
+0
+
+Figura 10 - Ajuste aos dados no caso A4 
+
+Ajuste - MMi
+Ajuste - MMh
+Ajuste - Chrastil
+Experimental
+
+20
+
+40
+
+60
+
+80
+
+100
+
+120
+
+140
+
+160
+
+tempo  (h) 
+
+Fonte: Acervo Pessoal 
+
+Figura 11 - Ajuste aos dados no caso A5 
+
+80
+
+70
+
+60
+
+50
+
+40
+
+30
+
+20
+
+10
+
+0
+
+ 
+
+Ajuste - MMi
+
+Ajuste - MMh
+
+Ajuste - Chrastil
+
+Experimental
+
+0
+
+20
+
+40
+
+60
+
+80
+
+100
+
+120
+
+140
+
+160
+
+tempo  (h) 
+
+Fonte: Acervo Pessoal 
+
+ 
+
+25 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+)
+L
+/
+g
+(
+ 
+e
+s
+o
+c
+i
+l
+g
+e
+d
+o
+ã
+ç
+a
+r
+t
+n
+e
+c
+n
+o
+C
+
+ 
+
+ 
+
+ 
+)
+L
+/
+g
+(
+ 
+e
+s
+o
+c
+i
+l
+g
+e
+d
+o
+ã
+ç
+a
+r
+t
+n
+e
+c
+n
+o
+C
+
+ 
+
+Figura 12 - Ajuste aos dados no caso A6 
+
+26 
+
+Ajuste - MMi
+Ajuste - MMh
+Ajuste - Chrastil
+Experimental
+
+0
+
+20
+
+40
+
+60
+
+80
+
+100
+
+120
+
+140
+
+160
+
+tempo  (h) 
+
+Fonte: Acervo Pessoal 
+
+Figura 13 - Ajuste aos dados no caso B1 
+
+Ajuste - MMi
+Ajuste - MMh
+Ajuste - Chrastil
+Experimental
+
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+12
+
+14
+
+16
+
+tempo  (h) 
+
+Fonte: Acervo Pessoal 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+90
+
+80
+
+70
+
+60
+
+50
+
+40
+
+30
+
+20
+
+10
+
+0
+
+90
+
+80
+
+70
+
+60
+
+50
+
+40
+
+30
+
+20
+
+10
+
+0
+
+ 
+
+ 
+
+ 
+
+120
+
+105
+
+90
+
+75
+
+60
+
+45
+
+30
+
+15
+
+0
+
+100
+
+90
+
+80
+
+70
+
+60
+
+50
+
+40
+
+30
+
+20
+
+10
+
+0
+
+ 
+
+ 
+)
+L
+/
+g
+(
+ 
+e
+s
+o
+c
+i
+l
+g
+e
+d
+o
+ã
+ç
+a
+r
+t
+n
+e
+c
+n
+o
+C
+
+ 
+
+ 
+
+ 
+)
+L
+/
+g
+(
+ 
+e
+s
+o
+c
+i
+l
+g
+e
+d
+o
+ã
+ç
+a
+r
+t
+n
+e
+c
+n
+o
+C
+
+ 
+
+Ajuste - MMi
+Ajuste - MMh
+Ajuste - Chrastil
+Experimental
+
+0
+
+5
+
+10
+
+15
+
+20
+
+tempo  (h) 
+
+25
+
+30
+
+35
+
+Fonte: Acervo Pessoal 
+
+Figura 15 - Ajuste aos dados no caso B3 
+
+Ajuste - MMi
+Ajuste - MMh
+Ajuste - Chrastil
+Experimental
+
+0
+
+10
+
+20
+
+30
+
+tempo  (h) 
+
+40
+
+50
+
+60
+
+Fonte: Acervo Pessoal 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 14 - Ajuste aos dados no caso B2 
+
+27 
+
+ 
+
+ 
+
+ 
+
+Figura 16 - Ajuste aos dados no caso B4 
+
+28 
+
+ 
+
+125
+
+113
+
+100
+
+88
+
+75
+
+63
+
+50
+
+38
+
+25
+
+13
+
+0
+
+50
+
+40
+
+30
+
+20
+
+10
+
+ 
+
+ 
+)
+L
+/
+g
+(
+ 
+e
+s
+o
+c
+i
+l
+g
+e
+d
+o
+ã
+ç
+a
+r
+t
+n
+e
+c
+n
+o
+C
+
+ 
+
+ 
+
+ 
+)
+L
+/
+g
+(
+ 
+e
+s
+o
+c
+i
+l
+g
+e
+d
+o
+ã
+ç
+a
+r
+t
+n
+e
+c
+n
+o
+C
+
+ 
+
+Ajuste - MMi
+Ajuste - MMh
+Ajuste - Chrastil
+Experimental
+
+0
+
+10
+
+20
+
+30
+
+40
+
+50
+
+tempo  (h) 
+
+Fonte: Acervo Pessoal 
+
+Figura 17 - Ajuste aos dados no caso C1 
+
+Experimental
+
+Ajuste - Chrastil
+
+ 
+
+ 
+
+0
+
+0
+
+20
+
+40
+
+60
+
+80
+
+100
+
+tempo (h) 
+
+Fonte: Acervo Pessoal 
+
+Comparando  os  modelos  analisados  pelos  ajustes  e  pelo  coeficiente  de 
+
+determinação (r²), apresentado na Tabela Tabela 7, percebe-se que o modelo 
+
+ 
+
+ 
+
+ 
+
+de Chrastil foi o que melhor se ajustou aos dados experimentais na maioria dos 
+
+casos vistos. Assim, este modelo   foi escolhido para representar a cinética do 
+
+processo na segunda parte do trabalho. 
+
+Tabela 7 - Comparação entre os modelos pelo coeficiente de determinação (r²) 
+
+29 
+
+   
+
+A1 
+
+A2 
+
+A3 
+
+A4 
+
+A5 
+
+A6 
+
+B1 
+
+B2 
+
+B3 
+
+B4 
+
+MMi 
+
+0,951 
+
+0,953 
+
+0,951 
+
+0,973 
+
+0,977 
+
+0,969 
+
+0,941 
+
+0,990 
+
+0,982 
+
+0,978 
+
+MMh 
+
+Chrastil 
+
+0,951 
+
+0,953 
+
+0,950 
+
+0,971 
+
+0,978 
+
+0,969 
+
+0,930 
+
+0,987 
+
+0,979 
+
+0,976 
+
+0,961 
+
+0,973 
+
+0,954 
+
+0,983 
+
+0,974 
+
+0,967 
+
+0,935 
+
+0,993 
+
+0,994 
+
+0,983 
+
+Melhor 
+
+Ajuste 
+
+Chrastil 
+
+Chrastil 
+
+Chrastil 
+
+Chrastil 
+
+MMh 
+
+MMi 
+
+MMi 
+
+Chrastil 
+
+Chrastil 
+
+Chrastil 
+
+Fonte: Acervo Pessoal 
+
+ 
+
+4.2. Análise econômica preliminar 
+
+4.2.1.  Reologia e escalonamento do reator 
+
+Foi escolhido o diâmetro do reator (T) de 2 m, resultando em (mantidas as 
+
+proporções  de  Pereira,  et  al.,  2011):  diâmetro  do  impelidor  (D)  0,84  m,  
+
+espessura do impelidor (W) 0,185 m, altura do reator (H) 2 m, volume do reator 
+
+6,28 m³ e frequência de rotação (N) 150 rpm. Nessa rotação, com os dados de 
+
+(Correa,  2014),  foi  ajustado  o  modelo  hiperbólico  da  equação  (20),  com  o 
+parâmetro      obtido  por  extrapolação  do  polinômio  de  segunda  ordem 
+(Equação (47)), ajustado da curva           , no software Microsoft Excel ®. Os 
+outros  parâmetros  foram  obtidos  por  ajuste  no  próprio  EMSO.  Os  parâmetros 
+
+obtidos são expostos na Tabela 8 e o ajuste na Figura 18. 
+
+                                               
+
+(47) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Tabela 8 - Parâmetros ajustados do modelo hiperbólico em relação aos dados 
+
+30 
+
+reológicos 
+
+Parâmetro 
+
+Valor 
+
+   (  ) 
+
+   
+   
+
+2488,59 
+
+1,192 
+
+0,204 
+
+Fonte: Acervo Pessoal 
+
+Figura 18 - Ajuste ao modelo hiperbólico dos dados reológicos 
+
+1
+
+0,9
+
+0,8
+
+0,7
+
+0,6
+
+0,5
+
+0,4
+
+0,3
+
+0,2
+
+0,1
+
+ 
+)
+μ
+/
+ₒ
+μ
+(
+n
+
+l
+
+Experimental
+
+Ajuste Hiperbólico
+
+0
+0,00%
+
+10,00%
+
+20,00%
+
+30,00%
+Conversão (%) 
+
+40,00%
+
+50,00%
+
+ 
+
+Fonte: Acervo Pessoal 
+
+O  ajuste  realizado  para  o  caso  C1,  como  descrito  na  metodologia,  e  os 
+
+parâmetros  obtidos  são  apresentados,  respectivamente,  na  Tabela  9  e  Figura 
+
+19. 
+
+ 
+
+ 
+
+ 
+
+Figura 19 - Ajuste ao modelo hiperbólico dos dados de potência consumida 
+
+31 
+
+ 
+)
+p
+N
+/
+ₒ
+p
+N
+(
+n
+
+l
+
+1,20
+
+1,00
+
+0,80
+
+0,60
+
+0,40
+
+0,20
+
+0,00
+
+Experimental
+
+Ajuste Hiperbólico
+
+00%
+
+10%
+
+20%
+
+30%
+
+40%
+
+50%
+
+60%
+
+70%
+
+80%
+
+90%
+
+Conversão (%) 
+
+Fonte: Acervo Pessoal 
+
+ 
+
+Tabela 9 - Parâmetros ajustados do modelo hiperbólico em relação aos dados de 
+
+potência consumida 
+
+Parâmetro 
+
+Valor 
+
+  
+
+   
+   
+   
+
+0,150 
+
+1,097 
+
+0,056 
+
+Fonte: Acervo Pessoal 
+
+ 
+
+4.2.2.  Análise do cenário presente 
+
+Utilizando  o  modelo  de  Chrastil,  com  os  parâmetros  ajustados,  para 
+
+representar  a  cinética,  a  metodologia  descrita  anteriormente  e  com  os 
+parâmetros econômicos: Preço da enzima tipo 1 (        ) US$ 2,25/ kg, preço 
+da  enzima  tipo  2  US$  3,50  /kg,  preço  do  etanol  hidratado  (       )  R$  1,17/L 
+(05  de  Outubro  de  2013,  (UDOP,  2013)),  preço  da  energia  (        )  R$ 
+102,41/MWh (ANEEL, 2011), câmbio do dólar R$ 2,21/US$ (05 de Outubro de 
+
+2013), foi feita a avaliação do soma dos fluxos de caixa (SFC) em base de US$ 
+
+por tonelada de cana, apresentado na Figura 20. 
+
+ 
+
+ 
+
+ 
+
+Figura 20 - Soma dos Fluxos de Caixa em função do tempo de hidrólise 
+
+32 
+
+ 
+)
+C
+T
+/
+$
+S
+U
+
+ 
+
+(
+ 
+a
+x
+i
+a
+C
+e
+d
+ 
+s
+o
+x
+u
+l
+F
+ 
+s
+o
+d
+a
+m
+o
+S
+
+ 
+
+2
+
+1
+
+0
+
+-1
+
+-2
+
+-3
+
+-4
+
+-5
+
+-6
+
+-7
+
+-8
+
+0
+
+25
+
+50
+
+75
+
+100
+
+125
+
+150
+
+175
+
+200
+
+225
+
+250
+
+Tempo de hidrólise (h) 
+
+A1
+
+A5
+
+B3
+
+A2
+
+A6
+
+B4
+
+A3
+
+B1
+
+C1
+
+Fonte: Acervo Pessoal 
+
+A4
+
+B2
+
+Queima direta
+
+ 
+
+Através  dessa  análise,  percebe-se  que  apenas  os  casos  que  utilizam  a 
+
+enzima tipo 2 (A4 a A6) apresentam perspectiva de lucro (SFC > R$ 0,00/TC), 
+
+mas  mesmo  assim,  apenas  no  caso  A5  com    tempo  de  hidrólise  de 
+
+aproximadamente 250 h, há perspectiva de lucro superior ao da queima direta 
+
+do bagaço para geração de energia.  
+
+Nota-se também a grande vantagem da utilização da enzima do tipo 2, já 
+
+que,  apesar  do  preço  mais  elevado,  apresenta  melhores  resultados  na  etapa 
+
+de  hidrólise,  os  quais  geram  ganhos  econômicos.  A  utilização  de  uma  maior 
+
+ 
+
+ 
+
+ 
+
+33 
+
+carga  enzimática  inviabiliza  o  processo,  visto  que  os  casos  que  utilizaram 
+                 
+se  a  limitação  da  transferência  de  massa  em  altas  cargas  de  sólidos, 
+
+ (B1 a B4) tiveram os piores resultados. Além disso, evidenciou-
+
+⁄
+
+observando  os  piores  resultados  dos  casos  utilizando  20%,  comparados  aos 
+
+casos utilizando 15% (A6 contra A5, A3 contra A2 e B2 contra B1), e também a 
+
+maior eficiência do pré-tratamento com H2SO4 1% e NaOH 7% (B1 e B2), em 
+comparação aos demais do grupo B. 
+
+Não  é  possível  comparar  o  tipo  de  impelidor,  visto  que  não  há  dois 
+
+cenários  em  que  este  fator  seja  a  única  diferença,  entretanto  mantida  a  alta 
+
+conversão  em  baixo  tempo,  a  utilização  do  impelidor  do  tipo  “orelha  de 
+
+elefante”  pode  ser  vantajosa  mudando  os  tipos  de  enzima  e  pré-tratamento  e 
+
+da carga enzimática empregados. 
+
+Como  o  caso  A5  obteve  os  melhores  resultados  foi  escolhido  para  as 
+
+análises posteriores. A Figura 21 apresenta outros dados relevantes para este 
+
+caso. 
+
+ 
+
+ 
+)
+C
+T
+/
+L
+(
+ 
+l
+
+ 
+
+ 
+
+o
+n
+a
+t
+e
+e
+d
+o
+ã
+ç
+u
+d
+o
+r
+p
+a
+d
+o
+m
+i
+c
+s
+é
+r
+c
+A
+
+ 
+
+ 
+
+ 
+
+ 
+
+l
+
+G
+2
+a
+t
+o
+r
+ 
+a
+r
+a
+p
+G
+B
+/
+a
+r
+i
+e
+d
+a
+c
+ 
+a
+r
+a
+p
+G
+B
+e
+d
+a
+c
+i
+s
+s
+á
+m
+o
+ã
+z
+a
+R
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 21 - Parâmetros relevantes para o caso A5 
+
+ 
+)
+g
+k
+/
+g
+k
+(
+
+5,00
+
+4,75
+
+4,50
+
+4,25
+
+4,00
+
+3,75
+
+3,50
+
+3,25
+
+3,00
+
+2,75
+
+2,50
+
+2,25
+
+2,00
+
+1,75
+
+1,50
+
+1,25
+
+1,00
+
+40,00
+
+39,00
+
+38,00
+
+37,00
+
+36,00
+
+35,00
+
+34,00
+
+33,00
+
+32,00
+
+31,00
+
+30,00
+
+ 
+)
+C
+T
+/
+h
+W
+k
+(
+ 
+a
+d
+i
+z
+u
+d
+o
+r
+P
+a
+i
+g
+r
+e
+n
+E
+
+ 
+
+ 
+
+Acréscimo de Etanol (L/TC)
+
+Razão (BG para Caldeira)/(BG
+para 2G)
+Energia Gerada (kWh/TC)
+
+Energia Gerada: Queima
+Direta (kWh/TC)
+
+0
+
+25
+
+50
+
+75
+
+100
+
+125
+
+150
+
+175
+
+200
+
+225
+
+250
+
+Tempo de hidrólise (h) 
+
+ Fonte: Acervo Pessoal 
+
+Estes  dados  apontam  aspectos  importantes  do  processo  como  a 
+
+relativamente  baixa  produção  de  etanol,  devido  ao  consumo  de  energia  e 
+
+ 
+
+ 
+
+34 
+
+ 
+
+desvio de bagaço para caldeira com a finalidade de suprir esta demanda. Por 
+
+exemplo,  para  100  h  de  hidrólise  e  66%  de  conversão,  há  uma  produção  de 
+
+3,73  L  de  etanol  por  tonelada  de  cana  (TC)  e  a  razão  de  BG  para  caldeira 
+
+sobre  BG  para  rota  2G  é  1,59,  ou  seja,  do  total  disponível  seriam  destinados 
+
+38,6%  para  a  rota  2G  e  o  restante  queimado  para  atender  a  demanda 
+
+energética  desta  rota  e  para  este  mesmo  tempo  de  hidrólise,  a  redução  de 
+
+energia produzida é de 8,2 kWh/TC. 
+
+ 
+
+4.2.3.  Análise de sensibilidade aos parâmetros econômicos 
+
+Para o caso A5, foi avaliada a soma dos fluxos de caixa variando o preço 
+
+da  enzima  de  US$  1,50/kg  a  US$5,50/kg  e  do  etanol  de  US$  0,35/L  a  US$ 
+
+0,75/L, apresentados respectivamente nas Figuras Figura 22 e Figura 23. 
+
+Figura 22 - Soma dos Fluxos de Caixa em função do preço da enzima e da 
+
+conversão para o caso A5 
+
+Fonte: Acervo Pessoal 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 23 - Soma dos Fluxos de Caixa em função do preço do etanol e da 
+
+conversão para o caso A5 
+
+35 
+
+Fonte: Acervo Pessoal 
+
+ 
+
+Através  destas  análises  pode-se  atingir  o  patamar  de  viabilidade  (Soma 
+
+dos  fluxos  de  caixa  acima  da  queima  direta  US$  1,84/TC),  por  exemplo,  com 
+
+preço  da  enzima  em  US$  2,50/kg  (redução  de  28,6%  em  relação  ao  cenário 
+
+analisado)  e  conversão  da  celulose  de  60%,  ou  preço  do  etanol  em  US$ 
+
+0,70/L(aumento  de  32,2%  em  relação  ao  cenário  analisado)  e  conversão  de 
+
+65%. 
+
+4.2.4.  Análise do cenário presente utilizando a palha da cana 
+
+Utilizando  os  mesmos  parâmetros  de  4.2.2,  verificando  apenas  as 
+
+condições  de  A5,  os  resultados  obtidos  com  o  uso  da  palha  na  caldeira  são 
+
+apresentados na Figura 24, e o volume de etanol produzido é apresentado na 
+
+Figura 25. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+)
+C
+T
+/
+$
+S
+U
+
+ 
+
+(
+ 
+a
+x
+i
+a
+C
+e
+d
+ 
+s
+o
+x
+u
+l
+F
+ 
+s
+o
+d
+a
+m
+o
+S
+
+ 
+
+Figura 24 - Soma dos Fluxos de Caixa em função do tempo de hidrólise 
+
+7
+
+6
+
+5
+
+4
+
+3
+
+2
+
+1
+
+0
+
+-1
+
+-2
+
+-3
+
+0
+
+25
+
+50
+
+75
+
+A5
+
+Queima Direta
+
+175
+
+200
+
+225
+
+250
+
+100
+tempo de hidrólise (h) 
+
+125
+
+150
+
+ 
+)
+C
+T
+/
+L
+(
+ 
+o
+d
+i
+z
+u
+d
+o
+r
+p
+
+ 
+l
+
+ 
+
+o
+n
+a
+t
+e
+e
+d
+e
+m
+u
+o
+V
+
+l
+
+ 
+
+ 
+
+Fonte: Acervo Pessoal 
+
+Figura 25 - Volume de etanol produzido 
+
+12
+
+10
+
+8
+
+6
+
+4
+
+2
+
+0
+
+0
+
+50
+
+100
+tempo de hidrólise (h) 
+
+150
+
+Fonte: Acervo Pessoal 
+
+200
+
+250
+
+36 
+
+ 
+
+ 
+
+Neste cenário, o objetivo de ampliar a produção de etanol, através do uso 
+
+da  palha,  é  atingido,  visto  que  mantem-se  o  balanço  de  energia  do  processo 
+
+reduzindo  a  competição  entre  o  etanol  2G  e  a  energia  elétrica.  A  soma  dos 
+
+fluxos  de  caixa  alcança  valores  razoavelmente  bons  em  baixo  tempo  de 
+
+ 
+
+ 
+
+37 
+
+ 
+
+hidrólise,  no  entanto  economicamente,  ainda  é  mais  viável  queimar  todo  o 
+
+bagaço e a palha para gerar energia.  
+
+4.2.5.  Análise de sensibilidade aos parâmetros econômicos com o uso 
+
+da palha 
+
+A análise neste cenário foi feita similarmente a que foi feita em 4.2.3, os 
+
+resultados são apresentados nas Figuras Figura 26 e Figura 27. 
+
+Figura 26 - Soma dos Fluxos de Caixa em função do preço da enzima e da 
+
+conversão para o caso A5 
+
+Fonte: Acervo Pessoal 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 27 - Soma dos Fluxos de Caixa em função do preço do etanol e da 
+
+conversão para o caso A5 
+
+38 
+
+ 
+
+Fonte: Acervo Pessoal 
+
+  Em  ambos  os  casos  (variando  preço  da  enzima  e  do  etanol),  nota-se 
+
+uma  dificuldade  em  atingir  o  patamar  da  queima  direta  (US$  6,45/TC), 
+
+evidenciando  que  com  o  uso  da  palha,  apesar  do  possível  lucro  com  baixo 
+
+tempo de hidrólise e do aumento da produção de etanol (em relação ao cenário 
+
+onde apenas se utiliza o bagaço na caldeira), a viabilidade econômica torna-se 
+
+de difícil obtenção. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5.  Conclusões 
+
+39 
+
+Neste  trabalho,  a  validação  cinética  foi  concluída  com  relativamente  alta 
+
+concordância  com  os  dados  experimentais;  a  análise  econômica  mostrou 
+
+inviabilidade deste processo em relação à produção de energia elétrica apenas, 
+
+no  cenário  estudado,  devido  principalmente  ao  gasto  com  as  enzimas,  mas 
+
+com potencial viabilidade com possíveis variações nos preços da enzima e do 
+
+etanol, e baixa produção de etanol em razão da competição entre a caldeira e a 
+
+rota  2G  pelo  bagaço  a  fim  de  manter  o  balanço  energético;  o  uso  da  palha 
+
+como combustível da caldeira reduz esta competição, aumentando a produção 
+
+de etanol, contudo a viabilidade econômica se torna mais distante. 
+
+Fica evidente que o domínio tecnológico do processo é importante e que 
+
+a viabilidade econômica sofre forte influência dos preços dos produtos, o etanol 
+
+e  a  energia  elétrica,  além  do  insumo,  pool  enzimático.  O  desenvolvimento 
+
+tecnológico  do  processo,  com  o  aumento  da  eficiência  no  processo  de 
+
+conversão da celulose a glicose também é fator preponderante. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+40 
+
+ 
+
+6.  Bibliografia 
+
+ 
+
+Alberto,  C.  2010.  Cana  de  açúcar.  Centro  de  Teconologia  -  UFPB. 
+
+[Online] 
+
+2010. 
+
+[Citado 
+
+em: 
+
+24 
+
+de 
+
+Julho 
+
+de 
+
+2013.] 
+
+http://www.ct.ufpb.br/laboratorios/lpfd/index.php?option=com_content&view=arti
+
+cle&id=55&Itemid=55. 
+
+Andrietta,  S.  R.  2009.  Optinal  Industrial  Fermentation.  s.l. :  BioContal, 
+
+2009. 
+
+ANEEL. 2011. Primeiro Leilão de Energia A-3 do ano tem deságio médio 
+
+de  26,6%.  ANEEL.  [Online]  2011.  [Citado  em:  01  de  Agosto  de  2013.] 
+
+http://www.aneel.gov.br/aplicacoes/noticias/Output_Noticias.cfm?Identidade=44
+
+66&id_area=90. 
+
+Bommarius,  A.  S.,  et  al.  2008.  Cellulase  kinetics  as  a  function  of 
+
+cellulose pretreatment. Metabolic Engineering. 2008, Vol. 10, pp. 370-381. 
+
+Brodeur, G., et al. 2011. Chemical and Physicochemical Pretreatment of 
+
+Lignocellulosic Biomass: A Review. Enzyme Research. 2011, 2011. 
+
+Cardona,  C.  A.,  Quintero,  J.  A.  e  Paz,  I.  C.  2009.  Production  of 
+
+bioethanol  from  sugarcane  bagasse:  Status  and  perspectives.  Bioresource 
+
+Technology. 2009, 101, pp. 4754-4766. 
+
+Carvalho, M. L. 2011. Estudo cinético da hidrólise enzimática de celulose 
+
+de bagaço de cana-de-açúcar. São Carlos : UFSCar, 2011. 
+
+Carvalho, R. 2009. Usina de Resultados. s.l. : LDC-SEV, 2009. 
+
+Chrastil,  J.  1988.  Determination  of  the  ﬁrst  order  consecutive  reaction 
+
+rate  constants  from  ﬁnal  products.  Comput.  Chem.  1988,  Vol.  12,  4,  pp.  289-
+
+292. 
+
+—.  1987.  Enzymic  product  formation  curves  with  the  normal  or  diffusion 
+
+limited  reaction  mechanism  and  in  the  presence  of  substrate  receptors.  Int.  J. 
+
+Biochem. 1987, Vol. 20, 7, pp. 683-693. 
+
+CONAB.  2011.  A  Geração  Termoelétrica  com  a  Queima  do  Bagaço  de 
+
+Cana-de-Açúcar  no  Brasil:  Análise  do  Desempenho  da  Safra  2009-2010.  s.l. : 
+
+Ministério da Agricultura, Pecuária e Abastecimento, 2011. 
+
+ 
+
+ 
+
+41 
+
+ 
+
+—.  2012.  Acompanhamento  da  Safra  Brasileira  -  2012/2013  Terceiro 
+
+Levantamento.  Brasília :  Ministério  da  Agricultura,  Pecuária  e  Abastecimento, 
+
+2012. 
+
+Correa,  L.  J.,  Badino,  A.  C.,  Cruz,  A.  J.  G.  2014.  Power  input  and 
+
+rheology  measurements  during  sugarcane  bagasse  enzymatic  hydrolysis. 
+
+Clearwater  Beach,  EUA :  36th  Symposium  on  Biotechnology  for  Fuels  and 
+
+Chemicals, 2014. 
+
+de  Carli,  C.  M.  2011.  Hidrólise  e  fermentação  do  bagaço  de  cana-de-
+
+açúcar  em  escala  de  bancada  para  produção  de  etanol  2G.  São  Carlos : 
+
+UFSCar, 2011. 
+
+Ecowood do Brasil. 2006. Produção de painel industrial AFB (agricultural 
+
+fiber-board)  com  bagaço  de  cana.  UFLA.  [Online]  2006.  [Citado  em:  02  de 
+
+Agosto 
+
+de 
+
+2013.] 
+
+http://www.nucleoestudo.ufla.br/necana/pdfs/aproveitamento_de_bagaco.pdf. 
+
+ECS.  2007.  Sugar  and  Ethanol  Production  Potential:  Ord  River  Stage  II. 
+
+s.l. : ECS, 2007. 
+
+EPA.  2007.  Methodology  for  Thermal  Efficiency  and  Energy  Input 
+
+Calculations  and  Analysis  of  Biomass  Cogeneration  Unit  Characteristics. 
+
+Washington : U.S. Environmental Protection Agency, 2007. 
+
+Fengel, D. e Wegner, G. 1984. Wood: chemistry, ultrastructure, reactions. 
+
+Berlim : W. de Gruyter, 1984. 
+
+Fiomari, M. C., et al. 2006. Análise termodinâmica e termoeconômica de 
+
+uma  usina  sucroalcooleira  que  produz  excedente  de  energia  para 
+
+comercialização. Ilha Solteira, Brasil : NUPLEN, Unicamp, 2006. 
+
+Flikweert,  M.  T.  1999.  Physiological  roles  of  pyruvate  decarboxylase  in 
+
+Saccharomyces cerevisiae. Delft : Delft University of Technology, 1999. 
+
+Furlan, F. F., et al. 2013. Bioelectricity versus bioethanol from sugarcane 
+
+bagasse:  is  it  worth  being  flexible?  Biotechnology  for  Biofuels.  2013,  Vol.  6, 
+
+142. 
+
+Lamonica, H. M. 2007. Produção De Vapor E Eletricidade  – A Evolução 
+
+Do Setor Sucroalcooleiro. Pirassununga : II Workshop de Gestão de Energia e 
+
+Resíduos na Agroindustria Sucroalcooleira, 2007. 
+
+ 
+
+ 
+
+42 
+
+ 
+
+Liu,  M.  L.  Y.  2010.  Fermentation  of  hemicellulose  rich  liquid  fractions 
+
+derived from steam pretreated softwoods. Vancouver : Simon Fraser University, 
+
+2010. Tese de Mestrado. 
+
+Martins,  D.,  et  al.  1999.  Emergência  Em  Campo  De  Dicotiledôneas 
+
+Infestantes Em Solo Coberto Com Palha De Cana-de-açúcar. Planta Daninha. 
+
+1999, Vol. 17, 1. 
+
+Nagata,  S.  1975.  Mixing:  principles  and  applications.  New  York :  John 
+
+Wiley & Sons, 1975. 
+
+Pereira,  L.  T.  C.,  et  al.  2011.  Sugarcane  bagasse  enzymatic  hydrolysis: 
+
+rheological  data  as  criteria  for  impeller  selection.  J  Ind  Microbiol  Biotechnol. 
+
+2011, Vol. 38, pp. 901-907. 
+
+Rocha, G. J. M., et al. 2011. Steam explosion pretreatment reproduction 
+
+and alkaline deligniﬁcation reactions performed on a pilot scale with sugarcane 
+
+bagasse for bioethanol production. Industrial Crops and Products. 2011, 35, pp. 
+
+274-279. 
+
+Santos, F. A., et al. 2013. Otimização Do Pré-tratamento Hidrotérmico Da 
+
+Palha De Cana-de-açúcar Visando À Produção De Etanol Celulósico.  Química 
+
+Nova. 2013, Vol. XY, 00. 
+
+Secchi,  A.  R,  e  P.,  Soares  R.  2008.  Tutorial  on  Equation-Oriented 
+
+Dynamic Simulation using EMSO. Mar del Plata : CEPAC, 2008. 
+
+Smith,  J.  M.,  Van  Ness,  H.  C.  e  Abbott,  M.  M.  2005.  Introduction  to 
+
+Chemical Engineering Thermodynamics. New York : McGraw Hill, 2005. 
+
+Souza, R. B. A. 2013. Produção de Etanol a Partir da Palha de Cana-de-
+
+açúcar. São Carlos : PPGEQ-UFSCar, 2013. Projeto de Tese. 
+
+Turbines  Info.  2011.  Steam  Turbine  Efficiency.  Turbines  Info.  [Online] 
+
+2011.  [Citado  em:  02  de  Agosto  de  2013.]  http://www.turbinesinfo.com/steam-
+
+turbine-efficiency. 
+
+UDOP.  2013.  Dados  de  Mercado  -  Etanol.  União  dos  Produtores  de 
+
+Bioenergia. 
+
+[Online]  2013. 
+
+[Citado  em:  05  de  Outubro  de  2013.] 
+
+http://www.udop.com.br/index.php?item=alcool. 
+
+van  Zyl,  W.  H.,  et  al.  2011.  Next-generation  cellulosic  ethanol 
+
+technologies  and  their  contribution  to  a  sustainable  Africa.  Interface  Focus. 
+
+2011, 2011, Vol. 1, pp. 196-211. 
+
+ 
+
+ 
+
+ 
+
+Wooley,  R.  J.  e  Putsche,  V.  1996.  Development  of  an  ASPEN  PLUS 
+
+Physical  Property  Database  for  Biofuels  Components.  Golden,  Colorado : 
+
+43 
+
+NREL, 1996. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+

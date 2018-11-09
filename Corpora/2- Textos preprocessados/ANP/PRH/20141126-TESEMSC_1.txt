@@ -1,0 +1,988 @@
+universidade federal rio grande instituto oceanografia posgraduacao oceanografia fisica quimica geologica integracao dados morfologicos fundo termo halinos coluna dagua plataforma externa talude bacias pelotas santos sig marcelo peres pinho prof 
+ lauro julio calliari orientador prof 
+ lauro saint pastous madureira coorientador rio grande rs universidade federal rio grande instituto oceanografia programa posgraduacao oceanografia fisica quimica geologica integracao dados morfologicos fundo termo halinos coluna dagua plataforma externa talude bacias pelotas santos sig marcelo peres pinho eng° computacao dissertacao apresentada programa pos graduacao oceanografia fisica quimica geologica universidade federal rio grande requisito parcial obtencao titulo mestre 
+ lauro julio calliari orientador prof 
+ lauro saint pastous madureira coorientador rio grande rs agradecimentos primeiramente gostaria agradecer maiores responsaveis momento 
+ queridos pais jorge nilda sempre lutaram melhor dentro possivel 
+ agradeco educacao exemplos forjaram carater compreensao mundo permitem hoje seguir rumo discernindo bom ruim certo errado 
+ amada michele neste tempo juntos tudo poderia esperar 
+ construimos familia vida maravilhosa juntos realizamos sonhos dividimos alegrias tristezas superamos problemas avancamos 
+ obrigado companheirismo incentivo amor compreensao 
+ agradeco linda amada filha camila tendo capacidade entender significado dimensao mestrado representou imenso fator motivador conclusao deste trabalho 
+ peco desculpas momentos ausencia agradeco compreensao mesmos 
+ coorientador amigo lauro saint pastous madureira neste longo periodo laboratorio investiu tempo paciencia engenheiro computacao metido oceanologo aprendesse algo sobre oceanografia 
+ agradeco confianca orientacao 
+ agradeco orientador lauro julio calliari ter aceitado tarefa orientar desconhecido 
+ obrigado sugestoes discussoes duvida agregaram qualidade trabalho principalmente etapas finais 
+ oceanologa carla aseff scripts magicos solucionaram varios problemas pouparam dias valiosos inestimavel ajuda vivo msn dados ambientais 
+ oceanologo christian ferreira santos ajuda dados batimetricos la inicio tudo 
+ manuel haimovici dados pesca espinhel fundo utilizados neste trabalho 
+ amigos laboratorio tecnologia pesqueira hidroacustica antonio carlos neiva stefan carol marcelo denis paloma nayara ajuda dicas momentos descontracao geralmente pausa cafezinho forte neiva manterem sempre atualizado todos problemas computador capaz gerar  
+ professor gilberto griep atencao oferecer condicoes realizacao trabalho professora maria isabel machado incentivo estar sempre disposta ajudar 
+ agradeco universidade federal rio grande ter proporcionado educacao superior qualidade bem professores funcionarios colegas passaram vida durante todos anos especial programa pos graduacao oceanografia fisica quimica geologica professores funcionarios 
+ todos participaram direta indiretamente deste trabalho modo importantes nesta caminhada 
+ agradeco prh agencia nacional petroleo gas natural bicombustiveis anp apoio financeiro 
+ iv sumario lista tabelas 
+ vi lista figuras 
+ vii lista siglas abreviaturas 
+ consideracoes gerais sobre sig sistema informacao geografica 
+ caracterizacao area estudo 
+ dados altimetria satelite 
+ processamento dados batimetricos 
+ dados pesca fundo sedimentologia 
+ linguagem xd descricao ambientes virtuais 
+ preparacao dados geracao mapa batimetrico 
+ preparacao insercao dados ambientais representacao 
+ representacao interativa dados oceanograficos 
+ dados altimetria satelite 
+ malha batimetrica final qualidade dados utilizados 
+ feicoes fundo identificadas area estudo 
+ dados ambientais representacao 
+ massas dagua area estudo 
+ processos oceanograficos area estudo 
+ faciologia bsbs presenca fosforita 
+ dados pesca fundo sedimentologia 
+ conclusao consideracoes finais 
+ anexo linguagem xd 
+ vi lista tabelas tabela dados referentes cruzeiros prospeccao acustica pesqueira 
+ tabela limites termohalinos utilizados classificacao massas dagua adaptado moller al 
+ tabela informacoes lances pesca espinhel fundo utilizados trabalho 
+ tabela numero leituras acusticas faixa batimetrica 
+ tabela correlacao faixas reflexao acustica fundo classificacao sedimentar segundo diagrama triangular tipo shepard 
+ tabela principais caracteristicas geovrml 
+ vii lista figuras figura mesma regiao geografica representada 
+ figura mapa mostrando area estudo desenho amostral cruzeiros revizee pelagicos 
+ figura fluxograma diferentes etapas trabalho sequencia logica desenvolvimento 
+ figura cruzeiros prospeccao acustica pesqueira 
+ figura medicao batimetrica atraves variacao altura superficie oceano altimetria satelite 
+ figura estacoes coleta dados ambientais cruzeiros revizee pelagicos 
+ figura carta sedimento fundo elaborada dados dias al 
+ figura lances pesca espinhel fundo utilizados trabalho 
+ circulos laranja indicam posicao lances presenca peixebatata amarelos lances presenca chernepoveiro azuis lances presenca ambos 
+ figura trecho codigo xd insercao perfis temperatura salinidade representacao 
+ figura janela execucao visualizador ambientes virtuais xjd 
+ figura sequencia ilustrando dinamica navegacao representacao desde visao geral visao detalhe 
+ figura visao geral detalhe mapa batimetrico base 
+ figura visao geral detalhe mapa batimetrico sobreposto dados sedimentologicos 
+ figura cone rio grande 
+ figura plato rio grande 
+ figura plato largo florianopolis 
+ figura platos largo norte paranagua 
+ figura plato largo cabo frio 
+ figura plato paulo 
+ figura feicoes fundo face sul ingreme relacao norte indicando maior retirada sedimento face sul 
+ viii figura feicoes fundo norte paranagua face norte ingreme relacao sul indicando maior retirada sedimento face norte 
+ figura perfis temperatura salinidade gerados partir tres estacoes ctd cruzeiro revizee posteriormente inseridos representacao area estudo 
+ figura visao geral mapa perfis temperatura 
+ figura visao detalhe perfis temperatura salinidade cruzeiro rev alem dados batimetricos sedimentologicos 
+ figura diagramas ts cruzeiros revizee areas norte sul cabo santa marta 
+ figura perfil temperatura largo cabo frio ilustrando estrutura agua fria torno °c subindo 
+ figura nucleo acas metros profundidade plataforma media sul sebastiao 
+ figura aguas frias pouco salinas sul sebastiao largo cananeia 
+ figura aguas frias pouco salinas cobrindo plataforma sul 
+ figura prp intensamente presente extremo sul area estudo 
+ figura processo enriquecimento observado largo cabo frio durante cruzeiro revizee 
+ figura ressurgencia acas quebra plataforma largo francisco sul 
+ figura aguas plataforma sul sebastiao presenca acas sobre plataforma media externa 
+ figura lente aguas frias baixa salinidade sobre plataforma largo rio grande rs 
+ figura processo enriquecimento observado largo cabo frio durante cruzeiro revizze 
+ figura aguas costeiras largo paranagua durante cruzeiro revizee 
+ figura aguas plataforma sul cabo santa marta 
+ ix figura presenca aguas prp sistema lagoa patos mirim extremo sul area estudo 
+ figura diagrama triangular tipo shepard modificado shepard 
+ figura carta sedimento fundo sobreposta dados reflexao acustica fundo adquiridos durante cruzeiro revizee 
+ figura visao geral detalhe mapa batimetrico sobreposicao dados sedimentologios reflexao acustica fundo 
+ figura fundos duros alta refletividade acustica largo cabo frio 
+ figura fundos duros alta refletividade acustica largo ilha sebastiao 
+ figura fundos pouco duros baixa refletividade acustica largo cananeia 
+ figura area baixo bsbs fundo lamoso sul cabo santa marta 
+ figura area baixo bsbs fundo lamoso largo rio grande 
+ figura perfis localizados proximo cabo frio caracteristicas compativeis presenca fosforita 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ figura perfis localizados largo cabo santa marta grande caracteristicas compativeis presenca fosforita 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ figura provavel fundo fosfatico registrado durante cruzeiro revizee realizado verao proximo cabo santa marta grande 
+ figura provavel fundo fosfatico registrado durante cruzeiro revizee realizado verao proxima cabo santa marta grande 
+ figura provavel fundo fosfatico registrado durante cruzeiro revizee realizado verao proxima cabo santa marta grande 
+ figura perfis localizados rio grande rs chui rs caracteristicas compativeis presenca fosforita 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ figura visao geral localizacao lances pesca espinhel fundo sobre mapa batimetrico carta sedimentologica 
+ figura lances pesca espinhel fundo realizados largo chui rs 
+ figura lances pesca espinhel fundo realizados largo albardao 
+ figura lances pesca espinhel fundo realizados largo rio grande 
+ figura lances pesca espinhel fundo realizados largo mostradas 
+ figura script ola mundo 
+ figura representacao gerada codigo figura 
+ lista siglas abreviaturas xi °c ac graus celsius bidimensional tridimensional agua costeira acas agua central atlantico sul aia api agua intermediaria antartica aplicattion programming interface asa agua subantartica asap agua subantartica plataforma ascii american standard code information interchange astp agua subtropical plataforma agua tropical bndo banco nacional dados oceanograficos bsbs bottom surface backscattering strentgh caco carbonato calcio cb cm corrente brasil corrente malvinas cprm companhia pesquisa recursos minerais servico geologico brasil cst ctd db convergencia subtropical conductivity temperature depth decibel dhn diretoria hidrografia navegacao geovrml geographic virtual reality modeling language geographic information system generic mapping tools global positioning system gis gmt gps xii iso international standards organization iucn uniao internacional conservacao natureza leplac levantamento plataforma continental brasileira mn ne metro milha nautica nordeste po fosfato padct programa apoio desenvolvimento cientifico tecnologico pnap plano estrategico nacional areas protegidas pr prp parana pluma rio prata revizee recursos vivos zona economica exclusiva rov remotely operated vehicle rs sc sig sp ts rio grande sul santa catarina sistema informacao geografica paulo temperatura salinidade utm universal transverso mercator vrml virtual reality modeling language xd xml zee extensible extensible markup language zona economica exclusiva xiii resumo imensa capacidade processamento armazenamento dados computadores atuais permite uso geoprocessamento realidade virtual 
+ apesar disto consideravel volume dados oceanograficos disponiveis brasil noticia mapas integrem informacoes ambiente computacional unico tridimensional dinamico possibilidade interferencia interacao direta usuario 
+ conhecimento caracteristicas ambientais fundo fundamental diversas atividades ligadas oceanografia engenharia oceanica orgaos defesa ambiental especialmente industria petroleo necessita informacoes diagnostico ambiental avaliacao recursos alem ferramentas visualizacao primaria regioes interesse 
+ neste trabalho integrados sig sistema informacao geografica dados sedimentologicos refletividade acustica fundo alem dados termohalinos obtidos estacoes oceanograficas realizadas tres cruzeiros chuirs °s cabo tomerj °s 
+ malha batimetrica gerada partir 
+ leituras provenientes seis cruzeiros prospeccao acustica altimetria satelite navios ocasiao 
+ partir desta malha gerada representacao fundo marinho area estudo utilizandose linguagem descricao ambientes tridimensionais interativos xd 
+ feicoes fundo cone rio grande terraco rio grande plato paulo identificadas mapas batimetricos 
+ partir dados ambientais identificadas massas dagua principais feicoes oceanograficas 
+ potencial tipos fundo associadas depositos minerais avaliado cruzamento dados refletividade acustica fundo distribuicao sedimentologica mapeamento caracteristicas oceanograficas associadas fenomenos ressurgencias 
+ avaliada relacao dados captura espinhel fundo sedimentologia 
+ sig mostrou vantajoso comparado representacoes estaticas bidimensionais limitam observador pontos visao sempre favoraveis observacao detalhes interpretacao informacoes 
+ transmissao informacoes usuarios familiarizados ambiente informacoes sob analise mostrou eficiente confirmando versatilidade representacao demonstrando mesma somente forma atraente visualizacao dados efetivamente ferramenta potencial fins educativos tomada decisoes 
+ palavras chave geoprocessamento visualizacao xd sig petroleo 
+ xiv abstract huge capacity data storage processing current computers makes virtual reality geoprocessing valuable tool science 
+ considering facility considerable volume oceanographic data available brazil reports mapping tool integrate information single threedimensional dynamic computational environment possibility interference direct interaction user interpretation oceanographic information 
+ knowledge environmental bottom characteristics essential several activities related oceanography ocean engineering environmental defense agencies specially oil industry gathers data environmental diagnostics resources evaluation beyond tools primary visualization interest regions 
+ work integrates gis geographic information system sedimentological seabed acoustics reflectivity information oceanographic data stations carried three cruises chuirs °s cape tome rj °s 
+ bathymetric grid built 
+ recordings six cruises acoustics assessment well satellite altimetry ships opportunity data 
+ grid virtual representation seabed study area generated using language description threedimensional interactive environments xd 
+ bottom features rio grande cone rio grande terrace paulo plateau identified 
+ water masses major oceanographic features identified environmental data set 
+ geological structures potentially associated mineral deposits investigated integrating seabed acoustics reflectivity data sedimentology distribution well oceanographic features associated enrichment process upwelling 
+ also relationship fish catch data bottom longline fishing sedimentology assessed 
+ gis proved valuable tool static twodimensional representations often limit observer viewpoints always favorable observation details interpretation information 
+ integration large number complex variables work generated product facilitates interpretation oceanographic information users familiar marine environment 
+ confirms versatility representation demonstrates attractive way displaying data effectively tool potential application education environmental decision making 
+ keywords geoprocessing visualization xd gis oil 
+ consideracoes gerais sobre sig sistema informacao geografica intensiva atividade humana sobre meio ambiente gerado aumento expressivo demanda tecnologias auxiliem manejo ambiental 
+ necessidade informacao referente localizacao geografica propriedades recursos minerais animais vegetais sempre presente parte importante sociedades organizadas 
+ entanto pouco tempo obtencao desses dados complexa armazenamento consistia apenas geracao documentos mapas papel 
+ advento informatica rapido desenvolvimento tornaram possivel armazenamento grandes quantidades informacao facilitou imensamente representacao abrindo espaco geoprocessamento 
+ nesse contexto sistemas tipo sig surgiram evoluido simples auxiliares confeccao mapas importantes ferramentas auxilio tomada decisao extracao informacao gerenciamento recursos naturais renovaveis renovaveis 
+ sigs possuem ampla gama aplicacoes podem ter diferentes definicoes acordo aplicacoes 
+ segundo camara al 
+ definicoes sig refletem cada maneira multiplicidade usos visoes possiveis desta tecnologia apontam perspectiva interdisciplinar utilizacao 
+ sig apresentacao dados papel relevante extracao informacoes 
+ usada visualizar problema possibilitando observar manipular estudar relacionamentos geograficos envolvidos pode apresentar alternativas solucao problema considerado egenhofer 
+ segundo conceitos arono bull sig sistemas automatizados usados armazenar analisar manipular dados geograficos dados representam objetos fenomenos localizacao geografica caracteristica inerente informacao indispensavel analisala 
+ adicionalmente laurini thompson sugeriram sigs ferramentas projetadas coletar manipular apresentar grandes volumes dados espaciais 
+ termo espacial neste sentido refere dados descrevem espaco referenciando alguma localizacao fisica 
+ particular localizaveis terra superficie acima abaixo ditos geograficos 
+ camara davis definem sig ferramenta computacional geoprocessamento permite realizar analises complexas integrar dados diversas fontes criar bancos dados georeferenciados 
+ sigs tornam possivel automatizar producao documentos cartograficos 
+ mundo empresarial muitas vezes organizacoes lidam diferentes tipos informacoes costumam utilizar procedimentos tomada decisao fim reduzir incertezas aumentar chances sobrevivencia mercado 
+ segundo gaddy organizacoes necessitam transformar dados brutos numeros informacao nada dados acrescidos significado 
+ informacao vez acrescida percepcao humana tornase conhecimento base decisao 
+ segundo laundon laudon citados gaddy sistema informacao pode ser definido tecnicamente conjunto componentes inter relacionados colecionam processam armazenam distribuem informacao apoiar tomada decisao controle organizacao 
+ alem apoiar tomada decisao controle coordenacao sistemas informacao podem ajudar gerentes trabalhadores analisar problemas visualizar assuntos situacoes complexas criar produtos novos 
+ assim modo extremamente simplista podese dizer implementacao sig pode ser considerada questao ser respondida problema ser solucionado sistema computacional envolva localizacao espacial determinado dado informacao 
+ sig sabese grande parte neuronios humanos envolvidos processo visao imagens facilitam interpretacao parte cerebro vez aproximam representacao experiencia cotidiana usuario mundo real favorecendo assim percepcao representacao modo natural al 
+ analisamos representacao ambiente tridimensional apenas duas dimensoes relevo regiao exemplo forcamos mente primeiro construir modelo conceitual antes fazer qualquer tipo analise al 
+ requer habilidade parte usuario ainda parte profissional queira gerar representacao pois deseja usuario interprete informacoes modo correto 
+ figura ilustra questao representacao bi tridimensional 
+ figura mesma regiao geografica representada duas formas 
+ representacao tridimensional mostrase informativa facil interpretacao alem ser visualmente atrativa 
+ fonte ferreira al 
+ figura mesma regiao geografica representada 
+ tecnologia atualmente disponivel abre possibilidade preparar produzir mapas possam ser visualizados diferentes angulos relacao plano horizontal abandonando restricao apenas ponto vista vertical baseiam principios cartograficos vigentes 
+ pontos vista antes conhecidos apenas mapas perspectiva mapas panoramicos hoje inerentes modelos tridimensionais al 
+ avanco informatica observado ultimas decadas gerou incremento significativo capacidades processamento armazenamento dados computadores pessoais 
+ avanco possibilitou usuarios usufruir vantagens ferramentas geoprocessamento realidade virtual proporcionou novo desafio representar mundo real tridimensional ambiente computacional limitado representacao convencional estatica dinamica possibilidade interferencia interacao direta usuario 
+ tal caracteristica enquadrase espera ambientes tipo sig cujo principal objetivo proporcionar usuario ambiente interativo facil manuseio pode partir cruzamento diversos dados informacoes georreferenciadas identificar areas interesse fazer suposicoes testar hipoteses 
+ alguns trabalhos sido desenvolvidos visando criacao sistemas visualizacao dados geograficos utilizando diferentes linguagens descricao 
+ dentre linguagens destacase xd extensible daly brutzman sucessora vrml virtual reality modeling language vrml extensao modelagem dados geograficos geovrml geovrml 
+ xd unico padrao totalmente aberto disponivel prove suporte renderizacao animacao interativa graficos tempo real proporcionando grandes avancos modelagem ambientes tridimensionais melhorias tratamento texturas interatividade usuario alem inclusao componente geoespacial funcionalidades voltadas diretamente representacao dados geograficos 
+ grupo pesquisa xd earth webd consortium trabalhado construcao modelo fundo planeta terra partir dados imagens publicas privadas disponiveis utilizando tecnologia xd 
+ grupo pretende modelo funcione independente plataforma computacional utilizados padroes extensoes processos livres 
+ fairbairn parsley exploraram possibilidades implicacoes representacao espacial usando ferramentas realidade virtual introduzindo uso vrml representacoes cartograficas tres dimensoes 
+ utilizaram linguagem programacao orientada objetos java criar interface espacial prover informacao interacao modelos geograficos tridimensionais criados vrml 
+ geovrml utilizada mccann produzir sistema representacoes geoespacialmente precisas areas noroeste oceano pacifico baia monterey 
+ alem representacao geografica sistema incluia dados navegacao embarcacao rovs utilizados mapas batimetricos areas estudadas colecoes especimes geologicos biologicos outros 
+ sistema desenvolvido proporcionou maior velocidade eficiencia analise integrada dados sendo bem recebido usuarios vez representava somente visualizacao atraente informacao disponivel funcional partir poderia correlacionar espacialmente diversas informacoes 
+ segundo autor reuniao varios conjuntos dados diferentes naturezas sistema comum visualizacao eficiente facil manuseio representa grande desafio 
+ capacidade geracao conteudo animado interativo demonstrado gelautz al 
+ autores utilizaram xd gerar visualizacao geocientifica tridimensional vulcao kilauea hawaii 
+ descreveram vantagens utilizar vrml construcao representacoes complexas quais poderiam ser visualizadas software livre possibilitando estudo afloramentos geologicos modo simples 
+ autores destacam representacoes facilitam entendimento relacoes complexas dados diferentes naturezas necessidade deste tipo visualizacao interpretacao dados frequente geociencias 
+ percepcao usuarios sobre representacoes cartograficas tridimensionais estudada al 
+ autores utilizaram vrml modelagem cartografica tridimensional area estudo objetivo inferir futuras proposicoes projeto construcao destas representacoes avaliando questoes navegacao visualizacao informacoes 
+ uso xd desenvolvimento modelos web verificado hetherington al 
+ metodo desenvolvido demonstrou potencial desta tecnologia combinar diferentes tipos dados geometrias dados temporais aplicacao muitos campos visualizacao caso trabalho arqueologia 
+ caracterizacao area estudo area estudo margem continental sul brasileira limitada sul chui rs norte cabo tome rj regiao compreende bacias pelotas santos 
+ figura ilustra area estudo 
+ figura mapa mostrando area estudo desenho amostral cruzeiros revizee pelagicos 
+ linha azul representa desenho amostral serie cruzeiros prospeccao acustica revizee recursos vivos zona economica exclusiva quais adquiridos dados batimetricos refletividade acustica fundo ambientais temperatura salinidade utilizados dissertacao 
+ derrota cruzeiros cobriu regiao plataforma externa talude profundidades metros 
+ caracterizacao geologica margem continental brasileira tipo atlantico caracterizada estabilidade tectonica provincias fisiograficas bem desenvolvidas sendo principais plataforma continental talude sope continental coutinho 
+ segundo zembruski toda regiao sul margem caracterizada provincias normalmente amplas gradientes tanto suaves 
+ quebra plataforma forma geral notoria borda configuracao geral arredondada estreitos terracos abrasao marinha 
+ talude suave perfil ligeiramente concavo 
+ margem continental sul brasileira enquadrase categoria generica construcional deposicional 
+ plataforma margem continental sul brasileira compreendida chui cabo tome bastante larga sendo terceiro trecho largo brasil ficando atras somente daquele imediatamente frente rio amazonas plato abrolhos 
+ feicoes morfologicas observadas sobre apresentamse linhas gerais bastante homogeneas zembruscki 
+ largura maxima plataforma regiao km altura santos minima km setor cabo tome cabo frio media km 
+ quebra plataforma continental nesta regiao media metros profundidade maximo ocorrendo sul santos regiao tramandai minimo localizado altura lagoa mangueira zembruscki 
+ borda plataforma talude apresentam cortados muitos canions excecao vale rio grande coutinho 
+ zembruscki citando curray fairbridge diz talude regiao sul caracterizase modo geral apresentar perfil concavo largura tipica moderada ampla baixos gradientes declividade largura relativamente homogenea variando maior frequencia km algumas excecoes embaiamento paulo largo mostardas km cone terraco rio grande onde talude fica reduzido quase porcao superior larguras acima km 
+ porcao sul margem continental brasileira caracterizada presenca provincias secundarias associadas elevacoes irregularidades fundo oceanico 
+ destacamse platos paulo rio grande cone rio grande leque submarino tome vales rio grande situados largo cabo frio sul cone rio grande zembruscki 
+ distribuicao sedimentar margem continental sulriograndense descrita trabalhos martins al 
+ correa abreu correa martins al 
+ enquanto correa villwock analisaram distribuicao sedimentar margem continental sul brasileira desde cabo frio chui 
+ mapas distribuicao sedimento gerados recentemente figueiredo madureira revelaram plataforma continental brasileira apresenta ampla distribuicao areias predominio sedimentos maior granulometria norte cabo frio presenca principalmente cascalho areia cascalhosa devido predominio sedimentacao carbonatica 
+ plataforma continental porcao sul proximidades baia ilha grande apresenta bolsoes areia lamosa lama arenosa 
+ plataforma interna media desde ilha sebastiao cidade rio grande dominada lamas excecao plataforma continental media longo cidade paranagua onde presenca sedimentos granulometria areia lamosa frente lagoa patos onde predominio sedimentos granulometria lamas arenosas plataforma media figueiredo madureira 
+ toda plataforma interna regiao central area estudo recoberta principalmente areia pequenas ocorrencias areia lamosa areia cascalhosa ocorrendo plataforma media externa onde predominio lama figueiredo madureira 
+ talude modo geral predominio lamas ocorrencia lamas arenosas regioes proximas quebra plataforma 
+ quanto composicao sedimentos analise figueiredo madureira mostrou sul ilha sebastiao plataforma continental predominio sedimentos litoclasticos passando biolitoclasticos regioes profundas 
+ sedimentos bioclasticos apresentamse distribuidos faixas maiores continuas norte ilha sebastiao recobrindo plataforma continental externa media interna 
+ ocorrem associados sedimentos litobioclasticos manchas isoladas sedimentos biolitoclasticos principalmente cabo frio ilha sebastiao 
+ sul lagoa patos plataforma continental caracterizada baixo percentual caco sendo recoberta principalmente sedimentos litoclasticos figueiredo madureira 
+ caracterizacao hidrodinamica hidrodinamica area estudo dominada acao ventos sobre plataforma interna corrente brasil dominio externo castro al 
+ verao agua central atlantico sul acas penetra camada profunda direcao costa atingindo muitas vezes parte interna plataforma continental castro al 
+ inverno massa agua afastase direcao quebra plataforma continental aumentando largura banda costeira onde agua costeira ac predominante castro al 
+ intrusao acas influenciada variabilidade mesoescala corrente brasil pode alterar padrao circulacao massas dagua plataforma continental sudeste 
+ massas dagua presentes costa sudeste sul brasil apresentam amplitudes significativas variacao sobretudo funcao sazonalidade dinamica mesmas braga niencheski 
+ plataforma interna ocupada agua costeira ac cujas propriedades termohalinas variam sazonalmente funcao descarga agua doce lagoa patos rio prata garcia 
+ verao diferenca temperatura bastante pronunciada surgimento termoclina pouco profunda identificacao acas camada inferior braga niencheski 
+ aguas salinas caracteristicas agua tropical presentes camada superior pouco profunda dominio externo plataforma onde existe forte influencia acas camadas inferiores 
+ aguas salinas separam aguas plataforma intermediaria plataforma externa castro al 
+ regiao sudeste limitada sul cabo santa marta grande recebe pouco aporte continental devido fato grandes rios fluirem oeste desaguando bacia rio parana vez desemboca rio prata 
+ contudo inverno pode sofrer ainda influencia aguas baixa salinidade oriundas estuario rio prata menor proporcao aguas estuario lagoa patos alem aguas origem subantartica miranda katsuragawa 
+ frente termica conhecida convergencia subtropical cst formada interacao corrente brasil cb flui sul transportando agua tropical corrente patagonica piola flui norte transportando agua subantartica asa influencia diretamente circulacao regiao sul area estudo chui cabo santa marta grande emilson citado garcia 
+ aporte aguas continentais provenientes lagoa patos rio prata confere regiao padrao grande dominio aguas costeiras castello moller castro al 
+ principais processos oceanograficos ocorrem regiao ressurgencia caracterizada ascensao aguas subsuperficie frias superficie vortices podem indicar combinacao frente formada agua ressurgida proximo costa agua superficial oceanica aportes agua continental representam entrada agua proveniente drenagem continental estuarios sistemas costeiros castro al 
+ periodos primavera verao frequentes ressurgencias costeiras induzidas fortemente ventos ne provocam divergencia aguas superficiais causando adveccao acas sobre plataforma latitudes °s garcia 
+ periodos inverno primavera comum presenca ressurgencias talude geradas interacao ente cb ramo costeiro cm formam vortices circulacao ciclonica causando ressurgencia aguas profundas principalmente acas miranda hubold citados garcia 
+ objetivos objetivo geral desenvolvimento sig tridimensional interpretacao integrada dados morfologicos sedimentares fundo termohalinos coluna agua pesca plataforma externa talude margem continental sul brasileira compreendida chui cabo tome objetivos especificos  implementacao sig contenha diferentes tipos dados expressos forma tridimensional interativa potencial integracao novos dados  interacao dados tridimensionalmente visando determinacao padroes oceanograficos ambientais caracteristicos associados plataforma externa talude tres estacoes distintas verao outono inverno  caracterizacao estrutura termohalina plataforma externa talude bacias pelotas santos  determinacao tipos fundo associacoes areas possivel presenca depositos fosfaticos  utilizacao dados esforco pesca associar padroes ambientais observados 
+ materiais metodos criacao ambiente virtual tridimensional utilizada linguagem programacao xd 
+ dados altimetria satelite acusticos usados geracao mapa batimetrico base acrescentados dados ambientais temperatura salinidade alem daqueles relativos composicao fundo 
+ dados oriundos cruzeiros pesquisa realizados navio oceanografico atlantico sul furg assim dados adquiridos outras embarcacoes durante trabalhos realizados costa brasileira 
+ figura traz fluxograma ilustra diferentes etapas trabalho bem sequencia logica desenvolvidas geracao representacoes area estudo integracao diferentes tipos dados 
+ longo deste capitulo diferentes etapas descritas detalhes 
+ figura fluxograma diferentes etapas trabalho sequencia logica desenvolvimento 
+ dados acusticos metodo acustico indireto versatil eficiente auxilio tecnicas tradicionais investigacao submarina tegowski 
+ neste trabalho utilizados dados provenientes seis cruzeiros prospeccao acustica pesqueira realizados longo costa brasileira anos totalizando milhas nauticas tabela 
+ tabela dados referentes cruzeiros prospeccao acustica pesqueira 
+ cruzeiro ecosar ecosar pelagicos pelagicos pelagicos padct embarcacao 
+ atlantico sul atlantico sul atlantico sul atlantico sul atlantico sul 
+ besnard ano periodo regiao sc pr sc pr rs sc pr rs sc pr rs sc pr pr sp estudo sp rj sp rj sp rj sp rj sp rj rj limites prof varredura mn cruzeiros ecosar realizados ano objetivaram mapear ocorrencias sardinha verdadeira sardinela brasiliensis longo costa sc pr sp rj 
+ cruzeiros revizee pelagicos realizados agosto dezembro efetuados ambito projeto revizee avaliacao potencial sustentavel recursos vivos zona economica exclusiva 
+ cruzeiros limitados norte cabo tome rj sul arroio chui rs sendo realizados sobre desenhos amostrais semelhantes excecao terceiro deslocado cinco milhas nauticas norte 
+ utilizados dados batimetricos coletados durante cruzeiro padct financiado programa apoio desenvolvimento cientifico tecnologico realizado maio cabo frio rj cabo santa marta grande sc todos cruzeiros esforco amostral deu longo desenhos amostrais previamente definidos incluiam perfis letra grega 
+ trechos costa preciso acompanhar mudancas direcao mesma desenho mudado zigzag figura 
+ espacamento perfis perpendiculares costa mn todos cruzeiros varredura acustica deu forma continua sendo suspensa apenas realizacao estacoes coleta dados oceanograficos 
+ figura cruzeiros prospeccao acustica pesqueira 
+ dados acusticos coletados bordo 
+ atlantico sul universidade federal rio grande furg excecao cruzeiro padct realizado 
+ besnard instituto oceanografico universidade paulo iousp 
+ coleta dados ambas embarcacoes contaram ecossondas cientificas simrad modelo ek simrad devidamente calibradas conforme metodologia descrita foote modificada maclennan simmonds 
+ equipamentos operaram frequencia khz partir transdutores instalados casco acrescentados metros leituras batimetricas ecossondas fim compensar calado embarcacoes distancia linha dagua transdutores instalados casco 
+ ecossonda ek disponibiliza saida dados via porta serial rs conectada microcomputador possibilita armazenamento diversos dados forma arquivos formato ascii 
+ dados encontramse posicao geografica latitude longitude profundidade local refletividade acustica fundo medidas cada pulso emitido equipamento direcao fundo alem hora data milha 
+ cruzeiros ecosar revizee pelagicos ainda existia conexao direta ecossonda gps global positioning system embarcacao 
+ entanto possivel recuperar posicionamento dados batimetricos partir interpolacao posicoes estacoes oceanograficas georeferenciadas distantes mn si 
+ detalhes desse procedimento podem ser encontrados figueiredo madureira 
+ cruzeiro revizee havia conexao direta ecossonda gps 
+ informacoes relevantes trabalho filtradas universo dados brutos adquiridos utilizacao rotina desenvolvida linguagem programacao lua 
+ maiores detalhes sobre metodologia acustica podem ser encontrados madureira al 
+ dados altimetria satelite cruzeiros prospeccao acustica pesqueira objetivam primeiro plano aquisicao dados batimetricos sim mapeamento distribuicao abundancia especies interesse comercial ecologico 
+ metodologia acustica sido recomendada avaliacao pequenos pelagicos pois permite cobrir grandes areas soares al 
+ assim embora excelente qualidade dados batimetricos cruzeiros prospeccao acustica pesqueira geralmente adquiridos sob malha grande espacamento ordem milhas nauticas perfis impede elaboracao mapas batimetricos detalhados baseados exclusivamente nestes dados 
+ assim tornase necessario utilizacao dados outras fontes fim completar malha batimetrica 
+ dados altimetricos utilizados neste trabalho obtidos atraves sensor microondas instalado plataforma orbital varre aproximadamente oceanos 
+ medicao profundidade indireta funcao variacao altura superficie oceano induzida influencia campo gravitacional relevo submerso geoide figura 
+ fonte modificado sandwell al 
+ figura medicao batimetrica atraves variacao altura superficie oceano altimetria satelite 
+ medicoes realizadas metodo sobre plataforma talude plenamente confiaveis vez leituras gravimetria influenciadas presenca sedimentos forma ainda quantificada sandwell al 
+ assim sendo autores incorporaram dados acusticos obtidos navios ocasiao visando complementar informacao batimetrica sobre plataforma talude oceanos 
+ neste trabalho utilizados dados altimetria satelite publicados smith sandwell disponiveis http topex 
+ processamento dados batimetricos dados altimetria satelite reunidos banco dados juntamente dados acusticos coletados cruzeiros prospeccao acustica pesqueira 
+ leituras batimetricas usado entrada rotina processamento dados desenvolvida utilizandose facilidades programas pacote gmt generic mapping tools wessel smith 
+ dados filtrados blocos segundos grau sendo obtida mediana valores profundidade localizacao 
+ apos filtragem dados interpolados malha amostral resolucao segundos grau rotina curvatura continua spline tensao conforme metodologia descrita smith wessel utilizada ferreira al 
+ malha batimetrica gerada utilizada base construcao representacao area estudo sobre incluidas diversas camadas dados 
+ detalhes sobre criacao desta representacao encontrados item 
+ informacoes batimetricas georeferenciadas posicionadas dentro area delimitada coordenadas longitudes  latitudes s  
+ dados ambientais conhecimento caracteristicas oceanograficas determinada regiao variam espacialmente longo tempo fundamental importancia estudos oceanograficos 
+ presenca massas dagua diferentes temperaturas salinidades pode exemplo explicar presenca ausencia determinado organismo vivo determinada regiao 
+ assim aquisicao dados ambientais pratica comum cruzeiros prospeccao acustica pesqueira pois possibilita melhor entendimento interacao organismos vivos ambiente oceanico 
+ neste trabalho utilizados dados temperatura salinidade funcao profundidade obtidos aparelho ctd conductivity temperature depth estacoes oceanograficas realizadas durante cruzeiros revizee pelagicos cruzeiros cruzeiro chui cabo tome °s 
+ coleta dados fisicos seguiu mesma metodologia durante tres cruzeiros estacoes sendo realizadas inicio fim perfis posicoes distancias maiores milhas nauticas 
+ figura ilustra posicao geografica estacoes oceanograficas coleta dados ambientais realizadas durante cruzeiros prospeccao acustica revizee pelagicos 
+ figura estacoes coleta dados ambientais cruzeiros revizee pelagicos 
+ coleta dados fisicos utilizado aparelho ctd modelo seabird sbe 
+ cruzeiro revizee pelagicos estacoes limitadas metros profundidade enquanto cruzeiros profundidade maxima estacoes limitada capacidade tecnica maxima aparelho atingindo profundidades extremidade oceanica perfis 
+ neste trabalho optouse limitar profundidade perfis metros valor maximo atingido cruzeiro revizee pelagicos fins padronizacao dados melhor ajuste figuras finais utilizadas representacao 
+ dados filtrados partir arquivos brutos utilizandose rotina desenvolvida matlab sendo padronizados tabelas formato unico temperatura salinidade 
+ dados organizados modo serem criados perfis verticais superficie fundo dados temperatura salinidade cada metro 
+ apos filtragem padronizacao dados estacao arquivos organizados perfil dados estacoes oceanograficas realizadas sobre determinado perfil reunidos tabela final unica 
+ todos cruzeiros cada perfil contou minimo duas maximo cinco estacoes 
+ tabelas finais utilizadas gerar perfis temperatura salinidade perpendiculares costa 
+ perfis gerados utilizandose algoritmo interpolacao krigging ferramentas visualizacao grafica software surfer versao 
+ totalizando perfis cruzeiro revizee cruzeiros 
+ fins comparacao sazonal dados diferentes cruzeiros todos perfis gerados respeitandose mesma escala cores cada umas variaveis estudadas 
+ perfis temperatura isotermas plotadas cada °c enquanto isohalinas perfis salinidade plotadas cada 
+ massas dagua presentes area estudo epoca cruzeiros identificadas utilizacao representacao ferramentas classicas analise dados oceanograficos tais indices termohalinos diagramas ts temperatura salinidade 
+ identificadas ressurgencias outras feicoes oceanograficas possivel relacao mesmas topografia fundo 
+ limites termohalinos utilizados classificacao massas dagua mostrados tabela 
+ tabela limites termohalinos utilizados classificacao massas dagua adaptado moller al 
+ prp asap astp acas inverno primavera verao outono 
+ faciologia neste trabalho utilizadas cartas sedimento fundo geradas dias al 
+ ambito programa revizee contem informacoes amostras obtidas junto banco nacional dados oceanograficos bndo dhn oriundas expedicoes revizee 
+ diversas cartas disponiveis integradas unico mapa cobrindo toda area estudo figura 
+ mapa sobreposto sobre superficie gerada possibilitando analise identificacao relacoes dados sedimentologicos batimetria bem dados reflexao acustica fundo figura carta sedimento fundo elaborada dados dias al 
+ refletividade fundo dentre dados utilizados trabalho relativos refletividade fundo oceanico 
+ importante parametro utilizado pesquisas oceanograficas medido equipamentos acusticos cientificos processam energia refletida superficie fundo oceanico denominada forca retroespalhamento superficie fundo bottom surface backscattering strentgh bsbs 
+ proporcao energia refletida determinada coeficiente reflexao vez funcao impedancia acustica meio agua refletor nesse caso fundo maclennan simmonds 
+ parte onda acustica atinge fundo retorna transdutor representa energia retroespalhada backscatter 
+ fundos planos irregulares apresentam diferentes graus espalhamento energia assim propriedades fisicas sedimento influenciam significativamente resposta 
+ formas sedimentares marcas ondulacao ripple marks textura rochas composicao litologica mineralogica organismos vivem fundo influenciam sinal collins al 
+ dados bsbs adquiridos via porta serial juntamente universo dados disponiveis ecossonda cientifica 
+ apos filtragem dados disponibilizados forma tabelas incluem dados posicionamento batimetria vide item 
+ dados reflexao acustica utilizados neste trabalho adquiridos durante cruzeiro revizee 
+ optouse utilizacao destes dados devido maior confiabilidade geoposicionamento mesmos vez durante cruzeiro ecossonda cientifica gps embarcacao conectados permitindo georreferenciamento preciso cada pulso emitido sonda 
+ dados bsbs agrupados quatro classes acordo figueiredo madureira 
+ db representada mapas cor vermelha db representada mapas cor amarela db representada mapas cor verde db representada mapas cor azul dados classificados utilizados confeccao mapa contendo dados sedimentologicos reflexao acustica fundo sobreposto sobre superficie batimetrica 
+ dados pesca fundo sedimentologia neste trabalho utilizados dados prospeccao pesqueira espinhel fundo realizada ambito projeto revizee publicados haimovici al 
+ lances pesca realizados dois cruzeiros cobriram plataforma externa talude superior regioes sudeste sul brasil desde chui rs cabo tome rj agosto setembro abril junho 
+ lances espinhel fundo considerados escolhidos devido presenca peixebatata lopholatilus villarii chernepoveiro polyprion americanus duas especies afinidades tipos fundo especificos 
+ lances realizados regiao sul area estudo sobre quatro perfis perpendiculares costa distantes mn si executados largo chui albardao rio grande mostardas 
+ mapa figura ilustra posicao geografica lances considerados 
+ figura lances pesca espinhel fundo utilizados trabalho 
+ circulos laranja indicam posicao lances presenca peixebatata amarelos lances presenca cherne poveiro azuis lances presenca ambos 
+ tabela resume algumas informacoes lances pesca espinhel fundo utilizados neste trabalho 
+ tabela informacoes lances pesca espinhel fundo utilizados trabalho lance data latidude longitude prof especie presente chernepoveiro ambas chernepoveiro ambas ambas ambas ambas chernepoveiro ambas ambas chernepoveiro ambas chernepoveiro ambas chernepoveiro ambas chernepoveiro chernepoveiro ambas ambas chernepoveiro ambas peixebatata peixebatata ambas chernepoveiro chernepoveiro posteriormente lances inseridos sobre batimetria mapa sedimentologico fim identificar possiveis relacoes presenca peixes tipo substrato 
+ linguagem xd descricao ambientes virtuais neste trabalho optouse utilizar linguagem xd construcao ambiente interativo sobre diferentes dados incluidos 
+ script xd arquivo ascii geral extensao 
+ xd pode ser editado qualquer editor texto 
+ formato semelhante arquivos xml extensible markup language facilita separacao conteudo formatacao proporcionando maior simplicidade legibilidade compartilhamento conteudo internet podendo ser visualizado atraves browser 
+ detalhes sobre linguagem descricao ambientes virtuais xd podem ser encontrados anexo 
+ preparacao dados geracao mapa batimetrico criacao scripts xd pode ser feita facilmente utilizandose editor textos comum vez arquivos gerados formato ascii 
+ entanto neste trabalho optouse utilizacao editor xd edit 
+ webd consortium editor grafico arquivos xd permite edicao livre erros arquivos menores 
+ alem funcao edicao validacao arquivos cena xd edit traz algumas facilidades arquivo ajuda bastante completo permite consulta rapida funcionalidades tipos parametros mesmos bem acesso rapido construtores codigo permitindo insercao corpo script forma rapida alem possibilitar visualizacao primaria representacao criada 
+ entanto magnitude dados utilizados trabalho impossibilitou edicao arquivos xd maiores diretamente editor vez grandes matrizes dados deveriam ser inseridas codigos forma organizada 
+ exemplo podese citar criacao arquivo xd gera representacao malha batimetrica versao final chegou linhas codigo quais ajustada matriz batimetrica dimensao representa 
+ pontos torna edicao manual deste tipo arquivo bastante complexa 
+ neste contexto antes criacao ambiente virtual preciso preparar dados poderia ser feito diretamente utilizandose linguagem xd vez mesma estritamente voltada geracao ambientes visuais disponibilizando funcoes ferramentas permitam previo processamento preparacao dados geracao codigo xd 
+ assim necessario desenvolver scripts outra linguagem programacao permitisse processar imensa quantidade dados gerar forma automatica scripts xd alguns casos chegaram apresentar milhares linhas codigo 
+ neste trabalho optouse utilizacao matlab matlab criacao scripts base responsaveis processamento preparacao dados geracao codigo xd 
+ matlab software bastante conhecido meio academico industrial trazendo serie facilidades processamento dados brutos forma matrizes justamente formato dados utilizados neste trabalho alem oferecer funcoes especificas formatacao geracao arquivos ascii 
+ formatacao codigo xd baseado xml facilita criacao automatica codigo devido alta estruturacao modularizacao 
+ representacao mapa batimetrico base sobre diversas informacoes integradas gerada exagero vertical vezes fim destacar principais feicoes fundo tornandoas visiveis observador 
+ preparacao insercao dados ambientais representacao resultado final processamento dados ambientais geracao perfis temperatura salinidade perpendiculares costa mostram variacao termica halina coluna dagua diferentes epocas ano 
+ mesma forma dados batimetricos insercao dados ambientais representacao exigiu esforco programacao bastante intenso 
+ cada perfil inserido representacao forma textura sobre poligono retangular georeferenciado 
+ figura mostra trecho codigo xd responsavel geracao poligono sobreposicao perfil forma textura sobre poligono 
+ figura trecho codigo xd insercao perfis temperatura salinidade representacao 
+ pode ser observado figura utilizados indexedfaceset criacao poligonos geocoordinate geolocalizacao mesmos 
+ ambos fazem parte componente geospatial xd 
+ numero elevado perfis temperatura salinidade dificultaria desenvolvimento manual codigo xd alem disso codigo necessario insercao cada perfil representacao bastante semelhante diferindo somente posicoes geograficas extremos perfis 
+ neste contexto optouse desenvolver script base matlab partir arquivos entrada informacoes sobre perfis gerou forma automatica codigo xd responsavel insercao perfis ambientais representacao virtual final 
+ visualizacao representacao visualizador conteudo apresentou melhor desempenho aliando baixa necessidade recursos hardware desenvoltura dados rapidez interpretacao arquivos xd alem total compatibilidade componente geoespacial xd xjd xjd 
+ xjd fruto projeto webd consortium focado criacao toolkit codigo aberto visualizacao manipulacao conteudo vrml xd totalmente desenvolvido java 
+ segundo desenvolvedores xjd serve base experimental prova representacoes biblioteca pode ser utilizada desenvolvedores proprias aplicacoes baseadas xd vez xjd altamente modularizado xjd 
+ atualmente devido alto grau desenvolvimento xjd tornou principal ferramenta usada grupos teste especificacao xd 
+ figura ilustra janela execucao visualizador xjd juntamente todas ferramentas navegacao ambiente tridimensional 
+ menu principal barra gerenciamento arquivos area visualizacao cena barra ferramentas navegacao visualizacao cena figura janela execucao visualizador ambientes virtuais xjd 
+ representacao interativa dados oceanograficos objetivo principal deste trabalho implementacao sig cuja base mapa tridimensional fundo marinho relevo principais feicoes sobreposto diversas informacoes relativas ambiente oceanico 
+ informacoes contidas sig englobam caracteristicas fundo marinho tais batimetria refletividade acustica fundo faciologia alem dados ambientais temperatura salinidade 
+ modelagem ambientes virtuais sido realizada sucesso utilizando linguagens vrml extensao dados geograficos geovrml 
+ vrml tornou padrao desde aprovacao iso international standards organization 
+ entanto perdido espaco sucessora xd trouxe avancos diversos aspectos mantendo porem principais caracteristicas funcionalidades vrml 
+ xd caracterizase principalmente maior modularizacao flexibilidade codigo processamento veloz estavel parte visualizadores tamanho reduzido arquivos fonte 
+ xd introduzida recentemente webd consortium tornou novo padrao desde aprovacao iso 
+ xd permite visualizacao modelagem criacao ambientes virtuais interativos suporta diversas transformacoes rotacao translacao escala alem textura sombreamento posicionamento fontes luz 
+ detalhes sobre linguagem xd podem ser encontrados anexo 
+ representacoes virtuais tridimensionais geradas xd podem ser visualizadas browser desde possua plugins especificos tratem arquivos xd 
+ existem alguns visualizadores podem funcionar tanto forma integrada browser modo stand alone necessidade outro software 
+ neste trabalho testados alguns visualizadores busca mostrasse melhor desempenho considerando tipo quantidade dados utilizados 
+ visualizadores testados octaga player octaga octaga flux player flux media machines visualizadores vrml xd livres uso comercial funcionam integrados browsers sozinhos 
+ ambos suportam grande parte componentes xd apresentaram boa resposta dados geograficos 
+ visualizador apresentou melhores resultados xjd fruto projeto webd consortium focado criacao toolkit codigo aberto visualizacao manipulacao conteudo vrml xd totalmente desenvolvido linguagem java 
+ segundo desenvolvedores xjd serve base experimental prova representacoes biblioteca pode ser utilizada desenvolvedores proprias aplicacoes baseadas xd vez xjd altamente modularizado xjd 
+ atualmente devido alto grau desenvolvimento xjd tornou principal ferramenta usada grupos teste especificacao xd 
+ apesar consideravel volume dados oceanograficos existentes atualmente brasil fruto pesquisas realizadas diversas instituicoes ainda noticia mapas detalhados integrem informacoes ambiente computacional unico tridimensional limitado representacao estatica dinamica possibilidade interferencia interacao direta parte usuario 
+ sabese volume dados vem sendo coletados longo costa aumentado significativamente motivado grandes projetos pesquisa objetivam mapear zee zona economica exclusiva demanda empresas petroleo tanto monitoramento ambiental quanto licenciamento atividades partir diagnostico ambiental 
+ neste contexto representacao desenvolvida neste trabalho representa grande avanco visualizacao dados oceanograficos 
+ maioria sig existentes mercado restringem visao espaco representacao 
+ possibilidade visualizacao sig aproxima interface aplicacao mundo real tridimensional usuarios acostumados imagens visualizadas atraves interface diretamente relacionadas experiencia cotidiana usuario 
+ facilita interpretacao informacoes vez elimina necessidade usuario construir mentalmente imagem tridimensional area estudo 
+ representacao desenvolvida permite usuario interaja forma direta grande volume dados disponiveis buscando angulos favorecam observacao informacoes 
+ possibilidade navegacao ambiente tridimensional interativo dinamico mostra altamente vantajosa principalmente comparada representacoes classicas bidimensionais 
+ disposicao espacial diversas informacoes cruzamento pode ser observada partir diferentes angulos visao 
+ desde abertos objetivo visualizar dados contexto geral visoes gradativamente fechadas regioes interesse observador 
+ interatividade representacao pode ser ilustrada sequencia imagens figura 
+ exemplo figura observador inicia visualizacao dados contemplando representacao partir visao aberta figura analisando dados forma geral avaliando somente contexto mesmos 
+ medida navega interface observador entra representacao aproximando cada vez ponto interesse onde deseja visualizar dados detalhes figura 
+ dinamica acesso dados facilita interpretacao mesmos consequencia maximiza qualifica geracao informacoes 
+ sequencia deste capitulo apresentados discutidos mapa batimetrico caracterizacao ambiental partir representacao areas selecionadas possivel presenca depositos fosfaticos cruzamento informacao sedimentologica dados pesca espinhel fundo 
+ visao geral visao intermediaria figura sequencia ilustrando dinamica navegacao representacao desde visao geral visao detalhe 
+ visao intermediaria visao detalhe 
+ dados acusticos dados acusticos utilizados neste trabalho adquiridos seis cruzeiros prospeccao pesqueira realizados chuirs °s cabo tomerj °s totalizando 
+ leituras batimetricas cobrindo faixa profundidade 
+ maior concentracao dados faixa corresponde regiao plataforma externa talude superior margem continental sul brasileira tabela 
+ maior concentracao dados nessa regiao devese fato todos cruzeiros analisados cobriram faixa plataforma enquanto demais areas cobertas forma parcial dois cruzeiros 
+ tabela numero leituras acusticas faixa batimetrica 
+ faixa batimetrica n° amostras 
+ ecosar revizee padct 
+ ecosar revizee padct revizee padct revizee padct revizee padct total amostras 
+ dados altimetria satelite cruzeiros prospeccao acustica pesqueira visam primeiro plano aquisicao dados batimetricos 
+ apesar representarem fonte ordem centenas milhares leituras batimetricas excelente qualidade cruzeiros realizados modo geral sobre perfis grande espacamento si dificultando interpolacao dados confeccao mapas batimetricos boa resolucao baseados exclusivamente nesses dados 
+ apesar grande avanco tecnicas ecossondagem ultimas decadas advento gps apenas pequena porcentagem fundo oceanico encontrase mapeado 
+ basicamente devido grandes custos envolvidos operacao embarcacoes ambiente tao vasto vezes hostil oceano sandwell 
+ neste contexto utilizacao satelites representa forma barata rapida eficiente mapear remotamente fundo oceanico 
+ mapeamento oceanos utilizando somente navios levaria anos custo bilhoes dolares enquanto trabalho poderia ser realizado satelites anos custo milhoes dolares garantia resolucao dados globalmente uniforme medicoes mesma qualidade praticamente todos locais vez sensor transportando redor globo sandwell al 
+ resolucao metodo funcao tanto erros medida instrumento quanto tamanho feicao fundo assim feicao identificavel deste mesma destaquese frente ruido fundo causado erros medicao sandwell 
+ ainda segundo autores dependendo ruido gerado ondas possivel identificar feicoes menores duas vezes profundidade local 
+ neste trabalho integrados dados batimetricos acusticos dados oriundos altimetria satelite navios ocasiao resolucao minuto grau 
+ leituras somados acusticos geraram banco 
+ leituras batimetricas dispostas 
+ malha batimetrica final qualidade dados utilizados 
+ tecnicas filtragem interpolacao aplicadas sobre banco dados batimetricos fim gerar malha batimetrica resolucao segundos grau aproximadamente metros pontos 
+ malha batimetrica final gerada inclui regioes plataforma continental talude regiao oceanica area estudo compreende bacias pelotas santos utilizada base criacao representacao 
+ figura ilustra mapa batimetrico base representado exagero vertical vezes fim destacar principais feicoes fundo escala ordem milhoes metros horizontalmente contra milhares metros verticalmente 
+ visao geral figura visao geral detalhe mapa batimetrico base 
+ visao detalhe fim melhorar qualidade produto final facilitar localizacao geografica visual parte usuario incorporados mapa dados elevacao continente resolucao segundos 
+ dados utilizados disponiveis http edcdaac 
+ gov gtopo gtopo 
+ figura mostra primeiro estagio integracao dados representacao 
+ duas vistas mostradas figura incluem sobreposicao dados sedimentologicos sobre mapa batimetrico base 
+ visao geral figura visao geral detalhe mapa batimetrico sobreposto dados visao detalhe sedimentologicos 
+ quanto qualidade dados batimetricos utilizados fato mesmos serem provenientes diferentes fontes epocas gera alguns problemas 
+ pequenas diferencas definicao parametros configuracao sonda velocidade som implicam diferencas leituras batimetricas cruzeiros relacao dados altimetricos 
+ erros leitura eventualmente sido filtrados podem estar presentes trabalha universo dados tao grande 
+ infelizmente todas diferencas podem ser atenuadas satisfatoriamente interpolacao dados algumas regioes mapa surgem forma linhas aparecem sobre trajetoria embarcacoes 
+ chamados artefatos citados becker al 
+ feicoes fundo identificadas area estudo qualidade dados liberdade movimentacao proporcionada representacao virtual permitiu observacao principais feicoes fundo presentes area estudo detalhes partir diferentes angulos 
+ comparando mapa batimetrico gerado mapas chaves possivel identificar principais feicoes fundo existentes area estudo cone rio grande encontrado sul seguido plato rio grande largo torres outras protuberancias longo talude margem continental sul brasileira alem plato paulo 
+ figueiredo madureira observaram mapas batimetricos menos seis protuberancias principais cones platos longo talude margem continental sul brasileira puderam ser observadas representacao gerada neste trabalho 
+ regiao sul podese observar maior todas cone rio grande figura seguido plato rio grande figura alem outro plato largo florianopolis figura dimensoes semelhantes plato rio grande 
+ figura cone rio grande 
+ figura plato rio grande 
+ figura plato largo florianopolis 
+ largo paranagua podese observar outro plato porem menor dimensao norte figura seguido outro cabo frio figura 
+ alem cone platos longo talude possivel identificar plato paulo figura 
+ figura platos largo norte paranagua 
+ figura plato largo cabo frio 
+ figura plato paulo 
+ representacao possibilitou confirmacao constatacao feita figueiredo madureira todas protuberancias observadas assimetricas relacao eixo imaginario partindo costa evidenciando presenca disposicao sedimentar diferenciada lado outro 
+ sul norte plato largo paranagua todas protuberancias apresentam face sul ingreme comparada norte suavizada indicativo retirada sedimento face sul provavelmente devido acao correntes contorno figura 
+ figura feicoes fundo face sul ingreme relacao norte indicando maior retirada sedimento face sul 
+ norte protuberancia paranagua face norte outras duas protuberancias apresenta ingreme indicando maior retirada sedimento nesta face figura 
+ figura feicoes fundo norte paranagua face norte ingreme relacao sul indicando maior retirada sedimento face norte 
+ principais feicoes fundo identificadas representacao gerada destacam mapa relevo submarino cprm elaborado diretoria hidrografia navegacao dhn marinha brasil leplac disponivel www 
+ visualizacao virtual leito oceanico gerada representa si avanco representacao dados oceanograficos principalmente comparada mapas bidimensionais estaticos pois permitiu analise dinamica detalhes principais feicoes fundo area estudo 
+ dados ambientais representacao coleta dados fisicos temperatura salinidade fato corriqueiro cruzeiros pesquisa visando principalmente caracterizacao ambiental area estudo identificacao massas dagua presentes vezes estabelecimento possiveis correlacoes outras variaveis locais presenca ausencia organismos vivos 
+ neste trabalho gerados perfis temperatura salinidade perpendiculares costa divididos tres cruzeiros realizados area estudo diferentes estacoes ano 
+ figura exemplifica perfis temperatura salinidade gerados cruzeiro revizee realizado inverno inseridos representacao 
+ perfil realizado extremo sul area estudo aproximadamente latitude °s 
+ linhas pretas verticais representam posicao relativa estacoes oceanograficas perfil profundidade maxima aquisicao dados mesmas 
+ todas figuras geradas respeitaram mesma escala vertical cujas estacoes atingiram profundidade acrescidas tarja preta porcao inferior ocultando dados irreais gerados interpolacao 
+ dados irreais estacoes gerados interpolacao ocultados mapa batimetrico assim inseridos representacao conforme mostrado figuras 
+ perfil temperatura perfil salinidade figura perfis temperatura salinidade gerados partir tres estacoes ctd cruzeiro revizee posteriormente inseridos representacao area estudo 
+ figuras mostram visao geral detalhe representacoes geradas 
+ informacao apresentada figuras inclui dados batimetricos sedimentologicos alem perfis temperatura salinidade cruzeiro revizee 
+ figura visao geral mapa perfis temperatura 
+ visao detalhe perfis temperatura visao detalhe perfis salinidade figura visao detalhe perfis temperatura salinidade cruzeiro rev alem dados batimetricos sedimentologicos 
+ massas dagua area estudo neste trabalho identificadas massas agua presentes area estudo epoca cruzeiros partir interpretacao estacoes ctd 
+ identificadas ressurgencias outras feicoes oceanograficas possivel relacao mesmas topografia fundo 
+ tanto utilizouse representacao visualizacao dados juntamente ferramentas classicas analise dados oceanograficos tais indices termohalinos diagramas ts 
+ devido grande extensao area estudo apresenta regioes caracteristicas fisicas distintas 
+ analise dados revelou regiao sul cabo santa marta grande setor complexo presenca varias massas dagua grande mistura mesmas 
+ norte deste cabo situacao diferente maior estratificacao menor mistura aguas 
+ neste contexto objetivando melhor visualizacao interpretacao dados ambientais area dividida dois setores norte cabo santa marta grande outro sul permitindo identificacao localizacao massas dagua presentes diferentes areas 
+ limites termohalinos utilizados classificacao massas dagua mostrados item material metodos 
+ diagramas ts gerados partir indices termohalinos dados temperatura salinidade tres cruzeiros dois setores estabelecidos separou seis massas dagua pluma rio prata prp agua subtropical plataforma astp agua subantartica plataforma asap agua tropical agua central atlantico sul acas agua intermediaria antartica aia figura 
+ cruzeiro revizee sul cruzeiro revizee norte cruzeiro revizee sul cruzeiro revizee norte cruzeiro revizee sul cruzeiro revizee norte figura diagramas ts cruzeiros revizee areas norte sul cabo santa marta 
+ prp denominacao dada aguas baixa salinidade distribuem longo costas argentina uruguai brasil misturandose lateralmente verticalmente outras massas dagua moller al 
+ denominacao deve origem dessas aguas estuario rio prata embora aguas complexo lagoa patos mirim contribuam menor escala formacao aguas baixa salinidade presentes longo costa sul brasil denominadas simplesmente aguas costeiras ac piola 
+ prp presente setor sul todos cruzeiros 
+ somente cruzeiro revizee realizado inverno observadas aguas indices termohalinos correspondentes massa dagua setor norte cabo santa marta grande 
+ astp relativamente quente °c salina resultante modificacao acas diluidas aguas aporte continental regiao sul brasileira piola al 
+ asap relativamente fria pouco salina transportada sobre plataforma sul brasil corrente patagonia piola al 
+ asap caracterizase apresentar salinidade sazonalmente uniforme media grandes variacoes temperatura superficial passando aproximadamente °c verao aproximadamente °c inverno 
+ segundo piola al 
+ astp asap separadas zona transicao termohalina observada sobre plataforma continental uruguaia sul brasileira chamada frente subtropical plataforma fstp 
+ massa agua quente temperatura minima variando °c dependendo estacao ano salina 
+ formada baixas latitudes onde taxa evaporacao maior taxa precipitacao campos al 
+ transportada sul corrente brasil onde tornase densa medida mistura outras massas dagua durante deslocamento 
+ geralmente encontrada talude pode ocupar plataforma externa media durante verao soares moller 
+ astp acas presentes toda area estudo todos cruzeiros analisados enquanto asap observada area sul forma intensa cruzeiros inverno verao 
+ menos presente setor sul area estudo durante cruzeiro inverno revizee comparado demais cruzeiros 
+ alem disso presente setor norte mostrou ligeiramente menos densa presente setor sul todos cruzeiros principalmente inverno 
+ contrapartida podese observar massas dagua ocupam camadas profundas acas aia apresentam mesma densidade longo toda area estudo 
+ posicionada logo abaixo coluna dagua acas formada regiao convergencia subtropical estrutura principal termoclina regiao oceanica adjacente plataforma continental 
+ apresenta temperaturas menores °c salinidade moller al 
+ analise diagramas ts cruzeiros inverno verao indicou presenca zona mistura intensa setor sul cabo santa marta grande 
+ agua presente nessa zona provavelmente proveniente mistura acas asap 
+ imediatamente abaixo acas encontrase aia temperaturas °c °c salinidades cirano al 
+ acordo muller al 
+ aia apresentase corrente contorno oeste bem definida bifurca movendose paralelamente talude direcao equador norte °s sul °s 
+ aia pode ser observada todos cruzeiros toda area estudo excecao setor norte cruzeiro inverno 
+ cabe salientar questao padronizacao limite maximo profundidade estabelecido analise dados fisicos maximo atingido cruzeiro revizee 
+ cruzeiros revizee realizados respectivamente outono verao atingiram profundidades estacoes oceanicas quais certamente marcada presenca aia 
+ processos oceanograficos area estudo partir analise dados possivel identificar cinco processos bem destacados area estudo intrusao acas plataforma sudestesul ressurgencias quebra plataforma focos ressurgencia acas fertilizacao oceanica aguas costeiras presenca aguas plataforma sul cabo santa marta conforme descrito gandini madureira 
+ cada cruzeiros analisados podese observar menos dois processos citados anteriormente 
+ seguir apresentada analise processos ocorridos cruzeiro 
+ cruzeiro revizee figura ilustra perfil temperatura realizado largo cabo frio durante cruzeiro revizee onde pode ser observada ocorrencia estrutura agua fria °c caracteristica acas subindo profundidade 
+ estrutura classificada ressurgencia pois agua fria rica aflora superficie algo aparentemente observado nesta regiao realizando estacoes oceanograficas costeiras 
+ tal afirmacao baseiase fato isotermas observadas figura indicarem continuidade subida acas mesma encontra estavel profundidade 
+ alem disso mesma estrutura observada perfis proximos 
+ estrutura classificada simplesmente intrusao acas sobre plataforma 
+ figura perfil temperatura largo cabo frio ilustrando estrutura agua fria torno °c subindo 
+ figura ilustra ocorrencia nucleo frio acas aproximadamente sendo bombeado direcao superficie sul ilha sebastiao observado durante cruzeiro revizee 
+ figura nucleo acas metros profundidade plataforma media sul sebastiao 
+ segundo gandini madureira trabalharam mesmos dados focos ressurgencia acas sobre plataforma intermediaria mecanismos locais ressurgencia dissociados conhecida infiltracao sazonal acas bacia santos tipicas epocas verao presenca vento ne 
+ focos observados condicoes oceanograficas regiao predominio aguas tropicais pequena influencia acas 
+ focos ressurgencia observados cruzeiro revizee 
+ neste cruzeiro notase sul ilha sebastiao presenca aguas frias temperatura baixas salinidades salinidade oriundas mistura aguas subtropicais descargas continentais figura 
+ aguas menor densidade cobrem parte plataforma sudestesul toda plataforma sul figuras 
+ temperatura figura aguas frias pouco salinas sul sebastiao largo cananeia 
+ salinidade temperatura figura aguas frias pouco salinas cobrindo plataforma sul 
+ salinidade extremo sul area estudo observase presenca aguas prp cobrindo grande parte plataforma externa media figura 
+ temperatura figura prp intensamente presente extremo sul area estudo 
+ salinidade cruzeiro revizee cruzeiro revizee realizado outono identificado evento ascensao acas proximo superficie largo cabo frio 
+ evento caracteriza ressurgencia vez aguas ricas afloram superficie 
+ figura pode ser observada presenca aguas temperaturas inferiores °c salinidades 
+ temperatura figura processo enriquecimento observado largo cabo frio durante cruzeiro salinidade revizee 
+ podese observar figura isolinhas sofrem deflexao direcao superficie indicando aguas frias ricas tendem direcionar superficie 
+ durante cruzeiro toda plataforma externa talude dessa regiao cobertas aguas caracteristica acas 
+ gandini madureira analisaram distribuicao valores acusticos primeiros coluna dagua nesta regiao periodo aquisicao dados fisicos encontrando alta densidade biologica mostrou forte afinidade area onde identificado processo enriquecimento 
+ outro mecanismo identificado gandini madureira confirmado neste trabalho presenca evento ressurgencia acas regiao quebra plataforma largo francisco sul sc conforme pode ser observado figura 
+ temperatura salinidade figura ressurgencia acas quebra plataforma largo francisco sul 
+ nucleo acas profundidade unico observado todos cruzeiros mostrou independente aguas frias cobrem fundo plataforma observado gandini madureira 
+ cruzeiro revizee mostrou presenca aguas plataforma sul ilha sebastiao figura porem menor cobertura maiores salinidades comparado cruzeiro inverno 
+ deve provavelmente menor contribuicao aguas provenientes drenagem continental 
+ nesta mesma area podese observar presenca bem marcada acas sobre plataforma media externa 
+ temperatura figura aguas plataforma sul sebastiao presenca acas sobre plataforma salinidade media externa 
+ termos temperatura plataforma sul area estudo cabo santa marta chui mostrouse homogenea durante cruzeiro revizee 
+ entanto podese observar ligeira diferenca temperatura camada superior largo rio grande rs caracterizando lente aguas provenientes aportes continentais associadas prp menor escala aguas sistema lagoa patos mirim 
+ lente bem evidente dados salinidade valores chegam atingir conforme pode ser observado figura 
+ temperatura figura lente aguas frias baixa salinidade sobre plataforma largo salinidade rio grande rs 
+ cruzeiro revizee observacao dados ambientais cruzeiro revizee realizado verao mostrou ocorrencia processo enriquecimento camadas superiores coluna dagua largo cabo frio aguas temperatura torno °c salinidade caracteristicas acas chegando metros superficie conforme pode ser observado figura 
+ temperatura figura processo enriquecimento observado largo cabo frio durante cruzeiro salinidade revizze 
+ figura ilustra presenca aguas costeiras menos salinas temperaturas ligeiramente inferiores °c norte oceanicas profundidade sobre plataforma media largo paranagua 
+ presenca dessas aguas indica influencia aguas plataforma vindas sul 
+ temperatura figura aguas costeiras largo paranagua durante cruzeiro revizee 
+ salinidade neste cruzeiro presenca acas bacia santos intensa cruzeiro revizee apresentandose toda regiao alem quebra plataforma 
+ sul cabo santa marta identificadas aguas costeiras grande parte plataforma media externa figura entanto menor cobertura comparado cruzeiro revizee inverno 
+ menor cobertura pode ser justificada baixa contribuicao aguas drenagem continental periodo realizacao cruzeiro maior influencia corrente brasil nesta regiao verao castro al 
+ temperatura figura aguas plataforma sul cabo santa marta 
+ salinidade assim cruzeiros revizee observouse cruzeiro presenca aguas salinidade temperatura baixas extremo sul area estudo conforme pode ser observado figura 
+ aguas origem subantartica provenientes prp menor escala sistema lagoa patos mirim 
+ temperatura figura presenca aguas prp sistema lagoa patos mirim extremo sul area salinidade estudo 
+ faciologia bsbs presenca fosforita neste item dados batimetricos faciologicos reflexao acustica fundo utilizados identificar locais presenca depositos fosfaticos 
+ fosforita principais recursos naometalicos encontrados fundo submarino silva mello 
+ minerais autigenicos relacionados elevados niveis materia organica sedimentos fundo intimamente associados clima convergencia correntes oceanicas baixa taxa sedimentacao terrigena riggs burnett 
+ formacao particulas autigenicas ocorre atraves longos processos envolvem reacoes quimicas agua substancias dissolvidas outras depositadas fundo oceanico dias 
+ segundo silva mello fosforitas desenvolvemse frequentemente sob forma pelotas nodulos diametros variaveis mm alguns centimetros chegando formar camadas variam alguns centimetros dezenas metros nodulos fosforitas intercalados quantidades variaveis material sedimentar detritico 
+ depositos fosforita relativamente comuns regioes tropicais ocorrendo profundidade maxima 
+ metros cobrindo borda plataforma talude superior platos marginais bancos submarinos mero 
+ aparecem forma cascalhos nodulos crostas espessura variada parecem estar associadas zonas ressurgencia upwelling divergencia alta produtividade biologica pinet 
+ segundo riggs shelton areas ressurgencia areas elevado aporte nutrientes nitrogenio fosforo elevam indices producao materia organica consequentemente formacao crescimento graos fosfaticos 
+ ciclo completo formacao fosforita marinha compreende tres estagios deposicao biogenica diagenese dinamica 
+ serie destes ciclos repetidos mesma regiao pode resultar formacao camadas nodulos grandes pelotas compostas diversas geracoes fosfatos baturin 
+ citam ocorrencia nodulos fosfaticos terraco rio grande durante dragagens plataforma continental externa talude superior profundidades 
+ silva mello destacam ocorrencias nodulos fosforita teores po terraco rio grande profundidade cerca metros 
+ identificacao possiveis ocorrencias depositos fosfaticos partir dados disponiveis inicio processamento dados acusticos 
+ neste trabalho dados reflexao acustica superficie fundo bsbs divididos quatro classes valores seguindo classificacao feita figueiredo madureira 
+ segundo autores classes podem ser correlacionadas classes sedimentares definidas partir diagrama triangular tipo shepard 
+ diagrama original criado shepard apresentado figura correlacao valores reflexao acustica tabela 
+ figura diagrama triangular tipo shepard modificado shepard 
+ tabela correlacao faixas reflexao acustica fundo classificacao sedimentar segundo diagrama triangular tipo shepard 
+ faixa ocorrencia classificacao segundo diagrama triangular tipo shepard db db cascalho cascalho lamoso cascalho arenoso cascalho areia lama areia cascalhosa areia lama cascalhosa lama arenosa areia lamosa areia db lama arenosa lama db lama fonte figueiredo madureira 
+ dados classificados utilizados confeccao mapa sobrepondo dados sedimentologicos reflexao acustica conforme pode ser observado figura 
+ figura carta sedimento fundo sobreposta dados reflexao acustica fundo adquiridos durante cruzeiro revizee 
+ posteriormente mapa modificado utilizado textura sobre superficie gerada conforme pode ser observado figura 
+ possibilitou interpretacao dados forma integrada 
+ visao geral visao detalhe figura visao geral detalhe mapa batimetrico sobreposicao dados sedimentologios reflexao acustica fundo 
+ partir representacao possivel identificar areas consideravel correspondencia dados bsbs sedimentologicos 
+ figuras ilustram respectivamente areas largo cabo frio largo ilha sebastiao quais dados bsbs indicam alta refletividade acustica caracteristica fundos duros justamente sobre areas fundos arenosos cascalho biodetriticos conchas algas calcarias indicados carta sedimentologica 
+ figueiredo madureira descrevem area cabo frio presenca sedimentos maior granulometria cascalho areia cascalhosa 
+ figura fundos duros alta refletividade acustica largo cabo frio 
+ figura fundos duros alta refletividade acustica largo ilha sebastiao 
+ largo cananeia observase area baixos valores bsbs figura indica presenca fundos menos duros 
+ nesta area carta sedimentologica mostrou ocorrencia fundos lamosos 
+ figura fundos pouco duros baixa refletividade acustica largo cananeia 
+ correspondencia dados refletividade acustica fundo sedimentologico pode ser identificada outras regioes dentro area estudo conforme pode ser observado figuras ilustram respectivamente areas sul cabo santa marta grande largo rio grande 
+ figura area baixo bsbs fundo lamoso sul cabo santa marta 
+ figura area baixo bsbs fundo lamoso largo rio grande 
+ possivel observar altos valores refletividade acustica sobre plataforma externa talude superior algumas regioes figuras indicando associacao variacao topografica fundo altos valores refletividade 
+ neste trabalho buscouse identificar possivel presenca depositos fosfaticos area estudo partir cruzamento diferentes informacoes 
+ fundos duros irregulares identificados altos valores refletividade acustica perfis batimetricos gerados cooke al 
+ selecionados conjuntamente mapas fundo gerados dias al 
+ considerados provaveis candidatos presenca depositos fosfaticos trechos perfis duros irregulares profundidades inferiores 
+ perfis numerados sequencialmente forma crescente norte sul objetivo facilitar localizacao mapas referenciamento texto 
+ extremo norte area estudo perfis apresentaram todas caracteristicas consideradas indicativas presenca fosforita 
+ figura ilustra localizacao perfis contexto mesmos relacao bsbs sedimentologia area 
+ todos perfis apresentaram trechos alta refletividade acustica setores dentro profundidade considerada ocorrencia fosforita 
+ alem disso informacao sedimentologica confirma dureza fundo ocorrencia substratos duros area realizacao perfis 
+ figura perfis localizados proximo cabo frio caracteristicas compativeis presenca fosforita 
+ figuras ilustram ecoperfis bsbs 
+ diferentes classes bsbs representadas diferentes cores conforme detalhado item material metodos diferentes tamanhos traco 
+ perfis maiores divididos setores fim possibilitar observacao irregularidades partir diferenciacao escala 
+ fonte cooke al 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ fonte cooke al 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ fonte cooke al 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ perfis localizados largo cabo frio regiao grande produtividade biologica onde ocorrencia ressurgencias comum conforme afirmam castro al 
+ guandini madureira moller al 
+ neste trabalho podese observar ocorrencia processos enriquecimento nesta regiao dois periodos distintos outono verao 
+ perfis realizados largo cabo santa marta grande apresentaram todas caracteristicas indicativas presenca fosforita pode ser observado seguir 
+ figura ilustra localizacao geografica perfis cruzamento informacoes bsbs sedimentologia 
+ assim perfis localizados largo cabo frio apresentaram trechos alta refletividade acustica setores dentro profundidade considerada ocorrencia fosforita 
+ alta refletividade acustica indicativa fundos duros pode ser confirmada partir cruzamento dados sedimentologicos indicam ocorrencia substratos duros area realizacao perfis 
+ figura perfis localizados largo cabo santa marta grande caracteristicas compativeis presenca fosforita 
+ figuras ilustram ecoperfis bsbs perfis citados 
+ fonte cooke al 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ fonte cooke al 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ fonte cooke al 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ fonte cooke al 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ fonte cooke al 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ fonte cooke al 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ fonte cooke al 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ fonte cooke al 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ perfis localizados largo cabo santa marta grande assim regiao cabo frio apresenta alta produtividade biologica eventualmente processos ressurgencia conforme afirmam moller al 
+ perfis realizados sobre terraco rio grande 
+ todos perfis identificados alem analise ecoperfis refletividade acustica fundo procedeuse busca ecoregistros cruzeiro revizze impressos papel fim identificar irregularidades fundo caracterizassem presenca depositos fosfaticos 
+ infelizmente escala utilizada tanto construcao ecoperfis refletividade acustica quanto impressao ecogramas ideal observacao irregularidades ordem alguns metros espera fundos presenca fosforita 
+ acreditase ecoregistros fosforita caracterizem presenca fundos irregulares apresentandose forma pinaculos bem destacados klein al 
+ fim exemplificar ecoregistro fundo assumidamente tipico depositos fosfaticos realizouse busca ecogramas impressos cruzeiro revizee realizado verao area proxima cabo santa marta grande objetivava estudo detalhe determinados ecoregistros biologicos observados cruzeiros revizee anteriores 
+ figuras ilustram possiveis fundos fosfaticos encontrados proximos area perfis cruzeiro revizee 
+ figura provavel fundo fosfatico registrado durante cruzeiro revizee realizado verao proximo cabo santa marta grande 
+ figura provavel fundo fosfatico registrado durante cruzeiro revizee realizado verao proxima cabo santa marta grande 
+ figura provavel fundo fosfatico registrado durante cruzeiro revizee realizado verao proxima cabo santa marta grande 
+ extremo sul area estudo perfis apresentaram caracteristicas compativeis presenca fosforita conforme pode ser observado seguir 
+ figura ilustra localizacao geografica perfis cruzamento informacoes bsbs sedimentologia 
+ figura perfis localizados rio grande rs chui rs caracteristicas compativeis presenca fosforita 
+ figuras ilustram ecoperfis refletividade acustica fundo destes perfis 
+ fonte cooke al 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ fonte cooke al 
+ figura ecoperfil refletividade acustica fundo bsbs perfil 
+ cruzamento diversas informacoes observacao mesmas ambiente tridimensional amigavel dinamico interativo permitiu selecao areas cuja probabilidade ocorrencia depositos fosfaticos maior areas onde caracteristicas ocorrem 
+ entanto tal afirmacao baseiase exclusivamente caracteristicas informacoes disponiveis cruzamento mesmas modo confirmacao podera ser feita partir realizacao amostragens fundo especificas areas identificadas 
+ dados pesca fundo sedimentologia dados captura espinhel fundo inseridos representacao fim identificar relacoes dados sedimentologicos presenca especies peixes afinidade tipos fundo especificos 
+ espinhel fundo arte pesca passiva permanece estacionaria local pesca podendo ser lancado sobre fundos lisos arenosos lamosos sobre fundos duros irregulares permitindo assim captura especies demersais habitam sobre todo tipo fundos haimovici al 
+ utilizados dados lances pesca realizados regiao sul area estudo chui rs mostardas norte cidade rio grande rs 
+ selecionados lances cuja composicao incluiu captura peixebatata lopholatilus villarii chernepoveiro polyprion americanus especies demersais vivem contato proximos fundo 
+ peixebatata habita fundos cascalho lama peres haimovici david 
+ enquanto chernepoveiro vive associado fundos duros irregulares peres haimovici 
+ figura mostra localizacao lances pesca utilizados trabalho sobre mapa batimetrico carta sedimentologica 
+ figura visao geral localizacao lances pesca espinhel fundo sobre mapa batimetrico carta sedimentologica 
+ circulos laranja indicam posicao lances presenca peixe batata amarelos lances chernepoveiro azuis lances presenca ambos 
+ lances posicionados sobre quatro perfis realizados largo costa rio grande sul 
+ figura ilustra perfil localizado largo chui extremo sul area estudo 
+ figura lances pesca espinhel fundo realizados largo chui rs 
+ sedimentologia desta regiao heterogenea presenca diferentes tipos fundo areas proximas 
+ entanto lances deste perfil concentraramse area predominancia areia grossa cascalho excecao lance ocorrencia cherne realizado sobre areia lamosa 
+ figura ilustra lances realizados sul cidade rio grande rs largo albardao 
+ figura lances pesca espinhel fundo realizados largo albardao 
+ pode observar figura todos lances realizados sobre areas predominancia lama areia lamosa 
+ tais fundos compativeis presenca peixebatata porem valido cherne afinidade fundos duros fundos rochosos cascalho 
+ figura ilustra lances realizados largo cidade rio grande rs 
+ figura lances pesca espinhel fundo realizados largo rio grande 
+ neste perfil observase todos lances realizados areas predominancia fundo classificado areia lamosa inclusive lances cherne 
+ entanto podese observar ocorrencia substratos duros cascalho areas proximas realizacao lances 
+ figura ilustra lances realizados norte rio grande largo mostardas 
+ figura lances pesca espinhel fundo realizados largo mostradas 
+ todos lances deste perfil realizados sobre area predominancia areia lamosa excecao lance cherne realizado area fundo classificado 
+ modo geral podese observar boa correlacao dados captura dados sedimentologicos 
+ areas onde tipo fundo considerado maior afinidade especies analisadas podese observar ocorrencia estratos compativeis areas proximas figuras 
+ cabe salientar especies escolhidas demersais capacidade locomocao ativa 
+ afinidade mesmas tipos fundo especificos determina ocorrencia exclusiva areas fundos 
+ propria dieta destes organismos evidencia exploracao areas amplas predando sobre especies distribuicao sobre fundos arenosos caso illex argentinus calamar principal item dieta cherne poveiro peres haimovici 
+ entanto especie frequentemente capturada parceis profundos cujas dimensoes claramente conhecidas podem ter tamanho bem reduzido 
+ alem disso dependendo area analisada resolucao mapas fundo ideal 
+ muitas areas numero testemunhos insuficiente gerar interpolacao precisa ponto permitir definicao exata zonas transicao areas diferentes tipos fundo 
+ areas heterogeneas zona transicao pode ser ordem algumas centenas metros menos assim amostragens fundo resolucao semelhante possivel definicao exata zona interface diferentes tipos fundo 
+ tentativa correlacionar ocorrencias especies mapas faciologicos objetiva longo prazo mapeamento habitats vez preferencias especie dependentes substratos caso organismos demersais principalmente bentonicos 
+ caso cherne poveiro pesca intensa sobre fundos duros irregulares especie incluida lista vermelha uniao internacional conservacao natureza iucn criticamente ameacada extincao tendo pesca proibida aguas jurisdicionais brasileiras periodo dez anos conforme instrucao normativa n° outubro 
+ futuros estudos devem investir esforcos melhora mapas vez especies buscarao habitats longo ciclos vida 
+ melhores formas controle manejo esforco pesqueiro poderao ser desenvolvidas medida mapas habitats disponiveis 
+ desta forma possivel definir areas protegidas alto mar areas temporariamente fechadas pesca importante controlalas eficientemente tecnologia informacao via satelites 
+ conclusao consideracoes finais representacao ambiente marinho moldes desenvolvida neste trabalho pode ser util diversas areas 
+ conhecimento relevo tipos fundo ocorrencia ausencia feicoes geomorfologicas determinada area fundamental importancia diversas atividades ligadas setores engenharia oceanica oceanografia orgaos defesa ambiental especialmente industria petroleo 
+ neste setor informacoes detalhadas relevo oceanico imprescindiveis tomada decisao quanto passagem dutos instalacao equipamentos implantacao estruturas 
+ alem disso caracterizacao fundo oceanico suma importancia interpretacao modelagem dinamica ambiente vez batimetria forte influencia deslocamento massas dagua 
+ neste trabalho integracao dados topograficos morfologicos fundo dados ambientais coluna dagua permitiu determinacao padroes oceanograficos associados plataforma externa talude regiao estudo 
+ representacao virtual mostrou vantajosa comparada outras representacoes estaticas limitam observador determinados pontos visao sempre favoraveis observacao detalhes interpretacao informacoes 
+ alem disso versatilidade representacao virtual gerada confirmada eficiencia transmissao informacoes usuarios familiarizados ambiente informacoes sob analise nivelandoos forma rapida comparado outras tecnicas tais exposicao oral leitura textos 
+ demonstra representacao virtual somente forma atraente visualizacao dados efetivamente facilita raciocinio interativo analise extracao geracao informacoes 
+ sig desenvolvido podera propiciar breve geracao produtos alta praticidade sofisticada apresentacao catalogos imagens mapas poderao conter diversas informacoes dispostas forma atraente tornando tais produtos interessantes facil disseminacao 
+ capacidade gerar informacoes interpretar mesmas partir integracao dados diferentes naturezas mostrou eficiente 
+ possivel identificar algumas principais feicoes fundo presentes area estudo tais cone rio grande terraco rio grande plato paulo alem outros tres platos menores presentes longo talude margem continental sul brasileira 
+ insercao perfis temperatura salinidade sig possibilitou analise destes dados contexto geografico espacial unico ambiente computacional necessidade utilizacao varias ferramentas softwares especificos 
+ possivel caracterizacao ambiental area estudo identificacao massas dagua principais feicoes oceanograficas presentes 
+ valido diversas informacoes incluidas representacao virtual especial sedimentologia pode ser analisada diretamente sobre superficie batimetrica tridimensional 
+ alta taxa amostral proporcionada metodo acustico permite identificacao feicoes fundo ordem metros 
+ mapa batimetrico base gerado dados representa si melhora significativa relacao representacoes geradas anteriormente mesmos dados 
+ informacao aliada outros dados podera ser util areas biologica geologica ambiental vez permitira caracterizacao substratos detalhamento morfologia leito oceanico servira ferramenta auxiliar processos licenciamento ambiental 
+ tange mapeamento recursos minerais trabalho representa significativa contribuicao avaliacao potencial mineral determinadas areas 
+ diretamente atraves informacoes quanto distribuicao superficial sedimentos correlacionados refletividade acustica fundo indiretamente atraves mapeamento feicoes morfologias favorecam ocorrencia recursos minerais 
+ neste trabalho buscouse identificacao areas caracteristicas pudessem indicar presenca depositos fosfaticos 
+ algumas areas identificadas regioes cabo frio principalmente cabo santa marta grande areas conhecidas eventos ressurgencia aportam grande quantidade materia organica localmente 
+ identificacao areas ressurgencia associadas irregularidades fundo pode indicar areas atualmente propiciais formacao desses depositos exemplo depositos ocorrem hoje costa sudoeste africa sul 
+ apesar indicios presenca depositos fosfaticos nessas areas pode ser confirmada partir amostragens fundo especificas sendo pontos amostragem tipo amostradores necessarios poderao ser determinados baseado informacoes geradas neste trabalho 
+ industria pesca pode ser beneficiada ferramenta desenvolvida 
+ caracterizacao fundo marinho quanto constituicao geologica relevo fundamental determinacao arte pesca ser empregada bem manobras captura serem realizadas embarcacao 
+ alem disso mapas sedimentologicos associados dados sobre biodiversidade caracteristicas ambientais permitem identificar extensao limites areas potencialmente exploraveis especies afinidades substratos especificos 
+ produtos venham contribuir manejo eficiente recursos pesqueiros dependem interpretacao integrada condicionantes determinam ocorrencia especies determinadas areas efeito pesca sobre mesmas 
+ neste sentido ferramenta ora desenvolvimento potencial colaborar orgaos governamentais tal 
+ ponto vista industria petroleo contexto pesquisa exploracao petrolifera brasil ferramenta podera ser importante instrumento geracao informacoes 
+ tanto diagnostico ambiental visando licenciamento atividades exigido legislacao brasileira quanto avaliacao recursos 
+ ferramenta podera ser utilizada visualizacao primaria regioes interesse permitindo extracao informacoes sedimentologicas geomorfologicas fundo identificacao areas fundo liso irregular distribuicao mesmos leito oceanico 
+ observancia acordo cupula mundial desenvolvimento sustentavel esforcos sendo direcionados selecao areas prioritarias serem preservadas atraves delimitacoes controle exploracao recursos 
+ tais esforcos incluem instituicao decreto decreto n° 
+ abril plano estrategico nacional areas protegidas pnap principios diretrizes objetivos estrategias irao orientar acoes estabelecimento manejo areas terrestres marinhas protegidas 
+ neste sentido ferramenta novamente podera ser utilizada fonte informacoes possibilitem identificacao areas caracteristicas devam ser preservadas 
+ sugestoes melhoria mapa batimetrico base incorporacao dados outras fontes 
+ cruzeiros prospeccao acustica pesqueira realizados recentemente regiao plataforma continental chui rs cabo tome rj podem fornecer novos dados acusticos irao incrementar qualidade representacao nesta regiao margem continental brasileira 
+ dados acusticos preteritos oriundos outros cruzeiros realizados longo costa brasileira durante projeto revizee alem dados altimetricos irao possibilitar expansao representacao regioes central nordeste norte brasil 
+ outros dados oriundos navios marinha brasil realizando batimetria precisao deverao ser acrescentados novas versoes 
+ melhoria malha batimetrica base alem incorporacao novos dados imperativo estudo tecnicas interpolacao dados apropriadas melhores formas utilizalas 
+ preciso reduzir presenca artefatos surgem malha batimetrica apos interpolacao dados 
+ artefatos fruto pequenas diferencas leituras batimetricas provenientes fontes diversas mostram forma marcas linhas surgem malha batimetrica sobre trajetorias embarcacoes 
+ primordial aperfeicoamento tecnicas filtragem objetivando minimizar ocorrencia dados erroneos eventualmente permanecem conjunto dados acabam gerar distorcoes 
+ recomendase futuros trabalhos prospeccao hidroacustica juntamente sondas buscam informacoes biologicas utilizadas ecobatimetros frequencias baixas 
+ utilizacao frequencias baixas khz possibilita menor atenuacao sinal consequentemente maior alcance permitindo obtencao dados areas profundas 
+ sugerese insercao instrumentos varredura multifeixe sonar varredura lateral procedimento rapido eficiente mapeamento fundo oceanico 
+ dados referentes refletividade acustica fundo bsbs utilizados neste trabalho necessitam maior refinamento vez existe sobreposicao valores distintos bsbs causada movimentos embarcacao pitch roll 
+ futuras aquisicoes dados bsbs deveriam incluir correcoes referentes movimentos meios identificar dados cujo angulo feixe acustico relacao fundo 
+ alem disso sugerese dados calibrados aquisicao novas informacoes sobre fundos caracteristicas sedimentologicas devidamente estudadas conhecidas 
+ processamento dados bsbs utilizados neste trabalho adquiridos bordo embarcacoes equipadas sensores movimento acoplados equipamentos acusticos sugerese desenvolvimento modelos matematicos busquem padroes associados movimentacao embarcacao permitindo exclusao dados baixa qualidade 
+ quanto informacoes ambientais temperatura salinidade recomendase incorporacao novos dados diferentes epocas regioes costa brasileira aperfeicoamento representacao mesmos 
+ alem representacao dados forma perfis verticais utilizado neste trabalho sugerese geracao mapas distribuicao horizontal temperatura salinidade adaptacao codigo fonte incorporacao destes mapas sig 
+ representacao horizontal deste tipo dado facilita identificacao estruturas possam estar presentes diferentes estratos alem fornecer visao completa disposicao espacial dados longo costa 
+ ainda quanto dados ambientais possivel melhoria representacao gerada insercao imagens satelite certamente representariam incremento informacao disponivel 
+ tanto individualmente quanto considerada juntamente outros dados forma integrada 
+ relacao ferramenta si sugerese melhoria geracao codigo fonte cria representacao propriamente dita 
+ atualmente grande parte deste codigo gerada forma automatizada partir scripts matlab 
+ automatizacao pode ser melhorada partir integracao sig sistema gerenciador banco dados sgbd alem organizar informacao basica scripts utilizam iria agilizar processamento desta informacao tornando construcao novas representacoes rapida eficiente 
+ insercao novos dados representacao exigira melhorias minimizar recursos computacionais necessarios visualizacao principalmente termos hardware 
+ melhorias segmentacao representacao texturas utilizadas diferentes resolucoes acordo area altitude observacao cada momento 
+ quanto visualizacao dados utilizacao diferentes exageros verticais regioes distintas plataforma continental talude ira possibilitar identificacao feicoes fundo pequena escala presentes regioes menor variacao batimetrica plataforma continental 
+ ferramenta desenvolvida pode ser aprimorada partir implementacao interface grafica ainda eficiente mantenha ferramentas navegacao visualizador tempo permita usuario interagir representacao forma ainda dinamica 
+ interface devera possibilitar usuario processar inserir dados sig forma rapida intuitiva 
+ implementacao camadas interface banco dados integracao mesmas camada existente inclui representacao solidificaria caminho desenvolvimento ferramenta direcao implementacao software propriamente dito representacao dados oceanograficos 
+ formato atual representacao desenvolvida instrumento eficiente auxilio entendimento ambiente oceanico principalmente utilizada juntamente outras ferramentas 
+ continuidade desenvolvimento ferramenta deve ser buscada complementacao sig formato plataforma processamento representacao dados oceanograficos 
+ plataforma deve ser autosuficiente proximo disto limitando necessidade utilizacao varios softwares processamento dados 
+ referencias bibliograficas arono 
+ geographic information systems management perspective 
+ wdl publications ottawa canada 
+ stages phosphorite formation ocean floor 
+ nature physical science 
+ global bathymetry elevation data arc seconds resolution srtmplus marine geodesy press 
+ composicao massas agua potencias produtivos area cabo tome rj chui rs 
+ ambiente oceanografico plataforma continental talude regiao sudestesul brasil 
+ paulo editora universidade paulo 
+ xd extensible graphics web authors 
+ editora morgan kaufmann 
+ ecosystem modelling gis 
+ introducao ciencia geoinformacao 
+ jose campos inpe edicao 
+ anatomia sistemas informacao geografica 
+ instituto computacao unicamp campinassp ed 
+ water mass characteristics geostrophic circulation south brazil bight summer 
+ journal geophysical research 
+ oceanographic conditions rio grande sul state 
+ atlantica rio grande 
+ condicoes hidrograficas plataforma continental largo ubatuba variacoes sazonais media escala 
+ boletim instituto oceanografico usp paulo 
+ estrutura termohalina circulacao regiao cabo tome rj chui rs 
+ ambiente oceanografico plataforma continental talude regiao sudestesul brasil 
+ editora universidade paulo 
+ geomorfologia margem continental brasileira areas oceanicas adjacentes 
+ relatorio final projeto remac ed 
+ rio janeiro petrobras cenpesm dintep 
+ circulacao oceanica largaescala regiao oeste atlantico sul base modelo circulacao global occam 
+ revista brasileira geofisica 
+ digital approach seabed classification 
+ analise dados ecossondagem fundo oriundos cruzeiros realizados fortaleza ce chui rs enfoque morfologia tipos fundo 
+ revista brasileira geofisica 
+ sedimentos superficiais plataforma talude continental rio grande sul 
+ pesquisas instituto geociencias ufrgs 
+ evolucao sedimentacao holocenica plataforma continental talude superior rio grande torres rs 
+ congresso brasileiro geologia rio janeiro rj 
+ rio janeiro rj 
+ continental shelf coastal plain sediments southeast south coast brazil 
+ explanatory texto atlas morphology sedimentology southwest atlantic coastal zone continental shelf cabo frio brazil peninsula valdes argentina 
+ porto alegre rs 
+ mapa relevo submarino 
+ disponivel http www 
+ levantamento estado arte pesquisa recursos vivos marinhos brasil oceanografia geologica 
+ xd extensible graphics standard 
+ ieee signal processing magazine 
+ idade crescimento batata lopholatilusvillarii teleostei malacanthidae regiao central zee salvador ba cabo tome rj 
+ analise sedimentar conhecimento sistemas marinhos introducao oceanografia geologica 
+ ebook disponivel http 
+ pt jdias jad ebooks 
+ cartas sedimento fundo 
+ areas oceanografia geologica sul central nordeste norte programa avaliacao potencial sustentavel recursos vivos zona economica exclusiva 
+ serie documentos tecnicos programa revizee score sul 
+ paulo instituto oceanografico usp 
+ interaction geographic information systems via spatial queries 
+ journal visual languages computing 
+ use vrml cartographic presentation 
+ mapas relevo marinho regioes sudeste sul central brasil acustica altimetria satellite 
+ serie documentos tecnicos programa revizee score sul 
+ paulo instituto oceanografico usp 
+ topografia composicao refletividade substrato marinho identificacao provincias sedimentares regiao sudestesul brasil 
+ serie documentos tecnicos programa revizee scoresul 
+ paulo instituto oceanografico usp 
+ disponivel http www 
+ optimizing copper spheres precision callibration hydroacoustic equipament 
+ journal acoustical society america 
+ avaliacao variaveis graficas representacao cartografica tridimensional 
+ revista brasileira cartografia 
+ realidade virtual ferramenta cartografia 
+ anais coloquio brasileiro ciencias geodesicas 
+ curso pos graduacao ciencias geodesicas universidade federal parana 
+ introduction gis petroleum industry 
+ prospeccao acustica organismos pelagicos integracao processos fisicos enriquecimento atlantico sudoeste brasileiro 
+ prospeccao pesqueira especies pelagicas pequeno porte zona economica exclusiva regiao sudestesul brasil 
+ serie documentos tecnicos programa revizee score sul 
+ paulo instituto oceanografico usp 
+ ambientes costeiros marinhos biota oceanografia fisica 
+ ecossistemas costeiro marinho extremo sul brasil 
+ editora ecoscientia rio grande 
+ webbased visualization animation geospatial data using xd 
+ geoscience remote sensing symposium 
+ disponivel http www 
+ prospeccao pesqueira especies demersais espinheldefundo regiao sudestesul brasil 
+ prospeccao pesqueira especies demersais espinheldefundo zona economica exclusiva regiao sudestesul brasil 
+ serie documentos tecnicos programa revizee scoresul paulo instituto oceanografico usp 
+ information rich temporal virtual models using xd 
+ intrucao normativa n° 
+ disponivel http www 
+ br ceperg downloads visualiza 
+ geovrml open webbased cartography 
+ international cartographic conference icc 
+ multimedia presentations integrating remote sesing photogrammetric modelling cartographic visualisation 
+ institute gis cartography technical university vienna 
+ ocorrencias concrecoes fosfaticas terraco rio grande 
+ congresso brasileiro geologia camboriu sc brasil resumos expandidos 
+ fundamentals spatial information systems 
+ academic press london uk 
+ disponivel http www 
+ prospeccao recursos pesqueiros pelagicos zona economica exclusiva regiao sudestesul brasil 
+ serie documentos tecnicos programa revizee scoresul paulo instituto oceanografico usp 
+ pesca potenciais exploracao recursos vivos regiao central zona economica exclusiva brasileira 
+ rio janeiro museu nacional 
+ distribuicao faciologica margem continental sulriograndense 
+ congresso brasileiro geologia 
+ aspectos sedimentares plataforma externa talude superior rio grande sul 
+ pesquisas instituto geociencias ufrgs 
+ online documentation mathworks products 
+ disponivel http www 
+ access helpdesk help helpdesk 
+ using geovrml oceanografic data visualizations 
+ webdvrml ninth symposium proceedings 
+ mineral resources sea 
+ estrutura termica regiao sudeste brasil outubro novembro 
+ instituto oceanografico usp paulo 
+ effects river discharge seasonal winds shelf southeastern south america 
+ continental shelf research 
+ using java interact georeferenced vrml within virtual field course 
+ direct measurements western boundary currents 
+ journal geophysical research 
+ disponivel http www 
+ pesca dirigida chernepoveiro polyprion americanus polyprionidae teleostei sul brasil 
+ atlantica rio grande 
+ jones bartlett pub 
+ variability subtropical shelf front eastern south america winter summer 
+ continental shelf research 
+ subtropical shelf front eastern south america 
+ journal geophysical research 
+ republica federativa brasil 
+ disponivel http www 
+ br estruturas ascomboletins arquivos completo 
+ paleoceanographic paleoclimactic controls temporal geographic distribution upper cenozoic continental margin phosphorites 
+ phosphate deposits world 
+ cambridge university press 
+ continental margin environments mineral resources comemir 
+ research project intergovernmental oceanographic commission united nations ocean affairs law sea branch 
+ ocean science relation nonliving resources osnrl 
+ bathymetry space white paper support highresolution ocean altimeter mission 
+ disponivel http topex 
+ edu marinegrav whitepaper 
+ pdf acesso abril 
+ bathymetry space oceanography geophysics climate geoscience professional services bethesda workshop maryland junho 
+ nomenclature based sandsiltclay ratios 
+ journal sedimentary petrology 
+ riquezas mar recursos naovivos 
+ ministerio educacao secretaria educacao basica 
+ mar espaco geografico brasileiro 
+ colecao explorando ensino 
+ silveira ica ack schmidt ejd campos ss godoi ikeda 
+ corrente brasil largo costa leste brasileira 
+ revista brasileira oceanografia 
+ simrad simrad ek fishery research echo sounder instruction manual operator manual 
+ global seafloor topography satellite altimetry ship depth soundings 
+ gridding continuous curvature splines tension 
+ caracterizacao ecotipos detectados durante cruzeiros prospeccao pesqueira acustica cabo tome rj chui rs madureira 
+ prospeccao recursos pesqueiros pelagicos zona economica exclusiva regiao sudestesul brasil 
+ serie documentos tecnicos programa revizee scoresul paulo instituto oceanografico usp 
+ lowfrequency currents water mass spatial distribuition southern brazilian shelf 
+ continental shelf research 
+ acoustical classification bottom sediments southern baltic sea 
+ building simple multiscale visualizations outcrop geology using virtual reality modeling language vrml 
+ disponivel http www 
+ org xd overview 
+ html acesso abril 
+ new improved version generic mapping tools released 
+ eos transactions american geophysical union 
+ vrml standards specifications 
+ web consortium site 
+ disponivel http www 
+ org xd specifications vrml acesso maio 
+ xjd java based xd toolkit xd browser 
+ web consortium online 
+ disponivel http www 
+ org xd xjd acesso abril 
+ geomorfologia margem continental sul brasileira bacias oceanicas adjacentes 
+ geomorfologia margem continental brasileira areas oceanicas adjacentes 
+ relatorio final projeto remac 
+ anexo linguagem xd xd padrao aberto descricao ambientes virtuais interativos web 
+ constituise linguagem definicao geometrias declarativas motor tempo execucao interface programacao aplicacoes ingles api aplicattion programming interface prove ambiente interativo animado graficos tridimensionais 
+ documentacao especificacao livre assim utilizacao pode ser feita pagamento qualquer tipo royalties 
+ alem disso disponiveis grande quantidade implementacoes daly brutzman 
+ xd manteve beneficios trazidos geovrml incorporacao sistema coordenadas latitude longitude utm universal transverso mercator diretamente arquivo vrml diferenciando sistema xyz largura altura profundidade nativo vrml proporcionando utilizacao conjunto diferentes sistemas permitindo visualizacao global 
+ tabela apresenta principais caracteristicas geovrml mantidas xd 
+ tabela principais caracteristicas geovrml 
+ precisao precisao posicional milimetrica 
+ escalabilidade administracao grande fluxo modelos alta resolucao generalizando apresentando somente informacao necessaria determinada escala 
+ metadados descricao objetos geograficos partir subconjunto metadados animacoes baseadas interpolacoes sobre sistema coordenadas animacao geograficas suportado permitem visualizacao pontos sobre superficie terra 
+ introspeccao todas imagens descritas georeferenciadas 
+ navegacao adequacao velocidade navegacao acordo altitude observacao 
+ fonte iverson reddy 
+ xd possui vasto conjunto funcionalidades visualizacao cientifica engenharia arquitetura visualizacao dados medicos treinamento simulacao desenho auxiliado computador outros daly brutzman 
+ xd conteudo tridimensional organizado grafo cena contem todos objetos ambiente tridimensional relacionamentos todos elementos cena transformacoes 
+ xd cada objeto comando execucao determinada acao exemplo transformacao definido podem conter campos propriedades especificos filhos 
+ estrutura dados hierarquica resultante conhecida grafico cena xd gelautz al 
+ estrutura hierarquica xd baseada xml permite definicao propriedades aparencia objetos solidos simples esferas cubos cones etc 
+ bem estruturas geometricas complexas mapas relevo elevationgrid modelos superficie baseados poligonos indexedfaceset brutzman daly 
+ figura exemplifica script xd 
+ figura script ola mundo 
+ script xd figura gera representacao simples consiste criacao solido esfera textura juntamente frase 
+ codigo versao tradicional ola mundo 
+ primeiro codigo iniciacao nova linguagem programacao 
+ arquivo xd dividese basicamente duas partes distintas cabecalho instrucoes gerais versao xml xd utilizados metadados informacoes opcionais identificam arquivo 
+ neste cabecalho podem ser incluidas componentes component definem conjuntos especificos poderao vir ser utilizados script exemplo componente geospatial disponibiliza serie voltados representacao informacao geografica geoelevationgrid permite construcao grid elevacao relevo sobre malha posicional geocoordinate permite localizar objetos sobre malha 
+ segunda parte principal script codigo si especificacao cena diferentes compoe bem relacoes 
+ figura mostra representacao gerada script mostrado figura 
+ figura representacao gerada codigo figura 
+ modificacoes animacoes podem ser aplicadas sobre grafico cena atraves utilizacao chamados eventos 
+ alguns sensor javascript capazes mandar eventos contem informacoes modificar parametros objetos recebem 
+ interacao usuario realizada diferentes sensores touchsensor equivalente dados geograficos geotouchsensor principais componentes alteracao grafico cena permitindo capturar posicao estado ponteiro mouse 

@@ -1,0 +1,2430 @@
+UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE
+
+CENTRO DE CIÊNCIAS EXATAS E DA TERRA
+
+PROGRAMA DE PÓS - GRADUAÇÃO EM CIÊNCIA E
+
+ENGENHARIA DE PETRÓLEO (PPGCEP)
+
+FÍSICA APLICADA À EXPLORAÇÃO E À PRODUÇÃO DE
+
+PETRÓLEO E GÁS NATURAL
+
+COMPORTAMENTO DAS CASCATAS DE
+ENERGIA EM HIDRODINÂMICA PARA A
+
+COMPREENSÃO DO FLUXO DE PETRÓLEO EM
+
+RESERVATÓRIOS
+
+Adam Smith Nunes Costa
+
+Natal, Julho de 2013
+
+Adam Smith Nunes Costa
+
+COMPORTAMENTO DAS CASCATAS DE ENERGIA
+
+EM HIDRODINÂMICA PARA A COMPREENSÃO
+DO FLUXO DE PETRÓLEO EM RESERVATÓRIOS
+
+Dissertação apresentada ao colegiado do Programa de Pós -
+
+Graduação em Ciência e Engenharia de Petróleo - PPGCEP
+
+da Universidade Federal do Rio Grande do Norte, com parte
+
+dos requisitos para obtenção do título de Mestre em Ciência
+
+e Engenharia de Petróleo.
+
+Orientador: Madras Viswanathan Gandhi Mohan
+
+Natal, Julho de 2013
+
+ii
+
+Dedico este trabalho à:
+
+Meu pai Raimundo Soares, minha mãe Francisca Val-
+
+deisa e minha irmã Camila Kaiane que foram a base de
+
+tudo. Minha tia Damiana Soares, meu tio Sérgio Ma-
+
+chado e meu primo Jeerson Costa que foram essenci-
+
+ais para a realização desse sonho. A todos os demais
+
+familiares e amigos que de forma direta ou indireta me
+
+ajudaram e torceram para que eu pudesse concluir esta
+
+etapa de minha vida, muito obrigado.
+
+iii
+
+Agradecimentos
+
+Primeiramente a Deus pela vida e pelas oportunidades a mim concedidas.
+
+Aos meus Pais, Raimundo Soares e Valdeisa Nunes pelo apoio e pela força nos mo-
+
+mentos de diculdade.
+
+A minha tia Damiana Soares e meu tio Sérgio Machado pela cobertura, força e auxílio
+
+para que eu pudesse realizar esta importante etapa da minha vida.
+
+Ao meu primo Jeerson Costa pelas orientações e ensinamentos nos momentos difí-
+
+ceis.
+
+Ao meu orientador Madras Viswanathan Gandhi Mohan pelos inúmeros ensinamen-
+tos, pela paciência nos momentos de diculdade, pela grandiosa ajuda em todos os momentos
+da minha vida acadêmica e pela força dada para que eu pudesse realizar esse sonho.
+
+Agradeço aos professores Liacir Dos Santos Lucena e Luciano Rodrigues da Silva
+
+pelos inúmeros ensinamentos e apoio nos momentos de dúvida.
+
+Agradeço aos professores Tarcilio Viana, Jennys Lourdes e Wilson da Mata pela
+
+excelente formação e apoio acadêmico.
+
+Agradeço a ANP e PRH-43 por todo o apoio acadêmico e nanceiro que me foi
+
+concedido nesta etapa, muito obrigado.
+
+iv
+
+O verdadeiro valor das coisas é o esforço e o problema
+de as adquirir..
+
+(Adam Smith)
+
+v
+
+Resumo
+
+Quando passamos a estudar uxo em meios porosos, percebe-se que existe um grande
+número de desaos em aberto envolvendo especicamente a matemática das equações da
+hidrodinâmica. Entre tais desaos, destaca-se a solução da equação de Euler em 3-D para
+uidos incompressíveis, onde não se sabe se existem singularidades em tempos nitos. Proble-
+mas de natureza semelhante são bastante estudadas atualmente utilizando como base outras
+equações da hidrodinâmica como, por exemplo, as equações de Navier-Stokes ou equações até
+mais simples com objetivo de diminuir as complicações matemáticas na busca de obter uma
+melhor compreensão sobre as equações de Euler. Um aspecto fundamental para problemas
+que envolvam essas equações é que a energia cinética presente nas escalas espaciais grandes
+pode ser redistribuída para escalas espaciais menores. Se isso for repetido em escalas cada
+vez menores e em tempos cada vez mais rápidos, o processo pode resultar numa singulari-
+dade mesmo no tempo nito. Com isso a premissa deste trabalho será estudar a atuação
+do processo de cascatas de energia usando como ferramenta a transformada de Fourier.
+Estudamos a equação de Burger não-viscosa em 1-D, o que nos permite investigar detalha-
+damente a formação da cauda de lei de potência no espectro de energia, que é associado à
+singularidade.
+
+vi
+
+Abstract
+
+When we study ows in porous media, we see that there are a number of open
+problems involving the mathematics of hydrodynamic equations. Among these challenges, is
+the problem of the Euler equations in 3-D for incompressible uids, where it is not known if
+there are singularities in nite time. Problems of a similar nature are currently studied using
+other hydrodynamic equations, such as the Navier-Stokes equations or even simpler equations
+aiming to reduce the mathematical complexities in seeking to gain a better understanding.
+A key aspect to problems involving these equations is that the kinetic energy present in large
+spatial scales can be redistributed to smaller spatial scales. If this is repeated on smaller and
+smaller scales and ever faster times, the process can even result in nite time singularity.
+Thus the premise of this work is to study the process of cascades of energy using the Fourier
+transform. We study the non-viscous Burger equation in 1-D, which allows us to investigate
+in detail the formation of the power-law tail in the energy spectrum, which is associated with
+singularities.
+
+vii
+
+Índice
+
+Agradecimentos
+
+Resumo
+
+Abstract
+
+1 Teoria da percolação e a indústria de petróleo
+
+1.1 Percolação por sítios em uma rede quadrada simples . . . . . . . . . . . . . .
+
+1.2 Transição de fase na teoria da percolação . . . . . . . . . . . . . . . . . . . .
+
+1.3 Dimensão fractal na percolação e suas contribuições para indústria do petróleo
+
+2 Hidrodinâmica em meios porosos
+
+2.1
+
+Introdução . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.2 Fluidos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.3 Meios porosos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.4 Alguns parâmetros macroscópicos da estrutura porosa . . . . . . . . . . . . .
+
+2.5 Porosidade . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.6 Permeabilidade e a lei de Darcy . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.7 Escoamento e suas classicações . . . . . . . . . . . . . . . . . . . . . . . . .
+
+viii
+
+iv
+
+vi
+
+vii
+
+1
+
+5
+
+7
+
+8
+
+15
+
+15
+
+15
+
+16
+
+17
+
+17
+
+18
+
+21
+
+3 Equações hidrodinâmicas generalizadas
+
+3.1
+
+Introdução . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.2 Equações não-lineares da hidrodinâmica . . . . . . . . . . . . . . . . . . . .
+
+3.3 Equação de Burger não-viscosa e sua solução . . . . . . . . . . . . . . . . . .
+
+4 Normas Lp e suas leis de conservação
+
+4.1
+
+Introdução . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.2 Normas Lp da equação de Burger não-viscosa
+
+. . . . . . . . . . . . . . . . .
+
+4.3 Normas Lp e a transformada de Fourier . . . . . . . . . . . . . . . . . . . . .
+
+4.4 A transformada de Fourier e as cascatas de energia . . . . . . . . . . . . . .
+
+5 Resultados numéricos e analíticos
+
+5.1 Resultados numéricos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.2 Resultados analíticos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+6 Discussão dos resultados e algumas conclusões
+
+6.1 Possíveis aplicações na indústria do petróleo . . . . . . . . . . . . . . . . . .
+
+7 Considerações nais
+
+24
+
+24
+
+28
+
+30
+
+32
+
+32
+
+33
+
+34
+
+35
+
+36
+
+37
+
+43
+
+48
+
+49
+
+50
+
+ix
+
+Lista de Figuras
+
+1.1 Representação das probabilidades de percolação . . . . . . . . . . . . . . . .
+
+1.2 Representação de lei de potência na percolação . . . . . . . . . . . . . . . . .
+
+1.3 Percolação e a similaridade estatística . . . . . . . . . . . . . . . . . . . . . .
+
+1.4 Figura ampliada mostrando a auto-similaridade estatística . . . . . . . . . .
+
+6
+
+8
+
+13
+
+14
+
+2.1 Experimento da lei de Darcy . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+20
+
+5.1 Condição sinusoidal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.2 Magnitude da transformada de Fourier da condição sinusoidal
+
+. . . . . . . .
+
+5.3 Condição Gaussiana
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.4 Magnitude da transformada de Fourier da condição Gaussiana . . . . . . . .
+5.5 Condição na forma u0 = exp[−|x|
+. . . . . . . . . . . . . . . . . . . . . . . .
+5.6 Magnitude da transformada de Fourrier da condição u0 = exp[−|x| . . . . . .
+
+5.7 Condição triangular inicial
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.8 Avanço temporal da condição triangular inicial . . . . . . . . . . . . . . . . .
+
+37
+
+38
+
+39
+
+40
+
+41
+
+42
+
+43
+
+44
+
+5.9 Magnitude da transformada de Fourier para a condição de três pontos singulares 46
+
+5.10 Transformadas de Fourier e a formação das singularidades
+
+. . . . . . . . . .
+
+47
+
+x
+
+Cap´ıtulo 1
+
+Teoria da percolação e a indústria de petróleo
+
+A teoria da percolação trata-se de um ramo probabilístico que estuda os mais diver-
+sos comportamentos e propriedades de meios aleatórios. Os primeiros processos deste estudo
+foram basicamente criados por dois matemáticos onde eles buscavam entender o comporta-
+mento simples de partículas que se modicavam e se desenvolviam com intuito de formar
+partículas maiores. Os pesquisadores Walter Stockmayer (1943) e Paul Flory (1941), bus-
+cando compreender tal ideia , determinaram que tal processo não se tratava de um processo
+característico de percolação.
+
+Na literatura puramente matemática, o processo percolativo foi introduzido graças
+a um artigo proposto por Simon R. Broadbent e por John M. Hammersley em 1957 onde os
+mesmos buscavam introduzir novos conceitos geométricos e probabilísticos ao modelo [1, 2].
+Mais adiante, a idéia da teoria de transição de fases foi incorporada ao modelo, onde em
+particular o método de expansão em série e a teoria dos grupos de renormalização foram
+incrementadas com propósito de estimular signicativamente as atividades de pesquisa nas
+transições geométricas de percolação.
+
+Mais adiante, conceitos mais fortes como a teoria dos fractais foram implementados
+ao modelo por Mandelbrot, enriquecendo ainda mais a teoria e transformando-a em uma
+poderosa ferramenta de modelagem onde hoje é bastante utilizada nas mais diversas ciências.
+Teoria que em pouco tempo foi conquistando o seu espaço e foi concebida originalmente para
+tratar de cristais, labirintos, meios aleatórios e meios que apresentem certo grau de desordem
+e heterogeneidade nas mais diversas escalas, como é o caso de um reservatório de petróleo.
+
+1
+
+Capítulo 1. Teoria da percolação e a indústria de petróleo
+
+2
+
+De início, tratou-se basicamente do estudo hidrodinâmico de uido e sua propagação
+através de meios aleatórios. Os mais diversos pesquisadores e até mesmo os criadores da
+teoria, explicavam e ainda explicam a percolação como sendo algo que modele problemas que
+envolvam hidrodinâmica de uido em meios porosos no sentido mais geral da coisa, porém
+com suas características devidamente consideradas para cada um dos casos.
+
+Na percolação, por exemplo, a ênfase e o foco está na aleatoriedade do meio que
+permite ou não que o uido percole, ou seja, o meio é quem determina os caminhos para a
+passagem do uxo das partículas, diferenciando assim por exemplo do processo de difusão.Na
+difusão a questão da aleatoriedade é atribuída basicamente ao uido, ou seja, o uido é quem
+decide por onde as partículas vão se deslocar no meio poroso.
+
+Para ilustrar melhor uma situação de atuação da teoria da percolação, consideremos
+um caso básico que ocorre na indústria de petróleo, onde temos a representação do meio
+poroso como sendo basicamente o reservatório onde o hidrocarboneto está contido. Ao utilizar
+algum dos métodos especiais de recuperação de petróleo como por exemplo, injeção de água
+ou gás através de um poço injetor, se faz o seguinte questionamento: Qual a probabilidade
+do óleo contido nos poros das rochas conseguir atravessar o meio poroso?
+
+A formulação de um modelo estocástico para representar bem este processo e respon-
+der a esta e outras perguntas, fez surgir os modelos aplicados de percolação. Os termos meio
+e uidos eram vistos apenas como sendo termos mais gerais, onde um uido poderia ser um
+liquido, um gás, uxo de calor e assim por diante. O meio em que o uido se propaga poderia
+ser os espaços vazios de uma rocha, as regiões permeáveis em um ambiente permeável, uma
+distribuição de árvores, etc [3, 4].
+
+Alguns sistemas físicos, químicos ou biológicos, são considerados como sendo sistemas
+complexos pois apresentam um vasto número de elementos que os compõe e que interagem
+entre si. Estes sistemas se caracterizam desta forma por apresentarem características de
+não-linearidade, comportamento não linear, e geralmente quando são apresentados matema-
+ticamente, não possuem uma solução analítica, onde nestes casos, o que se faz é recorrer ás
+simulações numéricas. Apesar de serem compostos por elementos bastante simples, estes sis-
+temas se comportam de maneira bastante complicada, com utuaçcões que não estão dentro
+de um certo padrão conhecido.
+
+Reservatórios de petróleo são ótimos exemplos que se enquadram dentro destes pa-
+drões, pois apresentam algo grau de heterogeneidade e anisotropia em todas as escalas e
+direções, podendo apresentar tais fatores desde escalas de centímetros, até quilômetros [5].
+
+Capítulo 1. Teoria da percolação e a indústria de petróleo
+
+3
+
+As heterogeneidades e o alto grau de desordem do meio são decorrentes desde as
+primeiras formações geológicas das rochas sedimentares, ocasionado as chamas dobras, falhas
+e deformações do meio, onde é entre essas falhas que o hidrocarboneto ca aprisionado, entre
+os mais diversos tipos de anomalias do meio, mostrando assim que o meio poroso trata-
+se de um local altamente heterogêneo, provenientes dos mais diversos tipos de formacões
+geológicas.
+
+Consideramos um sistema como sendo homogêneo quando suas propriedades são
+basicamente independentes do seu tamanho linear. Quando temos um certo grau de hete-
+rogeneidade nas mais diversas escalas de comprimento do meio, pensamos de forma global
+no comportamento da dependência do processo de transporte desse meio, tais como difusão,
+condução, que são as mais diversas maneiras que os uidos podem se distribuir no meio
+desordenado.
+
+Tomando como base o exemplo prático de um uido dentro de um reservatório de
+petróleo, o que se percebe é que o uxo é muito afetado, praticamente em quase todos os as-
+pectos devido a essas heterogeneidades que perduram nas diferentes escalas de comprimento,
+tornando assim uma tarefa bastante complicada de se estudar, pois não temos precisão nos
+fatores de dinâmica e de seu comportamento dentro desse meio altamente heterogêneo. Para
+isso é altamente recomendada a elaboração e a criação de modelos que consigam estimar
+as propriedades mais básicas até as mais complexas, com objetivo de se conseguir extrair o
+máximo de informações sobre campo estudado.
+
+Foi seguindo essa linha de estudo e pesquisa, que se pensou em fazer estudos sobre
+hidrodinâmica de uidos em reservatórios de petróleo , com objetivo de buscar entender como
+acontece o processo chamado de evolução das cascatas de energia cinética em hidrodinâmica,
+para que em um futuro próximo, os resultados aqui obtidos venham fornecer o máximo de
+informações possíveis sobre o comportamento do uxo de petróleo e o meio em que o petróleo
+se encontra.
+
+Algumas propriedades do uxo também podem ser obtidas através de pequenas
+amostras que recebem o nome de testemunhos, colhidas em poços reais de exploração, onde
+tais amostras representam muito pouco do volume total de um reservatório de petróleo [6,
+7]. Os testemunhos por sua vez, são os principais indicadores da representatividade do
+reservatório, onde com bons testemunhos em poços de teste, conseguimos na maioria dos casos
+uma representatividade do reservatório. Contudo, os resultados devem ser cuidadosamente
+interpretados para se obter o máximo de precisão nos dados obtidos, onde na maioria dos
+
+Capítulo 1. Teoria da percolação e a indústria de petróleo
+
+4
+
+casos não é uma tarefa nada fácil quando estamos tratando de desordem [8].
+
+Os problemas envolvendo estes tipos de abordagem são sem duvidas o alto grau de
+diculdade para se efetuar os estudos, pois sabemos também que é algo computacionalmente
+caro e pesado de se simular. Devido a isso, existe um grande estímulo a pesquisa para
+criação de novos tipos de modelos alternativos mais simples que consigam prever algumas
+incertezas, onde a maiorias desses processos se baseiam basicamente na física estatística para
+tentar explicar, por exemplo, o difícil processo de deslocamento de uidos através dos meios
+porosos.
+
+Sabemos de inicio que o uxo de uidos em meio porosos com alto grau de heteroge-
+neidade, é determinado pelos contrastes da permeabilidade. Embora saibamos que existem
+várias outras inuências, esta é uma característica que predomina. São basicamente estes e
+outros fatores tais como, por exemplo, conectividade, que utilizamos quando queremos mo-
+delar uxo em reservatórios de petróleo, onde consideramos quando a distribuição do meio é
+espacialmente distribuída de forma aleatória, sendo assim permeável ou impermeável [9, 10].
+Com isso, temos que o modelo que representa de forma mais completa as conectividades e
+transportes em sistemas com alto grau de desordem, e geometricamente complexos, é a teoria
+da percolação.
+
+A teoria de percolação portanto torna-se uma ferramenta altamente poderosa quando
+queremos tratar da representação de alguns sistemas complexos, dentre os quais podemos ci-
+tar transições de fases, difusão em meios desordenados, recuperação de petróleo, etc. Com
+denição bastante simples em termos de geometria, temos que por contra parte não obtemos
+uma solução analítica exata para casos mais gerais. Os problemas da percolação em si apre-
+sentam características físicas, tais como, fenômenos críticos, fractalidade e não linearidade.
+
+Como existem vários tipos e modelos de percolação podemos citar dentre os modelos
+diretos a percolação por sítios e percolação por ligações. Em meios considerados contínuos,
+existe a percolação continua, e o que se ressalta é que nas principais características encontra-
+das nos diferentes tipos de percolação, as informações mais importantes de cada uma delas
+apresentam certa semelhança umas com as outras, se mostrando assim praticamente idênti-
+cas em quase todos os aspectos que são considerados importantes. Para prosseguirmos com
+nossos estudos, neste capítulo iremos dar ênfase apenas a alguns dos modelos de estudo da
+percolação que são, percolação por sítios, e mais adiante demais teorias que foram incremen-
+tadas nos estudos de percolação como por exemplo a transição de fases onde mostraremos
+que tais modelos podem ser estudados na indústria do petróleo.
+
+Capítulo 1. Teoria da percolação e a indústria de petróleo
+
+5
+
+1.1 Percolação por sítios em uma rede quadrada simples
+
+O exemplo de percolação por sítios é o exemplo de percolação mais simples que existe
+onde na maioria das vezes é o modelo base até para se explicar e denir a própria percolação
+[11]. A ideia central é que temos uma rede quadrada linear de comprimento L onde consi-
+deramos que cada quadradinho que recebem o nome de sítios, ou célula, da rede quadrada
+possa ser ocupada com certa probabilidade p, ou permanece vazia com probabilidade 1 − p.
+
+Os espaços que são inicialmente ocupados ou desocupados possuem características
+intrínsecas diferentes. Para explicar essa armação, podemos exemplicar da seguinte forma:
+Podemos considerar que os sítios ocupados são placas condutoras e que as que estão de-
+socupadas são isolantes, e consideramos que a corrente só vai uir nos sítios considerados
+condutores de corrente, ou seja, a corrente só ui nos sítios considerados primeiros vizinhos.
+Armamos assim, que dois sítios são considerados vizinhos quando eles basicamente tiverem
+um lado em comum. Se dois sítios considerados primeiros vizinhos estiverem ocupados e
+todos os demais primeiros vizinhos estão vazios ao redor, então dizemos que eles formam um
+chamado cluster de dois sítios ocupados.
+
+Buscando exemplicar o modelo de percolação para um melhor entendimento, uti-
+lizamos uma linguagem bastante conhecida pelos físicos, onde dizemos que quando a con-
+centração p é baixa, os sítios que são considerados condutores cam isoladamente separados
+formando assim pequenos clusters. Dois sítios irão pertencer ao mesmo cluster ou aglome-
+rado quando eles estiverem conectados entre si por um caminho de sítios condutores primeiros
+vizinhos, de forma que a passagem de uma corrente elétrica possa uir facilmente entre eles.
+
+Para certo valor de probabilidade de ocupação p, surge certo aglomerado aleatório
+que se sobrepõe sobre os demais, ou seja, torna-se dominante sobre os demais, onde os passa a
+conectar margens opostas da rede quadrada, formando assim o que chamamos de aglomerado
+percolante.
+
+Para redes de tamanho linear innito, o limiar de percolação tem um valor bem de-
+terminado na literatura onde mais especicamente em uma rede quadrada o valor aproximado
+
+Capítulo 1. Teoria da percolação e a indústria de petróleo
+
+6
+
+Figura 1.1: Da esquerda para direita temos Imagens ilustrativas que representam a percolação por
+sítios em um rede quadrada de tamanho 16x16. Na primeira imagem temos que a probabilidade
+crítica de percolação é de p = 0.2, onde percebemos assim que o sistema não consegue percolar com
+este índice de probabilidade. Em seguida temos um sistema com p = 0.59, representando assim o
+aglomerado percolante e mais adiante a mesma imagem só que com p = 0.8, onde vemos que a rede
+quadrada está quase toda completa, indicando alto grau de percolação.
+
+da probabilidade crítica é basicamente:
+
+pc = 0.5927...,
+
+(1.1)
+
+Dessa forma, dizemos que o aglomerado percolante é de tamanho innito, indicando
+
+a característica fundamental da teoria da percolação que é o limiar de percolação.
+
+Quando os valores de p estão acima dos valores de pc, os aglomerados que são con-
+siderados nitos são absorvidos pelo aglomerado percolante a medida que o p vai crescendo
+e se aproximando de 1. Para um p menor do que a probabilidade critica pc, o sistema é
+considerado isolante, onde não existe nenhum caminho que consiga conectar as duas margens
+opostas da rede. O contrário acontece quando p é maior que a probabilidade crítica, onde
+existem muitos caminhos possíveis que conectam as duas margens opostas da rede e o sistema
+consegue assim percolar.
+
+Temos então que a probabilidade crítica caracteriza basicamente o sistema, ou seja,
+para uma probabilidade menor que a probabilidade crítica, o sistema tem uma característica
+física particular, e para o caso de probabilidade maior que a probabilidade crítica, o sistema
+se comporta de maneira oposta. Dizemos então que em pc acontece a chamada transição de
+
+Capítulo 1. Teoria da percolação e a indústria de petróleo
+
+7
+
+fase do sistema.
+
+1.2 Transição de fase na teoria da percolação
+
+Para melhor entendimento deste assunto, tomaremos como exemplo inicial de expli-
+cação materiais que possuem fases magnéticas, onde sob inuências externas de temperatura,
+a magnetização m do material se aproxima de zero para um certo valor da temperatura, onde
+tal recebe o nome de temperatura crítica Tc, e próximo a ela segue uma lei de potência que
+poderá ser representada na forma:
+
+m(T ) ∼ (Tc − T )β
+
+(1.2)
+
+Para a percolação, temos que a probabilidade p de ocupação dos sítios desempenha
+o mesmo papel da temperatura T para o exemplo anterior nas transições de fases térmicas.
+A transição de percolação é caracterizada pelas propriedades geométricas dos aglomerados
+próximos ao valor crítico pc. Uma grandeza importante que devemos considerar é a probabili-
+dade θ(p) de uma ligação ou sítio pertencer ao aglomerado percolante. Temos que a presença
+em si do pc caracteriza basicamente o ponto onde as transformações das propriedades de um
+certo sistema acontecem de uma fase para outra, nos permitindo assim denominar fases para
+tais comportamentos antes e após o valor crítico pc.
+
+No caso da percolação, considerando o θ(p) e o valor crítico pc temos que para
+p < pc o valor da probabilidade será θ(p) = 0, e para p > pc o θ(p) tem um comportamento
+semelhante ao da magnetização e cresce segundo lei de potência na forma:
+
+θ(p) ∼ (p − pc)β
+
+(1.3)
+
+Temos que o expoente β descreve o comportamento crítico do θ(p) associado a tran-
+sição de percolação, e é por esse motivo maior que ele é chamado de expoente crítico. Embora
+existam vários modelos de teoria da percolação e com isso vários valores para pc, o valor de
+
+Capítulo 1. Teoria da percolação e a indústria de petróleo
+
+8
+
+Figura 1.2: θ(p) é a probabilidade de um sítio pertencer ao aglomerado percolante. Aqui podemos
+visualizar o parâmetro de ordem descrito anteriormente para sistemas de percolação, onde para
+p < pc, θ(p) = 0 e para p > pc, 0 < θ(p) ≤ 1.
+
+permanece constante para todos eles dependendo somente da dimensão do espaço, onde com
+isso tal fenômeno recebe o nome de universalidade onde um expoente dito como crítico serve
+para denominar e classicar uma transição de fase em classes de universalidade.
+
+1.3 Dimensão fractal na percolação e suas contribuições
+
+para indústria do petróleo
+
+A estrutura de aglomerados que são considerados percolantes podem ser basicamente
+descritos através dos conceitos de fractais. Vamos considerar um aglomerado innito na
+concentração crítica pc. Um aglomerado percolante pode ser considerado estatisticamente
+similar em todas as escalas maiores de comprimento, onde sendo assim, basicamente pode
+ser considerado como sendo um fractal. As guras abaixo mostram um exemplo da presença
+dessa similaridade estatística presente em aglomerados que são considerados percolantes.
+
+Capítulo 1. Teoria da percolação e a indústria de petróleo
+
+9
+
+A dimensão fractal do meio df pode basicamente nos fornecer a informação de como a
+massa M (número de sítios) do aglomerado no interior de uma esfera com raio r por exemplo,
+muda de escala com o raio r.
+
+M (r) ∼ rdf
+
+(1.4)
+
+M (r) pode ser obtido através da média de muitas simulações de percolação. Abaixo
+e acima do ponto crítico, o tamanho médio do aglomerado nito no sistema é basicamente
+descrito pelo termo de correlação ϑ. Em pc o ϑ diverge e ocorrem buracos de todas as escalas
+e tamanhos no aglomerado. Tendo que ϑ é nito e acima de pc, temos que que o aglomerado
+innito pode ser considerado similar em apenas algumas escalas de comprimento menores do
+que ϑ.
+
+A interpretação de ϑ(p) pode ser considerada como um comprimento típico, onde
+para escalas de comprimentos menores do que ϑ o aglomerado poderá assim ser considerado
+similar, e consequentemente ser também classicada como sendo um fractal. Para as escalas
+consideradas maiores que ϑ a estrutura não é similar, sendo assim considerada homogênea.
+
+A passagem de um comportamento fractal de escalas menores para um comporta-
+mento homogêneo em escalas maiores, pode ser basicamente ilustrada através de uma rede
+composta por células unitárias no triângulo de Sierpinski de tamanho ϑ. Se nossa escala
+de comprimento for menor que ϑ, temos assim uma estrutura fractal em escalas de compri-
+mento maiores, onde o sistema pode ser considerado composto de várias células unitárias de
+tamanho ϑ.
+
+Resumindo, matematicamente podemos dizer que:
+
+M (r) ∼ {rdf , r << ϑ, rd, r >> ϑ}
+
+(1.5)
+
+Podemos relacionar a dimensão fractal df dos aglomerados considerados percolantes
+com os chamados expoentes críticos. Esses expoentes basicamente descrevem o compor-
+tamento crítico de grandezas associadas à transição de percolação. Expoentes críticos são
+
+Capítulo 1. Teoria da percolação e a indústria de petróleo
+
+10
+
+universais e não dependem da estrutura da rede, ou seja, se a rede é quadrada, triangular,
+etc, nem do tipo de percolação, se é por sítios, por ligações ou contínua, mas depende da
+dimensão da rede. Expoentes críticos na maioria dos casos são representados pelas letras β
+e γ.
+
+A probabilidade de um sitio arbitrário no interior de um disco de raio r e menor que
+ϑ pertencer ao aglomerado que é considerado innito é basicamente a razão entre o numero
+de sítios no aglomerado innito e numero total de sítios .
+
+P∞ ∼ M (r)
+M
+
+∼ rdf
+
+rd , r < ϑ
+
+(1.6)
+
+Esta equação está certamente correta se considerarmos que r = aϑ, onde a é consi-
+
+derada a constante arbitrária menor que 1. Substituindo o r na equação anterior temos:
+
+P∞ ∼ ϑdf
+ϑd
+
+(1.7)
+
+Resumindo podemos estabelecer uma associação direta da dimensão fractal e os
+
+expoentes críticos pela forma:
+
+Onde por m teremos,
+
+(p − pc)β ∼ (p − pc)γ(d−df )
+
+df = d − β
+γ
+
+(1.8)
+
+(1.9)
+
+De forma resumida vimos que a dimensão fractal df do aglomerado innito em pc, é
+um expoente que depende de β e γ, onde se tomarmos que os expoentes sejam considerados
+universais, então temos que df também tem de ser considerado universal.
+
+Sendo assim, como foi visto neste capítulo, a teoria da percolação em si é um modelo
+que basicamente serve como paradigma para sistemas complexos com conectividade, onde
+vem se constituindo cada vez mais como uma ferramenta bastante útil e aceita pela comuni-
+dade cientíca, quando queremos tratar de caracterização de sistemas desordenados. Vimos
+alguns dos potenciais de aplicação e entendimentos gerais da teoria como modelo convincente
+
+Capítulo 1. Teoria da percolação e a indústria de petróleo
+
+11
+
+para o entendimento de aspectos de uxo em meios aleatórios.
+
+Existem outras maneiras através das quais a física consegue se unir facilmente à
+indústria do petróleo. Uma delas está presente no método mais comum de recuperação de
+petróleo, que é quando se utiliza a injeção de um uido que pode ser água ou gás miscível
+em um poço injetor, com a nalidade de se criar uma frente de deslocamento que empurre o
+óleo existente no reservatório para um poço mais além, onde no caso seria o poço produtor.
+[14, 15]. Estudos que envolvam a hidrodinâmica podem ser sem dúvida utilizados a m de
+explicar o uxo e obter informações preciosas sobre o meio em que o uido se encontra.
+
+São várias as motivações que nos levam a tentar compreender o comportamento
+de uidos em meios desordenados, pois sabemos que a quantidade de aplicações existentes
+são enormes e nas mais diversas áreas. Tentar obter uma melhor compreensão sobre as
+instabilidades provocadas por uidos em meios que apresentam desordem por exemplo, nos
+leva a obter informações preciosas sobre o meio em que o uxo de uido se encontra. As
+aplicações são de fato inevitáveis para a indústria do petróleo, onde a mesma se preocupa em
+obter o máximo de informações possíveis do meio poroso em que o petróleo está contido.
+
+Uma importante aplicação de estudos que envolvam instabilidades em uidos estaria
+por exemplo em um dos casos mais simples de recuperação de petróleo, onde se injeta um
+uido em um poço injetor para criar uma frente de deslocamento que empurra o óleo para
+um poço produtor, aumentando assim a produção em massa. O fato de detectar o tempo em
+que o poço produtor entrará em declínio de produção é o grande desao, pois sabemos que
+depois de certo período de tempo o uido que foi injetado alcança o pooo de produção e a
+partir de então, o poço passa a produzir o uido que foi injetado inicialmente, e como é de
+se esperar, a taxa de produção em massa de óleo entrará em declínio. [16, 17, 18].
+
+Vendo de um ponto de vista econômico, seria altamente recomendado saber quando
+este uido de injeção entrará na produção do poço, e a que taxa de declínio a produção de óleo
+estará sujeita após este instante, de modo que podemos determinar o limite econômico dessa
+produção. Como estamos tratando de reservatórios de petróleo, estudos como a percolação
+ou o comportamento de uidos em meios porosos vem sendo cada dia mais utilizados por
+pesquisadores de todo o mundo, pois se sabe as inúmeras quantidades de aplicações a que
+estão sujeitas ambas teorias.
+
+Com isso não podemos deixar de fazer os comentários de que a teoria da percolação
+é uma ferramenta altamente poderosa quando queremos tratar de sistemas com alto grau de
+
+Capítulo 1. Teoria da percolação e a indústria de petróleo
+
+12
+
+desordem, como é o caso de reservatórios de petróleo, e da mesma forma devemos salientar
+que estudos envolvendo hidrodinâmica em meios desordenados vem sendo cada dia mais
+estudados com o decorrer dos anos, e sempre se buscando aplicações nas mais diversas áreas
+das ciências.
+
+Observa-se que ambas teorias possuem um vasto número de aplicações, e com isso
+decidimos que nesta dissertação iremos tratar de estudos que envolvam hidrodinâmica em
+meios porosos e suas possíveis aplicações na indústria do petróleo. Contudo o fato de se
+estudar especicadamente esta linha não nos impediu de termos revisado um pouco sobre a
+teoria da percolação, pois sabemos que ambas são teorias poderosas que podem ser utilizadas
+para o estudo de meios desordenados.
+
+Capítulo 1. Teoria da percolação e a indústria de petróleo
+
+13
+
+Figura 1.3: A região em preto é considerada como sendo o aglomerado percolante do sistema da
+rede quadrada. A parte colorida forma os aglomerados nitos, e mesmo considerando os efeitos de
+tamanho nito o aglomerado percolante apresenta uma similaridade dita como estatística (Roosewelt,
+2007).
+
+Capítulo 1. Teoria da percolação e a indústria de petróleo
+
+14
+
+Figura 1.4: Temos aqui basicamente a ampliação de uma parte da gura anterior, onde basicamente
+podemos observar uma similaridade estatística (Roosewelt, 2007).
+
+Cap´ıtulo 2
+
+Hidrodinâmica em meios porosos
+
+2.1
+
+Introdução
+
+Antes de iniciarmos nossos estudos sobre hidrodinâmica em meios porosos, faremos
+uma breve revisão de alguns conceitos que serão constantemente envolvidos no processo como
+por exemplo: uidos, meios porosos, permeabilidade e etc.
+
+2.2 Fluidos
+
+No geral sabemos que a matéria em si pode ser classicada considerando sua forma
+física natural, onde estas formas são bastante conhecidas na literatura como sendo fases ou
+estados. Tomando esta linha de raciocínio, podemos aqui dizer que a matéria em si pode ser
+apresentada em dois estados conhecidos: Sólidos e uido. A principal diferença básica entre
+estes dois estados é o comportamento apresentado em face às forças externas. Enquanto
+os que são considerados sólidos conseguem suportar as forças e tensão de cisalhamento, os
+uidos são praticamente incapazes de resistir a este tipo de tensão. Qualquer que seja a força
+tangencial aplicada ao uido, este irá mover-se e deformar-se continuamente ao longo da sua
+aplicação.
+
+Sabemos que os uidos são subdivididos em duas classes conhecidas, os líquidos e
+
+15
+
+Capítulo 2. Hidrodinâmica em meios porosos
+
+16
+
+os gases. Um liquido é um uido altamente difícil de se comprimir, e basicamente toma a
+forma do recipiente em que o contém. Em contraparte, um gás é uma classe de uido que é
+muito fácil de ser comprimido, onde ele consegue se expandir totalmente preenchendo todo
+o recipiente. Esta diferença de comportamento pode ser avaliada analisando as estruturas
+e comportamentos moleculares de ambos os uidos. Enquanto os líquidos são formados por
+moléculas mais próximas e com uma força maior de coesão, os gases são compostos por
+moléculas muito mais espaçadas e com forças de coesão basicamente desprezíveis.
+
+Como foi mencionado anteriormente, os uidos são substâncias que praticamente se
+deformam devido a ação de uma força tangencial. Quando essa taxa de deformação é dire-
+tamente proporcional à tensão de cisalhamento, dizemos que o uido é do tipo newtoniano,
+e no caso contrário temos que trata-se de um uido não newtoniano. Essa armação é em
+homenagem ao grande Isaac Newton, pois foi ele que supôs que a constante de proporcionali-
+dade entre a tensão de cisalhamento τ e a taxa de deformação du
+dy fosse uma das propriedades
+do uido, onde na qual, denominou-se de viscosidade. Então temos que:
+
+τ = µ
+
+du
+dy
+
+(2.1)
+
+Onde a constante µ recebeu o nome de coeciente de viscosidade dinâmica ou abso-
+
+luta.
+
+2.3 Meios porosos
+
+O meio poroso pode ser denido como sendo um meio sólido que possa conter espaços
+vazios, onde tais espaços vazios para a indústria do petróleo por exemplo, são os espaços onde
+podem possivelmente conter o óleo, onde sendo assim, esses espaços vazios recebem o nome
+de poros [19].
+
+É difícil de obter uma denição geométrica do que na verdade é um poro, pois
+espaços vazios em pequenos sólidos também recebem o nome de intersticidade molecular, e
+no caso de poros considerados bem mais largos, recebem o nome de cavernas. Contudo, poros
+são considerados espaços vazios intermediários entre cavernas e intersticidade molecular, e a
+limitação de seu tamanho é portanto considerada bastante intuitiva e indeterminada [20].
+
+Capítulo 2. Hidrodinâmica em meios porosos
+
+17
+
+Os poros de um meio poroso podem estar ou não interconectados entre si. Se esti-
+verem, temos um material poroso considerado permeável, ou seja, os uidos são capazes de
+escoar por suas cavidades penetrando através de uma face de um lado da parede, e emergir do
+outro lado fazendo com que o sistema seja considerado percolante. Os meios porosos ainda
+podem ser denidos levando em consideração a distribuição espacial dos poros, em ordenados
+ou desordenados, e também em função de serem dispersos ou ligados.
+
+2.4 Alguns parâmetros macroscópicos da estrutura po-
+
+rosa
+
+O meio poroso é caracterizado por uma variedade de propriedades geométricas como
+porosidade que pode ser representado pela letra φ, permeabilidade k, área de superfície es-
+pecíca Sv e fator de formação de resistividade F . Em vários casos, estes parâmetros são
+determinados pela estrutura porosa do meio, e não dependem de quaisquer outras proprie-
+dades [19]. Levando em conta estudos aplicados a indústria do petróleo, veremos brevemente
+algumas das características do meio poroso que são consideradas importantes para tal estudo
+que é a porosidade e a permeabilidade do meio.
+
+2.5 Porosidade
+
+Uma palavra bastante mencionada quando estamos estudando a fundo reservatórios
+de petróleo ou hidrodinâmica em meios desordenados, é a palavra poro. Este termo também é
+bastante utilizado em vários casos de nosso dia-a-dia, onde por exemplo quando caminhamos
+e dizemos que estamos suando através dos poros. Mas, para início de conversa, o que é
+um poro? Quando consideramos certos orifícios em um determinado material sólido, ou
+seja, espaços considerados vazios em um certo meio, podemos classicar como algo que seja
+poroso? Levando em consideração que estamos tratando algo como sendo um meio rochoso,
+podemos considerar como sendo poroso sim.
+
+Por existir tais descontinuidades em seu interior, essas descontinuidades recebem o
+nome de espaços vazios ou poros. A porosidade de uma rocha é a simples razão entre o volume
+
+Capítulo 2. Hidrodinâmica em meios porosos
+
+18
+
+dos espaços vazios e o volume total da formação rochosa considerada. Matematicamente,
+podemos expressar da seguinte forma:
+
+φ =
+
+Vp
+Vt
+
+(2.2)
+
+Onde temos que Vp é o volume considerado poroso e o Vt é o volume total da rocha.
+Existe também o termo chamado de porosidade efetiva, que nada mais é a razão entre o
+volume dos poros interconectados e o volume total da rocha, onde a porosidade efetiva é
+um dos termos considerados mais importantes para indústria do petróleo, pois representa o
+volume máximo de uido que poderá ser extraído de uma rocha reservatório.
+
+A forma matemática que expressa a porosidade efetiva é pode ser dada por:
+
+φ(e) =
+
+Vi
+Vt
+
+(2.3)
+
+Onde o φ(e) é a porosidade efetiva, o Vi é o volume dos poros interconectados e o Vt
+é o volume total da rocha porosa. Com isso, vimos que a porosidade trata-se de um termo
+bastante simples porém de grande importância para estudos que envolvam tais conceitos,
+como é o caso de estudos sobre o comportamento do uxo de petróleo em reservatórios por
+exemplo, onde meio poroso é um termo utilizado constantemente no estudo, assim como
+o termo permeabilidade, onde veremos a seguir que trata-se de outro importante conceito
+constantemente utilizado quando se busca entender propriedades de uxo em meios porosos.
+
+2.6 Permeabilidade e a lei de Darcy
+
+A teoria de escoamento monofásico laminar lento de uidos através de um meio
+poroso homogêneo foi baseada em um experimento clássico originalmente criado por Henry
+Darcy (1856), onde tal teoria recebeu seu nome onde é mundialmente conhecida no meio
+cientico como a lei de Darcy.
+
+Darcy, observando a puricação da água através do processo de ltração utilizando
+areia, percebeu que existia uma relação direta entre a vazão da água que atravessava os grãos
+da areia, a diferença de carga relativa a vazão e a área que representava as dimensões do meio
+poroso. Tendo isso em mente, ele acabou formulando uma relação matemática que serve de
+
+Capítulo 2. Hidrodinâmica em meios porosos
+
+base para todo tipo de estudo feito em cima de uxo em meios porosos.
+
+Q = −KA
+
+h2 − h1
+
+L
+
+19
+
+(2.4)
+
+O termo com o sinal negativo na equação indica que a velocidade é na direção
+considerada oposta a de maior pressão. A variação da altura h também pode ser considerada
+em termos de variação da pressão de entrada e de saída. K é uma constante de condutividade
+hidráulica que mede a permeabilidade do meio poroso.
+
+Para o caso de reservatórios de petróleo, uidos em fases diferentes escoam separada-
+mente nos poros das rochas. Pensando nisso, nos anos de 1930, Muskat conseguiu generalizar
+a lei de Darcy para escoamentos considerados bifásicos, introduzindo o conceito de perme-
+abilidade relativa, que trata-se de uma grandeza adimensional que varia entre 0 e 1 e que
+multiplica a permeabilidade absoluta, onde a permeabilidade absoluta pode ser expressa
+matematicamente na forma:
+
+K =
+
+QµL
+
+A(p1 − p2)
+
+(2.5)
+
+Onde Q é o volume total do uido que atravessa o ltro por unidade de tempo, µ
+é a viscosidade, L é o comprimento do meio poroso, o A é a secção transversal por onde o
+uido passa e p é a pressão.
+
+A permeabilidade é considerada como sendo uma constante de proporcionalidade do
+meio poroso, onde esta pode ser considerada: Absoluta K quando existe apenas um uido
+no interior da rocha ou efetiva Ke, que ocorre quando no interior da rocha existe mais de um
+uido, onde sendo simplesmente denida como sendo a facilidade com que cada um desses
+uidos consiga se mover no interior da rocha. O conceito e termo matemático que possa
+representar então a permeabilidade relativa pode ser escrito como sendo:
+
+Kre =
+
+Ke
+K
+
+(2.6)
+
+A permeabilidade considerada absoluta vai depender principalmente da saturação do
+uido. Em geral, trata-se de uma função não linear da saturação, pois cada uido diculta
+o movimento do outro.
+
+Capítulo 2. Hidrodinâmica em meios porosos
+
+20
+
+Figura 2.1: Esquema do experimento da Lei de Darcy para uxo de água (Adriano Ferreira, 2009).
+
+Capítulo 2. Hidrodinâmica em meios porosos
+
+21
+
+Como a velocidade média u do uido que atravessa a secção pode ser denida com
+
+sendo:
+
+u =
+
+Q
+A
+
+(2.7)
+
+Onde o Q é o volume do uido que atravessa o ltro e o A seria a secção transversal
+por onde o uido passa, como foi mencionado anteriormente. Sendo assim, podemos ver que
+foi no esquema acima montado por Darcy que se observou o uxo de água que percola no
+meio poroso, com isso se obteve a ideia de permeabilidade em regimes porosos.
+
+Substituindo os termos, a lei de Darcy torna-se:
+
+u = −K
+µ
+
+p2 − p1 + ρgh
+
+h
+
+(2.8)
+
+Se zermos h tender a zero, temos que a equação torna-se uma equação mais geral
+
+na forma:
+
+u = −K
+µ
+
+(∇p − ρg)
+
+(2.9)
+
+Temos que g é o vetor na direção da gravidade com a magnitude da aceleração da
+
+gravidade.
+
+Vimos aqui que a lei de Darcy foi apresentada como uma relação empírica baseada
+no experimento de escoamento estacionário em uma coluna vertical de areia homogênea.
+No entanto, esta lei também pode ser derivada para escoamento saturado usando modelos
+teóricos como modelos de tubos capilares, de ssuras, de raio hidráulico, de escoamento de
+resistência e modelos estatísticos. Provavelmente os modelos mais simples em que a lei de
+Darcy pode ser derivada são aqueles feitos com tubos capilares.
+
+2.7 Escoamento e suas classicações
+
+Capítulo 2. Hidrodinâmica em meios porosos
+
+22
+
+Escoamentos de uidos podem ser considerados e classicados de várias maneira. Po-
+demos observar na literatura, por exemplo, que existem os que são considerados escoamentos
+estacionários e o que são considerados permanentes, que são aqueles onde suas grandezas tais
+como pressão e velocidade não variam com o tempo. Caso contrário , eles são ditos como
+transientes ou não permanentes.
+
+Outra classicação foi proposta por Osborne Reynolds em 1883 [21]. Ele percebeu
+experimentalmente a existência de dois tipos de escoamentos, o laminar e o turbulento. O
+escoamento considerado laminar é aquele no qual existem camadas muito nas como lâminas,
+de uidos que parecem escorregar uma sobre as outras fazendo com que só leve a troca de
+quantidade de movimento molecular. Já o escoamento considerado turbulento é aquele onde
+as partículas de uido apresentam movimentos desordenados, isto é, a velocidade apresenta
+componentes transversais ao movimento geral do conjunto ao uido. Devemos salientar que
+os termos laminar e turbulento não são características do uido mais sim apenas um
+estado em que se encontram devido às condições do escoamento.
+
+Para podermos observar se um uido é considerado laminar ou turbulento, conside-
+rando a escala turbulenta, temos que o que vai nos dizer se um uido apresenta escoamento
+turbulento será o chamado número de Reynolds Re. O número de Reynolds trata-se de
+um parâmetro adimensional que mede o grau de turbulência de certo escoamento do uido,
+onde este parâmetro trata da relação das forças inerciais Fi devido à velocidade e das forças
+consideradas viscosas Fµ, podendo ser expressa por:
+
+(cid:80) Fi(cid:80) Fµ
+
+Re =
+
+= ρ
+
+LV
+µ
+
+(2.10)
+
+Onde ρ é considerada como sendo a densidade e µ a viscosidade do uido. L e V
+são comprimento e velocidades características do escoamento. Para escoamento em formas
+circulares de diâmetro D, temos:
+
+Re =
+
+ρV D
+
+µ
+
+(2.11)
+
+No geral, a magnitude do número de Reynolds indica a importância para o escoa-
+mento das forças inerciais Re > 1 e das forças viscosas Re < 1. Quando Re >> 1, as forças
+consideradas viscosas somente são importantes nas regiões adjacentes às superfícies sólidas,
+
+Capítulo 2. Hidrodinâmica em meios porosos
+
+23
+
+isso devido à presença da camada limite (região na ao redor da superfície de corpos em
+movimentos imersos em uidos onde o gradiente de velocidade normal ∂v
+∂n a superfície do
+corpo é signicativa). Escoamentos abaixo de um valor crítico são considerados laminares e
+acima deste valor são considerados turbulentos.
+
+Existem também três variáveis bastante utilizadas quando tratamos escoamento de
+uidos, onde a primeira é a vazão, onde nada mais é um volume de um uido que atravessa
+uma seção reta por unidade de tempo e o segundo é a vazão mássica ou descarga, que é a
+quantidade de massa que cruza uma seção reta por unidade de tempo. Por último temos o
+uxo, que representa a quantidade de grandeza física que cruza uma dada área por unidade
+de tempo.
+
+Cap´ıtulo 3
+
+Equações hidrodinâmicas generalizadas
+
+3.1
+
+Introdução
+
+Sabemos que para uma descrição numérica ou analítica baseada nas leis da física
+e matemática para o escoamento de uidos em certo meio, devem certamente ser expressas
+de maneira matemática adequada. O escoamento de uidos considerados newtonianos, com-
+pressíveis ou incompressíveis, turbulentos ou laminares por exemplo, podem ser basicamente
+descritos pelas chamadas equações de Navier-Stokes.
+
+As equações de Navier-Stokes foram derivadas inicialmente por M. Navier em 1827
+e por S.D. Poisson em 1831, baseando-se num argumento envolvendo considerações de forças
+intermoleculares. Mais tarde as mesmas equações foram derivadas sem o uso de nenhuma
+dessas hipóteses por B. de Saint Vernant em 1843 e por G.G. Stokes em 1945, onde suas
+derivações foram inicialmente baseadas em conformidade com a mais antiga lei da viscosidade
+de Newton, leis de conservação de massa e conservação de energia. Vale ressaltar que nem
+todas as leis mencionadas anteriormente podem vir a ser utilizadas para as soluções de certos
+problemas.
+
+Sabemos que soluções analíticas para problemas considerados mais gerais são ra-
+ras, pois as enormes diculdades matemáticas encontradas quando resolvemos as equações
+de Navier-Stokes tem até o presente momento nos impedido de obter uma solução analítica
+única na qual os termos convectivos interagem genericamente com os termos viscosos. No
+entanto, dependendo de algumas propriedades de escoamento do uido a ser analisado, a
+
+24
+
+Capítulo 3. Equações hidrodinâmicas generalizadas
+
+25
+
+equação poderá ser simplicada, possibilitando assim uma possível solução numérica. Como
+exemplo, podemos citar o estudo para uidos newtonianos incompressíveis escoando em re-
+gimes estacionários e isotérmicos, onde partindo inicialmente do principio fundamental da
+dinâmica de Newton temos inicialmente que:
+
+ρF = ρm
+
+du
+dt
+
+Rearrumando os termos camos com:
+
+ρ
+m
+
+F = ρ
+
+du
+dt
+
+Temos que o termo du
+
+dt da equação acima pode ser escrito como sendo:
+
+du
+dt
+
+=
+
+∂u
+∂t
+
++
+
+∂u
+∂x
+
+∂x
+∂t
+
++
+
+∂u
+∂y
+
+∂y
+∂t
+
++
+
+∂u
+∂z
+
+∂z
+∂t
+
+Reescrevendo os termos acima temos:
+
+du
+dt
+
+=
+
+∂u
+∂t
+
++ ∇u · u =
+
++ u · ∇u
+
+∂u
+∂t
+
+Substituindo o termo encontrado acima na equação (3.2) camos com:
+
+(3.1)
+
+(3.2)
+
+(3.3)
+
+(3.4)
+
+(3.5)
+
+(3.6)
+
+(3.7)
+
+(cid:18) ∂
+
+∂t
+
+(cid:18) ∂
+
+∂t
+
+(cid:19)
+
+(cid:19)
+
+ρ
+m
+
+F = ρ
+
++ u · ∇
+
+u
+
+−∇p =
+
++ u · ∇
+
+u
+
+Como estamos tratando um uido incompressível, temos que ρ é considerado cons-
+tante e em consideração a uma das forças comumente encontradas atuando no uido (força
+por unidade de volume), adotaremos o gradiente de pressão −∇p, onde com isso a equação
+poderá ser expressa na forma:
+
+Com isso, a equação de Navier-Stokes poderá basicamente assumir a forma:
+
+u + (u · ∇)u + ∇p = 0
+
+∂
+∂t
+
+Capítulo 3. Equações hidrodinâmicas generalizadas
+
+26
+
+Para mostrarmos o caso da condição de incompressibilidade ∇ · u = 0, vamos con-
+siderar um pequeno cubo de lados ∆x, ∆y e ∆z dentro de um uido (volume de controle).
+Considerando que ρ seja a densidade do uido dentro do volume de controle, podemos ba-
+sicamente escrever sua massa como sendo ρ∆x∆y∆z = m. Podemos considerar que há
+escoamento através de todas as faces do cubo, mas consideraremos primeiro o escoamento na
+direção x e com o uxo a entrar de um lado e sair do outro. Podemos expressar a taxa de
+variação da massa do cubo como sendo:
+
+∂m
+∂t
+
+=
+
+∂
+∂t
+
+(ρ∆x∆y∆z)
+
+(3.8)
+
+A taxa a que a massa de um uido está a entrar no cubo pode ser expressa por
+ρ1u1∆y∆z e a taxa a que a massa do uido está a sair do cubo pode ser expressa na forma
+ρ2u2∆y∆z. Com isso, podemos escrever:
+
+ou
+
+∂m
+∂t
+
+=
+
+∂
+∂t
+
+(ρ1u1∆y∆z) − (ρ2u2∆y∆z)
+
+(cid:18) ∂ρ
+
+∂t
+
+(cid:19)
+
+=
+
+ρ1u1
+∆x
+
+− ρ2u2
+∆x
+
+(3.9)
+
+(3.10)
+
+Se assumirmos que a densidade ρ e a velocidade do uido u variem linearmente ao
+longo do volume de controle, podemos considerar que para a velocidade teremos u1 = u− ∆u
+e u2 = u − ∆u
+2 . Substituindo na equação
+(3.10) temos:
+
+2 e ρ2 = ρ − ∆ρ
+2 , e para a densidade ρ1 = ρ − ∆ρ
+(cid:19)(cid:18)
+(cid:18)
+(cid:19)
+
+(cid:19)(cid:18)
+
+(cid:18)
+
+2
+
+(cid:19)
+
+∆u
+2
+
+(3.11)
+
+u +
+
+∂ρ
+∂t
+
+∆x =
+
+ρ − ∆ρ
+2
+
+u − ∆u
+2
+
+−
+
+ρ +
+
+∆ρ
+2
+
+Onde rearrumando os termos, a equação basicamente se reduzir a:
+
+Capítulo 3. Equações hidrodinâmicas generalizadas
+
+27
+
+∂ρ
+∂t
+
+= −ρ
+
+∆u
+∆x
+
+− ρ
+
+∆ρ
+∆x
+
+(3.12)
+
+Se o volume de controle for reduzido a um diferencial, podemos reescrever a equação
+
+para obter:
+
+ou
+
+∂ρ
+∂t
+
+= −ρ
+
+∂u
+∂x
+
+− ρ
+
+∂ρ
+∂x
+
+∂ρ
+∂t
+
+= − ∂
+∂x
+
+(ρu)
+
+Se zermos deduções semelhantes para as outras direções, caremos com:
+
+∂ρ
+∂t
+
+= − ∂
+∂x
+
+(ρu) − ∂
+∂y
+
+(ρu) − ∂
+∂z
+
+(ρu)
+
+(3.13)
+
+(3.14)
+
+(3.15)
+
+Para o caso de um uido incompressível, temos que ρ = constante, e sendo assim
+
+teremos:
+
+ou em notação vetorial:
+
+∂u
+∂x
+
++
+
+∂u
+∂y
+
++
+
+∂u
+∂z
+
+= 0
+
+∇ · u = 0
+
+(3.16)
+
+(3.17)
+
+Temos que a condição acima trata-se da condição de incompressibilidade para uidos
+
+Capítulo 3. Equações hidrodinâmicas generalizadas
+
+28
+
+que se propagam em meios homogêneos. Também foi observado anteriormente a equação
+de Navier-Stokes consegue desempenhar um papel bastante semelhante à chamada equação
+de Euler. No entanto, a questão de saber ou não se a solução da equação de Navier-Stokes
+para uidos considerados incompressíveis pode ou não apresentar singularidades para tempos
+nitos, é uma das grandes incógnitas atualmente quando se trata de escoamento dos uidos.
+
+3.2 Equações não-lineares da hidrodinâmica
+
+Começaremos este capítulo mostrando a equação de Euler em três dimensões para
+uidos considerados incompressíveis. Tal equação para uma velocidade de campo u(x, t)
+pode ser expressa por:
+
+∂
+∂t
+
+u + (u · ∇)u + ∇p = 0
+∇ · u = 0.
+
+(3.18)
+
+(3.19)
+
+Foi observado que a equação de Navier-Stokes difere da equação Euler apenas em
+um termo adicional que é o termo para a dissipação viscosa, onde a viscosidade em nosso
+caso pode ser considerada apenas como sendo uma unidade, onde sendo assim, temos que a
+equação de Navier-Stokes pode ser novamente apresentada como sendo:
+
+u + (u · ∇)u + ∇p = ∆u
+
+∂
+∂t
+
+(3.20)
+
+Seguindo esta linha de raciocínio, observamos também que a chamada equação de
+Burger na forma viscosa em uma dimensão, tem uma certa semelhança com a equação de
+Navier-Stokes:
+
+∂
+∂t
+
+u + u
+
+∂
+∂x
+
+u = ∆u
+
+(3.21)
+
+Onde notamos que a equação de Burger não possui o termo da pressão.
+
+Capítulo 3. Equações hidrodinâmicas generalizadas
+
+29
+
+Com isso de fato notamos que a equação de Burger pode representar um uido que é
+considerado perfeitamente compressível, onde logo abaixo podemos notar a simplicidade da
+equação de Burger não-viscosa:
+
+∂
+∂t
+
+u + u
+
+∂
+∂x
+
+u = 0
+
+(3.22)
+
+Ao mesmo tempo foi percebido que a equação de Burger viscosa poderia ser um
+ótimo modelo de representação da turbulência. Com isso, esperávamos que a equação de
+Burger nos levasse a tentar compreender e perceber percepções mais exatas a m de obter
+um entendimento mais completo e renado sobre a equação de Navier-Stokes. No entanto,
+um resultado obtido através da independência de Hopf [23] e Cole [24] acabaram com as
+nossas esperanças para este entendimento. A transformada Cole-Hopf pode ser basicamente
+representada como sendo:
+
+−2∂φ
+φ∂x
+
+u =
+
+= −2
+
+∂
+∂x
+
+lnφ
+
+(3.23)
+
+A princípio temos que a utilização dessa transformada nos fornece informações sobre
+a presença de singularidades em tempos nitos, onde foi detectado que a equação de Burger na
+forma viscosa em uma dimensão não permite singularidades em tempos nitos para soluções
+consideradas inicialmente suaves, e com isso, nada parecido com turbulência será possível.
+
+No entanto, para a equação de Burger não-viscosa temos um comportamento bas-
+tante diferente. Singularidades para tempos nitos são praticamente garantidas para qual-
+quer solução não trivial. A principal razão para esta diferença entre a equação viscosa e a
+não-viscosa é que o termo de dissipação viscosa é considerando como sendo uma perturbação
+singular, ou seja, ela contém um operador diferencial de ordem mais elevada do que aquelas
+na equação original. Com isso para podermos ganhar uma compreensão mais aprofundada
+sobre as cascatas de energia em hidrodinâmica, tentaremos compreender melhor a equação
+de Burger não-viscosa.
+
+Capítulo 3. Equações hidrodinâmicas generalizadas
+
+30
+
+3.3 Equação de Burger não-viscosa e sua solução
+
+Estudar equações diferenciais parciais em hidrodinâmica é uma área que comporta
+estudos teóricos em várias frentes, bem como permite a modelagem de problemas nas mais
+diversas áreas do conhecimento humano. No entanto, como apenas em casos extremamente
+simples é possível a obtenção de solução analítica, faz-se necessário o desenvolvimento de
+técnicas que forneçam a solução numérica dessas equações.
+
+A equação de Burger não-viscosa, por exemplo, trata-se de uma equação diferencial
+parcial de primeira ordem onde sua solução poderá ser facilmente encontrada utilizando o
+método de separação de variáveis. Buscaremos compreender melhor o desenvolvimento da
+solução desta equação dividindo o mesmo em duas etapas, onde na primeira etapa mostra-
+remos a sessão da separação das variáveis de uma forma bem geral e mais adiante veremos
+uma solução implícita da equação.
+
+Separando assim as variáveis, mostraremos as principais propriedades que possam
+
+partir de soluções expressas na forma u(x, t) = f (x)g(t) onde temos:
+
+(f g) = −f g
+
+∂
+∂t
+
+∂
+∂x
+
+(f g) = −f g2 d
+dx
+
+f
+
+obtendo assim:
+
+− 1
+g2 .
+
+d
+dt
+
+g =
+
+d
+dx
+
+f = constante.
+
+e a solução geral poderá ser expressa na forma:
+
+u =
+
+x0 − x
+tc − t
+
+,
+
+(3.24)
+
+(3.25)
+
+(3.26)
+
+Os termos x0 e tc são consideradas constantes de integração. A solução é zero es-
+tacionário em x = x0 e avança no tempo até t = tc, onde passando desse ponto temos que
+a solução torna-se descontínua. A maioria das soluções da equação não são separáveis, no
+entanto, pode-se basicamente aproximar funções que são consideradas suaves seccionalmente
+por soluções lineares que são individualmente separáveis, porém, não tomamos esta abor-
+dagem. Em vez disso utilizaremos a equação (3.26) para obter uma solução exata para a
+
+Capítulo 3. Equações hidrodinâmicas generalizadas
+
+31
+
+transformada de Fourier de u, com objetivo de entender um pouco mais e obter intuições
+sobre as cascatas de energia cinética.
+
+A equação de Burger não-viscosa tem uma interpretação física muito simples. A
+solução u(x, t) pode ser basicamente pensada como sendo a velocidade de uma partícula livre
+no ponto x e no tempo t. Sendo assim, em um tempo posterior t+dt a partícula se encontrará
+na posição x + udt. Com isso, dada a condição inicial u0(x) = u(x, 0), a solução satisfaz:
+
+u(x + tu(x, t), t) = u0(x)
+
+(3.27)
+
+O método das características, por exemplo, pode ser usado para obter esta relação
+[33], onde nas quais faremos o uso pesado desta solução implícita para tentarmos integrar
+numericamente a equação de Burger não-viscosa.
+
+De fato foi vericado também que o método de integração com Runge-Kutta não
+nos forneceria bons resultados pelo fato da enorme instabilidade provocada pela equação
+de Burger não-viscosa, que como a equação de Euler, trata-se de uma equação de onda
+hiperbólica. O termo não-linear da equação faz com que os erros cresçam rapidamente e
+de forma descontrolada. Contudo é evidentemente possível suavizar esses erros adicionando
+perturbações, mas de fato teríamos uma equação diferencial parcial diferente e aqui o nosso
+maior interesse é na equação real e não em perturbações externas que servem para suavizar
+erros. Para nossos propósitos, as abordagens com Runge-Kutta ou semelhantes a ela não serão
+úteis para nós. Pensando assim, em vez disso, utilizaremos fortemente a equação (3.27) como
+uma espécie de truque a m de podermos evitar completamente a instabilidade numérica
+hiperbólica provocada pela equação.
+
+Cap´ıtulo 4
+
+Normas Lp e suas leis de conservação
+
+4.1
+
+Introdução
+
+Falando em uma linguagem puramente matemática dizemos que os espaços Lp são
+espaços funcionais normados. As normas Lp são denidas em termos da integral de Lebesgue
+dada sobre o valor absoluto de uma dada função f sobre os reais, onde a integral pode ser
+escrita como sendo:
+
+(cid:18)(cid:90)
+
+(cid:19) 1
+
+p
+
+||F||p =
+
+|F|p dx
+
+(4.1)
+
+R
+
+Uma característica importante dessas normas é que cada uma delas possui um sig-
+nicado especial. Temos que a norma L∞ é considerada como sendo o limite das normas
+Lp e a norma suprema. Funções que são consideradas no espaço de primeira ordem L1 são
+chamadas de funções no espaço de Banach, onde uma característica importante para funções
+neste espaço é que por denição todas elas são absolutamente integráveis, e por m a norma
+de segunda ordem L2 que é considerada como sendo um espaço bastante conhecido pelos
+físicos que é o espaço de Hilbert.
+
+32
+
+Capítulo 4. Normas Lp e suas leis de conservação
+
+33
+
+4.2 Normas Lp da equação de Burger não-viscosa
+
+Temos que a equação de Burger não-viscosa em 1-D, equação utilizada em nossos
+
+estudos, possui uma lei de conservação de normas Lp para soluções regulares.
+
+(cid:90)
+
+(cid:107)u(cid:107)p
+
+Lp =
+
+d
+dt
+
+∂
+∂t
+
+updx
+
+R
+
+(cid:90)
+
+(cid:90)
+(cid:90)
+
+R
+
+R
+
+=
+
+R
+
+= −p
+
+= − p
+p + 1
+
+pup−1 ∂
+∂t
+
+udx
+
+up ∂
+∂x
+
+udx
+
+∂
+∂x
+
+up+1dx = 0
+
+(4.2)
+
+(4.3)
+
+(4.4)
+
+(4.5)
+
+A ultima integral é considerada como sendo zero pelo fato de u decair para zero
+quando x → ±∞. Resumidamente falando temos que as normas L1 e L2 são consideradas
+conservadas para a equação.
+
+Capítulo 4. Normas Lp e suas leis de conservação
+
+34
+
+4.3 Normas Lp e a transformada de Fourier
+
+Agora iremos focalizar na transformada de Fourier no espaço da variável x. Devemos
+nos lembrar também que a transformada de Fourier ˆf de uma função qualquer f, e sua
+transformação inversa são tais que a transformada da transformada é basicamente a função
+original, exceto pelo sinal de menos. Há várias convoluções que diferem onde os fatores
+2π
+aparecem. Com isso, sem perder a generalidade vamos usar as seguintes denições:
+
+√
+
+(cid:98)f (k) =
+
+f (x) =
+
+f (x)eikx dx
+
+(cid:98)f (k)e−ikx dk
+
+(cid:90) ∞
+(cid:90) ∞
+
+−∞
+
+−∞
+
+1√
+2π
+
+1√
+2π
+
+(4.6)
+
+(4.7)
+
+Resumidamente falando, temos que pelos teoremas de Parseval e Plancherel a norma
+de grau L2 da transformada de Fourier ˆu de u também é conservada. Devemos ressaltar a
+presença da auto-dualidade presente em alguns desses espaços. Basicamente falando temos
+que um espaço é auto-dual quando o produto interno de funções em um espaço Lp consegue
+formar um grupo em um outro espaço, onde chamamos de espaço Lq. Temos então que o
+espaço Lq e basicamente o auto-dual de Lp levando em consideração a seguinte relação:
+
+1
+p
+
++
+
+1
+q
+
+= 1
+
+(4.8)
+
+Só para exemplicar e fazer alguns comentários rápidos, temos por exemplo o caso da
+norma de segunda ordem L2, onde ela é considerada uma norma auto-dual. Temos também
+que o auto-dual de L∞ é considerado um caso especial que não iremos discutir aqui, pois a
+norma L∞ basicamente não pertence a um espaço de Banach separável. No entanto, temos a
+presença de um caso de auto-dualidade para a norma de primeiro grau L1 que é considerada
+como sendo L∞.
+
+Capítulo 4. Normas Lp e suas leis de conservação
+
+35
+
+4.4 A transformada de Fourier e as cascatas de energia
+
+Aqui o nosso principal objetivo será estudar o processo de atuação das cascatas de
+energia cinética utilizando como ferramenta a transformada de Fourier, onde utilizaremos
+a equação de Burger não viscosa em 1-D que nos permitirá investigar com mais detalhes
+a formação da cauda de lei de potência no espectro de energia, onde tal fenômenos está
+diretamente associado a singularidade. Sendo assim, se temos uma solução de quebra para
+um tempo crítico nito que chamaremos de t = tc, então o valor absoluto da transformada
+de Fourier no momento exato desta quebra deverá decair como lei de potência.
+
+O processo em cascata por conseguinte deverá redistribuir a energia a partir das
+frequências consideradas mais baixas para as frequências mais elevadas, de tal forma que em
+um momento crítico tc a magnitude da transformada de Fourier ˆu adquire uma cauda de lei
+de potência onde é basicamente este o processo que desejamos entender.
+
+Cap´ıtulo 5
+
+Resultados numéricos e analíticos
+
+36
+
+Capítulo 5. Resultados numéricos e analíticos
+
+37
+
+5.1 Resultados numéricos
+
+A gura a seguir mostra um estado sinusoidal inicial e a solução em tempos poste-
+
+riores.
+
+Figura 5.1: Temos uma condição senoidal inicial e em seguida a sua evolução para tempos subse-
+quentes. As linhas tracejadas mostram como as soluções seriam se o tempo continuasse e ultrapas-
+sasse o tempo crítico tc de quebra da onda.
+
+0103104104104x0uu0 = sin (x)TimeTimeCapítulo 5. Resultados numéricos e analíticos
+
+38
+
+Às vezes para além do tempo crítico tc a solução já não é mais considerada como
+
+sendo uma função, pois vemos a mesma torna-se vários valores.
+
+Já na gura a seguir, temos o valor absoluto da transformada de Fourier em escala
+
+log log da condição imposta anteriormente.
+
+Figura 5.2: Gráco log log da magnitude da transformada de Fourier em vários momentos subse-
+quentes no tempo para soluções da gura anterior. As linhas retas em paralelo indicam as leis de
+potência, onde observamos que as caudas vão se formando a medida que o tempo se aproxima do
+tempo crítico tc. Tal fenômeno ocorre porque o processo em cascata de energia faz com que para
+tempo um crítico nito ocorra uma singularidade que está diretamente associada a formação de uma
+cauda de lei de potência.
+
+10-410-3k10-610-4|û|β = -1βCapítulo 5. Resultados numéricos e analíticos
+
+39
+
+Como foi comentado em seções anteriores, observamos que quanto mais a solução se
+aproxima do tempo considerado tempo crítico tc, mais a transformada de Fourier adquire a
+chamada cauda de lei de potência ∼ 1/k.
+
+Na gura abaixo temos um outro caso onde temos um estado inicial de Gauss em
+
+vez de senoidal e sua evolução temporal.
+
+Figura 5.3: Condição gaussiana inicial em preto e sua evolução temporal em vermelho até o ponto
+de quebra.
+
+E na gura a seguir temos o valor absoluto da transformada de Fourier para o caso
+da gaussiana. Novamente observamos um comportamento semelhante como o da condição
+inicial senoidal mostrada anteriormente.
+
+0,00103,30103,60103,78103,90x0uu0 = e-x 2TimeCapítulo 5. Resultados numéricos e analíticos
+
+40
+
+Figura 5.4: Temos aqui novamente a magnitude da transformada de Fourier, e novamente percebe-
+mos a formação de uma cauda de lei de potência.
+
+Percebemos novamente a formação de uma cauda de lei de potência como no exemplo
+anterior e além disso, vemos que a inclinação da decomposição de lei de potência aqui é muito
+semelhante ao da (gura 5.2) mostrada anteriormente.
+
+Para o novo caso a seguir temos uma função do tipo triangular onde ela mostra
+novamente um estado dito como inicial na cor preta e novamente sua evolução subsequente
+no tempo.
+
+102103k10-1100101|û|β = -1βCapítulo 5. Resultados numéricos e analíticos
+
+41
+
+]Aqui temos a condição simétrica inicial na forma u0 = exp[−|x|].
+
+E na gura a seguir temos o valor absoluto da transformada de Fourier para o caso
+
+da condição triangular mostrada anteriormente.
+
+0103104104104x0uu0 = e-|x|TimeCapítulo 5. Resultados numéricos e analíticos
+
+42
+
+]Aqui temos a transformada de Fourier da condição triangular até o momento exato antes da
+quebra. Neste caso notamos uma diferença com relação aos valores mostrados anteriormente. A
+
+transformada de Fourier inicial tem uma pré-existência de cauda de lei de potência onde a
+
+inclinação da cauda muda com o decorrer do tempo levando até o tempo tc.
+
+Notamos que a transformada de Fourier não está decaindo rapidamente mesmo para
+a condição dita como inicial, isto é, não existe um declínio assintótico antes do tempo tc. No
+entanto o expoente da lei de potência claramente muda a medida que nos aproximamos do
+tempo crítico tc.
+
+No entanto, o principal resultado que obtivemos aqui é que para tempos críticos tc,
+o valor absoluto da transformada de Fourier decai como ∼ kα, com α nunca menor do que 1.
+
+102103k10-1410-11|û|βββ = -4/3β = -2Capítulo 5. Resultados numéricos e analíticos
+
+43
+
+5.2 Resultados analíticos
+
+Somos incapazes de obter expressões de forma fechada quando integrarmos analiti-
+camente as condições iniciais anteriormente citadas. Com isso, a m de avançar nos estudos
+analiticamente consideremos a condição triangular inicial dada por:
+
+
+
+u0(x) =
+
+0,
+
+x + 1,
+1 − x,
+
+|x| > 1
+−1 ≤ x ≤ 0
+0 < x ≤ 1
+
+(5.1)
+
+Temos que esta condição inicial não é muito boa, no entanto, há precisamente três
+pontos singulares das quais dois são estacionários no tempo. Em qualquer outro lugar a
+condição inicial é suave como pode ser vista na gura de condição triangular abaixo:
+
+Figura 5.7: Condição triangular inicial.
+
+-2-1012x01uCapítulo 5. Resultados numéricos e analíticos
+
+44
+
+Para condições subsequentes ao tempo 0 < t < t temos que sua solução será:
+
+
+
+u(x, t) =
+
+0,
+
+x+1
+1+t ,
+1−x
+1−t ,
+
+|x| > 1
+−1 ≤ x ≤ t
+t < x ≤ 1
+
+(5.2)
+
+Temos que a solução se quebra claramente para tempos abaixo de tc = 1 como mostra a
+gura a seguir
+
+Figura 5.8: Aqui temos sua solução para momentos posteriores no tempo. Esta condição inicial
+pode ser exatamente solucionável porque é linear por partes. Iremos explorar sua solução exata a
+m de estudar com mais detalhes o processo das cascatas de energia.
+
+A transformada de Fourier de ˆu no momento exato antes da quebra será:
+
+−1 eikx(cid:0) x+1
+(cid:82) t
+
+t+1
+
+(cid:98)u(k, t) =
+
+(cid:1) dx +(cid:82) 1
+
+√
+
+t eikx(cid:0) 1−x
+
+1−t
+
+(cid:1) dx
+
+=
+
+2π
+
+e−ik + eik − 2eikt − t(e−ik − eik)
+
+√
+
+2π (t2 − 1)k2
+
+(5.3)
+
+-2-1012x01uTimeCapítulo 5. Resultados numéricos e analíticos
+
+Onde tomando o valor absoluto temos:
+
+|(cid:98)u(k, t)| =
+
+(cid:12)(cid:12)(1 − t) + (1 + t)e2ik − 2eik(1+t)(cid:12)(cid:12)
+
+√
+
+2π |t2 − 1| k2
+
+45
+
+(5.4)
+
+Notamos que para o tempo t = 0 o decaimento da transformada de Fourier será do
+
+tipo:
+
+(cid:98)|u(k, 0)| ∼ k−2 .
+
+(5.5)
+
+No entanto para o momento crítico t = tc = 1 a transformada de Fourier torna-se:
+
+(cid:112)1 + 2k2 − 2cos(2k) − 4kcos(k)sin(k)
+
+|(cid:98)u(k, tc)| =
+
+√
+π
+
+2k2
+
+∼ k−1
+
+(5.6)
+
+(5.7)
+
+Portanto temos que a solução exata nos permite ver exatamente como procede o
+processo em cascata. Para um tempo inicial t = 0, a transformada de Fourier decai com
+o inverso do quadrado. Notamos que ela não decai tão rapidamente devido aos três pontos
+singulares da condição triangular inicial. No entanto com o passar do tempo, a lei de potência
+do inverso quadrado de 1/k2 dá lugar a uma lei de potência inversa de 1/k. Como é que a lei de
+potência de 1/k2 muda ao longo do tempo para uma lei de potência de 1/k? Intuitivamente
+espera-se que que o processo em cascata redistribua as energias para as frequências mais
+altas, de modo que um crossover se forme entre os dois regimes de escala que separa o
+comportamento de 1/k2 do comportamento de 1/k, com o último regime eventualmente
+completando e substituindo o antigo regime no momento crítico tc.
+
+Com efeito, esta intuição poderá ser correta como podemos ver nas guras a seguir.
+
+Capítulo 5. Resultados numéricos e analíticos
+
+46
+
+Figura 5.9: Esta gura mostra a magnitude da transformada de Fourier de soluções correspondentes
+a gura (5.8) mostrada para três tempos diferentes. Estas são soluções consideradas exatas dadas
+pelas equações (5.4) e (5.6), onde claramente se percebe que a transformada de Fourier torna-se mais
+larga com o tempo, onde para o tempo inicial t = 0 o decaimento é do tipo k−2, mas para o tempo
+de quebra tc o decaimento é do tipo k−1. Este alargamento da transformada é devido justamente
+à cascata de energia.
+
+Temos que a gura anterior representa gracamente a transformada de Fourier de
+ˆu em momentos subsequentes no tempo. Nela observamos que a mudança da escala em
+crossover é claramente visível. O fato da solução (5.4) ser exata nos fornece uma forte
+credibilidade para os resultados mostrados na gura a seguir.
+
+10203040k0.020.040.060.080.10ût=1t=0.8t=0Capítulo 5. Resultados numéricos e analíticos
+
+47
+
+Figura 5.10: Magnitude da transformada de Fourier |ˆu(k)| versus k em escala log log para várias
+ocasiões de t da solução mostrada anteriormente. A escala crossover entre 1/k2 e 1/k nos regimes de
+escala aumentam a medida que o tempo se aproxima do tc. Tais guras foram construídas utilizando
+os valores da solução exata da equação (5.4), onde assim podemos descartar erros numéricos ou
+artefatos. O deslocamento progressivo do crossover mostra que a medida que o tempo se aproxima
+do tc, o processo de cascata vai formando a singularidade.
+
+051015202530-40-200051015202530-40-200-40-200-40-200-40-200-40-200051015202530-40-200051015202530-40-200Log kLog |û|t=0t=tc-10-2t=tc-10-5t=tc-10-9t=tc-10-10t=tc-10-11t=tc-10-12t≈tc|û|~k-2|û|~k-1crossovercrossovercrossovercrossovercrossovercrossoverCap´ıtulo 6
+
+Discussão dos resultados e algumas conclusões
+
+Vericamos que através das soluções da equação de Burger não-viscosa em 1-D e
+da técnica transformada de Fourier, pudemos analisar detalhadamente a formação da cauda
+de lei de potência no espectro de energia. Vimos que a singularidade resultante possui uma
+simetria bem denida, onde observamos que para a existência de um tempo critico tc a
+magnitude da transformada de Fourier decai como lei de potência do tipo ∼ 1/k.
+
+Vimos também que as normas L2 de u e de ˆu são conservadas, onde signica dizer
+que ˆu decai rapidamente quanto ∼ k−1/2. No entanto o decaimento inicialmente observado de
+∼ 1/k para um momento exato de quebra da onda é muito mais rápido do que o decaimento
+∼ k−1/2, onde sendo assim temos que a condição imposta inicialmente ub(x) = u(x, tc) é
+solução para o primeiro momento do tempo de quebra observado. Com isso temos que o
+valor absoluto da transformada de Fourier apresenta uma cauda de lei de potência que é
+delimitada por 1/k.
+
+Em resumo estudamos o decaimento da magnitude da transformada de Fourier como
+lei de potência de soluções na presença de tempos críticos, onde percebemos que a energia
+cinética evolui no tempo fazendo com que o valor absoluto da transformada de Fourier de ˆu
+adquira cauda de lei de potência delimitada por 1/k no tempo critico exato tc. Tal fenômeno
+se atribui às cascatas de energia que faz com que a energia cinética presente nas escalas es-
+paciais maiores de frequências mais baixas se redistribua para escalas menores de frequências
+mais elevadas em tempos cada vez mais rápidos, onde na presença de um limite crítico a
+cascata de energia resulta se em uma singularidade decaindo assim como lei de potência.
+
+48
+
+Capítulo 6. Discussão dos resultados e algumas conclusões
+
+49
+
+6.1 Possíveis aplicações na indústria do petróleo
+
+Sabemos que o conhecimento prévio do reservatório de petróleo é essencial para o
+sucesso da operação. Aplicar o estudo da física dos sistemas complexos na indústria do
+petróleo é algo altamente motivante, pois as teorias atualmente utilizadas como estudos mais
+especícos da dinâmica de uidos em meios porosos, teoria da Percolação, estudo dos fractais,
+dentre outros, nos fornecem informações importantes quando queremos obter um maior índice
+de precisão nos dados do campo estudado.
+
+O estudo dos uidos vem ganhando destaque nas mais diversas áreas da ciência, pois
+quando se consegue obter bons resultados existe um vasto campo de aplicações e com isso, a
+possibilidade de aplicações na indústria do petróleo seria evidente. Estudar a instabilidade
+provocada por uidos viscosos ou não-viscosos pode ser a chave para um entendimento futuro
+do comportamento dos uidos em meios com alto grau de desordem, como é o caso de
+um reservatório de petróleo, onde situações de alta instabilidade de uidos ocorrem com
+frequência e neste caso são bastante comuns.
+
+Uma situação semelhante é quando um uido é injetado em um reservatório de
+petróleo para efetuar a recuperação do hidrocarboneto onde as instabilidades ocorrem com
+frequência quando se tem altas taxas de injeção desse uido. Consequentemente o fato das
+altas taxas de injeção podem fazer com apareçam turbulências no interior do reservatório,
+aumentando assim o grau de utuações em todas as escalas [34]. Com isso, os uxos laminares
+no meio poroso podem ser induzidos à formação de vórtices de todos os tamanhos na passagem
+pelo meio poroso, onde tal fenômeno acontece com frequência quando queremos aumentar a
+performance da recuperação de óleo e as paredes da estrutura porosa do meio apresentam
+arestas, cavidades irregulares e abertas assemelhando-se assim a uma estrutura fractal [35].
+
+Cap´ıtulo 7
+
+Considerações nais
+
+Na engenharia de petróleo sabemos que é extremamente importante coletar o máximo
+de informações possíveis sobre o uxo de petróleo e sobre o meio em que o petróleo se encontra.
+Obter o máximo de informações possíveis sobre a instabilidade do uxo de petróleo é algo
+que proporciona uma parcela signicativa no melhoramento da análise dos reservatórios de
+petróleo.
+
+Estudos envolvendo hidrodinâmica em meios porosos vem sendo cada vez mais es-
+tudados pela comunidade cientica atual pois sabemos que a mínima parcela de resultados
+obtidos podem nos levar a obter inúmeras informações que podem ser devidamente apli-
+cadas não só na engenharia mais também nas mais diversas ciências [11]. No nosso caso,
+apesar de estudos como percolação e hidrodinâmica de uidos exclusivamente voltados para
+aplicações na indústria terem surgido nas últimas décadas, tem se obtido ótimos resultados
+que ajudaram e muito não só na caracterização de poços más também na recuperação de
+petróleo.
+
+O que se espera é que os conhecimentos aqui obtidos venham a ser utilizados para a
+criação de novos trabalhos e aplicações futuras, e que venham incentivar na criação de novas
+técnicas que ajudem na investigação do comportamento do uxo em meios desordenados
+como é o caso de reservatórios de petróleo, a m de se obter avanços signicativos para o
+desenvolvimento da indústria do petróleo.
+
+50
+
+Referências Bibliográcas
+
+[1] S. R. Broadment and J. M. Hammersley, Pecolation Processes I. Crystals and mazes,
+
+Proceedings of the cambridge Philosophical Society, 53, 629-641 (1957).
+
+[2] B. D. Hughes Random Walks and Random Environments (Oxford Science Publications,
+
+Published in the United States by Oxford University Press Inc., New York, 1995).
+
+[3] M. Sahimi, Applications of Percolation Theory (Taylor and Francis, Bristol, 1994).
+
+[4] B. Berkowitz and R. P. Ewing, Surveys in Geophysics (Kluwer Academic Publishers,
+
+Netherlands, 1998).
+
+[5] J. S Andrade Jr., S. V. Buldyrev, N. V. Dokholyan, S. Havlin, P. R. King, Y. Lee, G.
+
+Paul, H. E. Stanley, Physical Rewiew E, 62, 8270 (2000).
+
+[6] P. R. King , J. S. Andrade Jr, S. V. Buldyrev, N. V. Dokholyan, Y. Lee, S. Havlin, H.
+
+E. Stanley, Percolation and Oil Recovery, Physica A, 266, 107-114 (1999).
+
+[7] P. R. King, S. V. Buldyrev, N. V. Dokholyan, S. Havlin, Y. Lee, G. Paul, H. E. Stanley,
+
+Physica A, 274, 60 (1999).
+
+[8] P. R. King, S. V. Buldyrev, N. V. Dokholyan, S. Havlin, Y. Lee, G. Paul, H. E. Stanley
+
+and N. Vandesteeg, Petroleum Geoscience, 7 (2001).
+
+[9] L. R. da Silva, G. Paul, S. Havlin, D. R. Baker, H. E. Stanley, Distribution of Backbone
+
+Mass Between Non-Parallel Lines, Physica A, 314, 140 (2002).
+
+[10] L. R. da Silva, G. Paul, S. Havlin, D. R. Baker, H. E. Stanley, Scaling of Clusters and
+
+Backbone Mass Between Two Lines in 3d Percolation, Physica A, 318, 307 (2003).
+
+51
+
+Referências Bibliográcas
+
+52
+
+[11] D. Stauer and A. Aharony, Introduction to Percolatation Theory (Taylor and Francis,
+
+London, 1994).
+
+[12] Kenneth J. Falconer, Fractal Geometry Mathematical Foundations and Applications
+
+(John Wiley and Sons, 2003).
+
+[13] B. D Hughes, Random Walks and Random Environments (Oxford Science Publications,
+
+Published in the United States by Oxford University Press Inc., New York, 1995).
+
+[14] M. Sahimi, Rev. Mod. Physi. 65, 1393 (1993).
+
+[15] J. S. Andrade Jr, D. A. Street, Y. Shibusa, S. Havlin, and H. E. Stanley, Physical
+
+Rewiew E, 55, 772 (1997).
+
+[16] Y. Lee. J. S. Andrade Jr, S. V. Buldyrev, N. V. Dokholyan, S. Havlin, P. R. King, G.
+
+Paul and H. E. Stanley, Phys. Rev. E, 60, 3425 (1999).
+
+[17] N. V. Dokholyan, J. S. Andrade Jr, S. V. Buldyrev, S. Havlin, P. R. King, H. E. Stanley,
+
+J. Stat. Phys. 93, 603 (1998).
+
+[18] N. V. Dokholyan, S. V. Buldyrev, S. Havlin, P. R. King, Y. Lee, H. E. Stanley, Physica
+
+A, 266, 55 (1999).
+
+[19] DULLIEN, F. A. L. Porous Media: Fluid Transport and Pore Structure (New York
+
+Academic, New York, 1979).
+
+[20] SCHEIDEGGER, A. E. The Physics of Flow through Porous Media (University of
+
+Toronto Pres, Toronto, 1974).
+
+[21] Fortuna, A. O., Técnicas Computacionais para Dinâmica dos Fluidos (Edusp, São
+
+Paulo, 2000).
+
+[22] SAHIMI, Muhammad. Applications of Percolation Theory. First Edition (Taylor and
+
+Francis, 1994).
+
+[23] E. Hopf, Comm. Pure Appl. Math. 3, 201 (1950).
+
+[24] J. D. Cole, Quart. Appl. Math. 9, 225 (1951).
+
+[25] P. Constantin, P. D. Lax and A. Majda, Comm. Pure Appl. Math. 38, 715 (1985)
+
+[26] HUNT, Allen G. Percolation Theory for Flow in Porous Media (Springer, Berlin, 2005).
+
+Referências Bibliográcas
+
+53
+
+[27] V. Scheer, Turbulence and Navier-Stokes equations (Springer, Berlin, 1976).
+
+[28] P. Constantin, Some open problems and research directions in the mathematical study
+
+of uid dynamics (Springer, Berlin, 2001).
+
+[29] A.L. Bertozzi and A.J. Majda, Vorticity and Incompressible Flow (Cambridge Univer-
+
+sity Press, Cambridge, 2002).
+
+[30] K. Ohkitani and J. D. Gibbon, Phys. Fluids 12, 3181 (2000).
+
+[31] P. W. Terry, Rev. Mod. Phys. 72, 109 (2000).
+
+[32] J. M. Burgers, A Mathematical Model Illustrating the Theory of Turbulence (Academic
+
+Press, New York, 1948).
+
+[33] G. B. Whitham, Linear and Nonlinear Waves (Wiley, New York, 1974).
+
+[34] B. K. Shivamoggi, Journal of Plasma Physics 27, 129 (1982).
+
+[35] N. Chakrarabarti and G.S. Lakhina, Annales Geophysicae EGU 21, 1153 (2003).
+
+[36] A. Majda and E. Tabak, Physica D 98, 51 (1996).
+
+[37] P. Constantin, Argonne National Laboratory preprint (1992).
+
+[38] D. Cordoba, Proc. Natl. Acad. Sci. USA 94, 12769 (1997).
+
+[39] D. Cordoba, Annals of Mathematics, 148, 1135 (1998).
+
+

@@ -1,0 +1,1292 @@
+CLIENTE: 
+
+RELATÓRIO  
+ANP – AGÊNCIA NACIONAL DO PETRÓLEO, GÁS NATURAL E 
+
+RL-ANP-FPL-043 
+1 
+
+FOLHA: 
+
+Nº: 
+
+BIOCOMBUSTÍVEIS 
+
+de
+
+13 
+
+PROGRAMA:  MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação do 
+
+Ramal Atalaia II e do gasoduto Atalaia-
+
+Laranjeiras 
+
+- 
+- 
+
+- 
+
+Faculdades Católicas – PUC-Rio – SIMDUT 
+
+ÍNDICE DE REVISÕES 
+
+REV. 
+
+DESCRIÇÃO E/OU FOLHAS ATINGIDAS 
+
+0 
+A 
+ 
+
+EMISSÃO ORIGINAL 
+REVISÃO APÓS COMENTÁRIOS DA ANP/SCM E PADRONIZAÇÃO DOS RELATÓRIOS 
+ 
+
+ 
+
+REV. 0 
+
+REV. A 
+
+REV. B 
+
+REV. C 
+
+REV. D 
+
+REV. E 
+
+REV. F 
+
+REV. G 
+
+REV. H 
+
+ANP 
+
+ANP 
+
+19/06/2015 03/08/2015 
+
+DATA 
+PROJETO 
+EXECUÇÃO 
+VERIFICAÇÃO 
+APROVAÇÃO 
+AS INFORMAÇÕES DESTE DOCUMENTO SÃO PROPRIEDADE DA ANP, SENDO PROIBIDA A UTILIZAÇÃO FORA DA SUA FINALIDADE. 
+ 
+
+P. Krause  P. Krause 
+I.Patrocinio I.Patrocinio 
+
+L. Pires 
+
+L. Pires 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-043 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+ 
+
+Documentação do Modelo de Simulação do Ramal 
+
+Atalaia II e do gasoduto Atalaia-Laranjeiras 
+
+ÍNDICE 
+
+ 
+
+FOLHA
+
+REV.
+
+A 
+
+2  de
+
+13 
+
+- 
+- 
+
+ 
+
+1  OBJETIVO _______________________________________________________________ 3 
+2  DOCUMENTOS DE REFERÊNCIA ____________________________________________ 3 
+3  DESCRIÇÃO GERAL DO MODELO ___________________________________________ 3 
+4  PREMISSAS DE CÁLCULO  _________________________________________________ 4 
+4.1 
+CONDIÇÕES DE REFERÊNCIA ___________________________________________ 4 
+
+4.2 
+
+4.3 
+
+4.4 
+
+4.5 
+
+4.6 
+
+4.7 
+
+4.8 
+
+MODELO DE TRANSFERÊNCIA DE CALOR _________________________________ 5 
+
+TEMPERATURA DO SOLO _______________________________________________ 5 
+
+CORRELAÇÕES ADOTADAS _____________________________________________ 5 
+
+SOFTWARE UTILIZADO _________________________________________________ 5 
+
+CARACTERÍSTICAS DO GÁS _____________________________________________ 5 
+
+TEMPERATURA AMBIENTE ______________________________________________ 5 
+
+VISCOSIDADE _________________________________________________________ 6 
+
+5  CARACTERÍSTICAS DOS SISTEMAS DE GASODUTOS __________________________ 6 
+DIÂMETRO, ESPESSURA E PMOA ________________________________________ 6 
+5.1 
+
+5.2 
+
+5.3 
+
+5.4 
+
+5.5 
+
+5.6 
+
+PERFIL ALTIMÉTRICO __________________________________________________ 6 
+
+RUGOSIDADE _________________________________________________________ 7 
+
+ESTAÇÕES DE REDUÇÃO DE PRESSÃO (ERP) _____________________________ 7 
+
+PONTOS DE ENTREGA (PTE) ____________________________________________ 7 
+
+PONTOS DE RECEBIMENTO (PTR)  _______________________________________ 8 
+
+6  CONDIÇÕES DE CONTORNO _______________________________________________ 8 
+6.1 
+PERFIL DE CONSUMO __________________________________________________ 8 
+
+6.2 
+
+6.3 
+
+MÁXIMA PRESSÃO ADMISSÍVEL DE OPERAÇÃO ____________________________ 8 
+
+PRESSÃO DE ENTREGA NOMINAL CONTRATUAL ___________________________ 8 
+
+7  RESULTADOS DA SIMULAÇÃO ______________________________________________ 8 
+8  ANEXOS  _______________________________________________________________ 10 
+“STEADY STATE REPORT” DO MODELO __________________________________ 10 
+8.1 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-043 
+
+FOLHA
+
+REV.
+
+A 
+
+3  de
+
+13 
+
+TÍTULO: 
+
+ 
+
+OBJETIVO 
+
+ 
+
+1 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação do Ramal 
+
+Atalaia II e do gasoduto Atalaia-Laranjeiras 
+
+- 
+- 
+
+Documentar as informações necessárias para a criação dos modelos computacionais de 
+parte da rede de gasodutos denominada pelo Transportador como malha Nordeste Meridional, 
+composta  pelo  Ramal  Atalaia  II  e  pelo  gasoduto  Atalaia-Laranjeiras  (GAL)  e  apresentar  as 
+características  físicas  e  valores  limite  de  projeto  dos  diversos  elementos  que  compõem  os 
+modelos de simulação termo-hidráulica. Permitindo, assim, a reprodutibilidade do modelo por 
+qualquer interessado. 
+
+O  modelo  foi  criado  para  o  programa  de  simulação  PipelineStudio  versão  3.4.1.0  da 
+
+Energy Solutions. 
+
+ 
+ 
+
+2 
+
+DOCUMENTOS DE REFERÊNCIA 
+
+Os  documentos  técnicos  codificados  utilizados  como  referência  para  elaboração  do 
+
+Relatório são: 
+2.1.  RL-ANP-FPL-012_Rev.A – Metodologia para Cálculo de Capacidade 
+2.2.  RL-ANP-FPL-007_Rev.A – Análise da Influência de Parâmetros Utilizados no Modelo de 
+
+Cálculo da Capacidade 
+
+2.3.  MO-5TP-00092-A – Manual de Operação do gasoduto Atalaia Laranjeiras e do Ramal 
+
+Atalaia II 
+
+2.4.  DE-877.1-374.080-BOP-01 a 28 – Perfil do Gasoduto Atalaia Laranjeiras 
+2.5.  Processo ANP n° 48610.010500/2012-40 
+2.6.  RL-ANP-FPL-044_RA  -  Cálculo  de  Capacidade  do  Ramal  Atalaia  II  e  do  gasoduto 
+
+Atalaia-Laranjeiras 
+
+ 
+
+3 
+
+DESCRIÇÃO GERAL DO MODELO 
+
+A rede de gasodutos denominada pelo Transportador como malha Nordeste Meridional 
+foi composta por vários modelos, de acordo com a metodologia apresentada na referência 2.1. 
+Ela se liga a malha Nordeste Setentrional no PTR de Pilar e a do Espirito Santo no PTR de 
+Cacimbas.  O  modelo  em  questão  se  refere  ao  Ramal  Atalaia  II  e  ao  Gasoduto  Atalaia-
+Laranjeiras. 
+
+De acordo com a referência 2.3, o Ramal Atalaia II foi construído em 2009 e começou a 
+operar  em  2010.  O  Ramal  Atalaia  II  tem  diâmetro  nominal  de  14  polegadas,  1,077  km  de 
+extensão e está localizado no estado de Sergipe, transportando gás natural da UPGN Atalaia-
+SE até a Estação de Distribuição de Gás (EDG) Atalaia. 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-043 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+A 
+
+4  de
+
+13 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação do Ramal 
+
+Atalaia II e do gasoduto Atalaia-Laranjeiras 
+
+- 
+- 
+
+ 
+
+Na  EDG  Atalaia,  o  Ramal  Atalaia  II  transfere  o  gás  natural  para  o  gasoduto  Atalaia-
+Laranjeiras (GAL), que possui o mesmo diâmetro nominal que o Ramal, ou seja, 14 polegadas. 
+O Gasoduto Atalaia-Laranjeiras foi construído em 1980 e começou a operar em 1981. O GAL 
+também  está  localizado  inteiramente  no  estado  de  Sergipe,  com  extensão  de  28  km.  Esses 
+dois gasodutos juntos interligam a UPGN-Atalaia até a FAFEN-SE, por meio da EDG Atalaia, 
+possibilitando, assim, o transporte de gás natural entre as duas unidades. Uma visão geral do 
+sistema está apresentada na Figura 1.  
+
+O modelo de simulação desenvolvido compreende todos os dutos e ramais existentes no 
+sistema.  Para  o  desenvolvimento  do  modelo  foi  utilizado  o  programa  comercial  Pipeline 
+Simulator  da  EnergySolutions  Inc,  versão  3.4.1.0.  A  representação  gráfica  do  modelo  está 
+apresentada na Figura 2. 
+
+ 
+
+ 
+
+ 
+ 
+
+Figura 1 – Visão geral da rede modelada 
+
+ 
+
+Figura 2 – Fluxograma do modelo 
+
+ 
+
+4 
+
+PREMISSAS DE CÁLCULO 
+
+4.1  Condições de Referência 
+
+As  vazões  volumétricas  apresentadas  neste  relatório  utilizam  os  seguintes  valores  de 
+
+pressão e temperatura como referência. 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-043 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+A 
+
+5  de
+
+13 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação do Ramal 
+
+Atalaia II e do gasoduto Atalaia-Laranjeiras 
+
+- 
+- 
+
+ 
+
+  Pressão: 1 atm 
+  Temperatura: 20°C 
+
+ 
+
+4.2  Modelo de transferência de calor 
+
+  Coeficiente global de transferência de calor solo-tubo: 1,9 Kcal/hm2°C (valor arbitrado, 
+
+não disponível nos documentos de referência) 
+
+ 
+
+4.3  Temperatura do solo 
+
+  30°C (Valor arbitrado, não disponível nos documentos de referência) 
+
+ 
+
+4.4  Correlações Adotadas 
+
+De  forma  a  seguir  as  orientações  gerais  para  construção  de  modelos  de  simulação 
+computacional  de  gasodutos  apresentadas  na  referência  2.2,  as  seguintes  correlações 
+foram adotadas: 
+
+  Equação de Estado: BWRS 
+  Fator de Atrito: Colebrook 
+
+ 
+
+4.5  Software utilizado 
+
+  Pipeline Studio versão 3.4.1.0 
+
+ 
+
+4.6  Características do Gás 
+
+As composições apresentadas na Tabela 1 são referentes ao mês de janeiro de 2015 e 
+foram  obtidas  a  partir  dos  sumários  estatísticos  dos  Certificados  de  Qualidade  do  Gás  (Ref. 
+2.5). 
+
+ 
+
+ 
+
+Tabela 1 – Composição do Gás Natural 
+
+Fonte 
+C1 
+C2 
+C3 
+C4 
+N2 
+CO2 
+
+Atalaia 
+86,99 
+8,33 
+0,1 
+0 
+1,7 
+2,88 
+
+4.7  Temperatura ambiente 
+
+  O  valor  de  temperatura  do  solo  adotado  para  todo  o  modelo  foi  de  30  oC  (Valor 
+
+arbitrado, não disponível nos documentos de referência) 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-043 
+
+FOLHA
+
+REV.
+
+A 
+
+6  de
+
+13 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação do Ramal 
+
+Atalaia II e do gasoduto Atalaia-Laranjeiras 
+
+- 
+- 
+
+TÍTULO: 
+
+ 
+
+4.8  Viscosidade 
+
+ 
+
+  Dado não disponível nos documentos de referência, utilizou-se a equação para cálculo 
+
+de viscosidade LGE (referência 2.2) 
+
+ 
+ 
+
+5 
+
+CARACTERÍSTICAS DOS SISTEMAS DE GASODUTOS 
+
+5.1  Diâmetro, Espessura e PMOA 
+
+A Tabela 2 apresenta a simplificação dos dutos utilizada nos modelos de simulação, de 
+acordo com cada trecho de duto. Foram ignoradas as variações de espessura devido a trechos 
+alagados  e  passagens  de  rios  para  simplificar  a  elaboração  do  modelo,  sem  afetar 
+significativamente o resultado das simulações. As referências utilizadas para a modelagem dos 
+trechos  de  dutos  foram  2.3  e  2.4.  A  espessura  do  gasoduto  GAL  é  uma  espessura  média, 
+devido ao grande número de variações de espessura no traçado. 
+
+ 
+
+Tabela 2 – Dutos do Sistema 
+
+Comprimento 
+
+(km desenvolvido) 
+
+Diâmetro 
+
+Nominal (pol) 
+
+1,08 
+28 
+
+14 
+14 
+
+Espessura 
+
+(pol) 
+0,219 
+0,281 
+
+PMOA 
+(kgf/cm²) 
+
+35 
+33 
+
+Duto 
+
+Ramal Atalaia 
+
+GAL 
+
+ 
+Nesse  documento,  as  localizações  e  extensões,  expressas  em  km,  referem-se  ao 
+
+comprimento desenvolvido (real), salvo quando disposto em contrário. 
+
+ 
+
+5.2  Perfil Altimétrico 
+
+O  perfil  do  gasoduto  em  estudo  se  encontra  a  seguir.  Este  perfil  foi  simplificado  para 
+atender  ao  modelo  de  simulação,  priorizando  o 
+tempo  computacional  e  respeitando 
+principalmente  as  mudanças  de  espessura  pertinentes  ao  modelo.  Não  foram  modeladas 
+passagens de rios e situações similares. O perfi levantado foi baseado nas referências 2.3 e 
+2.4. 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-043 
+
+FOLHA
+
+REV.
+
+A 
+
+7  de
+
+13 
+
+TÍTULO: 
+
+ 
+
+ 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação do Ramal 
+
+Atalaia II e do gasoduto Atalaia-Laranjeiras 
+
+- 
+- 
+
+Figura 3 - Perfil de elevação do Ramal Atalaia II e do GAL 
+
+ 
+
+ 
+
+5.3  Rugosidade 
+
+Tendo  em  vista  o  tempo  de  operação  dos  dutos  e  a  falta  de  um  valor  disponível  nos 
+documentos  de  referência,  adotou-se  por  hipótese  e  com  base  na  referência  2.2,  o  valor  de 
+0,04572 mm para todos os gasodutos. 
+ 
+5.4  Estações de Redução de Pressão (ERP) 
+
+De acordo com a referência 2.3, o Ramal Atalaia II possui um valor de PMOA maior que o 
+GAL. Sendo assim, existe uma quebra de pressão na EDG Atalaia para a PMOA do GAL, de 
+33  kgf/cm².  Não  há  maiores  informações  sobre  as  válvulas  utilizadas  para  realizar  essa 
+redução de pressão. 
+ 
+5.5  Pontos de Entrega (PTE) 
+
+A Tabela 3 apresenta a localização, em relação ao gasoduto, e os limites de projeto dos 
+
+pontos de entrega do sistema, de acordo com as referências 2.3, 2.4 e 2.5  
+
+ 
+
+Tabela 3 – Pontos de Entrega 
+
+Ponto de 
+Entrega 
+(PTE) 
+
+Linha 
+tronco 
+
+Localização na 
+linha tronco 
+
+(km desenvolvido) 
+
+Elevação 
+
+(m) 
+
+Vazão Máxima 
+
+(m³/d) 
+
+Pressão Mínima 
+
+(kgf/cm²) 
+
+FAFEN/SE 
+
+GAL 
+
+28 
+
+7.85 
+
+1.500.000 
+
+22 
+
+ 
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-043 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+A 
+
+8  de
+
+13 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação do Ramal 
+
+Atalaia II e do gasoduto Atalaia-Laranjeiras 
+
+- 
+- 
+
+5.6  Pontos de recebimento (PTR) 
+
+O  sistema  possui  um  único  ponto  de  recebimento  que  atende  a  este  sistema,  o  PTR 
+Atalaia I. Para este caso, foi utilizada como condição de contorno apenas a pressão máxima do 
+Ramal Atalaia II, que é de 35 kgf/cm², de acordo com a referência 2.3. 
+
+ 
+ 
+
+6 
+
+CONDIÇÕES DE CONTORNO 
+
+6.1  Perfil de Consumo 
+
+A  Tabela  4  apresenta  a  distribuição  de  demanda  nos  pontos  de  entrega  utilizada  no 
+modelo.  Os  valores  apresentados  representam  a  média  diária  do  mês  de  janeiro  de  2015, 
+conforme apresentado em http://tag.petrobras.com.br/ > Informações à ANP. 
+
+ 
+
+ 
+
+Tabela 4 - Perfil de Consumo 
+Pontos de 
+Entrega 
+FAFEN/SE 
+
+Vazão Média 
+Jan/15 (m3/d) 
+
+889.470 
+
+6.2  Máxima Pressão Admissível de Operação 
+
+A PMOA do sistema pode ser observada na Tabela 2. 
+ 
+
+6.3  Pressão de Entrega Nominal Contratual 
+
+A Tabela 3, apresentada no item 5.5, apresenta as pressões mínimas de cada ponto de 
+
+entrega, de acordo com a referência 2.3. 
+
+ 
+ 
+
+7 
+
+RESULTADOS DA SIMULAÇÃO 
+
+A pressão no ponto de entrega está apresentada na Tabela 5. A distribuição de pressão e 
+
+vazão da linha tronco para a condição média de janeiro de 2015 é apresentada na Figura 4. 
+
+Deve-se  ressaltar  que  os  resultados  das  simulações  que  detalham  as  capacidades  de 
+
+transporte e disponível encontram-se na referência 2.6. 
+
+ 
+
+Tabela 5 - Pressão no PTE 
+
+PTE 
+
+Localização na 
+linha tronco (km) 
+
+FAFEN/SE 
+
+28,00 
+
+Elevação 
+
+(m) 
+7,85 
+
+Pressão 
+(kgf/cm²) 
+31,40 
+
+ 
+
+ 
+
+ 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação do Ramal 
+
+Atalaia II e do gasoduto Atalaia-Laranjeiras 
+
+- 
+- 
+
+Figura 4 – Perfil de pressão, vazão e elevação 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-043 
+
+FOLHA
+
+REV.
+
+A 
+
+9  de
+
+13 
+
+TÍTULO: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-043 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação do Ramal 
+
+Atalaia II e do gasoduto Atalaia-Laranjeiras 
+
+- 
+- 
+
+FOLHA
+
+REV.
+
+A 
+
+10  de
+
+13 
+
+8  ANEXOS 
+8.1  “STEADY STATE REPORT” DO MODELO 
+ 
+                           ******************************************************************************* 
+                           *                                  SIMULACAO                                  * 
+                           ******************************************************************************* 
+ 
+ 
+                                          * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                          *                                               * 
+                                          *      Default Initial Values Selected:         * 
+                                          *                                               * 
+                                          *      Pressure ................    34.000      * 
+                                          *      Flow ....................   889.470      * 
+                                          *      Temperature .............    30.000      * 
+                                          *      % Oxygen ................     0.000      * 
+                                          *      % Nitrogen ..............     1.270      * 
+                                          *      % Carbon Dioxide ........     2.780      * 
+                                          *      % Methane ...............    86.680      * 
+                                          *      % Ethane ................     9.100      * 
+                                          *      % Propane ...............     0.170      * 
+                                          *      % i-Butane ..............     0.000      * 
+                                          *      % n-Butane ..............     0.000      * 
+                                          *      % i-Pentane .............     0.000      * 
+                                          *      % n-Pentane .............     0.000      * 
+                                          *      % Hexane ................     0.000      * 
+                                          *      % C7plus ................     0.000      * 
+                                          *      % Octane ................     0.000      * 
+                                          *      % Water .................     0.000      * 
+                                          *                                               * 
+                                          * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                       *                                                     * 
+                                       *                 Problem Size Report                 * 
+                                       *                                                     * 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                       *                                                     * 
+                                       *                                 Number   Maximum    * 
+                                       *                                  Used    Allowed    * 
+                                       *                                 ------   -------    * 
+                                       *                                                     * 
+                                       *     External Regulators             2      5000     * 
+                                       *     Equipment Devices               1      3000     * 
+                                       *     Drivers/Turbines                0       500     * 
+                                       *     Legs                            2     10000     * 
+                                       *     Nodes                           4     20000     * 
+                                       *     Knots                          24     30000     * 
+                                       *     Stations                        0       500     * 
+                                       *     Banks                           0      1000     * 
+                                       *     Groups                          0      1000     * 
+                                       *     Plants                          0        10     * 
+                                       *     Compressor Perf Types           0       500     * 
+                                       *     Driver/Turb Perf Types          0       500     * 
+                                       *     Cylinder Types                  0       500     * 
+                                       *     Fluids                         22       100     * 
+                                       *     Qualities                      20        26     * 
+                                       *                                                     * 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-043 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+A 
+
+11  de
+
+13 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação do Ramal 
+
+Atalaia II e do gasoduto Atalaia-Laranjeiras 
+
+- 
+- 
+
+ 
+ 
+                           ******************************************************************************* 
+                           *                      Steady State Convergence Summary                       * 
+                           ******************************************************************************* 
+ 
+ 
+                    ============================================================================================ 
+                                                 Greatest       Greatest        Greatest                 
+                    Iteration     Tolerance     Hydraulic      Temperature     Composition        Associated 
+                     Number       Requested     Adjustment     Adjustment      Adjustment           Device 
+                    ---------     ---------     ----------     -----------     -----------     ----------------- 
+                         0        0.0001000      0.0777836      0.0000000       0.0000000      Node  NODE04 
+                         1        0.0001000      0.0022859      0.0000000       0.0000000      Node  NODE04 
+                         2        0.0001000      0.0000108      0.0000249       0.0000000      TNODE NODE03 
+                         3        0.0001000      0.0028580      0.0000249       0.0000000      Pipe  GAL 
+                         4        0.0001000      0.0000057      0.0000525       0.0000000      TNODE NODE04 
+                         5        0.0001000      0.0000071      0.0000009       0.0000000      Pipe  RAMAL_ATALAIA_II 
+ 
+ 
+                           ******************************************************************************* 
+                           *                                  SIMULACAO                                  * 
+                           ******************************************************************************* 
+ 
+ 
+                           ******************************************************************************* 
+                           *                         Reference Conditions Report                         * 
+                           ******************************************************************************* 
+ 
+                                              Reference Pressure        =     0.00  KG/CM2G 
+                                              Reference Temperature     =    20.00 (DEG C ) 
+ 
+ 
+                           ******************************************************************************* 
+                           * Leg Hydraulic Summary Report        -----        Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                 =================================================================================================== 
+                                           Pressure                   Flow                Line         Temperature 
+                                            KG/CM2G                 (KSM3/D)              Pack           (DEG C ) 
+                      Leg ID            Head      Tail          Head        Tail        ( KSM3 )       Head    Tail 
+                 ----------------     --------  --------     ----------  ----------     ---------     ------  ------ 
+                 GAL                     33.00     31.40        889.470     889.470       85.5877      29.10   29.77 
+                 RAMAL_ATALAIA_II        35.00     34.95        889.470     889.470        3.6570      30.00   29.98 
+ 
+ 
+                           ******************************************************************************* 
+                           * Equipment Hydraulic Report         -----         Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+                                             ::  Equipment Hydraulic Summary Report  :: 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+            ============================================================================================================ 
+                                                 Pressure                          Temperature                  Heating 
+            Equipment        Mode of              KG/CM2G             Flow           (DEG C )         Spc        Value 
+                ID           Control           Up       Down        (KSM3/D)        Up     Down       Grv       ( MJ/M3) 
+            ----------     ------------     --------  --------     ----------     ------  ------     ------     -------- 
+            EDG_ATALIA     Max PD              34.95     33.00         889.47      29.98   29.10     0.6317        38.18 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-043 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+A 
+
+12  de
+
+13 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação do Ramal 
+
+Atalaia II e do gasoduto Atalaia-Laranjeiras 
+
+- 
+- 
+
+ 
+ 
+                                     ========================================================== 
+                                                     Current       Accumulated         Timer 
+                                     Equipment      Flow Rate         Volume           Value 
+                                         ID          (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                     ----------     ----------     ------------     ----------- 
+                                     EDG_ATALIA         889.47             0.00           0.000 
+ 
+ 
+                           ******************************************************************************* 
+                           * External Regulator Hydraulic Report    -----     Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                           :::::::::::::::::::::::::::::::::::::::::::::: 
+                                           ::  External Regulator Flow Balance Report  :: 
+                                           :::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                      ========================================================= 
+                                                               Mass Units      Volumetric Units 
+                                                                (TONN/H)           (KSM3/D) 
+                                      --------------------     -----------     ---------------- 
+                                      Total input flow              28.189           889.470 
+                                      Total output flow             28.189           889.470 
+                                      Network flow balance           0.000             0.000 
+ 
+ 
+                                         ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                         ::  External Regulator Hydraulic Summary Report  :: 
+                                         ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                 ================================================================================================== 
+                  External                                                                    Specific     Heating 
+                  Regulator        Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                     ID            Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+                 -----------     ------------     --------     ----------     -----------     --------     -------- 
+                 FAFEN/SE        Max Flow            31.40        889.470        29.77         0.6317         38.18 
+                 PTR_ATALAIA     Max Pres            35.00       -889.470        30.00         0.6317         38.18 
+ 
+ 
+                                     ========================================================== 
+                                      External        Current      Accumulated         Timer 
+                                      Regulator      Flow Rate        Volume           Value 
+                                         ID          (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                     -----------     ---------     ------------     ----------- 
+                                     FAFEN/SE          889.470            0.000           0.000 
+                                     PTR_ATALAIA      -889.470            0.000           0.000 
+ 
+ 
+                                     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                     ::  Supply External Regulator Hydraulic Summary Report  :: 
+                                     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                 ================================================================================================== 
+                   Supply                                                                     Specific     Heating 
+                    Xreg           Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                     ID            Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+                 -----------     ------------     --------     ----------     -----------     --------     -------- 
+                 PTR_ATALAIA     Max Pres            35.00       -889.470        30.00         0.6317         38.18 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-043 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+A 
+
+13  de
+
+13 
+
+TÍTULO: 
+
+ 
+
+Documentação do Modelo de Simulação do Ramal 
+
+Atalaia II e do gasoduto Atalaia-Laranjeiras 
+
+- 
+- 
+
+ 
+ 
+                                     =========================================================== 
+                                       Supply         Current       Accumulated         Timer 
+                                        Xreg         Flow Rate         Volume           Value 
+                                         ID           (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                     -----------     ----------     ------------     ----------- 
+                                     PTR_ATALAIA       -889.470            0.000           0.000 
+ 
+ 
+                                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                    ::  Delivery External Regulator Hydraulic Summary Report  :: 
+                                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                   =============================================================================================== 
+                   Delivery                                                                  Specific     Heating 
+                     Xreg         Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                      ID          Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+                   --------     ------------     --------     ----------     -----------     --------     -------- 
+                   FAFEN/SE     Max Flow            31.40        889.470        29.77         0.6317         38.18 
+ 
+ 
+                                      ======================================================== 
+                                      Delivery      Current       Accumulated         Timer 
+                                        Xreg       Flow Rate         Volume           Value 
+                                         ID         (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                      --------     ----------     ------------     ----------- 
+                                      FAFEN/SE        889.470            0.000           0.000 
+ 
+ 
+                           ******************************************************************************* 
+                           * Node Mass Balance Error Report       -----       Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+                                                Threshold Level =     0.0100 (KSM3/D) 
+                                                No Mass Balance Errors above Threshold 
+ 
+ 
+                                              ::::::::::::::::::::::::::::::::::::::: 
+                                               ::  Pressure/Flow Violation Reports  :: 
+                                               ::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                               ALL XREGS FALL WITHIN PRESSURE BOUNDS 
+                                             ALL EQUIPMENT FALL WITHIN PRESSURE BOUNDS 
+                                         ALL INTERNAL LEG KNOTS FALL WITHIN PRESSURE BOUNDS 
+ 
+ 
+                                            ::::::::::::::::::::::::::::::::::::::::::::: 
+                                            ::  Setpoint/Constraint Violation Reports  :: 
+                                            ::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                            ALL XREGS COMPLY WITH MONITORED CONSTRAINTS 
+                                          ALL EQUIPMENT COMPLY WITH MONITORED CONSTRAINTS 
+ 
+ 
+                      TRANSIENT GAS NETWORK MODEL (TGNET) 
+                       RELEASE 7.6  LEVEL 00  30-SEP-2008 
+ 
+                             STEADY-STATE MODULE 
+
+ 
+
+ 
+
+ 
+
+

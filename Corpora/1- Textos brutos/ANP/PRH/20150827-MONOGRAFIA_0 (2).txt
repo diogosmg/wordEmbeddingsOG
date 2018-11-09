@@ -1,0 +1,1710 @@
+Pablo Ruan Zotti Brum 
+
+ 
+
+ 
+
+Iniciação Cientifica (PRH-24) 
+
+Janeiro de 2014 até Fevereiro de 2015 
+
+ 
+
+ 
+
+Interface Gráfica para Metodologia global de Controle de Vibrações em Sistemas 
+
+Mecânicos: Aplicação no caso de neutralizadores hidráulicos 
+
+ 
+ 
+ 
+ 
+ 
+
+apresentado 
+
+à 
+Relatório 
+Coordenadoria  de  Iniciação  Científica 
+e 
+da 
+Universidade  Federal  do  Paraná  por 
+ocasião 
+das 
+atividades de Iniciação Científica. 
+
+encerramento 
+
+Integração 
+
+Acadêmica 
+
+de 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Prof: Carlos Alberto Bavastri / Departamento de mecânica 
+
+Curitiba 
+2015 
+
+ 
+
+ 
+
+ 
+
+EDUARDO BONTORIN MEDEIROS SANTOS – GRR20128404 
+
+Resumo 
+
+No  presente  relatório  busca-se  apresentar  sobre  a  problemática  envolvida  nas  vibrações 
+mecânica em relações as estruturas. Uma vez que se estas forem em elevado grau podem 
+causar ruído e até mesmo o colapso da estrutura. Desta forma abordou-se sobre conceitos 
+de vibrações e possíveis formas de diminuir as vibrações no período de iniciação científica 
+do  aluno.  Logo  objetiva-se  criar  uma  interface  onde  se  consiga  projetar  de  forma  mais 
+eficiente, econômica e rápida tais neutralizadores. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Palavras-Chave: estruturas; vibrações mecânicas; neutralizadores
+
+ 
+
+SUMÁRIO 
+
+1 
+
+INTRODUÇÃO 
+
+SUMÁRIO 
+
+1.1 
+
+Aplicação na Indústria do Petróleo 
+
+2  OBJETIVOS 
+3  REVISÃO BIBLIOGRÁFICA 
+
+3.1 
+
+Conceitos de vibrações 
+
+3.1.1 
+
+Parâmetros equivalentes 
+
+3.2 
+3.3 
+3.4 
+
+Sistemas de múltiplos graus de liberdade 
+Neutralizadores 
+Programação Java 
+
+3.4.1 
+3.4.2 
+3.4.3 
+3.4.4 
+
+objetos 
+classes 
+herança 
+variáveis 
+
+4  MATERIAIS E MÉTODOS 
+5  RESULTADOS 
+
+5.1 
+5.2 
+
+Software para otimização dos neutralizadores 
+Criação de Neutralizador do tipo hidráulico 
+
+6  CONCLUSÕES 
+7  AGRADECIMENTOS 
+8  REFERENCIAS BIBLIOGRÁFICAS 
+ 
+
+ 
+
+4 
+5 
+7 
+9 
+9 
+11 
+13 
+15 
+18 
+18 
+19 
+19 
+20 
+21 
+23 
+23 
+26 
+28 
+28 
+29 
+
+ 
+
+4 
+
+1 
+
+INTRODUÇÃO 
+
+Elevadas vibrações presentes em estruturas na engenharia podem provocar elevado nível 
+de ruído ou até o colapso da mesma por fadiga. Dessa forma, a análise de vibrações, assim 
+como, as metodologias utilizadas para reduzi-las são linhas importantes de pesquisa que o 
+grupo de pesquisa GVIBS vem desenvolvendo ao longo dos últimos 20 anos. 
+
+Com o objetivo de reduzir a amplitude de vibração de estruturas, podem-se utilizar algumas 
+das seguintes técnicas (Espíndola e Silva, 1992 e Bavastri, 1997): atuar sobre a excitação, 
+reduzindo sua amplitude e/ou alterando o seu espectro; atuar sobre a estrutura, seja pela 
+variação  da  rigidez,  massa  ou  introduzindo  amortecimento;  fixar  um  ou  mais  sistemas 
+secundários  (neutralizadores  dinâmicos)  ao  sistema  vibrante  (sistema  primário),  cuja 
+vibração deseja-se reduzir.  
+
+Devido à quantidade de trabalhos que foram desenvolvidos nesta área e pela complexidade 
+envolvida neles, existe a necessidade de se criar um ambiente computacional que permita 
+aplicar  estas  metodologias  para  atender  as  necessidades  acadêmicas,  para  formação  de 
+recursos  humanos  a  nível  de  graduação  e  pós-graduação  e,  também,  atender  as 
+necessidades de extensão. Esta interfase gráfica, também, permitirá dar suporte às novas 
+pesquisas  nesta  linha  que  estão  em  desenvolvimento,  metodologia  geral  de  projeto  para 
+controle de vibrações. 
+
+Basicamente, a interface permitirá criar um arquivo de dados de entrada que será lido por 
+um aplicativo em Fortran, em constante desenvolvimento, encarregado do processamento 
+numérico. Após o processamento, os códigos em Fortran geram um arquivo de saída que é 
+lido pela interface gráfica, permitindo assim a visualização dos resultados de forma amigável 
+para o usuário.  
+
+Devido  a  sua  especificidade  e  à  pesquisa  de  ponta  envolvida  neste  trabalho,  produto  de 
+vários anos de pesquisa do grupo GVIBS, a interface em questão, assim como os códigos 
+numéricos  desenvolvidos,  possuem  um  caráter  inovador  que  neste  projeto  pretende-se 
+proteger. 
+
+Após o desenvolvimento da interface gráfica pretende-se aplica-lo para projetar e criar um 
+neutralizador  hidráulico,  os  mesmos  são  utilizados  para  controlar  vibrações  de  baixas 
+frequências  em  estruturas  esbeltas  como  prédios,  torres  de  resfriamento,  estruturas 
+offshore, entre outras. As fontes de excitação podem ser: excitações eólicas ou sísmicas, 
+desbalanceamentos,  ondas  do  mar,  por  exemplo.  Busca-se  neste  trabalho  apresentar  o 
+desenvolvimento  teórico,  a  implementação  numérica  (através  da  interface  gráfica)  e  a 
+
+ 
+
+5 
+
+realização física de um neutralizador dinâmico hidráulico para reduzir os níveis de vibrações 
+de  um  modelo  de  um  prédio.  O  modelo  do  prédio  estará  representando,  sem  perda  de 
+generalidade, as estruturas esbeltas de baixas frequências naturais.  
+
+ 
+
+1.1  Aplicação na Indústria do Petróleo 
+
+ 
+Na área de petróleo, o controle das vibrações através de neutralizadores dinâmicos pode 
+observar-se  em  diversas  aplicações  de  extração  e  transporte  de  petróleo,  tais  como,  em 
+plantas Offshore e navios petroleiros, em geração de energia elétrica através de turbinas a 
+gás ou turbinas eólicas. Em particular os neutralizadores hidráulicos operam, na maioria dos 
+casos, sobre prédios, torres de resfriamento, estruturas offshore e navios de grande porte. 
+Logo, metodologia para controle de vibrações de baixa frequência atende, com baixo custo 
+e  de  rápida  aplicação,  reduzem  os  níveis  de  vibrações  em  estruturas,  sendo  de  elevada 
+importância em uma empresa exploradora de petróleo, do tamanho da Petrobrás. 
+Um  caso  comum  de  neutralizadores  dinâmicos  na 
+indústria  do  petróleo  são  os 
+neutralizadores  hidráulicos  existente  em  plataformas  off-shore  e  em  navios  petroleiros. 
+Segue algumas fotos com alguns dos casos. 
+
+O  neutralizador  hidráulico,  também  chamado  de  TLCD  encontra-se  em  cima  da  estrutura 
+que se deseja controlar. Este é um exemplo de uma plataforma off-shore. 
+
+ 
+
+ 
+
+6 
+
+Este  representa  o  funcionamento  de  um  neutralizador  hidráulico  existente  em  navios  de 
+grande porte, como os navios petroleiros usados largamente na indústria do petróleo. 
+
+ 
+
+ 
+
+ 
+
+2  OBJETIVOS 
+
+7 
+
+técnicas  de  otimização  não 
+
+Criar um ambiente computacional que permita aplicar a metodologia acima mencionada de 
+forma amigável e eficiente. Para tal, um código em JAVA, para criar um ambiente gráfico de 
+entrada e saída de dados, em conjunto com códigos próprios de FORTRAN, onde o projeto 
+dos  neutralizadores  é  realizado  usando 
+linear,  será 
+desenvolvido. Para aplicar esta metodologia, será projetado e construído um neutralizador 
+do tipo hidráulico que atuará, sem perca de generalidades, em uma maquete simplificada de 
+um prédio esbelto, representando estruturas flexíveis de baixa frequência. 
+ 
+Projetar  e  implementar  uma  interface  gráfica  para  dar  suporte  aos  desenvolvimentos 
+realizados nos últimos vinte anos, pesquisas realizadas por integrantes do grupo GVIBS do 
+CNPq  que  atua  no  PPGEM,  no  tocante  a  controle  passivo  de  vibrações  de  sistemas 
+mecânicos.  Esta  interfase  será  projetada  para  introduzir  futuros  desenvolvimentos,  assim 
+como  também  contemplar  distintos tipos  de  dispositivos  de  controle  atuando  em  sistemas 
+mecânicos  de  tipo  e  comportamentos  diferentes.  A  ideia  é  se  ter  em  um  único  ambiente 
+computacional, uma metodologia geral de projeto de controle de vibrações passivo usando 
+neutralizadores  dinâmicos.  Esta  interfase  permitirá  criar  um  arquivo  de  dados  de  entrada 
+que será lido por um aplicativo em Fortran, encarregado do processamento numérico. Após 
+o processamento, depois de  encontrado o sistema de controle passivo ótimo, os códigos 
+em  Fortran  geram  um  arquivo  de  saída  que  é  lido  pela  interfase  gráfica  para  mostrar  os 
+resultados e a eficiência dos neutralizadores. Devido a sua especificidade e à pesquisa de 
+ponta envolvida neste trabalho, produto de vários anos de pesquisa do grupo envolvido, a 
+interface em questão, assim como os códigos numéricos desenvolvidos, possui um caráter 
+inovador.   
+
+Além da interface, outro objetivo é projetar e construir um neutralizador dinâmico hidráulico 
+capaz  de  reduzir  ao  máximo  os  níveis  de  vibrações  de  um  modelo  simplificado  de  um 
+prédio, quando excitado em uma banda larga de frequências. 
+
+Objetivos secundários: 
+
+- Formação de recursos humanos em uma linha de pesquisa de interesse da indústria local 
+e  nacional,  particularmente  empresas  montadoras  de  veículos,  plantas  Off  Shore  de 
+petróleo, maquinas elétricas, entre outras; 
+
+ 
+
+8 
+
+- Melhorar os índices de produtividade do DEMEC, PGMEC e a UFPR com publicações de 
+trabalhos  científicos  em  Congressos  Nacionais  e  Internacionais  e  Revistas  Indexadas  de 
+renome; 
+
+- Depósito de propriedade intelectual para proteger os códigos desenvolvidos nos últimos 20 
+anos, melhorar os índices do PGMEC e da UFPR neste quesito; 
+
+- Apoio à linha de pesquisa relacionada com este trabalho, com a participação, no futuro, de 
+trabalhos de Iniciação Científica, alunos de mestrado e doutorado;     
+
+-  Aprofundar os conhecimentos e manipular software de elementos finitos para realizar uma 
+análise modal sobre uma estrutura real, verificar experimentalmente os resultados obtidos; 
+
+- aprofundar a teoria de vibrações o que, seguramente, proporcionará conhecimentos que 
+poderão ser aplicados em estruturas similares às aqui estudadas; 
+
+ 
+
+9 
+
+ 
+3  REVISÃO BIBLIOGRÁFICA 
+
+A seguir segue uma breve apresentação dos principais temas trabalhados afim de se fazer 
+uma revisão dos conceitos. 
+
+3.1  Conceitos de vibrações 
+
+Todo sistema físico real pode ser sempre modelado por um sistema de parâmetros 
+concentrados de 1 grau de liberdade. O qual pode ser representado aproximadamente como 
+a figura abaixo. 
+
+Onde são representados uma massa apoiada por uma mola e um amortecedor. Desta forma 
+fazendo o diagrama de corpo livre temos. (considerando uma força de excitação na massa) 
+
+ 
+
+ 
+
+Da 2ª Lei de Newton (
+
+ ), temos: 
+
+ 
+
+ou 
+
+ 
+
+ 
+
+10 
+
+ 
+
+Esta equação diferencial possui uma solução geral constituída de umasolução homogênea 
+associada a uma solução particular. 
+
+ 
+
+Com 
+
+ e 
+
+ (funções harmônicas). 
+
+Supondo condições iniciais nulas. E supondo excitação harmônica de frequência variável, a 
+equação diferencial transforma-se em: 
+
+ 
+
+Através da transformada de furier consegue-se transportar para o domínio da frequência as 
+equações. Definindo-se importantes características da estrutura, que facilitam seu estudo e 
+sua compreensão. Como: 
+
+ 
+
+ 
+
+Se 
+
+    
+
+   
+
+ 
+
+ 
+
+Receptância sendo: 
+
+Admitância (velocidade por força), sendo: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Inertância (aceleração por força) sendo: 
+
+(*) Todas são funções complexas que dependem da frequência. 
+
+ 
+
+ 
+
+11 
+
+Por  outro  lado,  para  sistemas  de  um  grau  de  liberdade,  as  inversas  dessas  funções  são 
+impedância  dinâmica  e  massa  dinâmica, 
+denominadas: 
+respectivamente. 
+
+rigidez  dinâmica, 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+De forma geral, a impedância (rigidez ou massa) dinâmica, na ressonância, possui valores 
+muito  baixos.  No  caso  de  ter  um  sistema  sem  amortecimento,  a  impedância  será  nula. 
+Qualquer excitação cuja frequência coincida com a frequência natural, se o sistema possui 
+amortecimento muito baixo, a resposta dele será elevada, por mais que a amplitude destas 
+excitações seja pequena. 
+
+Com  isso,  para  os  neutralizadores  dinâmicos  busca-se  injetar  impedância  para  a 
+ressonância, assim diminuindo a resposta da estrutura, evitando possíveis danos. 
+
+3.1.1 Parâmetros equivalentes 
+
+Os parâmetros equivalentes são obtidos quando as duas configurações mostradas na figura 
+abaixo comportam-se dinamicamente da mesma maneira, e possuem a mesma impedância 
+mecânica na base. 
+
+ 
+
+12 
+
+m  
+
+(ΩX
+
+)
+
+ 
+
+k  
+
+C  
+
+(ΩQ
+
+)
+
+ 
+
+Sistema 
+Primário 
+
+(ΩeqC
+
+)
+
+ 
+
+ 
+
+)
+
+(Ωeqm
+Sistema 
+Primário 
+
+(ΩQ
+
+)
+
+ 
+
+ 
+
+Utilizando  o  conceito  de  diagrama  de  corpo  livre  para  o  arranjo  da  figura  a  cima  e 
+aplicando  a  segunda  lei  de  Newton  e  a  transformada  de  Fourier,  pode-se  obter  a 
+impedância mecânica e a massa dinâmica quando se aplica uma excitação na base: 
+
+Z b
+
+(
+
+=Ω
+
+)
+
+M b
+
+(
+
+=Ω
+
+)
+
+k
+
+im
+ci
+)
+Ω+Ω
+m
+ci
++Ω+Ω−
+
+(
+2
+
+ 
+
+k
+
+)
++Ω+Ω−
+
+ci
+Ω+
+ci
+
+km
+(
+2
+m
+
+ 
+
+k
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+O  amortecimento  viscoso  equivalente  generalizado  é  definido  como  a  parte  real  da 
+impedância dinâmica, equação (3.1.6), portanto: 
+
+c
+
+e
+
+(
+
+Ω=Ω
+
+m
+
+)
+
+4
+2
+ζε
+2
+)1
++
+
+)2(
+ζε
+
+ 
+
+2
+
+a
+
+2
+(
+ε
+
+−
+
+ 
+
+ 
+
+ 
+
+Por  outro  lado,  a  massa  generalizada  equivalente  é  a  parte  real  da  massa  dinâmica, 
+equação (3.1.7): 
+
+em
+
+(
+
+Ω = −
+
+)
+
+m
+
+2
+{
+ε
+2
+(
+ε
+
+[1
+− +
+2
+1)
+−
+
+(
+)2
+2
+]}
+ζε
+ζε    
+2
+(2
+)
++
+
+ 
+
+ 
+
+ 
+
+Onde: 
+
+• 
+
+aΩΩ=ε
+
+: relação entre freqüência de calculo e freqüência natural do 
+
+neutralizador; 
+
+• 
+
+CCC=ζ
+
+: fator de amortecimento 
+
+Mostra-se que com estas definições de parâmetros equivalentes generalizados, os modelos 
+dinâmicos  da  Figura  10  são  dinamicamente  equivalentes  (Bavastri,  1997).  Desta  forma  é 
+possível substituir um ou outro modelo no sistema composto de uma estrutura e um sistema 
+de neutralizadores a ela fixado. 
+
+ 
+
+13 
+
+3.2  Sistemas de múltiplos graus de liberdade 
+
+Muitos  problemas  na  engenharia  podem  ser  representados  por  uma  malha  de  elementos 
+compostos  por  uma massa  concentrada  e  conectados  entre  eles  por  elementos  elásticos. 
+Esta  malha,  conhecida  como  elementos  finitos,  descreve  de  forma  aproximada  (porém 
+satisfatória) o comportamento dinâmico do sistema a controlar. 
+
+A equação dinâmica que governa o movimento de um sistema linear, invariante no tempo, 
+causal e estável para múltiplos graus de liberdade ( n ) é: 
+
+( )
+M q t
+
+
+( )
+Cq t
++
+
++
+
+( )
+K q t
+
+=
+
+( )
+t
+
+ 
+
+f
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Como já visto, anteriormente. 
+
+= φ , onde 
+Assumindo-se que a solução para vibração livre (
+φ é um vetor de deslocamentos e ‘s’ é tal que seja solução para o sistema de equações 
+dado em (3.2.1). Realizando a substituição fica: 
+
+( )
+t = 0 ) toma a forma 
+
+( )q t
+
+est
+
+f
+
+[
+
+ou simplesmente 
+[
+
+s M sC K est
+2
+
++
+
++
+
+]
+=φ
+
+2
+s M sC K
+
++
+
++
+
+]
+0
+=φ  
+
+0
+
+ 
+
+ 
+
+ 
+
+já que  est  é diferente de zero. 
+
+A solução não trivial da equação é: 
+
+[
+
+det K sC s M
+
++
+
++
+
+2
+
+]
+
+=
+
+0 . 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Do  polinômio  formado  na  equação  (3.2.4)  obtém-se  2n   valores  de  s  ( s
+). 
+1
+Assim,  substituindo  cada  valor  sj ,  com  j
+= 1 2 ,  na  equação  (3.2.3),  determina-se  um 
+vetor  φj   de  valores  relativos.  As  raízes  sj   são  conhecidas  como  autovalores  e  φj ,  os 
+autovetores  correspondentes.  Os  autovalores  dependem  somente  das  características  do 
+sistema ou dos parâmetros do modelo, tais como inerciais, elásticos e dissipadores. 
+
+, ......,
+
+a n
+
+s n
+2
+
+s
+2
+
+,
+
+Os  2n  autovalores podem tomar diferentes quantidades, dependendo das características do 
+problema.  Podem  ser  reais  e  distintos,  reais  e  iguais  ou  complexos  conjugados.  Na 
+expressão,  apresenta-se  como  caso  geral  na  forma  complexa,  sendo  que  esta  sempre 
+estará acompanhada do seu par complexo conjugado. 
+
+ 
+
+14 
+
+s
+s
+
+j
+
+j
+
+*
+
+δ ν
+=
+j
+j
+i
+=
+δ ν
+j
+
+i
++
+−
+
+j
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Para  cada  par  de  autovalores  complexos  conjugados,  têm-se  um  par  de  autovetores 
+correspondentes, também complexos conjugados. 
+
+Como  os  modelos  numéricos  de  amortecimento  são  pouco  precisos,  e  em  muitos  casos 
+pode  ser  considerado  de  influência  desprezível,  elimina-se  este  termo  da  equação  e  o 
+problema se resume a: 
+
+[
+
+2
+s M K
+
++
+
+]
+0
+=φ  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Demonstra-se que os autovalores do problema são imaginários puros e conjugados: 
+
+s
+s
+
+j
+
+j
+
+*
+
+i
+Ω
+=
+i
+= −
+
+j
+Ω
+
+j
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Substituindo uma na outra o problema de autovalores toma a forma: 
+
+K
+
+φ
+
+= Ω2
+
+M
+
+φ
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Pode-se  visualizar,  na  ultima  equação,  que  os autovetores  correspondentes  a  s e s
+
+j
+
+*   são 
+j
+
+reais e iguais. A solução deste problema conduz diretamente a  Ω j
+
+je2 φ . Confunde-se muitas 
+2   com  o  j-ésimo  autovalor  do  sistema,  quando  na  realidade  o 
+
+vezes,  por  esta  razão,  Ω j
+autovalor é dado pela equação. 
+
+Em forma matricial, a solução completa pode ser apresentada como: 
+
+diag
+
+(
+
+2
+jΩ
+
+)
+
+,
+
+Φ
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2  é conhecido como o j-ésimo autovalor (mais precisamente o autovalor é  s
+
+i= Ω ) 
+onde  Ω j
+ou  freqüência  natural  ao  quadrado  e  φj   é  o  correspondente  autovetor  ou  modo  de  vibrar 
+(Ewins, 1984). 
+
+O conjunto de matrizes é conhecido como modelo modal e as matrizes  M e K  formam o 
+modelo espacial. É importante notar que a matriz de autovalores é única, diferentemente da 
+matriz de autovetores. Isto pode ser demonstrado de forma simples uma vez que existirão 
+2 . Demonstra-
+infinitos vetores, a menos de uma constante, que satisfazem  para um dado  Ω j
+se que o modelo modal tem a seguinte propriedade conhecida como ortogonalidade: 
+
+ 
+
+15 
+
+T
+
+Φ
+
+M
+
+Φ
+
+=
+
+(
+diag m
+r
+
+)
+
+T
+
+Φ
+
+K
+
+Φ
+
+=
+
+(
+diag k
+
+r
+
+)
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+o que leva a 
+
+diag
+
+(
+
+Ω2
+r
+
+)
+
+=
+
+(
+
+(
+diag m
+r
+
+)
+)
+
+−
+
+1
+
+(
+diag k
+
+r
+
+)
+
+. 
+
+Cada  componente  da  expressão  anterior  é  Ωr
+
+2 =
+
+k
+r
+m
+r
+n= 1,
+
+.  Os  parâmetros  m e k
+
+r
+
+r   são 
+
+denominados massa e rigidez modal do r-ésimo (com  r
+) modo, respectivamente. Uma 
+vez  que  cada  autovetor  é  normalizado  através  da  raiz  quadrada  da  massa  modal  as 
+seguintes relações também serão válidas: 
+
+T
+
+Ψ
+
+M
+
+Ψ
+
+=
+
+I
+
+T
+
+Ψ
+
+K
+
+Ψ
+
+=
+
+diag
+
+(
+
+Ω
+
+2
+r
+
+)
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+sendo ψ
+r
+
+=
+
+1
+φ
+rm
+r
+
+. 
+
+3.3  Neutralizadores 
+
+Neutralizadores de vibração são sistemas ressonantes simples, que ao serem fixados a um 
+sistema ou estrutura mecânica (sistema primário) reduzem os  níveis de vibração à valores 
+aceitáveis. Em geral, um sistema apresenta uma impedância mecânica relativamente baixa 
+em  suas  freqüências  naturais.  Os  neutralizados,  quando  devidamente  projetados,  injetam 
+naquele uma elevada impedância mecânica. Como comentado a pouco no tópico anterior. 
+Desta forma, um ou vários neutralizadores podem ser utilizados para controlar, na banda de 
+freqüências  de  interesse,  uma  ou  várias  freqüências  naturais.  Mostra-se  que  para  um 
+controle em banda larga, o amortecimento é fundamental. 
+Existem diversos tipos de neutralizadores do ponto de vista da sua construção física e cada 
+um destes possui uma aplicação bem característica. No controle de vibrações em prédios e 
+estruturas esbeltas geralmente são utilizados neutralizadores hidráulicos, devido às baixas 
+freqüências e às grandes massas envolvidas. Neutralizadores eletromecânicos podem ser 
+empregados  em  dispositivos  nos  quais  é  necessária  uma  boa  adaptabilidade,  já  que  é 
+possível variar suas características dinâmicas através dos seus parâmetros elétricos RLC. 
+Com estes dispositivos, praticamente não se agrega massa ao sistema primário, por outro 
+
+ 
+
+16 
+
+lado, muitas vezes é necessária uma estrutura adicional. Neutralizadores viscosos são de 
+difícil  construção  prática,  resumindo-se  a  modelos  teóricos  comparativos.  Na  maioria  das 
+aplicações  em  engenharia,  são  utilizados  neutralizadores  dinâmicos  viscoelásticos, 
+projetados  com  diferentes  tamanhos,  a  partir  de  gramas  até  o  tamanho  equivalente  a 
+massas de toneladas. Esta versatilidade na construção prática junto à grande dissipação de 
+energia  conseguida  pelas  características  dinâmicas  do  material  viscoelástico  permite  seu 
+emprego em aplicações tão diversas quanto linhas aéreas de energia, estruturas metálicas 
+de grande porte, ferramentas de corte para torneamento interno e unidades hidráulicas de 
+geração de energia. 
+Os  primeiros  modelos  de  que  se  tem  notícia,  foram  desenvolvidos  para  o  controle  do 
+movimento  pendular  em  navios  de  guerra.  O  projeto  de  neutralizadores  teve  um  grande 
+avanço  quando  demonstrou-se  ser  possível  projetar  de  forma  ótima  neutralizadores  tipo 
+massa, mola e amortecedor viscoso. A introdução do material viscoelástico possibilitou por 
+um  lado,  a  viabilidade  de  construção  destes  dispositivos  para  diferentes  tamanhos  e 
+aplicações e por outro, exigiu sofisticação na sua modelagem.  
+Conforme o modelo a seguir, uma representação esquemática de um neutralizador MCK. 
+
+ 
+
+dinâmicos 
+
+com  material 
+
+confeccionados 
+
+viscoelástico,  NDVs 
+Neutralizadores 
+(neutralizadores  dinâmicos  viscoelásticos),  substituindo  os  elementos  mola  e  amortecedor 
+por um elemento viscoelástico (borrachas, neoprenes, entre outros), mostram-se vantajosos 
+em  comparação  com  os  dispositivos  acima  citados.  O  material  viscoelástico,  além  de 
+produzir um efeito resiliente, introduz um fator dissipador de energia intrínseco. Os NDV’s 
+são de fácil construção, baixo custo e revelam excelentes resultados na redução dos níveis 
+de vibração, podendo ser construídos com grande versatilidade e com massas variando de 
+algumas poucas gramas até toneladas. Na figura a seguir pode observar-se um exemplo de 
+sistema composto por um NDV. 
+
+ 
+
+17 
+
+ 
+
+Para  projetar  de  forma  ótima  estes  dispostivos,  KITIS  (1983)  apresentou  um  método 
+numérico  para  minimizar  a  resposta  vibratória  de  um  sistema  de  múltiplos  graus  de 
+liberdade, em uma dada faixa de frequência. Para isso, realizou uma otimização do cálculo 
+numérico,  reduzindo  o  tempo  de  análise  estrutural,  utilizando  uma  técnica  de  reavaliação, 
+sob uma estrutura particular como uma viga engastada – livre. 
+Com o modelo de derivada fracionária com quatro ou cinco parâmetros possibilitou modelar 
+de  forma  simples  o  comportamento  dinâmico  da  maioria  dos  materiais  viscoelásticos 
+empregados  na  engenharia.  Devido  à  complexidade  do  modelo  do  sistema  composto 
+(sistema  primário  +  neutralizadores),  para  projetar  estes  dispositivos  para  máximo 
+desempenho utilizam-se técnicas de otimização não linear (TONL). Sendo uma metodologia 
+geral  para  o  projeto  ótimo  de  neutralizadores  viscoelásticos  para  redução  dos  níveis  de 
+vibração de uma estrutura mecânica qualquer, sobre uma banda larga de freqüências, onde 
+podem  atuar  um  ou  vários  dispositivos  de  controle.  Para  aplicar  a  mesma  é  fundamental 
+conhecer  os  parâmetros  modais  do  sistema  primário,  as  características  dinâmicas  do 
+material viscoelástico e o modelo equivalente generalizado do neutralizador em estudo. 
+A teoria dos parâmetros equivalentes generalizados (PEG), permite escrever as equações 
+de  movimento  do  sistema  composto  (primário  +  neutralizadores),  apenas  em  termos  dos 
+graus  de  liberdade  do  sistema  primário,  apesar  dos  graus  extras  introduzidos  pelos 
+neutralizadores. 
+Escrevendo  a  dinâmica  do  sistema  composto  para  um  sub-espaço  modal  do  sistema 
+primário retendo apenas algumas equações relacionadas com os modos a controlar na faixa 
+de freqüências de interesse, mostra-se ser possível, através de TONL, minimizar a resposta 
+vibratória  em  uma  banda  larga  de  freqüências.  Como  resultado  se  obtém  os  parâmetros 
+físicos ótimos para um ou mais neutralizadores. 
+Desta forma consegue-se obter um neutralizador ótimo para uma banda de frequências que 
+se  busca  controlar.  Não  será  apresentado  detalhadamente  esta  metodologia  para  não  se 
+
+ 
+
+18 
+
+alongar demais, visto que é preciso ter várias conceitos básicos bem fundamentados para o 
+entendimento da mesma. 
+
+ 
+
+3.4  Programação Java 
+
+Java é uma linguagem de programação criada em 1995 por James Gosling e sua equipe. A 
+linguagem é de propriedade da Sun Microsystem. 
+Com  o  passar  do  tempo,  o  número  de  desenvolvedores  aumentou  e  a  linguagem 
+amadureceu  sendo  hoje  considerada  o  principal  ambiente  de  desenvolvimento,  tanto  para 
+Internet  quanto  para  ambiente  cliente/servidor  tradicional.  Algumas  das  características  da 
+linguagem Java: 
+•Orientação a objetos 
+•Portabilidade  (isto  que  dizer  que  o  mesmo  programa  criado  no Windows  2000,  pode  ser 
+executado  em  Linux,  por  exemplo,  ou  qualquer  outro  Sistema  operacional,  sem  a 
+necessidade de fazer ajustes). 
+Entretanto, a linguagem Java vai além da dos computadores, sendo executada em diversos 
+dispositivos  como  telefones  celulares,  televisores,  cartões  inteligentes  e  etc.  O  Java  é 
+reconhecido como a principal linguagem no mundo dos servidores de Aplicações e ambiente 
+sem fio (wireless). 
+
+3.4.1 objetos 
+
+Em programação, objetos nada mais são do que um conjunto de dados sobre o qual estão 
+definidas  algumas  operações.  Se  fôssemos  criar  um  programa  capaz  de  gerar  na  tela 
+formas  geométricas,  por  exemplo,  poderíamos  criar  um  objeto  chamado  "quadrado"  que 
+seria um conjunto de quatro números (que em programação orientada a objeto – POO - são 
+chamados  de  Atributos)  que  representam  os  seus  vértices.  O  objeto  "quadrado"  poderia 
+possuir  as  operações  (que  em  POO  são  chamadas  de  Métodos)  "MudaPosicao()"  que 
+serviria  para  posicionar  o  quadrado  em  uma  coordenada  específica  passada  como 
+argumento e MudaCor() que trocaria a cor do quadrado desenhado na tela. 
+
+Os Atributos de um objeto são quaisquer variáveis que eles possuam que representam um 
+número, caractere ou string. Se fôssemos programar um jogo, por exemplo, o personagem 
+que o jogador controla poderia possuir atributos chamados Força, Resistência e Velocidade 
+que  seriam  variáveis  inteiras  dentro  do  código.  Ele  também  poderia  possuir  um  atributo 
+chamado Posição, que seria um vetor de inteiros que armazenariam a sua coordenada na 
+tela. 
+
+ 
+
+19 
+
+Os Métodos de um objeto podem ser qualquer ação que o objeto pode executar. No jogo do 
+exemplo acima, o personagem principal poderia possuir um métodos chamados Pular, Atirar 
+e Andar. Os Métodos nada mais são do que funções executadas sobre os Atributos de um 
+Objeto. 
+
+3.4.2 classes 
+
+Classes nada mais são do que uma declaração de um objeto no começo do código. Nesta 
+declaração,  você  especifica  quais  são  os  Atributos  e  Métodos(Comportamentos)de  seu 
+objeto. Por exemplo, uma vez que você crie uma classe chamada "quadrado", você pode 
+passar a criar novos objetos pertencentes à esta classe, que poderiam ter diferentes valores 
+para cada um de seus Atributos. 
+
+Classe é um conjunto de especificaçãos técnica de um objeto, Nesta declaração, pode-se 
+especificar  quais  são  os  Atributos  e  Métodos  (Comportamentos)  da  classe.  Por  exemplo, 
+uma  vez  que  seja  criada  uma  classe  chamada  "quadrado",  pode-se  passar  a  criar  novos 
+objetos pertencentes à esta classe, que podem ter diferentes valores para cada um de seus 
+Atributos. 
+
+3.4.3 herança 
+
+Herança é a capacidade que as classes tem de passar informações umas para as outras. 
+Através  da  herança  é  possível  criar  fácil  e  rapidamente  novos  tipos  de  classes  baseadas 
+nas classes existentes. Por exemplo, assumindo que existe uma classe chamada "Veiculo", 
+poderíamos gerar uma nova classe chamada "Carro", e outra classe chamada "Caminhao" 
+que herdam (ou são filhas) de "Veiculo". 
+
+A classe "Veiculo" possui todos os Atributos que tem em comum entre um caminhão e um 
+carro.  Ambos  possuem  caracteristicas  (Atributos)  como,  número  de  rodas,  tipo  de 
+combustível, quantidade de portas, etc. Estes Atributos estão definidos na classe "Veiculo". 
+Por  sua  vez,  as  classes  "Carro"  e  "Caminhão",  além  de  herdarem  os  atributos  da  classe 
+"Veiculo",  podem  possuir  seus  próprios  Atributos  exclusivos.  O  mesmo  ocorre  com  os 
+Metodos. 
+
+Por  exemplo,  a  classe  "Caminhao",  que  poderia  ter  o  Atributo  numero  de  marchas 
+reduzidas, que não faz sentido para um carro, apenas para um caminhão. 
+
+Para  identificar  se  dois  objetos  tem  uma  relação  de  herança,  deve-se  analisar  se  o 
+relacionamento é do tipo "é um tipo de". Por exemplo, Carro é um tipo de Veiculo, logo Carro 
+herda de Veiculo. 
+
+ 
+
+3.4.4 variáveis 
+
+20 
+
+Outro conceito bem simples mas não menos importante é sobre as variáveis, no java temos 
+vários tipos, como inteiros “int” onde conseguimos associar somente números inteiros, entre 
+outras, como: short; char; string; float; long double. Onde cada uma tem sua forma certa de 
+utilizar e espaço ocupado no programa. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+4  MATERIAIS E MÉTODOS 
+
+21 
+
+O presente trabalho será desenvolvido através das seguintes etapas: 
+
+- Revisão bibliográfica: Estudos dos modelos matemáticos de comportamento dinâmico de 
+materiais viscoelásticos utilizados em engenharia, teoria de elementos finitos, álgebra linear 
+e  problema  de  autovalores,  sinais,  sistemas,  fundamentos  de  vibrações,  controle  de 
+vibrações utilizando materiais viscoelásticos. Esta etapa será realizada através de palestras 
+ministradas pelo coordenador deste projeto, literatura da área sugerida aos alunos bolsistas, 
+trabalhos  científicos  relacionados  com  o  assunto  em  questão,  entre  outras  atividades. 
+Estudo de programação na linguagem JAVA e em FORTRAN. 
+
+-  Código  numérico:  Nesta  etapa  serão  revisados  e  atualizados  os  códigos  numéricos 
+existentes  em  Fortran.  O  código  numérico  em  Fortran,  utilizado  para  o  projeto  ótimo  de 
+neutralizadores dinâmicos viscoelásticos, tem como objetivo reduzir a resposta vibratória de 
+estruturas mecânicas com comportamento dinâmico linear. Além da revisão, o código será 
+atualizado  acrescentando  outros  modelos  de  neutralizadores.  Isto  o  tornará  mais  robusto, 
+podendo atender a necessidade de projetos para diferentes tipos de estruturas e problemas 
+na engenharia, desde pontes e edifícios até estruturas mais simples e de menor porte. Estes 
+códigos serão preparados para receber, no futuro, modificações, ampliações e atualizações, 
+que permitam que, além de escolher distintos tipos de dispositivos de controle, o sistema a 
+controlar tenha características diversas tais como um comportamento não linear ou sistemas 
+rotativos;   
+
+- Interface gráfica: Projetar e implementar a estrutura da interfase gráfica. A interfase gráfica 
+permitirá  uma  comunicação  amigável  com  o  especialista  da  área,  podendo  ser  utilizada 
+pelos diferentes alunos que participam do grupo de pesquisa, do laboratório de vibrações e 
+som,  tais  como:  alunos  de  IC,  mestrado  e  doutorado,  entre  outros.  Esta  interface 
+possibilitará  o  projeto  de  diferentes  dispositivos  de  controle  de  forma  rápida  e  amigável, 
+reduzindo o tempo de simulações nos diferentes estágios de pesquisa e extensão; 
+
+-  Simulações  numéricas:  Nesta  etapa  serão  realizadas  simulações  numéricas  sobre 
+diferentes  estrutura  já  estudadas  ao  longo  dos  últimos  anos  para  testar  tanto  a  interfase 
+como  o  código  em  Fortran.  Um  exemplo  numérico  sobre  uma  estrutura  simples  será 
+realizado e seus resultados serão implementados e testados experimentalmente;   
+
+ 
+
+ 
+
+22 
+
+-  Experimentação:  De  posse  dos  resultados  numéricos  será  montado  um  experimento  no 
+laboratório 
+códigos 
+implementados/atualizados; 
+
+os  modelos 
+
+validar 
+
+de 
+
+vibrações 
+
+e 
+
+e 
+
+som 
+
+para 
+
+- Projeto e Criação de neutralizador hidráulico: 
+
+• 
+
+• 
+
+ Simulações numéricas. Obtenção do modelo modal da estrutura a controlar usando 
+o  método  dos  elementos  finitos  (software  comercial  ansys),  projeto  ótimo  de 
+neutralizadores  dinâmicos  hidráulicos,  utilizando  a  metodologia  geral  criada  pelo 
+grupo onde este trabalho se insere. 
+ Realização  física.    Será  construído  o  prédio  em  escala  reduzida  e  o  neutralizador 
+hidráulico. O prédio será fixado a uma base de concreto. 
+
+•  Testes  em  laboratório.  Para  verificar  a  eficiência  do  método  de  controle  serão 
+realizados.  O  prédio  será  exposto  a  uma  excitação  do  tipo  banda  larga  de 
+frequências com e sem a fixação do neutralizador.  
+
+- Trabalho científico: Elaboração de artigo em congresso nacional ou internacional; 
+
+-  Propriedade  intelectual:  Se  dará  inicio  à  proteção  deste  trabalho  inédito  através  de  uma 
+patente de propriedade intelectual (software); 
+
+- Relatório final; 
+
+A seguir o Cronograma proposto. 
+
+Entretanto  ele  acabou  ficando  bem  adiantado,  devido  ao  aluno  realizar  um  período  de 
+iniciação cientifica vonluntária antes, assim adiantando o período para revisão bibliográfica. 
+
+ 
+
+ 
+
+ 
+
+5  RESULTADOS 
+
+23 
+
+Segue  alguns  dos  principiais  resultados  já  apresentados  pelo  aluno.  Lembrando que  para 
+realiza-los precisou-se de muito estudo anterior. 
+
+ 
+
+5.1  Software para otimização dos neutralizadores 
+
+Objetivo deste software é fornecer em uma plataforma livre um programa capaz de fornecer 
+dados  suficiente  para  a  criação  de  um  neutralizador  que  consiga  diminuir  os  efeitos  da 
+vibração  em  qualquer  estrutura  em  uma  faixa  de  trabalho  desejada,  apenas  inserindo  os 
+dados modais, frequências naturais e alguns parâmetros pedidos pelo programa. 
+
+A  seguir  uma  foto  esquemática  que  representa  a  forma  de  funcionamento  básico  do 
+programa. 
+
+Ou  seja,  se  insere  no  programa  os  dados  modais  da  estrutura  e  o  usuário  insere  as 
+características do neutralizado, o programa cria um arquivo com todos os dados necessários 
+e roda um código numérico feito em FORTRAN, que devolve os dados necessários para a 
+construção física do neutralizador. 
+
+Em relação ao software, já se tem toda metodologia e cálculos feitos em FORTRAN, e esta 
+sendo desenvolvido a interface gráfica em JAVA. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+24 
+
+Segue uma foto mostrando onde esta o desenvolvimento da interface. 
+
+Primeiramente temos uma tela de entrada, onde futuramente será possível acessar a outras 
+partes do programa. 
+
+Em  seguida  abre  a  janela  principal  onde  se  seleciona  as  abas  com  todos  os  dados 
+necessários para o programa. 
+
+ 
+
+Após o preenchimento de todos os dados, aperta o botão calcular, após alguns segundos se 
+tem alguns dados gerados do programa. 
+
+ 
+
+ 
+
+25 
+
+A mesma já esta coletando todos os dados inserindo na interface e transportando para 
+
+ 
+um modelo em txt, conforme a foto em seguir. 
+
+ 
+Posteriormente este arquivo é levado a um código em FORTRAN onde se calculará os 
+dados  para  a  melhor  neutralização  possível  conforme  a  metodologia  apresentada 
+anteriormente. 
+
+Conforme a figura a seguir. 
+
+ 
+
+ 
+
+26 
+
+ 
+
+ 
+O  calculo  numérico  já  é  possível  de  se  executar,  onde  se  consegue  até  mesmo  se 
+obter o resultado tanto na parte gráfica como nos valores necessários para a construção do 
+neutralizador projetado pelo programa. 
+
+Para a conclusão do programa falta apenas tornar ele mais fácil de usar, e solucionar 
+
+ 
+alguns problemas que apareceram devido alguns erros de programação. 
+
+ 
+
+5.2  Criação de Neutralizador do tipo hidráulico 
+
+Nesta  etapa  busca-se  a  criação  de  um  neutralizador  hidráulico  para  uma  estrutura  em 
+escala reduzida de um  prédio. Onde já foi coletados os dados da estrutura reduzida e foi 
+obitido  os  dados  modais  da  mesma,  através  do  software  ANSYS.  Entretanto  o  resultado 
+encontrado esta fora do esperado para um modelo de um prédio, com isso foi adicionado 
+mais massa na estrutura reduzida, com o objetivo de baixar a frequência natural da mesma. 
+Assim  se  assemelhando  mais  com  o  real  e  esperado.  Segue  uma  tabela  com  os  dados 
+antes e depois da adição da massa. 
+
+ 
+
+27 
+
+No momento esta sendo coletados os dados modais da estrutura modificada. 
+
+A seguir uma foto da análise da estrutura no ANSYS. 
+
+ 
+
+ 
+
+28 
+
+6  CONCLUSÕES 
+
+ 
+
+O período de iniciação cientifica foi muito enriquecedor, visto que se aprofundou em várias 
+áreas  de  conhecimento,  desde  vibrações,  álgebra 
+linear,  controle  de  vibrações, 
+programação e área de relacionamento humano. Tais conhecimentos já ajudaram o aluno 
+em seu curso de graduação, logo a iniciação científica já apresentou resultados. Como foi 
+possível praticamente concluir o programa desejado, mesmo se utilizado apenas metade do 
+período da bolsa, pode-se concluir que foi muito benéfico para o aluno e a instituição. 
+
+ 
+
+ 
+
+ 
+
+7  AGRADECIMENTOS 
+
+Agradecemos  o  apoio  financeiro  da Agência  Nacional  do  Petróleo,  Gás  Natural  e 
+Biocombustíveis  –  ANP  – ,  da Financiadora  de  Estudos  e  Projetos  –  FINEP  –  e 
+do Ministério da Ciência, Tecnologia e Inovação – MCTI por meio do Programa de Recursos 
+Humanos da ANP para o Setor Petróleo e Gás – PRH-ANP/MCTI. 
+
+ 
+
+ 
+
+ 
+
+29 
+
+ 
+8  REFERENCIAS BIBLIOGRÁFICAS 
+
+ 
+Conceitos de Vibrações: 
+
+Unicamente  por  palestras  feitas  pelo  professor  e  apostila  feita  pelo  mesmo  para 
+estudo. 
+
+ 
+
+Conceitos de Neutralizadores: 
+
+Por palestras feita pelo professor, apostila e os seguintes artigos: 
+
+-  Bavastri,  C.A.,  Doubrawa,  F.J.,  Espíndola,  J.J.,  Lopes,  E.M.O.,  Venancio,  H.W., 
+2007. Modelo geral de neutralizadores dinâmicos para controle passive de vibrações 
+e ruído: parâmetros equivalentes generalizado.  
+
+ 
+
+-  Bavastri,  C.A.,  1997.  Redução  de  Vibrações  de  Banda  Larga  em  Estruturas 
+Complexas  por  Neutralizadores  Viscoelásticos.  Tese  de  Doutorado,  Universidade 
+Federal de Santa Catarina/Florianópolis. 
+
+ 
+
+Programação orientada a Objeto Java: 
+
+Obteve material da internet, principalmente pelo site :< http://www.caelum.com.br/ > 
+
+E através de aulas orientadas pelo Francisco Doubrawa. 
+
+ 
+
+

@@ -1,0 +1,2811 @@
+CLIENTE: 
+
+RELATÓRIO  
+ANP – AGÊNCIA NACIONAL DO PETRÓLEO, GÁS NATURAL E 
+
+RL-ANP-FPL-026 
+1 
+
+FOLHA: 
+
+Nº: 
+
+BIOCOMBUSTÍVEIS 
+
+de
+
+25 
+
+PROGRAMA:  MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação do 
+
+Sistema de Gasodutos do Espirito Santo 
+
+Faculdades Católicas – PUC-Rio – SIMDUT 
+
+ÍNDICE DE REVISÕES 
+
+- 
+- 
+- 
+
+REV. 
+
+DESCRIÇÃO E/OU FOLHAS ATINGIDAS 
+
+0 
+A 
+
+EMISSÃO ORIGINAL 
+APÓS COMENTÁRIOS DA ANP/SCM 
+
+ 
+
+REV. 0 
+
+REV. A 
+
+REV. B 
+
+REV. C 
+
+REV. D 
+
+REV. E 
+
+REV. F 
+
+REV. G 
+
+REV. H 
+
+ANP 
+L.Pires 
+
+20/05/2015 15/06/2015 
+
+DATA 
+PROJETO 
+EXECUÇÃO 
+VERIFICAÇÃO 
+APROVAÇÃO 
+AS INFORMAÇÕES DESTE DOCUMENTO SÃO PROPRIEDADE DA ANP, SENDO PROIBIDA A UTILIZAÇÃO FORA DA SUA FINALIDADE. 
+ 
+
+I.Patrocinio I.Patrocinio 
+P.Krause 
+P.Krause 
+
+ANP 
+L.Pires 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+ÍNDICE 
+
+ 
+ 
+
+FOLHA
+
+REV.
+
+A 
+
+2  de
+
+25 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+1  OBJETIVO _______________________________________________________________ 4 
+2  DOCUMENTOS DE REFERÊNCIA ____________________________________________ 4 
+3  DESCRIÇÃO GERAL DO MODELO ___________________________________________ 4 
+3.1 
+GASODUTO CABIÚNAS – VITÓRIA (GASCAV) _______________________________ 6 
+
+3.2 
+
+3.3 
+
+GASODUTO CACIMBAS – VITÓRIA ________________________________________ 6 
+
+LAGOA PARDA ________________________________________________________ 7 
+
+4  PREMISSAS DE CÁLCULO  _________________________________________________ 8 
+4.1 
+CONDIÇÕES DE REFERÊNCIA ___________________________________________ 8 
+
+4.2 
+
+4.3 
+
+4.4 
+
+4.5 
+
+4.6 
+
+4.7 
+
+4.8 
+
+MODELO DE TRANSFERÊNCIA DE CALOR _________________________________ 8 
+
+TEMPERATURA DO SOLO _______________________________________________ 8 
+
+CORRELAÇÕES ADOTADAS _____________________________________________ 8 
+
+SOFTWARE UTILIZADO _________________________________________________ 8 
+
+CARACTERÍSTICAS DO GÁS _____________________________________________ 8 
+
+TEMPERATURA AMBIENTE ______________________________________________ 9 
+
+VISCOSIDADE _________________________________________________________ 9 
+
+5  CARACTERÍSTICAS DO SISTEMA ESPIRITO SANTO ____________________________ 9 
+DIÂMETRO, ESPESSURA E PMOA ________________________________________ 9 
+5.1 
+
+5.2 
+
+5.3 
+
+5.4 
+
+5.5 
+
+5.6 
+
+5.7 
+
+PERFIL ALTIMÉTRICO _________________________________________________ 11 
+
+RUGOSIDADE ________________________________________________________ 14 
+
+PONTOS DE ENTREGA ________________________________________________ 14 
+
+ESTAÇÕES DE COMPRESSÃO __________________________________________ 15 
+
+PONTOS DE RECEBIMENTO ____________________________________________ 16 
+
+ESTAÇÃO DE REDUÇÃO DE PRESSÃO ___________________________________ 16 
+
+6  CONDIÇÕES DE CONTORNO ______________________________________________ 16 
+PERFIL DE CONSUMO _________________________________________________ 16 
+6.1 
+
+6.2 
+
+6.3 
+
+ 
+
+ 
+
+MÁXIMA PRESSÃO ADMISSÍVEL DE OPERAÇÃO ___________________________ 17 
+
+CONDIÇÕES OPERACIONAIS DAS ESTAÇÕES DE COMPRESSÃO ____________ 18 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+A 
+
+3  de
+
+25 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+ 
+PRESSÃO DE ENTREGA NOMINAL CONTRATUAL __________________________ 18 
+
+Gasodutos do Espirito Santo 
+
+- 
+- 
+
+ 
+
+6.4 
+
+7  RESULTADOS DA SIMULAÇÃO _____________________________________________ 18 
+8  ANEXO _________________________________________________________________ 21 
+8.1 
+“STEADY STATE REPORT” DO MODELO __________________________________ 21 
+
+ 
+
+ 
+
+ 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+FOLHA
+
+REV.
+
+A 
+
+4  de
+
+25 
+
+- 
+- 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+ 
+
+ 
+1 
+
+ 
+
+OBJETIVO 
+
+Documentar  as  informações  necessárias  para  a  criação  do  modelo  computacional  do 
+Sistema de Transporte de Gasodutos do Espirito Santo e apresentar as características físicas e 
+valores limites de projeto dos diversos elementos que compõem o modelo. Permitindo, assim, a 
+reprodutibilidade do modelo por qualquer interessado. 
+
+O modelo foi criado para o programa de simulação PipelineStudio versão 3.4.1.0 da Energy 
+
+Solutions. 
+
+ 
+DOCUMENTOS DE REFERÊNCIA 
+
+2 
+
+Os  documentos  técnicos  codificados  utilizados  como  referência  para  elaboração  do 
+
+Relatório são: 
+
+ 
+
+2.1.  RT-PSL-2013.03_RA  –  Relatório  de  Simulação  Termo  Hidráulica  do  GASENE  para 
+
+Atendimento aos Ofícios ANP 718/2013/SCM e 806/2013/SCM 
+
+2.2.  RL-ANP-FPL-012_RevA – Metodologia para Cálculo de Capacidade 
+2.3.  RL-ANP-FPL-007_RA  –  Análise  da  Influência de  Parâmetros  Utilizados  no  Modelo  de 
+
+Cálculo de Capacidade 
+
+2.4.  RL-ANP-FPL-027_RB – Cálculo de Capacidade do Sistema de Transporte de Gasoduto 
+
+do Espirito Santo 
+
+2.5.  MO-4TP-00004-0 – Manual de Operação do Gasoduto Cacimbas-Vitória 
+2.6.  MO-4TP-00005-0 – Manual de Operação do Gasoduto GASCAV 
+2.7.  MO-4TP-00006-0 – Manual de Operação do Gasoduto Ramal UTG-SUL 
+2.8.  MO-4TP-00007-0 – Manual de Operação do Gasoduto Lagoa Parda 
+2.9.  DE-4715.11-6520-200-BCD-119 a 136 – Perfil do Duto 16” – Ramal Vitória 
+2.10.  DE-4150.43-6521-941-ICZ-001_RD  –  Lagoa  Parda  –  Vitória  8”  –  Perfil,  Diagrama  de 
+
+T.H., Classe de Locação e Pressões Admissiveis 
+
+2.11.  DE-4150.62-6521-948-SWZ-001 a 79 – Cabiúnas - Vitória – Planta e Perfil 
+2.12.  DE-4150.62-6521-948-CDT-080 a 302 – Cabiúnas - Vitória – Planta e Perfil 
+2.13.  DE-4150.98-6521-948-EIT-201 a 210 – Ramal UTG-SUL – Planta e Perfil 
+2.14.  DE-4150.44-6521-948-BCD-001 a 118, 201 a 212 – Cacimbas - Vitória – Planta e Perfil 
+2.15.  Processo ANP n° 48610.010500/2012-40 
+
+ 
+
+3 
+
+DESCRIÇÃO GERAL DO MODELO 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+5  de
+
+25 
+
+- 
+- 
+
+ 
+
+ 
+
+O  Sistema  de  Transporte  de  Gasodutos  do  Espirito  Santo  é  composto  pelos  Gasodutos 
+Cacimbas-Vitória,  Cabiúnas-Vitória  (GASCAV)  e  Lagoa  Parda,  conforme  apresentado  na 
+Figura 1 e descrito à seguir. 
+
+O  gasoduto  Cacimbas-Catu  (GASCAC),  que  tem  parte  da  sua  estrutura  no  Estado  do 
+Espirito Santo, é descrito em outro relatório devido a forma como a malha foi segmentada, que 
+seguiu os parâmetros definidos na referência 2.2.  
+
+ 
+
+ 
+Figura 1 – Visão geral (fonte:www.tag.petrobras.com.br) e diagrama simplificado dos gasodutos 
+
+Lagoa Parda, Cacimbas-Vitória e Cabiúnas-Vitória 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+6  de
+
+25 
+
+- 
+- 
+
+ 
+
+3.1  GASODUTO CABIÚNAS – VITÓRIA (GASCAV) 
+
+O  Gasoduto  Cabiúnas-Vitória  (modelo  apresentado  na  Figura  2)  interliga  o  Terminal 
+Intermodal de Serra (TIMS), em Serra-ES, ao Terminal de Cabiúnas (TECAB), no município de 
+Macaé-RJ. Este gasoduto, com diâmetro nominal de 28 polegadas e extensão aproximada de 
+302,9  km,  possui  uma  Estação  de  Compressão  (ECOMP)  no  município  de  Piúma-ES.  O 
+gasoduto  conta  ainda  com  o  Ramal  GASCAV-UTG  Sul  Capixaba  (9,9  km  de  extensão  e  10 
+polegadas de diâmetro nominal), que interliga o quilômetro 220,6 da linha tronco do gasoduto 
+GASCAV à Unidade de Tratamento de Gás Sul Capixaba, localizada no município de Anchieta-
+ES. Possui ainda 2 estações de compressão (uma no TECAB e outra em Piúma), um ponto de 
+interconexão e 4 pontos de entrega, conforme referências 2.1 e 2.6. 
+
+ 
+
+ 
+
+ 
+
+Figura 2 – Fluxograma do modelo do gasoduto GASCAV 
+
+ 
+
+ 
+
+ 
+
+3.2  GASODUTO CACIMBAS – VITÓRIA 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+7  de
+
+25 
+
+- 
+- 
+
+ 
+
+ 
+
+O  Gasoduto  Cacimbas-Vitória  (modelo  apresentado  na  Figura  3)  interliga  a  Unidade  de 
+Tratamento de Gás de Cacimbas (UTGC), localizada no município de Linhares-ES, aos pontos 
+de entrega (PTEs) Vale e Vitória, localizados no município de Vitória-ES. Este gasoduto possui 
+uma  Estação  de  Compressão  (ECOMP)  no  município  de  Aracruz-ES.  O  trecho  inicial  do 
+gasoduto Cacimbas-Vitória, com diâmetro nominal de 26 polegadas e extensão aproximada de 
+118,3 km, interliga a UTGC ao Terminal Intermodal de Serra (TIMS), onde existe uma Estação 
+Reguladora  de  Pressão  (ERP).  O  trecho  final,  com  diâmetro  nominal  de  16  polegadas  e 
+extensão  aproximada  de  12,4  km,  parte  do  TIMS  e  termina  nos  pontos  de  entrega  Vale  e 
+Vitória.  Possui  uma  estação  de  compressão,  um  ponto  de  interconexão  e  quatro  pontos  de 
+entrega, conforme referências 2.1 e 2.5. 
+
+ 
+
+Figura 3 – Fluxograma do modelo do gasoduto Cacimbas – Vitória 
+
+ 
+
+ 
+3.3  LAGOA PARDA 
+
+O  Gasoduto  Lagoa  Parda  (modelo  apresentado  na  Figura  4)  se  interliga  ao  Gasoduto 
+Cacimbas  –  Vitória  por  meio  de  um  duto  de  8  polegadas  de  diâmetro  nominal  e 
+aproximadamente 2km entre Lagoa Parda e a SDV-02 do Cacimbas – Vitória. A linha tronco do 
+gasoduto  possui  8  polegadas  de  diâmetro  nominal  e  aproximadamente  79  km,  entre  Lagoa 
+Parda e a VB-10, a partir desse ponto o duto foi transferido para a companhia de distribuição 
+estadual  de  gás.  Possui  3  estações  de  redução  de  pressão  5  pontos  de  entrega,  conforme 
+referência 2.8. 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+8  de
+
+25 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+Figura 4 – Fluxograma do modelo do gasoduto Lagoa Parda 
+
+ 
+
+4 
+
+PREMISSAS DE CÁLCULO 
+
+4.1  Condições de Referência 
+
+As  vazões  volumétricas  apresentadas  neste  relatório  utilizam  os  seguintes  valores  de 
+
+pressão e temperatura como referência. 
+ 
+
+  Pressão: 1 atm 
+  Temperatura: 20°C 
+
+ 
+4.2  Modelo de transferência de calor 
+
+  Coeficiente de transferência de calor global solo-tubo: 1,9 kcal/hm2°C (Ref. 2.1) 
+
+ 
+4.3  Temperatura do solo 
+
+A temperatura média do solo considerada na simulação é de 30oC, conforme apresentado 
+
+na referência 2.1. 
+ 
+4.4  Correlações Adotadas 
+
+As correlações adotadas seguem a referência 2.3. 
+  Equação de Estado: BWRS 
+  Fator de Atrito: Colebrook 
+
+ 
+4.5  Software utilizado 
+
+  Pipeline Studio versão 3.4.1.0 
+
+ 
+
+4.6  Características do Gás  
+
+A composição do gás natural utilizado no modelo tem como base janeiro de 2015 (Ref. 
+
+2.15) e está apresentada na Tabela 1. 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+9  de
+
+25 
+
+- 
+- 
+
+Tabela 1 – Composição média do gás natural  
+
+ 
+
+ 
+
+ 
+
+ 
+
+Componente 
+
+Metano 
+Etano 
+Propano 
+i-Butano 
+n-Butano 
+i-Pentano 
+n-Pentano 
+Oxigênio 
+Nitrogênio 
+Dióxido de 
+Carbono 
+
+UTG-SUL 
+Fração 
+Molar (%) 
+
+89,03 
+6,38 
+2,34 
+0,685 
+0,685 
+
+- 
+- 
+- 
+
+0,58 
+0,3 
+
+Sigla 
+C1 
+C2 
+C3 
+iC4 
+nC4 
+iC5 
+nC5 
+O2 
+N2 
+CO2 
+
+TECAB  Cacimbas* 
+Fração 
+Molar (%)
+
+Fração 
+Molar (%) 
+
+97,08 
+1,08 
+0,27 
+0,5 
+0,6 
+- 
+- 
+- 
+
+93,05 
+3,73 
+1,30 
+0,59 
+0,64 
+
+- 
+- 
+- 
+
+0,62 
+0,55 
+* - Média aritmética dos outros dois pontos de recebimento 
+
+0,66 
+0,81 
+
+ 
+Na falta da composição do gás natural para o ponto de recebimento Cacimbas foi utilizada 
+
+a média de cada um dos elementos da composição dos outros pontos de recebimento. 
+
+ 
+
+4.7  Temperatura ambiente  
+
+A temperatura ambiente considerada no modelo foi de 30°C (Ref. 2.1) 
+
+ 
+
+4.8  Viscosidade 
+
+  Dado não disponível nos documentos de referência, utilizou-se a equação para cálculo 
+
+de viscosidade LGE (referência 2.3) 
+
+ 
+
+5  CARACTERÍSTICAS DO SISTEMA ESPIRITO SANTO 
+
+ 
+As informações dos elementos do modelo de todos os gasodutos são detalhadas abaixo. 
+ 
+
+5.1  Diâmetro, espessura e PMOA 
+
+O GASCAV é constituído de tubulação de aço carbono API 5L X70, 28 polegadas de 
+diâmetro  externo  e  espessuras  de  parede  que  variam  de  0,469  –  0,625  polegadas.  A 
+pressão de projeto é de 100 kgf/cm², conforme a referência.2.11 e 2.12. 
+
+O  ramal  UTGSUL  é  constituído  de  tubulação  de  aço  carbono  API  5L  X65,  10 
+polegadas de diâmetro nominal e espessura de parede de 0,307 polegadas e pressão de 
+projeto de 100 kgf/cm², conforme a referência 2.7. 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+10  de
+
+25 
+
+- 
+- 
+
+ 
+
+ 
+
+O  Cacimbas  –  Vitória  é  constituído  de  tubulação  de  aço  carbono  API  5L  X70,  26 
+polegadas  de  diâmetro  externo,  espessuras  de  parede  que  variam  de  0,438  –  0,625 
+polegadas entre Cacimbas e TIMS e pressão de projeto é de 100 kgf/cm². No trecho entre 
+TIMS e Vitória, o diâmetro é de 16 polegadas, com espessuras de 0,250 e 0,281 polegadas 
+e pressão de projeto de 55 kgf/cm² segundo referência 2.5. 
+
+O gasoduto Lagoa Parda é constituído de tubulação API 5L Grau B de 8 polegadas de 
+diâmetro  nominal  e  espessuras  de  0,322  e  0,250  polegadas.  A  pressão  de  projeto  no 
+trecho de espessura maior é de 70 kgf/cm2, enquanto no trecho de menor espessura é de 
+52 kgf/cm2, conforme referência 2.8. 
+
+As  espessuras  adotadas  no  modelo  foram  calculadas  pela  média  ponderada  para  cada 
+
+trecho de duto e são descritas na Tabela 2. 
+
+Tabela 2 – Trechos de dutos e espessuras 
+Diâmetro 
+
+Comprimento 
+
+Espessura 
+
+ 
+
+Trecho 
+
+Ramal UTGSUL 
+
+GASCAV1 
+GASCAV2 
+GASCAV3 
+GASCAV4 
+GASCAV5 
+GASCAV6 
+GASCAV7 
+GASCAV8 
+GASCAV9 
+GASCAV10 
+GASCAV11 
+GASCAV12 
+GASCAV13 
+GASCAV14 
+GASCAV15 
+GASCAV16 
+GASCAV17 
+GASCAV18 
+GASCAV19 
+GASCAV20 
+GASCAV21 
+GASCAV22 
+GASCAV23 
+GASCAV24 
+GASCAV25 
+GASCAV26 
+GASCAV27 
+GASCAV28 
+GASCAV29 
+GASCAV30 
+
+ 
+
+ 
+
+(pol) 
+10,130 
+26,916 
+26,916 
+26,932 
+27,040 
+26,962 
+26,764 
+26,806 
+26,945 
+27,055 
+26,988 
+27,033 
+26,989 
+27,005 
+26,971 
+26,962 
+26,912 
+26,876 
+26,876 
+27,025 
+27,053 
+27,017 
+26,980 
+27,000 
+26,820 
+26,800 
+26,840 
+26,840 
+26,851 
+26,762 
+26,750 
+
+(km) * 
+9,700 
+5,000 
+12,100 
+24,945 
+11,336 
+16,403 
+10,295 
+14,263 
+11,199 
+5,273 
+10,295 
+4,520 
+14,515 
+14,062 
+1,306 
+19,335 
+10,085 
+1,125 
+1,004 
+6,529 
+7,533 
+5,775 
+14,179 
+10,520 
+14,263 
+15,117 
+10,044 
+2,762 
+5,022 
+3,516 
+11,049 
+
+(pol)** 
+0,307 
+0,542 
+0,542 
+0,534 
+0,480 
+0,519 
+0,618 
+0,597 
+0,527 
+0,473 
+0,506 
+0,484 
+0,506 
+0,497 
+0,514 
+0,519 
+0,544 
+0,562 
+0,562 
+0,488 
+0,473 
+0,492 
+0,510 
+0,500 
+0,590 
+0,600 
+0,580 
+0,580 
+0,574 
+0,619 
+0,625 
+
+Cota (m)*** 
+E 30 - D 70 
+E 70 - D 38 
+E 38 - D 3,01 
+E 3,01 - D 40 
+E 40 - D 6,04 
+E 6,04 - D 8 
+E 8 - D 30 
+E 30 - D 100 
+E 100 - D 45 
+E 45 - D 80 
+E 80 - D 52 
+E 52 - D 3,25 
+E 3,25 - D 130 
+E 130 - D 50 
+E 50 - D 42 
+E 42 - D 20 
+E 20 - D 70 
+E 70 - D 4,3 
+E 40 - D 4,3 
+E 1 - D 60 
+E 60 - D 60 
+E 60 - D 1 
+E 1 - D 48 
+E 48 - D 40 
+E 40 - D 20 
+E 20 - D 10 
+E 10 - D 180 
+E 180 - D 40 
+E 40 - D 240 
+E 240 - D 3 
+E 3 - D 5 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+Diâmetro 
+
+Comprimento 
+
+Espessura 
+
+FOLHA
+
+REV.
+
+A 
+
+11  de
+
+25 
+
+- 
+- 
+
+(pol)** 
+0,619 
+0,438 
+0,438 
+0,438 
+0,438 
+0,438 
+0,438 
+0,438 
+0,438 
+0,250 
+0,281 
+0,322 
+0,322 
+0,250 
+0,250 
+0,500 
+
+Cota (m)*** 
+E 5 - D 5 
+E 5 - D 5 
+E 50 - D 5 
+E 17 - D 50 
+E 10 - D 17 
+E 6 - D 10 
+E 6 - D 6 
+
+E 6,87 - D 6 
+
+E 5 - D 5 
+E 5 - D 10 
+E 6 - D 6 
+E 6 - D 6 
+E 6 - D 25 
+E 25 - D 25 
+E 6 - D 6 
+E 1 - D 1 
+
+ 
+
+ 
+Trecho 
+
+GASCAV31 
+
+Cacimbas_Vitoria8 
+Cacimbas_Vitoria7 
+Cacimbas_Vitoria6 
+Cacimbas_Vitoria5 
+Cacimbas_Vitoria4 
+Cacimbas_Vitoria3 
+Cacimbas_Vitoria2 
+Cacimbas_Vitoria1 
+Ramal TIMS-Vitoria 1 
+Ramal TIMS-Vitoria 2 
+
+Lag_Par1 
+Lag_Par2 
+Lag_Par3 
+Lag_Par4 
+
+(pol) 
+26,762 
+25,124 
+25,124 
+25,124 
+25,124 
+25,124 
+25,124 
+25,124 
+25,124 
+15,500 
+15,438 
+7,961 
+7,961 
+7,961 
+7,961 
+7,625 
+
+(km) * 
+9,469 
+13,100 
+22,900 
+19,400 
+13,700 
+21,700 
+8,600 
+8,200 
+9,200 
+5,237 
+7,202 
+35,500 
+1,900 
+0,600 
+40,900 
+1,942 
+
+Lig_Lagoa_Parda 
+* - Comprimento do trecho; 
+** - Espessura média do segmento; 
+*** - O programa de simulação usado só permite cota nos nós, E significa a cota do lado esquerdo do 
+
+e D do lado direto do segmento. 
+
+Nesse  documento,  as  localizações  e  extensões,  expressas  em  km,  referem-se  ao 
+
+comprimento desenvolvido (real), salvo quando disposto em contrário. 
+
+5.2  Perfil Altimétrico 
+
+A Figura 5, Figura 6, Figura 7, Figura 8 e Figura 9 apresentam o perfil de elevação dos 
+gasodutos  GASCAV,  Cacimba-Vitória,  Lagoa  Parda,  Ramal  UTG-SUL  e  Ramal  TIMS-Vitória 
+respectivamente, utilizados no modelo de simulação, que foram simplificados a partir dos perfis 
+apresentados nas referências 2.9, 2.10, 2.11, 2.12 e 2.13. 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+ 
+
+ 
+
+ 
+
+Figura 5 – Perfil GASCAV 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 6 – Perfil Cacimbas – Vitória 
+
+FOLHA
+
+REV.
+
+A 
+
+12  de
+
+25 
+
+- 
+- 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+13  de
+
+25 
+
+- 
+- 
+
+Figura 7 - Perfil Lagoa Parda 
+
+Figura 8 - Perfil ramal UTG-SUL 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+14  de
+
+25 
+
+- 
+- 
+
+ 
+
+Figura 9 - Perfil ramal TIMS-Vitória 
+
+ 
+
+ 
+ 
+5.3  Rugosidade 
+
+Tendo  em  vista  o  tempo  de  operação  dos  dutos  e  falta  de  um  valor  disponível  nos 
+documentos  de  referência,  adotou-se  por  hipótese  e  com  base  na  referência  2.3,  o  valor  de 
+0,04572 mm para todos os gasodutos. 
+
+5.4  Pontos de Entrega 
+
+A Tabela 3, a Tabela 4 e a Tabela 5 apresentam o quilômetro desenvolvido e a dos pontos 
+
+de entrega, conforme as referências 2.1, 2.5, 2.6, 2.7 e 2.8. 
+
+Tabela 3 – Pontos de Entrega do GASCAV 
+
+Ponto de Entrega 
+
+Desenvolvido1  Cota (m) 
+
+Vazão (x103m3/dia) 
+
+Mínima 
+
+Máxima 
+
+8 
+42 
+1 
+10 
+
+50,4 
+50 
+120 
+50 
+
+504 
+500 
+1.200 
+500 
+
+ 
+
+ 
+ 
+
+Cachoeiro de Itapemirim 
+
+Campos 
+
+Anchieta 
+Viana 
+
+1 – Distância a partir do TECAB 
+2 – Distância até o início do ramal 
+
+Km 
+
+80 
+
+174,8 
+2212 
+271 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+15  de
+
+25 
+
+- 
+- 
+
+Tabela 4 – Pontos de Entrega do Cacimbas - Vitória 
+
+ 
+
+ 
+
+Desenvolvido1  Cota (m)
+
+Mínima 
+
+Vazão (x103m3/dia) 
+
+Ponto de Entrega 
+
+UTE Linhares 
+
+Linhares 
+
+Vale 
+Vitória 
+
+1 – Distância a partir de Cacimbas 
+2 – Distância a SDV-02 
+* – Não informado  
+
+Ponto de Entrega 
+
+Degussa 
+
+Barra do Riacho 
+
+Arcel 
+VB-10 
+
+1 – Distância a partir de Lagoa Parda 
+
+Km 
+
+9,2 
+26 
+
+116,82 
+116,82 
+
+Km 
+
+35,5 
+37,4 
+38 
+78,9 
+
+ 
+
+ 
+
+6 
+10 
+10 
+10 
+
+6 
+6 
+25 
+25 
+
+130 
+* 
+170 
+400 
+
+15 
+30 
+35 
+45 
+
+Máxima 
+1.300 
+
+48 
+
+1.700 
+4.000 
+
+100 
+120 
+350 
+750 
+
+Tabela 5 – Pontos de Entrega do Lagoa Parda 
+
+Desenvolvido1  Cota (m)
+
+Vazão (x103m3/dia) 
+
+Mínima 
+
+Máxima 
+
+5.5  Estações de Compressão 
+5.5.1  Localização 
+
+O  GASCAV  e  o  Cacimbas  –  Vitória  possuem  cada  um  uma  estação  de  compressão.  A 
+Tabela  6  apresenta  o  quilômetro  e  a  elevação  da  localização  das  estações  de  compressão, 
+conforme as referências 2.5 e 2.6. 
+
+ 
+
+ 
+
+Tabela 6 – Estação de Compressão 
+
+Estação de 
+Compressão 
+
+Piúma 
+Aracruz 
+
+Cota (m) 
+
+60 
+50 
+
+Desenvolvido 
+
+Km 
+
+204,6 
+61,4 
+
+5.5.2  Configuração das Estações de Compressão 
+
+A Tabela 7 apresenta a configuração atual, conforme as referências 2.1, 2.5 e 2.6.  
+
+Tabela 7 - Configuração Atual das Estações de Compressão 
+
+ECOMP 
+
+Configuração 
+
+Vazão por máquina 
+
+(x106 m3/dia) 
+Vazão máxima 
+(x106 m3/dia) 
+
+Pressão máxima 
+
+(kgf/cm²) 
+
+Potência máxima(HP) 
+
+Piúma 
+3 – 1 
+7  
+
+20 
+
+100 
+
+10.300 
+
+Aracruz 
+
+2 – 1 
+
+* 
+
+21 
+
+100 
+* 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+16  de
+
+25 
+
+- 
+- 
+
+ 
+
+ 
+
+* - Dado não disponível nos documentos de referência 
+
+ 
+Não  foram  encontradas  informações  sobre  o  Gás  de  Uso  do  Sistema  e  curvas  de 
+
+desempenho nas referências supracitadas. 
+
+ 
+
+5.6  Pontos de recebimento 
+
+O sistema do Espirito Santo possui como pontos de recebimento o TECAB, Cacimbas e 
+UTG-SUL. A Tabela 8 apresenta o quilometro desenvolvido e a pressão máxima de cada ponto 
+de recebimento. 
+
+ 
+
+ 
+
+Ponto de 
+
+Recebimento 
+
+TECAB 
+UTG-SUL 
+Cacimbas 
+
+Km 
+
+01 
+2212 
+03 
+
+100 
+120 
+350 
+
+Tabela 8 - Pressões Máximas dos Pontos de Recebimento 
+
+Desenvolvido 
+
+Pressão Máxima 
+
+(kgf/cm2) 
+
+1 – Distância a partir do TECAB 
+2 – Distância a partir do TECAB, sem contar o ramal UTG-SUL 
+3 – Distância a partir de Cacimbas 
+
+5.7  Estação de Redução de Pressão 
+
+No  gasoduto  Cacimbas-Vitória existe  uma  estação de  redução de pressão em  TIMS 
+que  controla  a  pressão  para  o  Ramal  TIMS-Vitória.  Entre  Cacimbas  e  TIMS  o  gasoduto 
+possui uma PMOA de 100 kgf/cm2, a partir de TIMS a PMOA é reduzida para 55 kgf/cm2 
+até o PTE Vitória e o PTE Vale, conforme referência 2.5. 
+
+No  gasoduto  Lagoa  Parda  existem  duas  estações  de  redução  de  pressão,  uma  é  a 
+ERP  Lagoa  Parda  que  reduz  a  pressão  do  gás  natural  do  gasoduto  Cacimbas  –  Vitória 
+para  70  kgf/cm²  e  se  encontra  no  início  do  gasoduto  Lagoa  Parda,  a  segunda  é  a  ERP 
+Aracruz que reduz a pressão para 52 kgf/cm2, conforme referência 2.8. 
+
+ 
+Nota:  Não  foram  disponibilizadas  informações  sobre  limites  de  vazão  ou  pressão 
+
+mínima para as estações de redução de pressão.  
+
+ 
+
+6  CONDIÇÕES DE CONTORNO 
+ 
+6.1  Perfil de Consumo 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+17  de
+
+25 
+
+- 
+- 
+
+ 
+
+ 
+
+A  Tabela  9  apresenta  o  cenário  de  distribuição  de  demanda.  Os  valores  apresentados 
+representam  a  média  diária  do  mês  de  janeiro  de  2015,  conforme  apresentado  em 
+http://tag.petrobras.com.br/main.jsp?lumChannelId=8A95ECEB2260CD61012266064C477B86. 
+
+Tabela 9 – Cenário de Distribuição de Demandas base Janeiro/2015 
+
+Ponto de Entrega  Volume Mensal 
+
+Vazão Média 
+(x103m3/dia) 
+
+Campos 
+
+Cachoeiro de 
+Itapemirim 
+Anchieta 
+
+Viana 
+Vitória 
+Vale 
+
+Linhares 
+SDV-021 
+
+UTE Linhares 
+
+(103m3) 
+8.433,013 
+1.546,568 
+23.511,435 
+2.800,624 
+13.289,366 
+13.191,159 
+
+844,809 
+
+12.704,106 
+33.577,777 
+
+272 
+49,9 
+758,0 
+90,3 
+428,6 
+425,5 
+27,2 
+409,8 
+1.083,1 
+
+1 – O valor divulgado para a SDV-02 corresponde ao consumo dos pontos de entrega Degussa, 
+
+Barra do Riacho, Arcel e VB-10 juntos. 
+
+ 
+Em função de não haver valores individualizados de consumos em janeiro de 2015 para os 
+pontos  do  gasoduto  Lagoa  Parda,  foi  realizada  uma  distribuição  ponderada  do  consumo  da 
+SDV-02  para  os  pontos,  onde  foi  levado  em  consideração  a  vazão  máxima  dos  pontos, 
+conforme Tabela 10. 
+
+Tabela 10 - Cenário de Distribuição de Demandas do Lagoa Parda 
+
+Ponto de Entrega 
+
+Degussa 
+
+Barra do Riacho 
+
+Arcel 
+VB-10 
+
+Vazão Média 
+(x103m3/dia) 
+
+31 
+37,3 
+108,7 
+232,9 
+
+ 
+
+6.2  Máxima Pressão Admissível de Operação 
+
+As máximas pressões admissíveis por trechos do sistema estão descritas na Tabela 10, 
+
+conforme referências 2.5, 2.6, 2.7 e 2.8. 
+
+Tabela 11 – PMOA ao longo do sistema de gasodutos 
+
+Trecho 
+
+TECAB - TIMS 
+Ramal UTG-SUL 
+Cacimba - TIMS 
+Ramal Vitória 
+Lagoa Parda – 
+ERP Aracruz 
+ERP Aracruz – 
+
+PTE VB-10 
+
+PMOA 
+(kgf/cm2) 
+
+100 
+100 
+100 
+55 
+70 
+
+52 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+18  de
+
+25 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+6.3  Condições Operacionais das Estações de Compressão 
+
+ 
+Utilizando os dados obtidos nas referências e explicados no item 5.5, e visando maximizar 
+a capacidade de transporte do gasoduto, adotou-se como hipótese apenas a pressão máxima 
+de descarga e o limite de vazão das estações de compressão.  
+
+ 
+
+6.4  Pressão de Entrega Nominal Contratual 
+
+A  Tabela  12  apresenta  a  pressão  de  entrega  nominal  de  cada  trecho,  conforme  as 
+
+referências 2.5, 2.6 e 2.8. 
+
+Tabela 12 – Pressão de Entrega Nominal Contratual 
+Pressão de Entrega 
+
+Ponto de Entrega 
+
+(kgf/cm2) 
+
+Cachoeiro de Itapemirim 
+
+Campos 
+
+Anchieta 
+
+Viana 
+Vitória 
+Vale 
+
+Linhares 
+
+UTE Linhares 
+
+Degussa 
+
+Barra do Riacho 
+
+Arcel 
+VB-10 
+
+37 
+36,8 
+36,8 
+35 
+42 
+13 
+* 
+40 
+27 
+33 
+18 
+34 
+
+ 
+
+ 
+
+* Dado não disponível nos documentos de referência 
+
+7  RESULTADOS DA SIMULAÇÃO 
+
+ 
+As pressões e vazões nos diversos pontos de entrega estão apresentadas na Tabela 13. 
+Deve-se  ressaltar  que  os  resultados  das  simulações  que  detalham  as  capacidades  de 
+transporte comercial e disponível encontram-se na referência 2.4. 
+
+ 
+
+ 
+
+ 
+
+Tabela 13 – Pressão nos Pontos de Entrega 
+
+Ponto de Entrega 
+
+Campos 
+
+Cachoeiro de 
+Itapemirim 
+Anchieta 
+
+Viana 
+
+Vazão  
+
+(x10³m³/dia) 
+
+272,0 
+49,9 
+758,0 
+90,3 
+
+Pressão 
+(kgf/cm2) 
+
+100,1 
+99,9 
+100,0 
+99,8 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+19  de
+
+25 
+
+- 
+- 
+
+Ponto de Entrega 
+
+Vazão  
+
+(x10³m³/dia) 
+
+Pressão 
+(kgf/cm2) 
+
+ 
+
+ 
+
+Vitória 
+Vale 
+
+Linhares 
+
+UTE Linhares 
+
+Degusa 
+
+Barra do Riacho 
+
+Arcel 
+VB-10 
+
+428,6 
+425,5 
+27,2 
+1300,0 
+31,0 
+37,3 
+108,7 
+232,9 
+
+54,8 
+54,8 
+99,9 
+99,9 
+67,2 
+67,1 
+51,9 
+50,4 
+
+ 
+As distribuições de vazão e pressão para cada trecho do sistema estão apresentadas nas 
+
+Figura 10, Figura 11 e Figura 12. 
+
+ 
+
+Figura 10 – Perfil de pressão e vazão no trecho GASCAV 
+
+Figura 11 – Perfil de pressão e vazão no trecho Cacimbas - Vitória 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+20  de
+
+25 
+
+- 
+- 
+
+Figura 12 – Perfil de pressão e vazão no trecho Lagoa Parda 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+21  de
+
+25 
+
+- 
+- 
+
+ 
+
+ 
+
+ 
+
+ 
+
+8  ANEXO 
+8.1  “STEADY STATE REPORT” DO MODELO 
+
+ 
+ 
+
+                         
+ 
+ 
+ 
+                           ******************************************************************************* 
+                           *                                  SIMULACAO                                  * 
+                           ******************************************************************************* 
+ 
+ 
+ 
+ 
+ 
+ 
+                                          * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                          *                                               * 
+                                          *      Default Initial Values Selected:         * 
+                                          *                                               * 
+                                          *      Pressure ................    84.400      * 
+                                          *      Flow ....................   554.386      * 
+                                          *      Temperature .............    30.000      * 
+                                          *      % Oxygen ................     0.033      * 
+                                          *      % Nitrogen ..............     0.619      * 
+                                          *      % Carbon Dioxide ........     0.552      * 
+                                          *      % Methane ...............    92.872      * 
+                                          *      % Ethane ................     3.722      * 
+                                          *      % Propane ...............     1.300      * 
+                                          *      % i-Butane ..............     0.440      * 
+                                          *      % n-Butane ..............     0.460      * 
+                                          *                                               * 
+                                          * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+ 
+ 
+ 
+ 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                       *                                                     * 
+                                       *                 Problem Size Report                 * 
+                                       *                                                     * 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                                       *                                                     * 
+                                       *                                 Number   Maximum    * 
+                                       *                                  Used    Allowed    * 
+                                       *                                 ------   -------    * 
+                                       *                                                     * 
+                                       *     External Regulators            16      5000     * 
+                                       *     Equipment Devices               5      3000     * 
+                                       *     Drivers/Turbines                0       500     * 
+                                       *     Legs                           47     10000     * 
+                                       *     Nodes                          53     20000     * 
+                                       *     Knots                         744     30000     * 
+                                       *     Stations                        0       500     * 
+                                       *     Banks                           0      1000     * 
+                                       *     Groups                          0      1000     * 
+                                       *     Plants                          0        10     * 
+                                       *     Compressor Perf Types           0       500     * 
+                                       *     Driver/Turb Perf Types          0       500     * 
+                                       *     Cylinder Types                  0       500     * 
+                                       *     Fluids                          3       100     * 
+                                       *     Qualities                      14        26     * 
+                                       *                                                     * 
+                                       * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                           ******************************************************************************* 
+                           *                      Steady State Convergence Summary                       * 
+                           ******************************************************************************* 
+ 
+ 
+ 
+                ===================================================================================================== 
+                                             Greatest       Greatest        Greatest                     
+                Iteration     Tolerance     Hydraulic      Temperature     Composition             Associated 
+                 Number       Requested     Adjustment     Adjustment      Adjustment                Device 
+                ---------     ---------     ----------     -----------     -----------     -------------------------- 
+                            ------------------------------  Mode Rejects  ------------------------------- 
+                              0     Equip  ERP_TIMS                FROM: Max Flow        TO: Bypass       
+                            ----------------------------------------------------------------------------- 
+                     0        0.0001000     2.5096E+02      0.0000000       0.0000000      FLUX  NODE18 
+                     1        0.0001000     5.2562E+02      0.0000000       0.0000000      FLUX  NODE19 
+                                                     DPMX decreased to 0.0004882 
+                     2        0.0001000     4.5984E+02      0.0000000       0.0000000      FLUX  NODE18 
+                                                 Starting over with DPMX = 0.0004882 
+ 
+ 
+ 
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+22  de
+
+25 
+
+- 
+- 
+
+ 
+
+                           ******************************************************************************* 
+                           *                                  SIMULACAO                                  * 
+                           ******************************************************************************* 
+ 
+ 
+ 
+                            ------------------------------  Mode Rejects  ------------------------------- 
+                              3     Equip  ERP_TIMS                FROM: Max Flow        TO: Bypass       
+                            ----------------------------------------------------------------------------- 
+                     3        0.0001000     6.0660E+02      0.0000000       0.0000000      FLUX  NODE18 
+                     4        0.0001000     3.0394E+02      0.0000000       0.0000000      FLUX  NODE18 
+                     5        0.0001000     1.5325E+02      0.0000000       0.0000000      FLUX  NODE18 
+                     6        0.0001000     79.1561279      0.0000000       0.0000000      FLUX  NODE18 
+                     7        0.0001000     54.7949371      0.0000000       0.0000000      FLUX  NODE22 
+                                                     DPMX increased to 0.0009765 
+                     8        0.0001000     54.3133659      0.0000000       0.0000000      FLUX  NODE22 
+                     9        0.0001000     54.2463074      0.0000000       0.0000000      FLUX  NODE22 
+                    10        0.0001000     54.1980820      0.0000000       0.0000000      FLUX  NODE22 
+                    11        0.0001000     54.1500931      0.0000000       0.0000000      FLUX  NODE22 
+                                                     DPMX increased to 0.0019530 
+                    12        0.0001000     54.1021538      0.0000000       0.0000000      FLUX  NODE22 
+                    13        0.0001000     54.0543404      0.0000000       0.0000000      FLUX  NODE22 
+                    14        0.0001000     54.0065765      0.0000000       0.0000000      FLUX  NODE22 
+                                                     DPMX increased to 0.0039059 
+                    15        0.0001000     53.9588623      0.0000000       0.0000000      FLUX  NODE22 
+                    16        0.0001000     53.9113464      0.0000000       0.0000000      FLUX  NODE22 
+                    17        0.0001000     53.8638840      0.0000000       0.0000000      FLUX  NODE22 
+                                                     DPMX increased to 0.0078119 
+                    18        0.0001000     53.8164673      0.0000000       0.0000000      FLUX  NODE22 
+                    19        0.0001000     53.7694092      0.0000579       0.0008915      FLUX  NODE22 
+                            ------------------------------  Mode Changes  ------------------------------- 
+                             20     Equip  ECOMP_ARACRUZ           FROM: Bypass          TO: Closed       
+                             20     Equip  ECOMP_PIÚMA             FROM: Bypass          TO: Closed       
+                             20     Equip  ERP_TIMS                FROM: Bypass          TO: Max PD       
+                            ----------------------------------------------------------------------------- 
+                    20        0.0001000     53.7193222      0.0000579       0.0008915      FLUX  NODE22 
+                                                     DPMX increased to 0.0156238 
+                    21        0.0001000     53.6722107      0.0000158       0.0011225      FLUX  NODE22 
+                    22        0.0001000     53.6201515      0.0000158       0.0011225      FLUX  NODE22 
+                    23        0.0001000     53.5679245      0.0000344       0.0009879      FLUX  NODE22 
+                                                     DPMX increased to 0.0312475 
+                    24        0.0001000     53.5155907      0.0000344       0.0009879      FLUX  NODE22 
+                    25        0.0001000     53.4620094      0.0000451       0.0007688      FLUX  NODE22 
+                    26        0.0001000     53.4085007      0.0000451       0.0007688      FLUX  NODE22 
+                                                     DPMX increased to 0.0624951 
+                    27        0.0001000     53.3550339      0.0000477       0.0005553      FLUX  NODE22 
+                    28        0.0001000     53.2522964      0.0000477       0.0005553      FLUX  NODE22 
+                    29        0.0001000     53.1495514      0.0000821       0.0003816      FLUX  NODE22 
+                                                     DPMX increased to 0.1249902 
+                    30        0.0001000     53.0467987      0.0000821       0.0003816      FLUX  NODE22 
+                    31        0.0001000     52.8414726      0.0000593       0.0002529      FLUX  NODE22 
+                    32        0.0001000     52.6360435      0.0000593       0.0002529      FLUX  NODE22 
+                                                     DPMX increased to 0.2499803 
+                    33        0.0001000     52.4306183      0.0000589       0.0001629      FLUX  NODE22 
+                    34        0.0001000     52.0202255      0.0000589       0.0001629      FLUX  NODE22 
+                    35        0.0001000     51.6097374      0.0000592       0.0001031      FLUX  NODE22 
+                                                     DPMX increased to 0.4999606 
+                    36        0.0001000     51.1993446      0.0000592       0.0001031      FLUX  NODE22 
+                    37        0.0001000     50.3794441      0.0000933       0.0000912      FLUX  NODE22 
+                    38        0.0001000     49.5592728      0.0000933       0.0000912      FLUX  NODE22 
+                                                     DPMX increased to 0.9999213 
+                    39        0.0001000     48.7398453      0.0000561       0.0000943      FLUX  NODE22 
+                    40        0.0001000     47.1033058      0.0000561       0.0000943      FLUX  NODE22 
+                    41        0.0001000     45.4664841      0.0000482       0.0000798      FLUX  NODE22 
+                                                     DPMX increased to 1.9998425 
+                    42        0.0001000     43.8319817      0.0000482       0.0000798      FLUX  NODE22 
+                    43        0.0001000     40.5723152      0.0000677       0.0000859      FLUX  NODE22 
+                    44        0.0001000     37.3122902      0.0000677       0.0000859      FLUX  NODE22 
+                                                     DPMX increased to 3.9996850 
+                    45        0.0001000     34.0637207      0.0000706       0.0001951      FLUX  NODE22 
+                    46        0.0001000     27.6087971      0.0000706       0.0001951      FLUX  NODE22 
+                    47        0.0001000     21.1653252      0.0000468       0.0006210      FLUX  NODE22 
+                                                     DPMX increased to 7.9993701 
+                    48        0.0001000     14.7922173      0.0000468       0.0006210      FLUX  NODE22 
+                    49        0.0001000      4.6399870      0.0000536       0.0000002      Equip ECOMP_PIÚMA 
+                    50        0.0001000      2.3658199      0.0000536       0.0000002      Equip ECOMP_PIÚMA 
+                                                     DPMX increased to 15.998740 
+                    51        0.0001000      0.0003960      0.0000692       0.0026413      QNODE NODE21 
+                    52        0.0001000      0.0211934      0.0000692       0.0026413      FLUX  NODE60 
+                    53        0.0001000      0.0001396      0.0000395       0.0000000      Node  NODE62 
+                                                     DPMX increased to 31.997480 
+                    54        0.0001000      0.0018667      0.0000395       0.0000000      FLUX  NODE60 
+                    55        0.0001000      0.0000088      0.0000551       0.0000000      TNODE NODE61 
+                            ------------------------------  Mode Changes  ------------------------------- 
+                             56     Equip  ECOMP_ARACRUZ           FROM: Closed          TO: Bypass       
+                            ----------------------------------------------------------------------------- 
+                    56        0.0001000      0.2968133      0.0000551       0.0000000      Equip ECOMP_ARACRUZ 
+                                                     DPMX increased to 63.994961 
+                    57        0.0001000      0.1227609      0.0000531       0.0000000      Equip ECOMP_ARACRUZ 
+                    58        0.0001000      0.0244481      0.0000531       0.0000000      FLUX  NODE34 
+                    59        0.0001000      0.0002438      0.0000516       0.0000000      Xreg  UTG_SUL 
+                                                     DPMX increased to 127.98992 
+                    60        0.0001000      0.0036709      0.0000516       0.0000000      FLUX  NODE60 
+                    61        0.0001000      0.0000215      0.0000241       0.0000268      QNODE NODE34 
+                    62        0.0001000      0.0002229      0.0000241       0.0000268      Pipe  RAMAL_VITORIA_1 
+                                                     DPMX increased to 255.97984 
+                    63        0.0001000      0.0000003      0.0000433       0.0000537      QNODE NODE61 
+                    64        0.0001000      0.0000377      0.0000013       0.0000001      Pipe  GASCAV24 
+ 
+ 
+ 
+ 
+                           ******************************************************************************* 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+23  de
+
+25 
+
+- 
+- 
+
+ 
+
+                           *                                  SIMULACAO                                  * 
+                           ******************************************************************************* 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                           ******************************************************************************* 
+                           *                         Reference Conditions Report                         * 
+                           ******************************************************************************* 
+ 
+ 
+ 
+                                              Reference Pressure        =     0.00  KG/CM2G 
+                                              Reference Temperature     =    20.00 (DEG C ) 
+ 
+ 
+ 
+ 
+                           ******************************************************************************* 
+                           * Leg Hydraulic Summary Report        -----        Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+ 
+                ==================================================================================================== 
+                                           Pressure                   Flow                Line         Temperature 
+                                            KG/CM2G                 (KSM3/D)              Pack           (DEG C ) 
+                     Leg ID             Head      Tail          Head        Tail        ( KSM3 )       Head    Tail 
+                -----------------     --------  --------     ----------  ----------     ---------     ------  ------ 
+                CACIMBAS_VITORIA1       100.00     99.96       2463.395    2463.395      333.6713      30.00   29.99 
+                CACIMBAS_VITORIA2        99.96     99.95       1163.395    1163.395      297.3275      29.99   30.00 
+                CACIMBAS_VITORIA3        99.95     99.91        753.495     753.495      311.7568      30.00   29.99 
+                CACIMBAS_VITORIA4        99.91     99.85        726.295     726.295      786.1863      29.99   29.99 
+                CACIMBAS_VITORIA5        99.85     99.57        726.295     726.295      495.4919      29.99   29.94 
+                CACIMBAS_VITORIA6        99.57     99.93        726.295     726.295      701.6736      29.94   30.05 
+                CACIMBAS_VITORIA7        99.93     99.92        726.295     726.295      829.9581      30.05   30.00 
+                CACIMBAS_VITORIA8        99.92     99.91        726.295     726.295      474.7722      30.00   30.00 
+                GASCAV1                 100.00     99.70        321.900     321.900      201.8692      30.00   29.93 
+                GASCAV10                 99.88     99.61         49.900      49.900      417.3193      30.01   30.00 
+                GASCAV11                 99.61     99.83         49.900      49.900      183.7597      30.00   30.01 
+                GASCAV12                 99.83    100.20         49.900      49.900      590.0395      30.01   30.00 
+                GASCAV13                100.20     99.24         49.900      49.900      570.5715      30.00   29.99 
+                GASCAV14                 99.24     99.84         49.900      49.900       52.7247      29.99   30.08 
+                GASCAV15                 99.84     99.90         49.900      49.900      783.2464      30.08   30.00 
+                GASCAV16                 99.90    100.07          0.000       0.000      407.5069      30.00   30.00 
+                GASCAV17                100.07     99.69          0.000       0.000       45.2868      30.00   30.00 
+                GASCAV18                 99.69    100.19          0.000       0.000       40.4608      30.00   30.00 
+                GASCAV19                 99.92    100.19          0.000       0.000      266.2460      30.00   30.00 
+                GASCAV2                  99.70     99.94        321.900     321.900      488.2159      29.93   30.02 
+                GASCAV20                 99.92    100.21          0.000       0.000      307.8901      30.00   30.00 
+                GASCAV21                100.21     99.77          0.000       0.000      235.2207      30.00   30.00 
+                GASCAV22                 99.45     99.96          0.000       0.000      596.3052      30.00   30.00 
+                GASCAV23                 99.96     99.54        218.105     218.105      449.6761      30.00   29.97 
+                GASCAV24                 99.54     99.61        218.105     218.105      600.2867      29.97   30.00 
+                GASCAV25                 99.61     99.79        218.105     218.105      636.1205      30.00   30.01 
+                GASCAV26                 99.79     99.87        218.105     218.105      424.5555      30.01   30.01 
+                GASCAV27                 99.87     98.38        127.805     127.805      115.9815      30.01   29.73 
+                GASCAV28                 98.38     99.61        127.805     127.805      210.4213      29.73   30.12 
+                GASCAV29                 99.61     97.86        127.805     127.805      146.0706      30.12   29.75 
+                GASCAV3                  99.94    100.20        321.900     321.900     1010.4096      30.02   30.01 
+                GASCAV30                 97.86     99.93        127.805     127.805      458.8751      29.75   30.10 
+                GASCAV31                 99.93     99.91        127.805     127.805      398.3228      30.10   30.00 
+                GASCAV4                 100.20     99.92        321.900     321.900      462.8681      30.01   29.97 
+                GASCAV5                  99.92    100.18        321.900     321.900      665.6977      29.97   30.02 
+                GASCAV6                 100.18    100.16        321.900     321.900      412.2941      30.02   30.00 
+                GASCAV7                 100.16     99.99         49.900      49.900      572.4136      30.00   30.00 
+                GASCAV8                  99.99     99.46         49.900      49.900      452.4512      30.00   29.99 
+                GASCAV9                  99.46     99.88         49.900      49.900      214.6119      29.99   30.01 
+                LAG_PAR1                 70.00     67.24        409.900     409.900       86.6145      17.95   29.64 
+                LAG_PAR2                 67.24     67.11        378.900     378.900        4.4616      29.64   29.69 
+                LAG_PAR3                 52.00     51.88        341.600     341.600        1.0973      23.09   23.66 
+                LAG_PAR4                 51.88     50.41        232.900     232.900       71.4977      23.66   29.95 
+                LIG_LAGOA_PARDA          99.95     99.83        409.900     409.900        6.4817      30.00   29.96 
+                RAMAL_UTGSUL             99.96    100.00       -218.105    -218.105       58.5065      30.00   30.00 
+                RAMAL_VITORIA_1          55.00     54.93        854.100     854.100       40.4407       9.88   19.48 
+                RAMAL_VITORIA_2          54.93     54.81        854.100     854.100       52.7953      19.48   25.70 
+ 
+ 
+ 
+ 
+                           ******************************************************************************* 
+                           * Equipment Hydraulic Report         -----         Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+ 
+ 
+ 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+                                             ::  Equipment Hydraulic Summary Report  :: 
+                                             :::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+          ================================================================================================================= 
+                                                    Pressure                          Temperature                  Heating 
+             Equipment          Mode of              KG/CM2G             Flow           (DEG C )         Spc        Value 
+                ID              Control           Up       Down        (KSM3/D)        Up     Down       Grv       ( MJ/M3) 
+          ---------------     ------------     --------  --------     ----------     ------  ------     ------     -------- 
+          ECOMP_ARACRUZ       Bypass              99.57     99.57         726.30      29.94   29.94     0.6101        39.38 
+          ECOMP_PIÚMA         Closed              99.45     99.77           0.00      30.00   30.00     0.6035        38.97 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+24  de
+
+25 
+
+- 
+- 
+
+ 
+
+          ERP_ARACRUZ         Max PD              67.11     52.00         341.60      29.69   23.09     0.6101        39.38 
+          ERP_LAGOA_PARDA     Max PD              99.83     70.00         409.90      29.96   17.95     0.6101        39.38 
+          ERP_TIMS            Max PD              99.91     55.00         854.10      30.00    9.88     0.6135        39.60 
+ 
+ 
+ 
+                                   =============================================================== 
+                                                        Current       Accumulated         Timer 
+                                      Equipment        Flow Rate         Volume           Value 
+                                         ID             (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                   ---------------     ----------     ------------     ----------- 
+                                   ECOMP_ARACRUZ           726.30             0.00           0.000 
+                                   ECOMP_PIÚMA               0.00             0.00           0.000 
+                                   ERP_ARACRUZ             341.60             0.00           0.000 
+                                   ERP_LAGOA_PARDA         409.90             0.00           0.000 
+                                   ERP_TIMS                854.10             0.00           0.000 
+ 
+ 
+ 
+             =========================================================================================================== 
+                                              Actual                    Adiab        Dschrg        Power         Power 
+              Compressor         Head          Flow        Speed        Effic         Temp       Required      Available 
+                  ID           (N.M/KG)      ( M3/H )     (  RPM )     (PERCNT)     (DEG C )     (  HP  )      (  HP  ) 
+             -------------     ---------     --------     --------     --------     --------     ---------     --------- 
+             ECOMP_ARACRUZ          0.00       268.01                   100.00        29.94           0.00          0.00 
+             ECOMP_PIÚMA            (Not Operating ..... )  
+ 
+ 
+ 
+ 
+                           ******************************************************************************* 
+                           * External Regulator Hydraulic Report    -----     Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+ 
+ 
+ 
+                                           :::::::::::::::::::::::::::::::::::::::::::::: 
+                                           ::  External Regulator Flow Balance Report  :: 
+                                           :::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                      ========================================================= 
+                                                               Mass Units      Volumetric Units 
+                                                                (TONN/H)           (KSM3/D) 
+                                      --------------------     -----------     ---------------- 
+                                      Total input flow             115.664          3761.401 
+                                      Total output flow            115.664          3761.401 
+                                      Network flow balance           0.000             0.000 
+ 
+ 
+                                         ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                         ::  External Regulator Hydraulic Summary Report  :: 
+                                         ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+             =========================================================================================================== 
+                   External                                                                        Specific     Heating 
+                  Regulator             Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                      ID                Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+             --------------------     ------------     --------     ----------     -----------     --------     -------- 
+             ANCHIETA                 Max Flow           100.00        758.000        30.00         0.6332         40.88 
+             ARCEL                    Max Flow            51.88        108.700        23.66         0.6101         39.38 
+             B._RIACHO                Max Flow            67.11         37.300        29.69         0.6101         39.38 
+             CACHOEIRO_DO_ITAPEMI     Max Flow            99.90         49.900        30.00         0.5739         37.05 
+             CACIMBAS                 Max Pres           100.00      -2463.395        30.00         0.6101         39.38 
+             CAMPOS_DOS_GOYTACAZE     Max Flow           100.16        272.000        30.00         0.5739         37.05 
+             DEGUSSA                  Max Flow            67.24         31.000        29.64         0.6101         39.38 
+             LINHARES                 Max Flow            99.91         27.200        29.99         0.6101         39.38 
+             PE_TECAB                 Max Flow           100.00          0.001        30.00         0.5739         37.05 
+             TECAB                    Max Pres           100.00       -321.901        30.00         0.5739         37.05 
+             UTE_LINHARES             Max Flow            99.96       1300.000        29.99         0.6101         39.38 
+             UTG_SUL                  Max Pres           100.00       -976.105        30.00         0.6332         40.88 
+             VALE                     Max Flow            54.81        425.500        25.70         0.6135         39.60 
+             VB-10                    Max Flow            50.41        232.900        29.95         0.6101         39.38 
+             VIANA                    Max Flow            99.87         90.300        30.01         0.6332         40.88 
+             VITORIA                  Max Flow            54.81        428.600        25.70         0.6135         39.60 
+ 
+ 
+ 
+                                 =================================================================== 
+                                       External            Current      Accumulated         Timer 
+                                      Regulator           Flow Rate        Volume           Value 
+                                          ID              (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                 --------------------     ---------     ------------     ----------- 
+                                 ANCHIETA                   758.000            0.000           0.000 
+                                 ARCEL                      108.700            0.000           0.000 
+                                 B._RIACHO                   37.300            0.000           0.000 
+                                 CACHOEIRO_DO_ITAPEMI        49.900            0.000           0.000 
+                                 CACIMBAS                 -2463.395            0.000           0.000 
+                                 CAMPOS_DOS_GOYTACAZE       272.000            0.000           0.000 
+                                 DEGUSSA                     31.000            0.000           0.000 
+                                 LINHARES                    27.200            0.000           0.000 
+                                 PE_TECAB                     0.001            0.000           0.000 
+                                 TECAB                     -321.901            0.000           0.000 
+                                 UTE_LINHARES              1300.000            0.000           0.000 
+                                 UTG_SUL                   -976.105            0.000           0.000 
+                                 VALE                       425.500            0.000           0.000 
+                                 VB-10                      232.900            0.000           0.000 
+                                 VIANA                       90.300            0.000           0.000 
+                                 VITORIA                    428.600            0.000           0.000 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+25  de
+
+25 
+
+- 
+- 
+
+ 
+
+ 
+                                     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                     ::  Supply External Regulator Hydraulic Summary Report  :: 
+                                     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                   =============================================================================================== 
+                    Supply                                                                   Specific     Heating 
+                     Xreg         Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                      ID          Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+                   --------     ------------     --------     ----------     -----------     --------     -------- 
+                   CACIMBAS     Max Pres           100.00      -2463.395        30.00         0.6101         39.38 
+                   TECAB        Max Pres           100.00       -321.901        30.00         0.5739         37.05 
+                   UTG_SUL      Max Pres           100.00       -976.105        30.00         0.6332         40.88 
+ 
+ 
+ 
+                                      ======================================================== 
+                                       Supply       Current       Accumulated         Timer 
+                                        Xreg       Flow Rate         Volume           Value 
+                                         ID         (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                      --------     ----------     ------------     ----------- 
+                                      CACIMBAS      -2463.395            0.000           0.000 
+                                      TECAB          -321.901            0.000           0.000 
+                                      UTG_SUL        -976.105            0.000           0.000 
+ 
+ 
+                                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                                    ::  Delivery External Regulator Hydraulic Summary Report  :: 
+                                    :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+             =========================================================================================================== 
+                   Delivery                                                                        Specific     Heating 
+                     Xreg               Mode of        Pressure        Flow        Temperature     Gravity       Value 
+                      ID                Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+             --------------------     ------------     --------     ----------     -----------     --------     -------- 
+             ANCHIETA                 Max Flow           100.00        758.000        30.00         0.6332         40.88 
+             ARCEL                    Max Flow            51.88        108.700        23.66         0.6101         39.38 
+             B._RIACHO                Max Flow            67.11         37.300        29.69         0.6101         39.38 
+             CACHOEIRO_DO_ITAPEMI     Max Flow            99.90         49.900        30.00         0.5739         37.05 
+             CAMPOS_DOS_GOYTACAZE     Max Flow           100.16        272.000        30.00         0.5739         37.05 
+             DEGUSSA                  Max Flow            67.24         31.000        29.64         0.6101         39.38 
+             LINHARES                 Max Flow            99.91         27.200        29.99         0.6101         39.38 
+             PE_TECAB                 Max Flow           100.00          0.001        30.00         0.5739         37.05 
+             UTE_LINHARES             Max Flow            99.96       1300.000        29.99         0.6101         39.38 
+             VALE                     Max Flow            54.81        425.500        25.70         0.6135         39.60 
+             VB-10                    Max Flow            50.41        232.900        29.95         0.6101         39.38 
+             VIANA                    Max Flow            99.87         90.300        30.01         0.6332         40.88 
+             VITORIA                  Max Flow            54.81        428.600        25.70         0.6135         39.60 
+ 
+ 
+ 
+                                ==================================================================== 
+                                      Delivery            Current       Accumulated         Timer 
+                                        Xreg             Flow Rate         Volume           Value 
+                                         ID               (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                                --------------------     ----------     ------------     ----------- 
+                                ANCHIETA                    758.000            0.000           0.000 
+                                ARCEL                       108.700            0.000           0.000 
+                                B._RIACHO                    37.300            0.000           0.000 
+                                CACHOEIRO_DO_ITAPEMI         49.900            0.000           0.000 
+                                CAMPOS_DOS_GOYTACAZE        272.000            0.000           0.000 
+                                DEGUSSA                      31.000            0.000           0.000 
+                                LINHARES                     27.200            0.000           0.000 
+                                PE_TECAB                      0.001            0.000           0.000 
+                                UTE_LINHARES               1300.000            0.000           0.000 
+                                VALE                        425.500            0.000           0.000 
+                                VB-10                       232.900            0.000           0.000 
+                                VIANA                        90.300            0.000           0.000 
+                                VITORIA                     428.600            0.000           0.000 
+ 
+ 
+ 
+ 
+                           ******************************************************************************* 
+                           * Node Mass Balance Error Report       -----       Time =      0.000 ( HRS  ) * 
+                           ******************************************************************************* 
+ 
+ 
+ 
+                                                Threshold Level =     0.0100 (KSM3/D) 
+                                                No Mass Balance Errors above Threshold 
+ 
+ 
+ 
+ 
+                                               ::::::::::::::::::::::::::::::::::::::: 
+                                               ::  Pressure/Flow Violation Reports  :: 
+                                               ::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                               ALL XREGS FALL WITHIN PRESSURE BOUNDS 
+                                             ALL EQUIPMENT FALL WITHIN PRESSURE BOUNDS 
+                                         ALL INTERNAL LEG KNOTS FALL WITHIN PRESSURE BOUNDS 
+ 
+ 
+ 
+ 
+                                            ::::::::::::::::::::::::::::::::::::::::::::: 
+                                            ::  Setpoint/Constraint Violation Reports  :: 
+                                            ::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-026 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO:  Documentação do Modelo de Simulação do Sistema de 
+
+Gasodutos do Espirito Santo 
+
+FOLHA
+
+REV.
+
+A 
+
+26  de
+
+25 
+
+- 
+- 
+
+ 
+
+ 
+                                            ALL XREGS COMPLY WITH MONITORED CONSTRAINTS 
+                                          ALL EQUIPMENT COMPLY WITH MONITORED CONSTRAINTS 
+ 
+ 
+                      TRANSIENT GAS NETWORK MODEL (TGNET) 
+                       RELEASE 7.6  LEVEL 00  30-SEP-2008 
+ 
+                             STEADY-STATE MODULE 
+
+ 
+
+ 
+
+ 
+
+

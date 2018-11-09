@@ -1,0 +1,7125 @@
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+UNIVERSIDADE FEDERAL DE ALAGOAS 
+
+CENTRO DE TECNOLOGIA 
+
+CURSO DE ENGENHARIA CIVIL 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+MODELAGEM COMPUTACIONAL DA INTERAÇÃO ENTRE 
+
+O SOLO MARINHO E A LINHA DE ANCORAGEM 
+
+ENTERRADA 
+
+ 
+ 
+ 
+
+THIAGO DELFINO LIMA VASCONCELOS 
+
+ 
+Trabalho de Conclusão de Curso 
+
+Orientador: Eduardo Nobre Lages 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+Maceió 
+
+2013
+
+ 
+
+ 
+
+THIAGO DELFINO LIMA VASCONCELOS 
+
+MODELAGEM COMPUTACIONAL DA INTERAÇÃO ENTRE 
+
+O SOLO MARINHO E A LINHA DE ANCORAGEM 
+
+ENTERRADA 
+
+Trabalho de Conclusão de Curso apresentado ao Colegiado do 
+Curso de Engenharia Civil da Universidade Federal de Alagoas, 
+como parte dos requisitos para obtenção do título de Engenheiro 
+Civil 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+Maceió 
+
+2013
+
+ 
+
+THIAGO DELFINO LIMA VASCONCELOS 
+
+ 
+
+ 
+
+MODELAGEM COMPUTACIONAL DA INTERAÇÃO ENTRE 
+
+O SOLO MARINHO E A LINHA DE ANCORAGEM 
+
+ENTERRADA 
+
+Este trabalho de conclusão de curso foi julgado adequado para a obtenção do título de 
+
+ENGENHEIRO CIVIL e aprovado em sua forma final pelo professor orientador e pelo 
+
+Colegiado do Curso de Engenharia Civil da Universidade Federal de Alagoas. 
+
+Maceió, 24 de Julho de 2013 
+
+Prof. Eduardo Nobre Lages 
+Dr. pela PUC - Rio 
+Orientador 
+
+Adriana de Oliveira Santos Weber  
+Coordenadora do curso de Engenharia Civil 
+
+BANCA EXAMINADORA 
+
+Eduardo Nobre Lages (UFAL) 
+Doutor pela PUC-Rio 
+
+Eduardo Toledo de Lima Junior (UFAL) 
+Doutor pela EESC/USP 
+
+Luciana Correia Laurindo Martins Vieira (UFAL) 
+Mestre pela UFAL 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ 
+ 
+Dedico este trabalho à minha FAMÍLIA 
+
+ 
+
+ 
+
+AGRADECIMENTOS 
+
+Agradeço  a  Deus  por  guiar  meus  passos  para  mais  uma  conquista,  o  tão  sonhado  título  de 
+
+Engenheiro Civil. 
+
+Agradeço  ao  meu  Pai  pelo  apoio  incondicional  em  todas  as  fases  da  minha  vida,  pelos 
+
+conselhos singulares e orientações inteligentes; meu verdadeiro orientador. 
+
+Agradeço a minha Mãe pelo carinho e cuidado nos momentos mais difíceis e por me aguentar 
+
+nos dias de estresse com trabalhos e provas. 
+
+Agradeço  a  minha  irmã  pelos  momentos  de  descontração  proporcionados  em  momentos 
+
+oportunos. 
+
+Agradeço  a  minha  namorada  pelas  palavras  de  incentivo  e  pelo  companheirismo  durante  o 
+
+curso. 
+
+Agradeço  ao  meu  orientador  (Grande  Nobre)  por  fazer  deste  trabalho  mais  um  desafio  no 
+
+curso e pela orientação em todas as fases do trabalho. 
+
+Agradeço  ao  professor  Frede  de  Oliveira  Carvalho  (CTEC/UFAL)  pelo  curso  introdutório 
+
+sobre Redes Neurais Artificiais. 
+
+Agradeço  ao  apoio  financeiro  da  Agência  Nacional  do  Petróleo,  Gás  Natural  e 
+
+Biocombustíveis – ANP –, da Financiadora de Estudos e Projetos – FINEP – e do Ministério 
+
+da Ciência e Tecnologia – MCT por meio do Programa de Recursos Humanos da ANP para o 
+
+Setor Petróleo e Gás – PRH-ANP/MCT. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RESUMO 
+
+VASCONCELOS, T.D.L. Modelagem computacional da interação entre o solo marinho e a 
+linha de ancoragem enterrada. 2013. Trabalho de Conclusão de Curso (Graduação em 
+Engenharia Civil) – Universidade Federal de Alagoas, Maceió. 
+
+Devido às crescentes descobertas realizadas no campo do pré-sal, há uma grande necessidade 
+
+de  desenvolver  tecnologias  que  permitam,  e  até  mesmo  viabilizem,  a  produção  do  petróleo 
+
+nessa  região,  já  que  existem  grandes  desafios  a  serem  superados  nessas  bacias  petrolíferas. 
+
+Dentre  as  dificuldades  encontradas  está  a  de  manter  as  plataformas  offshore  estáveis,  o  que 
+
+pode ser garantido com sistemas de ancoragem eficientes e que resistam às tensões resultantes 
+
+das  movimentações  constantes  da  plataforma,  já  que  se  trata  de  ambientes  com  grandes 
+
+lâminas  de  água,  o  que  intensifica  as  solicitações  na  estrutura.  Nesse  contexto,  faz-se 
+
+necessário  o  uso  de  plataformas  do  tipo  FPSO,  que  são  adaptadas  a  esse  tipo  de  ambiente. 
+
+Essas,  por  sua  vez,  têm  sistemas  de  ancoragem  constituídos  por  cabos,  que  em  sua  parte 
+
+submersa  apresentam-se  na  forma  de  catenária,  já  sua  parte  enterrada  no  solo  marinho 
+
+apresenta-se na forma de uma catenária invertida. Na literatura, a maioria dos estudos sobre a 
+
+análise  das  linhas  de  ancoragem  delimita-se  à  parte  submersa,  desconsiderando  a  parte 
+
+enterrada,  onde  se  atribui  ao  ponto  de  afloramento  da  linha  no  solo  marinho  uma  fixação 
+
+perfeita dos movimentos. Para a análise desse trecho enterrado, neste trabalho implementa-se 
+
+inicialmente, no ambiente MATLAB, o modelo recomendado pela DNV  no “Recommended 
+
+Practice RP-E301”, que permite mapear as trações e definir as diversas geometrias das linhas 
+
+de  ancoragem  enterradas.  A  partir  das  trações  que  são  geradas  no  ponto  de  afloramento, 
+
+projeta-se  o  elemento  de  fundação  da  linha. Após  isso,  esse  modelo  é  utilizado  para  treinar 
+
+uma Rede Neural Artificial, que pode ser utilizada em substituição ao processo de integração 
+
+numérica  do  sistema  governante  de  equações  diferenciais  ordinárias,  acoplando-a, 
+
+posteriormente,  à  análise  dinâmica  da  parte  submersa  da  linha.  Foram  obtidos  resultados 
+
+satisfatórios com o programa computacional desenvolvido quando comparado com programas 
+
+de referência. Além disso, o uso de Rede Neural Artificial mostra-se muito vantajoso, pois o 
+
+tempo  de  resolução  do  problema  através  da  rede  é  cerca  de  80%  do  tempo  da  integração 
+
+numérica das equações diferenciais, com resultados muito similares. 
+
+Palavras-chave: Geomecânica computacional; Linha de ancoragem; Catenária invertida; 
+
+Redes Neurais Artificiais.
+
+ 
+
+ 
+
+ABSTRACT 
+
+VASCONCELOS, T.D.L. Modelagem computacional da interação entre o solo marinho e a 
+linha de ancoragem enterrada. 2013. Trabalho de Conclusão de Curso (Graduação em 
+Engenharia Civil) – Universidade Federal de Alagoas, Maceió. 
+
+Due  to  the  increasing  discoveries  made  in  pre-salt  field,  there  is  a  great  need  to  develop 
+
+technologies that allow, and even viable, the oil production in this region, since there are great 
+
+challenges to be overcome in these oil basins. Among the involved difficulties is to maintain 
+
+the offshore platforms stable, which can be ensured by efficient anchor systems and that resist 
+
+the  tensions  due  to  the  constants  movements  of  the  platform,  since  it  is  located  in  an 
+
+environment constituted by large water slides, what intensifies the tensions in structure. In this 
+
+context,  it  is  necessary  to  use  the  FPSO  platforms,  which  are  adapted  to  this  sort  of 
+
+environment. Such platforms in  turn have anchor  systems constituted by cables, which ones 
+
+have the shape of a catenary along the suspended part in water and forms an inverse catenary 
+
+in  the  embedded  part.  Most  of  studies  about  this  subject  are  limited  to  the  suspended  part, 
+
+disregarding  the  part  in  inverse  catenary,  considering  the  outcrop  point  perfectly  fixed  on 
+
+seabed.  For the  analysis of embedded part, this work implements  initially, in  MATLAB, the 
+
+model recommended by DNV on “Recommended Practice RP-E301”, which allows mapping 
+
+the tractions and defining several geometries of the embedded anchor lines. With the tractions 
+
+in outcrop point, it is possible to project the embedded part of the anchor system. Afterwards, 
+
+this  model  is  used  to  train  an Artificial  Neural  Network,  which  can  be  used  instead  of  the 
+
+numerical  integration  process  of  the  governing  system  of  ordinary  differential  equations, 
+
+coupling  it  to  dynamic  analysis  of  the  catenary  of  submerged  part  afterwards.  Satisfactory 
+
+results  were  obtained  with  the  computer  program  developed  here  when  comparing  with 
+
+reference programs. Furthermore, the use of Artificial Neural Network is very advantageous, 
+
+because  the  problem  resolution  time  by  network  is  about  80%  of  the  numerical  integration 
+
+time of the differential equations, with very similar results. 
+
+Key-words: Computational geomechanics; Anchor line; Inverse catenary; Artificial Neural 
+
+ 
+
+ 
+
+Network. 
+
+ 
+
+ 
+
+SUMÁRIO 
+
+1. 
+
+INTRODUÇÃO ................................................................................................................ 14 
+
+1.1  COMENTÁRIOS INICIAIS ...................................................................................... 14 
+
+1.2  MOTIVAÇÃO ............................................................................................................ 16 
+
+1.3  OBJETIVOS .............................................................................................................. 17 
+
+1.4  METODOLOGIA ...................................................................................................... 18 
+
+1.5  DELIMITAÇÃO DO TRABALHO........................................................................... 18 
+
+1.6  REVISÃO BIBLIOGRÁFICA .................................................................................. 19 
+
+1.6.1  Modelagem computacional da catenária invertida ............................................. 19 
+
+1.6.2  Redes Neurais Artificiais aplicadas à indústria do petróleo ............................... 21 
+
+1.7  ORGANIZAÇÃO DO TRABALHO ......................................................................... 22 
+
+2.  SISTEMAS DE ANCORAGEM ...................................................................................... 23 
+
+2.1  CONCEITOS ............................................................................................................. 23 
+
+2.2  TIPOS DE ANCORAGEM ....................................................................................... 25 
+
+2.2.1  Ancoragem convencional ................................................................................... 26 
+
+2.2.2  Ancoragem taut-leg ............................................................................................ 26 
+
+2.2.3  Ancoragem vertical............................................................................................. 27 
+
+2.3  TIPOS DE PLATAFORMAS FLUTUANTES .......................................................... 28 
+
+2.3.1 
+
+SEMISSUBMERSÍVEL ..................................................................................... 28 
+
+2.3.2 
+
+FPSO ................................................................................................................... 30 
+
+2.3.3 
+
+TLP ..................................................................................................................... 31 
+
+2.3.4 
+
+SPAR................................................................................................................... 32 
+
+2.3.4.1 
+
+Spar buoy..................................................................................................... 32 
+
+2.3.4.2 
+
+Truss Spar .................................................................................................... 33 
+
+2.3.4.3 
+
+Cell spar....................................................................................................... 33 
+
+3.  CATENÁRIA INVERTIDA ............................................................................................. 34 
+
+3.1 
+
+FORMULAÇÃO MATEMÁTICA ............................................................................ 34 
+
+3.2  DESCRIÇÃO DOS PARÂMETROS ........................................................................ 38 
+
+3.3  APLICAÇÃO DO MODELO .................................................................................... 40 
+
+3.3.1 
+
+Exemplo ilustrativo ............................................................................................ 42 
+
+3.3.2 
+
+Estudo de caso .................................................................................................... 47 
+
+4.  REDES NEURAIS ARTIFICIAIS ................................................................................... 51 
+
+4.1  CONCEITOS ............................................................................................................. 51 
+
+ 
+
+ 
+
+4.2  ARQUITETURA DA REDE ..................................................................................... 52 
+
+4.3 
+
+PROCESSO DE TREINAMENTO ........................................................................... 54 
+
+4.4  RESULTADOS DAS APLICAÇÕES COM REDES NEURAIS ARTIFICIAIS ...... 55 
+
+4.4.1  Rede com apenas um parâmetro de entrada (T0) ................................................ 55 
+
+4.4.1.1  Arquitetura da rede ...................................................................................... 55 
+
+4.4.1.2 
+
+Tipos de treinamento ................................................................................... 55 
+
+4.4.1.3  Otimização da arquitetura da RNA quanto à quantidade de neurônios em 
+
+cada camada .................................................................................................................. 58 
+
+4.4.1.4  Otimização da arquitetura da RNA quanto à função de transferência de cada 
+
+camada...... .................................................................................................................... 61 
+
+4.4.1.5 
+
+Influência da quantidade de dados de entrada no treino ............................. 62 
+
+4.4.1.6 
+
+Comparação dos resultados obtidos pela resolução do sistema de EDO e 
+
+através da RNA ............................................................................................................. 66 
+
+4.4.2  Rede com três parâmetros de entrada (T0, θ0 e P) .............................................. 68 
+
+4.4.2.1  Arquitetura da rede ...................................................................................... 68 
+
+4.4.2.2 
+
+Tipos de treinamento ................................................................................... 68 
+
+4.4.2.3  Otimização da arquitetura da RNA quanto à quantidade de neurônios em 
+
+cada camada .................................................................................................................. 70 
+
+4.4.2.4  Otimização da arquitetura da RNA quanto à função de transferência de cada 
+
+camada...... .................................................................................................................... 71 
+
+4.4.2.5 
+
+Influência da quantidade de dados de entrada no treino ............................. 72 
+
+4.4.2.6 
+
+Comparação dos resultados obtidos pela resolução do sistema de EDO e 
+
+através da RNA ............................................................................................................. 76 
+
+4.4.2.7 
+
+Comparação dos resultados obtidos pela resolução do sistema de EDO e 
+
+através da RNA única e das RNAs separadas............................................................... 78 
+
+4.4.2.8 
+
+Redes treinadas com diferentes erros .......................................................... 80 
+
+5.  CONCLUSÕES ................................................................................................................ 83 
+
+5.1 
+
+Sugestões para futuros trabalhos ................................................................................ 84 
+
+REFERÊNCIAS BIBLIOGRÁFICAS ..................................................................................... 85 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+
+LISTA DE FIGURAS 
+
+Figura 1.1: Primeiras plataformas de petróleo ..................................................................... 14 
+
+Figura 1.2: Plataformas fixas ............................................................................................... 15 
+
+Figura 1.3: Esquema da bacia do pré-sal ............................................................................. 16 
+
+Figura 2.1: Elos de amarras ................................................................................................. 24 
+
+Figura 2.2: Estrutura do cabo de aço ................................................................................... 24 
+
+Figura 2.3: Geometria típica de ancoragem convencional .................................................. 25 
+
+Figura 2.4: Ancoragem convencional e taut-leg .................................................................. 27 
+
+Figura 2.5: Ancoragem vertical ........................................................................................... 28 
+
+Figura 2.6: Detalhes da estrutura da plataforma semissubmersível .................................... 29 
+
+Figura 2.7: Plataforma semissubmersível ............................................................................ 29 
+
+Figura 2.8: Navio FPSO ...................................................................................................... 30 
+
+Figura 2.9: Sistema de ancoragem DICAS .......................................................................... 31 
+
+Figura 2.10: Sistema de ancoragem TLP ............................................................................. 31 
+
+Figura 2.11: Sistema de ancoragem Spar buoy .................................................................... 32 
+
+Figura 2.12: Ancoragem Truss Spar .................................................................................... 33 
+
+Figura 2.13: Sistema de ancoragem Cell Spar ..................................................................... 34 
+
+Figura 3.1: Diagrama de corpo livre de um segmento da catenária invertida ..................... 35 
+
+Figura 3.2: Seguimento ds da linha de ancoragem. ............................................................. 36 
+
+Figura 3.3: Parâmetros da catenária invertida ..................................................................... 38 
+
+Figura 3.4: Variação de Nc com a profundidade .................................................................. 41 
+
+Figura 3.5: Variação de Su com a profundidade ................................................................... 42 
+
+Figura 3.6: Geometria da linha dos três casos ..................................................................... 43 
+
+Figura 3.7: Inclinação da linha para os três casos ............................................................... 44 
+
+Figura 3.8: Tração na linha para os três casos ..................................................................... 45 
+
+Figura 3.9: Tração na linha do caso 2 .................................................................................. 46 
+
+Figura 3.10: Geometria da linha para os três casos ............................................................. 48 
+
+ 
+
+ 
+
+Figura 3.11: Inclinação da catenária para os três casos ....................................................... 49 
+
+Figura 3.12: Tração na linha para os três casos ................................................................... 50 
+
+Figura 4.1: Exemplo de arquitetura de uma RNA ............................................................... 53 
+
+Figura 4.2: Exemplo de final de treinamento de uma rede única e sem normalização ....... 57 
+
+Figura 4.3: Relação entre a quantidade de dados e o número de iterações.......................... 64 
+
+Figura 4.4: Comparação entre a quantidade de dados e o tempo de treino ......................... 65 
+
+Figura 4.5: Relação entre a quantidade de dados e a velocidade de treino.......................... 66 
+
+Figura 4.6: Comparação entre a quantidade de combinações e o número de iterações ....... 74 
+
+Figura 4.7: Relação entre a quantidade de combinações e o tempo de treino ..................... 75 
+
+Figura 4.8: Relação entre a quantidade de combinações e a velocidade de treino .............. 76 
+
+Figura 4.9: Final do treinamento da RNA 4 ........................................................................ 80 
+
+ 
+
+ 
+
+ 
+
+ 
+
+LISTA DE TABELAS 
+
+Tabela 3.1: Valores da superfície efetiva e da área efetiva de resistência ............................ 38 
+
+Tabela 3.2: Valores de Nc ..................................................................................................... 39 
+
+Tabela 3.3: Valores de referência para  solo ......................................................................... 40 
+
+Tabela 3.4: Comprimento e projeção horizontal do trecho .................................................. 46 
+
+Tabela 3.5: Descrição dos casos .......................................................................................... 48 
+
+Tabela 3.6: Resultados do comprimento do trecho .............................................................. 50 
+
+Tabela 3.7: Resultados da projeção horizontal .................................................................... 51 
+
+Tabela 4.1: Funções de transferência ................................................................................... 53 
+
+Tabela 4.2: Algoritmos de treinamento ................................................................................ 54 
+
+Tabela 4.3: Resultados do treinamento ................................................................................ 56 
+
+Tabela 4.4: Resultados para redes separadas ....................................................................... 57 
+
+Tabela 4.5: Número de convergências por combinação ...................................................... 59 
+
+Tabela 4.6: Resultados do treinamento ................................................................................ 60 
+
+Tabela 4.7: Resultados para função de transferência ........................................................... 61 
+
+Tabela 4.8: Resultados para a quantidade de combinações ................................................. 62 
+
+Tabela 4.9: Resultados do treinamento ................................................................................ 63 
+
+Tabela 4.10: Comparação das RNAs com o sistema de EDO ............................................. 67 
+
+Tabela 4.11: Erro relativo dos resultados ............................................................................. 67 
+
+Tabela 4.12: Erro relativo dos resultados ............................................................................. 67 
+
+Tabela 4.13: Resultados do treino ........................................................................................ 69 
+
+Tabela 4.14: Resultados das RNAs separadas ..................................................................... 69 
+
+Tabela 4.15: Número de convergências por combinação .................................................... 70 
+
+Tabela 4.16: Resultados do treinamento .............................................................................. 71 
+
+Tabela 4.17: Resultados da função de treinamento.............................................................. 72 
+
+Tabela 4.18: Resultado do treino para a quantidade de combinações ................................. 73 
+
+Tabela 4.19: Resultado do treinamento................................................................................ 74 
+
+ 
+
+Tabela 4.20: Comparação das RNAs com o sistema de EDO ............................................. 77 
+
+Tabela 4.21: Erro relativo dos resultados ............................................................................. 77 
+
+Tabela 4.22: Erro relativo dos resultados ............................................................................. 78 
+
+Tabela 4.23: Comparação das RNAs com o sistema de EDO ............................................. 78 
+
+Tabela 4.24: Erro relativo dos resultados ............................................................................. 79 
+
+Tabela 4.25: Erro relativo dos resultados ............................................................................. 79 
+
+Tabela 4.26: Comparação das RNAs com o sistema de EDO ............................................. 81 
+
+Tabela 4.27: Erro relativo dos resultados ............................................................................. 81 
+
+Tabela 4.28: Erro relativo dos resultados ............................................................................. 81 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+LISTA DE ABREVIAÇÕES 
+
+CENPES: 
+
+Centro de Pesquisa da PETROBRAS 
+
+DNV: 
+
+Det Norske Veritas 
+
+DICAS: 
+
+Differentiated Compliance Anchoring System 
+
+FPSO: 
+
+Floating Production, Storage and Offloading 
+
+LACEO: 
+
+Laboratório de Análise e Confiabilidade de Estruturas Offshore da 
+COPPE/UFRJ 
+
+LCCV: 
+
+     Laboratório de Computação Científica e Visualização 
+
+MODU: 
+
+     Mobile Offshore Drilling Unit 
+
+NNTOOL: 
+
+     Neural Network Toolbox 
+
+PETROBRAS: 
+
+     Petróleo Brasileiro S/A 
+
+RNA: 
+
+TLP: 
+
+UFAL: 
+
+VLA: 
+
+Rede Neural Artificial 
+
+Tension Leg Platform 
+
+Universidade Federal de Alagoas 
+
+Vertically Loaded Anchors 
+
+ 
+
+14 
+
+1.  INTRODUÇÃO 
+
+1.1  COMENTÁRIOS INICIAIS 
+
+As  primeiras  explorações  de  petróleo  ocorreram  em  terra,  campos  denominados  onshore 
+
+(Figura 1.1), com a utilização de poucos equipamentos e uma produção diária muito inferior 
+
+às  atuais.  Com  o  passar  do  tempo,  os  campos  de  exploração  de  petróleo  aumentavam 
+
+significativamente, até que começou o esgotamento de campos petrolíferos onshore, surgindo, 
+
+assim, a necessidade de exploração em solo marinho, em campos denominados offshore. 
+
+ 
+
+Figura 1.1: Primeiras plataformas de petróleo 
+
+Fonte: pt.wikipedia.org. Acesso em: 17 de junho de 2013 
+
+ 
+
+Com isso, houve uma grande e constante busca para a construção de plataformas e criação de 
+
+tecnologias  que  viabilizassem  a  exploração  de  tais  campos.  Inicialmente,  foram  fabricadas 
+
+plataformas fixas (Figura 1.2), as quais são fixadas no solo marinho através de estacas ou por 
+
+gravidade e são bastante utilizadas em lâminas d’água de até 300 metros pelo fato de serem 
+
+técnica e economicamente as mais viáveis (Kawasaki, 2010). 
+
+ 
+
+ 
+
+ 
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+15 
+
+Figura 1.2: Plataformas fixas 
+
+Fonte: www.wavesafety.com.br. Acesso em: 29 de junho 2013. 
+
+ 
+
+Na medida em que esses campos se esgotavam, as explorações tinham que ser realizadas em 
+
+águas  cada  vez  mais  profundas,  levando  ao  desenvolvimento  de  plataformas  flutuantes, 
+
+facilmente adaptáveis às adversidades do ambiente oceânico. 
+
+Atualmente,  devido  ao  crescimento  contínuo  da  exploração  de  campos  de  petróleo  em 
+
+ambientes cada vez mais profundos e hostis, principalmente no campo do pré-sal (Figura 1.3), 
+
+o qual se localiza a cerca de 300 km da costa, com lâminas d’água que chegam a 2000 metros, 
+
+fez-se  necessário  o  desenvolvimento  de  plataformas  mais  eficientes  para  esse  tipo  de 
+
+ambiente.  As  plataformas  mais  utilizadas  nesses  casos  são  as  FPSOs,  que  são  navios-
+
+plataforma  com  a  capacidade  de  produzir,  armazenar  e  transferir  o  petróleo,  os  quais  estão 
+
+sendo  constantemente  modificados  para  atender  às  solicitações  adversas  da  região  (Wang  et 
+
+al., 2010). 
+
+Nesse  contexto,  um  dos  desafios  encontrados  no  ambiente  do  pré-sal  é  manter  a  unidade 
+
+flutuante estável, sem grandes deslocamentos. Dessa forma, os sistemas de ancoragem dessas 
+
+plataformas  têm  uma  vital  importância  no  que  diz  respeito  a  sua  integridade  estrutural, 
+
+responsáveis  por sua estabilidade e resistência  frente às movimentações  devido  aos diversos 
+
+estados de mar.  
+
+Com  isso,  pretende-se  viabilizar  os  trabalhos  na  superestrutura  e  evitar  danos  às  diversas 
+
+peças  da  plataforma,  dentre  elas  pode-se  citar  os  risers,  os  quais  sofrem  com  o  movimento 
+
+constante  da  estrutura,  levando,  em  muitos  casos,  à  fadiga,  comprometendo,  assim,  a 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+16 
+
+produção  do  petróleo  e  a  preservação  do  meio  ambiente.  Portanto,  usam-se  cada  vez  mais 
+
+linhas de ancoragem com diferentes tipos de materiais, a fim de proporcionar maior eficiência 
+
+e economia ao sistema em águas profundas e ultraprofundas. 
+
+ 
+
+Figura 1.3: Esquema da bacia do pré-sal 
+
+Fonte: www.passeiweb.com. Acesso em: 29 de junho 2013. 
+
+ 
+
+ 
+
+1.2  MOTIVAÇÃO 
+
+As plataformas petrolíferas offshore estão sujeitas a diversos tipos de solicitações, atuando em 
+
+várias  direções.  Essas,  por  sua  vez,  podem  ter  origem  natural,  como  a  energia  das  ondas  ao 
+
+deslocar a estrutura e a elevada força dos ventos em alto mar; ou serem originadas do próprio 
+
+processo  de  exploração,  produção  e  transporte  do  petróleo  e  gás.  Para  resistir  a  tais 
+
+solicitações,  além  de  manter  a  plataforma  em  condições  favoráveis  para  a  realização  dos 
+
+trabalhos  no local,  foram  desenvolvidos vários tipos  de sistemas de ancoragem,  empregados 
+
+de acordo com as características do ambiente e da unidade flutuante, tais como: distância da 
+
+costa,  profundidade  de  lâmina  d’água,  tipo  de  solo  do  leito  marinho,  tipo  e  geometria  da 
+
+plataforma empregada e as condições do ambiente, além de outros fatores que interferem na 
+
+estabilidade da estrutura. 
+
+Em  cada  uma  das  configurações  das  linhas  de  ancoragem,  a  intensidade  e  a  forma  como  os 
+
+esforços  são  transmitidos  para  o  solo  variam,  fazendo  com  que  existam  vários  tipos  de 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+17 
+
+fundação  para  cada  situação.  Além  disso,  visando  a  economia  e  a  eficiência  da  linha,  são 
+
+utilizados  materiais  diferentes  ao  longo  do  seu  comprimento,  de  acordo  com  as  solicitações 
+
+em  cada  trecho  e  sua  respectiva  localização.  Como  exemplo,  pode-se  citar  a  parte  da  linha 
+
+apoiada  no  solo  e  a  parte  enterrada,  pois  estas  estão  sujeitas  a  forças  de  abrasão  mais 
+
+acentuadas  que  o  trecho  em  catenária  suspensa,  e,  dessa  forma,  os  materiais  mais  indicados 
+
+para  constituir  esse  trecho  são  as  amarras;  não  sendo  empregadas  na  parte  submersa  por 
+
+possuir baixa capacidade de restauração.  
+
+Na  literatura,  a  maioria  dos  estudos  sobre  a  análise  das  linhas  de  ancoragem  delimita-se  à 
+
+parte  submersa,  desconsiderando  a  parte  enterrada,  além  disso,  ao  ponto  de  afloramento  da 
+
+linha no solo marinho é atribuída uma fixação perfeita dos movimentos, o que na verdade não 
+
+ocorre, pois o mesmo translada constantemente devido à própria dinâmica da estrutura.  
+
+Como não há muitos estudos significativos em relação à parte do sistema de ancoragem sob o 
+
+leito marinho, há um certo desconhecimento sobre o comportamento desse trecho, levando a 
+
+adoção  de  altos  coeficientes  de  majoração  em  seu  projeto,  superdimensionando  tanto  a 
+
+fundação quanto o trecho em catenária invertida. Logo, há um grande interesse no estudo da 
+
+parte  enterrada  da  linha  de  ancoragem,  fazendo-se  necessário  o  estudo  da  configuração  e 
+
+tensões atuantes em cada ponto ao longo do seu comprimento. 
+
+1.3  OBJETIVOS 
+
+O  presente  trabalho  tem  como  objetivo  o  estudo  de  uma  formulação  para  representação  da 
+
+interação  do  trecho  enterrado  da  linha  de  ancoragem  com  o  solo  marinho,  permitindo-se  o 
+
+mapeamento das trações ao longo  da linha, tendo ainda a própria  geometria como  incógnita 
+
+do  problema.  Desenvolve-se  uma  aplicação  computacional  em  MATLAB,  onde  as  equações 
+
+governantes são integradas numericamente.  
+
+Após  isso,  esse  modelo  é  utilizado  para  treinar  uma  Rede  Neural  Artificial,  que  pode  ser 
+
+utilizada  em  substituição  ao  processo  de  integração  numérica  do  sistema  governante  de 
+
+equações  diferenciais  ordinárias,  acoplando-a,  posteriormente,  à  análise  dinâmica  da  parte 
+
+submersa  da  linha.  Dessa  forma,  nessa  interação,  o  ponto  de  afloramento  da  linha  no  solo 
+
+marinho  é  ajustado  automaticamente  durante  a  análise  dinâmica  dos  trechos  submerso  e 
+
+enterrado. 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+1.4  METODOLOGIA 
+
+18 
+
+Inicialmente, faz-se uma implementação no MATLAB®, pois esse apresenta vantagens como 
+
+a  disponibilidade  de  uma  ampla  biblioteca  e  simplicidade  de  programação.  Para  isso,  são 
+
+utilizadas  duas  equações  diferenciais  ordinárias  de  primeira  ordem,  obtidas  através  das 
+
+equações  de  equilíbrio  da  catenária  invertida,  formada  pela  parte  enterrada  da  linha  de 
+
+ancoragem. Para resolução dessas equações, neste trabalho opta-se pelo tratamento numérico 
+
+via função ode45 do MATLAB®. 
+
+Em  um  primeiro  momento,  obtêm-se  o  comportamento  da  tração  na  linha  ao  longo  da 
+
+profundidade, bem como a variação do ângulo que a linha forma com a horizontal ao longo do 
+
+seu  comprimento.  Com  isso,  obtém-se  a  geometria  da  catenária  invertida.  Logo  após, 
+
+compara-se  o  modelo  com  resultados  obtidos  na  literatura,  com  o  objetivo  de  validar  o 
+
+programa desenvolvido. 
+
+Depois  disso,  emprega-se  esse  modelo  para  treinar  uma  Rede  Neural  Artificial  em 
+
+substituição  ao  processo  de  integração  numérica  do  sistema  governante  de  equações 
+
+diferenciais ordinárias, utilizando a NNTOOL do MATLAB®. 
+
+Foram treinadas duas RNAs principais: a primeira, recebendo como entrada apenas a tensão 
+
+inicial  e  a  segunda,  recebendo  a  tensão  inicial,  a  inclinação  inicial  e  a  profundidade  da 
+
+fundação. Ambas  as  redes  possuem  como  saída  a  tensão  e  inclinação  da  linha  no  encontro 
+
+com a âncora, bem como o comprimento total e a projeção horizontal do trecho enterrado. 
+
+1.5  DELIMITAÇÃO DO TRABALHO 
+
+Não  é  analisada  a  parte  submersa  das  linhas  de  ancoragem,  apenas  a  força  axial  que  essa 
+
+transmite à parte enterrada no  solo e o  ângulo  da linha em  relação  à horizontal no ponto  de 
+
+encontro  entre  essas  partes.  Também  não  são  analisadas  as  configurações  em  taut-leg  e 
+
+verticais,  limitando-se,  assim,  ao  sistema  de  ancoragem  convencional,  o  qual  apresenta  a 
+
+configuração da catenária invertida. 
+
+No  presente  trabalho,  também  não  são  considerados  os  efeitos  de  deslizamento  do  cabo  no 
+
+solo,  pois  se  trata  de  uma  análise  estática,  considerando  a  resistência  do  solo  à  fricção  no 
+
+estado  limite  último.  Esse  efeito  é  apenas  levado  em  conta  quando  se  realiza  uma  análise 
+
+dinâmica da linha. A deformabilidade da linha de ancoragem é considerada implicitamente na 
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+19 
+
+formulação,  pois  se  assume  que  as  equações  governantes  são  estabelecidas  com  base  na 
+
+geometria deformada da mesma. 
+
+Além  disso,  o  modelo  implementado  apresenta  uma  restrição  quanto  ao  ângulo  da  linha 
+
+enterrada  no  ponto  em  que  a  mesma  aflora  no  leito  marinho,  pois  o  processo  de  integração 
+
+numérica das equações governantes envolve indeterminações numéricas quando são impostos 
+
+ângulos muito pequenos, menores que 1˚, aproximadamente. 
+
+1.6  REVISÃO BIBLIOGRÁFICA 
+
+Realizam-se  revisões  bibliográficas  sobre  a  modelagem  da  catenária  invertida  e  sobre  a 
+
+utilização de Rede Neural Artificial. Como não foram encontrados trabalhos que utilizassem o 
+
+conceito  de  RNA  aplicado  à  análise  da  parte  enterrada  da  linha  de  ancoragem,  a  revisão 
+
+bibliográfica pode ser dividida em duas partes, as quais são: 
+
+a)  Modelagem computacional da catenária invertida; 
+
+b)  Redes Neurais Artificiais aplicadas à indústria do petróleo. 
+
+ 
+
+1.6.1  Modelagem computacional da catenária invertida 
+
+Bang  et  al.  (2010)  formularam  as  equações  diferenciais  governantes  do  trecho  enterrado  da 
+
+linha  e  Kawasaki  (2010)  implementou  essas  equações,  as  quais,  segundo  os  autores,  podem 
+
+ser  facilmente  deduzidas  por  meio  das  equações  de  equilíbrio,  em  forças  e  momento,  do 
+
+sistema.  Além  disso,  esse  modelo  baseia-se  em  um  método  analítico  que  fornece  soluções 
+
+para  as  linhas  enterradas  em  solos  coesivos.  Com  isso,  obtiveram-se  as  seguintes  equações 
+
+incrementais,  que  regem,  respectivamente,  a  variação  da  tração  ao  longo  da  linha,  a  força 
+
+normal de reação do solo e a variação da inclinação da linha ao longo do comprimento: 
+
+ 
+
+ 
+
+                          
+
+   
+
+                  
+
+    
+
+ 
+
+(1) 
+
+ 
+
+(2) 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+ 
+
+ 
+
+      
+
+              
+
+       
+
+ 
+
+20 
+
+ 
+
+(3) 
+
+Bang et al. (2003) realizaram testes laboratoriais com um segmento de linha de ancoragem em 
+
+escala  reduzida,  com  o  auxílio  de  uma  centrífuga  geotécnica,  a  fim  de  calibrar  a  solução 
+
+analítica desenvolvida para a análise e projeto de linhas de ancoragem  associadas à âncoras, 
+
+mostrada  acima  através  das  Equações  1,  2  e  3.  O  modelo  incluía  cabos  de  aço  e  amarras 
+
+posicionadas em várias profundidades em um solo marinho arenoso. As linhas de ancoragem 
+
+eram  solicitadas  com  tensões  predefinidas  na  superfície  da  água  através  da  aceleração  da 
+
+centrífuga,  visando  simular  as  condições  dos  carregamentos  em  campo.  Os  ensaios 
+
+laboratoriais  apresentaram  excelentes  resultados  da  geometria  e  tensões  quando  comparados 
+
+com os resultados analíticos. Ambos os resultados apresentaram menos que 5% de diferença 
+
+total quando somadas as diferenças tanto das geometrias quanto das tensões. 
+
+Kawasaki (2010) analisou o comportamento das linhas de ancoragem compostas por diversos 
+
+trechos,  com  propriedades  físicas  e  geométricas  distintas  e  contabilizando  a  interação  solo-
+
+estrutura,  além  de  analisar  a  parte  enterrada  das  mesmas.  Nesse  estudo,  fez-se  uma 
+
+implementação em MATHCAD para descrever a geometria e os esforços solicitantes ao longo 
+
+de toda a linha, e os resultados foram  comparados com  programas de referência no assunto, 
+
+tais como: ÂNCORA (LACEO) e DIGIN (DNV). Com isso, os resultados mostraram que os 
+
+erros  relativos  entre  os  programas  foram  muito  pequenos,  não  ultrapassando  5%, 
+
+contribuindo,  assim,  para  a  validação  do  programa  desenvolvido  no  trabalho  e das  fórmulas 
+
+envolvidas no problema. 
+
+Wang  et  al.  (2010)  apresentaram  um  modelo  estático  bidimensional  e  um  modelo  quase 
+
+estático tridimensional para o cabo da linha de ancoragem, durante o pré-tensionamento e em 
+
+seu estado de serviço, respectivamente, considerando a parte submersa e a parte enterrada no 
+
+solo  marinho  como  um  cabo  único. Ambos  os  modelos  levaram  em  consideração  os  efeitos 
+
+das  correntes  oceânicas,  a  resistência  do  solo  e  a  elasticidade  do  cabo.  Os  resultados 
+
+mostraram  que  os  modelos  utilizados  são  confiáveis  devido  às  considerações  feitas 
+
+inicialmente,  além  disso,  mostraram  que  os  efeitos  de  deslizamento  do  cabo  no  solo  devem 
+
+ser levados em conta para se obter uma representação mais adequada do comportamento das 
+
+linhas de ancoragem. 
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+21 
+
+1.6.2  Redes Neurais Artificiais aplicadas à indústria do petróleo 
+
+Em  muitas  análises  no  cenário  offshore,  há  dificuldades  de  estabelecer  ou  aplicar  modelos 
+
+matemáticos  que  regem  os  problemas  envolvidos,  pois  tais  análises,  principalmente  as 
+
+dinâmicas, demandam um tempo computacional elevado, o que em muitos casos inviabiliza a 
+
+análise  utilizando  o  método  dos  elementos  finitos.  Nesse  contexto,  a  fim  de  otimizar  o 
+
+processo,  as  Redes  Neurais Artificiais  ganham  especial  atenção  devido  à  sua  capacidade  de 
+
+aprendizado, generalização, associação e busca paralela (Pina, 2010). 
+
+Pina  (2010)  desenvolveu  ferramentas  computacionais  para  o  projeto  de  sistemas  para 
+
+produção  de  petróleo  offshore,  empregando  recursos  de  inteligência  computacional  para 
+
+complementar e/ou substituir métodos numéricos. As ferramentas computacionais empregadas 
+
+foram  o  método  de  otimização  por  Enxame  de  Partículas  (PSO)  e  Redes  Neurais Artificiais 
+
+compondo metamodelos para substituir análises dinâmicas computacionalmente dispendiosas. 
+
+Os resultados mostraram que o uso de uma RNA como um modelo exógeno  autorregressivo 
+
+não linear (NARX) pode fornecer predições de tração no topo do riser com grande precisão, 
+
+21  vezes  mais  rapidamente  do  que  uma  simulação  completa  de  3 h  usando  o  método  de 
+
+elementos  finitos,  uma  vez  que  somente  500 s  devem  ser  calculados  a  fim  de  construir  os 
+
+conjuntos de treinamento e validação. Além disso, a substituição da análise rigorosa pela rede 
+
+neural, na otimização, representou uma redução de 54% no tempo computacional necessário 
+
+para otimizar o modelo dos sistemas de ancoragem. 
+
+Silva  (2006)  desenvolveu  modelos  preditivos  para  a  obtenção  das  características  de 
+
+reservatórios  de  petróleo  a  partir  de  dados  monitorados  ou  simulados,  utilizando-se  técnicas 
+
+de mineração de dados. Com isso, utilizaram-se Redes Neurais Artificiais por possuírem boas 
+
+características no que se refere à classificação de padrões e de reconhecimento de padrões. O 
+
+autor  também  utilizou  Algoritmos  Genéticos  como  ferramenta  de  otimização.  Com  isso, 
+
+concluiu-se  que  as  soluções  testadas  se  mostraram  eficientes  na  modelagem  do  problema, 
+
+permitindo bons resultados de previsão de produção, tanto para curto quanto para longo prazo. 
+
+Além  disso,  sugere  o  uso  de  redes  neurais  como  ferramenta  adicional  às  já  atualmente 
+
+utilizadas  curvas  de  declínio  e  simulação  numérica  ou  ainda,  em  situações  que  essas 
+
+ferramentas são de difícil utilização. 
+
+Tiquilloca  et  al.  (1999)  trabalharam  no  desenvolvimento  de  um  simulador  para  análise  do 
+
+comportamento dinâmico de navios ancorados, denominados FPSO, através de Redes Neurais 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+22 
+
+Artificiais Multicamadas. Embora exista um modelo matemático, ele é muito complexo, por 
+
+necessitar  de  parâmetros  hidrodinâmicos  provenientes  de  ensaios  em  escala  reduzida. Além 
+
+disso, a dinâmica do FPSO é válida apenas em um modelo linearizado ao redor do ponto de 
+
+equilíbrio.  Os  resultados  obtidos  concordaram  com  os  dados  experimentais,  mostrando  a 
+
+capacidade  das  RNAs  para  modelar  sistemas  que  variam  no  tempo,  com  alta  precisão  e 
+
+resposta dinâmica confiável. 
+
+Bezerra e Morishita (2012), baseados nas vantagens da utilização de Superfícies de Reposta 
+
+nos processos de Otimização Multi-Objetivo, avaliaram o ganho no tempo de processamento 
+
+na  busca  da  melhor  solução  que  minimiza  as  funções  objetivo  (tempo  de  assentamento  e 
+
+máximo  sobressinal)  por  meio  do  uso  de  uma  metodologia  baseada  em  Redes  Neurais 
+
+Artificiais  e  Algoritmos  Genéticos.  Através  da  utilização  da  técnica  de  RNA,  foi  possível 
+
+reduzir o tempo de processamento de otimização, realizado para a determinação dos melhores 
+
+valores  para  os  parâmetros  do  controlador  PID  (Proporcional  Integral  Derivativo)  de  uma 
+
+embarcação dotada de Sistema de Posicionamento Dinâmico. Além  disso, concluiu-se que a 
+
+utilização de Superfícies de Resposta permite uma convergência mais rápida dos métodos de 
+
+otimização com Algoritmos Genéticos, sem comprometer a qualidade das respostas, com uma 
+
+redução no custo computacional do processo de mais de 50%. 
+
+1.7  ORGANIZAÇÃO DO TRABALHO 
+
+ 
+
+Os capítulos do presente trabalho estão organizados da seguinte forma: 
+
+No Capítulo 2, são apresentados alguns conceitos sobre sistema de ancoragem, tais como sua 
+
+função  e  os  materiais  utilizados  nas  linhas.  Além  disso,  são  apresentados  os  tipos  de 
+
+ancoragem de plataformas flutuantes. 
+
+O Capítulo 3 apresenta os tipos de plataformas de petróleo flutuantes, explicando os sistemas 
+
+de ancoragem utilizados e as características da embarcação. 
+
+No Capítulo 4 é feita a dedução das equações diferenciais de equilíbrio da catenária invertida, 
+
+são explicadas as variáveis envolvidas nas equações, bem como mostrados alguns valores de 
+
+referência  para  as  mesmas,  e  por  fim,  são  apresentados  os  resultados  relativos  ao  uso  do 
+
+modelo matemático em análises do trecho enterrado da linha de ancoragem. 
+
+O Capítulo  5 apresenta  definições de Redes Neurais Artificiais, mostrando a composição da 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+23 
+
+arquitetura  de  uma  RNA  e  explicando  o  processo  de  treinamento,  e  por  fim,  apresenta  os 
+
+resultados decorrentes da utilização de RNA na análise da catenária invertida. 
+
+No  Capítulo  6,  são  apresentadas  as  conclusões  acerca  do  trabalho  desenvolvido  e  sugestões 
+
+para trabalhos futuros. 
+
+2.  SISTEMAS DE ANCORAGEM 
+
+2.1  CONCEITOS 
+
+Sistema de ancoragem é o conjunto de elementos estruturais que tem como função fornecer a 
+
+força  restauradora  para  que  a  plataforma  flutuante  mantenha-se  em  sua  posição  (Kawasaki, 
+
+2010). Os principais elementos constituintes do sistema são as linhas de ancoragem, presentes 
+
+em todos os tipos de unidades flutuantes. 
+
+As  linhas  de  ancoragem  têm  como  função  manter  a  plataforma  em  posição  e  transmitir  os 
+
+esforços solicitantes desta para a fundação, a qual pode ser estaca ou âncora, dependendo das 
+
+condições de transferência dos esforços. Os materiais utilizados nas linhas são amarras de aço, 
+
+também  chamadas  de  corrente,  cabos  de  aço  e,  mais  recentemente,  cabos  de  materiais 
+
+sintéticos, como a poliamida e o poliéster (Kawasaki, 2010). 
+
+As amarras são formadas pela ligação consecutiva de elos de aço de seção circular, os quais 
+
+podem ser sem malhete ou com malhete (Figura 2.1), sendo este o mais utilizado. Essas são 
+
+mais utilizadas nos trechos iniciais e finais das linhas de ancoragem, pois são mais resistentes 
+
+ao atrito com o solo marinho, dissipando as forças transmitidas à fundação, e ao atrito com os 
+
+guinchos das unidades flutuantes que os outros materiais. 
+
+Os  cabos  de  aço  são  formados  por  fios  de  aço  enrolados  e  agrupados  (Figura  2.2).  Os 
+
+principais aços utilizados nas plataformas são os six strand, que são usados nas operações de 
+
+perfuração e os  spiral strand, os quais  apresentam maior resistência e durabilidade, além de 
+
+serem  mais  usados  nas  unidades  de  produção.  Esses  cabos  apresentam  uma  vida  útil  menor 
+
+que as amarras, o que pode ser contornado através da galvanização. A possibilidade de fadiga 
+
+nesses cabos é maior próximo às terminações e às conexões (Kawasaki, 2010; Lacerda, 2005). 
+
+ 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+ 
+
+24 
+
+Figura 2.1: Elos de amarras 
+
+Fonte: Lacerda, 2005. 
+
+ 
+
+Figura 2.2: Estrutura do cabo de aço 
+
+Fonte: Lacerda, 2005. 
+
+ 
+
+Os cabos de materiais sintéticos são os que apresentam maior flexibilidade e menor densidade 
+
+linear  submersa  para  uma  mesma  carga  de  ruptura,  o  que  leva  a  uma  maior  capacidade  de 
+
+restauração  da  linha  de  ancoragem,  sendo  dessa  forma,  utilizados  em  sua  parte  submersa. A 
+
+PETROBRAS  foi  pioneira  na  utilização  desse  cabo  na  costa  brasileira  (Lacerda,  2005), 
+
+apresentando-se como a alternativa mais viável para águas profundas e ultraprofundas. 
+
+A escolha dos materiais  empregados nas linhas está relacionada com  o tipo de configuração 
+
+da  linha  de  ancoragem  e  a  localização  de  trechos  com  características  similares  ao  longo  do 
+
+comprimento. Já os principais fatores que influenciam na escolha do tipo de configuração das 
+
+linhas a ser utilizado são: o tipo de unidade flutuante, a direção e intensidade das solicitações 
+
+ambientais (Lacerda, 2005). 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+2.2  TIPOS DE ANCORAGEM 
+
+25 
+
+As configurações dos sistemas de ancoragem  podem ser convencional, taut-leg e vertical. A 
+
+primeira  apresenta  uma  parcela  significativa  do  cabo  apoiada  no  solo,  transmitindo  assim, 
+
+apenas  esforços  horizontais  à  fundação  se  a  ancoragem  for  feita  por  arrasto. Além  disso,  a 
+
+geometria da ancoragem convencional pode ser dividida em duas partes (Figura 2.3): a parte 
+
+submersa,  na  forma  de  catenária,  e  a  parte  enterrada,  com  a  geometria  de  uma  catenária 
+
+invertida, a qual é responsável pela transmissão das tensões ao solo e à fundação. 
+
+ 
+
+Figura 2.3: Geometria típica de ancoragem convencional 
+
+ 
+
+ 
+
+A segunda configuração não tem trecho apoiado no leito marinho, pois é mais tracionada que 
+
+a  convencional,  transmitindo  tanto  esforços  horizontais  quanto  verticais  à  fundação.  Já  o 
+
+último  sistema  é  formado  por  tendões  verticais  constantemente  tracionados,  utilizado  em 
+
+plataformas do tipo TLP (Kawasaki, 2010). 
+
+O tipo de plataforma utilizada, a geometria da unidade flutuante e as condições do ambiente 
+
+onde esta será instalada são os principais fatores que influenciam na escolha de um sistema de 
+
+ancoragem. 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+2.2.1  Ancoragem convencional 
+
+26 
+
+A  ancoragem  convencional  é  composta  por  linhas  que  possuem  a  configuração  de  uma 
+
+catenária. Essa técnica é utilizada em  operações  de produção por propiciar maiores passeios 
+
+da unidade flutuante e, com isso, não se faz necessário o uso de âncoras com elevado poder de 
+
+garra. 
+
+As  linhas  de  ancoragem  são  fixas  no  fundo  do  mar  por  meio  de  âncoras,  mantendo  a 
+
+plataforma  em  posição  por  meio  da  força  restauradora  das  linhas.  Dessa  forma,  o  trecho 
+
+apoiado  no  leito  marinho  contribui  com  essa  força  através  do  atrito  entre  o  solo  e  a  linha, 
+
+aliviando, assim,  os esforços transmitidos para a  âncora  em  condições normais de operação. 
+
+Pela necessidade de um  grande trecho apoiado no solo,  geralmente amarra, o custo  da linha 
+
+aumenta. 
+
+A  grande  desvantagem  do  uso  de  ancoragem  convencional  é  que  a  força  restauradora  está 
+
+relacionada  com  o  raio  da  linha,  e  para  atender  os  critérios  de  projeto  para  passeio  dessas 
+
+unidades, deve-se utilizar raios grandes, cerca de 10% da lâmina d’água (Pina, 2010). Dessa 
+
+forma, isso causa um congestionamento das linhas de ancoragem e das linhas de plataformas 
+
+próximas, interferindo no posicionamento destas, e, além disso, pode causar interferência com 
+
+equipamentos marinhos próximos.  
+
+2.2.2  Ancoragem taut-leg 
+
+Com  o  propósito  de  contornar  as  desvantagens  da  ancoragem  convencional,  surgiu  a 
+
+ancoragem  taut-leg  (Figura  2.4), a qual  é  constituída por linhas mais tensionadas, formando 
+
+com  isso  ângulos  de  aproximadamente  45˚  com  a  horizontal  no  topo  da  unidade  flutuante. 
+
+Com  isso,  obtêm-se  linhas  com  projeções  horizontais  menores  para  uma  lâmina  d’água  de 
+
+mesma ordem de grandeza. 
+
+Esse  tipo  de  ancoragem  proporciona  maior  rigidez  à  estrutura  e,  com  isso,  os  passeios  da 
+
+plataforma ficam limitados a offsets menores (deslocamentos menores). A utilização de taut-
+
+leg exige o uso de fundações que suportem elevadas forças verticais, por isso torna-se comum 
+
+a utilização de estacas de sucção, VLA ou estacas torpedo. 
+
+ 
+
+ 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+27 
+
+Figura 2.4: Ancoragem convencional e taut-leg 
+
+Fonte: www.oceanica.ufrj.br. Acesso em: 28 de junho 2013. 
+
+ 
+
+A ancoragem taut-leg geralmente é utilizada em regiões de grandes profundidades, pois, nesse 
+
+caso,  o  uso  de  ancoragem  convencional  demandaria  um  raio  de  catenária  muito  elevado, 
+
+inviabilizando o projeto. 
+
+2.2.3  Ancoragem vertical 
+
+A ancoragem vertical (Figura 2.5) caracteriza-se pela utilização de tendões verticais, os quais 
+
+estão  sempre  tracionados  devido  ao  excesso  de  empuxo  proveniente  da  parte  submersa  da 
+
+embarcação.  Podem  ser  constituídos  de  cabos  de  aço  ou  de  material  sintético.  Esse  tipo  de 
+
+sistema  proporciona  uma  elevada  rigidez  no  plano  vertical  em  contraposição  a  uma  baixa 
+
+rigidez no plano horizontal. 
+
+A força de restauração é garantida pela componente horizontal da força de tração nos tendões 
+
+quando  da  solicitação  da  linha  no  referido  plano.  Para  tendões  de  pequenos  diâmetros  (d    
+
+0,25 m), os efeitos de flexão podem ser desprezados, enquanto que, para grandes diâmetros (d 
+
+  1,00 m), tais efeitos devem ser considerados (Juvinao Carbono, 2005  apud Pina, 2010, p. 
+
+24). 
+
+Esse tipo de sistema de ancoragem é mais comumente utilizado em plataformas do tipo TLP, 
+
+podendo também ser empregado em ancoragens de bóias e monobóias. 
+
+ 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+28 
+
+Figura 2.5: Ancoragem vertical 
+
+Fonte: Kawasaki, 2010. 
+
+ 
+
+ 
+
+2.3  TIPOS DE PLATAFORMAS FLUTUANTES 
+
+Com  as  descobertas  de  campos  de  petróleo  em  águas  cada  vez  mais  profundas,  houve  a 
+
+necessidade  de  utilizar  plataformas  flutuantes,  pois  o  uso  de  plataformas  fixas  tornou-se 
+
+inviável nesse tipo de ambiente.  
+
+Como o foco do trabalho se dá em plataformas cujo sistema de ancoragem é constituído por 
+
+cabos, os tipos de plataformas offshore abordados serão as plataformas flutuantes. Logo, serão 
+
+abordadas as plataformas semissubmersíveis, o FPSO, a TLP e a SPAR. 
+
+2.3.1  SEMISSUBMERSÍVEL 
+
+Este tipo de plataforma (Figuras 2.6 e 2.7) é uma estrutura de um ou mais conveses e se apoia 
+
+através  de  colunas  em  flutuadores  marinhos,  os  quais  são  preenchidos  com  água  para  o 
+
+controle do nível da plataforma em relação ao nível do mar, e dessa forma, a linha d’água fica 
+
+na  altura  das  pernas.  Com  isso,  minimizam-se  os  movimentos  da  plataforma  pela  excitação 
+
+das ondas (Amorim, 2010). 
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+29 
+
+Figura 2.6: Detalhes da estrutura da plataforma semissubmersível 
+
+Fonte: Pina, 2010. 
+
+ 
+
+ 
+
+Figura 2.7: Plataforma semissubmersível 
+
+Fonte: www.qgog.com.br. Acesso em: 28 de junho 2013. 
+
+ 
+
+Essas plataformas podem ser utilizadas para produção ou para perfuração. As plataformas de 
+
+produção  ficam  fixas  por  muitos  anos  em  um  mesmo  local  e  não  armazenam  óleo,  ao 
+
+contrário das FPSOs. Já as plataformas de perfuração ficam por um período determinado em 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+30 
+
+uma mesma localidade e, por isso, são denominadas MODU (Lacerda, 2005). As plataformas 
+
+semissubmersíveis podem ter sistemas de ancoragem do tipo convencional ou taut-leg. 
+
+2.3.2  FPSO 
+
+Um  dos  desafios  encontrados  na  explotação  de  petróleo  em  regiões  com  grandes  lâminas 
+
+d’água e distantes da costa é como escoar a produção. Por conta disso, foi desenvolvida uma 
+
+tecnologia  para  retirada  desse  óleo  que  se  aproxima  cada  vez  mais  da  indústria  naval,  os 
+
+navios denominados FPSO (Figura 2.8). 
+
+ 
+
+Figura 2.8: Navio FPSO 
+
+Fonte: www.facebook.com/pages/GigaPetro. Acesso em: 10 de maio de 2013. 
+
+ 
+
+Esse tipo de navio é uma unidade estacionária ancorada que tem a capacidade de armazenar o 
+
+óleo e transmitir para outro navio, denominado aliviador, que é periodicamente conectado aos 
+
+FPSOs  para  receber  o  óleo  produzido  e  transportá-lo  aos  terminais  petrolíferos  (Lacerda, 
+
+2005). 
+
+A PETROBRAS desenvolveu um sistema especial de ancoragem para navios do tipo FPSO, o 
+
+sistema  DICAS  (Figura  2.9).  Este  se  caracteriza  por  utilizar  linhas  de  ancoragem  com 
+
+diferentes  rigidezes na proa e na popa do navio,  obtidas através da utilização de linhas  com 
+
+diferentes níveis de pré-tensão, proporcionando, assim, um alinhamento parcial do navio em 
+
+relação às direções principais dos carregamentos ambientais mais severos (Kawasaki, 2010). 
+
+ 
+
+ 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+31 
+
+Figura 2.9: Sistema de ancoragem DICAS 
+
+Fonte: Kawasaki, 2010. 
+
+ 
+
+2.3.3  TLP 
+
+O  casco  da  TLP  (Figura  2.10)  é  semelhante  ao  de  uma  semissubmersível,  constituído 
+
+basicamente  de  seções  tubulares  horizontais  e  cilindros  verticais  enrijecidos.  A  ancoragem 
+
+dessa plataforma é realizada por meio de tendões verticais. O excesso de empuxo proveniente 
+
+da  parte  submersa  do  casco  mantém  os  tendões  tensionados,  os  quais  devem  ser  mantidos 
+
+assim para evitar a desconexão no fundo do mar (Aguiar, 2005). 
+
+ 
+
+Figura 2.10: Sistema de ancoragem TLP 
+
+Fonte: www-it.jwes.or.jp. Acesso em: 28 de junho 2013. 
+
+ 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+2.3.4  SPAR 
+
+32 
+
+A  plataforma  SPAR  é  constituída  por  um  cilindro  vertical  de  aço,  de  grande  diâmetro,  com 
+
+converses  localizado  no  topo.  Possui  um  calado  de  aproximadamente  200  metros,  o  que 
+
+aumenta  a  rigidez  da  estrutura,  reduzindo  os  movimentos  verticais  e  possibilitando  a 
+
+utilização de risers rígidos de produção. Utilizam-se também supressores de vórtices em torno 
+
+do  cilindro,  a  fim  de  minimizar  os  efeitos  de  vibração  causados  pelo  fenômeno  de  vortex-
+
+shedding, induzido principalmente pela ação das correntes oceânicas. 
+
+Esse sistema ainda pode ser subdividido em três tipos de plataformas, as quais são: 
+
+a)  Spar buoy; 
+
+b)  Truss Spar; 
+
+c)  Cell Spar. 
+
+ 
+
+2.3.4.1 Spar buoy 
+
+Foi  o  primeiro  tipo  de  sistema  de  Spar  a  ser  desenvolvido  (Figura  2.11).  Possui  apenas  um 
+
+único  cilindro  vertical  de  aço,  o  que  flexibiliza  a  capacidade  de  carga  no  convés  (Amorim, 
+
+2010). 
+
+ 
+
+Figura 2.11: Sistema de ancoragem Spar buoy 
+
+Fonte: www.isiengenharia.com.br. Acesso em: 28 de junho 2013.  
+
+ 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+2.3.4.2 Truss Spar 
+
+33 
+
+É uma evolução da plataforma Spar (Figura 2.12), na qual é substituído o cilindro na região 
+
+abaixo  dos  tanques  por  uma  estrutura  treliçada  e  composta  de  placas  horizontais,  o  que 
+
+minimiza os efeitos de onda e consequentemente os movimentos verticais da estrutura. 
+
+ 
+
+Figura 2.12: Ancoragem Truss Spar 
+
+Fonte: www.stoprust.com. Acesso em: 28 de junho 2013. 
+
+ 
+
+2.3.4.3 Cell spar 
+
+Esse  sistema  possui  as  mesmas  características  que  o  sistema  Truss  Spar,  sendo  que  a  única 
+
+diferença é que a plataforma Cell Spar é composta por vários tubos menores em volta de um 
+
+único cilindro (Figura 2.13). Além disso, esse sistema é a opção mais econômica entre os três 
+
+tipos supracitados. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+34 
+
+Figura 2.13: Sistema de ancoragem Cell Spar 
+
+Fonte: www.rigzone.com. Acesso em: 28 de junho 2013. 
+
+ 
+
+3.  CATENÁRIA INVERTIDA 
+
+3.1  FORMULAÇÃO MATEMÁTICA 
+
+Na Figura 3.1, pode-se observar o diagrama de corpo livre de uma parcela infinitesimal dessa 
+
+parte da estrutura, onde estão presentes: o peso submerso da linha de ancoragem por unidade 
+
+de comprimento ( ), a tensão normal na linha de ancoragem (T), a força unitária de atrito do 
+
+solo ao longo da linha ( ) e a força normal de reação do solo ( ). Além disso, chama-se de 
+
+AS a superfície efetiva da linha de ancoragem por unidade de comprimento e AB a área efetiva 
+
+de resistência da linha por unidade de comprimento. 
+
+Com  base  nesse  diagrama  de  corpo  livre,  impõe-se  o  equilíbrio  de  forças  ao  longo  das 
+
+direções  longitudinal  (t)  e  transversal  (n),  chegando-se  a  duas  equações  diferenciais,  que 
+
+regem  a  variação  da  tração  ao  longo  da  linha  e  a  geometria  da  catenária  invertida  (DNV, 
+
+2000). 
+
+ 
+
+ 
+
+ 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+Figura 3.1: Diagrama de corpo livre de um segmento da catenária 
+
+invertida 
+
+ 
+
+ 
+
+Para as deduções, consideram-se as seguintes aproximações: 
+
+   
+
+  
+ 
+
+             
+
+            
+
+           
+
+35 
+
+ 
+
+(4) 
+
+(5) 
+
+(6) 
+
+Fazendo         : 
+
+                                               
+
+  
+ 
+
+             
+
+  
+ 
+
+                
+
+(7) 
+
+                                                                       
+
+  
+ 
+
+        
+
+(8) 
+
+                                                      
+
+  
+  
+
+                     
+
+Fazendo         : 
+
+              
+
+  
+ 
+
+                                          
+
+  
+ 
+
+    
+
+ 
+
+(9) 
+
+(10) 
+
+(11) 
+
+ 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+ 
+
+         
+
+  
+ 
+
+                                 
+
+  
+ 
+
+            
+
+  
+ 
+
+       
+
+  
+ 
+
+    
+
+(12) 
+
+36 
+
+ 
+
+  
+
+  
+ 
+
+     
+
+  
+ 
+
+                                    
+
+  
+ 
+
+             
+
+  
+ 
+
+    
+
+ 
+
+                                       
+
+  
+  
+
+ 
+
+                
+
+ 
+
+ 
+
+ 
+
+ 
+
+(13) 
+
+ 
+
+(14) 
+
+(15) 
+
+Para as duas equações diferenciais governantes, a variável independente é o comprimento de 
+
+arco ao longo da linha. Porém, como o comprimento da parte enterrada da linha de ancoragem 
+
+não é um parâmetro conhecido a priori, deve-se reescrever essas equações em termos de uma 
+
+variável independente que remeta a uma informação conhecida  do problema, como  é o caso 
+
+da profundidade da fundação do sistema. 
+
+Através da Figura 3.2, sabe-se que: 
+
+ 
+ 
+
+ 
+
+ 
+
+Figura 3.2: Seguimento ds da linha de ancoragem. 
+
+ 
+
+ 
+
+  
+  
+
+        
+
+(16) 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+ 
+
+Com isso, utilizando-se a regra da cadeia na Equação 10: 
+
+ 
+
+ 
+
+  
+  
+
+ 
+
+  
+  
+
+                     
+
+  
+  
+
+                            
+
+  
+  
+
+                     
+
+Fazendo o mesmo para a Equação 15: 
+
+ 
+
+ 
+
+  
+  
+
+ 
+
+  
+  
+
+   
+
+                
+
+ 
+
+ 
+
+  
+  
+
+           
+
+                
+
+ 
+
+ 
+
+  
+  
+
+   
+
+                
+
+        
+
+ 
+
+37 
+
+(17) 
+
+(18) 
+
+(19) 
+
+(20) 
+
+(21) 
+
+(22) 
+
+Na  Figura  3.3,  pode-se  observar  os  parâmetros  relacionados  com  a  geometria  da  catenária 
+
+invertida:  H  é  a  projeção  horizontal  do  trecho  enterrado  da  linha  e  P  é  a  profundidade  ou 
+
+projeção vertical da linha de ancoragem enterrada. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+38 
+
+Figura 3.3: Parâmetros da catenária invertida 
+
+ 
+
+ 
+
+3.2  DESCRIÇÃO DOS PARÂMETROS 
+
+Alguns valores default de AS e AB são mostrados na Tabela 3.1. 
+
+Tabela 3.1: Valores da superfície efetiva e da área efetiva de 
+
+resistência 
+
+Tipo de linha 
+
+AS 
+
+Amarra 
+
+11,3d 
+
+Cabo 
+
+πd 
+
+AB 
+
+2,5d 
+
+d 
+
+ 
+
+ 
+
+onde: 
+
+d = Diâmetro nominal da amarra e o efetivo do cabo. 
+
+A força normal N pode ser calculada pela seguinte fórmula: 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+39 
+
+(23) 
+
+       c .  u 
+
+onde: 
+
+ c = Fator de capacidade de carga do solo; 
+
+ u = Resistência não drenada do solo. 
+
+Os valores de  c recomendados pela DNV para a parte enterrada da linha de ancoragem 
+
+são mostrados na Tabela 3.2. 
+
+ 
+
+ 
+
+ 
+
+  
+
+Tabela 3.2: Valores de Nc 
+
+Amarra/Cabo 
+
+Limite inferior 
+
+Default 
+
+Limite superior 
+
+ c 
+
+9 
+
+11,5 
+
+14 
+
+A  força  unitária  de  atrito  do  solo  f  ao  longo  da  linha  de  ancoragem  pode  ser  calculada 
+
+através da seguinte fórmula: 
+
+       solo .  u 
+
+(24) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+onde: 
+
+ solo  = Fator de adesão da linha de ancoragem. 
+
+Os  valores  recomendados  para  o  fator  de  adesão  para  a  parte  enterrada  da  linha  são 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+40 
+
+mostrados na Tabela 3.3 abaixo: 
+
+Tabela 3.3: Valores de referência para  solo  
+
+Cabo 
+
+Limite inferior 
+
+Default 
+
+Limite superior 
+
+ solo  
+
+0,2 
+
+0,3 
+
+0,4 
+
+Amarra 
+
+Limite inferior 
+
+Default 
+
+Limite superior 
+
+ solo  
+
+0,4 
+
+0,5 
+
+0,6 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3.3  APLICAÇÃO DO MODELO 
+
+Para  resolver  o  problema  de  valor  inicial  associado  ao  sistema  de  equações  diferenciais, 
+
+constituído  pelas Equações  19 e 22, deve-se adotar o intervalo  de integração e  as condições 
+
+iniciais.  Como  as  equações  estão  em  função  da  profundidade,  o  intervalo  de  integração  é  a 
+
+própria profundidade de assentamento da âncora, onde se localiza o final do trecho enterrado 
+
+da linha de ancoragem. No modelo, considera-se o eixo da profundidade positivo para baixo, 
+
+tendo como origem o leito marinho, como mostrado na Figura 3.3 anterior. 
+
+As  condições  iniciais  adotadas  são  relativas  ao  ponto  inicial  do  trecho  enterrado  da  linha, 
+
+sendo  este  ponto  considerado  no  leito  marinho  para  toda  a  análise  do  presente  trabalho. As 
+
+condições são a tensão inicial T0 e o ângulo inicial formado entre a linha e a horizontal θ0. 
+
+Em todos os casos analisados, Nc apresenta o comportamento observado na Figura 3.4 (Wang 
+
+et  al.,  2010),  com  um  valor  inicial  Nc0  maior  que  zero,  aumentando  linearmente,  com 
+
+determinado  coeficiente  angular  dNcdp,  até  uma  dada  profundidade  pNc,  a  partir  da  qual 
+
+assume valor constante. Essa variação inicial se deve ao fato de o solo se apresentar revolto 
+
+próximo a superfície, com resistência muito baixa. 
+
+ 
+
+ 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+ 
+
+Figura 3.4: Variação de Nc com a profundidade 
+
+41 
+
+ 
+
+Já  Su  tem  um  valor  inicial  constante  Su0  até  uma  determinada  profundidade  pSu,  a  partir  da 
+
+qual apresenta aumento linear, com um determinado coeficiente angular dSudp. Para todos os 
+
+casos  do  presente  trabalho,  Su  varia  linearmente  ao  longo  de  toda  a  profundidade,  não 
+
+apresentando,  portanto,  o  trecho  inicial  constante,  pois  pSu  é  tomado  como  zero.  Esse 
+
+comportamento pode ser visto no gráfico da  Figura  3.5. Além  disso, em  todos os casos,  α  é 
+
+considerado  constante  e  igual  a  0,5,  pois  é  o  valor  médio  recomendado  pela  DNV  (DNV, 
+
+2000) para amarras. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+42 
+
+Figura 3.5: Variação de Su com a profundidade 
+
+ 
+
+ 
+
+3.3.1  Exemplo ilustrativo 
+
+Através  do  modelo  matemático  descrito,  analisaram-se  três  casos  genéricos  de  um  trecho 
+
+enterrado da linha, variando apenas a tensão T0. Todos os valores adotados para as variáveis 
+
+são  obtidos  da  literatura,  com  exceção  de  T0,  o  qual  é  ajustado  para  se  ter  uma  melhor 
+
+percepção  da  variação  das  geometrias  nos  casos  descritos.  Com  isso,  são  utilizados  os 
+
+seguintes dados: 
+
+a)  T0 = 105, 2.105 e 106 N; 
+
+b)  θ0 = 30˚; 
+
+c)  P = 15 m; 
+
+d)  w = 2114,1 N/m; 
+
+e)  material do trecho = cabo de aço; 
+
+f)  diâmetro da linha = 0,0508 m; 
+
+g)  AS = 0,1596 m2/m; 
+
+h)  AB = 0,0508 m2/m; 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+43 
+
+ 
+
+ 
+
+i)  Su0 = 0 kPa; 
+
+j)  pSu = 0 m; 
+
+k)  dSudp = 1500 kPa/m; 
+
+l)  Nc0 = 5,14; 
+
+m)  pNc = 0,3048 m; 
+
+n)  dNcdp = 8,07 m-1; 
+
+o)  α0 = 0,5; 
+
+p)  pα = 0 m; 
+
+q)  dαdp = 0 m-1. 
+
+ A partir da implementação do sistema de equações diferenciais, obtiveram-se os gráficos das 
+
+Figuras 3.6, 3.7 e 3.8. 
+
+ 
+
+ 
+
+Figura 3.6: Geometria da linha dos três casos 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+ 
+
+44 
+
+Analisando  as  geometrias  das  linhas,  percebe-se  que  quanto  maior  a  tensão  inicial  há  uma 
+
+tendência do trecho em  linearizar-se. Além  disso, percebe-se que o ponto  de afloramento da 
+
+linha  varia  à  medida  que  a  tensão  inicial  adquire  diferentes  valores.  Dessa  forma,  pode-se 
+
+concluir que, na prática, esse ponto de afloramento translada constantemente no leito marinho, 
+
+pois os movimentos da unidade flutuante causam variações constantes das tensões nas linhas 
+
+de ancoragem. 
+
+ 
+
+ 
+
+Figura 3.7: Inclinação da linha para os três casos 
+
+ 
+
+ 
+
+Pode-se observar que nos primeiros 5 metros há pouca variação no ângulo da linha enterrada, 
+
+a qual se apresenta praticamente reta, sendo que a maior variação ocorre nos últimos metros, 
+
+apresentando um comportamento praticamente linear a partir de 7 metros, aproximadamente. 
+
+Percebe-se  também  que  a  variação  da  inclinação  da  linha  é  inversamente  proporcional  à 
+
+tensão inicial, devido ao efeito de linearização comentado anteriormente. 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+45 
+
+Figura 3.8: Tração na linha para os três casos 
+
+ 
+
+ 
+
+Para melhor visualizar o comportamento da tração ao longo da linha, isola-se o gráfico de T0 
+= 2.105 N na Figura 3.9. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+46 
+
+Figura 3.9: Tração na linha do caso 2 
+
+ 
+
+ 
+
+A tração ao longo da linha tem um comportamento similar ao da inclinação da mesma, com a 
+
+maior  variação  ocorrendo  nos  pontos  mais  próximos  à  âncora,  apresentando  um 
+
+comportamento  praticamente  linear  em  metade  do  trecho.  Isso  ocorre,  pois  a  resistência  do 
+
+solo  aumenta  com  a  profundidade,  o  que  dificulta  a  linearização  da  linha,  deixando-a  com 
+
+formato curvo. 
+
+Na Tabela 3.4 registram-se os comprimentos e projeções horizontais da linha para cada caso. 
+
+Tabela 3.4: Comprimento e projeção horizontal do trecho 
+
+T0 (N) 
+
+105 
+2.105 
+106 
+
+L (m) 
+22,0 
+24,3 
+28,2 
+
+H (m) 
+15,1 
+18,8 
+23,9 
+
+ 
+
+Analisando  esses  valores,  conclui-se  que  quanto  maior  a  tensão  inicial,  maiores  o 
+
+comprimento (L) e a projeção horizontal (H) do trecho enterrado da linha de ancoragem. Isso 
+
+se  deve  à  movimentação  do  ponto  inicial  da  linha  enterrada,  localizado  no  leito  marinho,  à 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+47 
+
+medida que a tensão varia, e, dessa forma, quanto maior a tensão, maior a distância entre este 
+
+ponto e a âncora. 
+
+3.3.2  Estudo de caso 
+
+Neste  estudo,  são  analisados  três  casos,  os  quais  são  comparados  com  os  resultados  obtidos 
+
+por Kawasaki  (2010),  cujo  trabalho apresenta os resultados de três programas diferentes: no 
+
+MATHCAD,  programado  pelo  autor;  ÂNCORA,  programa  do  laboratório  LACEO  da 
+
+COPPE/UFRJ;  e  DIGIN,  da  DNV.  Em  cada  caso,  os  únicos  parâmetros  que  variam  são  a 
+
+tensão inicial T0 e o ângulo inicial da linha θ0. Os dados comparados são a projeção horizontal 
+
+e  o  comprimento  total  da  catenária  invertida.  A  seguir  é  descrito  cada  caso,  os  quais 
+
+apresentam os seguintes dados de entrada em comum: 
+
+a)  P = 15 m; 
+
+b)  w = 2114,1 N/m; 
+
+c)  material do trecho = amarra; 
+
+d)  diâmetro da linha = 0,114 m; 
+
+e)  AS = 1,2882 m2/m; 
+
+f)  AB = 0,285 m2/m; 
+
+g)  Su0 = 0 kPa; 
+
+h)  pSu = 0 m; 
+
+i)  dSudp = 1500 kPa/m; 
+
+j)  Nc0 = 5,14; 
+
+k)  pNc = 0,684 m; 
+
+l)  dNcdp = 3,5965 m-1; 
+
+m)  α0 = 0,5; 
+
+n)  pα = 0 m; 
+
+o)  dαdp = 0 m-1. 
+
+ 
+
+Nas Figuras 3.10, 3.11 e 3.12 são mostrados, respectivamente, os resultados da geometria da 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+48 
+
+catenária invertida e do comportamento da inclinação e da tração ao longo da linha. A tensão 
+
+T0 e a inclinação θ0 para cada caso são descritas na Tabela 3.5. 
+
+Tabela 3.5: Descrição dos casos 
+
+Caso 
+
+T0 (106 N) 
+
+θ0 (graus) 
+
+1 
+2 
+3 
+
+6 
+7 
+8 
+
+33,69 
+34,38 
+34,84 
+
+Figura 3.10: Geometria da linha para os três casos 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Para  todos  os  casos,  percebe-se  a  pouca  variação  na  geometria  da  linha,  apesar  de  haver 
+
+variação significativa da tensão inicial. Isso ocorre, pois os valores das tensões já são bastante 
+
+elevados, o que torna a geometria praticamente linear. 
+
+ 
+
+ 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+49 
+
+Figura 3.11: Inclinação da catenária para os três casos 
+
+ 
+
+ 
+
+Na  Figura  3.11,  percebe-se  que,  para  os  três  casos,  a  inclinação  das  linhas  se  iguala  a  uma 
+
+profundidade de aproximadamente 13 metros, próximo da fundação. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+50 
+
+Figura 3.12: Tração na linha para os três casos 
+
+ 
+
+ 
+
+Com  isso,  comparam-se  os  resultados  do  comprimento  total  e  da  projeção  horizontal  do 
+
+trecho  enterrado  para  os  três  casos  supracitados,  mostrados  nas Tabela  3.6  e Tabela  3.7.  Os 
+
+erros relativos calculados são referentes à modelagem do presente trabalho, ou seja, referentes 
+
+à implementação em MATLAB. 
+
+Tabela 3.6: Resultados do comprimento do trecho 
+
+Comprimento do trecho enterrado (m) 
+MATLAB 
+
+MATHCAD 
+
+ÂNCORA 
+
+25,88 
+0,00 
+25,61 
+0,00 
+25,44 
+0,00 
+0,00 
+
+26,00 
+0,46 
+25,50 
+0,43 
+25,40 
+0,16 
+0,46 
+
+25,39 
+1,89 
+25,20 
+1,60 
+25,08 
+1,42 
+1,89 
+
+DIGIN 
+25,80 
+0,31 
+25,67 
+0,23 
+25,60 
+0,63 
+0,63 
+
+Caso 
+
+1 
+
+Erro relativo (%) 
+
+2 
+
+Erro relativo (%) 
+
+3 
+
+Erro relativo (%) 
+Erro máximo (%) 
+
+ 
+
+ 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+51 
+
+Tabela 3.7: Resultados da projeção horizontal 
+
+Projeção horizontal (m) 
+
+MATLAB 
+
+MATHCAD 
+
+ÂNCORA 
+
+21,08 
+0,00 
+20,74 
+0,00 
+20,54 
+0,00 
+0,00 
+
+21,44 
+1,71 
+20,55 
+0,92 
+20,41 
+0,63 
+1,71 
+
+20,45 
+2,99 
+20,24 
+2,41 
+20,09 
+2,19 
+2,99 
+
+Caso 
+
+1 
+
+Erro relativo (%) 
+
+2 
+
+Erro relativo (%) 
+
+3 
+
+Erro relativo (%) 
+Erro máximo (%) 
+
+DIGIN 
+20,96 
+0,57 
+20,81 
+0,34 
+20,72 
+0,88 
+0,88 
+
+ 
+
+ 
+
+ 
+
+Logo,  os  resultados  obtidos  com  o  programa  desenvolvido  neste  trabalho  são  satisfatórios, 
+
+visto que o maior erro relativo dos comprimentos é de 1,89%, e das projeções horizontais é de 
+
+2,99%, os quais são erros desprezíveis. Assim, os maiores erros são relativos ao ÂNCORA, já 
+
+os  menores  são  relativos  ao  DIGIN,  o  que  é  esperado,  pois  a  formulação  matemática 
+
+empregada no presente trabalho é a recomendada pela DNV. Com isso, pode-se comprovar a 
+
+validade da implementação e que a mesma está pronta para o treinamento da RNA. 
+
+4.  REDES NEURAIS ARTIFICIAIS 
+
+4.1  CONCEITOS 
+
+Muitos foram os estudos sobre o cérebro humano, sendo o mais relevante o trabalho pioneiro 
+
+de  Ramón  y  Cajál  (1911),  o  qual,  segundo  Haykin  (2001),  introduziu  a  ideia  dos  neurônios 
+
+como  os  constituintes  principais  do  cérebro,  responsáveis  pela  transmissão  e  processamento 
+
+de informações através  de impulsos elétricos, chamados sinapses. Ao conjunto de neurônios 
+
+dá-se o nome de redes  neurais. Esses neurônios interagem  entre si,  armazenando e tomando 
+
+decisões a partir das informações recebidas. Dessa forma, surgiu a ideia de criar sistemas de 
+
+computação usando o conceito das redes neurais biológicas. 
+
+As  Redes  Neurais  Artificiais  (RNAs)  são  sistemas  computacionais  adaptativos,  capazes  de 
+
+armazenar informações decorrentes de um processo de aprendizado da rede. Esse processo é 
+
+feito  a  partir  de  algoritmos  de  aprendizagem,  onde  os  pesos  das  sinapses  são  ajustados 
+
+constantemente para que os resultados dos valores de saída se aproximem cada vez mais dos 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+52 
+
+resultados  desejados,  além  de  haver  um  sinal  adicional,  denominado  bias,  que  favorece  ou 
+
+limita a possibilidade de ativação do neurônio. Os pesos (w) amplificam  cada um dos sinais 
+
+recebidos  e  a  função  de  ativação  modela  a  forma  como  o  neurônio  responde  aos  sinais, 
+
+limitando e definindo a saída da RNA (Matsunaga, 2012). 
+
+A partir de dados de entrada e saída (amostras do treinamento) passados pelo usuário, a rede é 
+
+treinada  a  reconhecer  padrões  e  dessa  forma,  “aprendem”  e  generalizam  o  conhecimento 
+
+adquirido  com  as  amostras,  a  fim  de  responder  de  forma  satisfatória  aos  dados  de  entrada 
+
+diferentes dos dados para treinamento (Matsunaga, 2012). 
+
+Segundo Silva (2006), pode-se notar algumas características básicas das RNAs, que são: 
+
+a)  capacidade de adquirir conhecimento através de um processo de aprendizado; 
+
+b)  capacidade de armazenamento do conhecimento; 
+
+c)  são modelos adaptativos facilmente treinados; 
+
+d)  a RNA pode ser linear ou não linear; 
+
+e)  capacidade de generalização no processamento de informações incompletas; 
+
+f)  são algoritmos robustos e bastante utilizados; 
+
+g)  são capazes de fazer armazenamentos associativos de informações. 
+
+ 
+
+4.2  ARQUITETURA DA REDE 
+
+A arquitetura de uma rede pode ter várias disposições, dependendo do tipo do problema e o 
+
+que se deseja  alcançar,  estando diretamente ligada ao  algoritmo de aprendizado utilizado no 
+
+processo de treinamento  da RNA. Em geral, a arquitetura é constituída pelos seguintes itens 
+
+(Matsunaga, 2012): 
+
+a)  camadas intermediárias; 
+
+b)  quantidade de neurônios; 
+
+c)  função de transferência ( f ); 
+
+d)  algoritmo de aprendizado. 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+ 
+
+53 
+
+As principais funções de transferência do toolbox do MATLAB estão listadas na Tabela 4.1. 
+
+Tabela 4.1: Funções de transferência 
+
+Função 
+purelin 
+tansig 
+logsig 
+satlin 
+
+Descrição 
+
+Linear 
+
+Tangente hiperbólica 
+
+Sigmóide 
+
+Linear com saturação 
+
+ 
+
+ 
+
+Um exemplo genérico da arquitetura de uma RNA pode ser visto na Figura 4.1. 
+
+ 
+
+ 
+
+ 
+
+Figura 4.1: Exemplo de arquitetura de uma RNA 
+
+ 
+
+Observa-se que a arquitetura mostrada é composta por uma camada de entrada, a qual recebe 
+
+dois dados de entrada; uma segunda camada intermediária, composta por 3 neurônios;  e por 
+
+fim, uma última camada de saída, resultando em dois dados de saída. Percebe-se também que 
+
+os pesos, bias e a função de transferência são aplicados na camada intermediária. 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+4.3  PROCESSO DE TREINAMENTO 
+
+54 
+
+Segundo Silva (2006), o processo de aprendizado é um processo iterativo, baseado em ajustes 
+
+dos  pesos,  o  qual  ocorre  quando  a  rede  neural  atinge  uma  solução  generalizada  para  um 
+
+determinado volume de dados utilizados no processo de treinamento. 
+
+O algoritmo de aprendizado é um conjunto de regras a serem seguidas para a solução de um 
+
+problema  de  aprendizado.  Vários  são  os  tipos  de  algoritmos  de  aprendizado,  os  quais  são 
+
+específicos  para  determinadas  arquiteturas  de  RNA,  diferindo  entre  si  principalmente  pelo 
+
+modo como os pesos são modificados no decorrer do processo. 
+
+Dentre esses algoritmos, pode-se destacar os listados na Tabela 4.2. 
+
+Tabela 4.2: Algoritmos de treinamento 
+
+Descrição 
+
+Backpropagation Levenberg-Marquardt 
+
+Backpropagation de gradiente decrescente 
+
+Backpropagation de gradiente decrescente com momentum 
+
+Backpropagation de gradiente decrescente com taxa adaptativa 
+
+Backpropagation de gradiente decrescente com momentum e taxa adaptativa 
+
+Algoritmo 
+
+trainlm 
+traingd 
+traingdm 
+traingda 
+traingdx 
+
+ 
+
+ 
+
+Antes de dar início ao processo de treinamento, a RNA divide os dados em três categorias. A 
+
+primeira, constituída por dados de treinamento,  a qual  é utilizada para computar o gradiente 
+
+de aprendizado e atualizar os pesos e bias. A segunda é composta de dados para validação da 
+
+rede. Já a terceira categoria é constituída por dados de teste (Beale et al., 2012). 
+
+Existem quatro funções de divisão dos dados: dividerand, divideblock, divideint e divideind. A 
+
+divisão  default  do  toolbox  de  redes  neurais  (NNTOOL)  do  MATLAB®  é  a  primeira,  a  qual 
+
+divide  os  dados  randomicamente,  e,  além  disso,  a  porcentagem  dos  dados  para  treino, 
+
+validação e teste é de 0,7%, 0,15% e 0,15%, respectivamente. 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+55 
+
+4.4  RESULTADOS  DAS  APLICAÇÕES  COM  REDES  NEURAIS 
+
+ARTIFICIAIS 
+
+São  treinadas  duas  Redes  Neurais  Artificiais  principais  do  tipo  MLP  (Multi-Layer 
+
+Perceptron):  a  primeira,  recebendo  como  entrada  apenas  a  tensão  inicial,  e  a  segunda, 
+
+recebendo a tensão inicial, a inclinação inicial e a profundidade da fundação. Ambas as redes 
+
+têm  como  saída  a  tensão  e  inclinação  da  linha  no  encontro  com  a  âncora,  bem  como  o 
+
+comprimento total e a projeção horizontal do trecho. 
+
+4.4.1  Rede com apenas um parâmetro de entrada (T0) 
+
+4.4.1.1 Arquitetura da rede 
+
+Para  compor  a  arquitetura  da  rede,  são  utilizadas  duas  camadas  intermediárias  de  neurônios 
+
+(quantidade  escolhida  por  análises  já  realizadas)  e  são  realizadas  várias  análises  para  se 
+
+encontrar a arquitetura mais eficiente para a RNA quanto às funções de transferência, sendo 
+
+utilizadas  as  funções  linear  (purelin),  tangente  hiperbólica  (tansig)  e  a  sigmóide  (logsig),  e 
+
+quanto  à  quantidade  de  neurônios  em  cada  camada,  com  essa  variando  de  1  a  10.  Para  os 
+
+estudos  anteriores  a  estas  análises,  utilizam-se  8  neurônios  na  primeira  camada  e  10  na 
+
+segunda,  além  de  logsig  para  ambas  as  camadas  como  função  de  transferência  em  todas  as 
+
+redes. 
+
+Para  ambas  as  camadas,  utiliza-se  como  algoritmo  de  aprendizado  o 
+
+trainlm 
+
+(Backpropagation Levenberg-Marquardt), pois, segundo Beale et al. (2012), em geral, para os 
+
+problemas de ajuste de função que utilizam redes com algumas centenas de pesos, o algoritmo 
+
+Levenberg-Marquardt tem a convergência mais rápida. Pode-se notar essa vantagem  quando 
+
+se requer treinamentos mais precisos. Apesar disso, à medida que o número de pesos da rede 
+
+aumenta, a velocidade de convergência diminui. 
+
+4.4.1.2 Tipos de treinamento 
+
+A  fim  de  encontrar  o  melhor  tipo  de  treinamento  da  rede,  são  realizados  quatro  tipos  de 
+
+treinamentos:  um  treinamento  único  para  as  quatro  saídas  com  os  dados  tanto  de  entrada 
+
+quanto  de  saída  não  normalizados  e  normalizados;  e  um  treinamento  para  cada  saída  com  e 
+
+sem normalização das entradas e saídas. 
+
+Em todos os casos, utiliza-se uma tolerância de erro de 10-9 e um número máximo de iterações 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+56 
+
+igual a 1000. Além disso, são utilizados 701 diferentes valores de T0, variando de 106 a 8.106 
+
+N, para o treinamento da RNA. Os parâmetros restantes ficam com valores constantes e, por 
+
+isso, não são utilizados para treinamento. Tais valores são listados abaixo: 
+
+a)  θ0 = 30˚; 
+
+b)  P = 15 m; 
+
+c)  w = 2114,1 N/m; 
+
+d)  AS = 1,2882 m2/m; 
+
+e)  AB = 0,285 m2/m; 
+
+f)  Su0 = 0 kPa; 
+
+g)  pSu = 0 m; 
+
+h)  dSudp = 1500 kPa/m; 
+
+i)  Nc0 = 5,14; 
+
+j)  pNc = 0,684 m; 
+
+k)  dNcdp = 3,5965 m-1; 
+
+l)  α0 = 0,5; 
+
+m)  pα = 0 m; 
+
+n)  dαdp = 0 m-1.  
+
+ 
+
+Para a obtenção dos resultados, são realizados dez treinamentos para o caso da RNA única e 
+
+cinco treinamentos para cada RNA separada. Dessa forma, os valores apresentados nas tabelas 
+
+a seguir são as médias aritméticas dos valores obtidos. 
+
+Os resultados para uma única saída podem ser observados na Tabela 4.3. 
+
+Tabela 4.3: Resultados do treinamento 
+
+ 
+
+ 
+
+RNA sem normalização 
+RNA com normalização 
+
+RNA única 
+
+Tempo (s) 
+
+Iterações 
+
+-- 
+8 
+
+-- 
+152 
+
+ 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+57 
+
+Nota-se  que,  para  o  caso  de  uma  saída  com  os  dados  de  entrada  não  normalizados,  não  é 
+
+possível a realização do treinamento, pois o mesmo não atinge o desempenho desejado para o 
+
+número máximo de iterações estipulado, o que pode ser observado na Figura 4.2 para um dos 
+
+casos analisados. Já com a normalização dos dados, o treinamento da Rede Neural Artificial 
+
+ocorre de forma satisfatória, com 152 iterações em um intervalo de 8 segundos. 
+
+ 
+
+Figura 4.2: Exemplo de final de treinamento de uma rede única e sem 
+
+normalização 
+
+ 
+
+ 
+
+Para os casos de redes neurais separadas para cada saída, resumem-se os principais resultados 
+
+na Tabela 4.4. 
+
+Tabela 4.4: Resultados para redes separadas 
+
+ 
+
+ 
+
+Treinamento 
+
+RNAs Separadas 
+
+Com normalização 
+
+Sem normalização 
+
+Iterações  Tempo (s) 
+
+Iterações  Tempo (s) 
+
+1 
+2 
+3 
+4 
+
+Total 
+
+198 
+267 
+194 
+289 
+
+948 
+
+7 
+10 
+7 
+11 
+
+35 
+
+-- 
+-- 
+445 
+491 
+
+-- 
+
+-- 
+-- 
+16 
+18 
+
+-- 
+
+ 
+
+ 
+
+Na Tabela 4.4, observam-se os resultados com uma RNA para cada saída, sendo o treinamento 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+58 
+
+1 referente a Tanc como saída, 2 referente a θanc, 3 para a saída de L e 4 para H. Observa-se que 
+
+não se consegue realizar os treinamentos 1 e 2 sem a normalização dos dados, ou seja, não é 
+
+atingido o desempenho esperado, fixado em 10-9. Para esses dois casos supracitados, ocorre o 
+
+mesmo  fato  mostrado  na  Figura  4.2,  ou  seja,  após  1000  iterações  não  há  a  convergência 
+
+esperada. Para o caso dos treinamentos 3 e 4, é atingida a convergência adequada, apesar do 
+
+elevado  número  de  iterações,  resultando  em  uma  demanda  computacional  maior  em  relação 
+
+aos treinamentos com normalização.  
+
+Já  com  o  uso  da  normalização  dos  dados  de  entrada  e  de  saída,  é  possível  realizar  o 
+
+treinamento  desejado  para  as  quatro  RNAs.  Pode-se  perceber,  também,  que  há  uma  maior 
+
+rapidez  no  treinamento  da  rede,  pois,  agora,  os  dados  utilizados  no  processo  têm  valores 
+
+pequenos, variando de -1 a 1. Segundo Beale et al. (2012), a função de transferência sigmóide 
+
+(logsig)  torna-se  saturada  quando  os  valores  passados  como  dados  de  entrada  da  rede  estão 
+
+fora  do  intervalo  [-3,3].  Se  isso  ocorrer,  o  gradiente  de  aprendizado  será  pequeno  e,  como 
+
+consequência, o treinamento  da  rede tornar-se-á  muito  lento.  Isso se deve ao fato de que na 
+
+primeira camada, os valores de entrada são multiplicados pelos pesos e somados com as bias, 
+
+e  se  os  valores  de  entrada  são  grandes,  os  pesos  têm  que  ser  muito  pequenos  para  evitar  a 
+
+saturação da função de transferência. Por isso, antes do treinamento, é comum a normalização 
+
+tanto das entradas como dos dados de saída, deixando-os com valores entre -1 e 1. 
+
+Por fim, chega-se que os melhores resultados, em se tratando de números de iterações e tempo 
+
+de treinamento, se dão no treino com uma saída e com normalização, pois a soma dos tempos 
+
+e  número  de  iterações  dos  quatro  treinamentos  com  normalização  são  bem  maiores  que  o 
+
+tempo e quantidade de iterações para o caso de treinamento com saída única. 
+
+4.4.1.3 Otimização da arquitetura da RNA quanto à quantidade de neurônios em cada camada 
+
+São realizadas análises para diversas combinações de neurônios nas duas camadas da rede, N1 
+
+e  N2,  respectivamente.  Busca-se,  com  isso,  encontrar  a  combinação  que  resulte  no 
+
+treinamento mais eficiente. 
+
+Em um primeiro momento, a RNA é treinada cinco vezes para cada combinação de neurônios. 
+
+Vale ressaltar, também, que são utilizados 701 dados de entrada e um número máximo de 400 
+
+iterações. 
+
+Os principais resultados deste estudo estão resumidos na Tabela 4.5. 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+59 
+
+Tabela 4.5: Número de convergências por combinação 
+
+N1 
+
+2 
+
+3 
+
+4 
+
+5 
+
+6 
+
+7 
+
+8 
+
+N2 
+
+7 
+
+10 
+
+4 
+
+6 
+
+7 
+
+8 
+
+9 
+
+10 
+
+5 
+
+6 
+
+7 
+
+8 
+
+9 
+
+10 
+
+4 
+
+5 
+
+6 
+
+7 
+
+8 
+
+9 
+
+10 
+
+4 
+
+5 
+
+6 
+
+7 
+
+8 
+
+9 
+
+10 
+
+2 
+
+4 
+
+5 
+
+6 
+
+7 
+
+8 
+
+9 
+
+10 
+
+3 
+4 
+6 
+7 
+8 
+9 
+10 
+
+Convergência 
+
+1 
+
+1 
+
+1 
+
+2 
+
+2 
+
+3 
+
+3 
+
+4 
+
+1 
+
+1 
+
+2 
+
+2 
+
+3 
+
+4 
+
+2 
+
+3 
+
+5 
+
+3 
+
+5 
+
+4 
+
+5 
+
+1 
+
+2 
+
+3 
+
+4 
+
+3 
+
+3 
+
+4 
+
+1 
+
+1 
+
+1 
+
+3 
+
+3 
+
+5 
+
+5 
+
+5 
+
+1 
+3 
+4 
+4 
+4 
+5 
+5 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+60 
+
+N1 
+
+N2 
+
+Convergência 
+
+9 
+
+10 
+
+4 
+
+5 
+
+6 
+
+7 
+
+8 
+
+9 
+
+10 
+
+4 
+
+5 
+
+6 
+
+7 
+
+8 
+
+9 
+
+10 
+
+2 
+
+3 
+
+3 
+
+4 
+
+3 
+
+5 
+
+5 
+
+1 
+
+2 
+
+2 
+
+3 
+
+4 
+
+3 
+
+4 
+
+ 
+
+ 
+
+ 
+
+Depois disso, realiza-se uma nova análise para as combinações com as quais ocorrem as cinco 
+
+convergências. Para cada uma dessas combinações, a RNA é novamente treinada cinco vezes 
+
+e  são  calculadas  as  médias  aritméticas  dos  números  de  iterações  (Nite)  e  dos  tempos  de 
+
+treinamento. Além disso, é importante frisar que, para essa nova análise, o número máximo de 
+
+iterações utilizado é de 1000. Os resultados desse treinamento estão resumidos na Tabela 4.6. 
+
+Tabela 4.6: Resultados do treinamento 
+
+N1 
+
+5 
+
+7 
+
+8 
+
+9 
+
+N2 
+6 
+
+8 
+
+10 
+
+8 
+
+9 
+
+10 
+
+9 
+
+10 
+
+9 
+
+10 
+
+Nite 
+506 
+
+302 
+
+90 
+
+276 
+
+110 
+
+82 
+
+143 
+
+282 
+
+276 
+
+239 
+
+Tempo  Velocidade de treinamento (Nite/s) 
+
+23 
+
+15 
+
+4 
+
+14 
+
+6 
+
+5 
+
+8 
+
+17 
+
+17 
+
+15 
+
+22,0 
+
+20,1 
+
+22,5 
+
+19,7 
+
+18,3 
+
+16,4 
+
+17,9 
+
+16,6 
+
+16,2 
+
+15,9 
+
+ 
+
+ 
+
+Percebe-se que os melhores resultados são obtidos com 7 neurônios na primeira camada e 10 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+61 
+
+neurônios na segunda, com 82 iterações em um intervalo de tempo de 5 segundos. Observa-se 
+
+também  que  os  melhores  treinamentos  se  dão,  em  geral,  com  10  neurônios  na  segunda 
+
+camada e que a velocidade de treinamento decai à medida que a quantidade de neurônios em 
+
+ambas as camadas aumenta.  
+
+Como  os  dados  de  entrada  são  separados  aleatoriamente  entre  dados  para  treino,  teste  e 
+
+validação,  o  tempo  de  convergência  dos  treinamentos  pode  variar  muito,  dependendo  da 
+
+divisão dos dados, apesar de o mesmo seguir certa tendência. Por isso, afirma-se que todas as 
+
+combinações da Tabela 4.6 podem resultar em treinos mais rápidos que os obtidos para 7 e 10 
+
+neurônios, apesar de esta combinação ter a tendência de apresentar os melhores resultados. 
+
+4.4.1.4 Otimização da arquitetura da RNA quanto à função de transferência de cada camada 
+
+Da mesma forma que se fez para análise do número de neurônios, faz-se uma análise para as 
+
+funções  de  transferência,  ou  seja,  são  analisadas  as  combinações  de  funções  para  cada 
+
+camada, variando entre purelin, logsig e tansig, pois essas são as principais funções utilizadas 
+
+na literatura. Para cada combinação, realizam-se três treinos e obtém-se a média aritmética. 
+
+Os principais resultados dessa análise estão resumidos na Tabela 4.7. 
+
+Tabela 4.7: Resultados para função de transferência 
+
+ 
+
+ 
+
+purelin 
+
+purelin 
+
+logsig 
+
+tansig 
+
+purelin 
+
+logsig 
+
+tansig 
+
+purelin 
+
+logsig 
+
+tansig 
+
+logsig 
+
+tansig 
+
+Nite 
+
+Tempo (s) 
+
+-- 
+
+552 
+
+-- 
+
+119 
+
+101 
+
+760 
+
+279 
+
+141 
+
+463 
+
+-- 
+
+38 
+
+-- 
+
+8 
+
+7 
+
+55 
+
+19 
+
+9 
+
+32 
+
+ 
+
+ 
+
+Dessa forma, o treinamento mostra-se mais eficiente quando é utilizada a função logsig para 
+
+ambas as camadas, com 101 iterações em um intervalo de tempo de 7 segundos. Além disso, 
+
+não há convergência quando utilizadas as combinações purelin-purelin e purelin-tansig. 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+62 
+
+4.4.1.5 Influência da quantidade de dados de entrada no treino 
+
+Para essa análise, treina-se uma RNA com a arquitetura baseada nos resultados anteriores, ou 
+
+seja,  com  duas  camadas,  sendo  a  primeira  constituída  de  7  neurônios  e  a  segunda  de  10 
+
+neurônios,  utilizando  como  funções  de  ativação  logsig  para  ambas  as  camadas  e  como 
+
+algoritmo de aprendizado o trainlm. Além disso, a mesma é treinada para receber apenas um 
+
+dado de entrada, a tensão inicial no subleito marinho T0, e retornar quatro dados de saída, a 
+
+tensão na âncora Tanc, o ângulo em relação a horizontal na âncora θanc, a projeção horizontal 
+
+da linha de ancoragem enterrada e seu respectivo comprimento. 
+
+Os  valores  de  T0  para  o  treino  variam  de  106  a  8.106,  sendo  incrementada  a  quantidade  de 
+
+dados  (NT0)  dentro  desse  intervalo  para  cada  rodada  de  treinamento. Vale  ressaltar  também 
+
+que  os  resultados  do  número  de  iterações  e  do  tempo  para  o  treinamento  são  obtidos  pela 
+
+média  de  três  treinos.  Com  isso,  são  obtidos  resultados  a  partir  de  36  dados  de  entrada  até 
+
+3501, os quais podem ser vistos na Tabela 4.8. 
+
+Tabela 4.8: Resultados para a quantidade de combinações 
+
+NT0 
+
+36 
+
+47 
+
+71 
+
+141 
+
+176 
+
+234 
+
+ 
+ 
+ 
+ 
+
+Nite 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+ 
+
+ 
+
+Nite 
+
+Tempo (s)  Velocidade de treinamento (Nite/s) 
+
+238 
+
+106 
+
+28 
+
+420 
+
+200 
+
+18 
+
+365 
+
+234 
+
+19 
+
+234 
+
+159 
+
+20 
+
+303 
+
+251 
+
+20 
+
+247 
+
+178 
+
+19 
+
+ 
+
+ 
+
+6 
+
+3 
+
+1 
+
+10 
+
+5 
+
+1 
+
+9 
+
+6 
+
+1 
+
+7 
+
+5 
+
+1 
+
+9 
+
+7 
+
+1 
+
+8 
+
+6 
+
+1 
+
+ 
+
+ 
+
+39,7 
+
+35,3 
+
+28,0 
+
+42,0 
+
+40,0 
+
+18,0 
+
+40,6 
+
+39,0 
+
+19,0 
+
+33,4 
+
+31,8 
+
+20,0 
+
+33,7 
+
+35,9 
+
+20,0 
+
+30,9 
+
+29,7 
+
+19,0 
+
+ 
+
+ 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+63 
+
+Nite 
+
+Tempo (s)  Velocidade de treinamento (Nite/s) 
+
+372 
+
+134 
+
+20 
+
+400 
+
+112 
+
+26 
+
+278 
+
+190 
+
+20 
+
+312 
+
+166 
+
+19 
+
+457 
+
+203 
+
+28 
+
+263 
+
+170 
+
+21 
+
+236 
+
+151 
+
+19 
+
+305 
+
+191 
+
+22 
+
+244 
+
+129 
+
+25 
+
+14 
+
+5 
+
+1 
+
+23 
+
+6 
+
+1 
+
+22 
+
+13 
+
+1 
+
+21 
+
+11 
+
+1 
+
+34 
+
+15 
+
+2 
+
+26 
+
+17 
+
+3 
+
+29 
+
+20 
+
+2 
+
+72 
+
+35 
+
+3 
+
+69 
+
+37 
+
+7 
+
+26,6 
+
+26,8 
+
+20,0 
+
+17,4 
+
+18,7 
+
+26,0 
+
+12,6 
+
+14,6 
+
+20,0 
+
+14,9 
+
+15,1 
+
+19,0 
+
+13,4 
+
+13,5 
+
+14,0 
+
+10,1 
+
+10,0 
+
+7,0 
+
+8,1 
+
+7,6 
+
+9,5 
+
+4,2 
+
+5,5 
+
+7,3 
+
+3,5 
+
+3,5 
+
+3,6 
+
+ 
+
+ 
+
+ 
+
+NT0 
+
+351 
+
+701 
+
+778 
+
+876 
+
+1001 
+
+1401 
+
+1751 
+
+2334 
+
+3501 
+
+Nite 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+A  partir  desses  resultados,  são  separados  apenas  os  valores  médios,  os  quais  podem  ser 
+
+observados na Tabela 4.9. 
+
+Tabela 4.9: Resultados do treinamento 
+
+NT0 
+
+Nite 
+
+Tempo (s)  Velocidade de treinamento (Nite/s) 
+
+36 
+
+47 
+
+71 
+
+141 
+
+106 
+
+200 
+
+234 
+
+159 
+
+3 
+
+5 
+
+6 
+
+5 
+
+35,3 
+
+40,0 
+
+39,0 
+
+31,8 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+64 
+
+NT0 
+
+Nite 
+
+Tempo (s)  Velocidade de treinamento (Nite/s) 
+
+176 
+
+234 
+
+351 
+
+701 
+
+778 
+
+876 
+
+1001 
+
+1401 
+
+1751 
+
+2334 
+
+3501 
+
+251 
+
+178 
+
+134 
+
+112 
+
+190 
+
+166 
+
+203 
+
+170 
+
+151 
+
+191 
+
+129 
+
+7 
+
+6 
+
+5 
+
+6 
+
+13 
+
+11 
+
+15 
+
+17 
+
+20 
+
+35 
+
+37 
+
+35,9 
+
+29,7 
+
+26,8 
+
+18,7 
+
+14,6 
+
+15,1 
+
+13,5 
+
+10,0 
+
+7,6 
+
+5,5 
+
+3,5 
+
+ 
+
+ 
+
+ 
+
+Com  isso,  pode-se  fazer  a  análise  da  relação  do  número  de  iterações  com  a  quantidade  de 
+
+dados de entrada através do gráfico da Figura 4.3. 
+
+ 
+
+ 
+
+ 
+
+300 
+
+250 
+
+200 
+
+150 
+
+100 
+
+50 
+
+ 
+s
+e
+õ
+ç
+a
+r
+e
+t
+i
+ 
+
+ 
+
+e
+d
+o
+r
+e
+m
+ú
+N
+
+0 
+
+0 
+
+Figura 4.3: Relação entre a quantidade de dados e o número de 
+
+iterações 
+
+500 
+
+1000 
+
+1500 
+
+2000 
+
+2500 
+
+3000 
+
+3500 
+
+4000 
+
+Quantidade de dados 
+
+ 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+ 
+
+65 
+
+Como se pode observar, não há uma relação entre a quantidade de dados de treinamento com 
+
+o número de iterações. Isso se deve à aleatoriedade da separação dos dados para treinamento, 
+
+validação  e  teste,  ou  seja,  a  quantidade  de  iterações  depende  da  separação  dos  dados  e,  por 
+
+isso,  há  uma  grande  oscilação  na  quantidade  de  iterações  para  convergência.  Além  disso, 
+
+pode-se  notar  que  à  medida  que  a  quantidade  de  dados  aumenta,  a  oscilação  do  número  de 
+
+iterações para convergência do treinamento diminui, ou seja, tende a um certo valor. Também 
+
+é possível notar, durante a realização dos treinos, que a partir de 71 dados de entrada, há uma 
+
+garantia quanto à convergência do processo. 
+
+Na Figura 4.4 pode-se analisar a relação existente entre a quantidade de dados e o tempo para 
+
+treinamento. 
+
+ 
+
+ 
+
+Figura 4.4: Comparação entre a quantidade de dados e o tempo de 
+
+treino 
+
+ 
+)
+s
+o
+d
+n
+u
+g
+e
+s
+(
+ 
+o
+p
+m
+e
+T
+
+40 
+
+35 
+
+30 
+
+25 
+
+20 
+
+15 
+
+10 
+
+5 
+
+0 
+
+ 
+
+0 
+
+500 
+
+1000 
+
+1500 
+
+2000 
+
+2500 
+
+3000 
+
+3500 
+
+4000 
+
+Quantidade de dados 
+
+ 
+
+Como  é de se esperar, quanto  maior o número de dados  de  entrada para  o treino,  maior é  o 
+
+tempo  computacional  gasto.  Isso  se  deve  ao  fato  de  que  a  velocidade  de  treinamento  reduz 
+
+com  o  aumento  dos  dados,  apresentando  um  comportamento  logarítmico,  como  pode  ser 
+
+observado na Figura 4.5. 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+Figura 4.5: Relação entre a quantidade de dados e a velocidade de 
+
+treino 
+
+45,0 
+
+40,0 
+
+35,0 
+
+30,0 
+
+25,0 
+
+20,0 
+
+15,0 
+
+10,0 
+
+5,0 
+
+0,0 
+
+0 
+
+500 
+
+1000 
+
+1500 
+
+2000 
+
+2500 
+
+3000 
+
+3500 
+
+4000 
+
+Quantidade de dados 
+
+66 
+
+ 
+
+ 
+)
+s
+/
+e
+t
+i
+N
+
+i
+
+ 
+
+(
+ 
+o
+t
+n
+e
+m
+a
+n
+e
+r
+t
+ 
+e
+d
+e
+d
+a
+d
+i
+c
+o
+e
+V
+
+l
+
+ 
+
+ 
+
+Por  fim,  afirma-se  que  há  tanto  um  limite  inferior  quanto  superior  de  dados  para  o 
+
+treinamento. O limite inferior gira em torno de 36 dados, já que o treinamento da RNA com 
+
+essa quantidade de dados converge apenas algumas vezes. Já como limite superior, observa-se 
+
+uma  quantidade  de  dados  em  torno  de  3500,  acima  da  qual  o  tempo  computacional  para  o 
+
+treino aumenta significativamente. 
+
+4.4.1.6 Comparação  dos  resultados  obtidos  pela  resolução  do  sistema  de  EDO  e  através  da 
+
+RNA 
+
+Com as RNAs treinadas, é possível utilizá-las para a obtenção de resultados referentes à Tanc, 
+
+θanc,  L  e  H,  passado  um  valor  de  tensão  inicial  T0.  Dessa  forma,  são  realizadas  análises 
+
+comparando  o  tempo  de  resolução  do  problema  utilizando  uma  RNA  (RNA  1)  com  7 
+
+neurônios  na  primeira  camada  e  10  neurônios  na  segunda,  uma  RNA  (RNA  2)  com  5 
+
+neurônios na primeira camada e 6 na segunda, e  utilizando a resolução analítica  através das 
+
+equações diferenciais de equilíbrio do sistema (Equações 19 e 22). Também são comparados 
+
+os  erros  relativos  dos  resultados  da  primeira  e  da  segunda  RNA  com  os  resultados  obtidos 
+
+com a integração numérica.  
+
+A  escolha  da  arquitetura  da  RNA  1  deve-se  aos  estudos  realizados  nas  seções  anteriores,  os 
+
+quais  mostram  que  essa  configuração  apresenta  os  melhores  resultados.  A  escolha  da 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+67 
+
+arquitetura da RNA 2  é  devido  ao fato  de que  esta é constituída pela  combinação da Tabela 
+
+4.6 anterior com menos neurônios em cada camada. 
+
+São analisadas 5 rodadas de resolução, com T0 variando de 106 a 8.106, a um passo de 104, e 
+
+os valores obtidos são mostrados na Tabela 4.10. 
+
+Tabela 4.10: Comparação das RNAs com o sistema de EDO 
+
+Rodada 
+
+Tempo 
+
+Tempo 
+
+RNA 1(s) 
+
+RNA 2 (s) 
+
+1 
+
+2 
+
+3 
+
+4 
+
+5 
+
+Média 
+ 
+
+0,0106 
+
+0,0107 
+
+0,0107 
+
+0,0109 
+
+0,0106 
+
+0,0107 
+
+0,0106 
+
+0,0107 
+
+0,0107 
+
+0,0109 
+
+0,0106 
+
+0,0107 
+
+Tempo 
+EDO (s) 
+0,0146 
+
+0,0139 
+
+0,0140 
+
+0,0140 
+
+0,0140 
+
+0,0141 
+
+Tempo RNA 1/Tempo 
+
+Tempo RNA 2/Tempo 
+
+EDO (%) 
+
+EDO (%) 
+
+72,31 
+
+76,78 
+
+76,75 
+
+77,99 
+
+75,59 
+
+75,88 
+
+72,17 
+
+76,94 
+
+76,27 
+
+77,82 
+
+75,30 
+
+75,70 
+
+Pode-se observar que os tempos para a resolução através das RNAs são menores que o tempo 
+
+computacional  para  a  resolução  analítica.  Observa-se  também  que  os  tempos  das  RNAs  são 
+
+iguais devido ao arredondamento dos valores, já que os valores das porcentagens dos tempos 
+
+são  diferentes,  sendo  o  tempo  relativo  para  RNA  1  igual  a  75,88%  e  para  a  RNA  2  igual 
+
+75,7%, mostrando que a resolução através da RNA 2 é ligeiramente mais rápida que através 
+
+da RNA 1. Isso é devido ao fato de que a RNA 1 tem uma arquitetura mais robusta, com mais 
+
+neurônios. Além disso, pode-se observar na Tabela 4.11 e Tabela 4.12 que os erros relativos 
+
+dos resultados obtidos são desprezíveis e que na maioria dos resultados, a RNA 2 apresenta os 
+
+menores  erros  relativos.  Deve-se  ressaltar  que  tais  erros  são  os  maiores  erros  relativos 
+
+calculados entre 2184 resultados. 
+
+Tabela 4.11: Erro relativo dos resultados 
+
+Erro relativo da RNA 1 (10-2 %) 
+Tanc 
+H 
+1,17 
+
+θanc 
+1,10 
+
+0,13 
+
+L 
+
+0,17 
+
+ 
+
+ 
+
+Tabela 4.12: Erro relativo dos resultados 
+
+Erro relativo da RNA 2 (10-2 %) 
+Tanc 
+H 
+1,04 
+
+θanc 
+0,45 
+
+0,16 
+
+L 
+
+0,09 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+68 
+
+Desse  modo,  conclui-se  que  há  um  menor  custo  computacional  quando  se  utiliza  RNA  em 
+
+comparação com a integração numérica, cerca de 75% do tempo, e que a RNA 2 se mostrou 
+
+mais eficaz, com 5 neurônios na primeira camada e 6 neurônios na segunda. 
+
+4.4.2  Rede com três parâmetros de entrada (T0, θ0 e P) 
+
+Essas mesmas análises são realizadas para o caso de RNAs treinadas com três parâmetros de 
+
+entrada: a tensão T0, o ângulo inicial θ0 e a profundidade P, e com os outros parâmetros com 
+
+os  mesmos  valores  utilizados  anteriormente.  Tais  parâmetros  de  entrada  variam  da  seguinte 
+
+forma: 
+
+ 
+
+a)  T0 = 106 a 8.106 N; 
+
+b)  θ0 = 3˚ a 51˚; 
+
+c)  P = 5 a 25 metros. 
+
+Neste caso, utiliza-se uma tolerância de erro de 10-5, pois, ao adotar um erro de 10-9, como se 
+
+fez  para  a  RNA  com  um  parâmetro  de  entrada,  o  treinamento  demora  muito  mais  para 
+
+convergir,  tornando-se  inviável  quando  se  trata  do  desempenho  de  um  computador  pessoal. 
+
+Apesar  dessa  redução,  10-5  ainda  é  um  erro  muito  pequeno  quando  se  trata  de  valores  de 
+
+entrada e saída de ordem de grandeza maior que 101. 
+
+4.4.2.1 Arquitetura da rede 
+
+Utiliza-se  a  mesma  arquitetura  que  a  RNA  com  apenas  um  parâmetro  de  entrada,  ou  seja, 
+
+composta  por  duas  camadas  e  o  trainlm  como  algoritmo  de  treinamento.  Em  relação  aos 
+
+outros componentes da rede, são realizadas as mesmas análises anteriormente abordadas. 
+
+4.4.2.2 Tipos de treinamento 
+
+São realizados quatro tipos de treinamentos: um treinamento único para as quatro saídas com 
+
+os dados tanto de entrada quanto de saída não normalizados e normalizados; e um treinamento 
+
+para  cada  saída  com  e  sem  normalização  das  entradas  e  saídas.  Para  essa  segunda  análise, 
+
+também  são  utilizados  os  mesmos  valores  para  os  parâmetros  constantes,  os  quais  não  são 
+
+utilizados no treinamento da RNA.  
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+69 
+
+Utiliza-se o número máximo de iterações igual a 1000 e 2184 combinações diferentes de T0, 
+
+θ0 e P para o treinamento da RNA. 
+
+Os resultados para uma única saída são apresentados na Tabela 4.13. 
+
+Tabela 4.13: Resultados do treino 
+
+ 
+  
+RNA sem normalização 
+
+RNA com normalização 
+
+RNA única 
+
+Tempo (s) 
+
+Iterações 
+
+-- 
+
+24 
+
+-- 
+
+144 
+
+ 
+
+Nesse  caso,  também  se  observa  que  para  a  RNA  sem  normalização  não  é  possível  atingir  a 
+
+convergência  do  treino  para  o  número  máximo  de  iterações  estipulado.  Já  com  a  segunda 
+
+rede,  fazendo  uso  da  normalização  tanto  dos  dados  de  entrada  como  dos  dados  de  saída,  é 
+
+possível atingir o desempenho desejado, com 144 iterações em um intervalo de tempo de 24 
+
+segundos. 
+
+Para o caso de RNAs separadas para cada saída, a Tabela 4.14 resume os dados. 
+
+Tabela 4.14: Resultados das RNAs separadas 
+
+ 
+
+ 
+
+Treinamento 
+
+RNAs Separadas 
+
+Com normalização 
+
+Sem normalização 
+
+Iterações  Tempo (s) 
+
+Iterações  Tempo (s) 
+
+1 
+2 
+3 
+4 
+
+27 
+35 
+55 
+40 
+
+2 
+3 
+4 
+3 
+
+Total 
+
+157 
+
+12 
+
+-- 
+-- 
+-- 
+-- 
+
+-- 
+
+-- 
+-- 
+-- 
+-- 
+
+-- 
+
+ 
+
+Percebe-se  que  não  é  possível  a  realização  do  treinamento  da  rede  sem  a  utilização  da 
+
+normalização  dos  dados,  pois  não  houve  convergência  após  o  número  máximo  de  iterações 
+
+estabelecido ser atingido.  
+
+Já com relação ao treinamento da RNA com o uso da normalização, observa-se que os tempos 
+
+dos  treinos  separados  são  bem  menores  que  o  tempo  da  RNA  com  apenas  uma  saída. Além 
+
+disso, a soma dos tempos de cada treinamento separado ainda é menor que o tempo de treino 
+
+da RNA única. Apesar disso, é mais trabalhoso para o usuário treinar as redes separadas que 
+
+treinar a rede única. 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+70 
+
+4.4.2.3 Otimização da arquitetura da RNA quanto à quantidade de neurônios em cada camada 
+
+Para  o  caso  de  três  parâmetros  de  entrada,  a  RNA  é  treinada  apenas  três  vezes,  pois  há  um 
+
+maior  refinamento  na  quantidade  de  combinações  que  converge  em  cada  rodada  de 
+
+treinamento, quando comparado com a RNA com apenas uma parâmetro de entrada. Portanto, 
+
+no terceiro treino já é possível obter resultados melhores que os da Tabela 4.5, como pode ser 
+
+visto  na  Tabela  4.15.  Vale  ressaltar  que  para  as  análises  de  otimização  da  arquitetura,  a 
+
+quantidade  de  combinações  dos  parâmetros  de  entrada  é  de  2184  e  o  número  máximo  de 
+
+iterações é de 400. 
+
+Tabela 4.15: Número de convergências por combinação 
+
+N1 
+
+5 
+
+6 
+
+7 
+
+8 
+
+9 
+
+10 
+
+N2 
+
+Convergência 
+
+10 
+
+8 
+9 
+10 
+
+7 
+8 
+9 
+10 
+
+6 
+9 
+10 
+
+6 
+7 
+8 
+9 
+10 
+
+5 
+6 
+7 
+8 
+9 
+10 
+
+2 
+
+1 
+1 
+3 
+
+1 
+1 
+3 
+3 
+
+1 
+3 
+3 
+
+1 
+1 
+2 
+2 
+3 
+
+2 
+2 
+2 
+2 
+3 
+3 
+
+ 
+
+ 
+
+Após isso, realiza-se uma nova análise com as combinações com as quais a RNA converge em 
+
+todos os treinamentos. Para cada combinação, a rede é treinada cinco vezes e são calculadas 
+
+as  médias  aritméticas  das  quantidades  de  iterações  e  dos  tempos. Além  disso,  é  importante 
+
+frisar que o número máximo de iterações utilizado é de 1000. 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+71 
+
+Os resultados dessa análise encontram-se resumidos na Tabela 4.16. 
+
+Tabela 4.16: Resultados do treinamento 
+
+N1 
+6 
+
+7 
+
+8 
+
+9 
+
+10 
+
+N2 
+10 
+
+9 
+
+10 
+
+9 
+
+10 
+
+10 
+
+9 
+
+10 
+
+Nite 
+350 
+
+365 
+
+207 
+
+207 
+
+111 
+
+114 
+
+105 
+
+124 
+
+ 
+
+Tempo  Velocidade de treinamento (Nite/s) 
+
+56 
+
+58 
+
+34 
+
+34 
+
+19 
+
+21 
+
+22 
+
+25 
+
+6,3 
+
+6,3 
+
+6,1 
+
+6,1 
+
+5,8 
+
+5,4 
+
+4,8 
+
+5,0 
+
+Analisando os resultados, percebe-se que os treinamentos com as convergências mais rápidas 
+
+ocorrem com um número de neurônios na primeira camada a partir de 8, como também com 9 
+
+e  10  neurônios  na  segunda  camada.  Os  treinamentos  a  partir  da  combinação  8  e  10 
+
+apresentam valores de iteração e tempo muito próximos, indicando que qualquer uma destas 
+
+combinações  podem  ser  utilizadas  quando  se  quer  a  otimização  no  tempo  de  treinamento, 
+
+pois,  como  já  comentado,  esses  resultados  dependem  da  divisão  aleatória  dos  dados  de 
+
+entrada feita pelo programa, apesar de haver certa tendência quanto à quantidade de iterações 
+
+e ao tempo. 
+
+Escolhe-se  como  melhor  combinação  a  que  tem  8  neurônios  na  primeira  camada  e  10  na 
+
+segunda,  porque  esta  resulta  no  menor  tempo  de  convergência,  com  um  intervalo  de  19 
+
+segundos,  mas,  apesar  de  ser  mais  rápida,  não  obteve  o  menor  número  de  iterações,  o  qual 
+
+ocorreu  com  a  combinação  10  e  9,  com  105  iterações.  Isso  ocorre,  pois  a  velocidade  de 
+
+treinamento  decresce  com  o  aumento  de  neurônios  nas  camadas,  ou  seja,  apesar  de  a 
+
+combinação 10 e 9 apresentar o menor número de iterações, a velocidade de treinamento desta 
+
+rede é menor que o da rede com a combinação 8 e 10, o que demanda um tempo maior. 
+
+4.4.2.4 Otimização da arquitetura da RNA quanto à função de transferência de cada camada 
+
+Da mesma forma que se fez na seção 5.4.1.4, são analisadas as combinações das funções de 
+
+transferência  para  cada  camada,  variando  entre  purelin,  logsig  e  tansig.  Para  cada 
+
+combinação, realizam-se três treinos e obtém-se a média aritmética. 
+
+Os resultados dessa análise encontram-se resumidos na Tabela 4.17. 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+72 
+
+ 
+
+ 
+
+Tabela 4.17: Resultados da função de treinamento 
+
+ 
+
+ 
+
+purelin 
+
+purelin 
+
+logsig 
+
+tansig 
+
+purelin 
+
+logsig 
+
+tansig 
+
+purelin 
+
+logsig 
+
+tansig 
+
+logsig 
+
+tansig 
+
+Nite 
+
+-- 
+
+-- 
+
+-- 
+
+-- 
+
+97 
+
+178 
+
+-- 
+
+219 
+
+100 
+
+Tempo 
+
+-- 
+
+-- 
+
+-- 
+
+-- 
+
+17 
+
+30 
+
+-- 
+
+37 
+
+17 
+
+Analisando  a  Tabela  4.17  acima,  observa-se  que  os  melhores  resultados  ocorrem  quando 
+
+utilizadas  as  funções  de  transferência  logsig  para  ambas  as  camadas,  havendo  convergência 
+
+do  treinamento  em  97  iterações  após  um  intervalo  de  tempo  de  17  segundos.  Nota-se  que  a 
+
+combinação  tansig-tansig  apresenta  resultados  tão  bons  quanto  à  combinação  logsig-logsig, 
+
+com valores praticamente iguais. Além disso, não há convergência quando se utiliza a função 
+
+purelin, para nenhuma das combinações. 
+
+4.4.2.5 Influência da quantidade de dados de entrada no treino 
+
+Para  esta  análise,  treina-se  uma  Rede  Neural  Artificial  com  a  arquitetura  baseada  nos 
+
+resultados anteriores, ou seja, com duas camadas, sendo a primeira constituída de 8 neurônios 
+
+e a segunda de 10 neurônios, utilizando a função de ativação logsig para ambas as camadas e 
+
+como  algoritmo  de  aprendizado  o  trainlm.  Além  disso,  a  RNA  é  treinada  recebendo  três 
+
+parâmetros de entrada: a tensão inicial no leito marinho T0, o ângulo formado entre a linha e a 
+
+horizontal no ponto inicial do trecho enterrado θ0 e a profundidade de assentamento da âncora 
+
+P,  e  retornando  os  quatro  dados  de  saída  anteriormente  comentados,  a  tensão Tanc,  o  ângulo 
+
+θanc, a projeção horizontal H e o comprimento L. 
+
+Os resultados sobre o número de iterações e o tempo para cada treinamento são obtidos pela 
+
+média de três treinamentos. Com isso, são obtidos os resultados a partir de 120 combinações 
+
+de entrada (Ncomb) até 13923, os quais se encontram listados na Tabela 4.18. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+Tabela 4.18: Resultado do treino para a quantidade de combinações 
+
+73 
+
+Ncomb 
+
+120 
+
+198 
+
+504 
+
+1260 
+
+2538 
+
+3834 
+
+4680 
+
+6060 
+
+7878 
+
+10647 
+
+13923 
+
+Nite 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Max 
+
+Med 
+
+Min 
+
+Nite 
+
+Tempo (s)  Velocidade de treinamento (Nite/s) 
+
+153 
+
+106 
+
+35 
+
+227 
+
+146 
+
+87 
+
+243 
+
+125 
+
+69 
+
+318 
+
+197 
+
+101 
+
+179 
+
+126 
+
+60 
+
+317 
+
+166 
+
+29 
+
+136 
+
+119 
+
+100 
+
+273 
+
+177 
+
+119 
+
+159 
+
+117 
+
+86 
+
+373 
+
+197 
+
+100 
+
+215 
+
+169 
+
+123 
+
+4 
+
+3 
+
+1 
+
+8 
+
+5 
+
+3 
+
+12 
+
+6 
+
+3 
+
+33 
+
+21 
+
+11 
+
+41 
+
+28 
+
+14 
+
+107 
+
+63 
+
+13 
+
+50 
+
+47 
+
+42 
+
+157 
+
+123 
+
+93 
+
+114 
+
+83 
+
+61 
+
+363 
+
+192 
+
+98 
+
+283 
+
+224 
+
+163 
+
+38,3 
+
+35,3 
+
+35,0 
+
+28,4 
+
+29,2 
+
+29,0 
+
+20,3 
+
+20,8 
+
+23,0 
+
+9,6 
+
+9,4 
+
+9,2 
+
+4,4 
+
+4,5 
+
+4,3 
+
+3,0 
+
+2,6 
+
+2,2 
+
+2,7 
+
+2,5 
+
+2,4 
+
+1,7 
+
+1,4 
+
+1,3 
+
+1,4 
+
+1,4 
+
+1,4 
+
+1,0 
+
+1,0 
+
+1,0 
+
+0,8 
+
+0,8 
+
+0,8 
+
+ 
+
+ 
+
+ 
+
+Com os valores médios acima, constrói-se a Tabela 4.19. 
+
+ 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+74 
+
+Tabela 4.19: Resultado do treinamento 
+
+Ncomb  Nite 
+
+Tempo (s)  Velocidade de treinamento (Nite/s) 
+
+120 
+
+198 
+
+504 
+
+1260 
+
+2538 
+
+3834 
+
+4680 
+
+6060 
+
+7878 
+
+10647 
+
+13923 
+
+106 
+
+146 
+
+125 
+
+197 
+
+126 
+
+166 
+
+119 
+
+177 
+
+117 
+
+197 
+
+169 
+
+3 
+
+5 
+
+6 
+
+21 
+
+28 
+
+63 
+
+47 
+
+123 
+
+83 
+
+192 
+
+224 
+
+35,3 
+
+29,2 
+
+20,8 
+
+9,4 
+
+4,5 
+
+2,6 
+
+2,5 
+
+1,4 
+
+1,4 
+
+1,0 
+
+0,8 
+
+ 
+
+ 
+
+Com isso, faz-se a análise da relação entre a quantidade de dados de entrada e o número de 
+
+iterações do treinamento através da Figura 4.6. 
+
+ 
+
+ 
+
+ 
+
+250 
+
+200 
+
+150 
+
+100 
+
+50 
+
+ 
+s
+e
+õ
+ç
+a
+r
+e
+t
+i
+ 
+
+ 
+
+e
+d
+o
+r
+e
+m
+ú
+N
+
+0 
+
+0 
+
+Figura 4.6: Comparação entre a quantidade de combinações e o 
+
+número de iterações 
+
+2000 
+
+4000 
+
+6000 
+
+8000 
+
+10000 
+
+12000 
+
+14000 
+
+16000 
+
+Quantidade de combinações 
+
+ 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+75 
+
+Percebe-se que, da mesma forma que para a RNA com apenas um parâmetro de entrada, não 
+
+há uma relação entre a quantidade de combinações de entrada e o número de iterações para a 
+
+convergência do treinamento; isso se deve à aleatoriedade inerente ao processo. A diferença é 
+
+que para o caso de mais parâmetros de entrada e consequentemente mais combinações para o 
+
+treino, há uma menor oscilação na quantidade de iterações, ou seja, quanto maior o volume de 
+
+dados de entrada, menor a oscilação dos valores e em consequência disso, maior a evidência 
+
+de tendência do gráfico. Além disso, é possível observar, no decorrer dos treinamentos, que a 
+
+partir de 1260 combinações de entrada, há uma garantia quanto à convergência do processo. 
+
+Na Figura 4.7, pode-se analisar a relação existente entre a quantidade de dados e o tempo para 
+
+treinamento. 
+
+ 
+
+ 
+
+ 
+
+ 
+)
+s
+o
+d
+n
+u
+g
+e
+s
+(
+ 
+o
+p
+m
+e
+T
+
+250 
+
+200 
+
+150 
+
+100 
+
+50 
+
+0 
+
+Figura 4.7: Relação entre a quantidade de combinações e o tempo de 
+
+treino 
+
+0 
+
+2000 
+
+4000 
+
+6000 
+
+8000 
+
+10000 
+
+12000 
+
+14000 
+
+16000 
+
+Quantidade de combinações 
+
+ 
+
+Assim,  quanto  maior  a  quantidade  de  combinações,  maior  é  o  tempo  gasto  para  a 
+
+convergência  do  treinamento  da  RNA,  pois  à  medida  que  a  quantidade  de  dados  de  entrada 
+
+aumenta, a arquitetura da rede torna-se mais robusta e, com isso, a velocidade de treino reduz, 
+
+como  pode  ser  observado  no  gráfico  da  Figura  4.8,  o  qual  apresenta  um  comportamento 
+
+logarítmico. 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+Figura 4.8: Relação entre a quantidade de combinações e a velocidade 
+
+de treino 
+
+76 
+
+40,0 
+
+35,0 
+
+30,0 
+
+25,0 
+
+20,0 
+
+15,0 
+
+10,0 
+
+5,0 
+
+0,0 
+
+0 
+
+2000 
+
+4000 
+
+6000 
+
+8000 
+
+10000 
+
+12000 
+
+14000 
+
+16000 
+
+Quantidade de combinações 
+
+ 
+
+ 
+)
+s
+/
+e
+t
+i
+N
+
+i
+
+ 
+
+(
+ 
+o
+t
+n
+e
+m
+a
+n
+e
+r
+t
+ 
+e
+d
+e
+d
+a
+d
+i
+c
+o
+e
+V
+
+l
+
+ 
+
+ 
+
+Por fim, afirma-se que o limite inferior de combinações para o treinamento gira em torno de 
+
+120,  já  que  o  treinamento  da  RNA  com  essa  quantidade  de  dados  converge  apenas  algumas 
+
+vezes.  Já  como  limite  superior,  observa-se  uma  quantidade  de  combinações  em  torno  de 
+
+13923, acima da qual o tempo computacional para o treino aumenta significativamente. 
+
+4.4.2.6 Comparação  dos  resultados  obtidos  pela  resolução  do  sistema  de  EDO  e  através  da 
+
+RNA 
+
+São realizadas análises comparando o tempo de resolução do problema utilizando uma RNA 
+
+(RNA 1) com 8 neurônios na primeira camada e 10 neurônios na segunda, uma RNA (RNA 2) 
+
+com  6  neurônios  na  primeira  camada  e  10  na  segunda,  e  utilizando  a  resolução  analítica 
+
+através das equações diferenciais de equilíbrio do sistema (Equações 19 e 22), bem como os 
+
+erros  relativos  dos  resultados  da  primeira  e  da  segunda  RNA  com  os  resultados  obtidos  por 
+
+meio da integração numérica. A escolha da arquitetura da primeira rede se deve aos estudos 
+
+realizados  nas  seções  anteriores,  os  quais  mostram  que  essa  configuração  apresenta  os 
+
+melhores  resultados.  A  escolha  da  segunda  é  devido  ao  fato  de  que  esta  apresenta  a 
+
+combinação da Tabela 4.16 com a menor quantidade de neurônios em cada camada. 
+
+São  analisadas  5  rodadas  de  resolução,  com  diferentes  combinações  de  T0,  θ0  e  P,  os  quais 
+
+variam da seguinte forma: 
+
+a)  T0 = 106 a 8.106 N, com incrementos de 6.104; 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+ 
+
+b)  θ0 = 3˚ a 51˚, com incrementos de 4˚; 
+
+c)  P = 5 a 25 metros, com incrementos de 3 metros. 
+
+77 
+
+Dessa forma, a quantidade de combinações possíveis entre esses três parâmetros é de 10647, 
+
+obtendo-se os resultados da Tabela 4.20. 
+
+Tabela 4.20: Comparação das RNAs com o sistema de EDO 
+
+Rodada 
+
+Tempo 
+
+Tempo 
+
+RNA 1 (s) 
+
+RNA 2 (s) 
+
+0,0110 
+
+0,0116 
+
+0,0125 
+
+0,0115 
+
+0,0126 
+
+0,0118 
+
+0,0112 
+
+0,0119 
+
+0,0120 
+
+0,0111 
+
+0,0123 
+
+0,0117 
+
+1 
+
+2 
+
+3 
+
+4 
+
+5 
+
+Média 
+
+ 
+
+ 
+
+Tempo 
+EDO (s) 
+0,0145 
+
+0,0148 
+
+0,0156 
+
+0,0150 
+
+0,0153 
+
+0,0150 
+
+Tempo RNA 1/Tempo 
+
+Tempo RNA 2/Tempo 
+
+EDO (%) 
+
+EDO (%) 
+
+76,06 
+
+78,43 
+
+80,30 
+
+77,06 
+
+82,48 
+
+78,87 
+
+77,20 
+
+80,06 
+
+76,98 
+
+73,98 
+
+80,54 
+
+77,75 
+
+Observa-se  que  a  RNA  2  é  ligeiramente  mais  rápida  que  a  RNA  1  para  a  resolução  do 
+
+problema,  pois  a  arquitetura  desta  é  mais  densa  que  a  da  primeira,  diferindo  apenas  na 
+
+quantidade de neurônios na primeira camada. Como concluído na seção 5.4.1.6, a utilização 
+
+de  RNA  para  a  resolução  do  problema  abordado  é  mais  rápida  que  o  uso  da  integração 
+
+numérica do sistema de equações diferenciais, com um tempo relativo de 78,87% para a RNA 
+
+1 e 77,75% para a RNA 2, sendo ligeiramente maiores que os tempos relativos das redes com 
+
+apenas um parâmetros de entrada, já que há duas entradas a mais para tratamento. Além disso, 
+
+pode-se  observar  na  Tabela  4.21  e Tabela  4.22  que  os  erros  relativos  dos  resultados  obtidos 
+
+são bem maiores que os erros das redes com apenas um parâmetro de entrada. Isso se deve ao 
+
+aumento da tolerância do erro no processo de treinamento da rede. Observa-se também que a 
+
+RNA  2  apresenta  os  menores  erros  relativos  para  todos  os  resultados.  Tais  erros  são  os 
+
+maiores erros relativos calculados entre 10647 resultados. 
+
+Tabela 4.21: Erro relativo dos resultados 
+
+Erro relativo da RNA 1 (%) 
+H 
+
+L 
+
+7,76 
+
+9,51 
+
+Tanc 
+7,84 
+
+θanc 
+5,43 
+
+ 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+78 
+
+Tabela 4.22: Erro relativo dos resultados 
+
+Erro relativo da RNA 2 (%) 
+
+Tanc 
+3,04 
+
+θanc 
+5,28 
+
+L 
+
+H 
+
+7,04 
+
+9,01 
+
+ 
+
+ 
+
+ 
+
+Logo,  conclui-se  que  há  um  menor  custo  computacional  quando  se  utiliza  RNA  em 
+
+comparação  com  a  integração  numérica,  cerca  de  78%  do  tempo  para  o  caso  de  três 
+
+parâmetros  de  entrada,  e  que  a  RNA 2  se  mostra  mais  eficaz,  com  6  neurônios  na  primeira 
+
+camada e 10 neurônios na segunda. Além disso, afirma-se que há uma tendência de melhores 
+
+resultados  quando  utilizadas  redes  com  menos  neurônios  em  cada  camada,  ou  seja,  RNAs 
+
+com arquitetura menos robusta. 
+
+4.4.2.7 Comparação  dos  resultados  obtidos  pela  resolução  do  sistema  de  EDO  e  através  da 
+
+RNA única e das RNAs separadas 
+
+Realiza-se  uma  nova  comparação  para  os  tempos  e  erros  relativos,  da  mesma  forma  que  na 
+
+seção anterior, utilizando cinco RNAs e a integração numérica. A primeira análise é feita com 
+
+a mesma RNA 1 descrita anteriormente, já a segunda é realizada utilizando as quatro RNAs 
+
+separadas  descrita  na  seção  5.4.2.2,  com  cada  uma  retornando  apenas  uma  saída,  ou  seja, 
+
+implementa-se um arquivo, denominado RNA 3, com essas quatro redes, retornando os quatro 
+
+resultados comparados, que são Tanc, θanc, L e H. Além disso, ressalta-se que essas cinco redes 
+
+possuem a mesma arquitetura. 
+
+Na Tabela 4.23 encontram-se resumidos os resultados dessa análise. 
+
+Tabela 4.23: Comparação das RNAs com o sistema de EDO 
+
+Rodada 
+
+Tempo 
+
+Tempo 
+
+RNA 1 (s) 
+
+RNA 3 (s) 
+
+1 
+
+2 
+
+3 
+
+4 
+
+5 
+
+Média 
+
+ 
+
+0,0104 
+
+0,0109 
+
+0,0106 
+
+0,0104 
+
+0,0106 
+
+0,0106 
+
+0,0417 
+
+0,0437 
+
+0,0417 
+
+0,0417 
+
+0,0428 
+
+0,0423 
+
+Tempo 
+EDO (s) 
+0,0138 
+
+0,0138 
+
+0,0138 
+
+0,0138 
+
+0,0140 
+
+0,0138 
+
+Tempo RNA 1/Tempo 
+
+Tempo RNA 3/Tempo 
+
+EDO (%) 
+
+EDO (%) 
+
+75,48 
+
+79,13 
+
+77,39 
+
+75,52 
+
+76,03 
+
+76,71 
+
+302,34 
+
+316,02 
+
+303,18 
+
+302,96 
+
+306,95 
+
+306,29 
+
+ 
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+79 
+
+Na seção 5.4.2.2, concluiu-se que os treinamentos separados para cada uma das quatro RNAs 
+
+são muito mais rápidos que o treinamento para uma RNA única, além de a soma dos tempos 
+
+dos  treinos  separados  ainda  ser  menor  que  o  tempo  do  treino  único. Apesar  disso,  quando 
+
+essas  quatro  redes  são  utilizadas  juntas  para  uma  mesma  análise,  o  tempo  computacional 
+
+demandado é quatro vezes maior que o da RNA 1. Isso se deve, pois, independentemente de 
+
+quantas  saídas  tenha  uma  RNA,  o  tempo  para  seu  acesso  é  praticamente  o  mesmo  de  outra 
+
+com a mesma arquitetura. 
+
+Com os resultados das análises, obtêm-se as Tabela 4.24 e Tabela 4.25 com os erros relativos 
+
+das RNAs com a integração numérica. 
+
+Tabela 4.24: Erro relativo dos resultados 
+
+Erro relativo da RNA 1 (%) 
+H 
+
+L 
+
+Tanc 
+7,84 
+
+θanc 
+5,43 
+
+7,76 
+
+9,51 
+
+  
+
+ 
+
+Tabela 4.25: Erro relativo dos resultados 
+
+Erro relativo para RNA 3 (%) 
+Tanc 
+H 
+4,38 
+
+θanc 
+4,61 
+
+9,14 
+
+11,04 
+
+L 
+
+Percebe-se  que  os  erros  relativos  para  a  RNA  1,  deste  caso,  são  iguais  aos  erros  na  análise 
+
+anterior. Isso se deve ao fato de que a RNA 1 é treinada apenas uma vez, já que se essa rede 
+
+fosse treinada novamente para essa análise, provavelmente os resultados seriam diferentes, ou 
+
+seja, a RNA 1 retornaria valores de Tanc, θanc, L e H diferentes da análise anterior, pois a rede 
+
+possuiria um reconhecimento de padrões diferente, fato esse que será visto na próxima seção. 
+
+Além disso, a RNA 3 se aproxima mais dos resultados analíticos para Tanc e θanc e a RNA 1 
+
+mostra-se  mais  próxima  dos  resultados  analíticos  para  L  e  H.  Desse  modo,  afirma-se  que 
+
+apesar de ser muito mais rápido o uso da RNA 1, a aproximação dos resultados de ambas as 
+
+análises em relação à integração numérica, em geral, não apresentam diferenças significativas. 
+
+Logo, não há vantagens na utilização de RNAs separadas para cada saída em relação à RNA 
+
+única. 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+4.4.2.8 Redes treinadas com diferentes erros 
+
+80 
+
+Também  são  realizadas  as  mesmas  análises  para  redes  com  a  mesma  arquitetura,  mas 
+
+treinadas  com  erros  diferentes. Assim,  são  comparados  os  resultados  de  duas  RNAs  com  os 
+
+valores resultantes do processo de integração numérica, sendo que a primeira rede é a mesma 
+
+RNA 1 acima e a outra, a RNA 4, possui a mesma arquitetura, mas é treinada com um erro de 
+
+9.10-7,  menor  que  o  erro  com  o  qual  todas  as  redes  com  três  parâmetros  de  entrada  são 
+
+treinadas, o qual é de 10-5. O final do treinamento da RNA 4 pode ser visto na Figura 4.9. 
+
+ 
+
+ 
+
+ 
+
+Figura 4.9: Final do treinamento da RNA 4 
+
+ 
+
+Observa-se  que  o  treinamento  da  RNA  4  demora  muito  mais  que  os  outros  treinamentos  já 
+
+realizados, com 5406 iterações em um intervalo de tempo de aproximadamente 18 minutos. O 
+
+erro  de  9.10-7  é  escolhido  após  ser  observado  o  comportamento  do  treino  para  diversos 
+
+valores,  pois,  para  erros  menores  que  este,  raramente  ocorria  convergência  após  horas  de 
+
+processamento. 
+
+Na Tabela 4.26, observam-se os resultados da utilização das redes e da resolução do sistema 
+
+de equações diferenciais. 
+
+ 
+
+ 
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+ 
+
+ 
+
+81 
+
+Tabela 4.26: Comparação das RNAs com o sistema de EDO 
+
+Rodada 
+
+Tempo 
+
+Tempo 
+
+RNA 1 (s) 
+
+RNA 4 (s) 
+
+1 
+2 
+3 
+4 
+5 
+
+Média 
+
+ 
+
+0,0108 
+0,0108 
+0,0111 
+0,0111 
+0,0110 
+
+0,0110 
+
+0,0111 
+0,0109 
+0,0115 
+0,0110 
+0,0110 
+
+0,0111 
+
+Tempo 
+EDO (s) 
+0,0144 
+0,0144 
+0,0144 
+0,0141 
+0,0140 
+
+0,0143 
+
+Tempo RNA 1/Tempo 
+
+Tempo RNA 4/Tempo 
+
+EDO (%) 
+
+EDO (%) 
+
+75,39 
+75,07 
+77,40 
+78,61 
+78,33 
+
+76,96 
+
+77,28 
+76,09 
+80,26 
+78,33 
+78,43 
+
+78,08 
+
+Percebe-se que a utilização da RNA 1 é um pouco mais rápida que a utilização da RNA 4 e, 
+
+além  disso,  as  resoluções  através  das  redes  são  mais  rápidas  que  através  da  integração  dos 
+
+sistema de equações, com um tempo relativo de 76,96% para a RNA 1 e 78,08% para a RNA 
+
+4. 
+
+Os erros relativos encontram-se resumidos nas Tabela 4.27 e Tabela 4.28. 
+
+Tabela 4.27: Erro relativo dos resultados 
+
+Erro relativo da RNA 1 (%) 
+H 
+
+L 
+
+Tanc 
+6,75 
+
+θanc 
+7,22 
+
+10,34 
+
+11,55 
+
+Tabela 4.28: Erro relativo dos resultados 
+
+Erro relativo da RNA 4 (%) 
+H 
+
+L 
+
+Tanc 
+4,80 
+
+θanc 
+4,89 
+
+2,00 
+
+6,21 
+
+ 
+
+ 
+
+ 
+
+Analisando essas tabelas, percebe-se que os erros relativos da RNA 1 são diferentes dos erros 
+
+das  RNAs  1  anteriores,  pois,  para  essa  análise,  é  realizado  um  novo  treinamento  da  rede. 
+
+Além disso, afirma-se que os resultados obtidos com a RNA 4 são muito mais próximos dos 
+
+resultados a partir da resolução do sistema de equações diferenciais, quando comparados com 
+
+os  erros  relativos  da  RNA  1.  Isso  se  deve  ao  fato  de  que  a  RNA  4  é  treinada  com  uma 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+82 
+
+tolerância  menor  de  erro,  o  que  leva  a  resultados  mais  próximos  dos  valores  gerados  pelas 
+
+EDOs. 
+
+Logo,  quanto  menor  o  erro  escolhido  para  o  treinamento  da  RNA,  mais  exatos  serão  os 
+
+resultados  da  rede  com  relação  aos  dados  obtidos  através  da  integração  numérica.  Apesar 
+
+disso, quanto maior o erro para o treino, maior será o custo computacional com o processo, o 
+
+que demanda computadores com melhores desempenhos. 
+
+ 
+
+ 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+5.  CONCLUSÕES 
+
+83 
+
+O  presente  trabalho  focou  na  modelagem  da  interação  entre  o  solo  marinho  e  a  linha  de 
+
+ancoragem enterrada, através da integração numérica das equações diferenciais de equilíbrio, 
+
+aplicando-se  posteriormente  o  conceito  de  Redes  Neurais  Artificiais  em  susbstituição  ao 
+
+processo de integração. 
+
+Devido ao próprio movimento da unidade flutuante, as tensões na linha de ancoragem variam 
+
+com  o  tempo,  e  dessa  forma,  o  ponto  de  afloramento  da  linha  de  ancoragem  enterrada 
+
+translada constatemente no leito marinho. Por isso, deve-se considerar os graus de liberdade 
+
+do  ponto  de  afloramento  desse  trecho  nas  análises  da  linha  de  ancoragem  como  um  todo. 
+
+Além  disso,  a  geometria  do  trecho  enterrado  da  linha  tende  a  linearizar-se  à  medida  que  a 
+
+tensão  inicial  aumenta,  se  apresentando  praticamente  reta  nos  primeiros  metros  e  possuindo 
+
+uma  maior  variação  na  inclinação  nos  últimos  metros  de  profundidade,  com  variação 
+
+praticamente  linear.  O  mesmo  ocorre  com  o  comportamento  da  tensão  na  linha  ao  longo  da 
+
+profundidade. 
+
+Os resultados obtidos com o programa computacional desenvolvido foram satisfatórios, visto 
+
+que o maior erro relativo do comprimento foi de 1,89% e da projeção horizontal foi de 2,99%, 
+
+ambos  relativos  ao  ÂNCORA.  Já  os  menores  erros  foram  com  relação  ao  DIGIN,  pois  as 
+
+fórmulas  utilizadas  no  presente 
+
+trabalho 
+
+foram  as 
+
+recomendadas  pela  DNV  e 
+
+consequentemente utilizadas no DIGIN. Dessa forma, valida-se o programa desenvolvido. 
+
+Foram utilizadas basicamente dois tipos de RNAs ao longo da pesquisa: a primeira recebendo 
+
+um  parâmetro  de  entrada  e  a  segunda  recebendo  três  parâmetros  de  entrada.  Os  melhores 
+
+resultados ocorreram quando utilizou-se uma única RNA para as quatro saídas e fez-se o uso 
+
+da normalização dos dados de entrada e saída. Além  disso,  a rede mostrou-se mais eficiente 
+
+quando utilizada a função de transferência logsig para ambas as camadas e quando o número 
+
+de  neurônios  em  ambas  as  camadas  era  maior  que  7,  de  modo  que  os  melhores  resultados 
+
+foram obtidos com 10 neurônios na segunda camada. 
+
+Nas análises realizadas, percebe-se que não existe uma relação entre a quantidade de dados de 
+
+entrada e o número de iterações do treinamento, pois o mesmo depende da divisão dos dados 
+
+de entrada, a qual é feita aleatoriamente. Já o tempo de treino aumenta à medida que o volume 
+
+de dados de entrada aumenta. Percebe-se também que quanto maior o volume de dados para 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+84 
+
+treinamento e quanto maior a quantidade de neurônios nas camadas, menor é a velocidade de 
+
+treinamento, a qual apresenta decaimento logarítmico. 
+
+O uso de RNA mostrou-se muito vantajoso, pois o tempo de resolução do problema é cerca de 
+
+80%  do  tempo  da  integração  numérica  das  equações  diferenciais. Além  disso,  para  as  redes 
+
+com apenas um parâmetro de entrada, os erros relativos dos resultados são desprezíveis, já os 
+
+erros  relativos  das  redes  com  três  parâmetros  de  entrada  são  mais  expressivos.  Tais  erros 
+
+podem ser reduzidos com a adoção de tolerâncias de erro cada vez menores nos treinamentos. 
+
+Apesar disso, quanto menor o erro adotado no treinamento, maior será o custo computacional 
+
+com o processo, o que demanda computadores com melhores capacidades de processamento. 
+
+5.1  Sugestões para futuros trabalhos 
+
+Para  a  continuidade  do  presente  trabalho  sugere-se  o  treinamento  de  uma  RNA  que  receba 
+
+todos  os  outros  parâmetros  de  entrada,  utilizados  na  resolução  do  sistema  de  equações 
+
+diferenciais  ordinárias  de  equilíbrio  da  catenária  invertida.  Feito  isso,  propõe-se  acoplar  a 
+
+RNA  do  trecho  enterrado  à  análise  dinâmica  da  parte  submersa  da  linha.  Em  relação  ao 
+
+modelo  matemático,  sugere-se  levar  em  consideração  a  deformabilidade  da  linha  de 
+
+ancoragem. 
+
+Além  disso,  sugere-se  realizar  as  mesmas  análises  para  RNAs  com  mais  camadas 
+
+intermediárias  e  com  diferentes  algoritmos  de  treinamento,  utilizando  tolerâncias  de  erro  de 
+
+treinamento cada vez menores.
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+ 
+
+REFERÊNCIAS BIBLIOGRÁFICAS 
+
+85 
+
+AGUIAR, C. S. Análise de vibrações livres em estruturas offshore com ênfase em linhas 
+de ancoragem. Trabalho de Conclusão de Curso, Tecnologia em Construção Naval, UEZO, 
+Rio de Janeiro, RJ, Brasil, 2010. 
+
+AMORIM, T. O. Plataformas offshore, uma breve análise desde a construção ao 
+descomissionamento. Trabalho de Conclusão de Curso, Engenharia Civil, COPPE/UFRJ, Rio 
+de Janeiro, RJ, Brasil, 2010. 
+
+BANG, S., RICHARDSON, R., CHO, Y., KIM, Y.S. “Calibration of Analytical Solution 
+Using Centrifuge Model Tests on Mooring Lines”. In: Proceedings of the Thirteenth 
+International Offshore and Polar Engineering Conference, Honolulu, Hawaii, USA, 2003. 
+
+BANG, S., HAN, H., TAYLOR, R.J. “Development and validation of mooring line 
+analysis in cohesive seafloor”. In: Proceedings of the Tenth International Offshore and Polar 
+Engineering Conference, Seattle, USA, 2000. 
+
+BEALE, M.H., HAGAN, M.T., DEMUTH H.B. “Neural network toolbox: matlab user’s 
+guide”. Natick, MA: MathWorks, 2012, 420 f. 
+
+BEZERRA, M.V.O., MORISHITA, H.M. Aplicação de superfícies de resposta para 
+otimização dos parâmetros de controle de um sistema de posicionamento dinâmico. In: 
+Congresso Nacional de Transporte Aquaviário, Construção Naval e Offshore, 24, 2012, Rio 
+de Janeiro, Brasil. Disponível em: 
+http://www.ipen.org.br/downloads/sobena/proyectos/TF053.pdf. Acesso em: 20 de junho 
+2013.  
+
+DNV. “Design and installation of fluke anchors in clay”, RECOMMENDED PRACTICE 
+RP-E301. Det Norske Veritas, Norway, 2000. 
+
+HAYKIN, S. Redes Neurais: princípios e práticas. 2a edição. Tradução de Paulo Martins 
+Engel. Porto Alegre: ARTMED, 2001. 908 f.  
+
+KAWASAKI, P.Y. Análise de linhas de ancoragem de plataformas oceânicas 
+considerando diversos tramos e o trecho enterrado da linha. Trabalho de Conclusão de 
+Curso, Engenharia Civil, COPPE/UFRJ, Rio de Janeiro, RJ, Brasil, 2010. 
+
+LACERDA, T.A.G. Análise de sistemas de ancoragem de plataformas flutuantes. 
+Trabalho de Conclusão de Curso, Engenharia Civil, UFRJ, Rio de Janeiro, RJ, Brasil, 2005. 
+
+MATSUNAGA, V.Y. Curso de redes neurais utilizando o matlab. 2012. 22 f., Belém, PA, 
+Brasil. 
+
+PINA, A.A. Metodologias de análise, síntese e otimização de sistemas para produção de 
+
+Modelagem computacional da interação entre o solo marinho e a linha de ancoragem enterrada. 
+
+ 
+
+86 
+
+petróleo offshore através de metamodelos e enxame de partículas. Tese de Doutorado, 
+Engenharia Civil, COPPE/UFRJ, Rio de Janeiro, RJ, Brasil, 2006. 
+
+SILVA, L.C.F. Inteligência computacional para predição de produção de reservatórios de 
+petróleo. Tese de Doutorado, Engenharia Civil, COPPE/UFRJ, Rio de Janeiro, RJ, Brasil, 
+2006. 
+
+TIQUILLOCA, J.L.M., MORISHITA, H.M., SIMÕES, M.G. Análise dinâmica de sistemas 
+de produção flutuante de petróleo através de redes neurais artificiais. In: Simpósio 
+Brasileiro de Automação Inteligente, 4., 1999, São Paulo, SP, Brasil. Disponível em: 
+http://fei.edu.br/sbai/SBAI1999/ARTIGOS/IV_SBAI_19.pdf. Acesso em: 23 de junho 2013. 
+
+WANG, L., GUO, Z., YUAN, F. “Quasi-static three-dimensional analysis of suction 
+anchor mooring system”. Ocean Engineering, v. 37, n. 13, pp. 1127-1138, 2010. 
+
+Thiago Delfino Lima Vasconcelos (thiagodel@lccv.ufal.br). Trabalho de Conclusão de Curso. Maceió, AL, UFAL, 2013. 
+ 
+
+

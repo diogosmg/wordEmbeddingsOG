@@ -1,0 +1,6084 @@
+Laborat´orio Nacional de Computa¸c˜ao Cient´ıﬁca
+
+Programa de P´os-Gradua¸c˜ao em Modelagem Computacional
+
+Modelagem Computacional do Acoplamento
+
+Hidro-Geomecˆanico em Reservat´orios
+
+N˜ao-Convencionais de G´as
+
+Por
+
+Diego Tavares Volpatto
+
+PETR ´OPOLIS, RJ - BRASIL
+
+JUNHO DE 2016
+
+MODELAGEM COMPUTACIONAL DO ACOPLAMENTO
+
+HIDRO-GEOMEC ˆANICO EM RESERVAT ´ORIOS
+
+N ˜AO-CONVENCIONAIS DE G ´AS
+
+Diego Tavares Volpatto
+
+DISSERTA ¸C ˜AO SUBMETIDA AO CORPO DOCENTE DO LABORAT ´ORIO
+
+NACIONAL DE COMPUTA ¸C ˜AO CIENT´IFICA COMO PARTE DOS REQUI-
+
+SITOS NECESS ´ARIOS PARA A OBTEN ¸C ˜AO DO GRAU DE MESTRE EM
+
+CIˆENCIAS EM MODELAGEM COMPUTACIONAL
+
+Aprovada por:
+
+Prof. M´arcio Arab Murad, D.Sc
+
+(Presidente)
+
+Prof. M´arcio Rentes Borges, D.Sc
+
+Prof. Jos´e Luis Drummond Alves, D.Sc.
+
+Prof. Fernando Pereira Duda, D.Sc.
+
+PETR ´OPOLIS, RJ - BRASIL
+
+JUNHO DE 2016
+
+Volpatto, Diego Tavares
+
+V931m
+
+Modelagem computacional do acoplamento hidro-geomecˆanico em reser-
+
+vat´orios n˜ao-convencionais de g´as / Diego Tavares Volpatto – Petr´opolis, RJ.:
+
+Laborat´orio Nacional de Computa¸c˜ao Cient´ıﬁca, 2016.
+
+xvi, 73 p. : il.; 29 cm
+
+Orientadores: M´arcio Arab Murad e Eduardo L´ucio Mendes Garcia.
+
+Disserta¸c˜ao (Mestrado) – Laborat´orio Nacional de Computa¸c˜ao Cient´ı-
+
+ﬁca, 2016.
+
+1. Reservat´orios de g´as. 2. M´etodo de elementos ﬁnitos. 3. Algoritmos
+
+num´ericos. 4. Geomecˆanica de reservat´orios. 5. Acoplamentos iterativos.
+
+I.
+
+Murad, M´arcio Arab. II. Eduardo L´ucio Mendes Garcia III. LNCC/MCTI.
+
+IV. T´ıtulo.
+
+CDD – 627.86
+
+“You won’t ﬁnd it here,
+
+Look another way,
+
+You won’t ﬁnd it here,
+
+So try another day”.
+
+Can¸c˜ao “Another Day” de autoria da banda
+
+Dream Theater.
+
+iv
+
+Dedicat´oria
+
+Dedico ao leitor na esperan¸ca de que, ap´os a
+
+leitura deste texto, seja adicionado um dx ao
+
+seu conhecimento e que possa, por
+
+conseguinte, ser de algum proveito.
+
+v
+
+Agradecimentos
+
+Gostaria inicialmente de agradecer a Deus, `a natureza, `as circunstˆancias e
+
+convergˆencia de toda a existˆencia para at´e este estado onde pude concluir o presente
+
+trabalho.
+
+Agrade¸co imensamente aos meus orientadores, os professores M´arcio e Edu-
+
+ardo (Bidu), por todos os ensinamentos fornecidos. Isto ´e algo de valor incomen-
+
+sur´avel e que levarei comigo ao longo de toda a minha carreira. Agrede¸co tamb´em
+
+pela paciˆencia e pelas palavras de apoio. Se pude concluir este trabalho, conside-
+
+r´avel parcela ´e gra¸cas ao excelente papel desempenhado pelos meus orientadores.
+
+S˜ao proﬁssionais de excelˆencia e fonte de inspira¸c˜ao para mim.
+
+Expresso profundos agradecimentos aos membros da minha banca: Professor
+
+Jos´e Alves, tanto pelas corre¸c˜oes como pelos conselhos dados pessoalmente quando
+
+passei no LAMCE/Coppe. Ao Professor Fernando Duda pelo valoroso apoio pres-
+
+tado e corre¸c˜oes. Ao Professor M´arcio Borges pelo aux´ılio na melhoria do texto.
+
+Agrade¸co a todos pelas contribui¸c˜oes e sujest˜oes para o presente trabalho.
+
+Gostaria de expressar meus profundos agradecimentos aos colegas de grupo
+
+de pesquisa: `A Patr´ıcia Pereira por todo o aux´ılio prestado e paciˆencia principal-
+
+mente quando o presente trabalho se encontrava em est´agio embrion´ario. Ao Jes´us
+
+Alexei pela ajuda e prestatividade, me auxiliando bastante no entendimento da
+
+implementa¸c˜ao da geomecˆanica. `A Aline Rocha pelas d´uvidas sanadas e ajuda no
+
+texto, al´em da sua paciˆencia inex´oravel. Ao Josu´e Barroso pelas conversas e trocas
+
+de experiˆencia e, claro, pela paciˆencia tamb´em, que aparentemente ´e a qualidade
+
+onipresente no grupo.
+
+Agrade¸co `as minhas colegas da sala 1A-40: Ana Cl´audia Valentim (AC) e
+
+vi
+
+Jaqueline Angelo pela amizade, conselhos, paciˆencia pelas conversas na sala (eu sei
+
+que eu falo demais) e suporte quando precisei. `A Aline novamente, por ter tamb´em
+
+me aguentado como colega de sala.
+
+Gostaria de agradecer tamb´em a alguns professores pelos quais nutro pro-
+
+fundo respeito e s˜ao fontes de inspira¸c˜ao para mim: Professor Abimael Loula pelas
+
+palavras e conhecimentos valiosos passados. Ao Professor Jos´e Karam pelo seu
+
+jeito particular e muito inspirador de ministrar aulas.
+
+Durante alguns momentos, me deparei em situa¸c˜oes complicadas e pensei em
+
+desistir do mestrado trˆes vezes. Por´em, obtive for¸ca e apoio da minha fam´ılia san-
+
+gu´ınea e tamb´em da de alma, que s˜ao os meus amigos: Andr´e Luis (Chovas), Luiz
+
+Oliveira (Manaus), Phelippe Melo (Gordinho), Raphael Russi, Fernanda Cunha
+
+(Biribis) e ´Igor Jales. Apesar da distˆancia, se mantiveram presentes juntamente
+
+com a minha fam´ılia.
+
+Agrade¸co aos meus amigos de gradua¸c˜ao, Thiago Carneiro (MT) e Carol
+
+S´a, que vieram juntamente comigo tentar ganhar a vida pelo Rio de Janeiro e
+
+perseguir um t´ıtulo de mestre e doutor. Obrigado por estarem comigo por tanto
+
+tempo e me apoiado nos momentos dif´ıceis em terras ﬂuminenses, assim como
+
+os ´otimos momentos felizes, fundamentais para poder ter condi¸c˜oes de trabalhar
+
+adequadamente.
+
+Sou muito agradecido `as pessoas que pude conhecer na vivˆencia do LNCC
+
+(algo muito importante para mim), principalmente aos amigos que dividi aparta-
+
+mento enquanto morava em Petr´opolis: Caio Padoan, Lucas Dos Anjos e Oscar
+
+Neiva. Agrade¸co tamb´em `a Natasha Paiva e Ana Nascimento pela amizade e jo-
+
+gatinas. Ao amigo M´arlon Gr´egori pelas conversas e toda a divers˜ao que ´e estar
+
+em sua presen¸ca. `A Suelen Rocha, Thiago Machado, Juliano Deividy (Julianel),
+
+Felipe Figueredo, Heber Rocha e Marcos Teixeira, que s˜ao “a galera l´a de n´os”
+
+(nordeste). `A Daiana Barreiro pela amizade e companhia de estudo ao longo do
+
+primeiro ano. A Vitor Sales e Leandro Tavares pelas trocas de ideias e conselhos
+
+enquanto fui representante discente do LNCC. Aos demais colegas que comp˜oem
+
+vii
+
+o corpo discente, meu muito obrigado pela convivˆencia.
+
+Agrade¸co a todos os professores das disciplinas pelas quais passei, por conso-
+
+lidarem conhecimentos fundamentais tanto para a elabora¸c˜ao deste trabalho como
+
+para trabalhos futuros.
+
+Aos funcion´ario do LNCC: secret´aria da p´os, pessoal da limpeza e Help Desk,
+
+deixo meus sinceros agradecimentos.
+
+Por ﬁm, agrade¸co `a Agˆencia Nacional de Petr´oleo, G´as Natural e Biocom-
+
+bust´ıveis (ANP) pelo fomento fornecido, possibilitando a realiza¸c˜ao deste trabalho.
+
+viii
+
+Resumo da Disserta¸c˜ao apresentada ao LNCC/MCTI como parte dos requisitos
+
+necess´arios para a obten¸c˜ao do grau de Mestre em Ciˆencias (M.Sc.)
+
+MODELAGEM COMPUTACIONAL DO ACOPLAMENTO
+
+HIDRO-GEOMEC ˆANICO EM RESERVAT ´ORIOS
+
+N ˜AO-CONVENCIONAIS DE G ´AS
+
+Diego Tavares Volpatto
+
+Junho, 2016
+
+Orientador: M´arcio Arab Murad, D.Sc
+
+Co-orientador: Eduardo L´ucio Mendes Garcia, D.Sc.
+
+O presente trabalho objetiva a constru¸c˜ao de um novo modelo de acopla-
+
+mento hidro-mecˆanico em reservat´orios de g´as. O aspecto inovador do modelo
+
+proposto reside na natureza sequencial do acoplamento caracterizado pela decom-
+
+posi¸c˜ao do operador acoplado levando ao surgimento de termos de fonte entre os
+
+subsistemas hidrodinˆamica e geomecˆanico. Quando comparado com a formula¸c˜ao
+
+completamente acoplada, onde os dois sistemas s˜ao resolvidos simultaneamente,
+
+a formula¸c˜ao proposta permite a ado¸c˜ao de diferentes passos de tempo, extens˜ao
+
+natural para descrever rochas adjacentes ao reservat´orio produtivo e n˜ao sofre de
+
+carˆencia de estabilidade nas zonas imperme´aveis da forma¸c˜ao geol´ogica. A formu-
+
+la¸c˜ao proposta, baseada no algoritmo “ﬁxed stress split”, apresenta a propriedade
+
+de ser incondicionalmente est´avel no processo iterativo adotado na resolu¸c˜ao dos
+
+dois subsistemas. A formula¸c˜ao sequencial ´e discretizada pelo m´etodo de Galerkin
+
+aliada com algoritmo de ponto ﬁxo para tratar as n˜ao-linearidades presentes na
+
+equa¸c˜ao de estado do g´as e no acoplamento entre os dois subsistemas. Simula¸c˜oes
+
+num´ericas s˜ao realizadas para ilustrar os efeitos geomecˆanicos sobre a produ¸c˜ao
+
+de g´as em reservat´orios n˜ao convencionais de g´as em folhelho. Compara¸c˜oes entre
+
+as formula¸c˜oes em uma-via e duas-vias, comumente discutidas em geomecˆanica de
+
+ix
+
+reservat´orios, s˜ao apresentadas.
+
+x
+
+Abstract of Dissertation presented to LNCC/MCTI as a partial fulﬁllment of the
+
+requirements for the degree of Master of Sciences (M.Sc.)
+
+COMPUTATIONAL MODELING OF HYDRO-GEOMECHANICAL
+
+COUPLING IN UNCONVENTIONAL GAS RESERVOIRS
+
+Diego Tavares Volpatto
+
+June, 2016
+
+Advisor: M´arcio Arab Murad, D.Sc
+
+Co-advisor: Eduardo L´ucio Mendes Garcia, D.Sc.
+
+The present work aims at constructing a new sequential hydro-mechanical
+
+model of gas reservoirs. The new aspect of the proposed model lies on the derivation
+
+of new source terms in the subsystems of hydrodynamics and geomechanics. When
+
+compared with the fully-coupled formulation, where the two systems are solved
+
+simultaneously, the proposed formulation allows to explore the diﬀerence in the
+
+time-scales of the two phenomena. In addition the sequential formulation can be
+
+naturally extended to treat impermeable adjacent rocks and overcomes the problem
+
+of lack of stability in the impermeable regions of the geological formation. The
+
+formulation proposed based on the ﬁxed stress split algorithm is unconditionally
+
+stable in the iterative procedure for coupling the two subsystems. This continuum
+
+problem is discretized by the Galerkin method coupled with ﬁxed point algorithms
+
+to handle non-linearities present in the equation of state of the gas and in the
+
+coupling between the two subsystems. Numerical simulations are performed to
+
+illustrate the inﬂuence of geomechanical eﬀects upon gas production. Comparisons
+
+between the well known one and two-way formulations are also presented.
+
+xi
+
+Sum´ario
+
+1 Introdu¸c˜ao
+
+2 Revis˜ao da Poroelasticidade Linear
+
+2.1 Equa¸c˜oes governantes . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.2 Formula¸c˜ao totalmente acoplada . . . . . . . . . . . . . . . . . . . .
+
+2.3 Formula¸c˜ao iterativamente acoplada . . . . . . . . . . . . . . . . . .
+
+2.3.1 Acoplamento iterativo com deforma¸c˜oes ﬁxadas . . . . . . .
+
+2.3.2 Acoplamento iterativo com tens˜oes ﬁxadas . . . . . . . . . .
+
+3 Geomecˆanica de Reservat´orios de G´as
+
+3.1 Constru¸c˜ao do Modelo . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.2 Formula¸c˜ao Totalmente Acoplada . . . . . . . . . . . . . . . . . . .
+
+3.3 Formula¸c˜ao Iterativamente Acoplada . . . . . . . . . . . . . . . . .
+
+4 Formula¸c˜ao Variacional e Aproxima¸c˜ao por Elementos Finitos
+
+4.1 Forma Fraca . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.1.1
+
+Subsistema hidrodinˆamico . . . . . . . . . . . . . . . . . . .
+
+4.1.2
+
+Subsistema geomecˆanico . . . . . . . . . . . . . . . . . . . .
+
+4.2 Discretiza¸c˜ao temporal
+
+. . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.3 Discretiza¸c˜ao espacial . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5 Resultados Num´ericos
+
+5.1 Experimento BS . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1
+
+7
+
+9
+
+13
+
+15
+
+17
+
+19
+
+24
+
+24
+
+30
+
+32
+
+36
+
+36
+
+37
+
+38
+
+39
+
+42
+
+45
+
+50
+
+xii
+
+5.2 Experimento MS . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+52
+
+6 Conclus˜oes
+
+Referˆencias Bibliogr´aﬁcas
+
+Apˆendice
+
+A Equa¸c˜ao de Estado
+
+A.1 Equa¸c˜oes de estado c´ubicas gen´ericas . . . . . . . . . . . . . . . . .
+
+A.2 Equa¸c˜ao de Peng-Robinson modiﬁcada . . . . . . . . . . . . . . . .
+
+62
+
+64
+
+70
+
+70
+
+71
+
+xiii
+
+Lista de Figuras
+
+Figura
+
+1.1 Resumo dos tipos de g´as em reservat´orios (baseado em +G´as Brasil).
+
+2
+
+1.2 Produ¸c˜ao de g´as natural n˜ao-convencional por tipo em bilh˜oes de
+
+metros c´ubicos (retirado de IEA (2012)).
+
+. . . . . . . . . . . . . . .
+
+1.3 Oferta interna de energia (retirado de EPE (2015)).
+
+. . . . . . . . .
+
+1.4 Bacias sedimentares brasileiras (Lucchesi (1998)).
+
+. . . . . . . . . .
+
+2.1 Microestrutura de um meio poroso saturada por uma ´unica fase ﬂuida.
+
+2.2 Esquemas completamente acoplado e iterativamente acoplado (Kim
+
+2
+
+3
+
+3
+
+7
+
+(2010)).
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+16
+
+3.1 Dependˆencia do fator de compressibilidade com a press˜ao calculado
+
+para diferentes equa¸c˜oes de estado.
+
+. . . . . . . . . . . . . . . . . .
+
+30
+
+4.1 Procedimento geral. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+41
+
+5.1 Exemplo num´erico idealizado da forma¸c˜ao geol´ogica.
+
+. . . . . . . .
+
+46
+
+5.2 Condutividade hidr´aulica em fun¸c˜ao da press˜ao para valores pa-
+rametrizados de porosidade com Sg = 0.9, Sgr = Swr = 0.05,
+µg = 1.2 · 10−5 P a · s e κ0 = 6 · 10−19 m2.
+
+. . . . . . . . . . . . . . .
+
+47
+
+5.3 Figura ilustrativa de po¸cos horizontais perfurados a profundidades
+
+diferentes em uma mesma forma¸c˜ao geol´ogica.
+
+. . . . . . . . . . . .
+
+48
+
+5.4 Faixas verticais escolhidas para ilustrar os perﬁs dos campos hidro-
+
+mecˆanicos dos resultados: L (extremo esquerdo), C (centro) e R
+
+(extremo direito). . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+50
+
+xiv
+
+5.5 Faixas horizontais escolhidas para ilustrar os perﬁs dos campos hidro-
+
+mecˆanicos dos resultados: B (fundo), M (meio) e T (topo).
+
+. . . . .
+
+5.6 Perﬁl de press˜ao na tira M para caso h = 1665 m.
+
+. . . . . . . . . .
+
+5.7 Fluxo m´assico na tira M para caso h = 1665 m.
+
+. . . . . . . . . . .
+
+5.8 Comparativo de produ¸c˜ao de g´as do caso BS.
+
+. . . . . . . . . . . .
+
+5.9 Perﬁl de press˜ao na tira M para profundidade do po¸co h = 2119 m.
+
+5.10 Perﬁl de press˜ao na tira M para profundidade do po¸co h = 2621 m.
+
+5.11 Perﬁs de deslocamento uy ao longo da faixa vertical C parametriza-
+
+50
+
+51
+
+51
+
+52
+
+53
+
+53
+
+dos pelo tempo. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+55
+
+5.12 Perﬁl do componentes σyy dos campos de tens˜ao ao longo da faixa
+
+vertical C parametrizados pelo tempo.
+
+. . . . . . . . . . . . . . . .
+
+55
+
+5.13 Perﬁl do componentes σxx dos campos de tens˜ao ao longo da faixa
+
+. . . . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . . . . . . . .
+
+dom´ınio ocupado pelo folhelho.
+
+vertical C parametrizados pelo tempo.
+
+5.14 Evolu¸c˜ao temporal do campo de tens˜ao m´edia total normal ((cid:101)σT ) no
+5.15 Evolu¸c˜ao do termo de fonte −Sgpα/(Z(p)K)∂(cid:101)σT /∂t no dom´ınio ocu-
+5.16 Termo de fonte −Sgα/(3.2 · 10−8 · K)∂(cid:101)σT /∂t para o caso de ﬂuido
+
+pado pelo folhelho.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+ligeiramente compress´ıvel.
+
+. . . . . . . . . . . . . . . . . . . . . . .
+
+5.17 Comparativo de produ¸c˜ao de g´as do caso MS.
+
+. . . . . . . . . . . .
+
+56
+
+57
+
+58
+
+60
+
+61
+
+A.1 Ilustra¸c˜ao das propriedades moleculares captadas por λ1 e λ2 para
+
+valores de elevadas intensidades (adaptado de Hosseinifar e Jamshidi
+
+(2016)).
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+72
+
+xv
+
+Lista de Tabelas
+
+Tabela
+
+3.1 Valores dos parˆametros para as Equa¸c˜oes de Estado (Smith et al.
+
+(2001)).
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+28
+
+5.1 Parˆametros inerentes aos dois campos utilizados nas simula¸c˜oes.
+
+. .
+
+5.2 Parˆametros utilizados na implementa¸c˜ao computacional.
+
+. . . . . .
+
+47
+
+49
+
+A.1 Valores dos parˆametros para as Equa¸c˜oes de Estado (adaptado de
+
+Smith et al. (2001)).
+
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+
+71
+
+A.2 Atribui¸c˜ao dos valores das constantes para a Equa¸c˜ao de Estado
+
+proposta por Hosseinifar e Jamshidi (2016).
+
+. . . . . . . . . . . . .
+
+73
+
+xvi
+
+Cap´ıtulo 1
+
+Introdu¸c˜ao
+
+No panorama energ´etico mundial, petr´oleo e g´as natural s˜ao respons´aveis
+
+por consider´avel parcela da matriz energ´etica possuindo valores expressivos tanto
+
+na demanda quanto nos recursos dispon´ıveis (BP Company, 2015). Estudos repor-
+
+tados pela Agˆencia Internacional de Energia (IEA, 2012) tˆem mostrado proje¸c˜oes
+
+que indicam o aumento da demanda global por fontes de g´as nas pr´oximas d´ecadas.
+
+Para suprir esta iminente necessidade energ´etica novas formas de extra¸c˜ao de g´as
+
+tˆem sido empregadas pela ind´ustria, al´em das t´ecnicas convencionais em arenitos.
+
+Neste contexto, ao contr´ario dos reservat´orios convencionais, o g´as encontra-se ar-
+
+mazenado na rocha geradora, a qual exibe baix´ıssima permeabilidade, da ordem
+
+de nanodarcys. Para tornar a produ¸c˜ao economicamente vi´avel faz-se necess´ario
+
+o emprego de t´ecnicas de estimula¸c˜ao ou recupera¸c˜ao avan¸cada de g´as (Heﬂey e
+
+Wang, 2014; Speight, 2013). Na Figura 1.1, apresentamos um breve resumo sobre
+
+as fontes de g´as de petr´oleo dispon´ıveis para explora¸c˜ao.
+
+No cen´ario atual, os reservat´orios n˜ao-convencionais de g´as tˆem se tornado
+
+fontes alternativas importantes para o suprimento das necessidades energ´eticas
+
+da sociedade. Recentemente, a produ¸c˜ao de g´as n˜ao-convencional tem crescido
+
+substancialmente, sendo considerada altamente promissora como fonte alternativa
+
+de hidrocarbonetos. O cen´ario atual e o estimado para os pr´oximos anos, de acordo
+
+com IEA (2012), est´a ilustrado na Figura 1.2.
+
+No Brasil, a matriz energ´etica se assemelha ao cen´ario global. O g´as natural ´e
+
+1
+
+Figura 1.1: Resumo dos tipos de g´as em reservat´orios (baseado em +G´as Brasil).
+
+Figura 1.2: Produ¸c˜ao de g´as natural n˜ao-convencional por tipo em bilh˜oes de
+metros c´ubicos (retirado de IEA (2012)).
+
+respons´avel pela terceira maior parcela da oferta de energia interna do pa´ıs (Figura
+
+1.3).
+
+No que tange os recursos n˜ao convencionais de g´as, Alves (2014) estima
+
+que a reserva de g´as em folhelhos da forma¸c˜ao Irati na bacia do Paran´a seja de 6.4
+
+trilh˜oes de metros c´ubicos, que ´e equivalente a mais de 12 vezes o valor das reservas
+
+brasileiras atuais. O mesmo autor ainda salienta que devemos considerar as reservas
+
+ainda n˜ao estimadas das bacias de Solim˜oes, Amazonas, Parna´ıba, Parecis, S˜ao
+
+Francisco, Potiguar, Recˆoncavo, dentre outras, que tem sua localiza¸c˜ao ilustrada
+
+2
+
+Figura 1.3: Oferta interna de energia (retirado de EPE (2015)).
+
+na Figura 1.4. H´a que ressaltar que nem todas estas s˜ao vi´aveis economicamente,
+
+tendo em vista a necessidade log´ıstica e o emprego de t´ecnicas de estimula¸c˜ao tais
+
+como fraturamento hidr´aulico. Neste contexto, as forma¸c˜oes consideradas mais
+
+atrativas economicamente s˜ao as do Recˆoncavo, Tucano Sul, Sergipe-Alagoas e
+
+Potiguar, embora estas reservas necessitem de serem mais precisamente avaliadas.
+
+Figura 1.4: Bacias sedimentares brasileiras (Lucchesi (1998)).
+
+Desde a d´ecada de 60, v´arios autores propuseram diversos modelos num´ericos
+
+objetivando a simula¸c˜ao hidrodinˆamica de reservat´orios de petr´oleo. Trabalhos de
+
+grande destaque s˜ao os elaborados em Peaceman (1977) e Aziz e Settari (1979), que
+
+3
+
+consolidaram modelos cl´assicos como o Black-Oil e os chamados composicionais,
+
+sendo a base de muitos simuladores comerciais atualmente. Em Chen et al. (2006),
+
+os modelos computacionais cl´assicos que descrevem a hidrodinˆamica e transporte
+
+multif´asico de reservat´orios convencionais s˜ao abordados apresentando a ampla
+
+classe de m´etodos num´ericos comumente reportados na literatura.
+
+Os modelos computacionais amplamente utilizados em simula¸c˜ao de reserva-
+
+t´orios incorporam os efeitos geomecˆanicos unicamente atrav´es do conceito de com-
+
+pressibilidade da rocha. Tal representa¸c˜ao assume estacionaridade da tens˜ao total,
+
+ou seja, n˜ao captura a natureza transiente da tens˜ao total oriunda do processo de
+
+extra¸c˜ao (Murad et al., 2013). A porosidade responde unicamente `a altera¸c˜oes da
+
+poro-press˜ao e, portanto, efeitos de dilatˆancia da rocha induzidos por tens˜oes de
+
+cisalhamento s˜ao desprezados. Visando a obten¸c˜ao de modelos hidro-geomecˆanicos
+
+mais soﬁsticados, formula¸c˜oes completamente acopladas amplamente utilizadas em
+
+solos (Biot, 1941) tˆem sido estendidas para simula¸c˜ao de reservat´orios. Tais for-
+
+mula¸c˜oes exibem a desvantagem de serem computacionalmente custosas, al´em de
+
+apresentarem problemas de estabilidade em regi˜oes de baixa permeabilidade (Kim,
+
+2010; Murad e Loula, 1992; Settari e Mourits, 1998), imposi¸c˜ao de um ´unico passo
+
+de tempo e restri¸c˜ao severa para inclus˜ao das forma¸c˜oes adjacentes n˜ao produto-
+
+ras imperme´aveis. Para superar estas diﬁculdades, trabalhos pioneiros relacionados
+
+com a constru¸c˜ao de formula¸c˜oes sequenciais foram propostos por Settari e Mourits
+
+(1998) e Settari e Walters (2001). As formula¸c˜oes totalmente acopladas resolvem
+
+os diversos problemas f´ısicos em um ´unico sistema, enquanto que as formula¸c˜oes
+
+sequenciais resolvem subsistemas que se comunicam entre si por meio de termos
+
+de fonte oriundos das reformula¸c˜oes das equa¸c˜oes originais. Estas ´ultimas possuem
+
+vantagens no que tange custos computacionais devido `a decomposi¸c˜ao dos fenˆo-
+
+menos em subsistemas iterativamente acoplados, al´em de serem f´aceis de aplicar
+
+em simuladores cl´assicos para os subsistemas f´ısicos separadamente, fornecendo
+
+tamb´em vantagem na utiliza¸c˜ao de escalas de tempo distintas para os subsistemas
+
+(Murad et al., 2013).
+
+4
+
+A partir de Settari e Mourits (1998), v´arios esquemas sequenciais foram
+
+propostos para descrever e incorporar efeitos geomecˆanicos sobre o escoamento.
+
+Utilizando a teoria linear proposta por Biot (1941) e posteriormente desenvolvida
+
+em Coussy (2004) para meios porosos saturados por ﬂuidos com comportamento
+
+constitutivo linearizado, uma s´erie de modelos foram reportados na literatura con-
+
+siderando o acoplamento hidro-geomecˆanico e utilizando algoritmos sequenciais
+
+iterativos (Kim et al., 2011; Kim, 2010; Mikeli´c et al., 2014; Mikeli´c e Wheeler,
+
+2012; Murad et al., 2013). Neste cen´ario, diferentes metodologias sequenciais ite-
+
+rativas foram desenvolvidas baseando-se no congelamento de diferentes termos no
+
+balan¸co de massa. Dentre elas destacamos “drained ” e “undrained splits” bem como
+
+“ﬁxed strain” e “ﬁxed stress splits” (Kim, 2010; Mikeli´c et al., 2014). Cada estrat´e-
+
+gia sequencial baseia-se em diferentes formas do algoritmo de ponto ﬁxo utilizado
+
+na resolu¸c˜ao do acoplamento. As diferentes formas de acoplamento encontram-se
+
+bem discutidas na literatura no caso linear de matriz el´astica e ﬂuidos ligeira-
+
+mente compress´ıveis. Dentre os algoritmos sequenciais iterativos, a abordagem
+
+com tens˜oes ﬁxadas (ﬁxed stress split) apresenta comportamento incondicional-
+
+mente est´avel (Kim et al., 2011; Kim, 2010) e por esta raz˜ao iremos aborda-la no
+
+presente trabalho para o caso n˜ao-linear de ﬂuidos compress´ıveis. Esta estrat´egia
+
+incorpora um termo adicional advindo da compressibilidade da rocha no subsis-
+
+tema hidrodinˆamico aliado a um termo de fonte oriundo da evolu¸c˜ao temporal das
+
+tens˜oes normais totais m´edias da matriz porosa. Quando este efeito ´e considerado,
+
+o acoplamento ´e denominado em duas-vias. Caso contr´ario, recebe a terminologia
+
+de acoplamento em uma-via (Benra et al., 2011).
+
+No cen´ario de reservat´orios n˜ao convencionais de g´as, trabalhos reportando
+
+efeitos geomecˆanicos sobre a produtividade do g´as via esquemas iterativos ﬁxed
+
+stress split s˜ao ainda inexistentes. O objetivo deste trabalho ´e o de preencher esta
+
+lacuna. Propomos aqui uma nova formula¸c˜ao n˜ao-linear utilizando equa¸c˜oes de
+
+estado para gases reais para descrever a hidrodinˆamica do g´as em conjun¸c˜ao com a
+
+geomecˆanica baseada em elasticidade linear da rocha, dando origem a subsistemas
+
+5
+
+fracamente acoplados de equa¸c˜oes diferenciais parciais. O problema resultante ´e
+
+discretizado pelo M´etodo de Elementos Finitos no dom´ınio espacial e pelo M´etodo
+
+de Euler impl´ıcito na evolu¸c˜ao temporal. Para ilustrar o potencial do modelo
+
+proposto, s˜ao realizadas simula¸c˜oes num´ericas de problemas de extra¸c˜ao de g´as
+
+baseado em campos reais situados nos Estados Unidos (Barnett e Marcellus shale).
+
+Neste cen´ario, s˜ao comparados os resultados num´ericos obtidos para formula¸c˜oes
+
+em uma-via, duas-vias e no caso da matriz r´ıgida. Discutimos, subsequentemente,
+
+situa¸c˜oes onde o efeito geomecˆanico deve ser incorporado no cˆomputo da produ¸c˜ao
+
+de g´as bem como exemplos onde a formula¸c˜ao uma-via exibe fontes num´ericas de
+
+massa levando a deterioriza¸c˜ao da qualidade das curvas de produ¸c˜ao.
+
+Estrutura da Disserta¸c˜ao
+
+Come¸caremos enunciando a teoria da poroelasticidade linear vigente no cap´ı-
+
+tulo 2. Ent˜ao, desenvolveremos a nova formula¸c˜ao da geomecˆanica de reservat´orios
+
+de g´as no cap´ıtulo 3. De posse dos modelos do cap´ıtulo 3, enunciamos a formula¸c˜ao
+
+variacional e sua aproxima¸c˜ao por elementos ﬁnitos para o modelo in´edito no cap´ı-
+
+tulo 4. No cap´ıtulo 5, realizamos o estudo de casos das simula¸c˜oes computacionais
+
+e avaliamos os efeitos da geomecˆanica e do comportamento compress´ıvel do g´as no
+
+comportamento do reservat´orio. Por ﬁm, apresentamos as conclus˜oes.
+
+6
+
+Cap´ıtulo 2
+
+Revis˜ao da Poroelasticidade Linear
+
+Para compreendermos melhor as diﬁculdades inerentes `a geomecˆanica de re-
+
+servat´orios de g´as ´e de suma importˆancia revisamos detalhadamente a constru¸c˜ao
+
+da teoria da poroelasticidade linear proposta por Biot (1941) e elucidada poste-
+
+riormente em Coussy (2004) e Cheng (2016). De posse destes conceitos e como
+
+refrasea-los no contexto das formula¸c˜oes inovadoras propostas, elucidamos clara-
+
+mente as diﬁculdades para estender o modelo para o caso n˜ao-linear.
+
+O problema abordado consiste do movimento de um ﬂuido levemente com-
+
+press´ıvel em um meio poroso el´astico linear sob hip´otese de pequenas deforma¸c˜oes
+
+e ausˆencia de efeitos t´ermicos e gravitacionais. Consideramos a hip´otese de escoa-
+
+mento monof´asico onde o ﬂuido preenche os espa¸cos intersticiais da matriz porosa
+
+(Figura 2.1).
+
+Figura 2.1: Microestrutura de um meio poroso saturada por uma ´unica fase ﬂuida.
+
+A modelagem do problema ´e efetuada na escala de Darcy (ou de laborat´o-
+
+7
+
+rio) onde as fases s´olida e ﬂuida coexistem sendo caracterizadas por propriedades
+
+m´edias pontuais associadas a um elemento representativo de volume (ERV). Nesta
+
+escala, ao contr´ario do caso de matriz r´ıgida, onde a deﬁni¸c˜ao de porosidade ´e
+
+´unica, a extens˜ao deste conceito para meios deform´aveis n˜ao ´e trivial e surge atre-
+
+lada ao referencial Euleriano ou Lagrangeano adotado. De acordo com Coussy
+
+(2004), denotando Vp o volume dos poros, as pororidades Lagrangeana e Euleriana
+
+s˜ao deﬁnidas respectivamente por
+
+φ :=
+
+Vp
+VT
+
+;
+
+n :=
+
+Vp
+vT
+
+(2.1)
+
+onde VT e vT denotam, respectivamente, os volumes totais do ERV nas conﬁgura-
+
+¸c˜oes de referˆencia e atual. A distin¸c˜ao entre estes dois conceitos ´e fundamental na
+
+representa¸c˜ao das equa¸c˜oes de conserva¸c˜ao. Na literatura corrente de escoamentos
+
+em meios porosos, tem-se adotado a porosidade Euleriana enquanto que na ´area
+
+de geomecˆanica de reservat´orios a Lagrangeana, que consiste da vari´avel natural
+
+para obten¸c˜ao de dados experimentais (Zoback, 2010).
+
+Sendo dVp = φdVT = ndvT e denotando J := det F = dvT /dVT o Jacobiano
+
+do gradiente de deforma¸c˜ao, podemos relacionar as porosidades da forma (Coussy,
+
+2004)
+
+φ = Jn
+
+(2.2)
+
+Sob hip´otese de pequenas deforma¸c˜oes, no contexto da teoria linearizada, temos
+
+J = 1 + ∇ · u
+
+(2.3)
+
+onde u denota o campo de deslocamentos da matriz porosa. No caso de meios
+
+incompress´ıveis, temos J = 1, que implica φ = n.
+
+A massa espec´ıﬁca real do ﬂuido que satura os poros ´e dada por
+
+ρf :=
+
+Mf
+Vp
+
+8
+
+(2.4)
+
+onde Mf ´e a quantidade de massa ﬂuida contida nos poros do ERV.
+
+A massa espec´ıﬁca aparente leva em considera¸c˜ao o volume total da c´elula
+
+porosa. Temos ent˜ao
+
+ρap
+f
+
+:=
+
+Mf
+VT
+
+=
+
+Vp
+VT
+
+× Mf
+
+Vp
+
+= φρf
+
+(2.5)
+
+A grandeza que desempenha papel fundamental na poromecˆanica (Coussy,
+
+2004) ´e o conte´udo de massa de ﬂuido por unidade de volume Lagrangeano do
+
+ﬂuido na forma
+
+mf := φρf ≡ ρap
+
+f
+
+(2.6)
+
+2.1
+
+Equa¸c˜oes governantes
+
+Na ausˆencia de troca de massa entre as fases s´olida e ﬂuida, em fun¸c˜ao do
+
+conte´udo de massa, a lei de conserva¸c˜ao de massa ´e dada por (Coussy, 2004)
+
+∂mf
+∂t
+
+onde
+
+(cid:17)
+
+= 0
+
+ρf vf
+D
+
++ ∇ ·(cid:16)
+D := n(cid:0)vf − ˙u(cid:1)
+
+vf
+
+(2.7)
+
+(2.8)
+
+(2.9)
+
+representa a velocidade de percola¸c˜ao do ﬂuido vf relativa ao movimento do s´olido.
+
+Alternativamente, a representa¸c˜ao Euleriana do balan¸co de massa ´e dada por
+
+(nρf ) = −∇ ·(cid:0)nρf vf(cid:1) = −∇ ·(cid:16)
+
+(cid:17) − ∇ · (nρf ˙u)
+
+ρf vf
+D
+
+∂
+∂t
+
+Na ausˆencia de efeitos gravitacionais, a velocidade de percola¸c˜ao do ﬂuido ´e
+
+descrita pela lei de Darcy (Bear e Bachmat, 1990) da forma
+
+D = −Kf∇p
+vf
+
+(2.10)
+
+onde Kf denota a condutividade hidr´aulica do meio.
+
+9
+
+Para fecharmos o modelo hidrodinˆamico necessitamos de postular uma lei
+
+constitutiva para o conte´udo de massa mf . No contexto da teoria linearizada com
+
+pequenas perturba¸c˜oes em rela¸c˜ao ao estado inicial, temos (Coussy, 2004)
+
+mf = m0
+
+f + ρ0
+
+(cid:124)
+
+(cid:123)(cid:122)
+(cid:125)
+f α∇ · u
+
+drained
+
++
+
+ρ0
+f
+M
+
+(cid:124)
+
+undrained
+
+(p − p0)
+
+(cid:123)(cid:122)
+
+(cid:125)
+
+(2.11)
+
+onde ρ0
+
+f , m0
+
+f e p0 designam a massa espec´ıﬁca, o conte´udo de massa e a press˜ao no
+
+estado inicial de referˆencia.
+
+A lei constitutiva acima incorpora de forma precisa o comportamento do meio
+
+poroel´astico saturado. O primeiro termo descreve a resposta “drenada” do sistema,
+
+ou seja, quantiﬁca a varia¸c˜ao do conte´udo de ﬂuido induzida puramente por uma
+deforma¸c˜ao volum´etrica da matriz perme´avel (∇ · u), a qual permite a sa´ıda/en-
+
+trada de ﬂuido na amostra. O segundo termo representa a resposta do conte´udo
+
+de massa “n˜ao-drenada” do sistema, ou seja, selada para o escape do ﬂuido. Nesta
+
+conﬁgura¸c˜ao a varia¸c˜ao de mf ´e puramente induzida pelas compressibilidades do
+
+ﬂuido e dos gr˜aos que comp˜oem a matriz porosa.
+
+Os parˆametros α e M s˜ao fundamentais na teoria da poroelasticidade, sendo
+
+representados da forma (Biot e Willis, 1957)
+
+e
+
+α := 1 − K
+Ks
+
+1
+M
+
+:=
+
+φ
+Kf
+
++
+
+α − φ
+Ks
+
+(2.12)
+
+(2.13)
+
+onde K, Ks e Kf representam, respectivamente, os m´odulos volum´etricos da matriz
+porosa, dos gr˜aos s´olidos e do ﬂuido. O parˆametro α = {α ∈ R : 0 ≤ α ≤ 1},
+denominado coeﬁciente de Biot-Willis, representa a raz˜ao entre a diferen¸ca mf−m0
+e a deforma¸c˜ao volum´etrica. Para gr˜aos incompress´ıveis, temos Ks >> K e α → 1,
+
+f
+
+o que implica que a quantidade de ﬂuido extra´ıdo da amostra ´e exatamente igual
+
+`a varia¸c˜ao de volume desta. Para gr˜aos compress´ıveis α < 1, implicando que o
+
+10
+
+conte´udo de ﬂuido extra´ıdo ´e menor que a varia¸c˜ao de volume.
+
+O parˆametro M incorpora os efeitos das duas compressibilidades locais no
+
+processo n˜ao-drenado. O primeiro termo representa a compressibilidade do ﬂuido
+(Kf < ∞), enquanto que o segundo a dos gr˜aos s´olidos (Ks < ∞). Para gr˜aos e
+ﬂuido localmente incompress´ıveis, M → ∞ (Kf → ∞ e Ks → ∞) o que conduz a
+
+1/M = 0.
+
+De maneira an´aloga, Coussy (2004) postula uma rela¸c˜ao constitutiva line-
+
+arizada para a porosidade Lagrangeana baseado na teoria desenvolvida por Biot
+
+(1941):
+
+φ = φ0 + α∇ · u +
+
+(p − p0)
+
+1
+N
+
+em que φ0 ´e a porosidade Lagrangeana inicial e
+
+1
+N
+
+:=
+
+α − φ
+Ks
+
+(2.14)
+
+(2.15)
+
+´E importante ressaltar que o parˆametro 1/N incorpora uma parcela do coe-
+
+ﬁciente 1/M em (2.13) , levando em conta somente a compressibilidade dos gr˜aos
+
+s´olidos.
+
+Derivando a equa¸c˜ao (2.11) em rela¸c˜ao ao tempo, obtemos
+
+∂mf
+∂t
+
+= ρ0
+
+f α∇ · ˙u +
+
+ρ0
+f
+M
+
+∂p
+∂t
+
+com ˙u = ∂u/∂t.
+
+Inserindo o resultado acima em (2.7), temos
+
++ ∇ ·(cid:16)
+
+ρf vf
+D
+
+(cid:17)
+
+= 0
+
+f α∇ · ˙u +
+ρ0
+
+ρ0
+f
+M
+
+∂p
+∂t
+
+Linearizando o termo do ﬂuido tomando ρf ≈ ρ0
+
+f , vem que
+
+1
+M
+
+∂p
+∂t
+
++ α∇ · ˙u + ∇ · vf
+
+D = 0
+
+11
+
+(2.16)
+
+(2.17)
+
+(2.18)
+
+A equa¸c˜ao acima representa o balan¸co de massa da mistura s´olido-ﬂuido na
+
+formula¸c˜ao completamente acoplada da teoria da poroelasticidade linear. Para
+
+completarmos o modelo hidro-geomecˆanico necessitamos enunciar o balan¸co de
+
+momento linear. Para tanto, ser´a utilizado como base o conceito de tens˜oes efetivas
+
+introduzido por Terzaghi (1943) e estendido posteriormente por Biot.
+
+O tensor de tens˜oes total σT em um meio poroso ´e decomposto da forma
+
+(Biot, 1941):
+
+σT := σ − αpI
+
+(2.19)
+
+em que I ´e o tensor identidade e σ ´e o tensor de tens˜oes efetivas que governa a
+
+deforma¸c˜ao da matriz porosa dado pela lei de Hooke
+
+σ := σ0 + Cε (u)
+
+(2.20)
+
+onde σ0 ´e a tens˜ao residual na conﬁgura¸c˜ao de referˆencia e C ´e o m´odulo de
+
+elasticidade representado no caso isotr´opico da forma
+
+Cijkl = µ (δikδjl + δilδjk) + λδijδkl
+
+onde {µ, λ} denota o par de constantes de Lam´e e a deforma¸c˜ao linearizada dada
+
+por
+
+ε (u) = ∇su
+
+e
+
+trε (u) = ∇ · u
+
+onde ∇s (•) denota a parte sim´etrica do operador gradiente.
+
+Na ausˆencia de efeitos gravitacionais, o equil´ıbrio da mistura s´olido-ﬂuido ´e
+
+governado por
+
+∇ · σT = 0
+
+Substituindo (2.19) em (2.21), obtemos
+
+∇ · σ = α∇p
+
+12
+
+(2.21)
+
+(2.22)
+
+2.2
+
+Formula¸c˜ao totalmente acoplada
+
+De posse das equa¸c˜oes que governam a hidrodinˆamica e a geomecˆanica do
+
+meio poroso, podemos escrever a formula¸c˜ao totalmente acoplada para o caso onde
+
+o meio seja homogˆeneo e isotr´opico.
+
+Seja ΩB ∈ Rd (d = 1, 2, 3) o dom´ınio ocupado por um meio poroso sa-
+
+turado por um ﬂuido ligeiramente compress´ıvel. Dado o conjunto de constantes
+{Kf , M, λ, µ, α, N} ∈ R, achar os campos p (x, t), u (x, t), vf
+φ (x, t) com x ∈ ΩB, t ∈ (0, tf inal] satisfazendo
+
+D (x, t), σ (x, t) e
+
+
+
+1
+M
+
++ α∇ · ˙u + ∇ · vf
+∂p
+∂t
+D = −Kf∇p
+vf
+
+D = 0
+
+∇ · σT = 0
+
+σT = σ − αpI
+σ = σ0 + λ (∇ · u) I + 2µε(u)
+
+(cid:104)∇u + (∇u)T(cid:105)
+
+(p − p0)
+
+1
+N
+
+1
+2
+
+ε (u) =
+φ = φ0 + α∇ · u +
+
+em ΩB
+
+(2.23)
+
+com as condi¸c˜oes iniciais p (x, t = 0) = pres
+
+∇ · u (x, t = 0) = 0
+
+em ΩB
+
+e condi¸c˜oes de contorno
+
+
+
+D · n = 0 sobre ΓH
+vf
+sobre ΓH
+D
+
+p = pw
+
+N
+
+sobre ΓG
+u = 0
+D
+σT · n = t sobre ΓG
+
+N
+
+13
+
+sendo
+
+∂Ω = Γ = ΓH
+
+D ∪ ΓH
+
+N = ΓG
+
+D ∪ ΓG
+N ;
+
+D ∩ ΓH
+ΓH
+
+N = ∅;
+
+D ∩ ΓG
+ΓG
+
+N = ∅
+
+onde ΓH
+
+D e ΓH
+
+N s˜ao as parti¸c˜oes da fronteira de Dirichlet e Neumann (ΓH
+
+N ´e assu-
+
+mido imperme´avel), respectivamente. Analogamente, ΓG
+
+D e ΓG
+
+N s˜ao as parti¸c˜oes da
+
+fronteira de Dirichlet e Neumann para o problema geomecˆanico, respectivamente,
+
+e t denota o carregamento aplicado sobre o reservat´orio.
+
+Alternativamente, podemos enunciar a formula¸c˜ao em termos das vari´aveis
+
+potenciais (press˜ao e deslocamento) dando origem `a bem conhecida formula¸c˜ao
+{u, p} do problema totalmente acoplado: Dado o conjunto de constantes {Kf , M ,
+λ, µ, α} ∈ R, achar o par {u, p} ∈ ΩB com t ∈ (0, tf inal] satisfazendo
+
+ µ∆u + (λ + µ)∇ (∇ · u) − α∇p = 0
+
++ α∇ · ˙u + Kf ∆p = 0
+
+1
+M
+
+∂p
+∂t
+
+em ΩB
+
+(2.24)
+
+sujeito `as condi¸c˜oes de contorno e iniciais (2.23).
+
+Para efeitos de compara¸c˜ao com a formula¸c˜ao sequencial apresentada a se-
+
+guir, podemos ilustrar o procedimento de resolu¸c˜ao totalmente acoplada conside-
+rando o operador Af c de forma que a obten¸c˜ao a evolu¸c˜ao da solu¸c˜ao pode ser
+
+descrita da forma (Kim, 2010)
+
+ Af c−−→
+
+un
+
+pn
+
+un+1
+
+pn+1
+
+ ,
+
+ 1
+
+M
+
+∂p
+
+∂t + α∇ · ˙u + ∇ · vf
+
+D = 0
+
+onde Af c
+
+∇ · σT = 0
+
+(2.25)
+
+sendo n = 1, 2, . . . , nT o ´ındice associado a cada passo de tempo em uma discretiza-
+
+¸c˜ao temporal. Desta forma, as solu¸c˜oes para a press˜ao e deslocamento s˜ao obtidas
+
+a partir do resolu¸c˜ao de um ´unico sistema em cada passo de tempo.
+
+14
+
+2.3
+
+Formula¸c˜ao iterativamente acoplada
+
+Tal como mencionado anteriormente, os modelos totalmente acoplados pos-
+
+suem elevado custo computacional devido a resolu¸c˜ao de um problema envolvendo
+
+uma matriz (em muitos casos n˜ao-linear) cujas entradas incorporam simultanea-
+
+mente todas as vari´aveis envolvidas. Dependendo da natureza dessa matriz, m´eto-
+
+dos num´ericos espec´ıﬁcos podem ser explorados na resolu¸c˜ao de cada subsistema.
+
+Por exemplo, se a hidrodinˆamica exibe n˜ao-linearidades, ser´a necess´ario a ado¸c˜ao
+
+de um m´etodo para sistemas n˜ao-lineares, mesmo com a geomecˆanica linear, condu-
+
+zindo a um alto custo computacional. Formula¸c˜oes sequenciais acopladas de forma
+
+expl´ıcita ou iterativa possuem vantagem nesse ponto, uma vez que cada sistema
+
+´e resolvido separamente, sendo poss´ıvel a resolu¸c˜ao do subsistema hidrodinˆamico
+
+n˜ao-linear sem a adi¸c˜ao de custos computacionais na obten¸c˜ao da solu¸c˜ao num´erica
+
+da elasticidade linear. No contexto de acoplamentos iterativos essa diﬁculdade ´e
+
+contornada com a decomposi¸c˜ao do operador do sistema em dois operadores asso-
+
+ciados `a hidrodinˆamica e `a geomecˆanica (Kim et al., 2011; Kim, 2010).
+
+Outro aspecto importante da formula¸c˜ao totalmente acoplada ´e a ado¸c˜ao
+
+de certas combina¸c˜oes de espa¸cos aproximantes para press˜ao e deslocamento pode
+
+levar a instabilidades num´ericas gerandos nodos esp´urios do campo de press˜ao
+
+(Murad e Loula, 1992). Al´em disto, a montagem de um ´unico sistema acoplado
+
+imp˜oe uma ´unica escala de tempo para fenˆomenos que ocorrem em escalas distin-
+
+tas. Tal desvantagem pode ser contornada via ado¸c˜ao de formula¸c˜oes parcialmente
+
+acopladas. Em problemas de reservat´orios que incorporam a geomecˆanica das ro-
+
+chas adjacentes, a formula¸c˜ao totalmente acoplada pode se tornar ineﬁcaz devido `a
+
+impermeabilidade das rochas adjacentes que deteriora a qualidade da aproxima¸c˜ao
+
+da hidrodinˆamica.
+
+De acordo com Settari e Walters (2001), a principal ideia por tr´as de for-
+
+mula¸c˜oes sequenciais ´e a reformula¸c˜ao do acoplamento entre hidrodinˆamica e ge-
+
+omecˆanica de forma a permitir a utiliza¸c˜ao de simuladores tradicionais para cada
+
+um destes subsistemas, resolvendo-os separadamente em cada passo de tempo. A
+
+15
+
+acur´acia comparada com a de um sistema totalmente acoplado ´e mantida se os
+
+subsistemas s˜ao suﬁcientemente iterados at´e a convengˆencia para uma tolerˆancia
+
+prescrita. O acoplamento iterativo proposto por Settari e Walters (2001) consiste
+
+na obten¸c˜ao sequencial de solu¸c˜oes para os subsistemas hidrodinˆamico e geomecˆa-
+
+nico de forma iterativa em um mesmo passo de tempo at´e que seja satisfeito um
+
+crit´erio de convergˆencia.
+
+A Figura 2.2 ilustra as diferen¸cas entre esquemas totalmente acoplado e ite-
+
+rativamente acoplado. Para um esquema iterativamente acoplado, em um certo
+
+passo de tempo, primeiramente resolvemos o problema hidrodinˆamico e subsequen-
+
+temente o geomecˆanico, com comunica¸c˜ao entre eles regida por meio de termos de
+
+fontes. Ap´os a convergˆencia, o mesmo procedimento ´e adotado para os tempos
+
+seguintes.
+
+Figura 2.2: Esquemas completamente acoplado e iterativamente acoplado (Kim
+
+(2010)).
+
+Tal como mencionado anteriormente, diferentes estrat´egias de acoplamento
+
+tˆem sido propostas na literatura, das quais as principais s˜ao expostas por Kim
+
+16
+
+et al. (2011); Kim (2010); Kolesov et al. (2014); Mikeli´c et al. (2014); Mikeli´c e
+
+Wheeler (2012); Settari e Walters (2001). Neste trabalho discutiremos duas formas
+
+amplamente conhecidas, a saber: ﬁxed-strain split e ﬁxed-stress split (Kim et al.,
+
+2011; Mikeli´c et al., 2014).
+
+2.3.1
+
+Acoplamento iterativo com deforma¸c˜oes ﬁxadas
+
+Uma forma sequencial de acoplamento discutida na literatura consiste em
+
+ﬁxar, no processo iterativo, a taxa de varia¸c˜ao temporal das deforma¸c˜oes volum´e-
+
+tricas presente na hidrodinˆamica. Este esquema ´e conhecido como ﬁxed-strain split
+
+(Kim et al., 2011).
+
+Para apresentar a formula¸c˜ao resultante recordamos a equa¸c˜ao da hidrodi-
+
+nˆamica (2.18):
+
+onde
+
+com
+
+1
+M
+
+∂p
+∂t
+
++ α∇ · ˙u + ∇ · vf
+
+D = 0
+
+α∇ · ˙u = α
+
+∂
+∂t
+
+(∇ · u)
+
+(cid:124) (cid:123)(cid:122) (cid:125)
+
+εv
+
+= α
+
+∂ εv
+∂t
+
+εv = tr ε (u)
+
+representa a deforma¸c˜ao volum´etrica da matriz porosa. Logo, temos
+
+1
+M
+
+∂p
+∂t
+
++ α
+
+∂ εv
+∂t
+
++ ∇ · vf
+
+D = 0
+
+(2.26)
+
+(2.27)
+
+(2.28)
+
+Quando utilizada a abordagem ﬁxed-strain split, o termo da derivada tem-
+
+poral das deforma¸c˜oes volum´etricas em (2.28) ´e ﬁxado nas itera¸c˜oes do subsistema
+
+hidrodinˆamico utilizando valores explicitamente calculados previamente. Desta
+
+forma este termo possui um valor conhecido nas itera¸c˜oes da hidrodinˆamica, sendo
+
+tratado como uma fonte de massa na lei de conserva¸c˜ao. Logo temos
+
+1
+M
+
+∂pi+1
+
+∂t
+
++ ∇ · vf
+
+D
+
+i+1
+
+= −α
+
+∂ εi
+v
+∂t
+
+(2.29)
+
+17
+
+onde i = 1, 2, . . . denota o ´ındice associado ao processo iterativo.
+
+Para o subsistema geomecˆanico, uma vez computado o campo de press˜ao, seu
+
+gradiente na decomposi¸c˜ao (2.22) ´e tratado como termo de fonte para o problema
+
+da elasticidade linear. Portanto temos
+
+∇ · σi+1 = α∇pi+1
+
+(2.30)
+
+Logo, podemos decompor o problema acoplado em dois subsistemas: Um
+
+para a hidrodinˆamica e outro para a geomecˆanica.
+
+Fomula¸c˜ao iterativamente acoplada ﬁxed-strain split
+Seja ΩB ∈ Rd (d = 1, 2, 3) o dom´ınio ocupado por um meio poroso sa-
+
+turado por um ﬂuido ligeiramente compress´ıvel. Dado o conjunto de constantes
+{Kf , M, λ, µ, α, N} ∈ R, para cada i = 0, 1, 2, . . . , if inal ∈ N achar os campos
+D (x, t), σ (x, t) e φ (x, t) com x ∈ ΩB, t ∈ (0, tf inal] satisfazendo
+p (x, t), u (x, t), vf
+
+
+
+Hidrodinˆamica:
+
+∂ εi
+v
+∂t
+
+∂pi+1
+
+1
+M
+
+= −α
+
+i+1
+
++ ∇ · vf
+= −Kg∇pi+1
+
+D
+
+∂t
+vf
+D
+
+i+1
+
+v = tr ε(cid:0)ui(cid:1)
+
+εi
+
+
+
+Geomecˆanica:
+
+∇ · σi+1 = α∇pi+1
+
+σi+1 = σ0 + λ∇ · ui+1I + 2µε(cid:0)ui+1(cid:1)
+(cid:0)pi+1 − p0(cid:1)
+
+φi+1 = φ0 + α∇ · ui+1 +
+
+1
+N
+
+(2.31)
+
+(2.32)
+
+As mesmas condi¸c˜oes de contorno e iniciais aplicadas `a formula¸c˜ao totalmente
+
+acoplada s˜ao mantidas em (2.31) e (2.32). Na inicializa¸c˜ao atribuimos εi+1
+
+v = εi
+v,
+
+levando a uma fonte nula em (2.31) na primeira itera¸c˜ao.
+
+Neste contexto, a geomecˆanica fornece o termo da taxa de deforma¸c˜ao m´edia
+
+para a hidrodinˆamica enquanto que este subsistema fornece o gradiente de press˜ao
+
+que desempenha o papel de uma fonte externa da decomposi¸c˜ao das tens˜oes efeti-
+
+vas. O termo que incorpora a taxa de deforma¸c˜ao no subsistema hidrodinˆamico ´e
+
+18
+
+advindo da itera¸c˜ao anterior do subsistema geomecˆanico. O Algoritmo 1 descreve
+
+o procedimento iterativo entre os subsistemas para um dado passo de tempo.
+
+Algoritmo 1: Algoritmo sequencial com taxa de deforma¸c˜oes ﬁxadas.
+
+in´ıcio
+
+i ← 0
+enquanto o crit´erio de convergˆencia n˜ao for satisfeito fa¸ca
+
+se i = 0 ent˜ao
+
+v ← εi
+εi+1
+
+v
+
+Resolva a sistema linear para pi+1 na hidrodinˆamica
+Dado pi+1 resolva para ui+1 e σi+1 na geomecˆanica
+Calcule: εi+1, εi+1
+i ← i + 1
+
+e φi+1
+
+v
+
+O procedimento de resolu¸c˜ao pode ser descrito a partir de uma decomposi-
+
+¸c˜ao do operador, como abordado por Kim et al. (2011), e aplicado ao caso como
+
+mostrado a seguir.
+
+ Ap
+
+sn−−→
+
+ui
+
+pi
+
+ u∗
+
+pi+1
+
+ Au
+
+sn−−→
+
+ui+1
+
+pi+1
+
+ ,
+
+onde
+
+Ap
+
+sn : Hidrodinˆamica, δ ˙εv = 0
+Au
+sn : Geomecˆanica, p : prescrito
+
+(2.33)
+
+em que δ ˙εv = 0 signiﬁca que εv ´e calculado explicitamente.
+
+´E importante ressaltar que o algoritmo deteriora rapidamente no caso incom-
+
+press´ıvel onde 1/M = 0, levando a um termo de acumula¸c˜ao nulo na equa¸c˜ao da
+
+press˜ao. Como consequˆencia tal algoritmo sequencial ´e condicionamente est´avel
+
+(Kim, 2010). A qualidade do resultado depende fortemente de um fator de pon-
+
+dera¸c˜ao utilizado na evolu¸c˜ao temporal do problema bem como na magnitude dos
+
+coeﬁcientes envolvidos (Kim et al., 2011).
+
+2.3.2
+
+Acoplamento iterativo com tens˜oes ﬁxadas
+
+A formula¸c˜ao iterativamente acoplada com tens˜oes ﬁxadas consiste em man-
+
+ter constante a taxa de tens˜ao m´edia total no subsistema hidrodinˆamico (Kim et al.,
+
+2011; Mikeli´c et al., 2014). Ao contr´ario dos algoritmos baseados em “ﬁxed-strain
+
+split”, a deriva¸c˜ao do acoplamento requer manipula¸c˜ao no sistema de equa¸c˜oes.
+
+19
+
+Para este ﬁm, retornamos `a equa¸c˜ao do balan¸co de massa:
+
+1
+M
+
+∂p
+∂t
+
++ α∇ · ˙u + ∇ · vf
+
+D = 0
+
+em conjun¸c˜ao com o princ´ıpio das tens˜oes efetivas
+
+σT = σ − αpI
+
+σ = σ0 + λ (∇ · u) I + 2µε (u)
+
+(2.34)
+
+(2.35)
+
+(2.36)
+
+com
+
+total
+
+com
+
+Tomando o tra¸co em (2.36), deﬁnimos a m´edia dos autovalores da tens˜ao
+
+(cid:101)σT =
+
+1
+3
+
+(cid:101)σ =
+
+1
+3
+
+tr σ =
+
+tr σT =(cid:101)σ − αp
+(cid:18)
+(cid:124)
+
+(cid:19)
+(cid:125)
+
+λ +
+
+µ
+
+2
+3
+
+(cid:123)(cid:122)
+
+K
+
+∇ · u +(cid:101)σ0
+
+(2.37)
+
+(2.38)
+
+onde K ´e o m´odulo volum´etrico do matriz porosa.
+
+Substituindo (2.38) em (2.37) e derivando em rela¸c˜ao ao tempo, vem que
+
+∂(cid:101)σT
+
+∂t
+
+∇ · ˙u =
+
+1
+K
+
++
+
+α
+K
+
+∂p
+∂t
+
+Substituindo (2.39) em (2.34), obtemos
+
+(cid:18) 1
+
+M
+
+(cid:19) ∂p
+
+∂t
+
++
+
+α2
+K
+
++ ∇ · vf
+
+D = − α
+K
+
+(2.39)
+
+(2.40)
+
+∂(cid:101)σT
+
+∂t
+
+Ao contr´ario da abordagem anterior, o presente contexto explicita claramente
+
+o conceito de compressibilidade total (Zimmerman, 1990) que surge como coeﬁci-
+
+ente no termo de derivada da press˜ao em rela¸c˜ao ao tempo. Note que o termo de
+
+acumula¸c˜ao n˜ao deteriora no caso incompress´ıvel (1/M = 0) uma vez que a com-
+pressibilidade da matriz (α2/K) ´e preservada. Podemos interpretrar o coeﬁciente
+
+20
+
+da derivada temporal da press˜ao como uma compressibilidade total βT dada por
+
+βT :=
+
+1
+M
+
++
+
+α2
+K
+
+(2.41)
+
+A compressibilidade total incorpora duas parcelas: uma advinda da compres-
+sibilidade da matriz, relacionada com o m´odulo volum´etrico K, e o segundo termo
+
+associado ao m´odulo de Biot M , que incorpora as compressibilidades dos gr˜aos e
+
+do ﬂuido.
+
+De posse da compressibilidade total, podemos analisar precisamente casos
+
+incompress´ıveis particulares.
+
+• Gr˜ao s´olidos incompress´ıveis:
+
+Neste caso, o temos que Ks → +∞, α → 1 ∴ 1/N → 0, portanto
+
+βT =
+
+φ
+Kf
+
++
+
+1
+K
+
+(2.42)
+
+onde apenas os termos relacionados com a compressibilidade do ﬂuido
+(φ/Kf ) e a parcela advinda da matriz (1/K) contribuem para βT .
+
+• Fluido e gr˜aos incompress´ıveis:
+
+Neste cen´ario, Kf → +∞ e consequentemente φ/Kf → 0. Dessa forma,
+
+βT =
+
+1
+K
+
+(2.43)
+
+onde βT incorpora somente a compressibilidade da matriz.
+
+• Matriz e ﬂuido incompress´ıveis:
+
+Nesta situa¸c˜ao K → ∞, levando a
+
+βT = 0
+
+(2.44)
+
+o qual reﬂete a elevada rigidez do esqueleto poroso e ausˆencia de compres-
+
+sibilidade.
+
+21
+
+Assim podemos enunciar a formula¸c˜ao iterativamente acoplada baseado no
+
+ﬁxed-stress split.
+
+Fomula¸c˜ao iterativamente acoplada ﬁxed-stress split
+Seja ΩB ∈ Rd (d = 1, 2, 3) o dom´ınio ocupado por um meio poroso sa-
+
+turado por um ﬂuido ligeiramente compress´ıvel. Dado o conjunto de constantes
+{Kf , M, λ, µ, α, N} ∈ R, para cada i = 0, 1, 2, . . . , if inal ∈ N achar os campos
+D (x, t), σ (x, t) e φ (x, t) com x ∈ ΩB, t ∈ (0, tf inal] satisfazendo
+p (x, t), u (x, t), vf
+
+
+
+
+(cid:18) 1
+
+M
+
++
+
+α2
+K
+
+(cid:19) ∂pi+1
+
+Hidrodinˆamica:
++ ∇ · vf
+
+D
+
+∂t
+
+∂(cid:101)σi
+
+T
+∂t
+
+i+1
+
+= − α
+K
+
+i+1
+
+= −Kf∇pi+1
+vf
+(cid:101)σi
+D
+T = K∇ · ui − αpi
+
+Geomecˆanica:
+
+∇ · σi+1 = α∇pi+1
+
+σi+1 = σ0 + λ∇ · ui+1I + 2µε(cid:0)ui+1(cid:1)
+(cid:0)pi+1 − p0
+
+φi+1 = φ0 + α∇ · ui+1 +
+
+1
+N
+
+(2.45)
+
+(2.46)
+
+(cid:1)
+
+sendo o ´ındice i associado `as itera¸c˜oes em cada subsistema. As mesmas condi¸c˜oes de
+
+contorno e iniciais aplicadas `a formula¸c˜ao completamente acoplada s˜ao utilizadas
+
+Assim como a abordagem ﬁxed-strain split, cada subsistema ´e resolvido se-
+
+em (2.45) e (2.46). No primeiro passo de tempo a hidrodinˆamica ´e resolvida na
+
+formula¸c˜ao uma-via, onde a fonte em (2.45) se anula tornando(cid:101)σi+1
+T =(cid:101)σi
+∂t e α∇p(cid:1)
+paradamente e o acoplamento ´e realizado a partir de termos fontes(cid:0) α
+∂(cid:101)σT
+ Ap
+ui
+
+ss : Hidrodinˆamica, δ ˙(cid:101)σT = 0
+
+calculados explicitamente a partir do outro subsistema. A abordagem pode ser
+
+representada por uma quebra de operador (Kim et al., 2011) na seguinte forma:
+
+ u∗
+
+ Au
+
+ss−−→
+
+ss−−→
+
+onde
+
+ui+1
+
+pi+1
+
+ ,
+
+T .
+
+K
+
+Ap
+
+pi
+
+pi+1
+
+Au
+ss : Geomecˆanica, p : prescrito
+
+(2.47)
+
+22
+
+com δ ˙(cid:101)σT = 0 signiﬁcando que as taxas de tens˜oes volum´etricas totais s˜ao mantidas
+
+constantes nas itera¸c˜oes do subsistema hidrodinˆamico e calculadas explicitamente.
+
+Para um dado passo de tempo s˜ao realizadas itera¸c˜oes em que primeiro ´e
+
+resolvido o subsistema hidrodinˆamico e subsequentemente o geomecˆanico. As ite-
+
+ra¸c˜oes internas a um determinado passo de tempo ocorrem at´e que seja satisfeito
+
+um crit´erio de convergˆencia estabelecido. O algoritmo enunciado a seguir descreve
+
+o procedimento iterativo.
+
+Algoritmo 2: Algoritmo sequencial com taxa de tens˜oes m´edias ﬁxadas.
+
+in´ıcio
+
+i ← 0
+enquanto o crit´erio de convergˆencia n˜ao for satisfeito fa¸ca
+
+/* Aproxima¸c~ao por uma-via para a primeira
+
+T
+
+se i = 0 ent˜ao
+itera¸c~ao na hidrodin^amica */
+
+(cid:101)σi+1
+T =(cid:101)σi
+Calcule via esquemas de p´os-processamento: (cid:101)σi+1
+
+Resolva o sistema linear para pi+1 na hidrodinˆamica
+Dado pi+1 resolva para ui+1 e σi+1 na geomecˆanica
+i ← i + 1
+
+e φi+1
+
+T
+
+Diferentemente da abordagem ﬁxed-strain split, o ﬁxed-stress split ´e incon-
+
+dicionalmente est´avel (Kim et al., 2011; Mikeli´c e Wheeler, 2012), e por isso tem
+
+sido preferencialmente empregado. Por esta raz˜ao, adotaremos no presente traba-
+
+lho esta abordagem. A seguir, propomos a generaliza¸c˜ao desta formula¸c˜ao para o
+
+caso de ﬂuido altamente compress´ıvel com equa¸c˜oes de estado com elevado teor de
+
+n˜ao-linearidades que ocorre no caso de reservat´orios de g´as.
+
+23
+
+Cap´ıtulo 3
+
+Geomecˆanica de Reservat´orios de G´as
+
+No cap´ıtulo anterior apresentamos a teoria de acoplamento hidro-geomecˆanico
+
+linearizada no contexto de pequenas perturba¸c˜oes para descrever ﬂuidos ligeira-
+
+mente compress´ıveis. No caso de l´ıquidos tal lineariza¸c˜ao n˜ao deteriora substanci-
+
+almente a qualidade do modelo. Para gases, onde os efeitos de compressibilidade
+
+s˜ao bem mais pronunciados, tal hip´otese n˜ao aproxima adequadamente as conhe-
+
+cidas equa¸c˜oes de estado de car´ater altamente n˜ao-linear (Kondepudi e Prigogine,
+
+1998; Smith et al., 2001).
+
+No contexto das formula¸c˜oes totalmente acopladas, teorias para geomecˆanica
+
+de meios porosos el´asticos saturados por ﬂuidos altamente compress´ıveis j´a se en-
+
+contram bem estabelecidas (Fan et al., 2015). Por outro lado, desenvolvimentos
+
+no contexto de formula¸c˜oes iterativamente acopladas s˜ao ainda inexistentes. Nosso
+
+principal objetivo aqui ´e preencher este v´acuo.
+
+3.1
+
+Constru¸c˜ao do Modelo
+
+Nesta se¸c˜ao desenvolvemos as equa¸c˜oes governantes que descrevem o movi-
+
+mento de um g´as em um meio poroso el´astico parcialmente saturado com ´agua
+
+estagnada. A presen¸ca desta ´agua ´e motivada pelas aplica¸c˜oes em “shale gas”
+
+onde os poros encontram-se parcialmente preenchidos pela ´agua advinda do fratu-
+
+ramento hidr´aulico. Consideramos que as fases (aquosa e gasosa) s˜ao imisc´ıceis,
+
+assim como efeitos capilares desprez´ıveis.
+
+24
+
+Analogamente ao cap´ıtulo anterior, incorporando agora a poss´ıvel presen¸ca
+
+de ´agua , o balan¸co de massa da fase ﬂuida ´e dado por (Chen, 2007)
+
+(φSgρg) + ∇ · (ρgvg
+
+D) = 0
+
+∂
+∂t
+
+(3.1)
+
+onde ρ ´e a massa espec´ıﬁca, vD a velocidade Darciana, S a satura¸c˜ao e φ a po-
+
+rosidade Lagrangeana da matriz s´olida. O subescrito “g” denota a propriedade
+
+correspondente associada a fase g´as.
+
+Para ﬂuidos compress´ıveis, desprezando as contribui¸c˜oes gravitacionais, a lei
+
+de Darcy ´e representada em termos do ﬂuxo m´assico
+
+Jg := ρgvg
+
+D = −ρgK(φ)∇p
+
+(3.2)
+
+em que K(φ) ´e a condutividade hidr´aulica para o ﬂuxo volum´etrico a qual, atrav´es
+
+da permeabilidade relativa, depende tamb´em da satura¸c˜ao. Para simpliﬁcar a
+nota¸c˜ao, omitiremos esta dependˆencia considerando um valor ﬁxo de Sg.
+
+O balan¸co de massa combinado com a lei de Darcy pode ser reescrito da
+
+forma:
+
+(φSgρg) − ∇ ·
+
+∂
+∂t
+
+ρg
+
+∇p
+
+K(φ)
+
+µg
+
+(cid:18)
+
+(cid:19)
+
+= 0
+
+(3.3)
+
+Na equa¸c˜ao (3.3), analogamente ao cap´ıtulo anterior, o conte´udo de massa
+estendido para incorporar a satura¸c˜ao de ´agua do meio ´e denotado por mg := φSgρg.
+
+Por´em, devido a alta compressibilidade do g´as, a lineariza¸c˜ao do conte´udo de massa
+
+n˜ao representa adequadamente o seu comportamento. Para obtermos um modelo
+
+mais acurado para a equa¸c˜ao da press˜ao, necessitamos de postular equa¸c˜oes de
+
+estado adequadas (Danesh, 1998; Kondepudi e Prigogine, 1998; Smith et al., 2001).
+
+As equa¸c˜oes de estado tˆem sido objeto de estudo no campo da termodinˆamica,
+
+uma vez que fornecem rela¸c˜oes experimentais que quantiﬁcam a dependˆencia entre
+
+press˜ao/volume/temperatura/composi¸c˜oes (PVTx) (Danesh, 1998; Smith et al.,
+
+2001). De uma forma geral representamos a dependˆencia entre as propriedades
+
+25
+
+termodinˆamicas de um ﬂuido bulk da forma
+
+pV = ZnRT
+
+(3.4)
+
+onde p ´e a press˜ao do ﬂuido, Z o fator de compressibilidade, n ´e o n´umero de
+
+moles, R ´e a constante dos gases e T a temperatura absoluta.
+
+O fator de compressibilidade Z ´e uma medida que quantiﬁca o desvio do com-
+
+portamento de um g´as em rela¸c˜ao `a idealidade. O regime onde o g´as se comporta
+
+como ideal desconsidera a existˆencia de efeitos intermoleculares entre as part´ıculas
+
+sendo a press˜ao advinda apenas da energia cin´etica destas (Smith et al., 2001).
+
+O fator de compressibilidade incorpora os efeitos de correla¸c˜ao entre as part´ıculas
+
+associadas com as for¸cas repuls˜ao e atra¸c˜ao entre elas. No caso do comportamento
+
+pr´oximo `a idealidade, temos
+
+Z → 1
+
+ou
+
+pV → nRT
+
+o qual descreve com precis˜ao o g´as na faixa para valores de press˜ao baixos, de forma
+
+que as intera¸c˜oes moleculares sejam praticamente inexistentes e a energia interna
+
+do ﬂuido depende exclusivamente da temperatura. As faixas de valores de press˜ao
+
+em reservat´orios de petr´oleo s˜ao elevadas, de forma a invalidar essa hip´otese. A
+
+equa¸c˜ao (3.4) pode ser escrita da forma
+
+ρ =
+
+p M
+ZRT
+
+(3.5)
+
+com
+
+M
+V
+
+ρ =
+
+; M = nM ;
+
+onde M ´e a massa molar do g´as.
+
+De posse de (3.5), torna-se poss´ıvel relacionar a massa espec´ıﬁca do g´as com
+
+press˜ao e temperatura, desde que a dependˆencia do fator de compressibilidade Z
+
+com a press˜ao seja conhecida.
+
+26
+
+Desde van der Waals v´arias equa¸c˜oes de estado foram postuladas e aprimo-
+
+radas Valderrama (2003), fazendo uso das mais diversas abordagens, tais como
+
+expans˜oes do tipo Virial, equa¸c˜oes c´ubicas e equa¸c˜oes baseadas em modelos mole-
+
+culares. Neste trabalho adotamos as equa¸c˜oes c´ubicas de estado por sua relativa
+
+facilidade em estimar propriedades termodinˆamicas al´em de possuir boa acur´acia
+
+para gases puros (Peng e Robinson, 1976; Redlich e Kwong, 1949; Soave, 1972).
+
+De acordo com Smith et al. (2001), uma equa¸c˜ao de estado c´ubica pode ser
+
+representada da forma geral:
+
+p =
+
+RT
+v − b
+
+−
+
+a (T )
+
+(v + b) (v + ςb)
+
+(3.6)
+
+onde  e ς s˜ao constantes, v denota o volume molar espec´ıﬁco, b ´e uma constante
+
+denominada de covolume e a (T ) um parˆametro que quantiﬁca as atra¸c˜oes inter-
+
+moleculares (Hosseinifar e Jamshidi, 2016; Valderrama, 2003). A dependˆencia de
+
+a com a temperatura est´a fortemente relacionada com a forma da equa¸c˜ao de es-
+
+tado. A f´ısica por tr´as de (3.6) pode ser interpretada decompondo a press˜ao em
+
+componentes repulsivo e outro atrativo:
+
+p = prep + patt
+
+onde
+
+prep :=
+
+RT
+v − b
+
+;
+
+patt := −
+
+a (T )
+
+(v + b) (v + ςb)
+
+(3.7)
+
+(3.8)
+
+sendo prep e patt as componentes associadas `a repuls˜ao oriunda da impenetrabili-
+
+dade das mol´eculas r´ıgidas (esferas duras) e `a atra¸c˜ao entre elas devido `as for¸cas
+
+de Van der Waals, respectivamente.
+
+Em Smith et al. (2001) ´e exposto um procedimento geral para a determina¸c˜ao
+
+dos parˆametros de uma equa¸c˜ao de estado c´ubica. Os parˆametros a (T ) e b s˜ao
+
+dados por
+
+a (T ) = Ψe
+
+αe (Tr) R2T 2
+c
+
+Pc
+
+(3.9)
+
+27
+
+e
+
+b = Ωe
+
+RTc
+Pc
+
+(3.10)
+
+onde Ψe e Ωe s˜ao constantes com valores independentes `a substˆancia e determina-
+
+dos particularmente para cada equa¸c˜ao de estado a partir dos valores de  e ς. A
+
+fun¸c˜ao αe (Tr) ´e uma express˜ao constru´ıda empiricamente para cada equa¸c˜ao de
+
+estado. As constantes Tc e Pc s˜ao denominadas de temperatura e press˜ao cr´ıti-
+
+cas, respectivamente, enquanto a constante Tr denota temperatura adimensional,
+
+deﬁnida por Tr = T /Tc.
+
+Para substˆancias puras os casos particulares mais conhecidos de (3.6) e co-
+
+mumente reportados na literatura s˜ao as equa¸c˜oes (Danesh, 1998; Smith et al.,
+
+2001; Valderrama, 2003): van der Waals – vdW (van der Waals, 1873), Redlich-
+
+Kwong – RK (Redlich e Kwong, 1949), Soave-Redlich-Kwong – SRK (Soave, 1972)
+
+e Peng-Robinson – PR (Peng e Robinson, 1976).
+
+A Tabela 3.1 apresenta os valores dos parˆametros para cada equa¸c˜ao de es-
+
+tado. ´E importante salientar a existˆencia de um parˆametro adicional nas equa¸c˜oes
+
+de Soave-Redlich-Kwong e Peng-Robinson no c´alculo dos termos de atra¸c˜ao, deno-
+
+minado de fator acˆentrico, denotado por ω (Peng e Robinson, 1976; Pitzer, 1995;
+
+Soave, 1972).
+
+Eq. de Estado
+
+αe (Tr)
+
+ς
+
+
+
+vdW
+RK
+SRK
+PR
+
+αSRK (Tr, ω) =
+
+αP R (Tr, ω) =
+
+0
+1
+√
+1
+2
+1 +
+
+0
+0
+0
+
+1
+−1/2
+T
+r
+
+(cid:104)
+
+1 − √
+αSRK (Tr, ω)
+2
+αP R (Tr, ω)
+1 + (0.480 + 1.574ω − 0.176ω2)
+1 + (0.37464 + 1.54226ω − 0.26992ω2)
+
+(cid:16)
+
+(cid:104)
+
+0.08664
+0.08664
+0.07780
+1 − T 1/2
+
+r
+
+(cid:16)
+
+(cid:17)(cid:105)2
+
+1 − T 1/2
+
+r
+
+Ωe
+
+1/8
+
+Ψe
+
+27/64
+0.42748
+0.42748
+0.45724
+
+(cid:17)(cid:105)2
+
+Tabela 3.1: Valores dos parˆametros para as Equa¸c˜oes de Estado (Smith et al.
+(2001)).
+
+A equa¸c˜ao de estado utilizada neste trabalho ´e baseada no modelo de Peng-
+
+Robinson modiﬁcado, onde a fun¸c˜ao αe ´e proposta por Hosseinifar e Jamshidi
+
+28
+
+(2016). Optamos por este modelo devido a sua precis˜ao para gases puros de hi-
+
+drocarbonetos na faixa de temperatura e press˜ao elevadas. Detalhes e discuss˜ao
+
+encontram-se no Apˆendice A.1. Temos ent˜ao,
+
+p =
+
+RT
+v − b
+
+− amP R (T, Tbr, ω)
+v (v + b) + b (v − b)
+
+(3.11)
+
+onde
+
+amP R (T ) = 0.45724
+
+αmP R (Tr, Tbr, ω) R2T 2
+c
+
+Pc
+
+;
+
+b = 0.07780
+
+RTc
+Pc
+
+Para se obter o fator de compressibilidade Z, no caso isot´ermico, substitu´ı-
+
+mos (3.11) em (3.4) ﬁxando T = Tres (temperatura do reservat´orio) para obter a
+
+representa¸c˜ao para o fator de compressibilidade
+
+Z =
+
+p(v)v
+RT
+
+(3.12)
+
+com p(v) dado por (3.11).
+
+A t´ıtulo de ilustra¸c˜ao a Figura 3.1 ilustra a fun¸c˜ao Z(p) para diferentes
+
+equa¸c˜oes de estado. Na regi˜ao de press˜oes baixas todos os modelos tendem assin-
+
+toticamente para o g´as ideal (Z = 1), com tal regime caracterizado pela ausˆencia de
+
+intera¸c˜ao intermoleculares. A medida que a press˜ao aumenta, intera¸c˜oes atrativas
+
+dominantes do tipo Van der Waals se tornam mais pronunciadas. Com a eleva¸c˜ao
+
+ainda maior da press˜ao, a distˆancia entre as mol´eculas diminui e as intera¸c˜oes entre
+
+esferas duras tornam-se predominantemente repulsivas, levando ao aumento de Z
+
+com a press˜ao.
+
+De posse da dependˆencia Z = Z(p), substituindo (3.12) em (3.5) a equa¸c˜ao
+
+da hidrodinˆamica pode ser reescrita da forma:
+
+(cid:19)
+
+(cid:18)K(φ)
+
+(cid:19)
+
+∇p
+
+= 0
+
+(3.13)
+
+(cid:18)
+
+∂
+∂t
+
+φSg
+
+p
+
+Z(p)
+
+− ∇ ·
+
+p
+
+µg
+
+Z(p)
+
+Para um campo de porosidade Lagrangeano computado pelo m´odulo geomecˆanico,
+
+o modelo acima d´a origem a uma equa¸c˜ao parab´olica n˜ao-linear para o campo de
+
+29
+
+Figura 3.1: Dependˆencia do fator de compressibilidade com a press˜ao calculado
+para diferentes equa¸c˜oes de estado.
+
+press˜ao.
+
+Da mesma forma que nos casos anteriores, as equa¸c˜oes que governam o mo-
+
+vimento do s´olido s˜ao dadas por
+
+
+
+∇ · σT = 0
+σT := σ − αpI
+σ = σ0 + λ (∇ · u) I + 2µε (u)
+N (p − p0)
+φ = φ0 + α∇ · u + 1
+
+(3.14)
+
+3.2
+
+Formula¸c˜ao Totalmente Acoplada
+
+Podemos agora enunciar a formula¸c˜ao totalmente acoplada para o acopla-
+
+mento hidro-mecˆanico. Para atingir este objetivo, ao inv´es de incorporar o produto
+φSgρg no conte´udo de massa mg e postular a equa¸c˜ao linearizada (2.34), procede-
+
+mos aqui pela decomposi¸c˜ao do termo de acumula¸c˜ao. Pela regra da derivada do
+
+produto temos ent˜ao
+
+φSg
+
+∂
+∂t
+
+(cid:18) p
+
+Z(p)
+
+(cid:19)
+
++ Sg
+
+p
+
+Z(p)
+
+∂φ
+∂t
+
+− ∇ ·
+
+30
+
+(cid:18) K(φ)
+
+p
+
+µg
+
+Z(p)
+
+(cid:19)
+
+∇p
+
+= 0
+
+(3.15)
+
+123456p (Pa)1e70.91.01.11.21.31.41.5ZZ(p) MetanovdWRKSRKPRmPRAplicando a equa¸c˜ao linearizada da porosidade em (3.14), obtemos
+
+(cid:18) p
+
+(cid:19)
+
+Z(p)
+
+φSg
+
+∂
+∂t
+
+(cid:18) 1
+(cid:124)
+
+N
+
+∂p
+∂t
+
+(cid:123)(cid:122)
+
+(cid:19)
+(cid:125)
+
+contribui¸c˜ao geomecˆanica
+
+(cid:18)K(φ)
+
+(cid:19)
+
++ Sg
+
+p
+
+Z(p)
+
++ α∇ · ˙u
+
+−∇ ·
+
+p
+
+∇p
+
+µg
+
+Z(p)
+
+= 0 (3.16)
+
+Formula¸c˜ao totalmente acoplada
+Seja ΩB ∈ Rd (d = 1, 2, 3) o dom´ınio ocupado por um meio poroso poroel´as-
+
+tico saturado por g´as metano e ´agua estagnada. Dado o conjunto de constantes
+{λ, µ, Sg, µg, α, N} ∈ R assim como as fun¸c˜oes Z (p) e K(φ), achar os campos
+D (x, t), σ (x, t) e φ (x, t) com x ∈ ΩB, t ∈ (0, tf inal] satisfazendo
+(cid:19)
+p (x, t), u (x, t), vg
+
+(cid:19)
+
+(cid:19)
+
+(cid:18) p
+
+p
+
++ α∇ · ˙u
+
++ ∇ ·
+
+vg
+D
+
+Z(p)
+
+Analogamente ao cap´ıtulo anterior, podemos formular o problema acoplado
+
+em termos das vari´aveis potenciais (deslocamento e press˜ao). Temos ent˜ao, no caso
+homogˆeneo: Achar o par {u, p} satisfazendo
+
+1
+N
+
+Z(p)
+
+∇p
+
+φSg
+
+∂p
+∂t
+
+Z(p)
+
+N
+
+(cid:18) 1
+
+(cid:18) p
+
+∇ · σ = α∇p
+
+∂
++ Sg
+∂t
+D = −K(φ)
+vg
+µg
+
+σ = σ0 + λ (∇ · u) I + 2µε (u)
+φ = φ0 + α∇ · u +
+(p − p0)
+
+
+ µ∆u + (λ + µ)∇ (∇ · u) − α∇p = 0
+(cid:18) 1
+sujeito `as condi¸c˜oes iniciais p (x, t = 0) = pres
+
+(cid:18) p
+
+Z(p)
+
+N
+
+φSg
+
+∂
+∂t
+
++ Sg
+
+(cid:19)
+
+∂p
+∂t
+
+Z(p)
+
+∇ · u (x, t = 0) = 0
+
+p
+
++ α∇ · ˙u
+
+31
+
+= 0
+
+em ΩB
+
+(3.17)
+
+(cid:19)
+
+− ∇ ·
+
+(cid:18) p
+
+Z(p)
+
+(cid:19)
+
+∇p
+
+K
+µg
+
+em ΩB
+
+= 0
+
+(3.18)
+
+∀x ∈ ΩB
+
+e condi¸c˜oes de contorno
+
+
+
+D · n = 0
+vg
+
+p = pw
+
+u = 0
+σT · n = tt
+
+sobre ΓH
+N
+
+sobre ΓH
+D
+
+sobre ΓG
+D
+
+sobre ΓG
+N
+
+A seguir, apresentamos o aspecto inovador da tese que consiste na constru¸c˜ao
+
+de uma nova formula¸c˜ao iterativamente acoplada para reservat´orios de g´as. Devido
+
+a propriedade de ser incondicionalmente est´avel (Kim et al., 2011; Kim, 2010;
+
+Mikeli´c et al., 2014), nos restringiremos `a formula¸c˜ao iterativa baseada no ﬁxed-
+
+stress split.
+
+3.3
+
+Formula¸c˜ao Iterativamente Acoplada
+
+Tal como mostrado anteriormente na subse¸c˜ao 2.3.2, a abordagem baseada
+
+no algoritmo ﬁxed-stress split ﬁxa a taxa das tens˜oes normais m´edias no subsistema
+
+hidrodinˆamico,
+
+Para a constru¸c˜ao deste modelo hidrodinˆamico alternativo, revisitamos o
+
+balan¸co de massa na sua forma expandida:
+
+(cid:18) p
+
+(cid:19)
+
+(cid:18) 1
+
+φSg
+
+∂
+∂t
+
++ Sg
+
+p
+
+Z(p)
+
+Z(p)
+
+N
+
++ α∇ · ˙u
+
+∂p
+∂t
+
+(cid:19)
+
+− ∇ ·
+
+(cid:18) K(φ)
+
+p
+
+µg
+
+Z(p)
+
+(cid:19)
+
+∇p
+
+= 0 (3.19)
+
+Seguindo a metodologia discutida em Kim et al. (2011) e Mikeli´c et al. (2014),
+procedemos eliminando a taxa de deforma¸c˜ao volum´etrica ∇· ˙u do balan¸co de massa
+
+usando o princ´ıpio das tens˜oes efetivas. De 2.39, temos que a taxa de deforma¸c˜ao
+
+volum´etrica ´e dada por
+
+∂(cid:101)σT
+
+∂t
+
++
+
+α
+K
+
+∂p
+∂t
+
+∇ · ˙u =
+
+1
+K
+
+(3.20)
+
+Substituindo (3.20) em (3.19), refraseamos o balan¸co de massa da forma
+
+(cid:18) p
+
+(cid:19)
+
+Z(p)
+
+φSg
+
+∂
+∂t
+
++ Sg
+
+p
+
+Z(p)
+
+βr
+
+∂p
+∂t
+
+− ∇ ·
+
+p
+
+∇p
+
+= −Sg
+
+p
+
+Z(p)
+
+α
+K
+
+(3.21)
+
+(cid:19)
+
+(cid:18) K(φ)
+
+µg
+
+Z(p)
+
+32
+
+∂(cid:101)σT
+
+∂t
+
+onde a compressibilidade total da rocha ´e dada por
+
+βr :=
+
+1
+
+N(cid:124)(cid:123)(cid:122)(cid:125)
+
+c1
+
++
+
+α2
+
+K(cid:124)(cid:123)(cid:122)(cid:125)
+
+c2
+
+(3.22)
+
+em que a parcela c1 ´e oriunda da compressibilidade dos gr˜aos e c2 ´e associado `a
+
+compressibilidade da matriz porosa. A parcela da compressibilidade do ﬂuido que
+
+na teoria linear do cap´ıtulo anterior era incorporada em conjunto com a da rocha
+
+na compressibilidade total (2.40), exibe agora sua contribui¸c˜ao na hidrodinˆamica
+
+por meio do fator de compressibilidade n˜ao-linear do g´as Z(p).
+
+A equa¸c˜ao da press˜ao (3.21) ´e inovadora. Os efeitos geomecˆanicos s˜ao incor-
+
+porados `a hidrodinˆamica por interm´edio de dois termos. Um oriundo da compres-
+
+sibilidade da rocha e o outro que surge como uma fonte advinda das intera¸c˜oes
+
+hidro-geomecˆanicas (Benra et al., 2011). Tal como mencionado anteriormente,
+
+este termo se anula no caso em que(cid:101)σT ´e estacion´ario sendo este cen´ario conhecido
+
+como formula¸c˜ao em uma-via, e ocorre precisamente somente no caso unidimensi-
+
+onal, como por exemplo no problema de compacta¸c˜ao de uma coluna proposto por
+
+Terzaghi (1943). O termo de fonte em (3.21) da tens˜ao total quantiﬁca o desvio
+
+em rela¸c˜ao ao caso unidimensional. Na abordagem baseada no ﬁxed-stress split, o
+
+termo de fonte ´e atrasado e computado pelo m´odulo geomecˆanico.
+
+Considerando apenas os gr˜aos como incompress´ıveis temos 1/N → 0, Ks →
++∞ e α → 1, de forma que apenas a compressibilidade da matriz s´olida contribui
+
+para βr. Temos ent˜ao o modelo reduzido
+
+(cid:18) p
+
+(cid:19)
+
+Z(p)
+
+φSg
+
+∂
+∂t
+
+p
+
+Z(p)
+
+Sg
+K
+
+∂p
+∂t
+
++
+
+− ∇ ·
+
+(cid:18) K(φ)
+
+p
+
+µg
+
+Z(p)
+
+(cid:19)
+
+∇p
+
+∂(cid:101)σT
+
+∂t
+
+= −Sg
+
+p
+
+Z(p)
+
+1
+K
+
+(3.23)
+
+No cen´ario mais particular de matriz s´olida incompress´ıvel, α2/K → 0 e
+1/N → 0, o que implica em βr → 0, recuperado a equa¸c˜ao da press˜ao t´ıpica do
+
+meio r´ıgido onde ∂(cid:101)σT /∂t = 0 e ∂φ/∂t = 0. Logo, temos (Chen, 2007)
+
+(cid:18) p
+
+(cid:19)
+
+Z(p)
+
+φSg
+
+∂
+∂t
+
+(cid:19)
+
+(cid:18)K(φ)
+
+33
+
+− ∇ ·
+
+p
+
+∇p
+
+µg
+
+Z(p)
+
+= 0
+
+(3.24)
+
+Fomula¸c˜ao iterativamente acoplada baseada no ﬁxed stress split
+Seja ΩB ∈ Rd (d = 1, 2, 3) o dom´ınio ocupado por um meio poroso el´astico
+saturado por g´as metano e ´agua estagnada. ´E dado o conjunto de constantes {λ,
+µ, Sg, µg, α, βr, K} ∈ R assim como as fun¸c˜oes Z (p) e K(φ). Denotando i =
+0, 1, 2, . . . , if inal ∈ N o ´ındice associado `as itera¸c˜oes internas aos subsistemas, achar
+D (x, t), σ (x, t) e φ (x, t) com x ∈ ΩB, t ∈ (0, tf inal]
+os campos p (x, t), u (x, t), vg
+
+satisfazendo
+
+
+
+(cid:18) pi+1
+
+(cid:19)
+
+φiSg
+
+∂
+∂t
+
+pi+1
+
++ Sg
+
+Z(pi+1)
+(pi+1)∇pi+1
+
+Z(pi+1)
+i+1 = −K(φi)
+µg
+
+vg
+D
+
+Hidrodinˆamica:
++ ∇ ·
+
+∂pi+1
+
+βr
+
+∂t
+
+(cid:18) pi+1
+
+Z(pi+1)
+
+(cid:19)
+
+i+1
+
+vg
+D
+
+∂(cid:101)σi
+
+T
+∂t
+
+= −Sg
+
+pi
+
+Z(pi)
+
+α
+K
+
+
+
+Geomecˆanica:
+
+∇ · σi+1 = α∇pi+1
+
+σi+1 = σ0 + λ(cid:0)∇ · ui+1(cid:1) I + 2µε(cid:0)ui+1(cid:1)
+(cid:101)σi+1
+(cid:0)pi+1 − p0
+(cid:1)
+T = K∇ · ui+1 − αpi+1
+φi+1 = φ0 + α∇ · ui+1 +
+
+1
+N
+
+(3.25)
+
+(3.26)
+
+Os subsistemas da hidrodinˆamica e geomecˆanica surgem acoplados a partir
+
+de termos de fonte previamente calculados. A hidrodinˆamica surge agora acoplada
+
+por meio do termo de taxa de tens˜oes volum´etricas total por´em com coeﬁciente n˜ao-
+
+linear dependente da press˜ao (−Sgpα/(Z(p)K)∂(cid:101)σT /∂t) em que todas as vari´aveis
+
+s˜ao atrasadas em rela¸c˜ao `a itera¸c˜ao atual deste subsistema. Na primeira itera¸c˜ao
+
+em cada passo de tempo resolvemos a formula¸c˜ao em uma-via onde a fonte se
+
+anula. Subsequentemente ap´os o cˆomputo do campo de press˜ao, o subsistema
+
+geomecˆanico ´e acoplado ao hidrodinˆamico por meio do termo de for¸ca de corpo
+associado com o gradiente de press˜ao α∇p.
+
+A seguir enunciamos o algoritmo 3 que descreve o procedimento iterativo
+
+para a obten¸c˜ao de solu¸c˜ao em um dado passo de tempo.
+
+34
+
+Algoritmo 3: Algoritmo sequencial com taxa de tens˜oes m´edias ﬁxadas para
+ﬂuidos altamente compress´ıveis para um determinado passo de tempo.
+
+in´ıcio
+
+i ← 0
+enquanto o crit´erio de convergˆencia n˜ao for satisfeito fa¸ca
+
+/* Aproxima¸c~ao por uma-via para a primeira
+
+se i = 0 ent˜ao
+itera¸c~ao na hidrodin^amica */
+
+(cid:101)σi+1
+T ←(cid:101)σi
+Calcule como p´os-processamento: (cid:101)σi+1
+
+T
+
+Resolva o sistema n˜ao-linear para pi+1 na hidrodinˆamica
+Dado pi+1 resolva para ui+1 e σi+1 no modelo de elasticidade linear
+i ← i + 1
+
+e φi+1
+
+T
+
+Um dos aspectos mais importantes neste trabalho ´e a n˜ao linearidade em-
+
+butida no termo de fonte em (3.25) que inclui o novo coeﬁciente (p/Z(p)) que por
+
+sua vez torna o acoplamento com maior intensidade de fontes de n˜ao linearidade.
+
+35
+
+Cap´ıtulo 4
+
+Formula¸c˜ao Variacional e Aproxima¸c˜ao
+
+por Elementos Finitos
+
+No presente cap´ıtulo apresentamos a formula¸c˜ao variacional e aproxima¸c˜ao
+
+por elementos ﬁnitos do problema na forma do ﬁxed-stress split. Na discretiza-
+
+¸c˜ao espacial adotamos o m´etodo de Galerkin enquanto que a evolu¸c˜ao temporal
+
+´e realizada via m´etodo de Euler impl´ıcito. Por ﬁm, as n˜ao-linearidades presen-
+
+tes na hidrodinˆamica e no acoplamento entre os dois subsistemas ser˜ao resolvidas
+
+por meio de itera¸c˜oes de ponto ﬁxo de Picard devido `a sua simplicidade e de n˜ao
+
+necessitar do c´alculo da Jacobiana associada ao problema.
+
+4.1
+
+Forma Fraca
+
+Relembrando a nota¸c˜ao anterior, ΩB ∈ Rd (d = 1, 2, 3) denota o dom´ınio
+
+ocupado pelo reservat´orio de g´as. Introduzimos ent˜ao os espa¸cos usuais de Sobolev
+
+L2 (ΩB) de fun¸c˜oes de quadrado integr´aveis e H 1 (ΩB) gerados por fun¸c˜oes e suas
+
+derivadas no sentido fraco de quadrado integr´avel. Denotamos o produto interno
+
+e norma em L2 (ΩB) da forma
+
+(cid:90)
+
+(u, v) =
+
+u(x)v(x)dx,
+
+(cid:107)u(cid:107) = (u, v)1/2
+
+ΩB
+
+De posse desta nota¸c˜ao, podemos formular as formas fracas de cada subsis-
+
+tema.
+
+36
+
+4.1.1
+
+Subsistema hidrodinˆamico
+
+Recapitulando, o subsistema hidrodinˆamico consiste em: Dada a evolu¸c˜ao
+
+da tens˜ao total m´edia e da porosidade Lagrangeana no tempo e o conjunto de
+parˆametros reais {µg , Sg, α, βr, K} assim como as fun¸c˜oes Z(p) e K(φ), achar o
+
+campo de press˜ao satisfazendo
+
+(cid:18)
+
+(cid:19)
+
+φ
+
+∂
+∂t
+
+Sg
+
+p
+
+Z(p)
+
++
+
+p
+
+Z(p)
+
+βr
+
+∂p
+∂t
+
+− ∇ ·
+
+(cid:18)K(φ)
+
+p
+
+µg
+
+Z(p)
+
+(cid:19)
+
+∇p
+
+∂(cid:101)σT
+
+∂t
+
+= − p
+Z(p)
+
+α
+K
+
+com as condi¸c˜oes iniciais e de contorno
+
+
+
+J · n = 0
+
+sobre ΓH
+N
+
+sobre ΓH
+p = pw
+D
+p (x, t = 0) = p0, ∀x ∈ ΩB
+
+em ΩB
+
+(4.1)
+
+(4.2)
+
+onde n ´e a normal unit´aria orientada para fora de ΩB no bordo ΓH
+
+N , pw ´e a press˜ao
+
+prescrita na interface com a fratura, J o ﬂuxo m´assico e p0 ´e a press˜ao inicial do
+
+reservat´orio.
+
+Seja U o conjunto de solu¸c˜oes admiss´ıveis deﬁnido por
+
+(cid:110)
+u ∈ H 1 (ΩB) : u|ΓH
+
+D
+
+U :=
+
+(cid:111)
+
+= pw
+
+e o subespa¸co das fun¸c˜oes testes para a hidrodinˆamica dado por
+
+(cid:110)
+v ∈ H 1 (ΩB) : v|ΓH
+
+D
+
+(cid:111)
+
+= 0
+
+V :=
+
+(4.3)
+
+(4.4)
+
+O problema na forma fraca consiste em: Dada a evolu¸c˜ao da tens˜ao total
+m´edia e da porosidade Lagrangeana no tempo e o conjunto de parˆametros {µg , Sg,
+α, βr, K} ∈ R assim como as fun¸c˜oes Z(p) e K(φ), para cada t ∈ (0, tf inal] achar
+
+37
+
+p ∈ U tal que
+
+(cid:90)
+
+(cid:18)
+
+vφSg
+
+∂
+∂t
+
+ΩB
+
+(cid:18) p
+
+(cid:19)
+
+Z(p)
+
++ vSg
+
+p
+
+Z(p)
+
+(cid:19)
+(cid:90)
+
+βr
+
+∂p
+∂t
+= −
+
+com a condi¸c˜ao inicial
+
+ΩB
+
+(cid:90)
+
+dΩB +
+
+K(φ)
+
+µg
+
+∂(cid:101)σT
+
+∂t
+
+p
+
+Z(p)
+
+dΩB,
+
+∇p · ∇v dΩB
+
+∀v ∈ V (4.5)
+
+ΩB
+
+vSg
+
+p
+
+Z(p)
+
+α
+K
+
+(p (x, t = 0) , q) = (p0, q), ∀q ∈ L2(ΩB)
+
+4.1.2
+
+Subsistema geomecˆanico
+
+De forma semelhante introduzimos a forma fraca do subsistema geomecˆa-
+nico: Dado ∇p e o conjunto de parˆametros {α , λ, µ} ∈ R, achar o campo de
+
+deslocamentos satisfazendo∇ · σ = α∇p
+sujeito `as condi¸c˜oes de contorno σT · n = tt
+
+u = 0
+
+sobre ΓG
+N
+
+sobre ΓG
+D
+
+σ = σ0 + λ∇ · uI + 2µε (u)
+
+(4.6)
+
+(4.7)
+
+onde tt denota a tra¸c˜ao prescrita.
+
+Para as condi¸c˜oes de Dirichlet na geomecˆanica denotamos W o subespa¸co
+
+das fun¸c˜oes vetoriais da forma
+
+(cid:110)
+w ∈(cid:2)H 1 (ΩB)(cid:3)d : w|ΓG
+
+D
+
+(cid:111)
+
+= 0
+
+(4.8)
+
+W :=
+
+A forma fraca de (4.6) ´e dada por
+
+(cid:90)
+
+(cid:90)
+
+(cid:90)
+
+αp∇ · w dΩB,
+
+∀w ∈ W (4.9)
+
+σ : ∇w dΩB =
+
+w · tt dΓ +
+
+ΩB
+
+Γ
+
+ΩB
+
+38
+
+onde A : B denota o produto interno entre tensores de segunda ordem. A forma
+fraca do subsistema geomecˆanico consiste em: Dado p ∈ V e os parˆametros {λ, µ,
+α} ∈ R, para cada t ∈ (0, tf inal] achar u ∈ W tal que
+
+(cid:90)
+
+(cid:90)
+
+[2µε (u) · ε (w) + λ (∇ · u,∇ · w)] dΩB =
+
+w·tt dΓ+
+
+ΩB
+
+Γ
+
+ΩB
+
+αp∇·w dΩB,
+
+∀w ∈ W
+
+(4.10)
+
+(cid:90)
+
+4.2
+
+Discretiza¸c˜ao temporal
+
+Considere agora a aproxima¸c˜ao de Euler impl´ıcito para o problema parab´olico
+(4.5). Sendo tn (n = 0, 1, . . . , Nt) uma parti¸c˜ao do eixo temporal com ∆t = tn+1 −
+
+tn o passo de tempo (assumido constante), as derivadas temporais no campo de
+
+press˜ao s˜ao aproximadas da forma
+
+(cid:18) p
+
+(cid:19)
+
+Z(p)
+
+∂
+∂t
+
+(cid:18) pn+1
+
+Z (pn+1)
+
+− pn
+Z (pn)
+
+(cid:19)
+
+(4.11)
+
+≈ 1
+∆t
+
+De forma similar, a derivada temporal da fonte devido `a tens˜ao m´edia total
+
+∂(cid:101)σT
+
+∂t
+
+≈ (cid:101)σn+1
+T −(cid:101)σn
+
+T
+
+∆t
+
+(4.12)
+
+s˜ao valores da tens˜ao normal previamente conhecidos pela resolu¸c˜ao
+
+´e aproximada da forma
+
+onde(cid:101)σn
+
+T e(cid:101)σn+1
+
+T
+
+do m´odulo geomecˆanico.
+
+Substituindo (4.11) e (4.12) em (4.5), podemos formular o problema discreto
+
+no tempo: Dados os campos (cid:101)σn
+
+T , (cid:101)σn+1
+
+T
+
+, φn+1 e pn e o conjunto de parˆametros
+{Sg , µg, α, βr, K} ∈ R assim como as fun¸c˜oes φ(x, t), Z(p) e K(φ), para cada
+tn = n∆t, n = 0, 1, . . . , Nt achar pn+1 ∈ U tal que
+
+vSg
+
+pn+1
+
+Z(pn+1)
+
+39
+
+(cid:90)
+
+(cid:90)
+
+(cid:90)
+
++ ∆t
+
+ΩB
+
+(cid:90)
+
++
+
+ΩB
+
+Sgβrv
+
+pn+1
+
+ΩB
+
+Z(pn+1)
+∇pn+1 · ∇v dΩB =
+
+(cid:90)
+
+pn+1dΩB
+
+φn+1Sgv
+
+pn+1
+
+Z(pn+1)
+
+dΩB +
+
+K(φn+1)
+
+pn+1
+
+ΩB
+
+Sgβrv
+
+µg
+pn+1
+
+Z(pn+1)
+pndΩB −
+
+Z(pn+1)
+
+(cid:90)
+
+ΩB
+
+φn+1Sgv
+
+(cid:0)(cid:101)σn+1
+T −(cid:101)σn
+
+T
+
+ΩB
+α
+K
+
+pn
+
+Z(pn)
+
+(cid:1) dΩB,
+
+dΩB
+
+∀v ∈ V
+
+A formula¸c˜ao geomecˆanica discreta no tempo ´e dada por: Dado o campo
+pn+1 ∈ U e os parˆametros {λ, µ, α} ∈ R, para cada tn = n∆t, n = 0, 1, . . . , Nt
+achar un+1 ∈ W tal que
+
+(cid:90)
+
+(cid:2)2µε(cid:0)un+1(cid:1) · ε (w) + λ(cid:0)∇ · un+1,∇ · w(cid:1)(cid:3) dΩB =
+
+ΩB
+
++
+
+w · tt dΓ
+
+(cid:90)
+(cid:90)
+
+Γ
+
+ΩB
+
+αpn+1∇ · w dΩB,
+
+∀w ∈ W
+(4.13)
+
+M´etodo de Picard para a hidrodinˆamica
+
+Para tratar as n˜ao-linearidades presentes na equa¸c˜ao da press˜ao bem como as
+
+advindas do acoplamento com a geomecˆanica, adotamos o algoritmo de lineariza¸c˜ao
+
+de Picard. Assim, denotando k = 0, 1, . . . , Nk o ´ındice associado ao esquema
+
+iterativo da lineariza¸c˜ao, temos: Dados os campos (cid:101)σn
+
+, φn+1,k, pn+1,k e pn
+juntamente com o conjunto de parˆametros {Sg , µg, α, βr, K} ∈ R assim como as
+
+T , (cid:101)σn+1,k
+
+T
+
+fun¸c˜oes Z(p) e K(φ), para cada tn = n∆t, n = 0, 1, . . . , Nt e k = 0, 1, 2, . . . , achar
+pn+1,k+1 ∈ U tal que
+
+(cid:90)
+
+(cid:90)
+
++ ∆t
+
+ΩB
+
+(cid:90)
+
++
+
+ΩB
+
+φn+1,kSgv
+
+pn+1,k+1
+Z(pn+1,k)
+
+dΩB +
+
+K(φn+1,k)
+
+pn+1,k
+
+ΩB
+
+Sgβrv
+
+µg
+pn+1,k
+
+Z(pn+1,k)
+pndΩB −
+
+Z(pn+1,k)
+
+Sgβrv
+
+pn+1,k
+
+ΩB
+
+Z(pn+1,k)
+∇pn+1,k+1 · ∇v dΩB =
+
+vSg
+
+pn+1,k
+
+Z(pn+1,k)
+
+ΩB
+
+(cid:90)
+
+(cid:90)
+
+pn+1,k+1dΩB
+
+ΩB
+
+(cid:90)
+(cid:16)(cid:101)σn+1,k
+=(cid:101)σn
+
+α
+K
+
+T
+
+φn+1,kSgv
+
+−(cid:101)σn
+
+T
+
+(cid:17)
+
+pn
+
+Z(pn)
+
+dΩB
+
+dΩB,
+
+∀v ∈ V
+
+(4.14)
+
+onde adotamos pn+1,0 = pn, φn+1,0 = φn e(cid:101)σn+1,0
+
+T , que ´e equivalente a utilizar a
+formula¸c˜ao em uma-via para o chute inicial das itera¸c˜oes de Picard. ´E importante
+
+T
+
+salientar as lineariza¸c˜oes adicionais requeridas pela presen¸ca do termo de fontes
+
+quando comparado com a formula¸c˜ao uma-via, consequentemente trazendo maior
+
+complexidade `a resolu¸c˜ao num´erica do problema.
+
+De maneira an´aloga, para o problema geomecˆanico: Dado o campo pn+1,k e os
+parˆametros {λ, µ, α} ∈ R, para cada tn = n∆t, n = 0, 1, . . . , Nt e k = 0, 1, 2, . . . ,
+
+40
+
+achar un+1,k+1 ∈ W tal que
+
+(cid:90)
+
+(cid:2)2µε(cid:0)un+1,k+1(cid:1) · ε (w) + λ(cid:0)∇ · un+1,k+1,∇ · w(cid:1)(cid:3) dΩB =
+
+ΩB
+
++
+
+(cid:90)
+(cid:90)
+
+Γ
+
+w · tt dΓ
+
+αpn+1,k+1∇ · w dΩB,
+
+ΩB
+
+∀w ∈ W
+
+(4.15)
+
+o qual mostra o mesmo m´odulo geomecˆanico a ser resolvido no caso dos gases e
+
+l´ıquidos.
+
+Para tratar as duas n˜ao-linearidades advindas da equa¸c˜ao da press˜ao e do
+
+acoplamento geomecˆanico, adotamos inicialmente uma itera¸c˜ao de Picard na hidro-
+
+dinˆamica e, em seguida, resolvemos a geomecˆanica com as informa¸c˜oes advindas
+
+da solu¸c˜ao pr´evia da hidrodinˆamica na itera¸c˜ao de Picard. Ap´os a resolu¸c˜ao do
+
+subsistema geomecˆanico e do p´os-processamento para a porosidade Lagrangeana
+
+retornamos para uma nova itera¸c˜ao de Picard na hidrodinˆamica com as solu¸c˜oes
+
+obtidas da anterior na geomecˆanica. Repete-se esse procedimento at´e que seja sa-
+
+tisfeito o crit´erio de convergˆencia nas itera¸c˜oes de Picard. Ap´os a convergˆencia das
+
+itera¸c˜oes entre os subsistemas, evolu´ımos para o passo de tempo seguinte, como
+
+ilustrado na Figura abaixo.
+
+Figura 4.1: Procedimento geral.
+
+41
+
+4.3
+
+Discretiza¸c˜ao espacial
+
+Finalmente consideramos a parti¸c˜ao do dom´ınio ΩB por uma fam´ılia de ma-
+lhas Th indexadas pelo parˆametro h denotando o diˆametro m´aximo de cada ele-
+B ∈ Th. Seguindo a nota¸c˜ao cl´assica de elementos ﬁnitos, denotamos
+mentos Ωe
+Pk (Ωe
+B de grau menor ou igual a k
+em cada coordenada. Tomando k ≥ 1, deﬁnimos os espa¸cos de elementos ﬁnitos
+
+B) o conjunto dos polinˆomios deﬁnidos em Ωe
+
+gerados por polinˆomios Lagrangeanos cont´ınuos
+
+(cid:110)
+
+S k
+h :=
+
+ϕh ∈ C 0 (Ωe
+
+B) : ϕh|Ωe
+
+∈ Pk (Ωe
+
+B) ∈ (∀Ωe
+
+B
+
+(cid:111)
+B ∈ Th)
+
+(cid:111)
+B ∈ Th)
+
+(4.16)
+
+(4.17)
+
+e para d = 1, 2, 3 deﬁnimos o conjunto das fun¸c˜oes vetoriais
+
+(cid:110)
+ψh ∈(cid:2)C 0 (Ωe
+
+B)(cid:3)d : ψ|Ωe
+
+B
+
+Dk
+
+h :=
+
+∈ [Pk (Ωe
+
+B)]d ∈ (∀Ωe
+
+Assim, sejam Uh e Vh subespa¸cos de dimens˜oes ﬁnitas de U e V dados por
+
+Uh = U ∩ S k
+
+h
+
+e Vh = V ∩ S k
+
+h
+
+(4.18)
+
+E analogamente denotamos W h ⊂ W o subespa¸co de dimens˜oes ﬁnitas para
+
+o campo de deslocamento
+
+W h = W ∩ Dk
+
+h
+
+(4.19)
+
+M´etodo de Galerkin
+
+h e os valores de(cid:101)σn
+
+,(cid:101)σn+1,k
+
+Th
+
+Dados pn+1,k
+
+e pn
+
+para o subsistema hidro-
+dinˆamico e o conjunto de parˆametros {Sg , µg, α, βr, K, λ, µ} ∈ R assim como as
+
+Th
+
+h
+
+h
+
+, φn+1,k
+
+fun¸c˜oes Z(p) e K(φ), para cada tn = n∆t, n = 0, 1, . . . , Nt e cada k = 0, 1, 2, . . . ,
+
+achar pn+1,k+1
+
+h
+
+∈ Uh, un+1,k+1
+
+h
+
+∈ W h e φn+1,k+1
+
+h
+
+∈ S 0
+
+h tal que:
+
+42
+
+vhSgφn+1,k
+
+h
+
+h
+
+pn+1,k+1
+h
+Z(pn+1,k
+)
+pn+1,k
+h
+Z(pn+1,k
+pn+1,k
+h
+Z(pn+1,k
+h
+pn+1,k
+α
+h
+K
+Z(pn+1,k
+
+)
+
+)
+
+)
+
+h
+
+h
+
+vhβrSg
+
+vhβrSg
+
+vhSg
+
+ΩB
+
+ΩB
+
+ΩB
+
+(cid:90)
+
++
+
++
+
+−
+
+ΩB
+
+(cid:90)
+(cid:90)
+(cid:90)
+
+
+
+
+Hidrodinˆamica:
+
+(cid:16)
+
+(cid:17)
+
+(cid:90)
+
+dΩB + ∆t
+
+ΩB
+
+dΩB =
+
+pn+1,k+1
+h
+
+K
+
+(cid:90)
+
+ΩB
+
+φn+1,k
+h
+µg
+vhSgφn+1,k
+
+h
+
+pn+1,k
+h
+Z(pn+1,k
+
+)
+
+h
+pn
+h
+Z(pn
+h)
+
+dΩB
+
+∇pn+1,k+1
+
+h
+
+· ∇vh dΩB
+
+pn
+hdΩB
+
+(cid:16)(cid:101)σn+1,k
+
+Th
+
+(cid:17)
+
+−(cid:101)σn
+
+Th
+
+dΩB,
+
+∀vh ∈ Vh
+
+(cid:104)
+
+(cid:90)
+
+(cid:90)
+
+ΩB
+
++
+
+ΩB
+
+φn+1,k+1
+h
+
+2µε
+
+Geomecˆanica:
+
+h
+
+un+1,k+1
+
+(cid:17) · ε (wh) + λ
+
+(cid:16)
+h ∇ · wh dΩB,
+= φ0 + α∇ · un+1,k+1
+
++
+
+h
+
+(cid:16)∇ · un+1,k+1
+(cid:16)
+
+h
+
+pn+1,k+1
+h
+
+∀wh ∈ Wh
+
+αpn+1,k
+
+1
+N
+
+(4.20)
+
+(cid:17)(cid:105)
+
+,∇ · wh
+
+dΩB =
+
+(cid:90)
+
+Γ
+
+wh · tt dΓ
+
+(cid:17)
+
+(4.21)
+
+− p0
+
+O algoritmo 4 resume a sequˆencia de procedimentos adotados para a solu¸c˜ao
+
+do problema (4.20) e (4.21).
+
+O sistema de equa¸c˜oes ´e inovador, nunca tendo sido reportado na literatura.
+
+Este consiste nos primeiros passos para aplica¸c˜ao dos algoritmos de ﬁxed-stress
+
+split para problemas n˜ao-lineares associados a gases. Sua natureza ´e promissora
+
+para representar a geomecˆanica de reservat´orios de ﬂuido altamente compress´ıveis.
+
+43
+
+Algoritmo 4: Algoritmo sequencial com taxa de tens˜oes m´edias ﬁxadas para
+ﬂuidos altamente compress´ıveis para a forma fraca discreta.
+
+in´ıcio
+
+(cid:101)σn
+pn=1,k=0 ← p0
+T ← p0
+para n ← 0 at´e n = Nmax fa¸ca /* La¸co das itera¸c~oes no tempo */
+k ← 0
+/* ´Indice das itera¸c~oes de Picard */
+enquanto o crit´erio de convergˆencia n˜ao for satisfeito fa¸ca
+
+se n = 0 e k = 0 ent˜ao
+tempo e na hidrodin^amica */
+
+(cid:101)σn+1,k
+T ←(cid:101)σn
+
+T
+
+/* Para a primeira itera¸c~ao no
+
+Resolva o sistema n˜ao-linear para pn+1,k+1 na hidrodinˆamica
+Atualize: pn+1,k ← pn+1,k+1
+Dado pn+1,k+1 resolva para un+1,k+1 e σn+1,k+1 no modelo da
+elasticidade linear
+Atualize: un+1,k ← un+1,k+1 e σn+1,k ← σn+1,k+1
+φn+1,k ← φn+1,k+1
+k ← k + 1
+pn+1 ← pn+1,k
+
+Efetue o cˆomputo via p´os-processamento: (cid:101)σn+1,k
+(cid:101)σn+1
+T ←(cid:101)σn+1,k
+
+T ←(cid:101)σn+1,k+1
+
+T
+
+T
+
+e
+
+44
+
+Cap´ıtulo 5
+
+Resultados Num´ericos
+
+Neste cap´ıtulo, apresentamos resultados num´ericos obtidos com o modelo
+
+hidro-geomecˆanico proposto para ﬂuidos altamente compress´ıveis.
+
+O reservat´orio idealizado consiste de dois blocos geol´ogicos retangulares se-
+
+parados por uma fratura hidr´aulica ortogonal a um po¸co horizontal onde condi¸c˜oes
+
+de Dirichlet para a press˜ao s˜ao prescritas. Devido a simetria do problema o dom´ı-
+
+nio computacional ΩB consiste da fratura hidr´aulica (a qual ´e tratada como uma
+
+interface) e metade do bloco geol´ogico tal como mostra a Figura 5.1. O dom´ınio
+
+retangular ΩB ´e particionado por uma malha regular de elementos bilineares retan-
+
+gulares Q1 adotados nas simula¸c˜oes dos problemas hidrodinˆamico e geomecˆanico.
+
+O modelo ´e resolvido numericamente a partir de implementa¸c˜ao pr´opria realizada
+
+com a linguagem de programa¸c˜ao Fortran 90.
+
+Para o cˆomputo da fun¸c˜ao K(φ) parametrizado pela satura¸c˜ao de ´agua (Sw)
+
+presente no subsistema hidrodinˆamico, adotamos uma rela¸c˜ao constitutiva cons-
+
+tru´ıda pela t´ecnica de homogeneiza¸c˜ao autocoerente, reportada em Auriault et al.
+
+(2010), sob hip´otese de isotropia da matriz porosa com poros de geometria esf´erica.
+
+Os efeitos da tortuosidade s˜ao incorporados atrav´es de uma fun¸c˜ao da porosidade
+
+Neste contexto, na presen¸ca da fase aquosa estagnada efetuamos a decomposi¸c˜ao
+
+(cid:19)
+
+(cid:18) 2φ
+
+3 − φ
+
+(Le et al., 2016)
+
+K(φ) := κr(S)κ0
+
+(5.1)
+
+onde κr(S) ´e a permeabilidade relativa, κ0 a permeabilidade associada aos poros
+
+45
+
+Figura 5.1: Exemplo num´erico idealizado da forma¸c˜ao geol´ogica.
+
+sem levar em considera¸c˜ao a fase s´olida.
+
+Para o cˆomputo da permeabilidade relativa adotamos o modelo de Brooks e
+
+Corey (1964) da forma
+
+e
+
+κr(S) :=(cid:0)1 − S2
+
+(cid:1) (1 − Se)2
+
+(5.2)
+
+(5.3)
+
+onde a satura¸c˜ao efetiva ´e deﬁnida como
+
+Se :=
+
+Sw − Swr
+
+1 − Swr − Sgr
+
+com Swr e Sgr denotando as satura¸c˜oes residuais da ´agua e do g´as, respectivamente.
+
+De posse das rela¸c˜oes acima apresentamos gr´aﬁcos da condutividade hidr´au-
+
+lica Kg(p, φ) = ρK(φ) como fun¸c˜ao da press˜ao na Figura 5.2.
+
+Ap´os a reconstru¸c˜ao num´erica dos coeﬁcientes efetivos Z(p) e K(φ) pode-
+
+mos agora proceder na obten¸c˜ao de simula¸c˜oes num´ericas do exemplo da Figura
+
+5.1 Visando avaliar a inﬂuˆencia dos efeitos geomecˆanicos sobre a produ¸c˜ao de um
+
+reservat´orio de g´as n˜ao-convencional, coletamos dados publicados na literatura ba-
+
+seados em campos reais. O primeiro campo analisado ´e o experimento BS (baseado
+
+no Barnett shale), caracterizado por exibir rigidez mais pronunciada e compacta¸c˜ao
+
+46
+
+Figura 5.2: Condutividade hidr´aulica em fun¸c˜ao da press˜ao para valores parame-
+trizados de porosidade com Sg = 0.9, Sgr = Swr = 0.05, µg = 1.2 · 10−5 P a · s e
+κ0 = 6 · 10−19 m2.
+
+menos acentuada durante a prospec¸c˜ao. O segundo ´e o experimento MS (baseado
+
+no Marcellus shale), que consiste numa forma¸c˜ao geol´ogica com menor rigidez e
+
+com maior capacidade de sofrer deforma¸c˜oes mais acentuadas (Yu e Sepehrnoori,
+
+2014).
+
+Alguns parˆametros comuns para ambos os casos est˜ao listados na Tabela 5.1.
+
+Parˆametro
+Ks (m´odulo de bulk dos gr˜aos s´olidos)
+µ (Coeﬁciente de Poisson)
+Sg (satura¸c˜ao do g´as)
+ppo¸co = pfratura
+Lx (largura de metade do bloco)
+Ly (altura da fratura)
+N ex (n´umero de elementos em x)
+N ey (n´umero de elementos em y)
+tf inal (tempo de simula¸c˜ao)
+
+Valor
+40 GPa
+0.23
+0.90
+0.5 MPa
+10 m
+50 m
+200
+200
+180 meses
+
+Tabela 5.1: Parˆametros inerentes aos dois campos utilizados nas simula¸c˜oes.
+
+Com o intuito de avaliar a inﬂuˆencia dos efeitos geomecˆanicos sobre a pro-
+
+du¸c˜ao de g´as na interface entre matriz com a fratura hidr´aulica, realizamos si-
+
+mula¸c˜oes para dois valores de profundidade do po¸co no reservat´orio e portanto
+
+47
+
+123456p (Pa)1e70123456789Condutividade hidráulica (m/s)1e13Porosidade = 0.04Porosidade = 0.07Porosidade = 0.10adotamos valores de carga distintos advindos das camadas geol´ogicas superiores.
+
+Admitimos que g = 9.8m/s2 e que a carga ´e dada pelo peso das camadas da forma
+tt = − (ρrgh) n onde ρr = 2500kg/m3 denota a massa espec´ıﬁca da rocha das
+
+camadas superiores e h a profundidade do reservat´orio sujeito `a carga. Na Tabela
+
+5.2 apresentamos os parˆametros utilizados em cada forma¸c˜ao geol´ogica.
+
+Figura 5.3: Figura ilustrativa de po¸cos horizontais perfurados a profundidades
+
+diferentes em uma mesma forma¸c˜ao geol´ogica.
+
+Tal como mencionado anteriormente, nas simula¸c˜oes a seguir fazemos uso de
+
+uma hip´otese de escala de tempo onde o escoamento na fratura ´e bem mais r´apido
+
+de tal forma que a press˜ao ao longo dela se iguala a press˜ao do po¸co. Os demais
+
+contornos como imperme´aveis. O campo de porosidade inicial ´e gerado de forma
+
+suave com valores na faixa apresentada na Tabela 5.2. No subsistema geomecˆanico
+
+assumimos ausˆencia de deslocamento vertical no bordo inferior Γ1 (Figura 5.1),
+
+assim como deslocamento horizontal nulo em Γ2 e que o bordo Γ3 est´a sujeito a
+
+uma carga advinda do peso das forma¸c˜oes geol´ogicas superiores. As condi¸c˜oes de
+
+48
+
+α (parˆametro de Biot-Willis)
+φ0 (porosidade inicial)
+K (m´odulo de bulk )
+E (m´odulo de Young)
+K (permeabilidade inicial)
+h (profundidade)
+T (temperatura)
+tt = −p0n (vetor tra¸c˜ao e press˜ao inicial)
+
+α (parˆametro de Biot-Willis)
+φ0 (porosidade inicial)
+K (m´odulo de bulk )
+E (m´odulo de Young)
+K (permeabilidade inicial)
+h (profundidade)
+T (temperatura)
+tt = −p0n (vetor tra¸c˜ao e press˜ao inicial)
+
+BS raso
+0.69
+0.04 ≤ φ0 ≤ 0.05
+12.34 GPa
+20 GPa
+1.5 · 10−19 m2
+1165 m
+338.45 K
+28.6 MPa
+MS raso
+0.91
+0.05 ≤ φ0 ≤ 0.08
+3.7 GPa
+6 GPa
+6 · 10−19 m2
+2119 m
+352.55 K
+52 MPa
+
+BS profundo
+0.69
+0.04 ≤ φ0 ≤ 0.05
+12.34 GPa
+20 GPa
+1.5 · 10−19 m2
+1665 m
+338.45 K
+40.8 MPa
+MS profundo
+0.91
+0.05 ≤ φ0 ≤ 0.08
+3.7 GPa
+6 GPa
+6 · 10−19 m2
+2621 m
+352.55 K
+64 MPa
+
+Tabela 5.2: Parˆametros utilizados na implementa¸c˜ao computacional.
+
+contorno adotadas na simula¸c˜ao s˜ao dadas a seguir
+
+
+
+D · n = 0
+vg
+
+p = ppo¸co
+
+uy = 0, τxy = 0
+
+ux = 0, τxy = 0
+σT · n = tt
+
+sobre Γi (i = 1, 2, 3)
+
+sobre Γ4
+
+sobre Γ1
+
+sobre Γ2
+
+sobre Γ3
+
+(5.4)
+
+onde τxy = 0 denota a tens˜ao de cisalhamento.
+
+As sa´ıdas gr´aﬁcas dos campos poromecˆanicos s˜ao apresentadas restritas a de-
+
+terminados sub-dom´ınios. Os perﬁs unidimensionais das vari´aveis hidrodinˆamicas
+
+s˜ao apresentados nas faixas mostradas abaixo (Figuras 5.4 e 5.5)
+
+49
+
+Figura 5.4: Faixas verticais escolhidas para ilustrar os perﬁs dos campos hidro-
+
+mecˆanicos dos resultados: L (extremo esquerdo), C (centro) e R (extremo direito).
+
+Figura 5.5: Faixas horizontais escolhidas para ilustrar os perﬁs dos campos hidro-
+
+mecˆanicos dos resultados: B (fundo), M (meio) e T (topo).
+
+5.1
+
+Experimento BS
+
+Iniciamos apresentando os resultados num´ericos para a forma¸c˜ao geol´ogica
+
+BS, a qual apresenta maior rigidez (Tabela 5.2). Levando em conta esta carac-
+
+ter´ıstica ´e esperado que os resultados comparativos entre as simula¸c˜oes com aco-
+
+plamento hidro-geomecˆanico e hidrodinˆamica desacoplada (matriz s´olida r´ıgida)
+
+sejam semelhantes. Para aferir tal proximidade apresentamos nas Figuras 5.6 e 5.7
+
+a evolu¸c˜ao do perﬁl horizontal de press˜ao e do ﬂuxo m´assico com o tempo, compu-
+
+tados via formula¸c˜oes em duas-vias e r´ıgida. Podemos observar que a sensibilidade
+
+em rela¸c˜ao aos efeitos geomecˆanicos ´e m´ınima. A inﬂuˆencia sobre a produ¸c˜ao ´e
+
+mostrada na Figura 5.8. A diferen¸ca na produ¸c˜ao se deve unicamente `a varia¸c˜ao
+
+de profundidade que altera a press˜ao inicial p0 para equilibrar a nova carga oriunda
+
+do peso das camadas superiores. A menos deste detalhe, notamos que a produ-
+
+¸c˜ao do g´as no caso BS sofre inﬂuˆencia desprez´ıvel dos efeitos geomecˆanicos e n˜ao
+
+apresenta disparidades entre os resultados em uma e duas vias. Devido a este com-
+
+portamento n˜ao analisaremos em detalhes a evolu¸c˜ao das vari´aveis hidrodinˆamicas
+
+50
+
+e geomecˆanicas.
+
+Figura 5.6: Perﬁl de press˜ao na tira M para caso h = 1665 m.
+
+Figura 5.7: Fluxo m´assico na tira M para caso h = 1665 m.
+
+51
+
+0246810x(m)0.00.51.01.52.02.53.03.5p(Pa)1e71 mêsrígidoduas-vias5 mesesrígidoduas-vias10 mesesrígidoduas-vias0246810x(m)0.0000000.0000020.0000040.0000060.0000080.0000100.0000120.000014Jx(kg/(m2s))1 mêsrígidoduas-vias5 mesesrígidoduas-vias10 mesesrígidoduas-viasFigura 5.8: Comparativo de produ¸c˜ao de g´as do caso BS.
+
+5.2
+
+Experimento MS
+
+Neste caso as propriedades mecˆanicas encontram-se na faixa de valores atre-
+
+lados `as forma¸c˜oes geol´ogicas de reservat´orios n˜ao convencionais de baixa rigidez
+
+(Yu e Sepehrnoori, 2014). Para quantiﬁcar a inﬂuˆencia dos efeitos geomecˆanicos
+
+sobre a produ¸c˜ao de g´as apresentamos inicialmente as Figuras 5.9 e 5.10 ilustrando
+
+a evolu¸c˜ao dos perﬁs horizontais de press˜ao.
+
+52
+
+050100150200t(meses)0500100015002000Produc˜ao(kg)RígidoUma-viaDuas-viasRígido (raso)Uma-via (raso)Duas-vias (raso)Figura 5.9: Perﬁl de press˜ao na tira M para profundidade do po¸co h = 2119 m.
+
+Figura 5.10: Perﬁl de press˜ao na tira M para profundidade do po¸co h = 2621 m.
+
+Podemos observar pelas Figuras 5.9 e 5.10 que os perﬁs de press˜ao que in-
+
+53
+
+0246810x(m)0.00.51.01.52.02.53.0p(Pa)1e71 mêsrígidoduas-vias5 mesesrígidoduas-vias10 mesesrígidoduas-vias0246810x(m)0.00.51.01.52.02.53.03.5p(Pa)1e71 mêsrígidoduas-vias5 mesesrígidoduas-vias10 mesesrígidoduas-viascorporam os efeitos geomecˆanicos encontram-se um pouco atrasados em rela¸c˜ao ao
+
+caso r´ıgido. Tal fato decorre do decr´escimo da permeabilidade com a porosidade
+
+a qual tende a retardar a dissipa¸c˜ao da poro-press˜ao. Al´em disso ´e poss´ıvel no-
+
+tar que o caso de maior profundidade exibe atraso na dissipa¸c˜ao da poro-press˜ao
+
+levemente maior em rela¸c˜ao ao caso mais raso, uma vez que a carga advinda do
+
+peso das forma¸c˜oes geol´ogicas superiores bem como a press˜ao inicial s˜ao maiores,
+
+produzindo maior compacta¸c˜ao da rocha.
+
+Na Figura 5.11 ilustramos a evolu¸c˜ao do perﬁl de deslocamento vertical com a
+
+profundidade do reservat´orio. Como esperado, os perﬁs possuem comportamento
+
+pr´oximo ao linear com desvio induzido pelo gradiente de poro-press˜ao que atua
+
+como fonte para o problema el´astico. Analisando a Figura 5.11, podemos observar
+
+que a diferen¸ca entre dois perﬁs consecutivos ´e ligeiramente maior para o caso de
+
+h = 2621 m.
+
+Na Figura 5.12, apresentamos o componente vertical σyy do campo de ten-
+
+s˜ao ao longo da faixa vertical C parametrizado pelo tempo. J´a na Figura 5.13,
+
+apresentamos, analogamente, o componente horizontal σxx.
+
+54
+
+Figura 5.11: Perﬁs de deslocamento uy ao longo da faixa vertical C parametrizados
+
+pelo tempo.
+
+Figura 5.12: Perﬁl do componentes σyy dos campos de tens˜ao ao longo da faixa
+
+vertical C parametrizados pelo tempo.
+
+55
+
+01020304050y(m)0.50.40.30.20.10.0u(m)1 mêsh=2119 mh=2621 m5 mesesh=2119 mh=2621 m10 mesesh=2119 mh=2621 m01020304050y6.56.05.55.04.54.03.53.02.5σyy(Pa)1e71 mêsh=2119 mh=2621 m5 mesesh=2119 mh=2621 m10 mesesh=2119 mh=2621 mFigura 5.13: Perﬁl do componentes σxx dos campos de tens˜ao ao longo da faixa
+
+vertical C parametrizados pelo tempo.
+
+Das Figuras 5.12 e 5.13, podemos observar que as tens˜oes efetivas σxx e
+
+σyy possuem um comportamento quase uniforme com pequenas perturba¸c˜oes na
+
+vizinhan¸ca do carregamento. Durante a evolu¸c˜ao temporal, caracterizada pela
+
+dissipa¸c˜ao da poro-press˜ao, ocorre transferˆencia da carga para as tens˜oes efetivas,
+
+que tendem a aumentar at´e a situa¸c˜ao estacion´aria onde equilibram completamente
+
+o carregamento aplicado sobre o folhelho. Por estar sujeito a uma tra¸c˜ao mais
+
+elevada, o caso h = 2621 m exibe magnitude mais acentuada das tens˜oes efetivas.
+
+Para compreendermos melhor a disparidade entre as solu¸c˜oes das formula¸c˜oes
+
+uma e duas-vias, apresentamos os perﬁs do termo de fonte do subsistema hidro-
+
+dinˆamico (5.5) para o caso de maior profundidade (h = 2621 m). A Figura 5.14
+
+apresenta os campos bidimensionais da tens˜ao total m´edia normal ((cid:101)σT ). Podemos
+observar que(cid:101)σT obedece um processo dissipativo que se propaga da fratura, onde
+
+a condi¸c˜ao de Dirichlet com menor magnitude para a press˜ao ´e imposta, para o
+
+interior do dom´ınio. A velocidade desta propaga¸c˜ao diretamente relacionada com
+
+o termo de fonte ´e exibida na Figura 5.15.
+
+56
+
+01020304050y0.00.51.01.52.02.53.0σxx(Pa)1e71 mêsh=2119 mh=2621 m5 mesesh=2119 mh=2621 m10 mesesh=2119 mh=2621 m(a) h = 2621 m e t = 1 mˆes.
+
+(b) h = 2621 m e t = 2 mˆes.
+
+(c) h = 2621 m e t = 3 meses.
+
+(d) h = 2621 m e t = 4 meses.
+
+(e) h = 2621 m e t = 5 meses.
+
+(f) h = 2621 m e t = 6 meses.
+
+Figura 5.14: Evolu¸c˜ao temporal do campo de tens˜ao m´edia total normal ((cid:101)σT ) no
+
+dom´ınio ocupado pelo folhelho.
+
+57
+
+(a) h = 2621 m e t = 1 mˆes.
+
+(b) h = 2621 m e t = 2 mˆes.
+
+(c) h = 2621 m e t = 3 meses.
+
+(d) h = 2621 m e t = 4 meses.
+
+(e) h = 2621 m e t = 5 meses.
+
+(f) h = 2621 m e t = 6 meses.
+
+Figura 5.15: Evolu¸c˜ao do termo de fonte −Sgpα/(Z(p)K)∂(cid:101)σT /∂t no dom´ınio ocu-
+
+pado pelo folhelho.
+
+O processo dissipativo da derivada temporal segue uma evolu¸c˜ao semelhante
+
+ao anterior se propagando da fratura para o interior at´e a situa¸c˜ao estacion´aria
+
+onde a fonte se anula devido `a diminui¸c˜ao da derivada temporal.
+
+O comportamento da evolu¸c˜ao temporal do termo de fonte apresentado na
+
+58
+
+Figura 5.15 ´e composto por duas parcelas evolutivas que inﬂuenciam o comporta-
+
+mento dinˆamico:
+
+Termo de fonte = −Sg
+
+α
+K
+
+∂(cid:101)σT
+∂t(cid:124)(cid:123)(cid:122)(cid:125)
+
+c2
+
+(5.5)
+
+p
+
+(cid:124)(cid:123)(cid:122)(cid:125)
+
+Z(p)
+
+c1
+
+Podemos observar durante o processo evolutivo que a presen¸ca do coeﬁciente
+
+envolvendo a press˜ao (p/Z(p)) tende a acelerar a redu¸c˜ao da magnitude do termo
+
+de fonte uma vez que a press˜ao tende a se dissipar ao longo do tempo. A t´ıtulo
+
+de ilustra¸c˜ao podemos comparar o comportamento dissipativo do termo de fonte
+
+em rela¸c˜ao ao caso ligeiramente compress´ıvel, onde ´e assumido que o ﬂuido possui
+
+compressibilidade aproximadamente constante (equa¸c˜ao (2.40) e (Coussy, 2004)).
+
+Neste caso, o termo de fonte ´e da forma:
+
+Termo de fonte (ligeiramente compress´ıvel) = −Sg
+
+α
+K
+
+∂(cid:101)σT
+∂t(cid:124)(cid:123)(cid:122)(cid:125)
+
+b2
+
+(5.6)
+
+1
+
+βf(cid:124)(cid:123)(cid:122)(cid:125)
+
+b1
+
+onde a compressibilidade ´e aproximada no caso de um g´as ideal βf ≈ 1/p∗ com p∗
+tomado como press˜ao m´edia no reservat´orio (p∗ = (p0 + ppo¸co)/2). Os resultados
+
+comparativos est˜ao exibidos na Figura 5.16.
+
+Podemos notar que a velocidade de dissipa¸c˜ao evolui mais lentamente no
+
+caso de ﬂuidos ligeiramente compress´ıveis, e isto incorpora um termo de sumidouro
+
+de massa atuante por um tempo maior em rela¸c˜ao ao caso compress´ıvel, onde a
+
+dissipa¸c˜ao evolui mais rapidamente devido ao termo de press˜ao.
+
+Por ﬁm, avaliamos a inﬂuˆencia dos efeitos geomecˆanicos sobre a produ¸c˜ao
+
+do g´as. Na Figura 5.17 exibimos o gr´aﬁco de evolu¸c˜ao da curva de produ¸c˜ao pa-
+
+rametrizada pela profundidade para cada tipo de acoplamento hidro-geomecˆanico
+
+(uma e duas-vias). Podemos notar a inﬂuˆencia da geomecˆanica da rocha sobre a
+
+produ¸c˜ao do g´as. Devido ao decr´escimo da permeabilidade com a porosidade, o
+
+processo de compacta¸c˜ao ´e retardado onde os efeitos geomecˆanicos s˜ao pronunci-
+
+ados e, portanto, a produ¸c˜ao ´e diminu´ıda. Podemos observar a clara disparidade
+
+59
+
+(a) h = 2621 m e t = 1 mˆes.
+
+(b) h = 2621 m e t = 2 mˆes.
+
+(c) h = 2621 m e t = 3 meses.
+
+(d) h = 2621 m e t = 4 meses.
+
+(e) h = 2621 m e t = 5 meses.
+
+Figura 5.16: Termo de fonte −Sgα/(3.2 · 10−8 · K)∂(cid:101)σT /∂t para o caso de ﬂuido
+
+(f) h = 2621 m e t = 6 meses.
+
+ligeiramente compress´ıvel.
+
+entre os resultados obtidos nas formula¸c˜oes em uma e duas vias. Este ´ultimo in-
+
+corpora os efeitos da fonte advinda das taxas de tens˜oes m´edias normais, enquanto
+
+que o anterior incorpora apenas a compressibilidade da rocha na formula¸c˜ao. Po-
+
+demos observar um fato muito importante relacionado com a formula¸c˜ao uma-via,
+
+60
+
+a qual tende a prover uma fonte de massa ao sistema devido `a omiss˜ao do termo
+
+de fonte negativo (sumidouro). Tal fonte num´erica tende a aumentar a quantidade
+
+de g´as no reservat´orio conduzindo erroneamente a uma produ¸c˜ao maior quando
+
+comparada com a formula¸c˜ao conservativa em duas-vias.
+
+Figura 5.17: Comparativo de produ¸c˜ao de g´as do caso MS.
+
+Os resultados num´ericos obtidos neste trabalho ilustram o potencial da nova
+
+formula¸c˜ao proposta em capturar o acoplamento hidro-mecˆanico em escoamento
+
+de gases em meios porosos.
+
+61
+
+050100150200t(meses)0500100015002000250030003500Produc˜ao(kg)RígidoUma-viaDuas-viasRígido (raso)Uma-via (raso)Duas-vias (raso)Cap´ıtulo 6
+
+Conclus˜oes
+
+No presente trabalho, propusemos um modelo inovador de acoplamento hidro-
+
+mecˆanico de reservat´orios de g´as desenvolvido no contexto de formula¸c˜oes sequenci-
+
+ais. Este modelo ´e formulado atrav´es de dois subsistemas, um hidrodinˆamico e ou-
+
+tro geomecˆanico, com caracter´ısticas distintas acoplados por termos de fonte entre
+
+eles. O m´odulo hidrodinˆamico ´e composto por uma equa¸c˜ao diferencial parab´olica
+
+n˜ao-linear, enquanto o geomecˆanico consiste da elasticidade linear. Propusemos
+
+um novo algoritmo sequencial iterativo utilizando a abordagem ﬁxed stress split
+
+(Kim et al., 2011), in´edita na aplica¸c˜ao em reservat´orios de gases altamente com-
+
+press´ıveis. Tal metodologia fornece uma alternativa potencialmente menos custosa
+
+computacionalmente comparada com modelos totalmente acoplados comumente
+
+adotados, al´em da facilidade de adapta¸c˜ao de simuladores comerciais desenvolvi-
+
+dos separadamente para cada subsistema. Nosso principal resultado consiste na
+
+constru¸c˜ao de um novo termo de fonte na equa¸c˜ao da press˜ao que governa a hidro-
+
+dinˆamica, o qual incorpora novos coeﬁcientes dependentes da press˜ao que multi-
+
+plicam o termo de fonte envolvendo a derivada temporal da tens˜ao total m´edia. O
+
+novo modelo foi linearizado considerando o algoritmo de ponto ﬁxo e discretizado
+
+espacialmente pelo m´etodo de Galerkin. Simula¸c˜oes num´ericas ilustraram a per-
+
+formance do modelo em um problema de extra¸c˜ao prim´aria de g´as usando como
+
+parˆametros de entrada inspirados nos campos Barnett e Marcellus. Visando avaliar
+
+os efeitos da geomecˆanica no cen´ario mais sens´ıvel – Marcellus shale –, realizamos
+
+62
+
+um comparativo entre a produ¸c˜ao do caso r´ıgido em rela¸c˜ao aos casos de uma-via
+
+e duas-vias em que os efeitos da geomecˆanica s˜ao pronunciados.
+
+O principal resultado num´erico obtido neste trabalho consiste no fato da
+
+formula¸c˜ao em duas-vias levar a fontes de massa com n˜ao-linearidades adicionais,
+
+gerando dissipa¸c˜ao no campo de press˜ao. ´E importante ressaltar que devido ao
+
+caso em uma-via desconsiderar o termo de fonte, massa ´e gerada erroneamente
+
+nesta formula¸c˜ao.
+
+O pr´oximo passo consiste em estender a metodologia para incorporar escoa-
+
+mento e geomecˆanica das fraturas, levando a modelos acoplados mais soﬁsticados
+
+com desaﬁos fascinantes.A an´alise num´erica da estabilidade para a decomposi¸c˜ao
+
+de operadores diferenciais tamb´em ´e um passo futuro importante a ser realizado,
+
+juntamente com o desenvolvimento de um m´etodo num´erico localmente conser-
+
+vativo para a obten¸c˜oes de resultados com maior acur´acia. A inclus˜ao de fortes
+
+heterogeneidades e a inﬂuˆencia do teor de mat´eria orgˆanica no modelo podem
+
+tamb´em aumentar a qualidade dos resultados e portanto ´e um passo recomendado.
+
+63
+
+Referˆencias Bibliogr´aﬁcas
+
+Ronaldo J. Alves. Reservas e produ¸c˜ao de g´as e petr´oleo em reservat´orios n˜ao
+
+convencionais. Boletim SBGf, (87):26–27, 2014. ISSN 2177-9090.
+
+J.L. Auriault, C. Boutin, e C. Geindreau. Homogenization of Coupled Phe-
+
+nomena in Heterogenous Media. ISTE. Wiley, 2010. ISBN 9780470610442.
+
+URL https://books.google.co.in/books?id=7HGMv8LEUL8C.
+
+K. Aziz
+
+e A. Settari.
+
+Petroleum reservoir
+
+simulation.
+
+Ap-
+
+plied
+
+Science Publishers,
+
+1979.
+
+ISBN 9780853347873.
+
+URL
+
+https://books.google.com.br/books?id=GJ5TAAAAMAAJ.
+
+J. Bear e Y. Bachmat.
+
+Introduction to Modeling of Transport Phe-
+
+nomena in Porous Media. Theory and Applications of Transport in
+
+Porous Media. Springer Netherlands, 1990.
+
+ISBN 9780792305576. URL
+
+https://books.google.com.br/books?id=MOaoeI9aAc0C.
+
+Friedrich-Karl Benra, Hans-Josef Dohmen, Ji Pei, Sebastian Schuster, e Bo Wan.
+
+A comparison of one-way and two-way coupling methods for numerical analy-
+
+sis of ﬂuid-structure interactions. J. Applied Mathematics, 2011:853560:1–
+
+853560:16, 2011.
+
+M. A. Biot e D. G. Willis. The Elastic Coeﬃcients of the Theory of Consolidation.
+
+Journal of Applied Mechanics, 24:594–601, Dezembro 1957.
+
+Maurice A. Biot.
+
+General Theory of Three-Dimensional Consolida-
+
+tion.
+
+Journal of Applied Physics,
+
+12(2):155–164,
+
+1941.
+
+URL
+
+http://dx.doi.org/10.1063/1.1712886.
+
+64
+
+BP Company. Bp statistical review of world energy june 2015, 2015. URL
+
+http://www.bp.com/content/dam/bp/pdf/energy-economics/statistical-
+
+review-2015/bp-statistical-review-of-world-energy-2015 -full-
+report.pdf. [Online; acessado em 16 de Mar ˜A§o, 2016].
+
+R.H. Brooks e A.T. Corey. Hydraulic Properties of Porous Media. Colo-
+
+rado State University Hydrology Papers. Colorado State University, 1964. URL
+
+https://books.google.com.br/books?id=F_1HOgAACAAJ.
+
+Z. Chen. Reservoir Simulation: Mathematical Techniques in Oil
+
+Recovery. CBMS-NSF Regional Conference Series in Applied Mathema-
+
+tics. Society for Industrial and Applied Mathematics (SIAM, 3600 Market
+
+Street, Floor 6, Philadelphia, PA 19104), 2007.
+
+ISBN 9780898717075. URL
+
+https://books.google.com.br/books?id=eUazfAaGBDEC.
+
+Z. Chen, G. Huan, e Y. Ma. Computational Methods for Multiphase
+
+Flows in Porous Media. Computational Science and Engineering. So-
+
+ciety for Industrial and Applied Mathematics (SIAM, 3600 Market Street,
+
+Floor 6, Philadelphia, PA 19104), 2006.
+
+ISBN 9780898718942.
+
+URL
+
+https://books.google.com.br/books?id=ckVZCABDkwYC.
+
+Alexander H. D. Cheng. Poroelasticity. Springer International Publishing, 2016.
+
+ISBN 9783319252025.
+
+Olivier Coussy. Poromechanics. John Wiley & Sons, 2004.
+
+A. Danesh. PVT and Phase Behaviour Of Petroleum Reservoir Fluids. De-
+
+velopments in Petroleum Science. Elsevier Science, 1998. ISBN 9780080540054.
+
+URL https://books.google.com.br/books?id=XqLPyqGzPoUC.
+
+EPE. Balan¸co energ´etico nacional 2015, 2015.
+
+Xin Fan, Gensheng Li, Subhash N. Shah, Shouceng Tian, Mao Sheng, e
+
+Lidong Geng. Analysis of a fully coupled gas ﬂow and deformation pro-
+
+cess in fractured shale gas reservoirs. Journal of Natural Gas Science
+
+65
+
+and Engineering, 27, Part 2:901 – 913, 2015.
+
+ISSN 1875-5100. URL
+
+http://www.sciencedirect.com/science/article/pii/S1875510015301736.
+
++G´as Brasil. URL http://www.maisgasbrasil.com.br/gasnatural/tipos.
+
+[Online; acessado em 16 de Mar¸co, 2016].
+
+W.E. Heﬂey e Y. Wang. Economics of Unconventional Shale Gas Deve-
+
+lopment: Case Studies and Impacts. Natural Resource Management and
+
+Policy. Springer International Publishing, 2014.
+
+ISBN 9783319114996. URL
+
+https://books.google.com.br/books?id=IaqvBQAAQBAJ.
+
+Pouya Hosseinifar e Saeid Jamshidi. An evolved cubic equation of state with
+
+a new attractive term. Fluid Phase Equilibria, 408:58–71, 2016. URL
+
+http://dx.doi.org/10.1016/j.fluid.2015.08.013.
+
+IEA. Golden rules for a golden age of gas: World energy outlook, 2012. URL
+
+http://www.worldenergyoutlook.org/goldenrules/.
+
+[Online; acessado em
+
+16 de Mar¸co, 2016].
+
+J. Kim, H.A. Tchelepi, e R. Juanes.
+
+Stability and convergence of se-
+
+quential methods for coupled ﬂow and geomechanics:
+
+Fixed-stress and
+
+ﬁxed-strain splits. Computer Methods in Applied Mechanics and
+
+Engineering, 200(13-16):1591 – 1606, 2011.
+
+ISSN 0045-7825.
+
+URL
+
+http://www.sciencedirect.com/science/article/pii/S0045782510003786.
+
+Jihoon Kim. Sequential methods for coupled geomechanics and mul-
+
+tiphase ﬂow. Tese de Doutorado, Stanford University, USA, 2010.
+
+A.E. Kolesov, P.N. Vabishchevich, e M.V. Vasilyeva.
+
+Splitting schemes for
+
+poroelasticity and thermoelasticity problems. Computers and Mathema-
+
+tics with Applications, 67(12):2185 – 2198, 2014.
+
+ISSN 0898-1221. URL
+
+http://www.sciencedirect.com/science/article/pii/S0898122114000674.
+
+Eﬃcient Algorithms for Large Scale Scientiﬁc Computations.
+
+66
+
+D.K. Kondepudi e I. Prigogine. Modern thermodynamics: from heat engines
+
+to dissipative structures. John Wiley, 1998.
+
+ISBN 9780471973935. URL
+
+https://books.google.com.br/books?id=kxcvAQAAIAAJ.
+
+Tien Dung Le, Marcio A. Murad, Patricia A. Pereira, e Claude Boutin. Bridging
+
+between macroscopic behavior of shale gas reservoirs and conﬁned ﬂuids in na-
+
+nopores. Computational Geosciences, 20(3):751–771, 2016. ISSN 1573-1499.
+
+URL http://dx.doi.org/10.1007/s10596-015-9511-x.
+
+Celso Fernando Lucchesi. Petr´oleo. Estudos Avan¸cados, 12:17 – 40, 08 1998.
+
+ISSN 0103-4014.
+
+Andro Mikeli´c, Bin Wang, e Mary F. Wheeler.
+
+Numerical convergence
+
+study of
+
+iterative coupling for coupled ﬂow and geomechanics. Com-
+
+putational Geosciences, 18(3):325–341, 2014.
+
+ISSN 1573-1499. URL
+
+http://dx.doi.org/10.1007/s10596-013-9393-8.
+
+Andro Mikeli´c e Mary F. Wheeler. Convergence of iterative coupling for coupled
+
+ﬂow and geomechanics. Computational Geosciences, 17(3):455–461, 2012.
+
+ISSN 1573-1499. URL http://dx.doi.org/10.1007/s10596-012-9318-y.
+
+Marcio A. Murad, Marcio Borges,
+
+Jesus A. Obreg´on,
+
+e Maicon
+
+Correa.
+
+A new locally
+
+conservative numerical method for
+
+two-
+
+phase ﬂow in heterogeneous poroelastic media.
+
+Computers
+
+and
+
+Geotechnics,
+
+48:192
+
+–
+
+207,
+
+2013.
+
+ISSN 0266-352X.
+
+URL
+
+http://www.sciencedirect.com/science/article/pii/S0266352X12001437.
+
+M´arcio A. Murad e Abimael F.D. Loula.
+
+Improved accuracy in ﬁnite element
+
+analysis of biot’s consolidation problem. Computer Methods in Applied
+
+Mechanics and Engineering, 95(3):359 – 382, 1992. ISSN 0045-7825. URL
+
+http://www.sciencedirect.com/science/article/pii/004578259290193N.
+
+Donald W. Peaceman. Fundamentals of numerical reservoir simulation.
+
+Cap´ıtulo 1, p´aginas 2–5, Elsevier Scientiﬁc Pub. Co. : Distributors for the
+
+67
+
+U.S. and Canada, Elsevier North-Holland, Amsterdam; New York, 1977. ISBN
+
+9780080868608 0080868606.
+
+Ding-Yu Peng e Donald B. Robinson. A new two-constant equation of state. In-
+
+dustrial & Engineering Chemistry Fundamentals, 15(1):59–64, 1976.
+
+K.S. Pitzer. Thermodynamics. McGraw-Hill Series in advanced chemis-
+
+try. McGraw-Hill Ryerson, Limited, 1995.
+
+ISBN 9780070502215. URL
+
+https://books.google.com.br/books?id=tZ0RAQAAIAAJ.
+
+Otto Redlich e J. N. S. Kwong. On the thermodynamics of solutions. v. an equation
+
+of state. fugacities of gaseous solutions. Chemical Reviews, 44(1):233–244,
+
+1949. URL http://dx.doi.org/10.1021/cr60137a013. PMID: 18125401.
+
+A. Settari e F. M. Mourits. A coupled reservoir and geomechanical simu-
+
+lation system. SPE Journal, 3:219–226, 1998.
+
+ISSN 1086-055X. URL
+
+http://dx.doi.org/10.2118/50939-PA.
+
+A. Settari e Dale A. Walters. Advances in coupled geomechanical and reservoir
+
+modeling with applications to reservoir compaction. SPE Journal, 6:334–342,
+
+2001. ISSN 1086-055X. URL http://dx.doi.org/10.2118/74142-PA.
+
+J.M. Smith, H.C. Van Ness,
+
+e M.M. Abbott.
+
+Introduction to
+
+Chemical Engineering Thermodynamics.
+
+Irwin/McGraw-Hill Se-
+
+ries
+
+in Marketing. McGraw-Hill, 2001.
+
+ISBN 9780072402964.
+
+URL
+
+https://books.google.com.br/books?id=EIkvAQAAIAAJ.
+
+Giorgio Soave. Equilibrium constants from a modiﬁed redlich-kwong equation of
+
+state. Chemical Engineering Science, 27(6):1197–1203, 1972. ISSN 0009-
+
+2509. URL http://dx.doi.org/10.1016/0009-2509(72)80096-4.
+
+J.G. Speight. Shale Gas Production Processes. Elsevier Science, 2013. ISBN
+
+9780124045514. URL https://books.google.com.mx/books?id=d8qngMz-
+
+vh0C.
+
+68
+
+K. Terzaghi. Theoretical soil mechanics. J. Wiley and Sons, inc., 1943. URL
+
+https://books.google.com.br/books?id=7_ogAAAAMAAJ.
+
+Jos´e O. Valderrama. The state of the cubic equations of state.
+
+Indus-
+
+trial & Engineering Chemistry Research, 42(8):1603–1618, 2003. URL
+
+http://dx.doi.org/10.1021/ie020447b.
+
+J.D. van der Waals. Over de Continu¨ıteit van den Gas-en Vloeistoftoes-
+
+tand. Tese de Doutorado, Leiden University, 1873.
+
+Wei Yu
+
+e Kamy
+
+Sepehrnoori.
+
+Simulation
+
+of
+
+gas
+
+desorp-
+
+tion
+
+and
+
+geomechanics
+
+eﬀects
+
+for
+
+unconventional
+
+gas
+
+reser-
+
+voirs.
+
+Fuel,
+
+116:455
+
+–
+
+464,
+
+2014.
+
+ISSN 0016-2361.
+
+URL
+
+http://www.sciencedirect.com/science/article/pii/S0016236113007606.
+
+R.W. Zimmerman. Compressibility of Sandstones.
+
+Developments in
+
+Petroleum Science. Elsevier Science, 1990.
+
+ISBN 9780080868875. URL
+
+https://books.google.com.br/books?id=tbQ6ye5yYukC.
+
+M.D.
+
+Zoback.
+
+Reservoir
+
+Geomechanics.
+
+Cambridge
+
+University
+
+Press,
+
+2010.
+
+ISBN
+
+9780521146197.
+
+URL
+
+https://books.google.com.br/books?id=Xx63OaM2JIIC.
+
+69
+
+Apˆendice A
+
+Equa¸c˜ao de Estado
+
+Neste apˆendice, discutimos brevemente os aspectos te´oricos b´asicos da equa-
+
+¸c˜ao de estado adotada para descrever o comportamento do g´as.
+
+A.1
+
+Equa¸c˜oes de estado c´ubicas gen´ericas
+
+Uma equa¸c˜ao de estado c´ubica pode ser representada da forma geral:
+
+p =
+
+RT
+v − b
+
+−
+
+a (T )
+
+(v + b) (v + ςb)
+
+(A.1)
+
+onde  e ς s˜ao constantes, v denota o volume molar espec´ıﬁco, b ´e uma constante
+
+denominada de covolume e a (T ) ´e um parˆametro que quantiﬁca as atra¸c˜oes inter-
+
+moleculares (Hosseinifar e Jamshidi, 2016; Valderrama, 2003).
+
+Os parˆametros a (T ) e b s˜ao
+
+e
+
+a (T ) = Ψe
+
+αe (Tr) R2T 2
+c
+
+Pc
+
+b = Ωe
+
+RTc
+Pc
+
+(A.2)
+
+(A.3)
+
+onde Ψe e Ωe s˜ao constantes independentes da substˆancia e determinados particu-
+
+larmente para cada equa¸c˜ao de estado a partir dos valores de  e ς. A fun¸c˜ao αe (Tr)
+
+´e uma express˜ao constru´ıda empiricamente para cada equa¸c˜ao de estado. As cons-
+
+70
+
+tantes Tc e Pc s˜ao a temperatura e press˜ao cr´ıticas, respectivamente. A constante
+
+Tr denota a temperatura adimensional, sendo esta expressa como Tr = T /Tc.
+
+Os casos particulares de (A.1) comumente reportados na literatura est˜ao
+
+listados a seguir:
+
+• van der Waals – vdW (van der Waals, 1873);
+
+• Redlich-Kwong – RK (Redlich e Kwong, 1949);
+
+• Soave-Redlich-Kwong – SRK (Soave, 1972);
+
+• Peng-Robinson – PR (Peng e Robinson, 1976).
+
+A tabela A.1 apresenta os valores atribu´ıdos aos parˆametros para cada equa-
+
+¸c˜ao de estado.
+
+Eq. de Estado
+
+αe (Tr)
+
+ς
+
+
+
+vdW
+RK
+SRK
+PR
+
+αSRK (Tr, ω) =
+
+αP R (Tr, ω) =
+
+0
+1
+√
+1
+2
+1 +
+
+0
+0
+0
+
+1
+−1/2
+T
+r
+
+(cid:104)
+
+1 − √
+αSRK (Tr, ω)
+2
+αP R (Tr, ω)
+1 + (0.480 + 1.574ω − 0.176ω2)
+1 + (0.37464 + 1.54226ω − 0.26992ω2)
+
+(cid:16)
+
+(cid:104)
+
+0.08664
+0.08664
+0.07780
+1 − T 1/2
+
+r
+
+(cid:16)
+
+(cid:17)(cid:105)2
+
+1 − T 1/2
+
+r
+
+Ωe
+
+1/8
+
+Ψe
+
+27/64
+0.42748
+0.42748
+0.45724
+
+(cid:17)(cid:105)2
+
+Tabela A.1: Valores dos parˆametros para as Equa¸c˜oes de Estado (adaptado de
+Smith et al. (2001)).
+
+´E importante salientar a existˆencia de um parˆametro adicional nas equa¸c˜oes
+
+de Soave-Redlich-Kwong e Peng-Robinson no c´alculo dos termos de atra¸c˜ao, deno-
+
+minado de fator acˆentrico, denotado por ω (Peng e Robinson, 1976; Pitzer, 1995;
+
+Soave, 1972).
+
+A.2
+
+Equa¸c˜ao de Peng-Robinson modiﬁcada
+
+Buscando modelar de forma mais acurada o comportamento do g´as metano
+
+sob as condi¸c˜oes de temperatura e press˜ao elevadas que os reservat´orios se encon-
+
+tram, adotaremos um modelo aperfei¸coado da equa¸c˜ao de Peng-Robinson proposto
+
+71
+
+por Hosseinifar e Jamshidi (2016) – aqui identiﬁcado pelo subscrito mPR, que leva
+
+em conta as intera¸c˜oes moleculares das substˆancias (ﬁgura A.1) por meio de dois
+
+parˆametros mostrados a seguir:
+
+λ1 =
+
+(cid:18) Tb
+
+(cid:19)
+
+M
+
+(cid:113)
+
+TbM
+
+ω;
+
+λ2 =
+
+(A.4)
+
+em que Tb ´e a temperatura no ponto de bolha normal (press˜ao atmosf´erica). O
+
+parˆametro λ1 ´e uma medida de intensidade das pontes de hidrogˆenio e o λ2 das
+
+for¸cas de dispers˜ao.
+
+Figura A.1: Ilustra¸c˜ao das propriedades moleculares captadas por λ1 e λ2 para
+
+valores de elevadas intensidades (adaptado de Hosseinifar e Jamshidi (2016)).
+
+Esses parˆametros s˜ao utilizados como cri´erio na ado¸c˜ao dos valores das cons-
+
+tantes nas equa¸c˜oes:
+
+αmP R (Tr, Tbr, ω) = (c1β + c2γ)d
+
+β (Tr, Tbr) =
+
+|1 − T a1
+|1 − T a3
+
+r |a2
+br |a4
+
+(A.5)
+
+(A.6)
+
+72
+
+(b1ω3+b2ω2+b3ω+b4)
+γ (Tr, ω) = T
+r
+
+(A.7)
+
+Nas condi¸c˜oes cr´ıticas em que se enquadram os reservat´orios de g´as, as cons-
+
+tantes das equa¸c˜oes (A.5)-(A.7) assumem os valores da tabela A.2.
+
+a1
+
+−0.69560
+
+b1
+
+−1.07370
+
+c1
+
+−0.56996
+
+a2
+
+a3
+
+a4
+
+0.786752
+
+0.710102
+
+0.140024
+
+b2
+
+b3
+
+1.604866 −0.93029 −0.44313
+
+b4
+
+c2
+1
+
+d
+
+0.594998
+
+Tabela A.2: Atribui¸c˜ao dos valores das constantes para a Equa¸c˜ao de Estado
+proposta por Hosseinifar e Jamshidi (2016).
+
+73
+
+

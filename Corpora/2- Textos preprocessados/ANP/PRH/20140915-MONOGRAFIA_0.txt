@@ -1,0 +1,318 @@
+universidade federal alagoas centro tecnologia universidade federal alagoas centro tecnologia analise estabilidade pocos verticais petroleo atraves metodo elementos finitos aluno victor costa pontes orientadores francisco patrick araujo almeida iv dedico trabalho familia apoio dedicacao deram amigos conquistados longo deste percurso 
+ agradecimentos agradeco primeiramente pais iran pollenya todo apoio dedicacao conselhos possibilitaram momento 
+ irmao bruno apoio auxilio tanto desenvolvimento deste trabalho quanto momentos compartilhados 
+ professor francisco patrick paciencia acreditar capacidade desenvolver trabalho 
+ todos professores amigos contribuiram desenvolvimento deste trabalho 
+ apoio financeiro agencia nacional petroleo gas natural biocombustiveis anp financiadora estudos projetos finep ministerio ciencia tecnologia mct meio programa recursos humanos anp setor petroleo gas prhanp mct 
+ victor costa pontes resumo vi pontes 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos 
+ trabalho conclusao curso graduacao engenharia civil universidade federal alagoas maceio 
+ trabalho objetivo avaliacao estabilidade pocos verticais petroleo apos perfuracao aplicacao revestimento 
+ relevancia desse estudo surgiu necessidade prevenir minimizar instabilidades estruturais pocos verticais petroleo intuito evitar custos adicionais visto perfuracao processo onde inseridos maiores custos 
+ afim prevenir instabilidades estruturais desenvolveuse programa atraves software matlab baseado metodo elementos finitos calculo deformacoes materiais elasticos faz comparacao deformacoes reais atraves estado tensao rocha submetida deformacoes maximas partir secoes transversais longo poco 
+ calculadas partir estado tensao ficticio leva consideracao envoltoria resistencia rocha estado tensao real 
+ utilizouse primeiramente benchmarks apresentam resultados coerentes satisfatorios 
+ programa apresentando bons resultados analisouse secoes apresentam convergencia curva deformacao real curva deformacao maxima 
+ outro fator observado atraves curvas deformacoes existe faixa segura deformacao onde rochas propriedades viscosas limite deformacao suposto colapso 
+ palavraschave metodo elementos finitos estabilidade poco vertical abstract vii pontes 
+ stability analysis vertical oil wells finite element method 
+ undergraduate project degree civil engineering universidade federal alagoas maceio 
+ study aims assess stability vertical oil wells drilling coating application 
+ relevance study stemmed need prevent minimize structural instabilities vertical oil wells order avoid additional costs since drilling process highest costs included 
+ order prevent structural instability program developed matlab software based finite element method calculation deformations elastic materials makes comparison actual deformations stress state rock submitted maximum deformation crosssections along well 
+ calculated fictional state tension takes account envelope rock strengths actual state tension 
+ first used benchmarks show consistent satisfactory results 
+ program satisfactory results analyzed sections present convergence actual deformation curve curve maximum deformation 
+ another observation curves deformation safe range deformation rocks viscous properties limit deformation supposed collapse 
+ keywords finite element method stability vertical oil well 
+ viii sumario introducao 
+ ensaio uniaxial triaxial 
+ metodo elementos finitos 
+ resolucao sistema equacoes 
+ analise multiplas secoes 
+ analise metodo diferentes raios 
+ lista figuras ix figura estado tridimensional tensao 
+ figura determinacao envoltoria resistencia 
+ figura demonstracao ensaio brasileiro 
+ figura prolongamento envoltoria 
+ figura barragem exemplo estrutura estado plano deformacao 
+ figura viga parede exemplo estrutura estado plano tensao 
+ figura organograma programa 
+ figura determinacao estado tensao maximo 
+ figura transformacao tensao forcas nodais 
+ figura matriz rigidez elemento cst 
+ figura elemento isoparametrico familia serendipity 
+ figura mapeamento elemento 
+ figura resultados forcas deformacoes 
+ figura chapa tracionada 
+ figura resultados obtidos programa 
+ figura representacao resultados problema obtidos zienkiewicz 
+ figura malha utilizada comparacao resultados 
+ figura resultado obtido utilizacao elementos finitos 
+ figura resultado obtido introducao elementos infinitos 
+ figura sobreposicao resultados 
+ figura perfil poco cotas metro 
+ figura circulo mohr 
+ figura determinacao estado tensao maximo 
+ figura discretizacao malha 
+ figura discretizacao incremento revestimento 
+ figura impressao resultados 
+ figura entrada saida dados multiplas secoes 
+ figura representacao estados tensoes presentes maximos 
+ figura representacao grafica deformacoes cada secao 
+ figura deformacao maxima viscosa longo profundidade 
+ figura discretizacao malha raios polegadas respectivamente 
+ lista tabelas xi tabela propriedades rocha 
+ tabela propriedades secao transversal fluido perfuracao agua 
+ tabela tensoes secoes 
+ tabela deformacoes secoes 
+ lista abreviaturas siglas xii anp agencia nacional petroleo gas natural biocombustiveis prh programa recursos humanos ∅ angulo atrito coesao tensao determinada ensaio brasileiro τ tensao cisalhante tensao normal tensao efetiva normal tensoes principais mef metodo elementos finitos ѳ angulo rotacao sistemas coordenadas ρ densidade aceleracao gravidade γ peso especifico cst constant strain triangle triangulo deformacao constante ptv principio trabalhos virtuais ufal universidade federal alagoas π energia potencial total energia deformacao total xiii wp trabalho potencial forcas externas δ deslocamentos trabalho forcas externas internas operador diferencial deformacao direcao deformacao direcao coeficientes serem determinados variaveis xi yi abcissas ordenadas area elemento ξ funcao forma matriz rigidez matriz constitutiva analise estabilidade pocos verticais petroleo atraves metodo elementos finitos introducao industria petroleo mobiliza grandes somas recursos economicos sustentar operacoes exploracao producao oleo gas 
+ deter reservas oleo gas dominar tecnologias obtelas fator essencial desenvolvimento nacao mundo 
+ caminho petroleo desde pesquisa descoberta chegada refinaria passa diversas etapas sendo principais custo dispendioso perfuracao pocos 
+ comuns operacao perfuracao dois modos ruptura falha podem ocorrer paredes poco falha cisalhamento decorrentes esforcos compressivos falha tracao decorrentes esforcos distensivos 
+ problemas relacionados modos ruptura deixam operacao dispendiosa rocha azevedo 
+ ocorrencia instabilidade pocos devido diversos mecanismos sendo significativo relacao estado tensoes poco resistencia rocha 
+ fato torna avalicao estabilidade poco problema classico mecanica rochas vez necessaria previsao resposta rochas determinado carregamento mecanico 
+ desta forma analise mecanica rochas fundamental operacoes perfuracoes estaveis 
+ parte dessa analise necessario conhecimento esforcos submetidas formacoes determinacao parametros relacionados resistencia rocha possam ser estudadas situacoes onde ocorrera colapso fratura formacao 
+ avancos tecnologicos area computacao permitido uso modelos cada vez complexos refinados quais possibilitam simulacoes cada vez realistas culminando otimizacao projetos reducao custos azevedo 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos simulacoes descritas realizadas atraves metodo elementos finitos mef surgiu intuito resolver problemas teoria elasticidade superando metodos residuos ponderados 
+ metodo baseado divisao dominio integracao continuo numero finito subregioes denominados elementos finitos assan 
+ ideia basica mef estrutura consiste usar funcoes aproximadoras descritas subdominios elementos finitos descrever campos deslocamentos estrutura 
+ melhora solucao deve ser obtida uso subdominios elementos apenas uso polinomios alto grau 
+ sistematizar operacoes matematicas problema funcoes aproximadoras devem ser descritas cada subdominio funcoes interpolacao previamente definidas vaz 
+ motivacao realizacao deste trabalho partiu preocupacao reduzir altos custos area producao oleo gas 
+ surgimento industria petroleo final seculo xix refino obtencao querosene iluminacao representava etapa onde maior rentabilidade 
+ durante desenvolvimento industria petroleo seculo xx sendo descobertas novas reservas garantiam manutencao preco materiaprima industria milionaria 
+ porem passar anos reservas sendo descobertas cada vez afastadas maiores mercados consumidores apresentando concentracao elevada regiao oriente medio principalmente paises arabia saudita iraque 
+ crises resultaram aumento valor petroleo levando rentabilidade industria refino producao pois aumento materiaprima empresas refino obrigadas reduzir margem lucro manutencao vendas 
+ transferencia lucratividade gerou importante fator industria moderna 
+ desenvolvimento producao petroleo tornou fator estrategico mundo campos producao offshore tornaram economicamente viaveis devido alto custo analise estabilidade pocos verticais petroleo atraves metodo elementos finitos petroleo paises onde produzia petroleo passaram investir desenvolvimento tecnologico dessa etapa cadeia 
+ passar anos industria precisou tornar cada vez rentavel processo extracao petroleo levando necessidade reduzir custos perfuracao pocos aumentar qualidade analise informacoes obtidas antes durante apos perfuracao 
+ instabilidade pocos gera aumento custos adicionais perfuracao podendo chegar abandono devido prisao coluna perfuracao 
+ custos instabilidade necessidade limpeza poco injecao fluido perfuracao devido perda prisao mesma determinados niveis pode ser tratada permitindo continue perfuracao 
+ contudo continue perfuracao problemas causaram atraso pode representar perdas comprometem rentabilidade poco tisser 
+ trabalhos seguem mesma linha pensamento tisser apresentou atraves modelos volumetricos dois modelos ruptura associados superficie eliptica limita estado tensao hidrostatico admissivel 
+ forma encontrar resultados analiticos sobre densidade fluido perfuracao rodrigues propos solucao engenharia baseada metodo equilibrio limite auxiliar problema instabilidade pocos petroleo rochas fraturadas 
+ solucoes analiticas propostas determinar faixa valores massa especifica fluido perfuracao janela operacional 
+ azevedo apresentou outra forma avaliar estabilidade formacao analisando comportamento rochas submetidas esforcos caracteristicos fase perfuracao subsidio realizacao perfuracoes estaveis 
+ forma prevenir minimizar instabilidades estruturais pocos utilizados metodos definem limites seguros operacao 
+ trabalho visa analise poco vertical petroleo mef atraves programa analise estabilidade pocos verticais petroleo atraves metodo elementos finitos desenvolvido plataforma matlab partir proposta desenvolvida durante periodo iniciacao cientifica patrocinada agencia nacional petroleo gas natural biocombustiveis anp atraves programa recursos humanos prh 
+ principais contribuicoes deste trabalho apresentar proposta modelo analise pocos verticais posteriormente ser utilizado analises rochas propriedades viscosas atraves deformacoes apresentam sob estado tensao submetida desenvolver programa capaz calcular deformacoes partir estado tensao rocha avaliar partir modelo proposto estabilidade secoes estudadas 
+ modelo possui diversas limitacoes devido principalmente modelos calculo utilizados exemplo analise apenas comportamento elastico linear materiais levar consideracao efeitos termicos quimicos poder utilizar secoes proximas mudancas diametros utilizar secoes propicias ruptura cisalhamento 
+ metodologia empregada baseada modelo proposto visa comparacao deformacoes atraves estado tensao rocha submetida estado tensao maximo definido longo deste trabalho 
+ deformacoes calculadas partir mef 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos referencial teorico base teorica desenvolvimento deste trabalho fundamentada partir estudo mecanica rocha estudo comportamento formacao apos perfuracao teoria estruturas conceitos relacionados trabalhos virtuais mef determinacao deformacoes secoes longo poco 
+ mecanica rochas durante perfuracao poco rocha formacao exposta cargas externas devido retirada fragmentos rochas alteram estado tensao original existente subsolo podendo levar graves problemas tais desmoronamento total paredes poco 
+ rocha exposta carregamento externo forcas internas induzidas 
+ vez afetam tanto comportamento corpo quanto deformacao rocha azevedo 
+ ter descricao completa estado tensao ponto necessario identificar tensoes relacionadas tres planos orientados ortogonalmente 
+ figura representa estado tridimensional tensoes 
+ figura estado tridimensional tensao fonte rocha azevedo circulo mohr representa graficamente transformacao tensor tensao facilitando identificacao tensoes principais tensao cisalhante maxima 
+ construcao circulo mohr pode ser feita facilmente conhecidas tensoes principais onde tensoes cisalhantes nestes pontos iguais zero 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos centro circulo neste caso media aritmetica tensoes principais raio igual metade diferenca mesmas 
+ determinacao tensao ruptura rocha realizados ensaios exemplo ensaio uniaxial ensaio triaxial ensaio brasileiro 
+ ensaios propiciam informacoes sobre resistencia rocha 
+ ensaio uniaxial triaxial resultados importantes obtidos testes uniaxiais triaxiais propiciar informacoes sobre resistencia rochas estabelecimento criterio ruptura equacao represente situacoes estado tensao pode levar ruptura rocha 
+ criterios ruptura devido compressao utilizados industria petroleo chamado criterio mohrcoulomb sido escolhido simplicidade 
+ baseado circulo mohr utilizando circulos descrevem estados tensao onde falha rocha ocorrido 
+ figura demonstra partir destes valores definido angulo atrito φ coesao 
+ valores tensao geralmente utilizados correspondem pico tensao curva tensaodeformacao rocha azevedo 
+ figura determinacao envoltoria resistencia fonte rocha azevedo analise estabilidade pocos verticais petroleo atraves metodo elementos finitos 
+ ensaio brasileiro diferente ensaios resistencia compressao resistencia tracao rochas dificil ser medida diretamente pois rochas apresentam baixos valores resistencia tracao 
+ alem disso maioria rochas possuem fraturas caso destas fraturas serem normais direcao tensao tracao aplicada resistencia tracao rocha pode aproximar zero sendo hipotese comumente assumida 
+ metodo comum estimar resistencia tracao rochas ensaio brasileiro ensaio compressao diametral 
+ metodo indireto onde aplica carga compressao sobre eixo vertical amostra rocha comprimento geralmente inferior igual diametro conforme figura 
+ falha ocorrera devido tensao tracao plano contenha eixo cilindro cargas compressao 
+ figura demonstracao ensaio brasileiro fonte rocha azevedo estabelecimento criterio falha ruptura tracao utilizada teoria mohrcoulomb 
+ tanto basta prolongar envoltoria mohrcoulomb regiao tracao ponto tensao determinada ensaios rocha azevedo 
+ figura apresenta tanto criterio ruptura cisalhamento quanto criterio ruptura tracao representado termo 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos figura prolongamento envoltoria 
+ teoria estruturas fonte rocha azevedo conceitos relativos deslocamentos virtuais trabalho virtual usualmente introduzidos durante estudo mecanica geral usados resolver problemas sobre equilibrio estatico 
+ palavra virtual significa quantidades puramente imaginarias precisam existir sentido real fisico 
+ assim deslocamento virtual pequeno deslocamento imaginario arbitrariamente imposto sobre sistema estrutural 
+ necessidade tratar deslocamento real exemplo deslocamentos flexao causada cargas atuantes estrutura 
+ trabalho realizado forcas reais durante deslocamento virtual chamado trabalho virtual 
+ principio trabalhos virtuais ptv afirma condicao necessaria suficiente equilibrio ponto sistema pontos materiais qualquer soma trabalhos virtuais qualquer deslocamento virtual compativel ligacoes sistema nula matematicamente conforme equacao 
+ ∑ τvirtual externo deslocamento virtual deve ser suposto infinitesimal modo alterar configuracao estatica geometrica sistema forcas nele agem violando condicoes equilibrio tais forcas obedecem 
+ deslocamento virtual causado acao externa qualquer cuja origem objeto discussao analise estabilidade pocos verticais petroleo atraves metodo elementos finitos sendo completamente independente forcas externas mantem estrutura equilibrio 
+ ptv aplicado estruturas isostaticas equilibrio resolve problema estatico atraves geometrico 
+ ptv consiste apenas equacao torna seletivo aplicacao determina apenas incognita havendo necessidade repetir procedimento cada incognita procurada 
+ obstante fato inclusive util deseja determinar apenas esforco caso determinacao linhas influencia 
+ aplicacao ptv estruturas isostaticas determinacao determinado esforco requer aplicado deslocamento virtual pode ser realizado sistema movel obtido retirandose vinculo correspondente incognita substituindoo esforco correspondente 
+ deslocamentos virtuais supostos infinitesimais deslocamentos seguem leis pequenos deslocamentos simples deslocamentos finitos 
+ estudo analise estrutural devese estender principio trabalhos virtuais caso estruturas deformaveis 
+ neste caso devese levar consideracao apenas trabalho realizado acoes externas trabalho associado esforcos internos deformacao elementos estrutura 
+ principio extremamente valioso muitas aplicacoes analise estrutural 
+ durante desenvolvimento principio notase propriedades material entram discussao consequentemente ptv aplicase todas estruturas independente material comportar linearmente 
+ ptv enuncia corpos deformaveis estrutura deformavel equilibrio soma trabalhos virtuais acoes externas deslocamento compativel ligacoes igual trabalho virtual interno realizado esforcos internos deformacao elementos estrutura matematicamente explicita conforme equacao serra 
+ τexternoτinterno deformacao analise estabilidade pocos verticais petroleo atraves metodo elementos finitos 
+ metodo elementos finitos mef baseia principio minima energia potencial total 
+ energia potencial total definida sistemas conservativos equacao 
+ π wp onde π energia potencial total energia deformacao total wp trabalho potencial forcas externas deslocamentos 
+ principio minima energia potencial total enuncia deslocamentos estrutura equilibrio estavel tornam minima energia potencial total estrutura estrutura equilibrio estavel deformou modo gastar minimo energia potencial total 
+ matematicamente condicao primeira ordem minimo funcao dada equacao vaz 
+ δπ δd⁄ onde δ operador diferencial 
+ apos definir equacoes equilibrio necessario definir equacoes constitutivas definidas atraves geometria estrutura carregamento submetida 
+ dois tipos estruturas planas estudadas estruturas estado plano deformacao estado plano tensao 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos problemas envolvem corpos longos cuja geometria estado carregamento mudam longo eixo longitudinal sob estado plano deformacao assan 
+ estado plano deformacao apresenta deformacoes impedidas longo eixo longitudinal 
+ figura mostra barragem exemplo desse estado carregamento 
+ figura barragem exemplo estrutura estado plano deformacao fonte elaborado autor contrario estado plano deformacao estado plano tensao ocorre solidos cuja dimensao direcao perpendicular plano principal solido pequena relacao outras dimensoes assan 
+ estado plano tensao caracterizado apresentar tensao normal plano principal igual zero 
+ figura mostra viga parede exemplo desse estado carregamento 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos figura viga parede exemplo estrutura estado plano tensao fonte elaborado autor neste trabalho considerado apenas estado plano deformacao estado plano tensoes utilizado apenas comparacao resultados programa 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos metodologia realizacao analise primeiramente proposto metodo avaliacao definido partir comparacao deformacoes maximas rocha pode suportar deformacoes reais partir estado tensao rocha submetida 
+ deformacoes calculadas partir programa desenvolvido atraves software matlab escolhido ser software estudado graduacao curso engenharia civil universidade federal alagoas ufal 
+ facilitar desenvolvimento programa dividido duas partes 
+ primeira parte diz respeito calculos referentes tensoes provenientes peso macico rochoso pressao poros pressao exercida fluido perfuracao 
+ segunda parte definida calculos deformacao aplicacao mef 
+ figura representa organograma processo calculo programa 
+ programa composto estruturalmente  principal entrada dados calculo tensoes compatibilizacoes tensoes aplicacao mef comparacao resultados impressao resultados  secundaria malha propriedades secoes entrada dados pressao poros tensao total tensao efetiva tensao fluido calculo tensoes matriz rigidez condicoes contorno sistema equacoes aplicacao mef 
+  terciaria elementos condicoes contorno malha entrada dados 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos figura organograma programa 
+ entrada dados fonte elaborado autor entrada dados parte fundamental programa 
+ neste ponto definidas malha condicoes contorno propriedades rocha secoes 
+ entrada dados feita atraves arquivos texto interface matlab 
+ arquivos texto referemse dados necessarios calculo tensoes metodo elementos finitos 
+ dados inseridos interface quantidade secoes profundidades cada secao 
+ calculo tensoes tensoes exercidas peso coluna agua pressao poros peso macico rochoso pressao total peso coluna fluido perfuracao pressao fluido calculadas partir equacao 
+ σ ∑ ρighi ∑ γihi onde analise estabilidade pocos verticais petroleo atraves metodo elementos finitos densidade aceleracao gravidade profundidade ρ γ peso especifico numero camadas caso agua fluido perfuracao 
+ tensoes efetivas tensao total fluido calculadas diferenca tensao pressao poros 
+ calculo tensoes principais definir circulo mohr real tensao efetiva total tensao efetiva fluido 
+ determinar estado tensao maximo primeiramente definido criterio seguranca desenvolvido forma levar consideracao envoltoria resistencia estado tensao rocha 
+ figura mostra calculado estado tensao maximo estado tensao rocha submetida criacao circulo mohr ficticio criacao estado tensao maximo estado tensao maximo 
+ figura determinacao estado tensao maximo analise estabilidade pocos verticais petroleo atraves metodo elementos finitos fonte elaborado autor determinado estado tensao real estado tensao maximo feita compatibilizacao tensoes principais malha 
+ figura mostra graficamente tensoes secao espessura unitaria transformadas forcas nodais tensoes aplicadas secao forcas aplicadas 
+ figura transformacao tensao forcas nodais fonte elaborado autor consequencia etapas anteriores criado vetor forcas nodais 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos 
+ calculo deformacoes definido vetor forcas nodais iniciado processo calculo deformacoes programa desenvolvido 
+ matriz rigidez primeiramente calculado matriz rigidez cada elemento conforme apresentado secoes 
+ elemento cst elemento funcoes interpoladoras deslocamentos polinomios primeiro grau conforme equacoes 
+ aaxay aaxay onde deformacao direcao deformacao direcao coeficientes serem determinados variaveis 
+ funcoes forma elemento calculadas conforme equacao 
+ ξi xjykxkyjx yjyk xkxj onde xi yi abcissas ordenadas area elemento ξ funcao forma 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos matriz rigidez determinada atraves equacao 
+ ∫ btdb dv υ υ υ υ υ υ estado plano deformacao aixkxj biyjyk onde matriz rigidez 
+ estruturas estado plano deformacao adotase espessura igual unidade comprimento 
+ matriz rigidez elemento cst forma generalizada matriz coeficientes elasticos fica conforme figura assan 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos figura matriz rigidez elemento cst 
+ elemento serendipity fonte assan elemento finito dito isoparametrico mesmas funcoes interpolacao usadas interpolar apenas grandezas cinematicas deslocamentos usual elementos convencionais grandezas geometricas caso coordenadas 
+ familia desses elementos denominada familia serendipity referencia conto infantil persa tres principes serendip 
+ historia conta aventuras tres principes ceilao atual sri lanka viviam fazendo descobertas inesperadas cujos resultados procurando realmente 
+ gracas capacidade observacao sagacidade descobriram acidentalmente solucao diversos dilemas impensados 
+ caracteristica tornavaos especiais importantes apenas analise estabilidade pocos verticais petroleo atraves metodo elementos finitos terem dom especial terem mente aberta multiplas possibilidades vaz 
+ facilitar calculo feitas parametrizacoes conforme figura 
+ figura elemento isoparametrico familia serendipity desta forma funcoes interpoladoras parametricas conforme fonte vaz equacoes 
+ ξ η aaξaηaξη ξ η aaξaηaξη consideracoes feitas zienkiewicz taylor zhu definem polo onde irao infinito contidos retas passam polo elemento compoe malha irao infinito possuem deslocamentos prescritos iguais zero 
+ funcoes forma elemento calculadas zienkiewicz taylor zhu conforme equacoes 
+ xN η − ξ −ξ xc ξ −ξ xq N η − ξ −ξ xc ξ −ξ xq analise estabilidade pocos verticais petroleo atraves metodo elementos finitos N η η N η − η figura demonstra onde localizados pontos 
+ figura mapeamento elemento fonte zienkiewicz taylor zhu matriz rigidez calculada conforme equacao 
+ matriz deste tipo elemento possui configuracao definida elemento cst pois feitas integracoes longo dominio infinito posicao polo parametrizacao utilizada influenciam determinacao matriz rigidez 
+ resolucao sistema equacoes matriz rigidez estrutura vetor forcas nodais definidos proximo passo aplicacao condicoes contorno 
+ matematicamente substituidos valores desconhecidos vetor forcas nodais reacoes valores conhecidos deslocamentos nodais deslocamentos prescritos substituicao implica mudanca matriz rigidez 
+ facilitar entendimento equacoes exemplificam processo 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos xaubv ycudv matricialmente onde valores conhecido matriz incognitas valores conhecidos 
+ software matlab existe funcao calcula matriz inversa 
+ sistema equacoes resolvido produto inversa matriz rigidez vetor forcas nodais conforme equacao 
+ comparacao deformacoes resolucao sistema equacoes obtidos valores deformacoes cada reacoes 
+ deformacao nodal calculada equacao 
+ ε √ux uy valores todas deformacoes nodais escolhesse maior deformacao representar secao interesse 
+ finalmente comparadas deformacoes calculadas estado tensao real estado tensao maximo conforme equacao 
+ εmax ≥ ε analise estabilidade pocos verticais petroleo atraves metodo elementos finitos 
+ impressao resultados resultados impressos arquivos texto conforme figura 
+ figura resultados forcas deformacoes fonte elaborado autor resultado havera colapso secao impresso interface matlab 
+ secao impressos comparacao deformacoes plotado grafico deformacao profundidade 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos resultados discussoes utilizacao programa primeiramente utilizados benchmarks comparar resultados determinar mesmos coerentes satisfatorios 
+ benchmarks benchmark termo utilizado computacao visando avalicao performance programa computador normalmente executando serie testes padroes 
+ primeiro exemplo utilizada chapa tracionada conforme figura 
+ figura chapa tracionada fonte elaborado autor comparar resultados utilizouse software abaqus 
+ abaqus pacote software comercial analise atraves elementos finitos desenvolvido hks inc 
+ agora comercializado sob simulia marca dassault systemes 
+ comparacao resultados programa software abaqus apresentou erro cerca 
+ figura apresenta resultados obtidos quatro mostrados figura 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos figura resultados obtidos programa fonte elaborado autor acordo resultado programa apresenta resultados coerentes satisfatorios 
+ segundo exemplo utilizado problema apresentado zienkiewicz taylor zhu figura 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos figura representacao resultados problema obtidos zienkiewicz taylor zhu fonte zienkiewicz taylor zhu problema apresenta solo sendo comprimido forca pontual intensidade igual solo possui modulo elasticidade poisson iguais respectivamente 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos malha utilizada composta elementos triangulares conforme figura 
+ figura malha utilizada comparacao resultados fonte elaborado autor resultados obtidos programa apresentados figura 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos figura resultado obtido utilizacao elementos finitos fonte elaborado autor resultados obtidos combinacao elementos finitos infinitos presentes figura 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos figura resultado obtido introducao elementos infinitos figura sobrepoe curvas encontradas 
+ fonte elaborado autor analise estabilidade pocos verticais petroleo atraves metodo elementos finitos figura sobreposicao resultados fonte elaborado autor analise graficos figura tanto resultados obtidos programa quanto literatura observase introducao elementos infinitos melhora consideravelmente resultados apresentados 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos 
+ analise secao figura apresenta poco vertical lamina agua igual profundidade secao interesse igual 
+ figura perfil poco cotas metro fonte elaborado autor propriedades rocha presentes tabela 
+ tabela propriedades rocha densidade media coesao angulo poisson modulo cm psi atrito elasticidade gpa propriedades secao transversal fluido perfuracao agua presentes tabela 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos tabela propriedades secao transversal fluido perfuracao agua raio pol densidade fluido lb gal peso especifico agua kn 
+ determinacao tensoes pressao poros tensao total pressao exercida fluido perfuracao presentes equacoes 
+ σporosγaguahagua kn σtotalρrochaghrocha kn σfluidoρfluidocghfluido kn tensoes efetivas presentes equacoes 
+ σtotalσtotalσporos kn σfluidoσfluidoσporos kn tensoes efetivas tensoes principais determinacao circulo mohr 
+ figura representa circulo mohr desse estado tensao envoltoria resistencia 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos figura circulo mohr fonte elaborado autor estado tensao maximo representado figura equacao representa tensao principal maxima 
+ figura determinacao estado tensao maximo fonte elaborado autor σmax kn analise estabilidade pocos verticais petroleo atraves metodo elementos finitos 
+ deformacoes apos determinar tensoes calculo deformacoes primeiramente criasse malha 
+ criacao malha pode ser feita duas formas manualmente criacao arquivos entrada dados partir programa secundario 
+ programa cria malha partir raio interno raio externo divisao malha radialmente angularmente 
+ figura representa malha utilizada composta elementos triangulares elementos quadrangulares infinitos 
+ elementos quadrangulares representados figura 
+ figura discretizacao malha fonte elaborado autor analise estabilidade pocos verticais petroleo atraves metodo elementos finitos malha definida todos parametros conhecidos programa calcula deformacoes nodais 
+ estado tensao rocha submetida deformacao representa secao igual ε calculo realizado introducao revestimento polegada modulo elasticidade coeficiente poisson iguais respectivamente gpa 
+ figura representa discretizacao desta nova configuracao 
+ elementos quadrangulares representados figura 
+ figura discretizacao incremento revestimento fonte elaborado autor analise estabilidade pocos verticais petroleo atraves metodo elementos finitos deformacao calculada configuracao igual εrev observase incremento revestimento diminui consideravelmente deformacoes considerando proporcao espessura revestimento macico 
+ deformacao maxima secao pode suportar partir estado tensao maximo igual εmax posse deformacoes programa faz comparacao resultados exibe resultados conforme figura 
+ figura impressao resultados fonte elaborado autor resultados obtidos acima comprovam coerencia problema proposto 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos 
+ analise multiplas secoes analise multiplas secoes programa recebe quantidade secoes profundidade interface matlab 
+ figura mostra feita introducao parametros 
+ figura entrada saida dados multiplas secoes fonte elaborado autor tabela apresenta valores tensoes cada secao 
+ tabela tensoes secoes profundidade tensao total kn pressao poros kn tensao fluido kn tensao efetiva rocha kn tensao efetiva fluido kn figura apresenta estados tensoes reais estados tensoes maximos secoes 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos figura representacao estados tensoes presentes maximos fonte elaborado autor malha utilizada tres secoes igual utilizada analise secao 
+ deformacoes encontradas presentes tabela 
+ tabela deformacoes secoes secao deformacao presente deformacao maxima figura apresenta grafico deformacoes presentes maximas secoes 
+ funcao habilitada calculo multiplas secoes 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos figura representacao grafica deformacoes cada secao fonte elaborado autor grafico figura notase leve convergencia curva deformacao real curva deformacao maxima esperado fato tensao real crescer rapidamente tensao maxima deformacoes causadas serem diretamente proporcionais tensoes 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos 
+ deformacao viscosa analisando curvas grafico figura observase faixa curvas onde ocorreria ruptura rocha 
+ faixa representa diferenca deformacoes reais maximas 
+ diferenca quanto rocha pode fluir antes supostamente romper 
+ figura apresenta variacao deformacao viscosa maxima rocha pode suportar 
+ figura deformacao maxima viscosa longo profundidade fonte elaborado autor analise estabilidade pocos verticais petroleo atraves metodo elementos finitos 
+ analise metodo diferentes raios 
+ avaliacao metodo proposto utilizados alem raio descrito polegadas utilizouse raios polegadas 
+ estado tensao maximo utilizado utilizado secao 
+ figura representa malha utilizada novas configuracoes 
+ elementos quadrangulares representados figura 
+ figura discretizacao malha raios polegadas respectivamente fonte elaborado autor deformacoes maximas encontradas diametros igual ε ε ε desta forma observase pequenos diametros variacao deformacao maxima minima 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos conclusao resultados obtidos benchmarks observouse resultados programa satisfatorios coerentes problemas propostos resultado obtido introducao elementos infinitos melhora consideravelmente resultados aumento imperceptivel custo computacional 
+ programa desenvolvido facilitar calculo visualizacao resultados pocos verticais implementadas funcoes auxiliares exemplo criacao malha exibicao graficos correspondentes deformacoes 
+ malhas utilizadas compostas poucos elementos podem apresentar erros significantes contudo resultados apresentaram erros comprometam analise secoes 
+ utilizacao revestimentos paredes poco diminui deformacoes reais apresentadas considerando proporcao espessura revestimento espessura macico rochoso 
+ percebese pequenos diametros mudanca raio poco pouca influencia deformacao maxima calculada esperado secao estado tensao parametros resistencia 
+ estudo metodo avaliar comportamento viscoso rocha ainda carece analises principalmente dificuldade encontrar dados concretos sobre rochas propriedade 
+ analise estabilidade pocos verticais petroleo atraves metodo elementos finitos referencias alves filho 
+ elementos finitos base tecnologia cae 
+ paulo editora erica assan 
+ metodos elementos finitos primeiros passos 
+ paulo editora unicamp azevedo 
+ analise geomecanica aplicada analise estabilidade pocos 
+ rio janeiro ufrj escola politecnica hibbeler 
+ paulo pearson education brasil martins 
+ aplicacao elementos finitos infinitos analise problemas caracter geotecnico porto dissertacao mestrado rocha 
+ projeto pocos petroleo 
+ rio janeiro editora interciencia rodrigues 
+ estabilidade pocos petroleo rochas fraturadas modelagens computacionais solucao analitica 
+ ouro preto dissertacao mestrado santos 
+ perfuracao pocos eciv centro tecnologia universidade federal alagoas brasil serra 
+ teoria estruturas principio trabalhos virtuais 
+ material didatico faculdade engenharia sorocaba brasil 
+ elementos finitos formulacao aplicacao estatica dinamica estruturas 
+ rio janeiro editora ciencia moderna tisser 
+ modelo constitutivo analise estabilidade pocos petroleo 
+ rio janeiro ufrj coppe thomas 
+ fundamentos engenharia petroleo 
+ rio janeiro interciencia vaz 
+ metodo elementos finitos analise estruturas 
+ rio janeiro elsevier zienkiewicz 
+ finite element method basis fundamentals 
+ oxford edition published butterworthheinemann 

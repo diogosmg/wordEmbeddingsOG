@@ -1,0 +1,1498 @@
+RELATÓRIO  
+
+Nº: 
+
+CLIENTE: 
+
+ANP – AGÊNCIA NACIONAL DO PETRÓLEO, 
+
+GÁS NATURAL E BIOCOMBUSTÍVEIS 
+
+PROGRAMA:  MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+RL-ANP-FPL-018 
+1 
+
+FOLHA: 
+
+de
+
+13 
+
+TÍTULO: 
+
+ 
+
+CAPACIDADE DE GASODUTOS 
+
+Documentação do Modelo de Simulação do Gasoduto 
+
+Bolívia – Mato Grosso 
+
+Faculdades Católicas – PUC-Rio – SIMDUT 
+
+ÍNDICE DE REVISÕES 
+
+- 
+- 
+- 
+
+REV. 
+
+DESCRIÇÃO E/OU FOLHAS ATINGIDAS 
+
+0 
+A 
+B 
+C 
+
+EMISSÃO ORIGINAL 
+APÓS COMENTÁRIOS DA SCM 
+APÓS COMENTÁRIOS DA SCM 
+APÓS COMENTÁRIOS DA SCM 
+
+ 
+
+REV. 0 
+
+REV. A 
+
+REV. B 
+
+REV. C 
+
+REV. D 
+
+REV. E 
+
+REV. F 
+
+REV. G 
+
+REV. H 
+
+ANP 
+
+ANP 
+
+ANP 
+
+23/03/2015 08/04/2015  15/05/2015 22/05/2015
+
+DATA 
+PROJETO 
+EXECUÇÃO 
+VERIFICAÇÃO 
+APROVAÇÃO 
+AS INFORMAÇÕES DESTE DOCUMENTO SÃO PROPRIEDADE DA ANP, SENDO PROIBIDA A UTILIZAÇÃO FORA DA SUA FINALIDADE. 
+ 
+
+I. Patrocinio I. Patrocinio  I. Patrocinio I. Patrocinio
+P. Krause 
+P. Krause  P. Krause  P. Krause 
+L. Pires 
+L. Pires 
+L. Pires 
+
+L. Pires 
+
+ANP 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-018 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Gasoduto 
+
+Bolívia – Mato Grosso 
+
+ÍNDICE 
+
+ 
+
+ 
+ 
+
+FOLHA 
+
+REV. C 
+
+2  de
+
+13 
+
+- 
+- 
+
+ 
+
+1  OBJETIVO _______________________________________________________________ 3 
+2  DOCUMENTOS DE REFERÊNCIA ____________________________________________ 3 
+3  DESCRIÇÃO GERAL DO MODELO  ___________________________________________ 3 
+4  PREMISSAS DE CÁLCULO __________________________________________________ 4 
+4.1 
+CONDIÇÕES DE REFERÊNCIA ___________________________________________ 4 
+
+4.2 
+
+4.3 
+
+4.4 
+
+4.5 
+
+4.6 
+
+4.7 
+
+MODELO DE TRANSFERÊNCIA DE CALOR (REF. 2.3) ________________________ 4 
+
+TEMPERATURA DO SOLO _______________________________________________ 5 
+
+CORRELAÇÕES ADOTADAS _____________________________________________ 5 
+
+SOFTWARE UTILIZADO _________________________________________________ 5 
+
+CARACTERÍSTICAS DO GÁS (REF.2.4)  ____________________________________ 5 
+
+VISCOSIDADE (REF. 2.3). ________________________________________________ 5 
+
+5  CARACTERÍSTICAS DO GASODUTO BOLÍVIA – MATO GROSSO __________________ 5 
+DIÂMETRO, ESPESSURA E PMOA ________________________________________ 5 
+5.1 
+
+5.2 
+
+5.3 
+
+5.4 
+
+5.5 
+
+PERFIL ALTIMÉTRICO (REF. 2.3)  _________________________________________ 6 
+
+RUGOSIDADE (REF. 2.3) ________________________________________________ 7 
+
+PONTOS DE RECEBIMENTO _____________________________________________ 7 
+
+PONTOS DE ENTREGA (REF. 2.4) _________________________________________ 7 
+
+6  CONDIÇÕES DE CONTORNO _______________________________________________ 8 
+PERFIL DE CONSUMO __________________________________________________ 8 
+6.1 
+
+6.2 
+
+6.3 
+
+6.4 
+
+PRESSÃO MÁXIMA DE OPERAÇÃO ADMISSÍVEL ____________________________ 8 
+
+PRESSÃO DE ENTREGA NOMINAL CONTRATUAL ___________________________ 8 
+
+INTERCONEXÕES ______________________________________________________ 9 
+
+7  RESULTADOS DA SIMULAÇÃO ______________________________________________ 9 
+ANEXO – “STEADY STATE REPORT” DO MODELO ________________________________ 10 
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-018 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Gasoduto 
+
+Bolívia – Mato Grosso 
+
+ 
+
+OBJETIVO 
+
+ 
+
+1 
+
+FOLHA 
+
+REV. C 
+
+3  de
+
+13 
+
+- 
+- 
+
+Documentar  as  informações  necessárias  para  a  criação  do  modelo  computacional  do 
+gasoduto  Bolívia  –  Mato  Grosso  e  apresentar  as  características  físicas  e  valores  limites  de 
+projeto  dos  diversos  elementos  que  compõe  o  modelo  de  simulação  termo-hidráulica. 
+Permitindo, assim, a reprodutibilidade do modelo por qualquer interessado. 
+
+O modelo foi criado para o programa de simulação PipelineStudio versão 3.4.1.0 da Energy 
+
+Solutions. 
+
+ 
+DOCUMENTOS DE REFERÊNCIA 
+
+2 
+
+2.1. 
+2.2. 
+2.3. 
+
+IPE-04-578-50-P805-001_RC – Perfil de linea 
+IPE-04-578-50-P810-001_RC – Esquemático de linea KP 0+000 a KP 644+923 
+Relatório  Técnico  –  Determinação  da  capacidade  máxima  de  transporte  de  gás 
+natural do gasoduto Bolívia – Mato Grosso no seu trecho brasileiro – Revisão 1 – 06/11 
+
+2.4. 
+2.5. 
+
+Processo ANP n° 48610.010500/2012-40 
+Contrato de Serviço de Transporte firmado entre o Carregador e a Transportadora 
+
+Gasocidente do Mato Grosso LTDA 
+
+2.6. 
+
+RL-ANP-FPL-19_RC - Cálculo de Capacidade do Gasoduto Bolívia-Mato Grosso 
+
+ 
+
+3 
+
+DESCRIÇÃO GERAL DO MODELO 
+
+O trecho brasileiro do Gasoduto Bolívia – Mato Grosso é de propriedade da Gasocidente do 
+Mato Grosso LTDA, tem comprimento de aproximadamente 283 km e diâmetro nominal de 18”. 
+O gasoduto se inicia na fronteira da Bolívia com o Brasil, no quilômetro 362+262 da faixa do 
+gasoduto, no município de Cáceres – MT, atravessando os municípios de Nossa senhora do 
+Livramento, Poconé, Várzea Grande e Cuiabá, até a termoelétrica Governador Mario Covas, no 
+quilômetro 644+918 da faixa do gasoduto. A Figura 1 apresenta uma visão geral do gasoduto. 
+
+A Figura 2 apresenta um fluxograma simplificado do gasoduto, com o ponto de recebimento 
+
+na fronteira Bolívia – Brasil e os pontos de entrega. 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-018 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Gasoduto 
+
+Bolívia – Mato Grosso 
+
+ 
+
+ 
+
+FOLHA 
+
+REV. C 
+
+4  de
+
+13 
+
+- 
+- 
+
+ 
+
+Figura 1 – Visão geral do gasoduto Bolívia - Mato Grosso (fonte: www.gasnet.com.br) 
+
+Figura 2 – Fluxograma do modelo do gasoduto Bolívia – Mato Grosso 
+
+ 
+
+PREMISSAS DE CÁLCULO 
+
+ 
+
+ 
+ 
+4 
+
+4.1  Condições de Referência 
+
+  Pressão: 1 atm 
+  Temperatura: 20°C 
+
+ 
+4.2  Modelo de transferência de calor (Ref. 2.3) 
+
+  Coeficiente global de transferência de calor: 2,3383 W/(m².K) 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-018 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Gasoduto 
+
+Bolívia – Mato Grosso 
+
+ 
+
+ 
+
+4.3  Temperatura do solo 
+  30°C (Ref. 2.3). 
+
+ 
+
+4.4  Correlações Adotadas 
+
+FOLHA 
+
+REV. C 
+
+5  de
+
+13 
+
+- 
+- 
+
+As  correlações  a  seguir  foram  as  mesmas  utilizadas  na  referência  2.3,  de  forma  a 
+facilitar futuras comparações de resultados entre o modelo desenvolvido e o utilizado pela 
+GasOcidente. 
+
+  Equação de Estado: BWRS 
+  Equação do fator de atrito: Colebrook  
+ 
+
+4.5  Software utilizado 
+  Pipeline Studio versão 3.4.1.0 
+
+ 
+
+4.6  Características do Gás (Ref.2.4) 
+
+A composição do gás natural utilizado, com base em janeiro de 2015 (Ref. 2.4), está 
+
+apresentada na Tabela 1: 
+
+ 
+ 
+
+Tabela 1 – Composição do gás natural 
+
+Componente 
+
+Formula 
+
+Metano 
+Etano 
+Propano 
+I-Butano 
+Nitrogênio 
+
+Dióxido de Carbono 
+
+CH4 
+C2H6 
+C3H8 
+C4H10 
+
+N6 
+CO2 
+
+% Molar 
+89,31 
+5,9 
+1,72 
+0,93 
+0,73 
+1,41 
+
+ 
+
+ 
+
+4.7  Viscosidade (Ref. 2.3). 
+
+  Utilizada a correlação LGE 
+
+CARACTERÍSTICAS DO GASODUTO BOLÍVIA – MATO GROSSO 
+
+ 
+
+5 
+
+5.1  Diâmetro, espessura e PMOA 
+
+O  Gasoduto  Bolívia  –  Mato  Grosso  é  construído  em  aço  carbono  API  5LX-65,  com 
+revestimento  externo  em  FBE  e  tem  a  espessura  da  parede  variando  conforme  a  classe  de 
+locação: para classe 1 a espessura é de 0,250” e para classe 2, 0,375”, e em cruzamentos de 
+rios e serras, a espessura é de 0,500. 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-018 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Gasoduto 
+
+Bolívia – Mato Grosso 
+
+FOLHA 
+
+REV. C 
+
+6  de
+
+13 
+
+- 
+- 
+
+ 
+
+ 
+
+O trecho brasileiro do gasoduto foi modelado com as seguintes características descritas nas 
+
+referências 2.1, 2.2 e 2.3. 
+
+  Diâmetro nominal: 18” 
+  Espessura: Média igual a 6,780 mm (0,2669”)1 
+  Pressão Máxima Operacional Admissível (PMOA): 1440 psi (101,2 kgf/cm²) 
+
+A Tabela 2 apresenta os trechos do gasoduto que foram modelados para refletir o perfil de 
+elevação do mesmo (Ref. 2.1). Nesse documento, as localizações e extensões, expressas em 
+km, referem-se ao comprimento desenvolvido (real), salvo quando disposto em contrário. 
+
+ 
+
+Tabela 2 - Trechos de dutos do Gasoduto Bolívia – Mato Grosso 
+
+Diâmetro 
+
+Comprimento 
+
+Espessura 
+
+Rugosidade 
+
+(pol)** 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+0,2669 
+
+(pol) 
+
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+0,000598 
+
+Cota (m)*** 
+
+E 179,6 - D 251,8 
+E 251,8 - D 125,4 
+E 125,4 - D 314,4 
+E 314,4 - D 225,5 
+E 225,5 - D 374,3 
+E 374,3 - D 307,2 
+E 307,2 - D 571,3 
+E 571,3 - D 190,3 
+E 190,3 - D 147,6 
+E 147,6 - D 298,9 
+E 298,9 - D 242,8 
+E 242,8 - D 388,8 
+E 388,8 - D 466,3 
+E 466,3 - D 247,6 
+E 247,6 - D 300,5 
+E 300,5 - D 154,9 
+E 154,9 - D 207,6 
+
+Trecho 
+Duto1 
+Duto2 
+Duto3 
+Duto4 
+Duto5 
+Duto6 
+Duto7 
+Duto8 
+Duto9 
+Duto10 
+Duto11 
+Duto12 
+Duto13 
+Duto14 
+Duto15 
+Duto16 
+Duto17 
+
+(pol) 
+18 
+18 
+18 
+18 
+18 
+18 
+18 
+18 
+18 
+18 
+18 
+18 
+18 
+18 
+18 
+18 
+18 
+
+(km) * 
+10,240 
+66,110 
+24,060 
+3,990 
+10,630 
+3,360 
+8,190 
+8,150 
+21,400 
+22,110 
+4,040 
+10,050 
+8,030 
+22,710 
+16,060 
+34,260 
+10,440 
+
+* - Comprimento a partir da fronteira Bolívia - Brasil; 
+** - Espessura média para o trecho; 
+*** - O programa de simulação usado só permite cota nos nós, E significa a cota do lado esquerdo do 
+
+segmento e D do lado direto do segmento. 
+
+ 
+
+5.2  Perfil Altimétrico (Ref. 2.3) 
+
+A Figura 3 apresenta o perfil de elevação utilizado no modelo. 
+ 
+
+                                            
+
+1. A espessura média foi a mesma utilizada na referência 2.3, de forma a facilitar futuras comparações de resultados entre o 
+modelo desenvolvido e o utilizado pela GasOcidente. 
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-018 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Gasoduto 
+
+Bolívia – Mato Grosso 
+
+FOLHA 
+
+REV. C 
+
+7  de
+
+13 
+
+- 
+- 
+
+ 
+
+ 
+
+Figura 3 – Perfil de elevação 
+
+ 
+
+ 
+
+5.3  Rugosidade (Ref. 2.3) 
+
+  Rugosidade: 0,0152 mm (0,000598”) 
+
+ 
+
+5.4  Pontos de recebimento 
+
+O  gasoduto  não  dispõe  de  pontos  de  recebimento.  O  gás  do  sistema  vem  de 
+
+interconexões com outros gasodutos. 
+
+O  ponto  de  recebimento  considerado  no  modelo  é  a  EMED  (Estação  de  Medição)  San 
+Matias  que  fica  na  fronteira  da  Bolívia  com  Brasil  junto  a  válvula  MLV-17  e  representa  a 
+interconexão  entre  as  transportadoras.  As  pressões  e  vazões  de  projeto  estão  listadas  na 
+Tabela 3. 
+
+Tabela 3 - Ponto de recebimento do Gasoduto Bolívia – Mato Grosso 
+
+Ponto de 
+recebimento  Localização Cota 
+(m) 
+Cáceres 
+179,6 
+
+km 0 
+
+Pressão de Projeto 
+
+Vazão de Projeto 
+
+(kgf/cm²) 
+
+(10³ m³/dia) 
+
+Mínima
+
+* 
+
+Máxima  Mínima  Máxima
+7500 
+
+* 
+
+* 
+
+* - Dados não disponíveis nos documentos de referência; 
+ 
+
+5.5  Pontos de Entrega (Ref. 2.4) 
+
+ 
+Os pontos de entrega são localizados na extremidade oposta do gasoduto e estão listados 
+
+na Tabela 4. 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-018 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Gasoduto 
+
+Bolívia – Mato Grosso 
+
+FOLHA 
+
+REV. C 
+
+8  de
+
+13 
+
+- 
+- 
+
+Tabela 4 - Pontos de entrega do gasoduto Bolívia – Mato Grosso 
+
+ 
+
+ 
+
+Ponto de 
+entrega 
+
+Localização*
+
+Cota 
+(m) 
+
+UTE Governador 
+
+Mário Covas 
+
+km 283,830 
+
+207,6 
+
+** 
+
+MTGás 
+
+km 283,830 
+
+207,6 
+* - Comprimento a partir da origem, MLV-17; 
+** - Dados não disponíveis nos documentos de referência; 
+ 
+
+** 
+
+Pressão de Projeto 
+
+(kgf/cm²) 
+
+Mínima
+
+Máxima 
+
+101,2 (1440 
+
+psi)1  
+
+101,2 (1440 psi) 
+
+1 
+
+Vazão de projeto 
+
+(10³m³/dia) 
+
+Mínima Máxima
+2300 
+
+** 
+
+** 
+
+600 
+
+6  CONDIÇÕES DE CONTORNO 
+ 
+6.1  Perfil de Consumo 
+
+De acordo com a Ref.  2.5, não há volumes contratados em base firme. A  vazão utilizada 
+como  condição  de  contorno  foi  baseada  no  contrato  extraordinário/interruptível  (conforme 
+disponibilizado  em  http://www.gasocidentemt.com.br/pagina.asp?cod=31,  em  23/03/2015) 
+somente para obtenção de um regime permanente convergido. 
+
+ 
+
+Tabela 5 – Vazão Contratual nos PTEs 
+
+Ponto de entrega 
+
+UTE Governador 
+
+Mário Covas 
+
+Vazão contratual 
+
+(10³ m³/dia) 
+
+Mínima Máxima 
+
+* 
+
+0 
+
+Condição de 
+
+contorno 
+
+Vazão utilizada **– 
+
+2.240 10³m³/dia 
+
+Vazão utilizada **– 
+
+MTGás 
+
+0 
+* - Dados não disponíveis nos documentos de referência; 
+**-  Vazão  baseada  no  contrato  extraordinário/interruptível  somente  para  obtenção  de  um  regime 
+
+40 10³m³/dia 
+
+* 
+
+permanente convergido. 
+
+ 
+
+6.2  Pressão Máxima de Operação Admissível 
+
+A pressão máxima de operação admissível no gasoduto é de 1440 psi ou 101,2 kgf/cm² 
+
+(Ref. 2.3). 
+ 
+6.3  Pressão de Entrega Nominal Contratual 
+
+A  Tabela  6  apresenta  a  pressão  de  entrega  nominal  de  cada  trecho,  conforme  a 
+
+referência 3. 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-018 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Gasoduto 
+
+Bolívia – Mato Grosso 
+
+FOLHA 
+
+REV. C 
+
+9  de
+
+13 
+
+- 
+- 
+
+Tabela 6 – Pressão mínima contratual nos PTEs 
+
+ 
+
+ 
+
+Pressão contratual 
+
+(kgf/cm²) 
+
+Mínima 
+
+Máxima 
+
+* 
+* 
+
+* 
+* 
+
+Ponto de entrega 
+
+UTE Governador 
+
+Mário Covas 
+
+MTGás 
+
+* - Como não existe contrato em base firme, esses valores ainda não estão definidos; 
+ 
+
+6.4 
+
+Interconexões 
+As condições de contorno no ponto de interconexão devem ser reguladas nos contratos. A 
+entrada de gás é realizada através da EMED San Matias (Estação de Medição e Entrega de 
+Gás), de propriedade da empresa Gasoriente Boliviana, localizada na fronteira do Brasil com a 
+Bolívia. Nesse ponto foi modelado um ponto de recebimento com as seguintes características 
+(Ref. 2.3): 
+
+  Pressão: 101,2 kgf/cm²  (utilizando a PMOA, Ref. 2.3) 
+  Vazão máxima de projeto: 7500 10³ m³/d (Ref. 2.4). 
+
+ 
+
+7  RESULTADOS DA SIMULAÇÃO 
+
+As distribuições de vazão e pressão no gasoduto estão apresentadas na Figura 4. 
+ 
+
+Figura 4 – Perfil de pressão e vazão 
+
+Deve-se ressaltar que os resultados das simulações que detalham as capacidades de 
+
+transporte, ociosa e disponível encontram-se na referência 2.6. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-018 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Gasoduto 
+
+Bolívia – Mato Grosso 
+
+ 
+
+FOLHA 
+
+REV. C 
+
+10  de
+
+13 
+
+- 
+- 
+
+ 
+
+ 
+
+ANEXO – “STEADY STATE REPORT” DO MODELO 
+
+ 
+
+             ******************************************************************************* 
+             *                                  SIMULACAO                                  * 
+             ******************************************************************************* 
+ 
+ 
+ 
+ 
+ 
+ 
+                            * * * * * * * * * * * * * * * * * * * * * * * * * 
+                            *                                               * 
+                            *      Default Initial Values Selected:         * 
+                            *                                               * 
+                            *      Pressure ................   101.200      * 
+                            *      Flow ....................  1140.000      * 
+                            *      Temperature .............    30.000      * 
+                            *      % Oxygen ................     0.000      * 
+                            *      % Nitrogen ..............     0.730      * 
+                            *      % Carbon Dioxide ........     1.410      * 
+                            *      % Methane ...............    89.310      * 
+                            *      % Ethane ................     5.900      * 
+                            *      % Propane ...............     1.720      * 
+                            *      % i-Butane ..............     0.930      * 
+                            *      % n-Butane ..............     0.000      * 
+                            *      % i-Pentane .............     0.000      * 
+                            *      % n-Pentane .............     0.000      * 
+                            *      % Hexane ................     0.000      * 
+                            *      % C7plus ................     0.000      * 
+                            *      % Octane ................     0.000      * 
+                            *                                               * 
+                            * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+ 
+ 
+ 
+ 
+                         * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                         *                                                     * 
+                         *                 Problem Size Report                 * 
+                         *                                                     * 
+                         * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                         *                                                     * 
+                         *                                 Number   Maximum    * 
+                         *                                  Used    Allowed    * 
+                         *                                 ------   -------    * 
+                         *                                                     * 
+                         *     External Regulators             3      5000     * 
+                         *     Equipment Devices               0      3000     * 
+                         *     Drivers/Turbines                0       500     * 
+                         *     Legs                           17     10000     * 
+                         *     Nodes                          18     20000     * 
+                         *     Knots                         313     30000     * 
+                         *     Stations                        0       500     * 
+                         *     Banks                           0      1000     * 
+                         *     Groups                          0      1000     * 
+                         *     Plants                          0        10     * 
+                         *     Compressor Perf Types           0       500     * 
+                         *     Driver/Turb Perf Types          0       500     * 
+                         *     Cylinder Types                  0       500     * 
+                         *     Fluids                         18       100     * 
+                         *     Qualities                      19        26     * 
+                         *                                                     * 
+                         * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+             ******************************************************************************* 
+             *                      Steady State Convergence Summary                       * 
+             ******************************************************************************* 
+ 
+ 
+ 
+    ================================================================================================ 
+                                 Greatest       Greatest        Greatest                   
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-018 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Gasoduto 
+
+Bolívia – Mato Grosso 
+
+FOLHA 
+
+REV. C 
+
+11  de
+
+13 
+
+- 
+- 
+
+ 
+
+    Iteration     Tolerance     Hydraulic      Temperature     Composition          Associated 
+     Number       Requested     Adjustment     Adjustment      Adjustment             Device 
+    ---------     ---------     ----------     -----------     -----------     --------------------- 
+         0        0.0001000      0.6609932      0.0000000       0.0000000      Xreg  MTGAS 
+         1        0.0001000      0.0281013      0.0000000       0.0000000      Node  N18 
+         2        0.0001000      0.0000434      0.0000959       0.0000000      TNODE N7 
+         3        0.0001000      0.0126268      0.0000959       0.0000000      Pipe  DUTO8 
+         4        0.0001000      0.0000066      0.0000731       0.0000000      TNODE N8 
+         5        0.0001000      0.0000405      0.0000023       0.0000000      Xreg  CÁCERES 
+ 
+ 
+ 
+ 
+             ******************************************************************************* 
+             *                                  SIMULACAO                                  * 
+             ******************************************************************************* 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+             ******************************************************************************* 
+             *                         Reference Conditions Report                         * 
+             ******************************************************************************* 
+ 
+ 
+ 
+                                Reference Pressure        =     0.00  KG/CM2G 
+                                Reference Temperature     =    20.00 (DEG C ) 
+ 
+ 
+ 
+ 
+             ******************************************************************************* 
+             * Leg Hydraulic Summary Report        -----        Time =      0.000 ( HRS  ) * 
+             ******************************************************************************* 
+ 
+ 
+ 
+ 
+ 
+        ========================================================================================= 
+                        Pressure                   Flow                Line         Temperature 
+                         KG/CM2G                 (KSM3/D)              Pack           (DEG C ) 
+        Leg ID       Head      Tail          Head        Tail        ( KSM3 )       Head    Tail 
+        ------     --------  --------     ----------  ----------     ---------     ------  ------ 
+        DUTO1        101.20    100.32       2279.993    2279.993      183.5343      30.00   29.65 
+        DUTO10        97.53     95.69       2279.995    2279.996      378.1096      30.26   29.51 
+        DUTO11        95.69     96.05       2279.995    2279.996       68.5623      29.51   29.84 
+        DUTO12        96.05     94.58       2279.996    2279.997      169.6259      29.84   29.24 
+        DUTO13        94.58     93.74       2279.996    2279.997      133.9795      29.24   29.11 
+        DUTO14        93.74     94.93       2279.997    2279.998      378.1883      29.11   30.28 
+        DUTO15        94.93     94.07       2279.998    2279.998      267.5859      30.28   29.85 
+        DUTO16        94.07     94.35       2279.998    2280.000      568.7521      29.85   30.21 
+        DUTO17        94.35     93.64       2280.000    2280.000      172.9484      30.21   29.85 
+        DUTO2        100.32     99.78       2279.993    2279.993     1174.7227      29.65   30.04 
+        DUTO3         99.78     97.55       2279.993    2279.994      421.7704      30.04   29.34 
+        DUTO4         97.55     98.21       2279.994    2279.994       69.3357      29.34   29.84 
+        DUTO5         98.21     96.68       2279.995    2279.994      183.8869      29.84   29.25 
+        DUTO6         96.68     97.16       2279.995    2279.994       57.7972      29.25   29.66 
+        DUTO7         97.16     94.74       2279.994    2279.995      139.6191      29.66   28.60 
+        DUTO8         94.74     97.71       2279.994    2279.996      138.8646      28.60   30.63 
+        DUTO9         97.71     97.53       2279.996    2279.995      368.8715      30.63   30.26 
+ 
+ 
+ 
+ 
+             ******************************************************************************* 
+             * Leg Wall Temperature Summary Report    -----     Time =      0.000 ( HRS  ) * 
+             ******************************************************************************* 
+ 
+ 
+ 
+                   =================================================================== 
+                                                     Inner        Outer            
+                                        Fluid         Wall         Wall       Ambient 
+                                        Temp.         Temp         Temp         Temp 
+                   Leg ID              (DEG C )     (DEG C )     (DEG C )     (DEG C ) 
+                   ------     ----     --------     --------     --------     -------- 
+                   DUTO1      Head       30.00        30.00        30.00        30.00 
+                              Tail       29.65        29.65        29.65        30.00 
+                   DUTO10     Head       30.26        30.26        30.26        30.00 
+                              Tail       29.51        29.52        29.52        30.00 
+                   DUTO11     Head       29.51        29.52        29.52        30.00 
+                              Tail       29.84        29.84        29.84        30.00 
+                   DUTO12     Head       29.84        29.84        29.84        30.00 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-018 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Gasoduto 
+
+Bolívia – Mato Grosso 
+
+FOLHA 
+
+REV. C 
+
+12  de
+
+13 
+
+- 
+- 
+
+ 
+
+                              Tail       29.24        29.25        29.25        30.00 
+                   DUTO13     Head       29.24        29.25        29.25        30.00 
+                              Tail       29.11        29.12        29.12        30.00 
+                   DUTO14     Head       29.11        29.12        29.12        30.00 
+                              Tail       30.28        30.28        30.28        30.00 
+                   DUTO15     Head       30.28        30.28        30.28        30.00 
+                              Tail       29.85        29.85        29.85        30.00 
+                   DUTO16     Head       29.85        29.85        29.85        30.00 
+                              Tail       30.21        30.20        30.20        30.00 
+                   DUTO17     Head       30.21        30.20        30.20        30.00 
+                              Tail       29.85        29.85        29.85        30.00 
+                   DUTO2      Head       29.65        29.65        29.65        30.00 
+                              Tail       30.04        30.04        30.04        30.00 
+                   DUTO3      Head       30.04        30.04        30.04        30.00 
+                              Tail       29.34        29.34        29.34        30.00 
+                   DUTO4      Head       29.34        29.34        29.34        30.00 
+                              Tail       29.84        29.85        29.85        30.00 
+                   DUTO5      Head       29.84        29.85        29.85        30.00 
+                              Tail       29.25        29.25        29.26        30.00 
+                   DUTO6      Head       29.25        29.25        29.26        30.00 
+                              Tail       29.66        29.66        29.66        30.00 
+                   DUTO7      Head       29.66        29.66        29.66        30.00 
+                              Tail       28.60        28.61        28.61        30.00 
+                   DUTO8      Head       28.60        28.61        28.61        30.00 
+                              Tail       30.63        30.63        30.63        30.00 
+                   DUTO9      Head       30.63        30.63        30.63        30.00 
+                              Tail       30.26        30.26        30.26        30.00 
+ 
+ 
+ 
+ 
+             ******************************************************************************* 
+             * External Regulator Hydraulic Report    -----     Time =      0.000 ( HRS  ) * 
+             ******************************************************************************* 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                             :::::::::::::::::::::::::::::::::::::::::::::: 
+                             ::  External Regulator Flow Balance Report  :: 
+                             :::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                        ========================================================= 
+                                                 Mass Units      Volumetric Units 
+                                                  ( KG/H )           (KSM3/D) 
+                        --------------------     -----------     ---------------- 
+                        Total input flow           71979.875          2279.993 
+                        Total output flow          71980.102          2280.000 
+                        Network flow balance          -0.227            -0.007 
+ 
+ 
+                           ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                           ::  External Regulator Hydraulic Summary Report  :: 
+                           ::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+ ====================================================================================================== 
+    External                                                                      Specific     Heating 
+    Regulator          Mode of        Pressure        Flow        Temperature     Gravity       Value 
+       ID              Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+ ---------------     ------------     --------     ----------     -----------     --------     -------- 
+ CÁCERES             Max Pres           101.20      -2279.993        30.00         0.6293         39.62 
+ MTGAS               Max Flow            93.64         40.000        29.85         0.6293         39.62 
+ UTE_MARIO_COVAS     Max Flow            93.64       2240.000        29.85         0.6293         39.62 
+ 
+ 
+ 
+                     ============================================================== 
+                        External          Current      Accumulated         Timer 
+                        Regulator        Flow Rate        Volume           Value 
+                           ID            (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                     ---------------     ---------     ------------     ----------- 
+                     CÁCERES             -2279.993            0.000           0.000 
+                     MTGAS                  40.000            0.000           0.000 
+                     UTE_MARIO_COVAS      2240.000            0.000           0.000 
+ 
+ 
+                       :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                       ::  Supply External Regulator Hydraulic Summary Report  :: 
+                       :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+
+ 
+
+ 
+
+ 
+
+RELATÓRIO 
+
+Nº RL-ANP-FPL-018 
+
+PROGRAMA: MODELO TEÓRICO E COMPUTACIONAL PARA AVALIAÇÃO DE 
+
+CAPACIDADE DE GASODUTOS 
+
+TÍTULO: Documentação do Modelo de Simulação do Gasoduto 
+
+Bolívia – Mato Grosso 
+
+FOLHA 
+
+REV. C 
+
+13  de
+
+13 
+
+- 
+- 
+
+ 
+
+ 
+ 
+     ============================================================================================== 
+     Supply                                                                   Specific     Heating 
+      Xreg         Mode of        Pressure        Flow        Temperature     Gravity       Value 
+       ID          Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+     -------     ------------     --------     ----------     -----------     --------     -------- 
+     CÁCERES     Max Pres           101.20      -2279.993        30.00         0.6293         39.62 
+ 
+ 
+ 
+                         ======================================================= 
+                         Supply       Current       Accumulated         Timer 
+                          Xreg       Flow Rate         Volume           Value 
+                           ID         (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                         -------     ----------     ------------     ----------- 
+                         CÁCERES      -2279.993            0.000           0.000 
+ 
+ 
+                      :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+                      ::  Delivery External Regulator Hydraulic Summary Report  :: 
+                      :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+ ====================================================================================================== 
+    Delivery                                                                      Specific     Heating 
+      Xreg             Mode of        Pressure        Flow        Temperature     Gravity       Value 
+       ID              Control         KG/CM2G      (KSM3/D)       (DEG C )                    ( MJ/M3) 
+ ---------------     ------------     --------     ----------     -----------     --------     -------- 
+ MTGAS               Max Flow            93.64         40.000        29.85         0.6293         39.62 
+ UTE_MARIO_COVAS     Max Flow            93.64       2240.000        29.85         0.6293         39.62 
+ 
+ 
+ 
+                     =============================================================== 
+                        Delivery          Current       Accumulated         Timer 
+                          Xreg           Flow Rate         Volume           Value 
+                           ID             (KSM3/D)        ( KSM3 )        ( HRS  ) 
+                     ---------------     ----------     ------------     ----------- 
+                     MTGAS                   40.000            0.000           0.000 
+                     UTE_MARIO_COVAS       2240.000            0.000           0.000 
+ 
+ 
+ 
+ 
+             ******************************************************************************* 
+             * Node Mass Balance Error Report       -----       Time =      0.000 ( HRS  ) * 
+             ******************************************************************************* 
+ 
+ 
+ 
+                                  Threshold Level =     0.0100 (KSM3/D) 
+                                  No Mass Balance Errors above Threshold 
+ 
+ 
+ 
+ 
+                                 ::::::::::::::::::::::::::::::::::::::: 
+                                 ::  Pressure/Flow Violation Reports  :: 
+                                 ::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                                 ALL XREGS FALL WITHIN PRESSURE BOUNDS 
+                           ALL INTERNAL LEG KNOTS FALL WITHIN PRESSURE BOUNDS 
+ 
+ 
+ 
+ 
+                              ::::::::::::::::::::::::::::::::::::::::::::: 
+                              ::  Setpoint/Constraint Violation Reports  :: 
+                              ::::::::::::::::::::::::::::::::::::::::::::: 
+ 
+ 
+                              ALL XREGS COMPLY WITH MONITORED CONSTRAINTS 
+ 
+ 
+                                   TRANSIENT GAS NETWORK MODEL (TGNET) 
+                                    RELEASE 7.6  LEVEL 00  30-SEP-2008 
+                                  
+                                          STEADY-STATE MODULE 
+
+ 
+
+ 
+
+ 
+
+ 
+
+

@@ -1,0 +1,1492 @@
+universidade estadual campinas faculdade engenharia mecanica departamento engenharia petroleo dissertacao mestrado desenvolvimento controladores inteligentes sistema vasps autor andre veras melo orientador prof 
+ mendes campinas novembro biblioteca area engenharia arquitetura bae unicamp ficha catalografica elaborada md melo andre veras desenvolvimento controladores inteligentes sistema vasps andre veras melo 
+ orientador jose ricardo 
+ dissertacao mestrado universidade estadual campinas faculdade engenharia mecanica instituto geociencias 
+ sistemas inteligentes controle 
+ mendes jose ricardo 
+ universidade estadual campinas 
+ faculdade engenharia mecanica instituto geociencias 
+ titulo ingles development intelligent controllers vasps system palavraschave ingles submarine intelligent control systems area concentracao explotacao petroleo titulacao mestre ciencias engenharia petroleo banca examinadora adriane beatriz souza serapiao sergio 
+ bordalo valdir estevam data defesa programa pos graduacao ciencias engenharia petroleo universidade estadual campinas faculdade engenharia mecanica departamento engenharia petroleo dissertacao mestrado desenvolvimento controladores inteligentes sistema vasps autor andre veras melo orientador prof 
+ mendes universidade estadual campinas dr 
+ valdir estevam petrobras profa 
+ adriane beatriz souza serapiao universidade estadual paulista prof 
+ bordalo universidade estadual campinas campinas novembro agradecimentos agradeco familia suporte inquestionavel incondicional tornando busca conhecimento apenas possivel prazerosa 
+ profundo reconhecimento mae tanto chorou saudade pai tanto batalhou dignamente querida avozinha tanto rezou esplhou bondade mundo homens irmao cacula manteve ligado melhores momentos vida residentes memoria eternamente 
+ agradeco raquel indistinguivel forca vasto suporte emocional agradavel companhia licoes impares determinacao 
+ adriane trabalho equipe esforco realizado auxilio formacao cientifica 
+ jose ricardo oportunidades compreensao bem ter representado melhor profissional qualquer outro programa 
+ agradeco anp suporte financeiro 
+ agradeco deus bela vida deu 
+ resumo cenario producao campos petroleo apresentado anos recentes condicoes cada vez severas complexas 
+ muitas descobertas regioes maior profundidade formacoes geologicas diversas demandado solucoes tecnologicas beiram fronteira conhecimento forma producao andado lado lado desenvolvimento novas tecnologias 
+ assim necessidade aumento fator recuperacao justificar investimentos nestas condicoes desafios presentes novos projetos pocos elevacao artificial recuperacao secundaria vem levando desenvolvimento solucoes submarinas integradas caso separador submarino vasps 
+ entanto controle processos continuos vazao producao temperatura pressao ainda tratado mesma forma feito comeco producao offshore campos oleo leve 
+ trabalho visa permitir melhoria desempenho operacional sistema vasps mensurada custos totais gerados sistema proventos gerados producao oleo gas bem propor novas metodologias sistemas controle sistemas similares utilizando tecnologias recentes controle inteligente 
+ vale ressaltar problema controle atualmente tratado campo solucoes automacao estudo devido causando danos equipamentos exigem intervencoes custosas 
+ controladores propostos neste trabalho visam minimizar esforcos quais atuadores expostos provendo maior vida util tecnologias elevacao artificial alta vazao podendo ser aplicado forma modular outros processos relacionados 
+ palavras chave minimizacao esforco controle bcs vasps fuzzy logica nebulosa controle inteligente controle nebuloso producao submarina separacao submarina 
+ iv abstract oil production scenario becoming complex severe recent years 
+ plenty discoveries deeper diversified formations requiring cutting edge technological solutions 
+ production deployed side side technological development 
+ thus need enhancement recuperation factor order justify investment new conditions actual challenges within recent design wells artificial lift systems secondary recuperation projects leading development towards subsea integrated solutions vasps subsea separator 
+ however control continuous processes 
+ flow temperature pressure still dealt way done offshore production light oil fields began 
+ work envisions enhancement operational performance vasps system measured function total costs implied technology altogether receipts generated gas oil production well delivering new methodologies design controllers using late technologies intelligent control 
+ also worth recalling nowadays control task dealt automation solutions without proper handling causing failures equipments require expensive rig intervention workover 
+ controllers proposed work designed minimize control effort actuators exposed providing extended lifetime high level production artificial lift technologies also able applied related processes modular form 
+ keywords minimization control effort esp vasps fuzzy intelligent control fuzzy control sebsea production subsea separation 
+ vii lista tabelas 
+ sistemas producao offshore 
+ escoamento interno vaso 
+ elevacao artificial usando bcs 
+ equacionamento sistema vasps 
+ introducao teoria conjuntos nebulosos 
+ base regras tipo mamdani 
+ desnebulizacao sistemas mamdani 
+ sistemas tipo sugeno 
+ introducao teoria controle 
+ controle voltado desempenho 
+ controle hibrido fuzzypid 
+ controle voltado minimizacao esforco 
+ monitoramento media movel 
+ solucoes esforco controle 
+ monitoramento media movel 
+ vi relacao figuras figura 
+ representacao instalacao vasps sistema producao escala 
+ diagrama esquematico sistema vasps 
+ modelo preliminar vazao entrada liquido gerador golfadas comunicacao direta teixeira 
+ comparativo segundo terceiro geradores golfada 
+ esquematico escoamento fases liquido gas vasps 
+ exemplo curvas bomba bcs diferentes frequencias acionamento 
+ curvas bomba bcs vasps diferentes frequencias acionamento comunicacao direta teixeira 
+ modelo curva bomba bcs comunicacao direta teixeira 
+ sistema nebuloso generico adaptado riid 
+ exemplo tres possiveis funcoes pertinencia conjunto nebuloso baixo 
+ representacao variavel nebulosa nivel piscina 
+ representacao variavel nebulosa variacao nivel piscina 
+ nebulizacao variavel entrada nivel piscina 
+ nebulizacao variavel entrada variacao nivel piscina 
+ representacao variavel saida ativada entradas exemplificadas 
+ representacao aplicacao base regras entrada dada 
+ processo conversao variaveis exemplo vasps dominio nebuloso 
+ tecnicas desnebulizacao aplicadas exemplo valor saida destacado 
+ representacao sistema malha aberta 
+ diagrama blocos sistema malha fechada 
+ diagrama blocos detalhamento planta sistema vasps 
+ sinal resposta destaque parametros desempenho 
+ diagrama esquematico controle pid convencional 
+ processo controlador sistema nebuloso entradas erro derivada erro 
+ exemplo aplicacao sistema controle nebuloso 
+ diagrama blocos controlador pid 
+ diagrama blocos controlador supervisorio adaptado van nauta lemke dezhao 
+ detalhamento controlador fpid modelo supervisorio 
+ diagrama blocos controlador fpid 
+ conjuntos nebulosos controlador fpid 
+ comportamento desejado sistema voltado reducao esforco controle 
+ diagrama blocos controlador media movel aplicado vasps 
+ funcoes pertinencia controlador media movel aplicado vasps 
+ ilustracao funcao utilizada classificador 
+ diagrama blocos controlador classificador regioes aplicado vasps 
+ conjuntos nebulosos entrada classificador regioes 
+ diagrama blocos controlador classificador media 
+ funcoes pertinencia controlador classificador media 
+ detalhamento filtro sinal aplicado controlador atuador 
+ diagrama blocos controlador histerese autoajuste 
+ esquematico ilustrativo comportamento histerese 
+ diagrama esquematico controlador histerese autoajuste 
+ comparativo resposta sinal controle pid fpid 
+ sinal controle comportamento constantes pid fpid 
+ curvas resposta controlador media movel nivel inicial metros 
+ curvas resposta controlador media movel nivel inicial metros 
+ resposta classificador regioes nivel inicial metros 
+ resposta classificador regioes nivel inicial metros 
+ resposta sinal controle controlador classificador media referencia constante 
+ resposta sinal controle controlador classificador media referencia variavel 
+ resposta sinal controle controlador classificador media ultimo gerador golfadas frequencia amplitude variaveis 
+ esquematico histerese adaptado caso vasps 
+ resposta controlador histerese autoajuste referencia constante 
+ resposta controlador histerese autoajuste referencia variavel 
+ simulacao teste uz apresentando curvas 
+ curvas simulacoes teste mecanismo autoajuste 
+ diagrama blocos controlador pi 
+ diagrama blocos controlador pi derivada 
+ diagrama blocos controlador pd 
+ diagrama blocos controlador fpid 
+ conjuntos nebulosos controlador fpid 
+ variaveis entrada ix cx 
+ variacao constante kp ∆p 
+ variacao constantes ki kd ∆i ∆d 
+ diagrama blocos controlador fpi 
+ conjuntos nebulosos controlador fpi 
+ integral relativa erro ix 
+ variacao constante kp ∆p 
+ variacao constante ki ∆i 
+ diagrama blocos controlador fpi derivada 
+ conjuntos nebulosos controlador fpid 
+ variaveis entrada ix cx 
+ variacao constante kp ∆p 
+ variacao constante ki ∆i 
+ diagrama blocos controlador fpd 
+ conjuntos nebulosos controlador fpd 
+ variaveis entrada ix cx 
+ variacao constante kp ∆p 
+ variacao constante kd ∆d 
+ comparativo resposta sinal controle pid fpid 
+ sinal controle comportamento constantes pid fpid 
+ comparativo resposta sinal controle pd fpd 
+ comparativo resposta sinal controle pi derivada fpi derivada 
+ comparativo resposta sinal controle pi fpi 
+ sinal gerador golfadas tempo segundos 
+ simulacao teste apresentando curvas 
+ simulacao teste apresentando curvas 
+ simulacao teste apresentando curvas 
+ simulacao teste apresentando curvas 
+ simulacao teste apresentando curva 
+ simulacao teste apresentando curva 
+ simulacao teste apresentando curva 
+ simulacao teste apresentando curvas 
+ simulacao teste apresentando curvas 
+ planta controle nivel 
+ bloco controle nivel planta nivel fica equacao variacao nivel equacao 
+ bloco bomba fica curva equacao 
+ bloco vazao entrada qoe fica gerador golfadas 
+ primeiro gerador golfadas 
+ segundo gerador golfadas amplitude variavel 
+ componente segundo terceiro gerador golfadas sinal onda gerar amplitude variavel 
+ terceiro gerador golfadas amplitude frequencia variaveis 
+ detalhe gerador sinais teste mecanismo autoajuste 
+ malha controle controlador fuzzy pid supervisor 
+ controlador fuzzy pid supervisor 
+ malha controle controlador monitoramento media movel 
+ malha controle controlador classificador regioes 
+ controlador classificador regioes 
+ malha controle controlador histerese autoajuste 
+ detalhe geradores sinal referencia 
+ controlador histerese autoajuste 
+ detalhes classificador histerese parametrizacao rotacao transicao filtros saida 
+ componente controlador histerese autoajuste parametrizacao rotacao transicao 
+ componente controlador histerese autoajuste mecanismo autoajuste 
+ componente mecanismo autoajuste monitoramento media movel sinal controle 
+ ix relacao tabelas tabela 
+ aplicacao base regras entrada ativa 
+ implementacoes comuns operadores logicos 
+ aplicacao base regras usando entradas associativas 
+ aplicacao base regras sugeno 
+ representacao conjuntos nebulosos base regras 
+ base regras controlador supervisor fpid 
+ base regras controlador supervisor fpid 
+ base regras controlador monitoramento media movel 
+ aplicacao base regras usando entradas associativas 
+ base regras controlador classificador regioes 
+ base regras controlador classificador media adaptado vasps 
+ planejamento experimentos computacionais verificacao relacao parametros sinal controle resposta sistema 
+ comparacao controladores voltados minimizacao esforco 
+ base regras controlador supervisor fpid 
+ base regras controlador supervisor fpi 
+ base regras controlador supervisor fpi derivada 
+ base regras controlador supervisor fpd 
+ planejamento experimentos computacionais verificacao relacao parametros sinal controle resposta sistema 
+ explanacao parametros simulacao 
+ nomenclatura letras latinas ce mudanca erro ce mudanca erro discretizada cx mudanca relativa normalizada erro cx mudanca relativa normalizada erro discretizado diametro externo piscina regiao interna vasps 
+ di diametro interno piscina regiao interna vasps 
+ constante derivativa inicial uso controlador pid df variacao percentual ser impressa constante derivativa sinal erro sinal erro discretizado sinal erro medio frequencia acionamento bomba bcs fs funcao saturacao flr funcao limitacao rampa fq funcao quantizacao nivel liquido hr profundidade reservatorio formacao superficie hs profundidade referencia superficie hwh profundidade cabeca poco leito marinho superficie hbcs profundidade bomba bcs poco falso superficie ie integral erro ie integral erro discretizada ix integral relativa normalizada erro ix integral relativa normalizada erro discretizado constante integral inicial uso controlador pid variacao percentual ser impressa constante integral kp constante proporcional ganho proporcional controlador pid xi kd constante derivativo ganho derivativo controlador pid ki constante integral ganho integral controlador pid ke constante ganho entrada erro controlador supervisor fuzzypid kie constante ganho entrada integral erro supervisor fuzzypid kce constante ganho entrada mudanca erro supervisor fuzzypid numero pontos utilizados realizar media movel sinal nivel inicial piscina vasps durante partida sistema funcao transferencia qualquer planta naolinear constante proporcional inicial uso controlador pid pf variacao percentual ser impressa constante proporcional pr pressao estatica reservatorio pin pressao entrada fluido multifasico vasps pout pressao saida liquido bombeado bcs vasps oeq osq vazao entrada vasps impressa escoamento multifasico poco vazao saida vasps impressa bomba bcs sinal referencia setpoint sinal referencia setpoint discretizado variavel laplace treacao tempo reacao testab tempo estabilizacao sinal controle esforco controle sinal controle esforco controle discretizado sinal controle medio upb valor constante sinal controle operacao entorno valor pertinencia positiva alta positive big controlador histerese autoajuste ups valor constante sinal controle operacao entorno valor pertinencia positiva baixa positive small controlador histerese autoajuste uz valor constante sinal controle operacao entorno valor pertinencia zero controlador histerese autoajuste uns valor constante sinal controle operacao entorno valor pertinencia negativa baixa negative small controlador histerese autoajuste xii unb valor constante sinal controle operacao entorno valor pertinencia negativa alta negative big controlador histerese autoajuste vl volume liquido erro relativo normalizado sinal entrada sistema erro relativo normalizado discretizado sinal saida sistema sinal saida sistema discretizado letras gregas ∆e derivada erro ∆d variacao constante derivativa ∆i variacao constante integral ∆p variacao constante proporcional ∆pbcs energia pressao adicionada bomba bcs fluido bombeado μ sinal pertinencia atribuido erro saida classificador μ sinal pertinencia media μa funcao pertinencia conjunto nebuloso variavel μb funcao pertinencia conjunto nebuloso variavel μ μ valores transicao regioes trabalho histerese subida controlador histerese autoajuste 
+ δ intervalo histerese 
+ siglas bcs bombeio centrifugo submerso ft funcao transferencia fpid controlador supervisor fuzzy pid li limite inferior estabilidade nivel liquido vasps ls limite superior estabilidade nivel liquido vasps pid proporcionalintegralderivativo xiii pi proporcionalintegral pd proporcionalderivativo rsl rising slew rate inclinacao rampa aceleracao maxima atuador fsl falling slew rate inclinacao rampa desaceleracao maxima atuador sp valor instantaneo sinal referencia vasps vertical annular separation pumping system xiv capitulo introducao sistema separacao submarina vertical vasps vertical annular separation pumping system permite separar ainda leito marinho fases liquida gasosa fluido produzido pocos petroleo introduzido sucesso brasil contribuindo aumentos significativos producao conforme reportado vale al 
+ entanto tecnologia elevacao artificial presente sistema bomba bcs apresentou dificuldades operacionais sistema controle conforme peixoto al 
+ devido acionamento imposto bomba encurtou vida util 
+ diferentemente industria manufatura onde processos batelada rigorosamente controlados seguir dada trajetoria qualquer outro sinal referencia processos continuos controle vazao temperatura pressao necessitam acompanhamento tao proximo sinal referencia sim minimizar desgaste atuador maximizando vida util atraves tratamento sinal controle devido alto custo atuador representa processo 
+ sistema submarino vasps intervencao manutencao bomba bcs bombeio centrifugo submerso conforme reportado peixoto al 
+ implica elevados custos caso minimizados podem inviabilizar solucao 
+ neste contexto objetivo deste trabalho aplicar teoria controle opcao elevacao artificial bcs usada sistema vasps objetivando viabilizacao tecnologia melhor gerenciando comportamento sistema 
+ obtemse ferramenta previsao simulacao sistema resultado uso software simulink® disponibilizado parte integrante software matlab® permite construcao sistemas unidimensionais simulacao resultados baseados modelagem voltada sistemas controle 
+ ferramenta simulacao pode entao ser usada planejamento producao desenvolvimento tecnicas eficientes operacao 
+ ultima caracteristica sistema reforcada uso tecnicas inteligencia artificial permitem ainda desenvolvimento interface operacao facilita interpretacao sistema atraves uso mesmas variaveis usados leitura sinais monitorados campo 
+ organizacao trabalho trabalho organizado sete capitulos seguinte disposicao capitulo posiciona trabalho cenario historico desenvolvimento tenologias submarins introduzindo detalhes sobre objeto estudo sistema vasps capitulo aprofunda detalhes acerca vasps apresentando modelagem equacionamento componentes principais sistema 
+ neste capitulo realizadas consideracoes delimitam escopo teoria desenvolvida trabalho contextualizando problematica controle capitulo apresenta fundamentos teoricos teoria controle introduzindo alguns conceitos essenciais usados desenvolvimento controladores devem ser suficientes entendimento tecnicas desenvolvidas longo trabalho 
+ capitulo possui secao tratar logica nebulosa outra teoria controle moderno conclui fusao duas apresentando controle nebuloso usando todos exemplos relacionados conceitos sistema vasps trabalhados capitulo anterior capitulo metodologias sintese controladores apresentadas contexto duas principais estrategias controle adotadas 
+ primeira segue conceito melhoria desempenho sinal resposta tendencia controladores classicos enquanto segunda trata minimizacao esforco controle propriamente dito foca diretamente objetivo deste trabalho 
+ modelos apresentados discutidos apresentacao resultados capitulo simulados resultados casos propostos 
+ curvas resposta avaliadas individualmente dispositivos inseridos malha controle caracteristicas mapeadas permitindo avaliar trabalham si mesclar conceitos controladores finais finalmente capitulo apresenta conclusoes obtidas decorrer deste estudo esao propostas sugestoes trabalhos futuros trabalho possui tres apendices 
+ apendice dedica detalhamento matematico modelos controladores voltados desempenho definicao parametros apresentacao curvas resposta variacoes desenvolvidas neste trabalho 
+ apendice apresenta todas simulacoes computacionais realizadas ultimo modelo controlador proposto voltado minimizacao esforco controle apresentando resultados preliminares proposta experimentacao real 
+ fim apendice apresenta modelos computacionais todos controladores desenvolvidos sistema fisico vasps desenvolvidos forma diagrama blocos simulink® 
+ capitulo panorama tecnologico 
+ sistemas producao offshore descobertas recentes reservatorios oleo ocorrido cada vez frequentemente alto mar laminas dagua cada vez profundas especialmente brasil onde volume reserva sofreu incrementos expressivos anos recentes 
+ novas descobertas impostos novos desafios vez condicoes operacionais ficam complexas tecnologias existentes suficientes exploracao novos campos 
+ exemplo adaptacao novo cenario dado campos al 
+ onde plataforma ser instalada lamina dagua metros sofrer desenvolvimento novo sistema controle atender condicoes criticas escoamento golfadas variacao brusca vazao recebida plataforma caracteristica causada outras coisas alto volume producao forte presenca gas causa diferenca velocidade fases instabilizando fluxo geometria terreno acidentado devido localizacao maior profundidade faz gravidade gere escoamento risers levam producao fundo mar plataforma 
+ assim exploracao producao alto mar bacia campos entao lancanva mao tecnologias consagradas uso quase exclusivo tecnica gas lift solucao elevacao artificial sofrer novos desenvolvimentos aplicacoes fim sustentar operacao novas condicoes 
+ exemplo elevacao artificial transicao cenario agua ultraprofundas exigiu alguns casos solucoes apropriadas escoamento grandes vazoes bombeio centrifugo submerso bcs conta bomba eletrica incremento pressao fluido 
+ plataformas locadas regioes distantes litoral maior custo producao devido necessidade desenvolver novas tecnologias apenas producao maior escala consegue prover retorno suficiente custos risco controlado forma nestas novas condicoes usadas plataformas maiores menor quantidade integrando regioes vastas aumentando distancia postos 
+ ocupacao espaco plataforma torna questao critica pois maior producao exige maiores tanques armazenamento maiores separadores maior maodeobra descarregamento producao frequente 
+ todo novo cenario implicou desenvolvimento tecnologias ainda inovadoras surgido forma sistemas producao submarinos campos inteligentes transporte producao longas distancias atraves oleodutos gasodutos 
+ junto todas novas abordagens aparecem questoes adicionais processamento producao garantia escoamento monitoramento pocos longo prazo questao meio ambiente seguraca todo caracterizam transicao tecnologica significativa tecnologias explotacao petroleo 
+ questoes mencionadas aboradadas devegowda scott fazem levantamento possiveis solucoes novo cenario considerando desenvolvimento recente tecnologias submarinas 
+ dentre possibilidades processamento submarino cinco alternativas solucoes mencionadas referencia avaliadas segundo criterios destacados anteriormente bombeio mulifasico separacao gas liquido vasps separacao agua oleo bombeio multifasico consiste bomba capaz transmitir fluido fases liquida gasosa unica linha necessitando outros equipamentos submarinos 
+ tecnologia consegue lidar fracoes gas tao embora consiga trabalhar fracao maior 
+ alem disso paticulas solidas podem danificar sistema consumo energia pode ser bastante alto bombeio necessitar ser realizado grandes distancias exigiria maior manutencao ocupacao espaco plataforma geradores energia 
+ ainda assim bombeio multifasico apontado tecnologia comprovada bastante competitiva bombeio pequenas distancias 
+ separacao submarina gas liquido consiste vaso separacao submarino sistema bombeio transmitir fase liquida separada linha enquanto gas transmitido outra linha independente bombeio 
+ sistema necessita aparato complexo separacao agrava dificuldade realizar intervencoes uso instrumentacao adicional uso manifold valvulas sistema controle 
+ alem disso tecnologia apresenta dificuldades solidos geracao energia bombeio 
+ entanto diversos beneficios inerentes reducao pressao trabalho cabeca poco aumentando producao significativamente possibilidade uso gas separado reinjecao poco inibicao formacao hidratos tubulacao devido segregacao metano linha inedependente reducao diametro risers linhas transmissao barateando custo bombeio longas distancias 
+ diferenca ente vasps separacao submarina gas liquido convencional integracao sistema bombeio vaso separacao compacto 
+ implica reducao complexidade equipamento elimina necessidade linhas independentes gas liquido bomba separador podendo ser usada apenas linha alimentacao mutifasica fluido reduz consumo energia parte bomba vez sistema fica proximo base riser campo submarino reduzindo comprimento linha eletrica 
+ separacao agua oleo consiste separador ciclonico instalado leito submarino fundo poco separa agua oleo usa reinjecao poco bombeando oleo bomba submersa eletrica bcs hidraulica 
+ separacao pode ser ciclonica gravidade faz uso duas linhas saida gas outra oleo enquanto agua enviada dispositivo submarino tratamento 
+ sistema amplia beneficios separacao gas liquido liberar espaco plataforma devido reducao dispositivo separacao tratamento agua inibir ainda formacao hidratos devido remocao agua linha transmissao 
+ sistema entretanto elevado maturidade forma poucas aplicacoes ainda pode garantir alta confiabilidade 
+ alem disso caso agua usada injecao descarte tornase problema 
+ ademais todos problemas complexidade equipamento fundo mar continuam valendo bem dificuldades energia bombas 
+ devegowda scott bombeio multifasico indicado tecnologia consagrada desenvolvida devido alto custo intervencao pode inviabilizar uso bomba bcs presente outros sistemas considerando ultimo oferece maiores beneficios primeiro 
+ apenas justifica proposito deste trabalho visa buscar viabilidade sistema vasps atraves reducao quanidade intervencoes bomba bcs visto capitulos seguintes 
+ sistema vasps visto secao anterior sistema vasps vertical annular separation pumping system consiste separador submarino oleo gas instalado leito marinho sistema bombeio integrado bombeio centrifugo submerso bcs 
+ juntamente bcs vasps usa tecnica gas lift elevacao artificial oleo produzido 
+ plataforma plataforma producao producao vasps vasps vazao producao vazao producao pocos pocos manifold manifold figura 
+ representacao instalacao vasps sistema producao escala 
+ sistema vasps apresenta conceito inovador separacao bombeamento bifasico submarino 
+ detalhes constituido torre aproximadamente metros altura cuja estrutura interna contem separador ciclonico dividido tres estagios separacao bomba tipo bcs 
+ vaso separacao parcialmente enterrado poco falso regiao pocos proximo base riser producao possivelmente integrando pocos proximos atraves uso manifold 
+ melhor compreensao figura 
+ apresenta esquema sistema vasps onde dimensoes dadas esquerda abaixo estagios separacao indicados direita saidas producao linhas independentes liquido gas dadas acima 
+ diagrama esquematico sistema vasps 
+ principais condicoes operacionais vasps conforme relatado vale al 
+ utilizacao gas lift producao liquido producao gas 
+ pressao admissao fluido multifasico kgf cm pressao vaso separador kgf cm pressao descarga bcs kgf cm pressao linha gas kgf cm aliada condicoes saida linha gas aberta longo trecho forma valvula choke qualquer outro dispositivo restricao vazao gas permita controlar pressao vaso muita precisao velocidade 
+ considerando volume vasps algo torno indicacao sistema pressurizado pois pressoes fase gasosa bastante menores poco apresenta problemas operacionais pois dispositivo permita influenciar diretamente variavel 
+ alem disso pequeno volume fases liquidas ocupam frente producao considerandose saida linha independente controlada bomba grande variacao pressao sofrem indicam componente critico sistema 
+ considerando ainda bomba bcs deva trabalhar fracoes altas gas notando uso gas lift fazse imperativo controle volume piscina elaborado menos fortemente monitorado 
+ dadas instalacao condicoes operacionais sistema vasps atingiu resultados expressivos logo primeira operacao vale al 
+ dentre fatores positivos importantes cenario apresentado secao anterior reducao ocupacao espaco plataforma interligacao regioes produtivas bombeio longas distancias principal balisador viabilidade deste sistema reducao pressao trabalho cabeca poco permite aumento vazao producao 
+ publicada experiencia primeira instalacao vasps brasil ocorreu campo marimba lamina dagua metros 
+ poco alimentou separador produzindo antes intervencao vazao oleo assistencia 
+ gas lift pressao kgf cm 
+ apos instalacao sistema estabilizado gas lift interrompido nova condicao operacao producao oleo pressao kgf cm vasps 
+ pressao linha liquido apos saida bcs kgf cm pressao linha gas kgf cm 
+ ganhos dramaticos sustentaram operacao vasps tempo despeito dificuldades mencionadas secao anterior 
+ alguns anos apos primeira operacao outro trabalho publicado relatando algumas dificuldades ocorreram periodo 
+ trabalho peixoto al 
+ relata todo trabalho workover manutencao correcao falhas poco realizado retomar producao vasps 
+ esperar intervencao realizacao deste workover ocasionada falha bomba bcs entao trocada 
+ falha bcs ocorreu dezembro cinco meses instalacao sistema ocorrera julho 
+ causa atribuida parte complexa sistema sistema controle comprometeu sucesso nova tecnologia vez sistema protecao controle reagiu esperado ter detectado operacao impropria valvulas 
+ retomada producao utilizando vasps valvula choke presente linha gas removida protecoes adicionais implementadas aumento vida util nova bomba bcs 
+ apos correcoes realizacao ajustes sistema controle bomba trocada janeiro retomou operacao maio 
+ segunda operacao condicao operacional sistema corrigido bastante similar primeira operacao apresentando vazao oleo uso gas lift pressao kgf cm 
+ comeco tendo sido verificada estabilidade operacional sistema reincidencia falhas nova condicao operacional prevista projeto inicial posta producao uso gas lift concomitante operacao vasps 
+ retomando uso gas lift vazao producao oleo retornou patamar pressao kgf 
+ pressao saida bcs kgf cm pressao linha gas manteve patamar kgf cm 
+ interessante notar embora uso altissima vazao gas sistema gera alguma vibracao adicional bomba implica necessariamente pressurizacao vasps linha saida gas forma sistema continua trabalhar vaso despressurizado conectado diretamente linha presenca valvula choke 
+ importante ressaltar necessidade protecoes dinamicas estaticas controlador sempre necessarias pois dispositivos automacao realizam parada sistema casos eventuais falhas 
+ entanto sistemas servem apoiar gerenciamento podendo nunca ser ativados longo vida util equipamento 
+ acionamento protecoes ocorra necessario sistema controle estaja adequado objetivos operacionais forma estrategia controle elaborada acordo 
+ enquanto aplicacao sistema controle vasps mostrase altamente propicio ganhos eficiencia vez sistema mecanicamente eficaz robusto trouxe resultados comprovados campo 
+ sendo controlador gargalo tecnologia tao avancado interessante enderecar problema diretamente trabalho focado caso deste estudo especificamente 
+ aqui propostas alternativas solucionar problematica controle bomba bcs menos minimizar impactos desta forma novas estrategias possam ser usadas concepcoes futuras uso deste tipo bomba novas formulacoes problema possam ser tomadas levandose conta diferentes estrategias controle podem ser adotadas avancandose conhecimento atraves melhor entendimento geral problema 
+ capitulo modelagem neste capitulo sistema vasps apresentado detalhes suficientes realizacao controle 
+ consideracoes realizadas quanto modelagem escoamento quanto equacionamento bomba bcs dinamica interna vaso separador 
+ delimitacoes discutidas neste capitulo modelo fisico fechado proposto forma capitulos seguintes tratarao diretamente metodologia sintese controladores 
+ escoamento entrada visto capitulo sistema vasps alimentado diretamente poco producao padrao escoamento golfadas 
+ escoamento alterna predominancia liquido gas forma funciona sinal disturbio condicoes pressao vazao nivel liquido piscina dentro vaso 
+ visto adiante sinal entrada dado sistema afeta resposta condicoes operacionais forma estabilizalas necessario controlador 
+ dessa forma importante escolhido padrao escoamento entrada liquido vasps reflita condicao campo agressiva forma projeto controladores considere robustez necessaria atingir objetivo controle sob disturbios entrada bastante significativos 
+ intuito analisar tanto robustez controladores propostos quanto sensibilidade sistema variacoes escoamento trabalho apresenta simuladores fluxo entrada liquido paulatinamente agressivos 
+ elaboradas tres curvas diferentes simulador chamado gerador golfadas inseridos malha controle garantir robustez solucoes propostas 
+ alem disso passo objetivo controle atingido modelos controlador evoluem gerador golfadas simples substituido outro agressivo 
+ papel gerador golfadas sistema importante concepcao validacao modelo computacional pois responsavel simular todos disturbios campo tornam complexa operacao separador constituindo ferramenta essencial avaliacao robustez conceito controlador proposto sensibilidade variacoes escoamento 
+ primeira curva usada comportamento vazao entrada gerador golfadas apresentado figura 
+ comunicacao direta teixeira 
+ modelo preliminar vazao entrada liquido gerador golfadas comunicacao direta teixeira 
+ embora gerador golfadas inicial apresente componente aleatoria patamares amplitude vazao entrada pode ser considerado bastante conservador assemelhar bastante onda quadrada previsivel 
+ assim contribuicao literatura sofreu tres modificacoes neste trabalho forma compor outras duas curvas agressivas 
+ aumento oscilacao aleatoria patamar vazao 
+ variacao frequencia golfadas tornandoas imprevisiveis fim 
+ variacao patamares pancada liquido tornando golfadas diferentemente agressivas 
+ primeiro efeito combinado segundo compor segundo modelo gerador golfada 
+ adicao terceiro efeito gerador permitiu constituir ultimo modelo vazao entrada forma curvas tomam formas apresentadas figura 
+ nesta figura mantida curva primaria gerador golfadas comunicacao direta teixeira apresentar contraste desenvolvidas contribuicao deste trabalho 
+ comparativo segundo terceiro geradores golfada 
+ escoamento interno vaso escoamento fluido multifasico internamente vaso passa tres estagios separacao delimitados geometria interna conforme apresentados capitulo atraves esquematico figura 
+ separacao ocorre camara expansao helicoide separacao piscina forma principio separacao identificado cada estagios seguinte separacao primaria composta camara expansao onde ocorre extracao cerca gas mistura gas liquido oleo agua 
+ efeito incidencia jato paredes cilindricas internas formase filme liquido desce gravidade helicoide separador secundario separacao secundaria composta estrutura helicoidal visa aumentar eficiencia separacao sistema 
+ separacao combinacao efeito centrifugo segregacao gas livre efeito tempo residencia remocao gas disperso fase liquida separacao terciaria composta piscina liquido acumula parte gas separada efeito gravitacional 
+ nesta piscina onde opera bomba eletrica submersa tipo bcs 
+ escoamento ocorre desde admissao fluido multifasico bocal entrada passando estagios separacao ilustrado figura 
+ esquematico escoamento fases liquido gas vasps 
+ assim garantia eficiencia separacao vasps resultado contribuicao cada etapas deste processo sendo parcialmente realizada camara expansao parcialmente causada efeitos segregacao centrifuga tempo residencia gravitacional 
+ ultimos tres diretamente afetados nivel piscina encontra vez caso piscina cheia entao nivel considerado alto dado neste trabalho leitura realizada fundo topo tempo residencia menor consequentemente fluido exposto efeito centifugo menos tempo 
+ alem disso fracao gas maior piscina causada reducao eficiencia separacao efeito gravitacional impactado 
+ toda interligacao efeitos implica nivel piscina vasps deve ser mantido abaixo limite superior ls eficiencia separacao gas garantida 
+ mesma forma embora bomba bcs presente sistema resistente certa fracao gas consegue trabalhar fracoes vazio altas 
+ implica outra restricao sistema operacao bcs afogada completamente mergulhada liquido dano 
+ estabelecese limite inferior li operacao 
+ neste trabalho considerados parametros usados campo dois limites propostos 
+ entretanto valor fixo partir sistema apresenta problemas porque diversas condicoes operacao influenciam capacidade sistema absorver estabilidade oscilacoes variaveis tanto fluido sistema 
+ usado entao intervalo onde operacao possa ficar critica restringindo operacao faixa estabilidade proxima valores referencia usados nivel operacao sistema atual 
+ vez referencia sempre situa proximo metros altura nivel liquido oscilando menos alguns metros condicoes severas ssumido faixa estabilidade metros coluna liquido valores criticos operacao sistema atingidos respectivamente torno metros li torno metros ls altura 
+ elevacao artificial usando bcs vazao saida liquido vasps impressa bomba bcs vez acionada inversor frequencia 
+ dispositivo comum sistemas automatizados fazem uso rotores eletricos permite variar frequencia alimentacao dispositivo acionado caso bomba consequentemente variar vazao impressa sistema 
+ artificio usado exatamente adequar funcionamento equipamentos comportamento desejado sistema tao embora modelagem todos efeitos resultantes bastante intrincada 
+ vazao sistema alterada curva carga sofre variacoes vez componente perda carga escoamento afetada variacao velocidade fluido 
+ ilustracao efeito variacao frequencia alimentacao bomba bcs apresentada figura 
+ ilustracao representa relacao altura elevacao head apresentado vazao saida diversas frequencias acionamento eficiencia constante bomba bcs estagio modelo retirada catalogo produto curvas bombas serie 
+ dada eficiencia dada altura elevacao podese encontrar relacao frequencia acionamento bomba inversor respectiva vazao saida forma oscilacao presente vazao saida depende completamente forma acionamento realizada sobre atuador 
+ exemplo curvas bomba bcs diferentes frequencias acionamento 
+ bomba bcs presente vasps utilizada relacao proposta teixeira al 
+ nesta equacao osq vazao saida metros cubicos dia frequencia alimentacao bomba hertz 
+ realizacao modelagem desta curva apresentada referencia mencionada forma faz necessario esclarecer premissas assumidas bem raciocinio culminou tal resultado 
+ basicamente tres principais consideracoes realizadas saber comunicacao direta teixeira curvas bomba obtidas fabricante relacionando altura elevacao vazao serie frequencias selecionadas dadas figura 
+ equacao cada curvas obtida atraves selecao pontos operacao catalogo fabricante posterior interpolacao usando polinomio terceiro grau ajuste maior igual 
+ hz hz hz hz hz figura 
+ curvas bomba bcs vasps diferentes frequencias acionamento comunicacao direta teixeira 
+ alteracao frequencia alimentacao bomba implica alternar curvas vazao sistema apresentadas implica alteracao curva carga sistema vez velocidade fluido varia 
+ vez sistema controle tratara transiente variacao nivel alteracoes acionamento pequenas constantes efeito variacao curva carga sistema desprezado forma apenas curva bomba alterada dado acionamento 
+ profundidade vasps campo algo torno metros 
+ alem desta cota lamina dagua ser elevada perdas carga sistema causadas tanto escoamento quanto dispositivos valvulas joelhos etc presentes tubulacao 
+ somatoria todos efeitos considerada constante forma altura elevacao ser vencida bomba parametro fixo metros forma facilitar correlacao variaveis computo vazao saida 
+ assim equacionamento relacao frequencia acionamento bomba vazao saida tomando altura elevacao fixa metros apenas ponto operacao vazao cada valor frequencia acionamento bomba 
+ assim ajustando curva terceiro grau pontos encontrada curva apresentada figura 
+ comunicacao direta teixeira 
+ modelo curva bomba bcs comunicacao direta teixeira 
+ modelagem curva bomba proposta teixeira al 
+ utilizada neste trabalho fins simulacao dinamica vasps malha controle 
+ dadas consideracoes realizadas modelagem simplificada atende necessidades modelo fisico aplicacao sistema controle desenvolvimento novas tecnicas representa foco deste trabalho 
+ equacionamento sistema vasps apresentado capitulo sistema vasps composto tres partes camara expansao helicoide separacao piscina onde fica instalado sistema bombeio destina fase liquida linha segregada 
+ fica visivel tratamento independente escoamento cada fases gas liquido dentro vaso 
+ primeiro leve transportado possui pressao variavel governante 
+ visto gas altamente pressurizado possuindo leve oscilacao pressao sistema bocal entrada vaso linha tendo apresentado problemas operacionais criticos acumulo massa aumento pressao todo sistema consequentemente exigindo insercao equipamento restritivo controle valvula choke interrompendo comunicacao existente toda extensao aberta 
+ alem disso longa extensao linha independente transporte gas implica volume bastante grande gas pode expandir forma variacao variavel principal pressao ordem bastante pequena 
+ segundo ainda multifasico presenca diferentes liquidos precisa ser bombeado monitorado plataforma atraves altura nivel vaso indicando volume variavel governante 
+ sistema vez restrito vez volume ocupa limitado vaso 
+ alem disso neste sistema existe dispositivo necessita atencao redobrada bomba sendo componente critico sistema todo 
+ variacao deste nivel liquido algo bastante dinamico rapido variacao grandeza pressao vaso exige tomada decisoes relacao acionamento bomba frequentes 
+ dado panorama feita algumas consideracoes tratamento dinamica fisica deste sistema trabalho fases liquido presente escoamento interno vasps compreendem particulas solidas pequena escala fase agua salgada outra fase oleo possivelmente alguns outros elementos dissociados 
+ fases consideradas unica sendo particulas solidas desprezadas analise dado poucas devem ser retidas algum tipo filtro especifico 
+ tratamento liquido monofasico permite simplificacoes modelo muita parda credibilidade 
+ tratamento cada fases liquido gas vasps apos separacao tratado sistemas dinamica diferente porque variaveis regem diferentes possuem transientes ordem bastante distintas 
+ considerando analise controle usada apenas resposta transiente efeito variacao pressao dinamica volume liquido desprezada elaboracao sistema controle tratara apenas sistema critico vasps sistema liquido focando inclusive atuador bomba bcs componente critico sistema 
+ entretanto trabalho desenvolvido atuador completamente perdido tratamento possivel sistema controle gas pois conceitos presentes estrategias serem apresentadas podem bem ser adaptados nova aplicacao 
+ finalmente distinguir sistemas liquido gas considerado apos ingresso vaso consequente separacao fases liquido gas misturam associam sequestram particulas outra fase 
+ considerar fluxo massa fases trabalho elaborado estudo sistema controlado devendo ser realizado estudo parte utilizando softwares simulacao escoamento cfd computational flow dinamics 
+ fase liquido considerada incompressivel forma facilitar analise 
+ fim leitura nivel liquido piscina tomara referencia direcao emergente forma zero sistema ponto fundo vaso separado 
+ sistema coordenadas indo sentido contrario gravitacional nivel alto piscina proximo bocal entrada baixo proximo ponto instalacao bomba 
+ devidas consideracoes realizadas podese considerar equacionamento nivel liquido piscina 
+ tomando lei conservacao massa sabendo todo volume monofasico liquido entra incompressivel sofre fluxo entrada saida massa fase gasosa concluise conservacao volume expresso equacao 
+ onde oeq vazao entrada liquido osq vazao saida liquido podem ser expressas metros cubicos dia 
+ dv dt − oe 
+ ademais variacao nivel liquido relacionada variacao volume atraves fator geometrico dado equacao 
+ onde ed diametro externo piscina id diametro interno metros nivel liquido metros 
+ fator geometrico usado representa secao constante area anel onde piscina vasps localizada 
+ dh dt π ⋅ dv dt − 
+ associando duas relacoes acima dinamica variacao nivel piscina entao regida equacao 
+ funcao vazoes entrada saida proporcional inverso area secao constante 
+ dh dt − π − oe       
+ capitulo fundamentos teoricos neste capitulo introduzidos conceitos fundamentais utilizado sintese controladores apresentada capitulo 
+ fundamentos teoricos ferramentas manipuladas redefinicao estrategia controle cada modelo desenvolvido aplicado testado 
+ fim tao embora exemplos trabalhados decorrer deste capitulo correspondam modelo controlador especifico desenvolvido posteriormente exemplos servem base guiar entendimento funcionamento sistema vasps tocante caracteristicas variaveis relevantes sistema controle forma logica apresentada corresponde realidade fisica proposta delimitada capitulo 
+ introducao teoria conjuntos nebulosos teoria conjuntos nebulosos pode ser aplicada sistemas controle provendo abordagem pratica 
+ nesta abordagem importante formacao base conhecimento onde comportamento sistema regras informacoes sobre variaveis dados devem ser traduzidas forma matematica 
+ conforme proposto riid sistema utiliza teoria conjuntos nebulosa pode ser representado esquema figura 
+ sistema nebuloso generico adaptado riid 
+ primeiro bloco esquerda identifica etapa transformacao dados reais numericos dados sistema nebuloso linguisticos 
+ transformacao variaveis pode ser chamada nebulizacao fuzzificacao referencia apresentada 
+ apos transformacao variaveis numericas tornamse variaveis linguisticas identificadas substantivos possuem valores pertinencia conjuntos nebulosos representados adjetivos identificam valor daquela variavel 
+ processo detalhado secao 
+ variaveis definidas classificadas serie regras logicas pertencentes base regras aplicadas atraves mecanismo inferencia chamado nebuloso 
+ gerar valores saida usados dados banco dados juntamente base regras formam conhecimento sobre sistema 
+ mecanismo inferencia nebuloso pode possuir diversas formas tratar dados devem ser configurado acordo sistema questao 
+ detalhes apresentados secoes 
+ finalmente apos aplicacao regras computo solucao variaveis saida devem ser convertidas volta sistema numerico sendo necessario realizar transformada inversa 
+ passo pode ser chamado desnebulizacao defuzzificacao apresentado referencia 
+ maiores explicacoes apresentam secoes 
+ nebulizacao melhor compreensao logica nebulosa necessario remeter teoria conjuntos 
+ nesta podese agrupar elementos cada conjunto separadamente forma avaliar pertinencia μa variavel conjunto universo podese afirmar μ xa    ∈ ax ∈ ax 
+ desta forma elemento pertence conjunto pertence 
+ classificacao implica funcao pertinencia μa assume valores booleanos 
+ entanto diversos problemas praticos dificil classificar dada variavel apenas dois valores 
+ exemplo criterio classificar nivel piscina vasps alto baixo ainda nivel piscina critico valor superior dado valor referencia quao critico superior trabalhar valores intermediarios muitas vezes relevantes surge teoria conjuntos nebulosos apresentada jager passino yurkovich riid 
+ teoria conjuntos nebulosos admite possibilidade pertinencia parcial valor percentual diferente nocao classica 
+ assim elemento pode pertencer dado conjunto determinado grau pertinencia μa dentro intervalo 
+ exemplo considere sistema vasps apresentado capitulo 
+ referencia coordenadas dimensionais tratada sentido emergencia ponto fundo vaso separador equivale cota metro 
+ adicionalmente visto limite inferior trabalho nivel li metros limite superior ls metros forma pressupoese regiao ideal trabalho torno nivel metros equidistante limites operacionais 
+ conjunto nebuloso rotulado baixo pode caracterizar nivel piscina liquido vasps fortemente valor metros forma grau pertinencia nivel baixo dado funcao baixoμ ∈h onde nivel piscina 
+ pertinencia baixoμ nivel piscina conjunto baixo pode entao ser descrita conforme alguma funcoes representada figura 
+ baixo baixo baixo baixo baixo baixo ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ ⁄ nivel piscina nivel piscina nivel piscina nivel piscina nivel piscina nivel piscina figura 
+ exemplo tres possiveis funcoes pertinencia conjunto nebuloso baixo 
+ possivel observar figura quanto menor valor variavel nivel piscina maior pertinencia conjunto baixo 
+ mesma forma diversas podem ser funcoes classificam conjunto sendo menos gradativas 
+ entanto apenas pode ser funcao classifica conjunto baixo variavel nivel piscina forma tres funcoes apresentadas alguma outra deve ser escolhida relacionar conjunto nebuloso variavel nebulosa 
+ variavel nebulosa nivel piscina entretanto pode ser caracterizada outros conjuntos nebulosos exemplo alto medio podendo conter conjunto ativo diferentes graus pertinencia diferentes participacoes cada conjunto 
+ desta maneira variavel nivel piscina modelada variavel linguistica nebulosa assumindo valores alto baixo medio chamados rotulos linguisticos 
+ variavel linguistica caracterizada pertinencia possui cada conjuntos nebulosos caso conjuntos alto baixo medio possuem cada funcao pertinencia deve ser unica cada conjunto 
+ mostra possivel configuracao variavel nivel piscina 
+ baixo baixo baixo medio medio medio alto alto alto μh μh 
+ nivel piscina nivel piscina figura 
+ representacao variavel nebulosa nivel piscina 
+ atraves figura podese observar nesta modelagem variavel entrada cobertos valores reais entrada podem ser medidos sensor sistema metros altura liquido piscina considerando referencia medicao emergencia inicio medicao fundo vaso 
+ possivel concluir caso valores acima abaixo desta faixa ativam conjuntos extremos alto baixo respectivamente pertinencia 
+ outra variavel pode ser considerada sistema vasps pode ser relevante sistema controle variacao nivel piscina derivada tempo variavel anterior 
+ neste caso deve ser adotado criterio classificacao universo operacao variavel fim cobrilo conjuntos nebulosos 
+ supondo variacao maxima nivel vazao nominal entrada vazao saida variacao nivel equivale − π − cm 
+ considerando necessario bombeamento igual taxa manter equilibrio sistema caso critico inverso bombeio vazao entrada nula decrescimento nivel valor oposto cm 
+ assim universo variacao nova variavel dado intervalo 
+ gerando rotulos adequados representacao desta segunda variavel pode ser dada figura 
+ negativa negativa negativa nula nula nula positiva positiva positiva μh μh 
+ variacao nivel piscina cm variacao nivel piscina cm figura 
+ representacao variavel nebulosa variacao nivel piscina 
+ vez definidas variaveis entrada sistema universo valores entrada possivel traduzir valor real termos linguisticos aplicando transformacao variaveis nebulizacao conforme exemplificado figura 
+ apresenta conversao valor metros altura nivel piscina valor medio alto figura 
+ apresenta conversao valor cm variavel variacao nivel piscina valor negativa nula 
+ baixo baixo baixo baixo baixo medio medio medio medio medio alto alto alto alto alto nivel piscina nivel piscina 
+ baixo baixo baixo baixo medio medio medio medio alto alto alto alto baixo baixo baixo baixo medio medio medio medio alto alto alto alto nivel piscina nivel piscina figura 
+ nebulizacao variavel entrada nivel piscina 
+ negativa negativa negativa nula nula nula positiva positiva positiva 
+ negativa negativa negativa negativa nula nula nula nula positiva positiva positiva positiva cm cm cm cm 
+ variacao nivel piscina cm variacao nivel piscina cm variacao nivel piscina cm 
+ negativa negativa negativa nula nula nula positiva positiva positiva 
+ variacao nivel piscina cm variacao nivel piscina cm variacao nivel piscina cm figura 
+ nebulizacao variavel entrada variacao nivel piscina 
+ processo definicao variaveis linguisticas conjuntos nebulosos deve ser realizado variaveis saida forma expressas termos linguisticos cobrindo universo conhecido atuador 
+ base regras tipo mamdani vez definidas variaveis nebulosas entrada saida referentes determinado processo possivel codificar conhecimento sobre tal meio regras linguisticas condicionais estrutura condicao entao consequencia 
+ assim dada condicao ativacao variavel entrada possua qualquer valor pertinencia diferente zero algum conjuntos nebulosos consequencia ativacao algum conjunto nebuloso variavel saida conforme definido regra linguistica 
+ considerando exemplo secao anterior exemplo regra linguistica apresentado seguir nivel piscina alto entao rotacao bomba alta 
+ regra aciona conjunto nebuloso alta variavel saida rotacao bomba variavel nivel piscina possuir conjunto alto ativo 
+ partir dai associacao diversas regras linguisticas compoe base regras determina comportamento sistema 
+ assim dando continuidade exemplo secao anterior possivel construir sistema nebuloso usando mesmas duas variaveis entrada propostas ativando variavel saida rotacao bomba objetivo manter nivel piscina maior pertinencia possivel conjunto medio 
+ poderia ser obtido segundo seguinte base regras 
+ nivel piscina baixo entao rotacao bomba baixa peso 
+ nivel piscina medio entao rotacao bomba media peso 
+ nivel piscina alto entao rotacao bomba alta peso 
+ variacao nivel piscina negativa entao rotacao bomba baixa peso 
+ variacao nivel piscina nula entao rotacao bomba media peso 
+ variacao nivel piscina positiva entao rotacao bomba alta peso 
+ atraves desta base regras leitura nivel piscina garantiria comecasse subir direcao limite superior ls bcs acionada maior rotacao consequentemente maior vazao reduzindo entao volume oleo piscina fazendo nivel manter conjunto medio ativo 
+ raciocinio aplica abaixamento nivel 
+ variacao nivel segue logica nivel diminuir conjunto negativa deve reduzir rotacao reduza vazao saida equilibrando balanco massa transiente 
+ reducao nivel daria vagarosamente forma minimizar efeitos transiente funciona raciocinio inverso aumento nivel 
+ entanto caso manipulacao bomba atraves variavel variacao nivel trata variavel auxiliar vez status direto necessariamente significa necessaria atuacao apresentada base regras 
+ ocorrera exemplo variacao nivel negativa nivel alto neste caso saida desejada rotacao bomba sim alta estabilizara sistema 
+ claro tao logo correcao nivel realizada caso variacao mantenha status negativa desejarsea reduzir vazao saida 
+ assim conciliar regras conflitantes considerada diferenca peso regras provendo maior importancia regras onde avaliacao variavel critica peso menor variavel auxiliar peso 
+ fim ilustrar aplicacao pesos regras sistema considere conjuntos nebulosos ativos exemplo secao anterior base regras proposta 
+ quatro conjuntos nebulosos ativos variaveis entrada implica ativacao quatro regras diferentes graus ativacao 
+ assim obtido seguinte resultado saida conjunto medio variavel nivel piscina pertinencia 
+ condicao ativa regra ativando variavel saida rotacao bomba conjunto media 
+ grau ativacao pertinencia ativa entrada vezes peso regra pertinencia peso grau ativacao conjunto alto variavel nivel piscina pertinencia 
+ ativa regra ativando conjunto alta 
+ pertinencia peso grau ativacao conjunto negativa variavel variacao nivel piscina pertinencia 
+ ativa regra ativando conjunto baixa 
+ pertinencia peso grau ativacao conjunto nula variavel variacao nivel piscina pertinencia 
+ finalmente ultima condicao ativa regra ativando conjunto media 
+ pertinencia peso grau ativacao assim saidas ativas apresentadas tabela 
+ aplicacao base regras entrada ativa 
+ variavel conjunto entrada nivel piscina nivel piscina variacao nivel variacao nivel ativo medio alto negativa nula pertinencia regra acionada peso variavel saida rotacao bomba rotacao bomba rotacao bomba rotacao bomba conjunto acionado grau ativacao media alta baixa media grau ativacao total sistema soma parcelas ativadas cada regra 
+ graus ativacao calculados possivel descobrir pertinencia conjuntos nebulosos saida ativos atraves ponderacao valor relativo total 
+ assim variavel saida rotacao bomba conjuntos ativos baixa media alta pertinencia dada baixa media alta resultado saida nestas condicoes figura geometrica representativa variavel rotacao bomba apresentada figura 
+ baixa baixa baixa media media media alta alta alta 
+ rotacao bomba hz rotacao bomba hz figura 
+ representacao variavel saida ativada entradas exemplificadas 
+ processo aplicacao regras representado figura 
+ onde contribuicoes cada conjunto nebuloso saida apresentadas separadamente direita respectivas condicoes entrada ativaram saida 
+ baixo baixo baixo baixo baixo medio medio medio medio medio alto alto alto alto alto 
+ baixo baixo baixo baixo baixo medio medio medio medio medio alto alto alto alto alto nivel piscina nivel piscina nivel piscina negativa negativa negativa negativa nula nula nula nula positiva positiva positiva positiva 
+ negativa negativa negativa negativa nula nula nula nula positiva positiva positiva positiva 
+ baixa baixa baixa baixa media media media media alta alta alta alta baixa baixa baixa baixa media media media media alta alta alta alta baixa baixa baixa baixa media media media media alta alta alta alta rotacao bomba hz rotacao bomba hz rotacao bomba hz 
+ variacao nivel piscina cm variacao nivel piscina cm variacao nivel piscina cm figura 
+ representacao aplicacao base regras entrada dada 
+ outra forma aplicar base regras utilizando associacao entradas mesma regra 
+ linguisticamente associacao regras variaveis atraves operadores enquanto matematicamente computadas segundo tabela 
+ implementacoes comuns operadores logicos 
+ lukasiewicz probabilistico zadeh max · min min · max tabela possivel exemplificar tomando situacao arbitraria 
+ considere base regras anteriormente apresentada efeito oscilacao nivel apenas considerado condicoes especificas nivel piscina forma melhor caracterizar condicao consequentemente melhor controlar resposta 
+ neste caso base regras poderia ser reconstruida seguinte formato 
+ nivel piscina medio entao rotacao bomba media peso 
+ nivel piscina baixo variacao nivel piscina positiva entao rotacao bomba media peso 
+ nivel piscina baixo variacao nivel piscina positiva entao rotacao bomba baixa peso 
+ nivel piscina alto variacao nivel piscina negativa entao rotacao bomba media peso 
+ nivel piscina alto variacao nivel piscina negativa entao rotacao bomba alta peso 
+ regras apresentadas aparece operador funcao ativar regra complemento valor pertinencia conjunto questao conjunto acionado pertinencia acionado forma segundo valor usado computo grau ativacao 
+ retomando exemplo anterior considerando mesma entrada nivel piscina medio alto variacao nivel piscina pertinencia igual negativa nula regras ativas numero pois regra numero possui entrada ativa nivel piscina medio pertinencia regra possui ativos nivel piscina alto pertinencia variacao nivel piscina negativa regra possui ativo nivel piscina alto possui ativa variacao nivel piscina negativa associar duas entradas acionadas regras necessario usar alguma regras operador 
+ tomando ambos casos aplicando cada criterios pertinencias totais entrada ficam regra lukasiewicz max max probabilistico · zadeh min regra lukasiewicz max max probabilistico · zadeh min verificamse diferentes niveis conservadorismo adotados cada criterio forma cada pode ser usado acordo necessidade cada sistema 
+ caso desta segunda base regras associacao duas variaveis entrada permitiram tratar cada condicao independentemente alternativas configuradas condicoes criticas sistema peso maior frente regra numero 
+ entao forma reforcar importancia regras associativas escolhese criterio permite maior aumento pertinencia consequentemente acionamento rapido criterio zadeh 
+ finalmente grau ativacao regras dado tabela 
+ aplicacao base regras usando entradas associativas 
+ variavel conjunto entrada nivel piscina nivel piscina variacao nivel nivel piscina variacao nivel ativo medio alto negativa alto negativa pertinencia regra acionada peso variavel saida rotacao bomba rotacao bomba rotacao bomba conjunto acionado grau ativacao media media alta saida sistema nova base regras pode entao ser calculada forma rotacao bomba representada condicao 
+ desnebulizacao sistemas mamdani valor pertinencias conjuntos nebulosos variaveis saida calculados proximo passo realizar desnebulizacao forma calcular valor variavel dominio tempo entao acionar sistema 
+ considerando variaveis tomadas exemplo secao anterior podese ilustrar processo segundo figura 
+ repare nivel piscina h& variacao nivel piscina rotacao bomba forma letras minuscula representa variavel dominio tempo dominio real letras maiusculas representam variaveis dominio nebuloso 
+ dominio real dominio real dominio nebuloso dominio nebuloso dominio real dominio real nivel piscina nivel piscina variacao nivel variacao nivel h& h& h& h& rotacao bomba rotacao bomba nebulizacao nebulizacao base base regras regras desnebulizacao desnebulizacao figura 
+ processo conversao variaveis exemplo vasps dominio nebuloso 
+ mesma forma processo nebulizacao necessario definir intervalo discurso variavel saida 
+ caso exemplo pode ser feito utilizandose expressao equacao curva bomba apresentada capitulo equacao 
+ bem curva vazao entrada apresentada atraves gerador golfadas figura 
+ considerando necessario acionar bomba frequencia permite vazao saida media garanta balanco massa possivel definir vazao igual media patamar inferior vazao gerador golfadas algo torno 
+ acionamentos superiores serviriam entao compensar golfadas acionamentos inferiores compensar reducao nivel causada acionamentos sucessivos 
+ assim substituindo valor equacao 
+ obtemse frequencia acionamento aproximadamente hz frequencia funcionara centro faixa 
+ entao considerando oscilacao vazao valores acionamento encontrado respectivamente pouco acima hz pouco abaixo hz 
+ valores ideais bomba deveria trabalhar 
+ entanto casos criticos valores vazao apenas equilibrarao vazao entrada saida forma nivel manteria estatico nivel especifico 
+ desejado possibilidade correcao nivel piscina doravante exige acionamento critico bomba 
+ tomando acionamentos forma prover velocidade correcao apropriada encontrados valores criticos acionamento bomba hz hz 
+ claro tao embora universo discurso desejado ocorra nenhum acionamento nestes patamares 
+ assim intervalo variavel saida definido devese determinar desnebulizacao 
+ diversos metodos tratar processo 
+ comumente metodos geometricos imaginando conjuntos nebulosos saida compoem figura area calculavel 
+ assim tentativas encontrar valor numerico torno figura localiza atraves centro massa cog centro area coa pico figura geometrica formada mom desprezando parcelas menores valores pertinen centro gravidade cog calcula centro massa media ponderada figura 
+ cog μ dxx 
+ μ xdx ∫ ∫ centro gravidade discreto cog mesma tecnica pode ser utilizada funcao pertinencia discretizada utilizandose variavel indice discretizacao 
+ cog ∑ ∑ μ μ xx 
+ centro gravidade indexado icog calcula centro gravidade considerando apenas regiao possui valor pertinencia igual acima dado parametro chamado α 
+ exemplo funcao cut representa remocao area pertinencia menor α 
+ icog α cog −∩ α fcut α 
+ media maximo mom calcula ponto onde regiao valor pertinencia maximo pico dividida metade 
+ mom icog hgt 
+ centro area coa calcula ponto onde area desnebulizacao dividida metade 
+ equacao funcoes inf sup representam respectivamente valor inferior valor superior abscissa intervalo avaliado 
+ dxx μ coa ∫ inf sup ∫ coa μ dx 
+ ilustra aplicacao metodos desnebulizacao apresentados variavel saida obtida exemplos desenvolvidos longo deste capitulo 
+ cog continuo centro gravidade cog continuo centro gravidade coa centro area coa centro area 
+ gg hz hz 
+ hz hz rotacao bomba hz rotacao bomba hz rotacao bomba hz rotacao bomba hz rotacao bomba hz rotacao bomba hz cog indexado cog indexado mom media maximo mom media maximo 
+ α α α gg hz hz 
+ hz hz rotacao bomba hz rotacao bomba hz rotacao bomba hz rotacao bomba hz rotacao bomba hz rotacao bomba hz figura 
+ tecnicas desnebulizacao aplicadas exemplo valor saida destacado 
+ sistemas tipo sugeno outro tipo sistema nebuloso encontrado comumente literatura usado neste trabalho sistema regras tipo sugeno apresentado tanaka sugeno takagi sugeno 
+ neste sistema usados conjuntos nebulosos saida sim constantes funcoes variaveis entrada 
+ assim representacao regra poderia ser dada nivel piscina baixo entao rotacao bomba deve ser igual hz 
+ matematicamente falando denotando conjunto nebuloso baixo hb hb entao hz 
+ note conjunto nebuloso saida 
+ entanto definicao funcao dada regra permite interpolacao diversas funcoes lineares simples obter resultado linear complexo representacao linear sistema funcionamento linear diversas regioes 
+ assim retomando ultimo exemplo base regras apresentado formato mamdani possivel convertela sugeno atraves definicao valores constantes acionamento saida rotacao bomba cada regra forma poderia ser expressa seguinte maneira 
+ nivel piscina medio entao rotacao bomba hz peso 
+ nivel piscina baixo variacao nivel piscina positiva entao rotacao bomba hz peso 
+ nivel piscina baixo variacao nivel piscina positiva entao rotacao bomba hz peso 
+ nivel piscina alto variacao nivel piscina negativa entao rotacao bomba hz peso 
+ nivel piscina alto variacao nivel piscina negativa entao rotacao bomba hz peso 
+ embora valores criticos hz presentes regras diretamente acionados vez grau pertinencia toma valores progressivos permitindo uso parcial valor critico 
+ entendimento vide abaixo tabela 
+ aplicacao regras mesma condicao anterior acionamento entrada usando criterio associativo zadeh 
+ aplicacao base regras sugeno 
+ variavel conjunto entrada nivel piscina nivel piscina variacao nivel nivel piscina variacao nivel ativo medio alto negativa alto negativa pertinencia regra acionada peso variavel saida rotacao bomba rotacao bomba rotacao bomba valor acionado grau ativacao hz hz hz graus ativacao maos possivel realizar desnebulizacao 
+ saidas dadas funcao constantes valor final saida dado entao media ponderada valores acionamento respectivos graus ativacao rotacao bomba igual ⋅ ⋅ hz diferentemente sistemas mamdani sistemas sugeno proveem resposta dominio real diretamente tratar valores numericos reais 
+ entretanto caso variaveis saida expressas termos funcoes lineares haveria outra forma computar saida baseado medias ponderadas artificio usado neste trabalho situacao aqui introduzida 
+ introducao teoria controle sistema representado equacoes diferenciais modelado acordo dinamica fisica apresenta 
+ considerado sistema qualquer fenomeno possa ser representado equacao trajetoria projetil disparado comportamento nivel tanque funcao vazoes entrada saida vazao saida bomba funcao rotacao rotor carga submetida 
+ assim sistema responde saida dada entrada podendo ser ilustrado figura 
+ sistema sistema figura 
+ representacao sistema malha aberta 
+ dizse sistema malha aberta saida usada controlar entrada computo sinal entrada independe valor saida sistema apresentou 
+ outro lado valor saida monitorado deve atingir dado alvo valor desejado possivel calcular erro saida apresentou relacao referencia forma valor entrada sistema corrigido expectativa reduzir erro causado valor anterior saida 
+ processo configura sistema malha fechada 
+ teoria controle classico preve sistema controlado deve ser sistema malha fechada 
+ assim sistemas controlados possuem alem bloco representando fenomeno fisico questao chamado planta bloco referente controlador ira realizar calculo corretivo valor entrada processo proximo instante tempo 
+ sistema malha fechada entao representado diagrama blocos figura 
+ controlador controlador planta planta figura 
+ diagrama blocos sistema malha fechada 
+ alem dois blocos possuem cada dinamica representada equacoes diferenciais sinais caracteristicos deste tipo sistema saber sinal referencia set point 
+ sistema deve ser forcado retornar sinal saida valor referencia atuacao controlador 
+ sistema vasps sinal referencia nivel desejado liquido piscina sinal erro 
+ diferenca sinal referencia sinal saida sinal controle esforco controle 
+ sinal corrige processo retorne referencia 
+ variavel sofre acao controle encontrada atuador chamada variavel manipulada 
+ vasps variavel manipulada frequencia rotacao bcs diretamente relacionada vazao saida liquido 
+ valor medido processo indica status 
+ variavel medida variavel controlada 
+ caso nivel real medido piscina 
+ problema controle tradicional objetivo fazer saida comportar forma desejada atraves manipulacao sinal controle 
+ forma desejada ditada referencia forma erro minimizado 
+ literatura comum encontrar referencias problema regulador nada realizar problema controle sinal referencia constante sendo usualmente nulo 
+ diversos exemplos podem ser encontrados literatura ogata skogestad postlethwaite 
+ caso vasps planta dada dinamica variacao nivel piscina apresentada capitulo equacao 
+ funcao vazoes entrada golfadas saida vazao bcs liquido 
+ vazao entrada funciona disturbio sistema causando oscilacoes sinal saida representado nivel piscina 
+ sinal disturbio conjugado dinamica variacao nivel vazao saida acionada saida controlador estando portanto relacionada sinal controle 
+ modelagem sistema controle discutida detalhes capitulo usando modelagem fisica apresentada capitulo 
+ suma disturbio entrada provoca flutuacoes variavel controlada controle classico devem ser suavizadas fim melhorar desempenho sistema 
+ neste caso controle classico desempenho sistema poderia ser entendido manutencao patamar vazao restrito garantia eficiencia separacao 
+ caso sistema vasps onde utilizadas outras tecnicas controle classico visto adiante alem deste objetivo controle outro abordado minimizacao esforco controle sobre bomba 
+ deve fato conforme relatado peixoto al 
+ capitulo atuador componente critico sistema afeta estrategia controle ponto redefinir conceito controlador 
+ manipulacao sinais apresentados forma equacoes diferenciais complexidade matematica inerentemente alta 
+ sistema controlado si expresso meio convolucao equacoes diferenciais controlador planta solucoes temporais forma funcoes senoidais exponenciais representam oscilacao resposta dada excitacao planta 
+ evitar esforco desnecessariamente alto importante realizar transformacao dominio tempo algum outro facilite analise matematica comportamento sistema 
+ ferramenta adequada tarefa transformada laplace transfere dominio tempo dominio alternativo variavel torna funcoes diferenciais funcoes algebricas simples 
+ operacoes diferenciacao integracao substituidas operacoes algebricas plano complexo solucoes equacoes algebricas fornecem solucoes transiente estacionaria equacoes diferenciais meio transformadas inversas laplace 
+ sabendo sistema responde saida excitacao levando conta pode ser expresso formas algebricas simples dominio laplace definese funcao transferencia ft relacao saida sistema entrada dominio variavel 
+ conceito funcao transferencia ft importante vez variavel representa dominio frequencias consequentemente dado valor possui informacao respeito amplitude oscilacao sistema excitacao naquela frequencia especifica 
+ permite serie beneficios tratamento sistemas controle possivel saber frequencias maxima amplitude oscilacao sistema partir grafico resposta frequencia nada valor ft variandose intervalo 
+ frequencias identificadas valores singulares frequencia ressonancia frequencia natural possivel definir conceitos importantes realimentacao malha fechada largura banda frequencias quais sistema deve operar amplitude picos fts maior oscilacao transiente resposta sistema fts permitem avaliar resposta planta controlada excitacao qualquer definida tao embora forneca nenhuma relacao pertinente estrutura fisica sistema avaliacao sistemas serie rapidamente obtida multiplicacao fts vez complicadas integrais convolucao necessarias dominio tempo polos zeros respectivamente pontos singulares resposta tende infinito pontos nulos sistema aparecem explicitamente fts atraves raizes polinomios denominador numerador 
+ assim retomando conceito malha controle tendo maos fts planta controlador possivel exemplificar possivel malha controle vasps segundo diagrama blocos figura 
+ variavel controlada nivel entao regida acordo equacao 
+ curva bomba bcs linear acordo equacao 
+ conforme proposto trabalhos teixeira al 
+ setpoint setpoint nivel nivel controlador controlador curva curva bomba bomba gerador gerador golfadas golfadas dinamica dinamica dinamica nivel nivel nivel figura 
+ diagrama blocos detalhamento planta sistema vasps 
+ ainda importantes sistema controle conceitos parametros desempenho 
+ antes explicalos vale dizer controladores cuja logica desenvolvida minimizar erro dentro limite operacao dispositivos baixa potencia calculam modificacoes necessarias dado erro entrada amplificam sinal saida nivel suficientemente alto alimentar atuador 
+ partir dai atuador exerce acao sobre planta vez responde sinal saida 
+ assim avaliacao parametros desempenho considere sinal resposta qualquer apresentado figura 
+ pss pss pss ymax ymax ymax t→∞ t→∞ t→∞ t→∞ t→∞ t→∞ t→∞ · t→∞ · t→∞ eest eest eest t→∞ t→∞ t→∞ treacao 
+ sinal resposta destaque parametros desempenho 
+ principais criterios avaliar resposta atendeu determinado nivel desempenho expressos funcao caracteristicas resposta 
+ caracteristicas usadas especificacao estrategias controle 
+ basicamente principais caracteristicas avaliadas seguintes tempo reacao tempo necessario resposta atinja valor valor estacionario tempo estabilizacao tempo necessario valor resposta apos oscilacoes encaixe intervalo valor estacionario percentual sobresinal pss valor maximo pico atingido resposta porcentagem relativa valor estacionario erro estacionario divergencia porcentagem valor estacionario resposta valor referencia recebido sistema 
+ fim controladores industriais comumente utilizados pids assim chamados computarem modificacoes necessarias planta acordo composicao sinais proporcional erro integral erro derivada erro 
+ controladores possuem ganhos ajustaveis cada destes tres sinais forma permitir ajuste caracteristicas especificas resposta transiente separadamente apresentados detalhes proxima secao 
+ controle pid controle pid baseia utilizar sinal erro calculado atraves realimentacao variavel controlada real entrada sistema fechando malha controle comparandoa valor referencia deve seguir 
+ erro alimenta controlador integra deriva erro somando tres sinais apos passarem ganhos individuais proporcional integral derivativo conforme diagrama esquematico figura 
+ ∫ ∫ dt dt processo processo figura 
+ diagrama esquematico controle pid convencional 
+ efeito tres sinais composicao sinal controle suficiente cobrir maior parte problemas controle utilizandose tecnicas diferentes ponderar ganhos controlador 
+ suma ganho proporcional responsavel tempo resposta sistema dada entrada provocando muitas oscilacoes sobresinal caso estar alto 
+ ganho integral responsavel remover erro estacionario sistema causando atrasos resposta ganhos altos ganho derivativo remove oscilacoes amortecendo sistema causando erro estacionario alto 
+ calculo sinal controle ft dados equacao 
+ keku ⋅ ⋅ ∫ edt ⇒⋅ dt sk sk ⋅ ksksk ⋅ ⋅ 
+ correto balanco valor ganhos chamado ajuste sintonia controlador pid compreende tarefa dificil configuracao deste tipo controlador 
+ tecnicas projeto controle pid tecnica zieglernichols onde valor preajustado ganhos sugerido forma ajuste ser realizado normalmente apenas ajuste fino torno valores encontrados projeto 
+ entanto alguns controladores pid especialmente deseja alto desempenho apresentam desempenho otimo tecnica exigindo projeto analitico controlador realizado base ft sistema alocacao polos sistema controlado conforme apresentado literatura consagrada ogata onde diversos exemplos podem ilustrar projeto controlador pid 
+ sistemas ordem maior necessario auxilio recursos computacionais softwares especializados pois calculo analitico tornase complexo tanto computo controlador quanto identificacao sistema compreende descobrir ft atraves tecnicas experimentais 
+ fator principal demandante modelagem correta simplificada sistemas dinamicos controle 
+ controle nebuloso tecnicas controle nebuloso fazem uso mesmos sinais convencionados tecnicas controle tradicional excecao objetivo necessariamente minimizar erro 
+ acoplamento dispositivo inferencia nebulosa permite tomada decisoes sistemas utilizam logica nebulosa permite controlador trate sinais entrada sinal erro sistema acordo logica programada extraindo informacoes permitem retirada conclusoes simples sobre status processo 
+ assim possivel construir mecanismo funcione forma considerar objetivos flexiveis estrategia controle 
+ passos serem seguidos projeto controladores nebulosos basicamente mesmos construcao dispositivo logica nebulosa conforme apresentado anteriormente 
+ essencia controle nebuloso lanca mao variaveis linguisticas introduzidas logica nebulosa realizar controle sistemas malha fechada permitindo conhecimento especialistas incorporado controlador melhorando desempenho sistemas comportamento conhecido 
+ diversas tecnicas controle nebuloso especial algumas utilizando controle pid 
+ ser desenvolvido proposito contrario controlador nebuloso naolinear adaptando melhor plantas naolineares lidando eficientemente incertezas modelo caso controlador sido desenvolvido eficacia 
+ apresenta diagrama blocos sistema controlado controlador nebuloso entradas erro derivada erro 
+ integracao controlador inteligente entradas convencionais controlador pid implica conjunto caracteristicas peculiares construcao variaveis nebulosas conjuntos dado controle comumente realizado fechamento malha portanto lida minimizacao erro processo qualquer 
+ dt dt ∆e ∆e controlador controlador nebuloso nebuloso planta planta figura 
+ processo controlador sistema nebuloso entradas erro derivada erro 
+ vez controle nebuloso comumente naolinear sinal controle possui funcao transferencia forma controlador pode ser projetado ajustar linearidade planta conhecimento sobre comportamento 
+ adequacao forma base regras sistema nebuloso substituindo computo tao analitico sinal controle quanto realizado equacao 
+ assim sendo sistema controlador nebuloso regras referenciando erro derivacoes variaveis nebulosas entrada sinal controle variavel nebulosa saida 
+ construcao conjuntos nebulosos adequados poderseia ter situacao ilustrada figura 
+ onde apresentada possivel aplicacao base regras determinada entrada 
+ erro alto entao sinal controle alto erro baixo nulo alto sinal controle baixo alto nulo alto alto figura 
+ exemplo aplicacao sistema controle nebuloso 
+ capitulo metodologia capitulo apresenta aplicacao conceitos explorados capitulo sintese controladores contexto sistema vasps delimitado modelagem fisica realizada capitulo 
+ desenvolvimento metodologias sintese controladores usa duas estrategias controle distintas abordadas duas secoes deste capitulo 
+ primeira estrategia compreende melhorar sinal resposta atraves melhorias controlador usado campo limitando escopo metodologia reformulacao solucao existente melhorando desempenho 
+ segunda estrategia abordada secao seguinte extrapola uso tecnologia convencional lancando mao solucao menos convencional alcancar resultados operacionais significativos trabalhando diretamente questao melhor manipulacao atuador bomba bcs reduzindo esforco controle realizado sobre 
+ controle voltado desempenho controle voltado desempenho objetivo acompanhar sinal referencia forma saida sistema oscile minimo possivel 
+ vez saida sistema pode ser qualquer variavel fisica lida atraves sensor temperatura pressao vazao rotacao nivel 
+ caso vasps variavel saida nivel liquido reservatorio interno separador chamado anteriormente piscina forma mantendo sinal referencia fixo mantemse nivel menos variante possivel consequencia sistema permanece condicoes operacionais previsiveis 
+ abordagem leva possibilidade analise sinal resposta caso variacao nivel determinar comportamentos assintoticos resposta sistema possivel afirmar sobre valor estacionario regime permanente identificar variacao resposta funcao dada entrada conhecida 
+ vez sinal controle frequencia rotacao bomba oscila forma corrigir disturbios impostos processo possuindo forma muitas vezes similar disturbio entrada 
+ tipo abordagem necessario trajetoria sinal saida importante limites estabilidade saida processo rigidos 
+ aplicacoes comuns controle rotacao bombas intuito mantelas trabalhando ponto otimo operacional 
+ devido simplicidade facilidade aplicarse logica maquinas uso comum controladores industria tendo apresentado desenvolvimentos bastante complexos desde concepcao controlador pid 
+ possui hoje diversas tecnicas projeto permitam ajustar ganhos forma evitar regime transiente complicado atrasos resposta picos funcionamento antes estabilizacao sistema 
+ aplicando entao tecnicas controle nebuloso controlador pid classico apresentado capitulo possivel sintetizar mecanismo ajuste dinamico ganhos modificandoos segundo condicoes operacionais sistema 
+ forma ajuste automatico inicialmente proposta van nauta lemke dezhao melhorar desempenho dinamico controlador 
+ muitas tecnicas desenvolvidas neste sentido podem ser encontradas literatura controle adaptativo krstic al 
+ astrom wittenmark pid gain scheduling zhao al 
+ self tuning pid astrom wittenmark clarke gawthrop 
+ aplicacao desta tecnologia autoajuste sistema vasps apresentada proxima secao sob nomenclatura controle hibrido fuzzypid vez mescla tecnica classica controle pid conceitos logica nebulosa 
+ outras formas desta mesma combinacao podem ser encontradas literatura 
+ controle hibrido fuzzypid modelo adaptado van nauta lemke dezhao consiste supervisao sistema controle pid controlador inteligente hierarquicamente superior 
+ objetivo propiciar aumento desempenho resposta possibilitando melhorar eficiencia operacional bem permitir concepcao controlador naolinear capaz seguir sistema naolinear 
+ conceitualmente aplicar controlador inteligente nivel supervisao controle efetivo processo permanece sendo controlador pid havendo intervencao direta malha controle diferenca pid ajustado dinamicamente acordo status processo monitorado 
+ considerando modelo planta apresentado capitulo elaborado controle pid classico modulo supervisor pudesse ser aplicado sobre 
+ utilizando tecnicas comuns projeto controladores pid construido controlador apresentado figura 
+ possui ganhos conforme apresentado equacao 
+ referencia referencia pk pk ik ik dk dk ∫ ∫ dt dt planta planta processo processo figura 
+ diagrama blocos controlador pid 
+    → sk 
+ constantes podese calcular ft controlador conforme apresentado equacao 
+ verificando polos controlador segundo equacao 
+ sh spsk spsk ⋅ ⋅ 
+ ⋅ − − 
+ assim diagrama blocos sistema modulo supervisor apresentado figura 
+ onde estrutura basica controlador detalhada bloco usado representar processo 
+ diagrama blocos controlador supervisorio adaptado van nauta lemke dezhao 
+ controlador inteligente inserido bloco supervisao figura 
+ objetivo reforcar sinal controle atraves aumento valor constantes pid dada situacao condicao operacional definida parametrizacao controlador nebuloso 
+ condicao operacional ser definida base regras comportamento controlador nebuloso ocorre acordo parametrizacao escolhida projetista 
+ exemplo dado processo naolinear saida sistema dada equacao 
+ comportamento proximo linear desejado apenas sinal controle naolinear compensando comportamento 
+ ty tusp ⋅ 
+ diagrama controlador fpid apresentado figura 
+ ponto partida especificacao 
+ notacao adotada sinais seguinte erro ie integral erro ce mudanca erro proveniente ingles change error erro relativo ix integral relativa erro cx mudanca relativa erro 
+ alem disso saida sistema variacoes constantes ∆p ∆i ∆d somadas constantes iniciais sistema forma compor constante final opera sistema variando conforme status corrente 
+ saidas sistema possuem cada conjuntos nebulosos conforme apresentado capitulo 
+ formulacao apresentada anteriormente encontrada literatura citada rotulando sistema nebuloso sendo tipo mamdani 
+ ie ie ce ce ek ek ix ix iek iek cx cx cek cek base base regras regras pf pf df df ∆p ∆p ∆i ∆i ∆d ∆d figura 
+ detalhamento controlador fpid modelo supervisorio 
+ controlador integrado detalhado apresentado figura 
+ onde possivel notar supervisor atuando diretamente sobre constantes controlador pid respeitando conceito naointerferencia direta sinal controle 
+ base base regras regras ie ie ce ce ek ek ix ix iek iek cx cx cek cek ∫ ∫ dt dt fi fi fd fd ∆ ∆ ∆ ∆ ∆ ∆ pp pp planta planta processo processo figura 
+ diagrama blocos controlador fpid 
+ atraves diagrama completo figura 
+ possivel identificar calculo variaveis entrada forma erro mudanca erro ce integral erro ie dadas respectivamente equacoes 
+ ty − tce − − tie ∑ 
+ mesma forma saidas supervisor constantes dadas respectivamente equacoes 
+ entradas normalizadas cx ix dadas equacoes 
+ pp ∆ ∆ dd ∆ tx ⋅ tcx ⋅ ce tix ie ⋅ tce tie 
+ sinal controle resultante modelo mesma equacao controle pid diferenca termos relativos ganhos possuem naolinearidade intrinseca referentes termos ∆p ∆i ∆d podem ser modelados atuar diferentemente variacao componentes erro 
+ vez representados variaveis cx ix classificados durante processo fuzzificacao pertinencia dada conjuntos nebulosos 
+ exemplo logica nebulosa pode ser aplicada apresentada figura 
+ processo onde entrada assume valores relativos intervalo saida imprima variacoes valor original constante 
+ conjuntos nebulosos entrada conjuntos nebulosos entrada conjuntos nebulosos entrada μμ μμ μμ entrada erro ix cx entrada erro ix cx entrada erro ix cx conjuntos nebulosos saida pf conjuntos nebulosos saida pf conjuntos nebulosos saida pf variacao percentual variacao percentual variacao percentual conjuntos nebulosos saidas df conjuntos nebulosos saidas df conjuntos nebulosos saidas df μ μ μ μ μ μ legenda legenda legenda negativo negativo negativo negativo intermediario negativo intermediario negativo intermediario pouco negativo pouco negativo pouco negativo zero zero zero pouco positivo pouco positivo pouco positivo positivo intermediario positivo intermediario positivo intermediario positivo positivo positivo variacao percentual variacao percentual variacao percentual figura 
+ conjuntos nebulosos controlador fpid 
+ apresentada funcao pertinencia modelada tres variaveis entrada ix cx forma torno zero variaveis assumem valores pertinencia conjuntos zero pouco negativo pouco positivo passo vao aumentando diminuindo assumem pertinencias maiores nestes ultimos dois conjuntos ativarem conjuntos nebulosos negativo positivo 
+ possivel criar regras distintas acionamento variaveis saida resposta transiente longe estabilizacao exemplo erro normalizado positivo negativo combinacao erro pouco positivo derivada positiva pouco positiva outras regras alterar valores constantes sistema perto estabilizacao exemplo erro zero combinacao erro pouco positivo derivada pouco negativa integral zero 
+ apresentadas funcoes pertinencia variaveis saida variacoes percentuais impressas constantes controlador pid 
+ neste caso construcao conjuntos nebulosos variavel saida ∆p diferente construcao outras duas possuindo conjunto nebuloso zero conjuntos nebulosos positivo negativo estreitos 
+ caso primeiro conjuntos faz necessario pois composicao sinal controle contribuicao sinal erro normalizado tornase pequena devido reducao erro estabilizacao forma faz necessario imprimir variacoes rapidas constante obterse sinal controle efetivo 
+ caso ultimos dois conjuntos citados ocorre pois saidas referentes ganhos interessante reforco maior nestas constantes devido serem valores ativos representativos periodo estabilizacao forma grande area conjuntos negativo positivo destas variaveis influencia ponderacao conjuntos processo defuzzificacao 
+ finalmente conceitos devem estar claros definidos base regras forma percebese criacao conjuntos nebulosos definicao destas regras totalmente independentes sendo construidas funcao outra ambas acordo comportamento desejado controlador 
+ usualmente poderseia desejar comportamento linear saida facilitaria modelagem matematica avaliacao resultados 
+ entanto objetivo simplificar algebra controlador funcao transferencia sim buscar melhor resultado possa extrair sistema 
+ caso questao onde objetivo manter nivel piscina vasps proximo possivel valor referencia requisito claramente voltado desempenho controlador mantendo valor referencia saida algumas adaptacoes necessarias considerando equipamentos usados campo criterios desempenho 
+ primeiro comportamento desejado diz respeito atuacao controlador momentos diferentes regime transiente saber inicio grande disturbio versus periodo estabilizacao enquanto segundo diz respeito restricao fisica vazao sempre positiva forma seguintes melhorias podem ser incluidas base regras frente controlador pid puramente matematico caso reforcar sinal controle pequenos valores erro fim aumentar taxa correcao proxima estabilizacao caso eliminar contribuicoes negativas componentes erro composicao sinal controle evitando necessarios valores negativos correcao sistema implicariam saturacao controlador sistema pid 
+ primeiro caso lembrandose composicao sinal controle dada equacao 
+ possivel reforcar sinal controle componentes erro ie ce assumirem valores amplitude baixa entrada igual devido estabilizacao sinal resposta atraves aumento constantes 
+ ⋅ tep ⋅ iei tcedt ⋅ 
+ segundo caso desempenho melhorado apenas atuador sistema relevancia apenas sentido exemplo vasps onde bcs deve manter dado nivel atuando apenas vazao saida positiva niveis altos simplesmente atuando niveis baixos 
+ alem disso eliminar contribuicoes negativas pode vir ter impacto significante sistema correcao gera sinais erro grandes suficiente saturar atuador atrasando resposta piorando regime transiente 
+ efetivacao sinal controle apenas sentido realizado acrescimo delta saida igual sinais erro negativos entrada igual 
+ embora sistema proposto possua tres entradas tres saidas base regras dividida tres matrizes correspondentes cada variavel saida forma simplificar verificacao saida 
+ assim cada saidas funcao apenas duas variaveis entrada colocadas linha coluna matriz 
+ melhor ilustrar base regras seguese notacao tabela 
+ apresenta rotulo numerico cada conjunto nebuloso variaveis saida pf df 
+ rotulos apresentam casa decimal utilizada representar grau ativacao regra cujo valor complemento numero apresentado nesta casa decimal 
+ representacao conjuntos nebulosos base regras 
+ significado negativo negativo medio pouco negativo zero pouco positivo positivo medio positivo sigla pf df exemplificando caso celula matriz representa base regras apresente valor 
+ variavel saida analisada corresponder saida pf conjunto nebuloso ativado 
+ outra forma corresponder saidas df conjunto ativado 
+ outro exemplo ocorre caso valor ser 
+ significa saida pf ativada pertinencia 
+ base regra dois casos anteriormente abordados pode ser observada tabela 
+ onde possivel notar reforco constante pf aplicado erro pequeno diferente zero pois erro pequeno variacao nula sinal estagnou naquele valor devendo ser reforcado 
+ reforco constantes df ocorre tanto erro quanto integral derivada aproximam zero assumindo valor ainda maior exatamente zero 
+ base regras controlador supervisor fpid variacao erro integral erro pf 
+ df variacao erro 
+ possivel notar reforco constante pf dado erro pequeno diferente zero pois erro pequeno variacao nula sinal estagnou naquele valor devendo ser reforcado 
+ reforco constantes df ocorre tanto erro quanto integral derivada aproximam zero assumindo valor ainda maior exatamente zero 
+ apresenta base regras sistema onde desejam contribuicoes negativas sinal controle contribuicoes quaisquer erro sistema abaixo zero indicando ainda atingiu status operacional desejado 
+ base regras controlador supervisor fpid variacao erro integral erro pf 
+ df variacao erro 
+ modelos base regra ilustram dois casos especificos gerados partir necessidades provenientes sistema 
+ outras necessidades poderiam ser identificadas fim gerar regras adequadas tratar problema 
+ fim resultados modelo fpid apresentados capitulo modelos resultados modelos derivados fpid apresentados apendice 
+ controle voltado minimizacao esforco face problemas onde componente critico sistema atuador normalmente devido elevado custo pode ser traduzido baixo tempo medio falhas mtbf desejavel permaneca minimo utilizacao possivel minimo variacoes condicao trabalho possiveis permanecendo ponto otimo operacao 
+ acontece sistema vasps onde motor eletrico bcs acionado inversor permite maior flexibilidade atraves uso gama rotacoes diferentes acarreta trabalho ponto otimo 
+ visando reducao esforco bomba submetida desenvolvidos controladores especificamente voltados tratamento sinal controle forma permaneca poucas alteracoes saida sistema oscile dentro faixa estabilidade prevista modelo dinamico processo conforme definido secao 
+ assim comportamento desejado sistema controlado apresentado figura 
+ objetivo controle usado projeto controladores 
+ faixa oscilacao nivel piscina faixa oscilacao nivel piscina tempo tempo tempo tempo figura 
+ comportamento desejado sistema voltado reducao esforco controle 
+ vasps reducao esforco controle pode prover menor custo processo vez atuador componente critico detrimento melhor desempenho possivel sistema 
+ compromisso desempenho esforco controle pode ser parametrizado acordo faixa estabilidade processo fisico controlado respeitando limites operacionais utilizando resposta sistema avaliar parametros indiquem alteracao sinal controle realmente necessaria 
+ tratados quatro diferentes modelos controladores inteligentes permitem tipo inferencia 
+ monitoramento media movel objetivo avaliar tendencia comportamento sinal controlador realiza media movel erro acordo janela tempo parametrizada variavel forma erro medio processo calculado equacao 
+ faz papel ajustar tempo reacao sistema taxa desejada correcao funcao variacao sinal saida 
+ possivel realizar calculo sinal media movel ponderacao sinal erro perfil diferente uniforme exemplo media ponderando leituras recentes maior peso 
+ − nti ∑ 
+ assim sistemas onde sinal controle deve permanecer minimo variacoes possivel alteracao sinal controle dara apenas mediante mudanca significativa condicao operacao reduzindo sensibilidade oscilacoes curtas podem implicar necessidade alteracao sinal controle 
+ alteracao comportamento identificada portanto variacao magnitude media movel deve possuir baixa sensibilidade oscilacoes bruscas refletindo tendencia real processo 
+ conceito media movel funcionar contexto minimizacao esforco controle necessario esforco constante torno pontos operacao sistema forma mudanca sinal controle indique correcao sistema operar outro ponto 
+ assim leitura erro medio utilizada entrada mecanismo inferencia nebulosa controlador nebuloso encarregado dividir parametros operacao processo pontos operacao criando regioes trabalho onde media possa oscilar alguma liberdade 
+ ademais fazse necessaria manutencao leitura erro instantaneo vez deve ser considerado unica alternativa correcao caso sistema exposto oscilacoes bruscas possam levar condicoes operacao regiao critica necessite correcao imediata 
+ alternativa seguranca contra falhas sistemas baixa constante tempo 
+ assim diagrama blocos controlador aplicado sistema vasps apresentado figura 
+ media media media movel movel movel controlador controlador controlador hz hz fuzzy fuzzy fuzzy curva curva bomba bomba qos qos dinamica dinamica nivel nivel nivel nivel gerador gerador golfadas golfadas qoe qoe figura 
+ diagrama blocos controlador media movel aplicado vasps 
+ funcoes pertinencia controlador nebuloso devem contemplar regiao trabalho regioes criticas correcao proximas limites faixa trabalho regioes transicao 
+ alem disso recomendavel entradas mecanismo inferencia nebulosa normalizadas torno zero atraves calculo dado equacoes 
+ forma facilitar analises sinal 
+ tx tr − 
+ tx tr − 
+ forma atender faixa estabilidade vasps proposta inicio deste capitulo considerado erro relacao referencia metros metros menos margem segura trabalho forma deste intervalo estabilidade pode ser garantida 
+ assim definindo zona critica atuacao faixa erro regiao trabalho rotacao otima bomba faixa 
+ valores construidos conjuntos nebulosos figura 
+ relacionando rotulacao faixas erro conjuntos nebulosos 
+ conjuntos nebulosos entrada conjuntos nebulosos entrada conjuntos nebulosos entrada μμ μμ μμ crb trb crb trb crb trb rt rt rt tra cra tra cra tra cra μ μ μ erro instantaneo erro instantaneo erro instantaneo conjuntos nebulosos entrada conjuntos nebulosos entrada conjuntos nebulosos entrada conjuntos nebulosos entrada crb crb crb trb trb trb rt rt rt tra cra tra cra tra cra erro medio erro medio erro medio erro medio legenda legenda legenda crb regiao critica baixa crb regiao critica baixa crb regiao critica baixa trb regiao transicao baixa trb regiao transicao baixa trb regiao transicao baixa rt regiao trabalho rt regiao trabalho rt regiao trabalho tra regiao transicao alta tra regiao transicao alta tra regiao transicao alta cra regiao critica alta cra regiao critica alta cra regiao critica alta figura 
+ funcoes pertinencia controlador media movel aplicado vasps 
+ fim base regras controlador tipo sugeno usando formulacao tipo constante funcoes saida apresentado capitulo ativando saida valor frequencia inversor aciona bomba 
+ valor final saida ponderado segundo grau ativacao cada regra ativa μk 
+ assim valores saidas correspondente cada regra apresentados tabela 
+ base regras controlador monitoramento media movel 
+ rotulo regiao critica baixa regiao transicao baixa regiao trabalho regiao transicao alta regiao critica alta sigla crb trb rt tra cra instantaneo valor saida hz erro erro medio regras representadas tabela 
+ possuem associacao variaveis entrada sendo cada regra ativa valor saida ser computado atraves formulacao apresentada regras tipo sugeno capitulo 
+ assim sistema apresenta regras acionamento resposta ativam cada valor constante variavel saida entao ponderadas grau ativacao conjunto nebuloso entrada μk 
+ considerando todas regras peso regras erro instantaneo normalizado regra saida hz regra saida hz regra saida hz regra saida hz regras erro medio normalizado regra saida hz regra saida hz etc 
+ exemplo considere entrada erro instanteneo normalizado igual entrada erro medio normalizado tx igual 
+ primeira condicao ativa erro instantaneo conjunto nebuloso rt acionando nenhuma regra enquanto segunda condicao aciona erro medio conjuntos trb rt acionando regras 
+ assim entradas geram saidas apresentadas tabela 
+ aplicacao base regras usando entradas associativas 
+ variavel conjunto entrada erro instantaneo ativo rt erro medio trb erro medio rt μk regra peso μ μ μ variavel saida rotacao bomba rotacao bomba rotacao bomba valor acionado grau ativacao hz hz sinal controle pode entao ser calculado ponderacao saidas ativas grau ativacao ⋅ ⋅ hz 
+ classificador regioes intuito melhor manipulacao regiao trabalho limitada acima abaixo modelo trata sinal entrada funcao classificacao retorna pertinencia relativa distancia limite estabilidade proximo superior inferior valor referencia 
+ abordagem permite livre variacao sinal referencia dentro regiao trabalho controlador forma funcoes classificacao tomam novos coeficientes corrigem distancia limites estabilidade valor nova referencia 
+ ilustra construcao funcoes classificacao acordo referencia correcao desta apos variacao set point longo processo 
+ sp sp sp sp sp sp limite superior limite superior limite superior limite inferior limite inferior limite inferior μ μ μ μ μ μ μ μ μ li sp li sp li sp sp sp sp ls ls ls figura 
+ ilustracao funcao utilizada classificador 
+ conceito permite parametrizacao regiao trabalho vez entrada normalizada intervalo manipulacao valor set point apresenta limitacoes modelo monitoramento media movel 
+ entrada normalizada podese utilizar ideia valor pertinencia dada equacao 
+ forma magnitude expresse proximidade instabilidade referencia 
+ alem disso inclinacao funcao classificacao prove rapida transicao desta pertinencia dois casos 
+ μ − − li li − ls − ls        μ μ ≥ 
+ posto possivel resolver problema minimizacao variacoes acionamento atraves atuacao restrita proximidade regiao critica 
+ mente possivel utilizar classificador monitorar limites estabilidade utilizar mecanismo inferencia nebulosa conforme proposto figura 
+ calcular rotacao proximidades regiao critica realizando correcoes efetivas 
+ sp sp sp ls li sp sp sp sp ls li sp sp sp sp ls li sp classificador classificador classificador μ μ controlador controlador controlador hz hz fuzzy fuzzy fuzzy curva curva bomba bomba qos qos dinamica dinamica nivel nivel nivel nivel gerador gerador golfadas golfadas qoe qoe figura 
+ diagrama blocos controlador classificador regioes aplicado vasps 
+ sinal controle regiao estabilidade configurado valor critico factivel atuador forma imprimir maior correcao 
+ adentrar regiao estabilidade acionamentos sucessivos frequencias paulatinamente menores permitem transicao suave rotacao otima certa distancia limite estabilidade atingida 
+ sucessoes acionamento servem aproximacao instabilidade 
+ selecao rotacoes regiao proxima instabilidade serie conjuntos nebulosos inserida faixas criticas conforme apresentado figura 
+ neste exemplo conjuntos rotulados acordo intensidade alta baixa pertinencia atinge valor saida pode ser definido cada conjunto nebuloso vez tipo sugeno formulacao funcoes saida tipo constante 
+ min min ub ub mb mb μ μ rt rt ua ua max max legenda legenda legenda min regiao critica minima min regiao critica minima min regiao critica minima ub regiao critica ultra baixa ub regiao critica ultra baixa ub regiao critica ultra baixa mb regiao critica baixa mb regiao critica baixa mb regiao critica baixa regiao critica baixa regiao critica baixa regiao critica baixa rt regiao trabalho rt regiao trabalho rt regiao trabalho regiao critica alta regiao critica alta regiao critica alta regiao critica alta regiao critica alta regiao critica alta ua regiao critica ultra alta ua regiao critica ultra alta ua regiao critica ultra alta max regiao critica maxima max regiao critica maxima max regiao critica maxima pertinencia classificada pertinencia classificada distancia normalizada referencia distancia normalizada referencia figura 
+ conjuntos nebulosos entrada classificador regioes 
+ tomando limite inferior nivel causaria quebra bomba li metros superior comprometeria pressao separacao ls metros podese definir base regras tabela 
+ base regras controlador classificador regioes 
+ sigla rotulo valor saida hz pertinencia minima pertinencia ultra baixa pertinencia baixa pertinencia baixa regiao trabalho pertinencia alta pertinencia alta pertinencia ultra alta pertinencia maxima min ub mb rt ua max tabela 
+ pode ser utilizada mesma forma tabela 
+ onde exemplo dado 
+ diferenca reside uso apenas unica variavel entrada 
+ classificador media considerando dois modelos voltados minimizacao esforco controle apresentados cabe analise quanto principais caracteristicas encontradas tempo reacao avaliacao tendencia monitoracao limites estabilidade oscilacao transicao regioes trabalho insensibilidade variacoes referencia sensibilidade oscilacoes bruscas 
+ ambos modelos apresentados anteriormente apresentam formas manipulacao tempo reacao sistema vez avaliacao tendencia media movel realizada permite concluir sobre incrementos sustentados transientes classificacao entrada pertinencia normalizada indica proximidade regiao critica 
+ entanto algumas simulacoes apresentadas capitulo percebidos alguns efeitos colaterais podem ser relevantes dado sistema 
+ primeiro oscilacao sinal controle duas regioes trabalho disturbio sistema possui maior duracao pode apresentar problemas campo caso constante tempo sistema ser alta instrumentacao apresentar rampas aceleracao mudanca ponto trabalho atuador 
+ segundo diz respeito conceito regioes trabalho implica menor manipulacao sistema atraves sinal referencia 
+ ora sistema pode variar livremente torno referencia esperar acompanhe sinal fielmente 
+ ultima consideracao torno disturbios maior amplitude afetam sistema media movel devido leitura variavel instantanea bem afetam sistema classificador fazendo pertinencia variar bruscamente 
+ condicoes embora esperadas podem apresentar riscos atuador deve ser capaz atuar limites deve ser exposto mudanca brusca atuacao 
+ nesse contexto proposto conceito controlador mescla ambos conceitos apresentados anteriormente forma reduzir efeito grandes disturbios atraves realizacao media movel sobre pertinencia classificada limitar faixa estabilidade regioes trabalho permitam acompanhar ordem grandeza sinal referencia ainda permitindo oscilacao torno pontos 
+ adicionalmente vez controlador proposto refinado sendo sensivel mudancas bruscas sinal controle mudancas minimizadas estrategia adotada nesta versao fazse necessario adicionar filtro sinal controlador atuador simulando efeitos saturacao sinal quantizacao rampa maxima acionamento presentes clp industrial 
+ diagrama blocos malha controle questao apresentado figura 
+ μ μ μ μ μ μ μ μ li sp li li sp sp sp li ls ls ls ls classificador classificador classificador media media movel movel μ μ hz hz hz hz qos qos nivel nivel controlador controlador fuzzy fuzzy filtro filtro curva curva bomba bomba dinamica dinamica nivel nivel μ μ μ gerador gerador golfadas golfadas qoe qoe figura 
+ diagrama blocos controlador classificador media 
+ controlador nebuloso inserido malha mecanismo permite definicao regioes trabalho sinal forma permitir certo grau acompanhamento referencia 
+ entanto leitura pertinencia instantanea ainda mantida novamente seguranca 
+ funcoes pertinencia apresentadas figura 
+ conjuntos nebulosos entrada μ conjuntos nebulosos entrada μ conjuntos nebulosos entrada μ μμ μμ μμ crb trb crb trb crb trb rt rt rt tra cra tra cra tra cra μ μ μ pertinencia instantanea classificada μ pertinencia instantanea classificada μ pertinencia instantanea classificada μ conjuntos nebulosos entrada μ conjuntos nebulosos entrada μ conjuntos nebulosos entrada μ conjuntos nebulosos entrada μ crb crb crb trb trb trb rt rt rt tra cra tra cra tra cra pertinencia media classificada μ pertinencia media classificada μ pertinencia media classificada μ pertinencia media classificada μ legenda legenda legenda crb regiao critica baixa crb regiao critica baixa crb regiao critica baixa trb regiao transicao baixa trb regiao transicao baixa trb regiao transicao baixa rt regiao trabalho rt regiao trabalho rt regiao trabalho tra regiao transicao alta tra regiao transicao alta tra regiao transicao alta cra regiao critica alta cra regiao critica alta cra regiao critica alta figura 
+ funcoes pertinencia controlador classificador media 
+ base regras controlador classificador media caso sistema vasps apresentada tabela 
+ mesma forma demais regras tipo sugeno 
+ base regras controlador classificador media adaptado vasps 
+ rotulo valor saida hz sigla pertinencia instantanea pertinencia media regiao critica baixa regiao transicao baixa regiao trabalho regiao transicao alta regiao critica alta crb trb rt tra cra filtro sinal inserido malha objetivo simular minimas variacoes aplicadas sinal controle antes aplicado terminais eletricos bomba bcs corrigindo picos sinal ruidos 
+ basicamente filtro constituido tres elementos ilustrados figura 
+ aplicados sequencia seguir 
+ elemento seguranca impede acionamento bomba fique intervalo estipulado limites funcionamento fisico limitando universo atuacao frequencias inversor 
+ dispositivo limita derivada sinal controle valor maximo valor minimo simulando rampas aceleracao desaceleracao permitidas sistema 
+ limitador atua malha controle eletrico bomba possui constante tempo baixissima vezes ordem milissegundos forma variacoes neste loop interno bomba fazem perceptiveis controle nivel 
+ qualquer forma acionamentos repentinos forma ondas completamente quadradas evitados 
+ ultimo componente filtro aplica segurador ordem zero filtro zoh acionamento sinal controle bomba evitando oscilacao sinal continuo portanto minimizando oscilacao sinal terminais bomba 
+ adotados neste projeto degraus hz forma realizar variacoes suaves acionamento 
+ hz hz saturador saturador fs fs limitador limitador rampa rampa flr fs flr fs quantizador quantizador fq flr fs hz fq flr fs hz figura 
+ detalhamento filtro sinal aplicado controlador atuador 
+ funcoes aplicadas sinal controle dadas equacoes 
+ uf max min      min ≤≤ uu uu max max min 
+ lr lr      − −− max min −− − ≤ min −− max min ≤ − max 
+ onde aeu derivada ude tempo 
+ lr    lr   − 
+ lr − −− 
+ lr lr lr lr −− ≥ 
+ ≤ − lr −− 
+ lr lr filtro caso qualquer problema computo sinal controle acionando bcs indevidamente sinal critico ser aplicado bomba sinal variacao meio meio hertz derivada limitada valor absoluto limitado minimos maximos permanecendo dentro universo desejado 
+ histerese autoajuste ainda melhorias apresentadas modelo classificador media transicao conjuntos nebulosos apresenta dificuldade manter nova regiao trabalho correcao plenamente estabelecida leva imaginar aplicacao conceito histerese fixar variacao saida sistema retorne completamente regiao trabalho anterior efeito proprio comportamento processo apenas correcao controlador 
+ histerese inserida logo apos calculo pertinencia media forma diagrama blocos sistema dado figura 
+ percebese controlador nebuloso malha vez histerese define regioes trabalho 
+ li sp li li sp sp sp li ls ls ls ls classificador classificador classificador μ μ μ μ μ media media movel movel histerese histerese filtro filtro processo processo processo auto auto ajuste ajuste figura 
+ diagrama blocos controlador histerese autoajuste 
+ comportamento histerese dado equacoes 
+ forma regioes trabalho podem ser identificadas figura 
+ diferentes intervalos ilustrados figura correspondem regioes trabalho apresentam valor constante saida fixando sinal controle enquanto sistema permanecer respectiva faixa trabalho 
+ alternancia equacoes apresentadas depende variacoes variavel avaliada pertinencia media cujo universo trabalho normalizado intervalo 
+ pb μ  pbu   ps δμμ δμμμ ≥ − − ps μ pb ≥  μμμ  psu   − δμμμ  − ≤ μμδμ μ ps   zu    ns μμμ μ μμμ − μμ ≥ −≤ 
+ ns μ  μμ  − nsu    μμ nb −≥ μμ −≤ δμ − μ δμ 
+ nb μ  nbu   ns μ μμ − −≥ δμ δμ 
+ associacao funcoes unb μ uns μ uz μ ups μ upb μ constitui funcao aplicada sinal controle gerar valor saida 
+ valor saida vez dado constantes unb uns uz ups upb dependendo intervalo onde pertinencia media localizada dependendo sinal derivada valor absoluto indica valor afastando aproximando zero 
+ vez valores μ μ opostos μ μ valores transicao regioes trabalho derivada modulo pertinencia media positiva 
+ condicao chamada histerese subida 
+ outro lado caso modulo pertinencia media decrescendo caso derivada valor absoluto negativa caracterizada condicao histerese descida neste caso valor transicao regioes trabalho deslocado direcao zero valor δ chamado intervalo histerese 
+ assim podese concluir transicao regioes operacao condicao histerese descida dada valores μ δ μ δ valores opostos μ δ μ δ 
+ obviamente pertinencias usadas conjuntos nebulosos entrada variam intervalo universo trabalho histerese compreendido neste intervalo normalizado podendo ser visualizado forma porcentagens 
+ aplicacao conceitos aqui apresentados realizada capitulo onde apresentados resultados 
+ histerese histerese histerese subida subida subida unb unbunb uns unsuns uz uz uz ups upsups upb upbupb histerese histerese descida descida unb unbunb uns unsuns uz uzuz ups upsups upb upbupb μ μ μδ μδ μ μ μδ μδ μδ μ μδ μ μδ μ μδ μ figura 
+ esquematico ilustrativo comportamento histerese 
+ μ μ μ pertinencia media pertinencia media figura 
+ ilustra conceitos histerese subida descida bem regioes trabalho rotuladas atraves valor respectiva constante saida 
+ nesta possivel verificar curioso efeito histerese sobre regioes trabalho saber regiao ativa valor transicao regioes vizinhas dado maior delta dentre valores transicao entorno 
+ assim podese dizer intervalo trabalho dado regiao expandida entorno valor medio pertinencia regiao 
+ regiao ativa fins transicao regioes afasta zero valor igual intervalo histerese 
+ dessa forma podese dizer intervalo trabalho inativo total dado regiao retraida entorno valor medio pertinencia 
+ efeito permite verificar soma regioes trabalho ativas maior intervalo operacao total valor igual soma todos intervalos histerese encontrados fronteiras operacao 
+ maior regiao trabalho real permite reduzir significativamente acionamentos atuador zelando vida util 
+ dessa forma figura 
+ ilustra regiao expandida entorno pertinencia media igual zero 
+ valor saida histerese dado diagrama blocos dado funcao uz μ cujo valor saida uz 
+ neste ponto interessante retomar consideracoes desenvolvidas modelagem fisica sistema vasps dinamica variacao pressao 
+ havia sido considerado tempo resposta variacao pressao gas maior sistema controle nivel forma trabalhando transiente controle nivel afetado dinamica pressao 
+ assim embora efeitos variacao pressao claros malha controle nivel caso avaliado tempo grande avaliacao dinamica interna vasps talvez amplitude variacao pressao influencie tal ponto valores constantes saida unb uns uz ups upb adequados regioes trabalho definidas 
+ ainda considerando tempos maiores deplecao reservatorio pode implicar alimentacao sistema vasps pressao admissao vazao liquido declinante causando efeito 
+ assim considerandose problema minimizacao esforco controle tentativa adaptar controlador condicoes dinamicas operacao sistema longo tempo desenvolvido mecanismo correcao valor sinal controle equilibrio uz forma caso sistema opere certa proporcao tempo regiao pertinencia media igual zero valor uz atualizado proporcionalmente 
+ importancia desta correcao ilustrada observacoes realizadas simulacao sistema dinamicamente variante tempo onde faixa erro nulo aplicando sinal controle invariante valor uz gerou atuacoes mantiveram sistema equilibrio sendo necessaria atuacao faixa operacao vizinha corrigir sinal saida retornar minimizar erro 
+ diagrama esquematico controlador ilustrando entradas saidas parametros cada bloco pode ser representado figura 
+ limite superior limite superior limite inferior limite inferior classificador classificador classificador μ μ μ μ μ μ μ μ μ μ li sp li li sp sp sp li ls ls ls ls media movel media movel media movel media movel μ μ μ μ μ μ ∑ ∑ ∑ − − − nt nt nt μ μ μ max max min min uz uz histerese histerese histerese δ δ δ filtro filtro processo processo regulador regulador regulador trigger trigger trigger trigger media media movel movel max max min min uz uz figura 
+ diagrama esquematico controlador histerese autoajuste 
+ realizar autoajuste regulador utiliza media movel sinal controle monitora atinja valor uz ups exemplo distancia patamares permanecendo ainda proximo valor equilibrio indicando tendencia sinal controle deslocar direcao extremidades regiao trabalho 
+ apos valor media movel ser atingido uz assume valor sistema passa ser referenciado partir dai sendo novo ponto equilibrio 
+ controlador engloba todos conceitos anteriormente propostos apresenta adicionalmente conceitos robustez histerese 
+ tendo sido idealizado aplicacoes grande constante tempo controlador apresenta ferramentas permite lidar sistemas rapidos dado alto grau informacoes utiliza definir politica controle 
+ formulacao controlador real pode ser menos conservadora vez parametros sistema permitem definir limites permitidos variavel controlada variavel manipulada 
+ merito minimizar esforco controle requer reforcado inicio discussao flexibilidade operacional parametros desempenho 
+ obstante tentativas minimizar erro estacionario desenvolvidas forma contemplar tanto sinal controle quanto permitir brechas compromisso desempenho deixado decisao projetista podendo dar maior peso desempenho 
+ solucao desempenho aplicacao controle hibrido fuzzypid segundo controlador apresentado secao 
+ simulada sistema apresentado equacoes 
+ alem disso fins comparacao aplicado controle pid simples cujos resultados apresentados mesmas figuras resultados controle fpid 
+ entao ambos sistemas variavel manipulada frequencia inversor alimenta bcs cuja relacao vazao saida sistema direta variavel controlada nivel piscina 
+ referencia fixada valor metros 
+ fuzzypid idealmente controle fpid tipo supervisor apresentado secao 
+ representa melhoria sistema controle vasps devido naointrusao processo considerando havia controle pid campo operando 
+ diante desse fato sistema supervisor apresentaria pioras controle vez controlador original mantido sofrendo apenas correcoes ganhos 
+ realizadas simulacoes levaram consideracao partida sistema nivel reservatorio valor minimo forma avaliar desempenho caso critico leitura real abaixo referencia 
+ situacao permite avaliar resposta sistema enchimento critico esvaziamento vez bomba deve ser acionada apenas apos estar submersa sendo estritamente necessario comportamento controlado 
+ referencia nivel sistema metros simulacoes realizadas sistema supervisorio efeito comparacao mensuracao melhoria desempenho 
+ tempo tempo pid pid pid fuzzy fuzzy fuzzy tempo tempo pid pid pid fuzzy fuzzy fuzzy figura 
+ comparativo resposta sinal controle pid fpid 
+ situacao critica imposta permite avaliacao resposta regime transiente estacionamento apos periodo 
+ efeito reproduzido figura 
+ onde apresentada resposta sistema controlador pid contra resposta controlador fpid 
+ alem resposta sistema sendo avaliado sinal controle gerou dada resposta 
+ conforme apresentado figura 
+ notase melhoria significativa sobresinal tempo estabilizacao sistema tao embora sinal controle similar 
+ considerando modulo supervisor aumenta constante torno zero natural resposta possua menor sobressinal dado amortecimento aumentado 
+ entretanto erro estacionario sistema causado saturacao efeito integral valores negativos altos 
+ ambos efeitos podem ser observados figura 
+ apresenta comportamento constantes longo simulacao bem decomposicao sinal controle contribuicoes individuais cada constante 
+ pid pid pid upcom fpid upcom fpid upcom fpid ui pid ui pid ui pid fpid fpid fpid tempo tempo tempo tempo pid pid pid fpid fpid fpid pid pid pid fpid fpid fpid udcom pid udcom pid fpid fpid tempo tempo pid pid pid fpid fpid fpid tempo tempo tempo tempo tempo tempo figura 
+ sinal controle comportamento constantes pid fpid 
+ sinal controle apresentado figura 
+ decomposto componentes proporcional figura 
+ sinais contribuicoes cada ganho composicao sinal controle total verificando saturacao sinal causada efeito integral 
+ alem disso apresentado graficos inferiores comportamento constantes submetidas 
+ exemplo notase reforco aplicado sinal derivativo figura 
+ proximo regiao onde nivel cruzou referencia indicando erro pequeno 
+ indicacao reforco causado aumento valor constante kd variacao positiva saindo indo obtendose sinal controle expressivo sinal cx variacao relativa erro inalterado relacao controle pid 
+ embora sinal controle proporcional apresentado figura 
+ menor sistema supervisorio deve fato erro sistema final menor conforme observado figura 
+ ainda assim aumento valor constante kp apresentada figura 
+ dessa forma observase melhoria geral resposta causada diversas acoes pontuais combinadas 
+ alem disso sinal controle praticamente mantido forma energia controle variacao imposta atuador mesmas viabilizando projeto sobre controlador atendia requisito energia controle 
+ desempenho obtido objeto estudo trabalho alcancado perda qualidade sinal controle perda estabilidade 
+ resultados modelos derivados fpid consultar apendice 
+ solucoes esforco controle nesta secao variaveis controlada manipulada continuam sendo mesmas dado processo controlar 
+ entretanto objetivo controle formulado intuito minimizar alteracoes sinal controle forma sistema permaneca sinal controle proximo constante saida oscilante 
+ saida entanto representada nivel liquido vasps deve permanecer dentro faixa estipulada projeto forma interessante conceber sistema evite muitas oscilacoes 
+ oscilacoes vez geradas disturbio proporcionado gerador golfadas projetos minimizacao esforco controle passo bons resultados adquiridos sinal controle gerador golfadas substituido agressivo va dificultar controle conforme apresentado anteriormente 
+ vasps campo sistema alta constante tempo conforme experimentado projetos iniciais forma variacoes nivel liquido sofrem oscilacoes tao bruscas quanto simuladas validacao controladores deste estudo 
+ entanto utilizar gerador golfadas agressivo reforca projeto computacional futuras experimentacoes sistema 
+ monitoramento media movel controlador adaptado vasps realizadas simulacoes testar conceito proposto neste modelo usando primeiro gerador golfadas 
+ parametros manipulados simulacoes nivel inicial reservatorio numero pontos usado calculo media movel doravante referenciado 
+ nivel inicial reservatorio seguiu referencia metros primeiro conjunto simulacoes variado metros posteriormente anular vasps completamente cheio 
+ nivel inicial usado partidas sistema oleo diesel antes abrir entrada fluido multifasico permite avaliar resposta sistema regime transiente condicao erro inicial grande 
+ media movel vez assumiu valores pontos taxa amostragem segundos cobrindo assim janela tempo vezes menor numero pontos 
+ resultados totalizaram seis simulacoes cujas curvas apresentadas separadamente duas figuras 
+ apresenta resposta nivel inicial metros nivel graficos superiores sinal controle graficos inferiores tendo sido ordenados esquerda direita casos igual pontos 
+ padrao adotado figura 
+ apresenta resultados nivel inicial metros 
+ curvas permitem verificar efeito 
+ quanto menor proximo nivel medio instantaneo portanto maiores variacoes sinal saida vez picos refletidos nivel medio 
+ contrario quanto maior lenta gradual reacao controlador permite picos distantes referencia 
+ ambas simulacoes notase comportamento forma valor intermediario picos destacados resposta ocorre valor pontos bem comportamento descendente ascendente sinal controle inves resposta retardada relacao instantanea ocorre valor pontos 
+ resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel med med med med med med med med med med med med tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo rotacao bomba rotacao bomba rotacao bomba rotacao bomba rotacao bomba rotacao bomba rotacao bomba rotacao bomba fref fref fref fref tempo tempo tempo tempo fref fref fref fref rotacao bomba rotacao bomba rotacao bomba rotacao bomba fref fref fref fref tempo tempo tempo tempo tempo tempo tempo tempo figura 
+ curvas resposta controlador media movel nivel inicial metros 
+ simulacoes percebese sinal controle comportou conforme esperado apresentando poucas oscilacoes estabilizado 
+ entanto simulacao realizada segundos permitiu avaliar correcoes sobre nivel apenas caso nivel inicial igual metros media movel usando pontos caso oscilacoes devido transicao conjuntos nebulosos 
+ dessa forma possivel notar efeito disturbio prolongado tentando desestabilizar sistema erro estacionario duracao disturbio oscilacoes sinal controle fronteira entra faixa estabilidade faixa transicao 
+ resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel resposta nivel med med med med med med med med med med med med tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo rotacao bomba rotacao bomba rotacao bomba rotacao bomba rotacao bomba rotacao bomba rotacao bomba rotacao bomba ref ref ref ref tempo tempo tempo tempo ref ref ref ref rotacao bomba rotacao bomba rotacao bomba rotacao bomba ref ref ref ref tempo tempo tempo tempo tempo tempo tempo tempo figura 
+ curvas resposta controlador media movel nivel inicial metros 
+ finalmente possivel afirmar controlador deve ser aplicado apenas sistemas onde sinal referencia sofre muitas variacoes possivel projetar faixa trabalho controlador considerando variacao limitada referencia tal forma situacao critica continue dentro limites estabilidade sistema 
+ condicoes devem ser respeitadas fatores determinantes garantia estabilidade sistema 
+ formulacao possivel sistema vasps 
+ classificador regioes controlador realizado intuito robustez maxima vez monitora faixa estabilidade possui grande regiao rotacao constante centro faixa pertinencia 
+ dessa forma tomadas medidas checar tal caracteristica 
+ primeira utilizar sinal referencia variavel todas simulacoes avaliando possivel perturbar estabilidade sinal controle 
+ alem disso constantes li ls simuladas valores metros apresentadas graficos esquerda variadas valores metros apresentadas graficos direita forma avaliar efeito causado controle rigido processo 
+ apresentada simulacao nivel inicial metros 
+ nivel inicial representa continuidade operacao sistema qualquer instante tempo sendo valor operacional ideal nivel 
+ necessario verificar sistema reage transicao tendo sido realizadas mesmas simulacoes nivel inicial metros conforme figura 
+ resposta nivel li ls resposta nivel li ls resposta nivel li ls resposta nivel li ls resposta nivel li ls resposta nivel li ls resposta nivel li ls resposta nivel li ls referencia referencia referencia referencia referencia referencia referencia referencia tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo rotacao bomba li ls rotacao bomba li ls rotacao bomba li ls rotacao bomba li ls rotacao bomba li ls rotacao bomba li ls rotacao bomba li ls rotacao bomba li ls fref fref fref fref fref fref fref fref tempo tempo tempo tempo tempo tempo tempo tempo figura 
+ resposta classificador regioes nivel inicial metros 
+ resposta nivel li ls resposta nivel li ls resposta nivel li ls resposta nivel li ls resposta nivel li ls resposta nivel li ls resposta nivel li ls resposta nivel li ls referencia referencia referencia referencia referencia referencia referencia referencia tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo rotacao bomba li ls rotacao bomba li ls rotacao bomba li ls rotacao bomba li ls rotacao bomba li ls rotacao bomba li ls rotacao bomba li ls rotacao bomba li ls fref fref fref fref fref fref fref fref tempo tempo tempo tempo tempo tempo tempo tempo figura 
+ resposta classificador regioes nivel inicial metros 
+ conforme esperado controlador mostrouse bastante robusto transicao suave apresentada agora 
+ entanto efeito colateral bastante prejudicial nivel acompanha nenhuma variacoes referencia pois ajuste regiao projeto vez base regras valor acionamento bomba todo intervalo regiao estabilidade unico 
+ explica oscilacoes ocorrem porque nivel estabiliza proximo regiao transicao assim adentra regiao estabilidade minimizando erro 
+ classificador media controlador apresentou resultado bastante satisfatorio conforme apontado simulacoes niveis iniciais metros metros altura sinal referencia mantido constante conforme figura 
+ sinal referencia variavel conforme figura 
+ resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial referencia referencia referencia referencia referencia referencia referencia referencia tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial fref fref fref fref fref fref fref fref tempo tempo tempo tempo tempo tempo tempo tempo figura 
+ resposta sinal controle controlador classificador media referencia constante 
+ resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial referencia referencia referencia referencia referencia referencia referencia referencia tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial fref fref fref fref fref fref fref fref tempo tempo tempo tempo tempo tempo tempo tempo figura 
+ resposta sinal controle controlador classificador media referencia variavel 
+ possivel notar nestas simulacoes algumas poucas oscilacoes curtas longo operacao sistema tao embora apresentem bem menos frequentes modelos controlador anterior 
+ alem disso percebese sinal acompanha alteracoes set point permitindo melhoria significativa desempenho relacao outros modelos 
+ assim devido bom resultado controlador apresentou usando gerador golfadas frequencia golfadas aleatoria realizado novo teste ainda set point variavel gerador golfadas amplitude golfadas aleatorias acordo figura 
+ resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial referencia referencia referencia referencia referencia referencia referencia referencia tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial fref fref fref fref fref fref fref fref tempo tempo tempo tempo tempo tempo tempo tempo figura 
+ resposta sinal controle controlador classificador media ultimo gerador golfadas frequencia amplitude variaveis 
+ figura notase gerador golfadas agressivo tanto desempenho quanto manipulacao sinal controle mantidos provendo processo resultado conforme desejado sinal controle corrigiu sinal saida nivel piscina faixa bastante proxima variacao picos largos suaves obtidos outros modelos 
+ histerese autoajuste vez controlador abrange ambos conceitos introduzidos outros dois possuindo classificador entrada computo media movel necessario realizar simulacoes todo conjunto parametros 
+ entanto feitas duas analises separadamente controlador si dinamica junto processo outra avaliacao efeito mecanismo autoajuste 
+ conseguir simulacao apenas avaliando controlador mecanismo autoajuste basta manter entrada gerador golfadas sistema vinha sendo mantida entao pois mecanismo autoajuste apenas efeito apos sistema sofrer mudancas dinamicas proposto projeto capitulo 
+ caso vasps mudanca dinamica deplecao reservatorio oleo decaimento pressao formacao 
+ simulacao apenas mecanismo auto ajuste podese simular vazao entrada decaindo manter parametros controlador constantes forma avaliar correcoes impostas frequencias acionamento uz ups uns 
+ avaliacao controlador avaliacao controlador realizadas inicialmente simulacoes variando apenas nivel inicial sinal referencia fim avaliar transiente 
+ demais parametros fronteiras regioes trabalho μ μ janela histerese δ valor saida cada regiao unb uns uz ups upb limites estabilidade sistema li ls numero pontos utilizados media movel mantidos constantes simulacoes iniciais 
+ apresenta esquematico configuracoes valores μ igual μ igual δ igual uz valendo hz ups valendo hz uns hz upb hz unb hz 
+ fim configurado pontos taxa amostragem segundo li metros ls metros 
+ histerese histerese histerese subida subida subida hz hz hz hz hz hz hz hz hz hz hz hz hz hz hz histerese histerese descida descida hz hz hz hz hz hz hz hz hz hz hz hz hz hz hz μ μ μ pertinencia media pertinencia media figura 
+ esquematico histerese adaptado caso vasps 
+ realizadas quatro simulacoes parametros 
+ controlador conceitualmente robusto anteriores utilizado ultimo gerador golfadas apresentado amplitude frequencia golfadas liquido variaveis 
+ nivel inicial assumiu valor metros graficos esquerda valor metros graficos direita 
+ referencia mantida constante metros figura 
+ variada segundo conjunto simulacoes conforme sinal pontilhado apresentado figura 
+ modelo apresentou simulacoes melhor sinal controle oscilacoes curtas frequentes bem erro estacionario condicionalmente proporcional 
+ entanto grau compromisso qualidade sinal controle desempenho pode ser manipulado parametros mantidos constantes nestas simulacoes pode ser visto apendice onde apresentadas simulacoes exaustivas todos parametros 
+ alem disso controlador submetido bruscas variacoes referencia apresentando oscilacoes indevidas sinal controle acompanhando referencia dentro faixa proximidade 
+ resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial referencia referencia referencia referencia referencia referencia referencia referencia tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial fref fref fref fref fref fref fref fref tempo tempo tempo tempo tempo tempo tempo tempo figura 
+ resposta controlador histerese autoajuste referencia constante 
+ resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial resposta nivel nivel inicial referencia referencia referencia referencia referencia referencia referencia referencia tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo tempo rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial rotacao bomba nivel inicial fref fref fref fref fref fref fref fref tempo tempo tempo tempo tempo tempo tempo tempo figura 
+ resposta controlador histerese autoajuste referencia variavel 
+ variacoes amplitude sinal saida rotacao bomba resposta parecem ser excedentes desejado vasps ocorre devido quantidade variacoes referencia curto periodo tempo 
+ caso operador venha fazelo campo sistema obedecera pois sendo projetado 
+ recomendacao entanto caso deseje vida util longa possivel bcs menores devem ser variacoes referencia 
+ sistema apresentou transicao estados suave sair patamar nivel inicial metros 
+ transicao tao paulatina quanto variacao nivel permitiu 
+ embora controlador apresente qualidade visivel sinal controle simulacoes iniciais apresentaram desempenho ainda deixa desejar tempo resposta erro estacionario tao embora resultados apresentem proximo desejado vasps 
+ oscilacoes obviamente permitem controle nivel exemplar controle rotacao foco deste modelo apresentase adequado simulacoes longa duracao tomadas partir entao 
+ apendice apresenta conjunto experimentos computacionais realizados sobre controlador histerese autoajuste teste controlador adaptado vasps ainda testar autoajuste 
+ simulacoes visam encontrar configuracao ideal parametros bem efeito dinamica sistema 
+ apendice conclui propostas experimentacao real implementacao conceitos desenvolvidos propostos neste trabalho 
+ fins referencia tabela 
+ apresenta grupos experimentos desenvolvidos computacionalmente 
+ planejamento experimentos computacionais verificacao relacao parametros sinal controle resposta sistema 
+ simulacao ordem sp var var var var var δ δ variaveis μ μ unb uns uz ups upb 
+ rsl fsl ademais curvas conclusivas melhor desempenho encontrado apresentadas figura 
+ onde pode notar melhoria relacao simulacoes iniciais 
+ importante notar tempo simulacao destas curvas estendidos relacao simulacoes anteriores forma realizar avaliacao rigorosa parametros simulacao dados tabela 
+ nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps 
+ hz hz hz hz hz sp nivel sp nivel sp nivel sp nivel sp nivel tempo tempo tempo tempo sinal controle total bomba sinal controle total bomba sinal controle total bomba sinal controle total bomba ref 
+ hz ref ref ref ref hz hz hz hz tempo tempo tempo tempo figura 
+ simulacao teste uz apresentando curvas 
+ possivel notar apos avaliacao profunda controlador possivel concluir sobre sistema ponto configuralo alguns poucos acionamentos dia forma sob condicoes severas trabalho caso sistema permaneca dentro escopo atuacao bomba possivel corrigir disturbios trabalhar acionamentos demorados suaves 
+ avaliacao autoajuste possivel notar figura 
+ talvez rotacao constante zona trabalho proxima erro nulo permitisse idealmente equilibrio disturbio conhecido controlado dada media ponderada rotacoes ativadas tempos atuacao decorridos 
+ rotacao proporcionaria vazao saida correspondesse balanco massa sistema 
+ sabese entanto vazao recebida vasps advinda poco altera conforme golfadas evoluem forma sistema sendo sempre perturbado impossivel manter equilibrio perfeito vazao saida constante 
+ conceitualmente entretanto desejado vazao saida equilibrio proxima possivel media oscilacoes vazao entrada forma minimizar alteracoes sinal controle 
+ assim considerando rotacao saida ativada patamares constantes oscilam torno vazao ideal saida possivel computar media movel sinal controle ativado mesma forma feito entrada pertinencia classificada comparalo patamares saida parametrizados encontrando distancia media movel cada 
+ sistema vasps distancia configurada sendo ponderacao valor valor equilibrio uz valor faixa subsequente uns ups forma valor uz dado equacao 
+ ⋅ − ⋅ ns ≥ ⋅ ∑ − nt ⋅ ⋅ ⋅ ps ps 
+    
+    
+   ⋅ 
+ ⋅ ps ⋅ − 
+ ⋅ ns ∑ ∑ − nt − nt ≤ ⋅ − ⋅ ns arbitragem sobre pesos advem conclusoes experimentais apontaram necessidade mudancas suaves valor rotacao equilibrio pois deslocada centro faixa operacao sinal controle mudancas maiores tornamse bruscas sentido onde maior margem variacao nivel regiao distante critica 
+ ainda sistema busca novo patamar equilibrio devido mudancas bruscas sistema alteracoes maior magnitude patamar equilibrio provaram retorno sistema condicao erro nulo dificuldades corrigir valor uz devido necessidade media ativacoes alta baixa sentido oposto acionamento dificilmente ocorre sistema retorna ponto operacao critico 
+ simplicidade computacional valor saida sinal controle faixa transicao uns ups parametrizado valor saida outros intervalos uz unb upb forma alterar valor uz automaticamente todos outros patamares sinal controle corrigidos tal forma computo valores uns ups dados equacoes 
+ interessante notar acionamento uns ups distante avaliacao media movel sinal controle proporciona faixas correcao poder significativo atuacao permitindo variacoes media movel condizentes pesos propostos 
+ ⋅ ns ⋅ ps nb ⋅ pb ⋅ 
+ resposta sistema nivel metros resposta sistema nivel metros resposta sistema nivel metros resposta sistema nivel metros tempo tempo tempo tempo tempo tempo tempo tempo sinal disturbio vazao entrada sinal disturbio vazao entrada sinal disturbio vazao entrada sinal disturbio vazao entrada 
+ tempo tempo tempo tempo 
+ tempo tempo tempo tempo sinais controle total equilibrio sinais controle total equilibrio sinais controle total equilibrio sinais controle total equilibrio ref ref ref ref eq eq eq eq tempo tempo tempo tempo ref ref ref ref eq eq eq eq tempo tempo tempo tempo figura 
+ curvas simulacoes teste mecanismo autoajuste 
+ finalmente realizar simulacoes importante ponderar sobre valor numero pontos usado media movel sinal controle 
+ diferentemente utilizado pertinencia entrada deseja parametro sinal controle grande pois tempo reacao sinal controle deve possuir sobre sistema deve ser menor alteracao deve ser rapida tempo reacao resposta vez sinal controle propicia condicao trabalho estavel 
+ assim utilizando inicialmente sinal controle valor pontos vez pontos propostos sistema conforme apendice realizadas simulacoes cujos resultados apresentados figura 
+ curvas apresentam resposta nivel sinal controle valor uz duas condicoes simuladas valores vazao entrada gerador golfadas disturbio dadas graficos 
+ primeira condicao simula transicao descontinua grande amplitude sistema exemplo segundo poco manifold ser interrompido bruscamente 
+ duas transicoes forma melhor avaliar transiente 
+ segunda condicao representa declinio linear magnitude vazao representando queda linear pressao poco 
+ queda suave campo vez simulacao possui duracao segundos corresponde periodo cinco horas meia trabalho 
+ ambas simulacoes possivel notar valor uz tres patamares trabalho buscados mecanismo autoajuste bem transiente bastante evidente representado mudancas degrau refletidas sinal controle 
+ interessante notar embora ativacoes faixas transicao momento algum sistema apresentou instabilidade alteracao patamares apresentando comportamento desejado 
+ avaliacao resultados sintese dificuldades vantagens cada modelo desenvolvido segundo estrategia minimizacao esforco controle apresentada tabela 
+ comparacao controladores voltados minimizacao esforco 
+ modelo caracteristicas vantagens desvantagens monitoramento media movel calculo nivel medio ajuste sinal controle logica nebulosa regioes trabalho definidas conjuntos nebulosos 
+ amplas regioes estabilidade sinal controle transicao suave condicao critica estavel 
+ sinal controle oscilatorio patamares saida estacionamento sinal controle regioes trabalho variacoes limitadas setpoint limitacao escolha sinal controle 
+ classificador regioes ajuste sinal controle logica nebulosa definicao limites moveis estabilidade 
+ calculo media classificacao entrada relativamente setpoint definicao limites moveis estabilidade classificador regioes media ajuste sinal controle logica nebulosa regioes trabalho definidas conjuntos nebulosos parametrizavel relacao clara parametros requisitos 
+ calculo media classificacao entrada relativamente setpoint classificador regioes media histerese definicao limites moveis estabilidade regioes trabalho definidas histerese parametrizavel relacao clara parametros requisitos 
+ setpoint variavel sinal controle sensivel alteracoes permite estreitar faixa estabilidade intervalo continuo selecao sinal controle 
+ insensibilidade variacoes setpoint sinal controle oscilatorio patamares saida limitacao escolha sinal controle 
+ sinal controle sensivel alteracoes setpoint variavel sinal controle estavel proximo setpoint permite estreitar faixa estabilidade amplas regioes estabilidade sinal controle transicao suave condicao critica estavel 
+ sinal controle sensivel alteracoes setpoint variavel sinal controle estavel proximo setpoint permite estreitar faixa estabilidade amplas regioes estabilidade sinal controle transicao suave condicao critica estavel 
+ sinal controle oscilatorio patamares saida estacionamento sinal controle regioes trabalho limitacao escolha sinal controle 
+ limitacao escolha sinal controle 
+ podese notar evolucao trabalho partindo dois conceitos distintos controlador representados dois primeiros modelos 
+ embora ambos utilizem logica nebulosa ferramenta diferenca estrategia controle propiciou resultados distintos 
+ enquanto primeiro modelo media movel estabilizacao suave regioes trabalho amplas variacao setpoint limitada segundo modelo classificador regioes maior flexibilidade selecao sinal controle controle rigido devido regioes estabilidade menores acarreta detrimento qualidade resposta 
+ ainda assim ambos apresentaram limitacao escolha sinal controle dificuldades tratamento variacao setpoint 
+ adiante outras duas estrategias controle composicoes destes dois conceitos permitiram corrigir dificuldades complementares controladores parametrizacao conjuntos nebulosos atraves classificador minimizando dificuldades oscilacao regioes trabalho conjugacao estreitamento faixa estabilidade alargamento faixa trabalho sinal controle permite minimizar alteracoes acionamento bomba 
+ ainda ultimo aspecto uso histerese lugar conjuntos nebulosos reforcou resultado obtido anteriormente aplicacao mecanismo autoajuste constantes saida permitiu adequacao controlador dinamica longo prazo vasps garantindo longa vida util controlador evitando necessidades reprogramacao 
+ finalmente desvantagem presente todos modelos apresentados tabela limitacao escolha sinal controle 
+ ocorre consequencia opcao preservacao atuador sendo parte conceito estrategia adotada detrimento desempenho funcao estabilidade operacional 
+ resultado esperado retorno adquirido abrir mao desta caracteristica sistema apareceu claramente sinal controle adotado 
+ capitulo conclusoes neste trabalho buscouse abordar problema controle vasps estrategias controle diferentes tradicionais focando requisitos sistema bomba bcs restringindo tecnologias classicas presentes controlador industrial 
+ primeiro ganho desta abordagem pode ser notado secao 
+ detalhada apendice apresentou uso tecnica controle adequada possivel melhorar sinal controle perda desempenho sinal resposta interferencia direta controlador usado campo 
+ estrategia apresentada propicia adicionalmente outro efeito positivo constante monitoramento operacao sistema atraves linguagem intuitiva aplicada operacao manual funcionando redundancia consequentemente provendo maior seguranca operador robustez sistema 
+ passo permitido interferir tecnologia presente sistema entao estudados novos conceitos novos modelos controladores diferentes niveis exigencia sistema forma tecnicas controle inteligente aplicadas mostraram adequadas tratamento sistemas continuos proveram maior facilidade tomada decisao automatica 
+ sintese dificuldades vantagens cada modelo desenvolvido segundo estrategia minimizacao esforco controle apresentada tabela 
+ inumeros ganhos encontrados melhoria desempenho operacional adocao estrategia adequada permitiu balanceamento compromisso desempenho versus esforco controle proposicao controladores visam reduzir custo operacao alto mar atraves reducao numero intervencoes submarinas causada aumento vida util bomba bcs 
+ provou ser possivel melhoria desempenho operacional uso bcs criticado devegowda scott flexibilidade controlador gerenciamento compromisso desempenho versus esforco controle permite alternar diversas condicoes operacao sistema comprovando flexibilidade tecnologia controle inteligente 
+ mostrou suavizacao sinal controle implica geracao picos resposta viceversa interface intuitiva uso logica nebulosa permite acompanhar processo mesma forma faz campo ler curvas operacao sistema 
+ caracteristica evidente subsecoes secao 
+ permite reformulacao sistema supervisorio interface amigavel usuario concepcao simulador coesao logica aplicada sistema monitoramento diversas variaveischave uso gerador golfadas agressivo sinal obtido campo permite simulacao operacao forma intuitiva pode ser usado treinamento desenvolvimento pessoas inclusive possibilidade treinamento situacoes emergenciais po si pode evitar complicacoes situacoes risco dada dificuldade encontrar capacitar manter maodeobra adequada ambiente exploracao aguas profundas aumento entendimento geral sobre sistema conhecimento dinamica fisica vasps propiciado curvas resposta permite longo prazo maior adequacao tecnologias menor tempo despendido experimentacao campo dada existencia simulador 
+ podese citar conhecimento adquirido sobre sistema alta constante tempo resposta algo desconhecido antes primeira operacao evidente resultados obtidos limites oscilacao resposta sistema tendencias geradas sinais erro media erro antes tratamento classificador conjuntos nebulosos variaveis correlacao clara cuja conclusao sobre impacto sistema tao intuitiva ajuste automatico contribuicao gerada elaboracao mecanismo independente autoajuste controlador ferramenta automacao pode ser aplicada outros conceitos controlador adequando funcionamento equipamento conhecida dinamica decaimento vazao producao pressao pocos 
+ ferramenta reduz necessidade reprogramacao periodica equipamentos 
+ propostas trabalhos futuros usando conceitos desenvolvidos neste trabalho sugeremse seguintes atividades tabela 
+ apresenta serie configuracoes possiveis modelo ultimo controlador desenvolvido classificador regioes media histerese pode ser usada guia experimentacao laboratorio 
+ trabalho aplicacao proximo passo validacao desenvolvimento obtido neste trabalho modelo fisico vasps proposto neste trabalho supoe algumas consideracoes realizadas capitulo podem ser estudadas fundo fim obter modelo refinado 
+ trabalho poderia inclusive minimizar desvios serem encontrados estudo experimental poderia dar seguintes frentes trabalho curva bomba poderia ser estudado efeito variacao curva carga sistema ocaionada variacao velocidade vazao fluido dinamica nivel considerar efeitos pressao variacao nivel estudar viabilidade trabalhar vaso pressurizado mapeando relacao variaveis controle pressao temperatura adaptar controladores obtidos realizacao malhas controle adicional sistema propondo utilizacao atuadores adequados cada situacao exemplo uso valvula choke controle pressao gas cruzamento variaveis realizar estudo fenomenologico encontrar interrelacao variaveis volume pressao temperatura possivelmente incluindo efeitos bomba vibracao controladores propostos neste trabalho podem ser aplicados outros processos continuos 
+ estudos grandes potenciais otimizacao sistemas podem seguir adaptacao controladores controle pressao temperatura vazao outros tipos separadores transporte gasodutos 
+ poderia ser estudado controle outro tipo atuado outros metodos elevacao artificial bcp area controle inteligente estudos possiveis integracao maior capacidade inferencia conclusao decisao controladores exemplo utilizacao redes neurais aprendizado processo previsao condicoes futuras baseadas leitura disturbios entrada campo 
+ possivel imaginar conhecimento escoamento sensorizacao pode permitir ajuste controlador condicao prevista futuro proximo necessitando correcoes realimentacao esperam haver erro real corrigilo 
+ outras tecnicas controle podem ser empregadas controle distribuido permita integracao sistemas trabalhando concorrentemente forma gerenciar exemplo entradas advindas producao plataforma 
+ controle distribuido pode lancar mao tecnica agentes inteligentes 
+ referencias biblograficas astrom 
+ self tuning regulators 
+ addisonwesley longman publishing co 
+ fuzzy modeling control 
+ application artificial intelligence process control 
+ ltd headington hill hall oxford 
+ novas estrategias controle plataforma 
+ rio oil gas expo conference rio janeiro setembro ibp 
+ controle inteligente separador vasps 
+ congresso brasileiro pesquisa desenvolvimento petroleo gas campinas outubro 
+ controle supervisorio inteligente separador submarino vasps 
+ iv congresso rio automacao rio janeiro maio ibp 
+ fuzzy tuned pid control vasps subsea separator 
+ th brazilian conference dynamics control applications jose rio preto 
+ vasps installation operation campos basin 
+ offshore technology conference otc houston texas maio 
+ assessment subsea production systems 
+ spe annual technical conference exhibition denver colorado outubro spe 
+ analise fenomenologica operacao bomba centrifuga escoamento bifasico 
+ tese doutorado fem ig unicamp marco 
+ hydrodynamic studies cyclonic separator 
+ offshore technology conference otc houston texas maio 
+ twophase slug flow 
+ fuzzy logic control 
+ thesis technich university delft isbn dutsh 
+ realtime fuzzy expert control 
+ international conference control 
+ tuning fuzzy pid controllers 
+ technical report n° 
+ technical university denmark department automation lyngby denmark 
+ nonlinear adaptive control design 
+ john wiley sons inc 
+ new york ny usa 
+ engenharia controle moderno 
+ publication upper saddle river 
+ publication menlo park california 
+ addison wesley longman inc 
+ vasps prototype marimba field — workover restart 
+ spe latin american caribbean petroleum engineering conference rio janeiro junho spe 
+ transparent fuzzy systems modeling control 
+ thesis informatics system engineering tallinn technical university estonia 
+ fuzzypid controllers vs 
+ proceedings fifth ieee international conference fuzzy systems 
+ fuzzypid pid conventional controllers good choice 
+ proceedings biennial conference north american fuzzy information processing societynafips pp 
+ state art cylindricalcyclone compactseparator technology 
+ spe distinguished author series 
+ multivariable feedback control 
+ publication baffins lane 
+ john wiley sons 
+ cascade control unstable systems aplication stabilization slug flow 
+ apresentado ifacsymposium adchem hong kong janeiro 
+ lowdimensional dynamic model severe slugging control design analysis 
+ apresentado multiphase san remo italia junho 
+ fuzzy identification systems applications modeling control 
+ ieee transactions systems man cybernetics 
+ stability analysis design fuzzy control systems 
+ fuzzy sets systems 
+ controle inteligente sistema separacao bombeamento submarino vasps 
+ rio oil gas expo conference ibp 
+ controlador fuzzy sistema separacao bombeamento submarino vasps 
+ rio oil gas expo conference ibp 
+ incremental fuzzy expert pid control 
+ industrial electronics outubro 
+ van nauta lemke 
+ fuzzy pid supervisor 
+ proceedings th ieee conference decision control fort lauderdale florida usa 
+ dynamic simulation controlsystem design gas liquid cylindrical cyclone separators 
+ spe spe journal 
+ adaptive fuzzy systems control design stability analysis 
+ publication englewood cliffs prentice hall 
+ editora mcgraw hill edicao 
+ fuzzy gain scheduling pid controllers 
+ ieee transactions systems man 
+ apendice dados projeto modelo supervisorio projeto controladores pid 
+ pi referencia referencia pk pk ik ik ∫ ∫ planta planta processo processo figura 
+ diagrama blocos controlador pi 
+    → sk 
+ sh spsk spsk ⋅ ⋅ 
+ pi derivada ⋅ 
+ referencia referencia ik ik pk pk dt dt planta planta processo processo figura 
+ diagrama blocos controlador pi derivada 
+    → sk 
+ sh spsk spsk ⋅ ⋅ ⋅ 
+ ⋅ − − polo − 
+ pd referencia referencia pk pk dk dk dt dt planta planta processo processo figura 
+ diagrama blocos controlador pd 
+    → sk sh spsk spsk ⋅ ⋅ ⋅ 
+ − − polo − 
+ − projeto controladores inteligentes 
+ controle fpid ie ie ce ce ek ek ix ix iek iek cx cx cek cek base base regras regras pkfp pkfp p∆ p∆ pkfi pkfi i∆ i∆ pkfd pkfd d∆ d∆ figura 
+ diagrama blocos controlador fpid 
+ μ μ μ μ nb nb nb nb ns ns ns ns ps ps ps ps pb pb pb pb μ μ μ nb nb nb ns ns ns ps ps ps pm pm pm pb pb pb μ μ μ μ μ nb nb nb legenda legenda legenda nb negative big negativo nb negative big negativo nb negative big negativo ns negative small pouco negativo ns negative small pouco negativo ns negative small pouco negativo zero zero zero ps positive small pouco positivo ps positive small pouco positivo ps positive small pouco positivo pm positive medium positivo medio pm positive medium positivo medio pm positive medium positivo medio pb positive big positivo pb positive big positivo pb positive big positivo ps ps ps pb pb pb 
+ conjuntos nebulosos controlador fpid 
+ variaveis entrada ix cx 
+ variacao constante kp ∆p 
+ variacao constantes ki kd ∆i ∆d 
+ base regras controlador supervisor fpid variacao erro integral erro pf nb ns ps pb nb 
+ nb ns ps pb nb 
+ df variacao erro nb ns ps pb nb 
+ controle fpi ek ek ie ie ix ix iek iek base base regras regras pkfp pkfp p∆ p∆ pkfi pkfi i∆ i∆ figura 
+ diagrama blocos controlador fpi 
+ μ μ μ μ μ μ nb nb nb nb ns ns ns ns ps ps ps ps pb pb pb pb μ μ μ nb nb nb ns ns ns ps ps ps pm pm pm pb pb pb nb nb nb nb ns ns ns ns ps ps ps ps pb pb pb pb μ μ μ μμ μ nb nb nb ps ps ps pb pb pb 
+ conjuntos nebulosos controlador fpi 
+ integral relativa erro ix 
+ variacao constante kp ∆p 
+ variacao constante ki ∆i 
+ base regras controlador supervisor fpi pf nb ns ps pb nb 
+ integral erro integral erro nb ns ps pb nb 
+ controle fpi derivada ek ek ce ce cx cx cek cek base base regras regras pkfi pkfi i∆ i∆ pkfp pkfp p∆ p∆ figura 
+ diagrama blocos controlador fpi derivada 
+ μ μ μ μ nb nb nb nb ns ns ns ns ps ps ps ps pb pb pb pb μ μ μ nb nb nb ps ps ps pb pb pb 
+ μ μ μ nb nb nb ns ns ns ps ps ps pm pm pm pb pb pb legenda legenda legenda nb negative big negativo nb negative big negativo nb negative big negativo ns negative small pouco negativo ns negative small pouco negativo ns negative small pouco negativo zero zero zero ps positive small pouco positivo ps positive small pouco positivo ps positive small pouco positivo pm positive medium positivo medio pm positive medium positivo medio pm positive medium positivo medio pb positive big positivo pb positive big positivo pb positive big positivo figura 
+ conjuntos nebulosos controlador fpid 
+ variaveis entrada ix cx 
+ variacao constante kp ∆p 
+ variacao constante ki ∆i 
+ base regras controlador supervisor fpi derivada pf nb ns ps pb nb 
+ variacao erro variacao erro nb ns ps pb nb 
+ controle fpd ek ek ce ce cx cx cek cek base base regras regras pkfp pkfp p∆ p∆ pkfd pkfd d∆ d∆ figura 
+ diagrama blocos controlador fpd 
+ μ μ nb nb nb nb ns ps ns ps ns ps ns ps pb pb pb pb μ μ μ nb nb nb ns ns ns ps ps ps pm pm pm pb pb pb 
+ μ μ μ μ nb nb legenda legenda legenda nb negative big negativo nb negative big negativo nb negative big negativo ns negative small pouco negativo ns negative small pouco negativo ns negative small pouco negativo zero zero zero ps positive small pouco positivo ps positive small pouco positivo ps positive small pouco positivo pm positive medium positivo medio pm positive medium positivo medio pm positive medium positivo medio pb positive big positivo pb positive big positivo pb positive big positivo ps ps pb pb figura 
+ conjuntos nebulosos controlador fpd 
+ variaveis entrada ix cx 
+ variacao constante kp ∆p 
+ variacao constante kd ∆d 
+ base regras controlador supervisor fpd variacao erro variacao erro pf nb ns ps pb nb 
+ df nb ns ps pb nb 
+ resultados computacionais simulacoes levaram consideracao partida sistema nivel reservatorio valor minimo forma avaliar desempenho caso critico leitura real abaixo referencia 
+ situacao permite avaliar resposta sistema enchimento critico esvaziamento vez bomba deve ser acionada apenas apos estar submersa sendo estritamente necessario comportamento controlado 
+ referencia nivel sistema metros simulacoes realizadas sistema supervisorio efeito comparacao mensuracao melhoria desempenho 
+ situacao critica imposta permite avaliacao resposta regime transiente estacionamento apos periodo 
+ efeito reproduzido figura 
+ onde apresentada resposta sistema controlador pid puro contra resposta controlador fpid 
+ alem resposta sistema sendo avaliado sinal controle gerou dada resposta 
+ comparativo nivel comparativo nivel pid pid pid fuzzy fuzzy fuzzy tempo tempo comparativo sinal controle comparativo sinal controle pid pid pid fuzzy fuzzy fuzzy tempo tempo figura 
+ comparativo resposta sinal controle pid fpid 
+ conforme apresentado figura 
+ notase melhoria significativa sobresinal tempo estabilizacao sistema tao embora sinal controle similar 
+ considerando supervisor fuzzy aumenta constante torno zero natural resposta possua menor sobresinal dado amortecimento aumentado 
+ entretanto erro estacionario sistema causado saturacao efeito integral valores negativos altos 
+ ambos efeitos podem ser observados figura 
+ apresenta comportamento constantes longo simulacao bem decomposicao sinal controle contribuicoes individuais cada constante 
+ atraves analise figura 
+ possivel afirmar sistema controle pid sinal integral saturado saida controlador gerando atraso resposta acompanhar setpoint consequentemente piores requisitos desempenho 
+ sistema fpid constante anulada contribuindo negativamente desempenho evidencia melhoria sistema 
+ sinal controle proporcional sinal controle proporcional sinal controle integral sinal controle integral sinal controle derivativo sinal controle derivativo upcom pid upcom pid upcom pid upcom fpid upcom fpid upcom fpid ui pid ui pid ui pid fpid fpid fpid udcom pid udcom pid udcom pid fpid fpid fpid tempo tempo tempo tempo tempo tempo variacao constante variacao constante variacao constante variacao constante variacao constante variacao constante pid pid pid fpid fpid fpid pid pid pid fpid fpid fpid tempo tempo tempo tempo pid pid pid fpid fpid fpid tempo tempo figura 
+ sinal controle comportamento constantes pid fpid 
+ variacoes controle pid realizadas simulacoes apresentaram comportamento constantes composicao sinal controle parecidas controle pid completo 
+ desempenho entanto mostrouse diferente caso controle pd pi derivada possuem entrada integral 
+ embora caracteristica imprimido diferenca sobresinal menor pouco perceptivel caso controle pd sinal controle apresentado bastante parecido 
+ tais efeitos observados figura 
+ apresenta resposta comparativa pd fpd 
+ neste caso controle fpd conjuntos nebulosos ser refinados outros arranjos forma proporcionar resposta desempenho significativo 
+ alem disso reforco sinal base regras permitiu sistema agir pouco antes ter leve melhoria desempenho 
+ possivel entanto utilizar mesma abordagem outros supervisores refinando bases melhorando controle pois metodologia comumente aplicada logica fuzzy 
+ comparativo nivel comparativo nivel pd pd pd fuzzy fuzzy fuzzy tempo tempo comparativo sinal controle comparativo sinal controle pd pd pd fuzzy fuzzy fuzzy tempo tempo figura 
+ comparativo resposta sinal controle pd fpd 
+ caso controle pi derivada diferenca bastante expressiva 
+ configuracao apresentou desempenho completamente diferente outras parecendo ser adequada vez apresentou sobresinal suavizou resposta sistema 
+ resposta apresentou ainda atuacao preditiva sobre nivel antes atingisse valor referencia 
+ entanto supervisor aumentou tempo estabilizacao visivel figura 
+ pode ser resolvido refinamento conjuntos nebulosos conforme realizado controle fpd 
+ comparativo nivel comparativo nivel pi pi pi fuzzy fuzzy fuzzy tempo tempo comparativo sinal controle comparativo sinal controle pi pi pi fuzzy fuzzy fuzzy tempo tempo figura 
+ comparativo resposta sinal controle pi derivada fpi derivada 
+ comparativo nivel comparativo nivel pi pi pi fuzzy fuzzy fuzzy tempo tempo comparativo sinal controle comparativo sinal controle pi pi pi fuzzy fuzzy fuzzy tempo tempo figura 
+ comparativo resposta sinal controle pi fpi 
+ apendice simulacao experimentos controlador histerese autoajuste controlador histerese autoajuste selecionado validacao experimental passou serie simulacoes computacionais forma verificar condicoes limite 
+ idealmente simulacoes deveriam ser testadas t→∞ entao sinal controle deveria ser reduzido maximo possivel 
+ dada impossibilidade necessario menos verificar resposta tempos simulacao grandes 
+ alem disso essencial considerar modelo atual gerador golfadas superreforcado representar pior caso golfadas durante todo tempo simulacao permite creditar maior confiabilidade modelo simulado 
+ assim aliando condicao tempo simulacao estendido gerador golfadas situacao critica possivel ter ideia visual comportamento conforme apresentado figura 
+ permite entender golfadas simuladas projeto constantes repentinas caso real 
+ tempo tempo figura 
+ sinal gerador golfadas tempo segundos 
+ diversos experimentos planejados intuito estabelecer relacao parametros operacionais qualidade sinal controle desempenho sistema termos faixa variacao nivel 
+ parametros avaliados restringiram maior influencia nesta relacao podem ser observados valores negrito cada simulacao tabela 
+ apresenta valores utilizados todas outras variaveis 
+ ademais simulacoes simuladas periodo 
+ segundos enquanto feitas tempo estendido 
+ segundos mantendo constantes todos variaveis cujos valores permanecem clareados cinza tabela 
+ planejamento experimentos computacionais verificacao relacao parametros sinal controle resposta sistema 
+ simulacao ordem sp var var var var var variaveis unb uns uz ups upb rsl fsl 
+ simbolos apresentados tabela 
+ significado valores utilizados simulacao apresentados tabela 
+ explica abreviacoes utilizadas cada parametro 
+ transicao regioes operacao janela histerese dadas parametros μ μ δ δ conforme apresentado capitulo onde histerese modelada 
+ grupos valores variantes agrupados sob parametros μ δ respectivamente 
+ explanacao parametros simulacao 
+ abreviacao valores significado sp δ μ rsl fsl fixo variavel var 
+ nivel inicial setpoint numero pontos usados calculo media pertinencia saida classificador janelas histerese 
+ corresponde valores δ δ pertinencias transicao regioes 
+ corresponde valores μ μ 
+ conjunto patamares rotacao bomba 
+ corresponde unb uns uz ups upb rampa aceleracao desaceleracao rising falling slew rate simulacao conforme apresentado tabela 
+ simulacao testou efeitos resposta sistema variandoa pontos enquanto outras variaveis mantiveram constantes 
+ quatro simulacoes agrupadas dois conjuntos onde primeiro apresentado figura 
+ realizado setpoint constante metros segundo figura 
+ realizado sinal referencia variando conforme apresentado 
+ cada duas figuras duas curvas referentes simulacoes 
+ influencia parametro sinal controle clara quanto maior numero pontos utilizados computar valor pertinencia media lenta modificacao picos pertinencia instantanea portanto tempo patamar velocidade bomba mantido menor quantidade transicoes velocidade 
+ dessa forma esperase poder maximizar valor simulacoes reais sendo limitado apenas constante tempo sistema pois valor alto pode atrasar resposta necessaria correcao nivel 
+ efeito atraso resposta consequente menor tempo reacao perceptivel embora suavemente figura 
+ nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps sp nivel sp nivel sp nivel sp nivel tempo tempo tempo tempo sinal controle total bomba sinal controle total bomba sinal controle total bomba sinal controle total bomba ref ref ref ref ref ref ref ref tempo tempo tempo tempo figura 
+ simulacao teste apresentando curvas 
+ nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps sp nivel sp nivel sp nivel sp nivel tempo tempo tempo tempo sinal controle total bomba sinal controle total bomba sinal controle total bomba sinal controle total bomba ref ref ref ref ref ref ref ref tempo tempo tempo tempo figura 
+ simulacao teste apresentando curvas 
+ tempo amostragem segundo valor pontos usa ultimos segundos realizar media pertinencia 
+ sistema real esperase configuracao tao maior quanto historico variacao nivel permita concluir sobre nivel corrente tao pequeno quanto suficiente tempo reacao efetivo 
+ simulacao influencia patamares velocidade bastante relevante 
+ tres simulacoes realizadas apresentaram variacao valor velocidade alta baixa todos outros parametros constantes plotadas juntas figura 
+ nesta figura legenda faz referencia diferenca magnitude velocidade intermediaria alta baixa forma exemplo curva indexada tabela 
+ tendo patamares apresentada figura 
+ hz patamares hz hz diferenca 
+ nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps hz hz hz hz 
+ hz hz hz hz hz sp nivel sp nivel sp nivel sp nivel tempo tempo tempo tempo sinal controle total bomba sinal controle total bomba sinal controle total bomba sinal controle total bomba hz hz hz hz 
+ hz ref ref ref ref ref ref ref ref fref hz fref hz fref hz fref hz tempo tempo tempo tempo figura 
+ simulacao teste apresentando curvas 
+ divisao patamares velocidade sinal controle clara amplitudes diferentes 
+ entanto parametro influencia sinal nivel vez energia controle mesma tres casos areas compensam diferenca magnitude periodos diferentes implicando melhor sinal controle variacoes menores velocidade acionamento bomba 
+ curiosamente quantidade acionamentos patamar mesma tres casos logico vez sinal resposta sistema 
+ simulacao ultima simulacoes periodo 
+ segundos teste valores janelas histerese genericamente agrupados chamados parametro 
+ valor apresentado legenda cada curva simulacoes respectivamente representa janela histerese δ 
+ nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps sp nivel sp nivel sp nivel tempo tempo tempo sinal controle total bomba sinal controle total bomba sinal controle total bomba tempo tempo tempo figura 
+ simulacao teste apresentando curvas 
+ curiosamente variacao isolada parametro parametros μ δ causou modificacoes perceptiveis sinal controle tanto quanto resposta nivel 
+ podemse notar sinais caminhando proximos quantidade acionamentos sinal controle igual parecido tres 
+ pode dever fato acionar patamar velocidade diferente variacao imposta resposta sensivel fazendoo retornar rapido faixa trabalho desejada 
+ assim sendo interessante maiores faixas histerese testadas aliadas efeitos causados outras variaveis retardem processo retorno nivel faixa desejada dois efeitos observados anteriormente 
+ assim sendo teste efetuado maior cuidado simulacao onde podese verificar correlacao clara parametro qualidade sinal controle 
+ simulacao simulacoes tempo estendido 
+ segundos permitem extrapolar dimensao tomada avaliacoes anteriores 
+ segundos pois permitem ter ideia funcionamento bomba longo dia inteiro 
+ perspectiva permite entender importancia minimizacao pequenas alteracoes patamar quantidade duracao influencia destas processo utilizacao bcs 
+ ter ideia desta diferenca podese analisar figura 
+ cujos parametros parecidos simulacao apresentada figura 
+ diferenca rampa aceleracao passa parametro patamares hz hz vez hz hz provoca aumento duracao patamares manutencao quantidade conforme concluido simulacao 
+ nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps sp nivel sp nivel sp nivel sp nivel tempo tempo tempo tempo sinal controle total bomba sinal controle total bomba sinal controle total bomba sinal controle total bomba ref ref ref ref tempo tempo tempo tempo figura 
+ simulacao teste apresentando curva 
+ segundos oito acionamentos patamar baixo velocidade refletem algo torno acionamentos tempo 
+ segundos representa modificacoes rotacao bcs cada dia operacao 
+ objetivo controlador reduzir quantidade aumentar duracao desses acionamentos identificase aqui grande potencial melhoria atraves manipulacao variaveis configuracao 
+ dando andamento simulacao tomadas tres medidas evidenciar relacao parametro teste histerese saidas desejadas sinal controle comportamento nivel 
+ primeira extensao tempo simulacao discutido permite avaliar melhor qualidade sinal controle 
+ segunda utilizacao valor radical janela histerese possivel notar tabela 
+ apresenta janelas simulacoes 
+ configuracao condizente conclusao tomada simulacao 
+ finalmente ultima medida reducao variacao patamares velocidade passaram simulacao nesta simulacao forma permitir variacao pertinencia menor apos acionar outra velocidade bomba dai transicao lenta tres simulacoes realizadas 
+ nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps sp nivel sp nivel sp nivel sp nivel tempo tempo tempo tempo sinal controle total bomba sinal controle total bomba sinal controle total bomba sinal controle total bomba ref ref ref ref tempo tempo tempo tempo figura 
+ simulacao teste apresentando curva 
+ apresenta simulacao curva 
+ onde utilizada janela histerese 
+ diferentemente ocorrido outra bateria testes aqui perceptivel aumentar janela histerese quantidade disparos rotacao reduzida pois pertinencia retornar valor anterior tomase tempo 
+ ainda assim haveria volta mudancas diarias bcs 
+ apresentacao tres curvas graficos separados mostrouse necessaria nesta simulacao efeito pequenos periodos permanencia patamares sinal controle 
+ alem disso curvas separadas possivel tomar comparacoes outras simulacoes forma clara 
+ dessa forma ultima curvas apresentada figura 
+ onde parametros simulacao alterados valores criticos 
+ intencao desta poder calibrar controlador melhores condicoes operacionais possiveis forma continuar analise sinal controle curso durante simulacao 
+ nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps sp nivel sp nivel sp nivel sp nivel tempo tempo tempo tempo sinal controle total bomba sinal controle total bomba sinal controle total bomba sinal controle total bomba ref ref ref ref tempo tempo tempo tempo figura 
+ simulacao teste apresentando curva 
+ alem alteracao mantida constante frente curvas 
+ estreita relacao outras simulacoes valor pontos curva 
+ prove reducao quantidade transicoes aumento duracao cada patamar velocidade 
+ finalmente janela velocidades alta baixa rotacoes criticas permite configurar sinal controle resultado apresentado figura 
+ limiar transicao velocidade configurado pertinencia reducao amplitude pertinencia media nivel oscilou apresentado outros casos apresentando efeito direto manipulacao histerese quanto maior janela oscilatorio estara variacao nivel 
+ efeito positivo dado desejase varie dentro faixa onde possivel controlar ficando maximo possivel dentro desta regiao variacao 
+ mesma forma variacao refletiu qualidade sinal controle vez oscilacao nivel sentido oposto anterior alteracao patamar resultando total volta transicoes velocidade dia inteiro trabalho bomba media alteracao cada horas meia trabalho 
+ percebese conseguinte necessidade fixar janelas grandes histerese permitam manipular oscilacoes variacao media sentido desejado 
+ simulacao simulacao testa influencia parametro utilizando janela histerese maior maior pontos 
+ relacao testada simulacao consolidada atraves comparacao simulacao sabe conclusao tirar 
+ diferenca possivel analisar outros parametros relacionam patamares velocidade 
+ nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps hz hz hz hz hz hz hz hz sp nivel sp nivel sp nivel sp nivel sp nivel tempo tempo tempo tempo sinal controle total bomba sinal controle total bomba sinal controle total bomba sinal controle total bomba ref hz ref hz ref hz ref hz ref ref ref ref hz hz hz hz tempo tempo tempo tempo figura 
+ simulacao teste apresentando curvas 
+ referenciadas legenda hz hz periodo 
+ novamente valores hz hz representam diferenca patamar velocidade central adjacente 
+ conforme esperado notase variacao parametro quanto menor diferenca patamares maior permanencia sinal patamar tao embora numero disparos igual pois energia controle mesma 
+ entanto comparando figura 
+ simulacao podese perceber numero menor transicoes efeito valor pontos 
+ mesma forma comparar curva 
+ linha continua curva figura 
+ linha tracejada quais unica diferenca alem tempo simulacao histerese verificase janela maior vez apresentou mudanca qualidade sinal controle conforme concluido simulacao onde percebese apenas janela maior influencia significativa simulacao 
+ simulacao finalmente utilizando valor critico histerese janela conforme tabela 
+ usando testada influencia leve alteracao hz hz parametro compondo curvas 
+ nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps nivel setpoint qb ps 
+ hz hz hz hz hz sp nivel sp nivel sp nivel sp nivel sp nivel tempo tempo tempo tempo sinal controle total bomba sinal controle total bomba sinal controle total bomba sinal controle total bomba ref 
+ hz ref ref ref ref hz hz hz hz tempo tempo tempo tempo figura 
+ simulacao teste apresentando curvas 
+ cujos parametros diferem apenas 
+ efeito aumento duracao patamares perceptivel desta vez quantidade disparos levemente diferente 
+ forma expressao janela histerese valor pontos pois ambos agem sobre computo retorno valor pertinencia media apos atuacao novo patamar velocidade criando situacao onde permanece tempo sujeito influencias sistema 
+ periodo permanencia patamar aumenta retorno antigo patamar instantaneo variacao vazao entrada pode afetar apenas sistema demorou retornar 
+ alem disso possivel comparar curva 
+ onde apenas janela histerese valor diferentes 
+ efeito combinado destas duas variaveis alterou quantidade disparos segundo caso primeiro longo dia inteiro simulacao 
+ variacao bastante sensivel frente resultado apos todos ajustes realizados longo simulacoes 
+ conclusao testes desenvolvidos controlador permitiram partir configuracao cerca acionamentos curtos velocidades diferentes sinal controle algo torno apenas dia trabalho duracao maior condizente informacao campo cada alteracao rotacao bomba seguida intervalo horas procedimento manual acompanhamento operador 
+ sistema aqui simulado entanto utilizou sinal disturbio entrada agressivo media encontrada campo justamente suplantar desconfianca inerente modelo computacional 
+ robustez sistema pode ainda ser aumentada acordo comportamento previsto sinais campo vazao entrada atraves ajuste parametro pode ser aumentado caso constante tempo sistema permita tempo necessario causar alteracao significativa nivel consequentemente pertinencia media superior aqui simulado segundos pontos 
+ mesma forma aumento histerese intervalos ainda maiores recurso tao embora ajuste mostre proximo limite matematico dentro universo trabalho 
+ alem disso ainda calibracao patamares velocidade necessarios cada sistema passiveis estudos vazao ideal cada bcs 
+ qualquer forma bastante credibilidade flexibilidade controlador prove ajustar situacao real 
+ necessario validacao experimental pode ser guiada simulacoes computacionais desenvolvidas forma criar gama resultados passiveis comparacao analise tanto refinamento modelo quanto verificacao controlador 
+ agressividade sistema laboratorio deve ser representada disturbio entrada forma experimentos pedem ser gradativamente reforcados representar situacao campo situacao computacional 
+ possivel realizar leituras experimentais usar sinal entrada adquirido laboratorio criar situacao similar computacionalmente comparando experimento simulador 
+ apendice modelos computacionais utilizados simulink® planta figura 
+ planta controle nivel 
+ bloco controle nivel planta nivel fica equacao variacao nivel equacao 
+ bloco bomba fica curva equacao 
+ bloco vazao entrada qoe fica gerador golfadas 
+ primeiro gerador golfadas 
+ segundo gerador golfadas amplitude variavel 
+ componente segundo terceiro gerador golfadas sinal onda gerar amplitude variavel 
+ terceiro gerador golfadas amplitude frequencia variaveis 
+ detalhe gerador sinais teste mecanismo autoajuste 
+ supervisor fuzzy pid figura 
+ malha controle controlador fuzzy pid supervisor 
+ controlador fuzzy pid supervisor 
+ monitoramento media movel figura 
+ malha controle controlador monitoramento media movel 
+ classificador regioes figura 
+ malha controle controlador classificador regioes 
+ controlador classificador regioes 
+ histerese autoajuste figura 
+ malha controle controlador histerese autoajuste 
+ detalhe geradores sinal referencia 
+ controlador histerese autoajuste 
+ detalhes classificador histerese parametrizacao rotacao transicao filtros saida 
+ componente controlador histerese autoajuste parametrizacao rotacao transicao 
+ componente controlador histerese autoajuste mecanismo autoajuste 
+ componente mecanismo autoajuste monitoramento media movel sinal controle 

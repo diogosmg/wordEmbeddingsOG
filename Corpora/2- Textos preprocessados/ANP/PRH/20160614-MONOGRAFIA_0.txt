@@ -1,0 +1,667 @@
+universidade federal rio janeiro escola politecnica curso engenharia producao felipe mazurek santos pereira lima simulacao sistema manutencao turbogeradores fpso rio janeiro rj brasil abril simulacao sistema manutencao turbogeradores fpso felipe mazurek santos pereira lima projeto graduacao apresentado curso engenharia producao escola politecnica universidade federal rio janeiro parte requisitos necessarios obtencao titulo engenheiro producao 
+ sc rio janeiro rj brasil abril simulacao sistema manutencao turbogeradores fpso felipe mazurek santos pereira lima projeto graduacao submetido corpo docente curso engenharia producao escola politecnica universidade federal rio janeiro parte requisitos necessarios obtencao grau engenheiro producao 
+ edilson fernandes arruda 
+ lino guimaraes marujo 
+ rio janeiro rj brasil abril iv lima felipe mazurek santos pereira simulacao sistema manutencao turbogeradores fpso rio janeiro ufrj escola politecnica 
+ orientador virgilio jose martins ferreira filho projeto graduacao ufrj escola politecnica curso referencias bibliograficas 
+ universidade federal rio janeiro escola politecnica curso engenharia producao 
+ simulacao sistema manutencao turbogeradores agradecimentos familia especial pais humberto roselma irmaos paulo lucas todo carinho dedicacao apoio durante toda vida quais chegado onde cheguei 
+ professor virgilio orientacao paciencia tempo disponibilizado possivel escrever trabalho alem todos conhecimentos transmitidos longo trajetoria academica 
+ amigos professores engenharia producao todo aprendizado experiencia obtidos durante todos anos 
+ engenheiros entrevistados durante trabalho sempre solicitos contribuiram desenvolvimento possivel 
+ fim programa prh formado recursos anp agencia nacional petroleo incentivo dado realizasse projeto graduacao area logistica operacao setor oleo gas 
+ felipe mazurek vi escalar grande montanha apenas descobre muitas outras escalar 
+ nelson mandela resumo projeto graduacao apresentado escola politecnica ufrj parte requisitos necessarios obtencao grau engenheiro producao 
+ vii simulacao sistema manutencao turbogeradores fpso felipe mazurek santos pereira lima abril orientador prof 
+ virgilio jose martins ferreira filho 
+ curso engenharia producao ultimos anos preco barril petroleo caiu consideravelmente ameacando viabilidade diversos projetos exploracao producao oleo gas especialmente relacionados reservas presal xisto 
+ apesar disso demanda desenvolvimento aperfeicoamento metodos tecnologias extracao petroleo continuou crescendo forma intensa ultimos anos 
+ dois motivos necessidade empresas setor investir iniciativas aumentem eficiencia operacoes combater reducao margens lucro preparar futuro mercado mantem elevadas expectativas sobre projetos mencionados retornos financeiros apostando queda preco barril petroleo momentanea 
+ nesse sentido trabalho busca contribuir dessas iniciativas melhoria operacoes empresas deste setor 
+ objetivo analisar funcionamento processo manutencao turbogeradores sistema geracao energia unidade producao petroleo meio modelo simulacao computacional consiga representar sistema possibilitar identificacao maneiras operalo forma eficiente 
+ palavraschave simulacao computacional sistemas manutencao turbogeradores 
+ viii abstract undergraduate project presented poli ufrj partial fulfillment requirements degree industrial engineering simulation maintenance system turbogenerators floating production storage offloading ship felipe mazurek santos pereira lima april advisor prof 
+ virgilio jose martins ferreira filho 
+ course industrial engineering recent years oil price dropped considerably threatening viability many oil gas exploration production projects especially related presalt reserves shale 
+ nevertheless demand development improvement methods technologies oil extraction continued grow intensively last years 
+ two reasons need oil companies invest initiatives increase efficiency operations combat profit margin reductions prepare future market holds high expectations mentioned projects financial returns betting price drop oil barrel momentary 
+ sense work aims contribute one improvement initiatives regarding operations companies sector 
+ objective analyze turbogenerators operation maintenance processes within power generation system oil production facility computer simulation model represents system permit identification ways operate efficiently 
+ keywords computer simulation maintenance systems turbogenerators 
+ lista figuras ix figura cadeia petroleo principais ativos 
+ fonte ferreira filho 
+ figura tipos sistemas flutuantes 
+ figura sistemas componentes navio fpso 
+ figura posicao turbogerador sistema geracao energia 
+ figura evolucao conceito perda tpm 
+ figura pilares tmp 
+ figura categorias manutencao traduzida 
+ figura etapas estudo simulacao 
+ fonte banks al 
+ figura subsistemas turbogerador adaptada 
+ figura diagrama transicao estados turbomaquina 
+ figura sobreposicao downtimes 
+ fonte promodel corporation 
+ figura teste ajuste dados manutencao corretiva tg amostra minutos 
+ figura teste ajuste dados standby tg amostragem minutos 
+ figura detalhamento teste ajuste dados standby tg amostra diaria 
+ figura modelo computacional animacao grafica ativada 
+ figura variaveis globais definidas promodel 
+ figura locais modelo computacional 
+ figura paradas relogio tg modelo computacional 
+ figura logica parada relogio 
+ figura paradas chamada logica 
+ figura distribuicoes usuario 
+ figura definicao entidades caracteristicas 
+ figura definicao chegadas caracteristicas 
+ figura processos definidos locais 
+ figura definicao subrotina logica 
+ figura ativacao subrotinas usando macro 
+ figura definicao recursos caracteristicas modelo computacional 
+ figura definicao rede caminhos recursos poderiam locomover 
+ figura relatorio resultados promodel 
+ figura modelagem maquinas receberem manutencao preventiva tempo 
+ lista graficos grafico resultados obtidos simulacao final 
+ grafico comparacao resultado modelo tempo simulacao aumentado 
+ grafico comparacao resultados originais simulacao manutencao corretiva padronizada distribuicao exponencial 
+ grafico comparacao resultados originais simulacao distribuicao gamma tempos standby 
+ grafico comparacao resultados originais simulacao tempos standby utilizando amostragem mensal 
+ xi lista tabelas tabela definicoes tempo relacionadas funcionamento maquina adaptado 
+ tabela frequencia realizacao manutencao preventiva 
+ tabela duracao homem hora estimado cada manutencao preventiva 
+ tabela locais modelo conceitual capacidades 
+ tabela recursos modelo conceitual estados 
+ tabela entidades modelo conceitual atividades 
+ tabela resumo resultados aderencia dados tipo amostragem 
+ tabela tabela resumo distribuicoes amostragem selecionadas standby 
+ tabela tabela resumo distribuicoes amostragem escolhidas manutencao corretiva 
+ tabela frequencia eventos standby 
+ tabela frequencia eventos manutencao corretiva 
+ tabela parametros gerais simulacao 
+ tabela tabela resumo logica parada relogio 
+ tabela caracteristicas computador utilizado executar simulacao 
+ tabela esforco computacional execucao modelo 
+ tabela resultados obtidos modelo inicial 
+ tabela resultados obtidos modelo ajustado 
+ tabela resultados obtidos modelo final 
+ tabela utilizacao mecanico bordo 
+ tabela resultado simulacao tempo simulacao aumentado 
+ tabela comparativo simulacao validada simulacao manutencao corretiva padronizada distribuicao exponencial 
+ tabela comparativo simulacao validada simulacao distribuicoes standby padronizadas 
+ tabela comparativo simulacao validada simulacao standby usando amostragem mensal 
+ cadeia produtiva petroleo 
+ unidades producao petroleo 
+ detalhamento caso estudo 
+ fontes dados informacoes 
+ experimentacoes modelo validado 
+ sugestoes trabalhos futuros 
+ apendice testes aderencia standby 
+ apendice testes aderencia manutencao corretiva 
+ introducao ultima decada descobertas grandes reservas petroleo camadas pre sal brasil causaram grande impacto industria oleo gas 
+ conta preco barril petroleo elevado setor considerava interessante exploracao tais reservas apresentavam petroleo alta qualidade abundancia investimentos necessarios desafios tecnicos enormes 
+ nesse sentido demanda desenvolvimento aperfeicoamento metodos utilizados extracao petroleo cresceu forma intensa especialmente observar complexidade operacoes custos envolvidos escalas producao esperadas mercado 
+ apesar preco barril petroleo ter caido consideravelmente ultimos anos tal demanda cessou conta expectativas retornos financeiros significativos queda precos momentanea 
+ longo ciclo vida unidade producao petroleo upp conjunto custos bastante relevante relacionado turbogeradores unidade finalidade produzir energia necessaria toda upp 
+ relevancia dessas maquinas termos custo associada altos investimentos realizados adquirilas custo operacional 
+ cada maquina equivale investimento capex ordem dezenas milhoes reais custo operacional opex cerca milhoes reais ano 
+ alem disso dependendo unidade producao falhas turbogeradores podem comprometer seriamente producao unidade gerando custos oportunidade significativos 
+ relacao cenario descoberta presal segundo ferreira filho justamente grandes escalas envolvidas razoavel introducao pequenas melhorias processos traduza ganhos bastante relevantes operacao todo 
+ nesse cenario trabalho busca estudar comportamento turbogeradores sistema manutencao unidade producao petroleo tipo fpso floating production storage offloading identificar maneiras operar sistema forma eficiente 
+ objetivo principal objetivo trabalho analisar funcionamento processo manutencao turbogeradores sistema geracao energia unidade producao petroleo 
+ feito meio desenvolvimento modelo simulacao consiga replicar comportamento desses turbogeradores sistema manutencao 
+ trabalho visa atingir alguns objetivos secundarios 
+ realizar experimentos modelo identificar sistema reage mudancas elementos 
+ identificar oportunidades melhoria consigam melhorar eficiencia sistema 
+ termos aprendizado possibilitar fixacao conhecimentos disciplinas simulacao manutencao industria petroleo 
+ estrutura trabalho trabalho pode ser condensado tres grandes partes contem secoes apresentadas sumario esclarecem forma desenvolvido 
+ contextualizacao parte trata seguintes secoes 
+ primeira secao explica motivos realizacao estudo questao fazendo breve apresentacao problema 
+ segunda secao apresenta conceitos referencias teoricas permitirao leitor compreender trabalho desenvolvido 
+ fim ultima secao delimita sistema estudado fornecendo detalhes sobre escopo fontes dados informacoes obtidas 
+ desenvolvimento modelo parte constituida basicamente secao 
+ secao apresenta forma optouse modelar problema conceitualmente computacionalmente explicitando estimados parametros utilizados quais hipoteses consideradas variaveis resposta definidas 
+ experimentacao avaliacao resultados ultima parte consiste secoes 
+ secao trata validacao modelo computacional gerado utilizacao realizar experimentos interesse 
+ fim sexta secao apresenta principais conclusoes sobre modelo criado sobre estudo 
+ cadeia produtiva petroleo acordo monie al 
+ industria petroleo divide dois segmentos principais upstream montante downstream jusante 
+ primeiro inclui fases exploracao desenvolvimento producao enquanto segundo compreende etapas transporte refino distribuicao 
+ alguns autores classificam etapas transporte refino midstream mostra figura 
+ figura cadeia petroleo principais ativos 
+ fonte ferreira filho segundo piquet al 
+ etapa upstream concentra maior parte investimentos feitos cadeia petroleo torno brasil 
+ acordo bain al 
+ fases deste segmento compreendem seguintes atividades  exploracao precede fases desenvolvimento producao consiste identificar quantificar novas reservas oleo gas meio analises subsolo 
+ alem disso fase trata acesso reservas meio negociacoes agentes publicos privados 
+  desenvolvimento acontece logo apos fase exploracao objetivo avaliar caracteristicas viabilidade pocos encontrados meio plano utilizacao recursos busque maximizar producao lucros longo ciclo vida poco inclui definicao localizacao perfuracoes alem especificacoes infraestrutura producao ser implementada 
+  producao ultima fase upstream trata extracao petroleo gas reservatorio 
+ utiliza diversas tecnicas recuperacao manutencao niveis extracao otimizados incluindo preocupacao encerramento atividades producao desativacao infraestrutura utilizada descarte residuos toxicos 
+ fase producao importante ressaltar importancia sistema geracao energia niveis producao otimizados 
+ segundo perera al 
+ plantas industriais energia sistemas criticos plataformas offshore 
+ porque afetam diretamente producao unidades podendo gerar perdas significativas alem apresentarem custos significativos operacionais investimento 
+ existem ainda atividades essenciais segmento upstream atividades apoio logistico 
+ acordo bain al 
+ atividades objetivo lidar transporte insumos equipamentos pessoas unidades producao podem ser divididas dois tipos apoio maritimo apoio aereo 
+ primeiro tipo consiste transporte materiais equipamentos costa unidades producao utilizando modais maritimos 
+ segundo foco transporte pessoas plataformas costa meio utilizacao modais aeroportuarios 
+ fim fases setor downstream apresentam seguintes atividades  transporte compreende transferencia producao campos petroliferos refinarias 
+ tal transporte feito partir embarcacoes caminhoes vagoes tubulacoes oleodutos gasodutos 
+  refino consiste processamento oleo gas derivados serie processos separacao conversao tratamento 
+  distribuicao trata transferencia comercializacao derivados resultantes fase refino distribuidoras responsaveis oferecer tais produtos consumidor final exemplo populacao dada regiao 
+ unidades producao petroleo existem diversos tipos unidade producao petroleo utilizadas conforme necessidades caracteristicas cada area operacao exige 
+ dentre principais tipos plataforma destacamse plataformas fixas autoelevadas flutuantes 
+ trabalho importam flutuantes apresentadas figura 
+ figura tipos sistemas flutuantes 
+ dentre sistemas flutuantes apresentados navios floating production storage offloading fpso receberao atencao especial 
+ segundo mitra navios fpso utilizados extracao oleo aguas profundas possuem vantagem necessitarem transporte oleo gas produzidos feito tubulacoes 
+ ultimo podem ser movimentados outro campo assim reservas poco esgotam 
+ figura abaixo apresenta principais subsistemas fpso 
+ subsistemas compressao processamento gas processamento oleo tratamento producao agua geracao energia utilidades tocha seguranca flare controle automacao ancoragem riseres 
+ todos subsistemas alimentados energia gerada sistema geracao energia 
+ figura sistemas componentes navio fpso 
+ sistema geracao energia composto conjunto turbogeradores produzem eletricidade partir combustao gas natural associado diesel 
+ turbogerador maquina bastante pesada cujo transporte armazenamento simples 
+ logo dificil custoso transportala plataforma atividade rapida fazer ainda plataformas aguas profundas 
+ posicao turbogerador sistema geracao apresentada figura 
+ figura posicao turbogerador sistema geracao energia 
+ funcionamento unidade producao completamente dependente sistema geracao energia demais sistemas fpso conseguem realizar funcoes 
+ tamanha importancia deste sistema conta equipe propria manutencao unidade producao alem outro setor terra monitora distancia 
+ importante ressaltar importancia operacao sistema geracao energia offloading 
+ operacao descarga oleo armazenado fpso bombas carga acionadas transferir oleo navio aliviador finalidade esvaziar tanque unidade producao levar oleo costa dando sequencia demais fases cadeia produtiva petroleo 
+ operacao demanda consideravel energia sistema geracao acontece frequencia relevante 
+ conceitos manutencao observado introducao objetivo deste trabalho analisar funcionamento processo manutencao turbogeradores desta forma nesta secao revisados principais conceitos manutencao 
+ manutencao produtiva total total productive maintenance tpm surgiu anos objetivo aumentar eficiencia equipamentos focada perdas quebra 
+ longo tempo expandiu conceito acerca perda aumentando escopo atuacao conforme apresenta figura 
+ figura evolucao conceito perda tpm 
+ fonte rodrigues segundo rodrigues objetivos tpm  eliminar variabilidade processos producao evitando quebras planejadas aumentando confiabilidade processo buscando zero falha zero quebra 
+  minimizar perdas quebras ajustes setup pequenas paradas tempo ocioso baixa velocidade  comprometimento todos funcionarios buscando aprimoramento manutencao operacao maior responsabilidade colaboradores maquinas equipamentos realizacao atividades rotineiras manutencao operadores  mudar conceito tradicional atores processo industrial passam ter obrigacoes responsabilidades sobre trabalho 
+ manutencao produtiva total utiliza principios apresentados figura ser implementada 
+ figura pilares tmp 
+ fonte rodrigues dentre conceitos destacados gestao manutencao planejada gestao manutencao focada gestao equipamentos 
+ ainda segundo rodrigues gestao manutencao planejada trata elaboracao plano manutencao preventiva preditiva maximizar utilizacao equipamento 
+ manutencao focada trata eliminacao perdas meio melhorias regulares incrementais 
+ fim gestao equipamentos consiste garantir meio eficiencia equipamentos atendimento especificacoes produto final caracteristicas especificacoes desejadas 
+ dito ainda resta explicar manutencoes enquadram utilizacao diaria equipamentos 
+ antes necessario apresentacao algumas definicoes 
+ acordo iso existem duas categorias basicas manutencao  corretiva feita corrigir item apos falha  preventiva realizada prevenir falha item sendo feita intervalos predeterminados acordo criterio preestabelecido reduzir probabilidade falha degradacao funcionamento item 
+ incluidas nessa categoria inspecoes ensaios testes verificar condicao equipamento 
+ ocorrencia manutencao antes falha separa duas categorias manutencao portanto importante definila 
+ segundo iso falha evento determinado item perde capacidade desempenhar funcao 
+ base nessas definicoes figura apresenta esquematicamente categorias manutencao descritas 
+ figura categorias manutencao traduzida 
+ iso apresenta manutencoes enquadram utilizacao diaria equipamentos definindo compostos tempos relacionados funcionamento maquina conforme apresenta tabela 
+ tempo total downtime paradas planejadas paradas planejadas manutencoes preventivas outras paradas manutencoes planejadas corretiva outras paradas planejadas uptime tempo operacao tempo operado ocioso tabela definicoes tempo relacionadas funcionamento maquina adaptado 
+ tempo total tempo corrido representa soma tempos downtime uptime determinada maquina 
+ downtime representa maquina inoperante algum motivo devido paradas planejadas 
+ outras paradas planejadas incluem tempo standby enquanto outras paradas naoplanejadas incluem queda sistema producao todo exemplo falta combustivel 
+ uptime refere tempo maquina atividade tempo operacao inativa tempo operado haver necessidade utilizala 
+ estado standby refere maquina precisa ser ativada ser posta funcionamento somente ocorre necessidade 
+ comumente utilizado sistemas redundantes 
+ caso sistema geracao energia fpso maquina operar entra downtime algum motivo maquina standby rapidamente pode ser colocada operacao evitando queda significativa producao energia navio 
+ simulacao problemas encontrados industria brasileira oleo gas tornado cada vez complexos 
+ cenario queda lucratividade importantissimo tomada decisao realizada forma assertiva conhecendose maximo possiveis resultados risco atrelado 
+ problemas ainda incluem grau significativo fenomenos aleatorios surge necessidade tecnicas consigam lidar questoes 
+ separa standby dois tipos hot standby cold standby 
+ primeiro trata maquina precisa ser ativada ser posta funcionamento segundo requer algumas atividades realizadas possa colocar maquina funcionamento 
+ entanto propositos desse trabalho divisao necessaria pode atrapalhar entendimento 
+ shannon define simulacao processo criar modelo sistema real conduzir experiencias modelo visando compreender comportamento sistema avaliar varias estrategias operalo 
+ conta disso autor defende crucial modelo criado forma imite comportamento sistema eventos longo tempo 
+ segundo campos simulacao pode ser usada seguintes objetivos  promover estudo experimentacao interacoes internas complexas subsistema sistemas complexos  estudar mudancas ambientais organizacionais bem efeitos alteracoes  promover aplicacao melhorias sistema meio conhecimento obtido construcao modelo  usar simulacao fins pedagogicos formar colaboradores tecnicos  testar novos desenhos processos definicao prioridades gestao  resolver analiticamente problemas engenharia importante mencionar problemas resolvidos simulacao maior parte casos exigem utilizacao computadores 
+ segundo ferreira filho razoes comuns utilizacao modelos computacionais sistema real ainda existe experimentacao sistema real dispendiosa experimentacao sistema real apropriada 
+ ferreira filho defende existem diversos tipos simulacao 
+ dentre autor cita modelos podem ser classificados deterministicos estocasticos estaticos dinamicos discretos continuos 
+ definicao cada classificacao dada seguir  deterministicos estocasticos modelos deterministicos variaveis entrada saida bem determinadas enquanto modelos estocasticos apresentam menos variaveis entrada saida probabilistica 
+  estaticos dinamicos modelos estaticos tempo variavel levada conta enquanto modelos dinamicos estado sistema baseado variavel tempo muda decorrer tempo 
+  discretos continuos modelos discretos apresentam mudancas pontos discretos tempo forma continua 
+ fim acordo banks al 
+ processo construcao modelo simulacao composto etapas conforme apresenta figura 
+ figura etapas estudo simulacao 
+ fonte banks al 
+ descricao sistema informacoes utilizadas escrever capitulo obtidas meio reunioes engenheiros manutencao estudam trabalham unidade producao questao 
+ detalhamento caso estudo caso escolhido estudase comportamento sistema geracao unidade producao tipo fpso 
+ unidade possui capacidade producao mil barris dia funciona continuamente horas dia dias semana 
+ cada dias media ocorre realizacao offloading gera pico demanda energia requer aumento producao parte turbogeradores durante periodo 
+ sistema geracao estudado compreende turbogeradores operam paralelo 
+ cenario operacao normal tres turbogeradores operam continuamente fica standby necessario colocalo uso devido menos seguintes casos 
+ durante offloading preciso absorver aumento demanda energia unidade 
+ algum outros turbogeradores operacao precisa ser parado passar determinada manutencao 
+ outros turbogeradores operacao tempo demasiadamente longo deve ser posto standby tempo total uso fique maior demais ocasionando chegada fim vida util maquina antes planejado 
+ afeta capacidade unidade producao absorver variacoes demanda energia futuro cria aumento gastos manutencao estender vida util equipamento 
+ nesse cenario todas maquinas acabam tendo periodo standby longo vida util 
+ entanto tarefa dificil predizer maquina deve estar standby pois alem situacoes citadas existem diversas outras mapeadas 
+ regras claras possivel determinalas conjunto engenheiros entrevistados fazer detalhamento 
+ alem disso muitas vezes pratica tempo standby mistura tempos manutencao 
+ acontece porque mecanicos bordo aproveitam maquina standby realizar algumas manutencoes usufruindo fato parada 
+ aparentemente pratica ruim pois outras maquinas falhar enquanto turbogerador standby sofrendo manutencao incapacite ser ativado naquele momento producao pode ser afetada 
+ relacao manutencoes dessas maquinas existem dois tipos preventivas corretivas 
+ primeiras tese planejadas realizadas acordo indicacoes fabricante visando garantir equipamentos funcionem maneira adequada maximizar vida util 
+ manutencoes corretivas decorrem correcao problemas causados falhas operacionais aleatorias podem acontecer qualquer subsistema turbogeradores 
+ manutencoes preventivas devem seguir tempos estipulados fornecedores conforme indicado tabela 
+ cada atividade manutencao pode ocorrer base tempo maquina ficou operacao tempo operado pode ser determinado horimetro tempo corrido inclui tempo maquina operacao 
+ caso maquina operado horas deve receber lavagem agua entanto caso sido utilizada horas passado mes desde iniciou operacao lavagem deve ser realizada 
+ atividades manutencao tempo operado tempo corrido horas meses lavagem agua analise oleo preditiva manutencao preventiva vibracao manutencao mecanica turbinas ggs limpeza filtros ar combustao manutencao mecanica suplementar termografia paineis eletricos manutencao baterias troca filtros ar combustao troca valvulas combustivel manutencao preventiva deteccao fogo gas manutencao preventiva instrumentacao revisao meia vida mid life vistoria empresa especializada overhaul tabela frequencia realizacao manutencao preventiva 
+ dentre atividades manutencao duas merecem atencao especial revisao mid life vistoria empresa especializada overhaul 
+ ambas necessitam remocao turbina envio manutencao 
+ evitar diminuicao capacidade sistema geracao energia outra turbina deve ser colocada lugar daquela retirada enviada manutencao 
+ turbina posta uso fica armazenada oficina terra enviada unidade producao somente turbogerador questao proximo requisitar duas manutencoes 
+ apos retorno turbina enviada manutencao necessariamente volta ser colocada turbogerador retirada 
+ estimativa duracao cada atividade manutencao preventiva estabelecida parte fornecedor equipamento observar coluna downtime tabela 
+ tempo cooldown desligamento maquina deve ser adicionado downtime alguns casos possa determinar tempo real maquina fica manutencao preventiva tempo completamente operacional 
+ alem disso previsao quantos homem hora devem ser gastos cada atividade 
+ atividades manutencao homem hora gasto downtime horas cooldown horas 
+ lavagem agua analise oleo preditiva manutencao preventiva vibracao manutencao mecanica turbinas ggs limpeza filtros ar combustao manutencao mecanica suplementar termografia paineis eletricos manutencao baterias troca filtros ar combustao troca valvulas combustivel manutencao preventiva deteccao fogo gas manutencao preventiva instrumentacao revisao meia vida mid life vistoria empresa especializada overhaul tabela duracao homem hora estimado cada manutencao preventiva 
+ outro ponto interesse diz respeito materiais utilizados nessas atividades 
+ algumas sempre requisitam troca pecas utilizacao equipamentos materiais especificos pode afetar realizacao manutencoes caso falta 
+ alem disso questao custo atrelado insumos passar tempo significativo 
+ relacao manutencoes corretivas primeiramente importante ressaltar cada turbogerador composto conjunto subsistemas cada determinada funcao conforme apresenta figura 
+ interesse deste trabalho explicar funcao todos porem relevante ressaltar funcionamento desses subsistemas impacta diretamente quantidade falhas operacionais cada maquina 
+ alem disso todos podem apresentar problemas impactem producao energia gerem necessidade manutencoes corretivas 
+ figura subsistemas turbogerador adaptada 
+ nesse sentido bastante trabalhoso complexo realizar analise individual componentes maquina determinar ocorrencia falhas 
+ conta disso comportamento unico conjunto dessas falhas estudado melhor falhas cada turbogerador 
+ entretanto analisar somente suficiente preciso determinar gastos tempo manutencao corretiva 
+ fim atividades manutencao corretiva preventiva realizadas mecanicos bordo localizam oficina bordo unidade producao 
+ existem dois mecanicos bordo trabalham oficina cada realizando turno dia 
+ alem disso acompanhamento funcionamento turbogeradores feito engenheiros centro monitoramento terra durante regime administrativo 
+ situacoes excepcionais possivel recorrer especialistas turbomaquinas realizar determinadas manutencoes auxiliar identificacao solucao problemas relacionados maquinas 
+ fontes dados informacoes secao apresenta quais informacoes fontes dados disponibilizadas elaboracao modelo 
+ primeiramente tabelas informacoes frequencia duracao atividades manutencao preventiva utilizadas informacoes construcao modelo 
+ modo regras relacionadas processos atividades sistema levantadas junto engenheiros entrevistados usadas 
+ tevese acesso duas bases dados referentes funcionamento turbogeradores centro monitoramento outra mecanicos bordo 
+ primeira continha visao geral acerca funcionamento turbomaquinas enquanto outra visao detalhada 
+ base dados referente centro monitoramento apresentava informacoes periodo aproximadamente anos 
+ nesta base dados segmentados cada turbina mes apresentando quantidade horas operadas horas disponiveis quantidade falhas operacionais tempo referente dias calendario daquele mes horas 
+ base referente mecanicos bordo refere periodo aproximado anos 
+ nestes dados havia grau detalhamento maior possivel identificar eventos ocorreram longo tempo cada maquina 
+ tais eventos divididos manutencao preventiva manutencao corretiva standby externo 
+ cada desses tipos eventos havia duracao momento inicio complemento sobre descricao evento 
+ motivo maior detalhamento precisao dados base referente mecanicos bordo utilizada 
+ entanto importante mencionar tratar diferentes fontes registro divergencias encontradas bases registros aparentemente incorretos falta 
+ modelo conceitual primeiramente limitacoes basicas modelo definidas 
+ modelo deve retratar sistema fechado quantidade turbogeradores mecanicos bordo sistema deve ser sempre constante 
+ outra consideracao importante eventos externos maquinas shutdown plataforma devem ser desconsiderados 
+ comportamento turbogeradores deve funcionar processo estocastico nada descricao fenomeno aleatorio varia tempo ferreira filho 
+ alem disso longo tempo cada turbogerador apresenta conjunto limitado discreto diferentes estados 
+ representar graficamente conjunto estados utilizacao diagrama transicao estados escolhida 
+ diagrama representa todo conjunto estados processo estocastico probabilidades transicao estados apresentado figura 
+ figura diagrama transicao estados turbomaquina 
+ cada arco diagrama representa quais transicoes possiveis estados 
+ exemplo possivel maquina manutencao corretiva estado passe estado standby estado 
+ todavia possivel faca caminho oposto saindo diretamente estado estado 
+ situacao possuisse todas probabilidades transicao estado deveriam ser representadas diagrama 
+ caso usouse diagrama forma visual representar estados turbogeradores relacoes 
+ descrever modelo conceitual grau detalhe maior secao dividida acordo elementos julgados relevantes problema 
+ nesse sentido seguintes elementos selecionados locais entidades recursos atividades variaveis resposta hipoteses consideradas 
+ contem descricao tais itens 
+ locais posicoes fisicas podem ser ocupadas recursos entidades onde ocorrem operacoes sobre ultimos 
+ modelo elaborado temse tipos locais turbomaquinas tgs oficina bordo 
+ cada local capacidade definida apresentada tabela 
+ quantidade locais turbogeradores oficina bordo capacidades turbina ilimitado tabela locais modelo conceitual capacidades 
+ recursos recursos elementos podem ser consumidos durante simulacao objetivo viabilizar realizacao determinada atividade 
+ modelo proposto contou tipo recurso mecanico bordo pode ficar estados longo tempo tabela 
+ disciplina atendimento cada atividade fifo 
+ quantidade recursos estados mecanico bordo 
+ realizando manutencao tabela recursos modelo conceitual estados 
+ entidades entidade qualquer elemento sofre alguma acao parte demais elementos simulacao 
+ caso tipo entidade utilizado turbinas ggs 
+ acoes acontecem sobre turbinas encontradas tabela 
+ quantidade entidade acoes atividades turbina gg 
+ standby tabela entidades modelo conceitual atividades 
+ todas atividades possuem frequencia duracao predefinida meio distribuicao funcao parametro determinado 
+ caso manutencao preventiva convencionouse deve seguir sugestoes fornecedor equipamentos tabela tabela 
+ relacao manutencao corretiva probabilidade define ocorrencia duracao determinada meio distribuicao probabilidade 
+ mesma modelagem utilizada determinar atividades standby 
+ fim operacao turbina determinada tempo total simulacao menos tempo outras atividades manutencao corretiva preventiva standby 
+ variaveis resposta variaveis resposta modelo determinam deve ser avaliado verificar modelo pode ser considerado aderente realidade 
+ caso variaveis consideradas tempos totais manutencao corretiva manutencao preventiva standby cada turbomaquina 
+ hipoteses consideradas secao apresenta simplificacoes realizadas criacao modelo conceitual devido indisponibilidade dados complexidade modelo si 
+ expostas topicos seguir 
+ restricao fornecimento combustivel tgs 
+ considerado impacto offloading funcionamento tgs 
+ turbina retirada tg manutencao overhaul mid life outra turbina colocada lugar apresenta mesma probabilidade falhar distribuicao tempos manutencao corretiva 
+ sendo assim modelo precisa preocupar mapear acontece turbina enviada fornecedor 
+ somente preocupacao funcionamento turbogerador apresenta tempo manutencao preventiva troca turbina deve ser posto operacao novamente 
+ pecas insumos manutencoes infinitos 
+ duas atividades manutencao preventiva podem ser feitas tempo contanto respeitem restricoes frequencia duracao 
+ duracao total duas atividades realizadas tempo sempre igual soma duracao ambas menos tempo sobrepuseram conforme mostra figura 
+ figura sobreposicao downtimes 
+ fonte promodel corporation 
+ atividade manutencao preventiva pode ser realizada maquina standby 
+ turbomaquinas diferentes podem receber manutencoes tempo devido limitacao somente mecanico bordo 
+ manutencao corretiva pode ser feita conjunto atividade manutencao preventiva standby 
+ simplificar modelo adotouse criterio tempo corrido realizar manutencoes preventivas apresentadas tabela 
+ troca mecanicos bordo cada horas desconsiderada simplificacao colocar mecanico bordo trabalhando horas dia dias semana 
+ tempos movimentacao mecanico bordo insignificantes proximidade turbomaquinas si oficina bordo 
+ unica tarefa mecanico bordo realizar manutencoes 
+ software escolhido software utilizado promodel 
+ descrito tecnologia simulacao eventos discretos utilizada planejar modelar melhorar novos existentes sistemas manufatura logistica outros sistemas operacionais promodel corporation 
+ diversos motivos escolha 
+ possui funcionalidades basicas criacao simulacao computacional disponivel universidade 
+ alem disso companhia dona fpso possui licenca software possibilita posterior uso modelo desenvolvido permite expandido 
+ ultimo promodel apresenta suite estatistica statfit possibilita realizar analise estatistica dados bem estimacao parametros criacao simulacao 
+ estimativas parametros poder criar modelo computacional fazelo funcionar adequadamente deve definir valores variaveis entrada utilizados 
+ caso ainda preciso determinar frequencia tempo seguintes variaveis aleatorias entrada manutencao corretiva standby 
+ bases dados apresentam informacoes dessas variaveis periodo anos 
+ partir possivel determinar tempo gasto manutencao corretiva standby cada ano mes dia hora minuto cada maquina 
+ entanto deve existir alguma amostragem dessas modela melhor dados apresenta distribuicao melhor ajuste dados 
+ necessario realizar estudo estatistico dados segmentados baseados amostras periodos descritos 
+ primeiramente comportamento dados testado amostra cada minuto 
+ figura demonstra resultado ajuste dados manutencao corretiva turbina tg alguma distribuicao probabilidade 
+ figura teste ajuste dados manutencao corretiva tg amostra minutos 
+ figura coluna esquerda indica distribuicao tentou ajustar dados duas colunas direita indicam resultado ajuste 
+ coluna rank indica quao bom ajuste determinada distribuicao sendo quanto maior rank aderentes dados distribuicao 
+ calculado atraves combinacao dois testes aderencia distribuicao teste andersondarling kolmogorov smirnov determinam resultado coluna aceitacao 
+ analise rank aceitabilidade teste ajuste concluise faz sentido representar manutencao corretiva amostra cada minuto 
+ entanto resultado positivo tempos standby tg amostra periodo indica figura 
+ figura teste ajuste dados standby tg amostragem minutos 
+ resultado indica distribuicao loglogistica pode representar comportamento variavel aleatoria standby amostragem minuto 
+ rank bastante elevado aderencia rejeitada grau significancia padrao statfit 
+ detalhamento melhor calculos realizados chegar figura apresenta figura 
+ figura detalhamento teste ajuste dados standby tg amostra diaria 
+ figura exibe dois testes aderencia utilizados verificar grau aderencia dados questao distribuicao loglogistica 
+ logo abaixo nome distribuicao figura podese notar parametros calculados distribuicao 
+ entanto resultado positivo repete tempos standby demais turbinas 
+ comportamento dados ambas variaveis testado utiliza outras amostragens diaria quinzenal mensal 
+ resumo resultados desses testes apresentado tabela 
+ escala utilizada tabela varia onde quanto melhor aderencia variavel tipo amostragem proximo indice quanto pior proximo 
+ variavel tipo amostragem minuto hora dia quinzenal mensal manutencao corretiva standby tabela resumo resultados aderencia dados tipo amostragem 
+ criterio utilizado determinar indice quantidade tgs maior rank tipo amostragem 
+ sendo assim dados todas tgs apresentam maior aderencia alguma distribuicao caso manutencao corretiva quanto amostragem mensal caso standby quinzenal 
+ sendo assim modelo computacional deve sortear cada quinze dias valor variavel aleatoria refere tempo maquina deve ficar standby 
+ modo cada mes variavel correspondente tempo gasto manutencao corretiva deve ser sorteada determinando tempo gasto manutencao corretiva naquele mes 
+ tabelas tabela tabela apresentam resumo distribuicoes parametros tipo amostragem rank alcancado cada turbogerador cada variavel aleatoria 
+ standby distribuicao amostragem rank tg tg tg tg gamma 
+ quinzenal quinzenal quinzenal quinzenal 
+ tabela tabela resumo distribuicoes amostragem selecionadas standby 
+ manutencao corretiva distribuicao amostragem rank tg tg tg tg gamma 
+ mensal mensal mensal mensal 
+ tabela tabela resumo distribuicoes amostragem escolhidas manutencao corretiva 
+ interessante observar manutencao corretiva ranks baixos turbogeradores resultado distribuicoes variam bastante pode ser consequencia inconsistencias base dados 
+ fazse necessario ainda definir frequencia tempos manutencao corretiva standby acontecem 
+ feita definicao simples probabilidade contar exemplo quantas vezes tempo manutencao corretiva maquina diferente zero total periodos observados numero dividido total periodos amostragem 
+ calcular probabilidade ocorrencia evento simplesmente subtraise probabilidade evento ser diferente zero chegando assim tabela tabela 
+ definicao frequencia eventos standby tg tg tg tg periodos tempo standby maior zero total periodos quinzenas probabilidade ocorrer standby quinzena probabilidade ocorrer standby quinzena tabela frequencia eventos standby 
+ definicao frequencia eventos manutencao corretiva periodos tempo manutencao corretiva maior zero tg tg tg tg total periodos meses probabilidade ocorrer manutencao corretiva mes probabilidade ocorrer manutencao corretiva mes tabela frequencia eventos manutencao corretiva 
+ modelo computacional criar modelo simulacao promodel definidos elementos parametros gerais variaveis globais locais entidades chegadas processos recursos 
+ conta disso secao escrita subdividida acordo descricao cada desses elementos 
+ parametros gerais elementos definem deve ser funcionamento geral simulacao 
+ resume tabela parametros utilizados 
+ parametros gerais valor unidade tempo simulacao duracao corrida 
+ horas tempo aquecimento 
+ horas numero replicacoes experimento corridas visualizacao execucao animacao desativada tabela parametros gerais simulacao 
+ tempo simulacao definido horas fato tempo equivalente tempo dados base utilizada permitiria comparacao resultado simulacao dados originais 
+ tempo aquecimento equivale tempo simulacao pois empiricamente julgouse tempo adequado estabilizacao sistema 
+ ultimo numero replicacoes determinado limite disponivel promodel sistema apresentasse menor variabilidade 
+ inicialmente visualizacao execucao forma ativada utilizada simulacao executada rapidamente desativada 
+ foto simulacao dois momentos distintos animacao grafica ativada apresentada figura 
+ figura modelo computacional animacao grafica ativada 
+ variaveis globais variaveis globais definidas dois motivos 
+ permitir determinacao parametros entrada sistema tempo aquecimento tempoaquecimento poder capturar algumas variaveis resposta tempo total manutencao corretiva vtmc cada maquina 
+ figura apresenta variaveis adicionadas promodel 
+ figura variaveis globais definidas promodel 
+ variaveis vmphh utilizadas calcular total homem hora gasto atividades manutencao preventiva cada maquinas 
+ variaveis somatsb utilizadas calcular tempo total standby cada maquinas 
+ locais definidos locais sendo turbogeradores tg oficina bordo mostra figura 
+ capacidade cada entidade vez cada local apresenta paradas dois tipos relogio chamada called 
+ cada local armazena estatisticas series tempo menos oficina bordo geraria informacoes necessarias 
+ fim coluna regras 
+ definese tratada ordem chegada entidades local modelo relevante 
+ figura locais modelo computacional 
+ paradas relogio modelam manutencoes preventivas pois determinam turbina entidade deve parar operar relogio simulacao chegava determinado horario 
+ paradas relogio tg apresentadas figura 
+ figura paradas relogio tg modelo computacional 
+ tabela apresentada figura todas atividades manutencao preventiva colocadas frequencia primeira vez parada deve acontecer 
+ coluna primeira vez fundamental garantir tempos manutencao preventiva diferentes turbomaquinas acontecam tempo pois frequencias manutencoes mesmas acontecem tempo diferentes maquinas 
+ outro ponto importante definicao coluna planejado permite diferenciar manutencao preventiva corretiva 
+ colocar sim coluna indicase software manutencao preventiva 
+ coluna logica deve ser escrito codigo indicar devia ser feito determinada manutencao 
+ figura logica parada relogio 
+ codigo apresentado figura retrata atividade vistoria empresa especializada overhaul 
+ parametros utilizados provenientes tabela tabela cujas informacoes atividade questao sumarizadas tabela facilitar leitura 
+ frequencia apresentada tabela indica cada horas overhaul deve ser realizado recomendacao feita fornecedor equipamento 
+ somente temse homemhora gasto horas mecanico bordo utilizado tempo maquina precisa aguardar parada tempo downtime cooldown atingido tempo horas 
+ variavel vmphh calcula homem hora gasto realizar manutencao 
+ atividades manutencao homem hora gasto downtime cooldown horas frequencia tempo corrido horas vistoria empresa especializada overhaul tabela tabela resumo logica parada relogio 
+ outro tipo parada parada chamada utilizada representar tempos standby cada maquina 
+ diferenca parada relogio frequencia definida quantidade vezes chamada processo 
+ parada planejada logica conforme apresenta figura 
+ figura paradas chamada logica 
+ codigo apresentado figura ocorrencia duracao tempo standby maquina determinada variavel tsb 
+ resultado sorteio distribuicao probabilidade distsb retorna valores determina havera standby naquele periodo havendo standby duracao determinada distribuicao tempo gamma 
+ funcao wait faz turbina standby tempo tsb variavel somatsb faz contagem quanto tempo turbina ficou standby 
+ distribuicao probabilidade distsb distribuicao usuario 
+ determinada base probabilidade turbomaquina entrar standby cada dias figura apresenta configuracao 
+ mesma logica aplicada distribuicoes manutencao corretiva disttmc 
+ figura distribuicoes usuario 
+ entidades chegadas relacao entidades apenas tipo definido figura turbina gg 
+ nela adicionou coleta estatisticas tempo velocidade suficientemente alta entrasse sistema definido chegadas rapidamente colocada respectiva tg 
+ figura definicao entidades caracteristicas 
+ criouse chegadas entidades ggs cada turbogerador tg 
+ somente entidade chega cada local ocorre somente vez primeira vez tempo zero pode observar figura 
+ frequencia nova ocorrencia cada entidade igual zero logica chegadas definida 
+ figura definicao chegadas caracteristicas 
+ processos processos definem acontece entidade determinado local 
+ nesse sentido cada combinacao gg tg necessario estabelecer processo todos processos iguais mostra figura 
+ figura processos definidos locais 
+ processos apresentados figura serviram simplesmente definir cada turbina deveria ficar operando local durante todo tempo simulacao 
+ condicao sempre verdadeira colocada codigo referente campo operacao obrigando maquina opere ciclos continuos horas seguidas durante toda simulacao 
+ feito questoes modelagem software explicado frente nesta secao trabalho 
+ ainda faz necessario representar acontecem manutencoes corretivas feita chamada downtimes referentes standby cada turbogerador 
+ criou subrotina faz papel processo cada maquina apresentada figura 
+ figura definicao subrotina logica 
+ mesma forma processo argumento adicionado sub rotinas tg realize sempre mesmas acoes sobre turbina durante todo tempo simulacao 
+ cada horas quinzena funcao parada chamada standby executada realizase sorteio quantidade tempo turbogerador deve ficar standby durante proximas horas 
+ independente maquina entrar standby chamada subrotina devido distribuicao probabilidade relogio simulacao continua contar horas 
+ relogio contabiliza horas totalizase mes sorteiase tempo refere tempo manutencao corretiva periodo 
+ funcionamento calculo tempo manutencao corretiva igual tempo standby 
+ possui distribuicao probabilidade acontecer disttmc multiplica distribuicao tempos manutencao corretiva 
+ caso apresentado figura distribuicao gamma utilizada 
+ calcular tempo total manutencao corretiva variavel vtmc faz somatorio desses tempos longo simulacao somente feito apos periodo aquecimento simulacao 
+ mesma forma calculase custo utilizacao mecanico bordo 
+ fim novamente funcao parada standby utilizada determinar fim periodo dias turbogerador deve entrar standby 
+ duas perguntas ainda precisam ser respondidas utiliza subrotina inves processo definir funcionamento standby manutencao corretiva tempo manutencao corretiva funciona parada chamada standby resposta primeira pergunta relacionada tempo execucao cada codigo 
+ parada chamada considerada downtime promodel cada vez ocorre downtime determinado local processo local dono interrompido afeta contagem tempo realizada wait dentro desse processo 
+ assim tempo contabilizado acaba sendo diferente tempo real simulacao sorteio tempos stand acontece cada dias tempos superiores quinzena 
+ acontece subrotina simplesmente chama funcao parada continua contagem tempo meio wait interrompido 
+ relacao segunda questao manutencao corretiva colocada funcionar parada chamada possivel sobrepor tempos tempos standby manutencao preventiva 
+ alem disso colocacao subrotina feita frequencia ocorrencia mensal 
+ fim subrotinas funcionem devem ser iniciadas comeco simulacao meio macro 
+ figura demonstra ativadas cada subrotinas macro inicial 
+ figura ativacao subrotinas usando macro 
+ recursos ultimos elementos sistema definidos recursos 
+ modelo conceitual considerado recurso mecanico bordo 
+ assim figura demonstra acrescentado modelo 
+ figura apresenta especificacoes desse recurso rede caminhos deve locomover base equivalente oficina bordo deve voltar base ocioso deve sempre atender entidade esperando tempo 
+ figura definicao recursos caracteristicas modelo computacional 
+ rede caminhos apresentada figura 
+ partir determinouse quais rotas mecanico pode percorrer acessar turbomaquinas voltar oficina bordo 
+ alem disso modelo conceitual considera tempo movimentacao desprezivel cada percurso percorrido mecanico tempo segundo 
+ figura definicao rede caminhos recursos poderiam locomover 
+ esforco computacional executar modelo computacional utilizouse computador caracteristicas apresentadas tabela 
+ caracteristicas computador utilizado sistema operacional descricao windows processador intel ® coreTM iu cpu 
+ ghz memoria instalada ram gb tipo sistema sistema operacional bits processador base tabela caracteristicas computador utilizado executar simulacao 
+ computador obtevese resultados esforco computacional mostrados tabela 
+ considerase corrida inicio momento clica executar simulacao termina momento todas informacoes output viewer exibidas 
+ esforco computacional corrida simulacao duracao todas corridas simulacao valor unidade segundos segundos tabela esforco computacional execucao modelo 
+ experimentacao secao apresenta validacao modelo computacional utilizacao modelo validado realizar experimentos 
+ validacao modelo validar modelo utilizadas seguintes variaveis resposta tempo manutencao corretiva tempo manutencao preventiva tempo standby cada maquinas 
+ resultado corridas simulacao promodel podem ser observados relatorio resultados conforme mostra figura onde possivel extrair informacoes referentes variaveis resposta 
+ figura relatorio resultados promodel 
+ quadrado vermelho esquerda imagem tempos programados cada turbogerador 
+ calcular combinacao tempos manutencao preventiva standby pois podem ser sobrepostos necessario resolver equacao 
+ TMP SB tempo simulacao − tempo programado equacao calculo tempo manutencao preventiva standby 
+ tmp sb tempo manutencao preventiva standby assim caso tg tmp sb 
+ determinar tempo manutencao corretiva basta observar variaveis vtmc 
+ caso turbomaquina tempo gasto manutencao corretiva igual 
+ resta apenas comparar dados obtidos simulacao dados originais apresentado tabela 
+ conjunto atividades tg tg tg tg total geral vtmc 
+ erro relativo total geral 
+ tabela resultados obtidos modelo inicial 
+ possivel observar resultados simulacao parte manutencao preventiva standby apresentam variacao grande relacao dados originais 
+ modelo conceitual definiuse somente mecanico bordo utilizado deveria atender cada maquinas medida apresentassem necessidade manutencao preventiva 
+ mundo real maquina parada mecanico pudesse realizar manutencao nela pois poderia estar trabalhando maquina exemplo 
+ maquina ficaria operacao tempo realizacao manutencao preventiva maquina alcancado aguardando mecanico terminasse manutencao outra maquina pudesse realizar manutencao nela 
+ promodel hora manutencao preventiva chega automaticamente coloca maquina manutencao preventiva mecanico ainda realizando manutencao outra maquina realista 
+ conta disso tempos manutencao preventiva ficaram supervalorizados tabela 
+ gargalo processo aparenta ser mecanico bordo pois neste caso algo relativamente facil perceber gestores plataforma solucao imediata colocacao mecanicos minimizar problema caso 
+ forma contornar restricao imposta promodel adicionar pressuposto modelo capacidade mecanico suficiente atender todas maquinas gerar atrasos atendimento maquinas 
+ necessario testar impacto mecanico sistema pois sempre maquina entrar manutencao podera atende la adequadamente 
+ apos mudanca resultados encontrados apresentados tabela 
+ conjunto atividades tg tg tg tg total geral vtmc 
+ erro relativo total geral 
+ tabela resultados obtidos modelo ajustado 
+ melhora tempos manutencao preventiva standby clara significativa 
+ outra hipotese diretamente ligada capacidade realizar manutencoes parte mecanico 
+ hipotese turbomaquinas diferentes podem receber manutencoes tempo devido limitacao somente mecanico bordo 
+ representala modelo computacional cada manutencao preventiva realizada primeira vez instante tempo diferente conforme podese observar figura 
+ figura modelagem maquinas receberem manutencao preventiva tempo 
+ maquinas passam manutencao exemplo lavagem agua tempo frequencia duracao cada manutencao preventiva mesmas todas maquinas 
+ entanto partir momento assume mecanico consegue atender todas maquinas ocorrem atrasos significativos nesse atendimento deixa ser necessario representar consideracao simulacao 
+ irreal representar manutencoes preventivas podem acontecer tempo diferentes maquinas exemplo conta necessidade parar producao tal simplificacao feita mudanca hipoteses verificar modelo melhoraria resultados 
+ conta disso modelo alterado novamente resultado pode ser encontrado tabela 
+ tabela apresenta cada conjunto atividades simulado erro relacao dados originais dado conjunto turbogerador 
+ conjunto atividades tg tg tg tg total geral vtmc 
+ erro relativo tmp sb 
+ erro relativo total geral 
+ tabela resultados obtidos modelo final 
+ grafico resultados obtidos simulacao final 
+ resultados encontrados melhores retirada duas restricoes conforme observa grafico 
+ grafico apresenta comportamento medio cada turbogerador dados originais resultados simulacao 
+ variacao dois resultados bastante pequena podese concluir modelo apesar simplicidade apresenta razoavel aproximacao comportamento observado sistema 
+ alem disso resultados originais simulacao fpso pode ser operado condicoes encontra menos maquinas 
+ porque media maquinas ficam standby durante menos tempo total 
+ possivel operar somente maquinas tempo standby deveria ser menos cada maquina 
+ experimentacoes modelo validado secao apresenta experimentacoes modelo validado secao 
+ visando ampliar conhecimento sobre comportamento sistema determinadas situacoes 
+ cada situacao apresentada topico desta secao 
+ utilizacao mecanico bordo mecanico bordo utilizado toda vez manutencao corretiva manutencao preventiva apresenta gasto homem hora conforme apresenta tabela 
+ nesse sentido possivel estimar tempo utilizacao mecanico bordo soma tempos manutencao corretiva variaveis vtmc gastos homem hora manutencao preventiva variaveis vmphh 
+ atividades consomem tg tg tg tg total geral vtmc vmphh 
+ horas manutencao total 
+ horas manutencao mensal tabela utilizacao mecanico bordo 
+ tabela mostra resultados utilizacao mecanico bordo 
+ informacoes permitem estimar mecanico gasta horas dia considerando trabalha dias mes 
+ aumento tempo simulacao conforme requerimentos normativos industria petroleo iso api turbogeradores devem apresentar vida util anos 
+ sendo assim nesta secao testase aconteceria tempo simulacao igual vida util 
+ calcular tempo anos horas fezse seguinte consideracao cada ano possui meses cada mes apresentando dias cada dia horas 
+ tabela apresenta resultados termos tempos cada conjunto atividades 
+ conjunto atividades vtmc tmp sb total geral tg 
+ tabela resultado simulacao tempo simulacao aumentado 
+ ter comparativo comparacao feita dados originais projetados simulacao anos meio grafico 
+ representa comportamento medio turbogeradores longo tempo possivel perceber pouca variacao dois resultados 
+ entanto existe aumento tempo manutencao preventiva standby comparado resultados modelo validado grafico 
+ grafico comparacao resultado modelo tempo simulacao aumentado 
+ manutencao corretiva mantem constante ser comparada modelo validado secao 
+ deve existencia fator cause aumento necessidade manutencao maquinas longo tempo comportamento esperado sistema real 
+ padronizacao distribuicoes manutencao corretiva acordo fogliatto al 
+ nasa lognormal distribuicao utilizada modelagem tempos reparo unidades reparaveis 
+ outros autores sugerem distribuicao exponencial pode ajustar bem tempos mendes mannan 
+ caso observase apendice testes aderencia manutencao corretiva lognormal rejeitada todos turbogeradores apresenta rank baixo 
+ outro lado ajuste distribuicao exponencial rejeitado nenhum equipamentos apesar desta apresentar baixo rank alguns 
+ conta disso utilizacao distribuicao exponencial testada todas turbomaquinas cujo resultado apresentado tabela 
+ conjunto atividades tg media distribuicoes melhor ajuste 
+ erro relativo tg tg tg distribuicao exponencial 
+ erro relativo tabela comparativo simulacao validada simulacao manutencao corretiva padronizada distribuicao exponencial 
+ surpreendentemente resultados modelagem manutencao corretiva distribuicao exponencial melhores distribuicoes utilizadas modelo validado onde criterio escolha distribuicao maior rank 
+ entanto ambas apresentam erros relativos medios proximos abaixo representando assim bem dados originais pode ser observado grafico 
+ grafico comparacao resultados originais simulacao manutencao corretiva padronizada distribuicao exponencial 
+ padronizacao distribuicoes standby caso tempos standby todas maquinas bem modeladas distribuicao gamma excecao turbogerador cuja distribuicao maior rank weibull 
+ sendo assim experimento apresenta resultado simulacao tempos standby todos turbogeradores sendo modelados distribuicao gamma 
+ tempo manutencao preventiva standby tg tg tg tg distribuicoes originais simulacao validada 
+ erro relativo media 
+ erro relativo tabela comparativo simulacao validada simulacao distribuicoes standby padronizadas 
+ tabela mostra resultados simulacao tempo manutencao preventiva standby simulacao validada simulacao padronizacao desses tempos distribuicao gamma 
+ alem disso mostra erro relativo cada duas simulacoes relacao resultados originais 
+ erro relativo medio todas turbinas maior utiliza todas distribuicoes gamma 
+ esperado turbogeradores distribuicao melhor ajusta dados 
+ entanto diferenca bastante pequena significa padronizacao distribuicoes obtem bons resultados 
+ grafico comparacao resultados originais simulacao distribuicao gamma tempos standby 
+ grafico compara comportamento medio turbinas resultados originais simulacao padronizada gamma nesta secao 
+ variacao resultados continua sendo pequena forma geral 
+ mudanca amostragem distribuicoes standby acordo tabela amostragem apresenta segundo melhor ajuste distribuicoes standby mensal 
+ sendo assim secao apresenta experimentacao aconteceria amostragem utilizada 
+ tempo manutencao preventiva standby tg tg tg tg media distribuicoes originais simulacao validada 
+ erro relativo standby amostragem mensal 
+ erro relativo tabela comparativo simulacao validada simulacao standby usando amostragem mensal 
+ tabela apresenta resultados desse experimento compara resultados simulacao validada 
+ media amostragem mensal apresenta erro relativo menor simulacao original entretanto individualmente pior maquinas 
+ forma geral resultados experimento ficaram pouco distantes resultados originais pode ser observado grafico 
+ grafico comparacao resultados originais simulacao tempos standby utilizando amostragem mensal 
+ criticas modelo partir desenvolvimento modelo realizacao experimentos percebeuse modelo apresenta algumas falhas limitacoes 
+ dois principais fatores contribuem simplificacoes hipoteses adotadas falta inexatidao dados entrada 
+ devido falta dados entrada alguns fatores puderam ser considerados modelo 
+ caso pecas materiais utilizados manutencoes bem custos 
+ tais elementos poderiam agregar informacoes bastante interessantes sistema permitiriam avaliar custo operacional turbogeradores gestao estoque pecas materiais alem avaliacao qualidade manutencoes parte mecanicos bordo exemplo relacionadas consumo excessivo materiais pecas 
+ focos deste trabalho identificar operar sistema forma eficiente elementos uteis pois elementos normalmente apresentam oportunidades melhoria 
+ outros dados interessantes acrescentar modelo estariam relacionados demanda producao energia parte turbogeradores 
+ porque permitiriam avaliar cadeia eventos vai desde falha turbogerador possivel geracao custo oportunidade relacionado queda producao oleo falta energia 
+ relacao inexatidao dados entrada podese dizer ajudou simplificar modelo 
+ porque maior precisao dados permitiria avaliacao adequada quais tempos relacionam exemplo manutencao preventiva quais standby 
+ alem disso maior precisao dados permitiria avaliar possivel modelar cada atividade amostragem menor minutos horas inves meses quinzenas 
+ amostragem menor permitiria representar maneira realista sistema maquinas podem ter diversos tempos manutencao corretiva standby longo mes quinzena 
+ modelo validado inves representar varios tempos longo mes quinzena realmente eventos longo tempo completar mes quinzena sorteavase chance haver falhas standby naquele periodo seguida caso haver falhas standby sorteavase tempo total gasto atividades naquele periodo 
+ prejudica avaliacao dinamica modelo permitiria identificar quantas vezes maquinas requereram manutencoes corretivas falharam tempo quantas vezes maquina entrou saiu stand 
+ modelo apresenta boa aderencia dados sistema nivel macro 
+ entanto consegue representalo grau detalhe suficiente avaliar impacto interferencias 
+ exemplo capaz identificar impacto acrescentar manutencao preventiva reduzir taxa falhas quantas vezes longo tempo simulacao maquinas falhas tempo impacto offloading funcionamento turbogeradores dentre outros 
+ deve simplificacoes adotadas realizacao modelo opcoes modelador devido limitacoes software 
+ simplificacao certamente gerou menor aderencia modelo fato frequencia ocorrencia tempos manutencao preventiva serem considerados variaveis deterministicas realidade estocasticas 
+ alem disso varios fatores impactam decisao realizar manutencao preventiva 
+ exemplo disso certamente mecanico bordo priorizaria realizar manutencao corretiva maquina inves preventiva maquina evitar sistema geracao diminuisse producao energia 
+ limitacao observada nesta utilizacao software necessidade afirmar mecanico bordo consegue atender todas maquinas gerar atrasos conforme explicado secao 
+ representar adequadamente atendimento mecanico correto calculo manutencoes preventivas tempo certamente aderencia modelo diminuiu 
+ fim modelo diferencia falha defeito 
+ defeito causa queda desempenho maquina necessariamente causar parada equipamento falha 
+ nesse sentido defeito requisita manutencao pode ser diferente termos frequencia tempo realizacao caso falha 
+ sugestoes trabalhos futuros trabalhos futuros interessante buscar resolver problemas levantados item anterior 
+ primeiramente obtencao dados acerca insumos bastante importante junto informacoes relacionadas producao cada turbogerador demanda energia unidade longo tempo 
+ modelo traria informacoes sobre sistema 
+ passo adiante coletar dados precisos sobre atividades manutencao standby 
+ partir disso chances conseguir obter distribuicoes aderentes amostragem periodo menor maximizada utilizando periodo amostragem menor modelo poderia apresentar granularidade maior detalhes 
+ alem disso determinacao aplicacao regras relacionadas colocar maquina standby maquina efetivamente deve entrar standby complementaria passo anterior 
+ outro ponto interessante tentar determinar quais parametros manutencao preventiva forma estocastica 
+ possibilitaria comparacao plano manutencao sugerido fornecedor equipamentos alem trazer maior realidade modelo 
+ importante observar maior complexidade atrelada modelo apos adicao todos elementos 
+ ultimo deve esquecer buscar contornar limitacoes encontradas promodel 
+ pode ser feito utilizacao codigo diferente contabilize forma diferente variaveis determine forma real utilizacao mecanico bordo busca outro software limite criacao modelo computacional 
+ meio disto interacao elementos modelo parecida sistema estudado 
+ aprendizado primeiramente projeto permitiu autor desenvolvimento habilidade lidar problemas complexos 
+ capacidade compreender problema complexo conseguir modelalo propor solucao razoavel alem aderente realidade competencia essencial qualquer profissional diferenciado dias hoje 
+ respeito problema estudado conhecimentos aplicados adquiridos gestao operacoes setor oleo gas manutencao estatistica simulacao reforcaram habilidades autor nesses assuntos 
+ outro ponto importante aprendizado relacionado utilizacao software simulacao cuja aplicabilidade resolucao diversos problemas praticos bastante alta 
+ fim ter oportunidade lidar profissionais ramo observar praticas mercado elementos bastante agregadores conhecimento 
+ bibliografia bain company tozzinifreire advogados estudos alternativas regulatorias institucionais financeiras exploracao producao petroleo gas natural desenvolvimento industrial cadeia produtiva petroleo gas natural brasil 
+ realizado recursos fundo estruturacao projetos bndes fep 
+ discrete event simulation 
+ new jersey prentice hall 
+ conquest inner space challenges innovations offshore technology 
+ marine systems ocean technology rio janeiro 
+ gestao operacoes logistica producao petroleo 
+ rio janeiro elsevier 
+ confiabilidade manutencao industrial 
+ rio janeiro elsevier 
+ petroleum petrochemical natural gas industries collection exchange reliability maintenance data equipment 
+ simio simulation modeling analysis applications 
+ pittsburgh simio llc 
+ lees process safety essentials hazard identification assessment control 
+ contribuicao analise confiabilidade sistemas redundantes inspecao periodica 
+ porto alegre universidade federal rio grande sul 
+ complex adaptive systems introduction computational models social life 
+ princeton princeton university press 
+ fundamentals floating production systems 
+ new delhi allied publishers private limited 
+ geografia geopolitica petroleo 
+ rio janeiro mauad 
+ mean time repair predictions 
+ disponivel http llis 
+ modelling system failures gas turbine engines offshore platforms 
+ petroleo regiao brasil desafio abundancia 
+ rio janeiro garamound 
+ promodel user guide 
+ disponivel https www 
+ entendendo apredendo desenvolvendo sistemas producao lean manufacturing 
+ rio janeiro elsevier 
+ introduction art science simulation 
+ winter simulation conference texas 
+ apendice testes aderencia standby amostragem minuto amostragem hora tgtgtgtgtgtgtgtg amostragem diaria amostragem quinzenal tgtgtgtgtgtgtgtg amostragem mensal tgtgtgtg apendice testes aderencia manutencao corretiva amostragem minuto amostragem hora tgtgtgtgtgtgtgtg amostragem diaria amostragem quinzenal tgtgtgtgtgtgtgtg amostragem mensal tgtgtgtg

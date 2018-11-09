@@ -1,0 +1,590 @@
+universidade federal rio janeiro departamento engenharia mecanica dem poli ufrj termoeconomia aplicada analise otimizacao sistemas cogeracao biogas hugo rodolfo carvalho costermani engenharia mecanica projeto final submetido corpo docente departamento politecnica universidade federal rio janeiro parte requisitos necessarios obtencao grau engenheiro mecanico 
+ escola aprovado prof 
+ manuel ernani carvalho cruz orientador dr 
+ leonardo santos reis vieira orientador prof 
+ marcelo jose colaco prof 
+ nisio carvalho lobo brum rio janeiro rj brasil fevereiro indice 
+ descricao planta cogeracao 
+ descricao problema otimizacao 
+ descricao metodos utilizados 
+ descricao rotinas implementadas 
+ descricao execucao rotinas avaliacoes realizadas 
+ comparacao resultados obtidos 
+ anexo resultados parciais metodo om 
+ anexo resultados parciais metodo 
+ anexo resultados parciais metodo 
+ anexo rotina programaprincipal 
+ anexo rotina criterios 
+ anexo rotina melhoraauto 
+ anexo rotina otimizaauto 
+ anexo subrotina calculodentrootimizacao 
+ anexo subrotina calculoforaotimizacao 
+ indice figuras figura diagrama planta utilizada modelagem vieira 
+ figura fluxogramas metodos utilizados neste trabalho 
+ figura fluxograma estapas metodo exergoeconomico valido 
+ figura fluxograma processos metodos 
+ figura representacao fluxograma rotinas metodos 
+ figura resultado grafico metodo om 
+ figura resultado grafico metodo 
+ figura resultado grafico metodo 
+ figura grafico comparativo comportamento funcao objetivo durante tempo execucao metodos otimizacao 
+ indice tabelas tabela composicao biogas utilizado modelagem sistema cogeracao 
+ tabela valores parametros constantes sistema adotados modelagem 
+ tabela caracteristicas variaveis decisao 
+ tabela parametros adotados configuracao algoritmo genetico metodo om 
+ tabela parametros entrada metodos 
+ tabela parametros adotados configuracao algoritmo genetico metodo 
+ tabela exemplo matriz obtida execucao metodo eis sistema cogeracao utilizado 
+ tabela exemplo vetor obtido execucao metodo melhoramento exergoeconomico 
+ tabela exemplo matriz onde possivel notar repeticoes seguidas subgrupos variaveis decisao 
+ tabela definicao metodos utilizados comparacao desempenho 
+ tabela resultado final metodo om 
+ tabela resultado metodo cada iteracao 
+ tabela vetor matriz resultantes primeira iteracao oito otimizacoes realizadas 
+ tabela vetor matriz resultantes primeira iteracao quatro otimizacoes realizadas 
+ tabela resultado metodo cada iteracao 
+ tabela comparacao resultados finais metodos om 
+ tabela resultados parciais metodo om 
+ tabela resultado iteracao metodo 
+ tabela resultado iteracao metodo 
+ tabela resultado iteracao metodo 
+ tabela resultado iteracao metodo 
+ tabela resultado iteracao metodo 
+ tabela resultado iteracao metodo 
+ tabela resultados iteracao metodo 
+ tabela resultado iteracao metodo 
+ tabela resultado iteracao metodo 
+ tabela resultado iteracao metodo 
+ introducao presente trabalho faz parte programa recursos humanos prh agencia nacional petroleo anp 
+ forneceu suporte necessario realizacao deste trabalho 
+ necessidade racionalizacao uso combustiveis reduzir emissoes poluentes vem incentivando busca sistemas termicos eficientes 
+ maior parte energia contida combustiveis perdida meio ambiente forma calor radiacao maquinas termicas modernas 
+ irreversibilidades presentes devidas limitacoes fisicas tecnologicas permitem rendimento elevado 
+ atualmente ciclo termico convencional somente energia combustivel transformados eletricidade 
+ alternativas obtencao eficiencias elevadas adocao sistemas cogeracao 
+ cogeracao producao simultanea energia termica energia mecanica eletrica partir uso unico combustivel 
+ cogeracao energia termica rejeitada ambiente ciclo geracao convencional parcialmente recuperada forma calor podendo eventualmente ser convertida eletricidade resulta maior eficiencia total 
+ alem maior eficiencia outra questao envolve uso cogeracao descentralizacao producao energia eletrica 
+ producao energia eletrica descentralizada uso cogeracao pode aumentar eficiencia sistema eletrico mediante reducao perdas eletricas transmissao pois reduz distancia producao consumidor energia eletrica 
+ descentralizacao producao energia tendencia mundial 
+ brasil alternativa vem sendo considerada visto grandes reservas hidreletricas esgotando ainda existem localizadas regioes distantes centros consumo energia eletrica 
+ caracteristicas projeto semelhantes termeletricas convencionais usinas cogeracao podem ser instaladas proximas consumidores finais adiando evitando investimentos adicionais sistemas transmissao distribuicao energia eletrica alem reduzirem impacto ambiental instalacao grandes linhas transmissao 
+ usualmente plantas cogeracao utilizam fonte quente motores combustao interna turbinas gas 
+ escolha equipamentos configuracao planta dependem produto final pretende obter energia termica conjunto energia eletrica somente energia eletrica 
+ sistemas cujo objetivo final apenas geracao energia eletrica sistemas cogeracao reduzem sistemas denominados ciclo combinado quais toda energia termica rejeitada queima combustivel turbina gas utilizada geracao eletricidade ciclo turbina vapor 
+ busca maiores eficiencias sistemas cogeracao traduzem menores indices emissoes 
+ busca reducao emissoes sustentabilidade processos geracao vem incentivando substituicao petroleo uso biogas 
+ alem disso preco petroleo instavel depende equilibrio geopolitico regioes produtoras ocorre biogas 
+ plantas biogas tipicamente utilizam digestores processar materia organica provem residuos animais esgoto lixo urbano 
+ digestao anaerobica residuos microrganismos resulta gas caracteristicas semelhantes gas natural composto principalmente metano dioxido carbono 
+ uso biogas producao energia eletrica significa parte carbono emitido queima resgatada ciclo materia organica utilizada producao biogas resultando menor emissao global poluentes 
+ funcao motivos expostos acima desenvolvimento novas plantas geracao energia eletrica tornando tarefa cada vez desafiadora pois devem levar consideracao simultaneamente aspectos ambientais eficiencia custos quais muitas vezes conflitantes 
+ facilitar tomada decisao desenvolvidos metodos analises simulacoes mostram viabilidade projeto buscam equilibrio aspectos custo eficiencia projetos 
+ tais metodos utilizam conceitos termoeconomia 
+ termoeconomia objetivo investigar meio metodos matematicos otimizacao simulacoes computacionais melhor escolha equipamentos combustivel modo operacao tornem plantas termicas eficientes economicamente viaveis 
+ metodos fazem uso conceitos primeira segunda leis termodinamica energia exergia denominados metodos exergoeconomicos 
+ otimizacao exergoeconomica consiste solucao problemas otimizacao fazendo uso metodos exergoeconomicos 
+ neste trabalho avaliados metodos exergoeconomicos aplicados projeto plantas cogeracao utilizando biogas combustivel 
+ dentro setor oleo gas biocombustiveis metodos otimizacao modelos desenvolvidos neste trabalho podem ser utilizados tanto testar uso combustivel alternativo caso utilizado biogas plantas existentes quanto desenvolvimento novas usinas geracao energia eletrica plantas producao combustivel 
+ relevancia tema necessidade obter cada vez energia forma eficiente crescente preocupacao meio ambiente vem sido discutidas estudadas mundialmente ultimas decadas 
+ novas formas novos metodos melhor utilizar combustiveis vem sendo desenvolvidos principalmente uso algoritmos otimizacao 
+ contudo tais metodos otimizacao ainda esbarram obstaculos tecnologicos funcao elevada complexidade modelos grande numero variaveis envolvidas sistema real 
+ solucao vem sendo proposta utilizacao simuladores termodinamicos profissionais forma integrada algoritmos otimizacao vieira 
+ relacao questao ambiental atualmente permanente discussao relacao biocombustiveis 
+ tais combustiveis derivados biomassa existente planeta renovaveis 
+ carbono emitido atmosfera decorrente queima biocombustiveis representa dano significativo planeta contrario queima combustiveis fosseis introducao carbono adicional atmosfera posteriormente sequestro 
+ dessa forma desenvolvimento algoritmos otimizacao processos termicos aplicados sistemas cogeracao biocombustiveis integrados simulacao computacional forma combinacao promissora desenvolvimento sistemas melhores desempenhos menores impactos ambientais 
+ objetivo objetivo principal deste trabalho implementacao metodos otimizacao exergoeconomica aplicados sistemas cogeracao biogas utilizando forma integrada simulador processo termodinamico comercial programa otimizacao matematica profissional 
+ simulador processos ipsepro versao 
+ metodo otimizacao matematica algoritmo genetico disponivel programa matlab 
+ metodo matematico otimizacao algoritmos geneticos aplicado diretamente minimizacao funcao objetivo abordagem otimizacao exergoeconomica denominada eis iterative exergoeconomic improvement integrated simulator desenvolvida vieira 
+ neste estudo desenvolvida alternativa metodo eis 
+ abordagem eis implementados novos procedimentos computacionais visando reducao tempo otimizacao 
+ dessa forma estudo tratado trabalha duas variantes metodo eis 
+ primeira chamada utiliza mesmos calculo procedimentos metodo eis aplicados conjunto matlab 
+ segunda chamada implementa uso matlab novo procedimento computacional visa reduzir tempo execucao analise 
+ objetivo secundario feita comparacao metodos metodo otimizacao tradicional 
+ nesse caso algoritmo genetico presente biblioteca matlab aplicado diretamente problema otimizacao tal abordagem denominada om 
+ cogeracao cogeracao novidade ponto vista tecnologico 
+ inicio seculo xx devido escassez grandes fornecedoras energia eletrica cogeracao aplicada solucao adequada geracao energia eletrica 
+ tratar modelo geracao distribuida eficiente economico ponto vista financeiro ter custo combustivel baixo plantas convencionais geracao energia eletrica 
+ situacao manteve decada sendo estados unidos cogeracao chegou ser responsavel fornecimento energia tito 
+ partir reservas combustiveis fosseis antes usadas guerra tornaram finalmente disponiveis sociedade desenvolvidos grandes sistemas geracao distribuicao energia eletrica 
+ durante decada durante crises petroleo cogeracao vista alternativa viavel producao energia eletrica grande escala 
+ tecnologia nuclear apontada futuro energetico humanidade recrutava grandes investimentos esperancas 
+ contudo devido acidentes altos custos instalacao pressoes politicas envolvendo principalmente questao ambiental uso energia nuclear perdeu forca 
+ partir decada reestruturacao industria petroleo notouse crescimento geracao descentralizada modelos plantas eficientes reabilitando tecnologia cogeracao oliveira 
+ final decada inicio implementados centenas projetos destacandose paises dinamarca holanda italia alemanha 
+ estados unidos editado national energy act nea composto cinco blocos independentes 
+ dentre destacase power utilities regulatory policies act purpa legislacao restringiu monopolio segmentos transmissao distribuicao eletrica incentivando geracao descentralizada principalmente cogeracao 
+ brasil uso cogeracao vem sendo impulsionado ultimas decadas devido altas taxas energia eletrica imposta operadoras 
+ alta preco tarifas eletricas estimula modelos geracao distribuida plantas cogeracao polito 
+ uso cogeracao principalmente setor sucroalcooleiro vem ganhando forca velhas usinas partindo retrofit modernizando parque industrial novas comecam obra planta incluido item cogeracao ainda exija altos investimentos sempre disponiveis montanini 
+ segundo associacao paulista cogeracao energia cogen sp operacao projetos cogeracao brasil principalmente sucroalcooleiros industrias setor quimico petroquimico papel celulose 
+ outros sistemas cogeracao desenvolvidos prestadoras servicos industrias alimenticias shopping centers edificios corporativos hoteis outros polito 
+ biogas biogas descoberto seculo xvii pantanos 
+ entanto nenhuma aplicacao pratica desenvolvida entorno entao nova descoberta 
+ somente seculo xix ulysse gayon aluno louis pasteur desenvolveu trabalho meio fermentacao dejetos animais obteve gas poderia ter aplicacoes aquecimento iluminacao pecora 
+ contudo apenas advento guerra mundial gerou escassez combustiveis fosseis biogas voltou ser utilizado agora aquecimento iluminacao cozinhar alimentos combustivel motores combustao interna 
+ final segunda grande guerra fontes combustiveis tradicionais voltaram ser abundantes uso biogas tornouse reduzido 
+ porem partir crise petroleo biodigestores anaerobicos voltaram ser utilizados algumas partes mundo 
+ brasil diversos programas difusao utilizacao biogas implantados nordeste porem resultados satisfatorios beneficios obtidos suficientes dar continuidade programas 
+ decada biogas visto subproduto valor comercial 
+ situacao mudou atualmente devido preocupacao questao ambiental instabilidades producao combustiveis fosseis pinheiro 
+ atualmente biogas mostrou alternativa combustivel viavel substituicao petroleo avellar al 
+ estudos torno mundo vem sendo feitos melhorar tecnologia biodigestores todo processo producao biogas 
+ brasil estudado producao biogas partir residuos urbanos residuos bovinos suinos vinhaca residuo producao sucroalcooleira salomon al 
+ termoeconomia termoeconomia pode ser definida combinacao analises exergetica economica fim possibilitar engenheiro projetista maior conhecimento sistema alcancado avaliacoes energeticas economicas convencionais bejan al 
+ ideia aliar conceito exergia custos fluxos sistema surgiu keenan abusoglu kanoglu 
+ somente partir inicio decada grande participacao tribus evans gaggioli elsayed evans realizados estudos detalhados envolvendo utilizacao segunda lei termodinamica calculo custos fluxos sistema 
+ primeira citacao termo termoeconomia feita tribus evans 
+ ideia desenvolvida tribus evans associar custo combustivel custo operacao custo capital exergia cada fluxo base desenvolvimento elsayed realizou primeira fundamentacao matematica otimizacao sistemas termicos abusoglu kanoglu 
+ tal metodologia otimiza sistema termico atraves otimizacao individual cada componentes baseada conceito matematico multiplicadores lagrange costa 
+ crises energetica economica decada impulsionadas principalmente choques petroleo serviram incentivo aplicacao pratica termoeconomia inicio decada 
+ trabalhos importantes publicados epoca ainda serve referencia basica area analise exergetica trabalho kotas reune alguns trabalhos publicados entao sobre termoeconomia abusoglu kanoglu 
+ ainda decada podemse citar outros trabalhos grande relevancia tsatsaronis al 
+ decada vieram grandes contribuicoes area termoeconomica 
+ resultado dessas contribuicoes definido termo exergoeconomia proposto tsatsaronis representar metodologias contabilidade baseadas custos exergeticos 
+ expressao termoeconomia usada representar interacao geral variaveis termodinamicas economicas tsatsaronis envolvendo necessariamente conceito exergia 
+ alem disso criado problema padrao finalidade estabelecer modelo referencia comparacao diferentes metodologias 
+ problema denominado cgam valero al 
+ trabalhos maior importancia deste periodo 
+ decada marcada busca formalizacao metodologias exergoeconomicas aplicacao termoeconomia sistemas cogeracao abusoglu kanoglu 
+ brasil decada podemse citar alguns trabalhos visando otimizacao termoeconomica sistemas balestieri borba vieira vieira al 
+ mothci santos rucker padilha palma cordeiro costa 
+ boa parte destes trabalhos utiliza metodologias auxiliadas simuladores processos termodinamicos 
+ novas metodologias vem sendo progressivamente aplicadas mundo instalacoes existentes geracao energia cogeracao utilizando estrategias estocasticas manolas al 
+ integracao estrategias otimizacao estocasticas busca direta juntamente simuladores processos mostrado ferramenta poderosa apresentado exemplo trabalhos vieira al 
+ cordeiro koch al 
+ utilizacao simuladores termodinamicos otimizacao sistemas objetivo reduzir numero variaveis simultaneamente utilizadas algoritmos otimizacao matematica convencionais 
+ desta forma problema otimizacao passa restringir apenas variaveis decisao variaveis simulacao incorporadas problema otimizacao 
+ alguns exercicios integracao destas tecnicas algoritmos profissionais otimizacao matematica implementados pires sistemas cogeracao gas natural 
+ alternativa metodos otimizacao vieira donatelli cruz propuseram utilizacao metodos melhoramento exergoeconomico abordagem eis visando aplicacao sistemas complexos quais tecnicas convencionais otimizacao matematica sempre satisfatorias funcao elevado numero variaveis decisao envolvidas complexidade termodinamica sistema 
+ metodo melhoramento exergoeconomico faz uso sucessivo algoritmos matematicos otimizacao subgrupos componentes variaveis decisao escolhidos base analise exergoeconomica previa sistema 
+ integracao metodos melhoramento exergoeconomico simuladores processos implementadas abordagem eis vieira donatelli cruz 
+ porem trabalho utilizados algoritmos otimizacao matematica profissionais comercialmente disponiveis 
+ assim neste trabalho alem integracao simulador termodinamico profissional empregado trabalhos anteriores vieira propoese utilizacao simultanea otimizador profissional solucao problema otimizacao termoeconomica aplicado sistemas biogas 
+ estudo caso neste trabalho desenvolvido estudo caso objetivo principal comparar dois procedimentos otimizacao aplicados sistema geracao energia eletrica utiliza tecnologia cogeracao biogas combustivel 
+ procedimentos escolhidos seguintes otimizacao matematica integrada simulador processos ipsepro 
+ utilizando metodo algoritmos geneticos disponivel biblioteca matlab melhoramento exergoeconomico eis integrado simulador processos ipsepro 
+ utilizando metodo algoritmos geneticos disponivel biblioteca matlab 
+ otimizacoes via algoritmo genetico via metodo melhoramento exergoeconomico objetivo encontrar custo minimo energia eletrica gerada sistema cogeracao 
+ implementacao estudo feita tres etapas 
+ primeiramente desenvolvida modelagem computacional sistema cogeracao energia biogas calculos termoeconomicos 
+ tal modelagem feita simulador processos termodinamicos 
+ simulador processos termodinamicos adotado ipsepro 
+ simtech versao nova programa utilizado sucesso vieira 
+ segunda etapa consistiu programacao rotinas calculos exergoeconomicos ambiente programa matlab mathworks 
+ base resultados obtidos simulacao termodinamica rotinas calculos exergoeconomicos possivel calcular funcao objetivo problema otimizacao 
+ fim terceira etapa solucao problema otimizacao 
+ conforme citado anteriormente funcao objetivo otimizada utilizandose dois metodos citados inicio desta secao 
+ descricao rotinas calculos pode ser encontrada secao 
+ uso matlab ferramenta calculo otimizacao integrado simulador processos profissional ipsepro confere resultados maior confiabilidade pratica pois trata uso dois programas profissionais renomados validados comunidade tecnicocientifica 
+ descricao planta cogeracao sistema cogeracao modelado apresentado figura composto componentes incluindo duas turbinas gas gt gta turbina vapor extracao st turbina vapor condensacao st duas caldeiras recuperacao calor hrsg hrsga dois aquecedores agua desarerador condensador torre resfriamento varias bombas pa misturadores splitters valvulas 
+ sistema possui fluxos massa incluindo entradas saidas agua 
+ sistema cogeracao produtos eletricidade turbinas gas vapor vapor processo agua quente processo 
+ combustivel turbinas gas biogas 
+ figura diagrama planta utilizada modelagem vieira 
+ biogas utilizado modelagem composicao apresentada tabela poder calorifero inferior pci igual kj kg salomon al 
+ tabela composicao biogas utilizado modelagem sistema cogeracao 
+ modelagem desse sistema termico feita utilizando programa ipsepro 
+ base modelos desenvolvidos vieira exceto combustivel componentemassicavolumetricametano monoxido carbono co dioxido carbono co hidrogenio acido sulfidrico hs nitrogenio oxigenio composicao mistura gasosa biogas utilizado 
+ assim facilitar comparacao adotada mesma notacao utilizada vieira 
+ descricao problema otimizacao funcao objetivo problema otimizacao soma custos especificos produtos sistema inclui investimento capital equipamentos planta custo combustivel operacao custos manutencao 
+ funcao objetivo pode ser expressa vieira al correspondem custo especifico produto combustivel respectivamente numeros totais produtos combustiveis sistema respectivamente taxa fluxo exergetico combustivel componente indice 
+ termo corresponde numero componente presente planta 
+ determinacao custos exergeticos combustiveis produtos componentes obedecem mesmas expressoes propostas vieira 
+ soma capital investido equipamentos custos operacao manutencao componente investimento capital total fator recuperacao capital numero horas operacionais ano fator manutencao assumido constante respectivamente vida util sistema taxa juros 
+ valores parametros economicos usados todos calculos anos horas onde custo cada componente utilizado sistema cogeracao tratado 
+ maiores detalhes podem ser encontrados vieira 
+ problema otimizacao envolve nove variaveis decisao escolhidas mostrarem sendo variaveis maior importancia estudos anteriores mesmas utilizadas vieira pires 
+ nove variaveis decisao apresentadas adiante tabela 
+ demandas vapor processo agua quente consideradas constantes 
+ processo otimizacao aplicada penalidade faz funcao objetivo retornar valor constante unidades monetarias caso ocorra inviabilidade termodinamica calculos simulador processos 
+ valor superior valor final esperado funcao objetivo 
+ tabela apresenta valores adotados parametros constantes sistema 
+ tabela apresenta variaveis decisao sistema limites superior inferior valores iniciais ponto inicial processo otimizacao 
+ fluxo componenteparametrovaloreficiencia volumetrica eficiencia mecanica motoreseficiencia mecanica eletrica queda pressao circuito quente bar queda pressao circuito frio bar tranferencia calor kw queda temperatura vapor °c queda pressao bar queda temperatura agua quente °c queda pressao bar pressao agua retorno bar temperatura agua quente °c fluxo agua quente kg poder colorifero kj kg 
+ pressao bar tempratura °c eficiencia mecanica eficiencia isentropica eficiencia mecanica eficiencia isentropica condesadorsubresfriamento °c queda pressao circuito hrsg bar queda pressao circuito hrsga bar torre resfriamentotemperatura agua entrada °c turbina condensacaomixer mcombustivelagua quente processovapor processocondensador trocadores calorbombasturbina extracao 
+ descricao variavelnumero variavelsimobolo varavellimite inferiorlimite superiorvalor inicialpotencia nominal turbina gt mwiso gtpotencia nominal turbina gta mwiso gtafator carga operacao turbina gt gt 
+ ffator carga operacao turbina gta gta 
+ fpressao vapor hrsg bar 
+ ppressao vapor hrsga bar sa 
+ ptemperatura vapor hrsg °c 
+ ttemperatura vapor hrsga °c sa 
+ tpressao extracao vapor st bar 
+ descricao metodos utilizados neste estudo caso aplicados trez metodos problema otimizacao 
+ todos utilizaram algoritmo genetico presente toolbox otimizacao matlab contudo existe pequena diferenca configuracao algoritmo genetico utilizado diretamente problema otimizacao metodo om variantes metodo eis metodos 
+ figura mostra fluxogramas metodos desenvolvidos neste trabalho 
+ note metodo om algoritmo genetico utilizado diretamente problema otimizacao 
+ metodo algoritmo genetico acrescentado metodo eis aplicado problema otimizacao 
+ metodo aplicado problema otimizacao sofreu modificacao feita implementacao codigo acelerador tratado capitulos seguintes resultando metodo entao aplecano solucao problema otimizacao 
+ figura fluxogramas metodos utilizados neste trabalho configuracoes parametros algoritmos geneticos usados neste estudo estabelecidas forma empirica 
+ executados diversos testes dimensionar parametros metodo tratado fim evitar metodo interrompido criterio parada antes convergir ponto otimo 
+ tal cuidado garante validade comparacao pois certeza ambos metodos utilizados entao operando capacidade plena otimizacao 
+ primeiro metodo algoritmo genetico aplicado alterandose simultaneamente nove variaveis decisao funcao objetivo 
+ metodo denominado om otimizacao matematica 
+ tabela mostra parametros adotados tabela parametros adotados configuracao algoritmo genetico metodo om 
+ tabela nvar numero variaveis serem otimizadas caso nvar igual tamanho populacao tamanho vetor populacao cada geracao geracoes numero maximo geracoes metodo pode alcancar geracoes melhoria numero maximo geracoes consecutivas onde nenhuma reducao funcao objetivo metodo pode alcancar 
+ note valores geracao geracao melhoria parametros parada metodo atingir dessa condicoes otimizacao interrompida 
+ outros criterios parada mutacao variacao media populacao numero chamadas funcao objetivo outros alterados permaneceram configuracao original defaut toolbox matlab 
+ metodos algoritmo genetico utilizado internamente forma sucessiva etapas metodo 
+ tal metodo corresponde alternativa tamanho populacao nvargeracoes nvargeracoes melhoria nvarparametros algoritmo genetico descrita detalhes vieira al 
+ neste trabalho metodo denominado melhoramento exergoeconomico 
+ paragrafos seguintes apresentam breve descricao metodos lembrando diferenca metodos somente implementacao computacional seguem mesmos parametros etapas calculo 
+ cada iteracao metodo consiste seis etapas 
+ etapa consiste analise exergoeconomica custos exergeticos eficiencia exergetica componentes sistema calculados 
+ nessa etapa alguns parametros entrada especificados incremento avaliacao numerica sensibilidade custo total sistema eficiencia exergetica relacao variavel decisao parametros respectivamente identificacao variaveis afetam custo total classificacao hierarquica componentes selecao variaveis decisao principais 
+ nesse estudo caso parametros configurados valores apresentados tabela 
+ tabela parametros entrada metodos 
+ seguida etapa analise sensibilidade numerica realizada quantificar efeito cada variavel decisao custo total sistema eficiencia exergetica 
+ variaveis decisao entao agrupadas quatro classes diferentes afeta apenas custo total sistema afeta apenas eficiencia sistema afeta custo eficiencia afeta sistema 
+ etapa consiste classificacao hierarquica componentes sistema 
+ classificados ordem decrescente funcao soma custo ∆xi parametros metodo eis investimento taxa custo destruicao exergia componentes possuem custo elevado energeticamente ineficientes classificados primeiro 
+ componentes entao agrupados principais secundarios remanescentes 
+ componentes principais exercem maiores influencias sobre custo total sistema considerados primeiro lugar processo melhoramento 
+ componentes remanescentes ignorados primeiro momento 
+ notase classificacao componente pode variar decorrer processo 
+ etapa cada componente principal secundario variavel custo investimento destruicao exergia exerce maior influencia sobre custo total componente identificada 
+ etapa calculados coeficientes ligacao estrutural vieira base custo destruicao exergia custo total investimento custo destruicao exergia componente 
+ etapa otimizacao matematica componentes principais secundarias identificadas etapa variaveis decisao principais selecionadas etapa afetam custo total sistema eficiencia exergetica variaveis decisao afetam custo total sistema apenas consideradas final iteracao 
+ processo otimizacao variaveis decisao limitadas modificadas dentro limites validade equacoes custo componente 
+ principio qualquer metodo matematico pode ser utilizado 
+ vieira utilizado metodo poliedros flexiveis 
+ presente estudo escolhido algoritmo genetico presente biblioteca software matlab 
+ figura exposto fluxograma etapas metodos possivel observar resultado iteracao serve entrada iteracao seguinte 
+ figura fluxograma estapas metodo exergoeconomico valido tabela mostra parametros utilizados configuracao algoritmo genetico utilizado internamente metodos 
+ notaque parametros algoritmo genetico utilizados metodos semelhantes parametros algoritmo genetico utilizado diretamente problema otimizacao nove variaveis 
+ contudo notase parametro numvar constante parametro nvar tratado anteriormente 
+ parametro numvar numero variaveis serem otimizadas valor modificado funcao numero varaveis serem otimizadas associadas cada componente sistema pode variar 
+ tabela parametros adotados configuracao algoritmo genetico metodo 
+ tamanho populacao numvargeracoes numvargeracoes melhoria numvarparametros algoritmo genetico relembrando tamanho populacao tamanho vetor populacao cada geracao geracoes numero maximo geracoes metodo pode alcancar geracoes melhoria numero maximo geracoes consecutivas onde nenhuma reducao funcao objetivo metodo pode alcancar 
+ valores geracao geracao melhoria variam acordo numvar tais criterios parada metodo constantes durante metodos obedecem mesma proporcao funcao numero variaveis algoritmo usado primeiro metodo descrito 
+ dessa forma possivel comparacao desempenho metodos 
+ descricao rotinas implementadas desenvolvimento estudo caso desenvolvidas rotinas extensao 
+ compiladas software matlab 
+ segue breve descricao mesmas 
+ tal rotina papel carregar parametros iniciais procedimentos otimizacao tais valores iniciais nove varaveis decisao limites inferior superior variaveis decisao parametros financeiros equacoes custo componentes iv parametros requeridos utilizacao algoritmo genetico parametros requeridos utilizacao metodos 
+ alem carregar parametros iniciais rotina tratada responsavel comunicacao ipsepro fornece resultado calculos exergoeconomicos metodo otimizacao escolhido algoritmo genetico metodos derivados metodo eis 
+ utilizada apenas metodos 
+ nela realizadas etapas mencionadas secao 
+ tal rotina calcula partir analise exergoeconomica resultante programaprincipal 
+ variaveis exergoeconomicas exigidas metodo determina ainda matriz decisao matriz vetor ordem componentes vetor descritos seguir sistema considerado 
+ matriz decisao matriz indica variaveis associadas componentes principais secundarios ordenados vetor descrito posteriormente devem ser modificadas durante otimizacao 
+ cada linha matriz representa subgrupo variaveis decisao associado componente 
+ variaveis decisao deste subgrupo influenciam desempenho componente associado 
+ caso estudo existem componentes 
+ dessa forma matriz decisao deve ter linha cada componente sistema 
+ ultima linha matriz decisao associada subgrupo variaveis afeta apenas custo global sistema afetando eficiencia portanto matriz decisao totaliza linhas 
+ matriz nove colunas quais representam nove variaveis iniciais passiveis serem escolhidas processo otimizacao 
+ matriz composta onde indica variavel decisao escolhida participar subgrupo otimizado indica variavel faz parte processo otimizacao 
+ dessa forma matriz representa quais variaveis decisao sistema interessantes otimizar componete melhor desempenho onde significa variavel afeta componente portanto utilizada representa variavel interessante utilizada processo otimizacao 
+ tabela mostra matriz decisao inicio processo iterativo 
+ note todas variaveis otimizadas cada componente 
+ componentes variaveisgtgtaststhrsghrsgahhatorre resfriamentocondensadordesaeradorvvvmmssssppappsistema globalmatriz base matriz decisao observase metodo trabalha subgrupos tamanho diferenciado numero total variaveis decisao 
+ alem disso subgrupos tamanhos diferentes 
+ objetivo metodo sempre efetuar otimizacao numero variaveis decisao reduzido desta forma buscar reducao tempo computacional simplificacao problema otimizacao 
+ vetor ordem componentes vetor resultado etapa metodo melhoramento exergoeconomico 
+ tal vetor mostra ordem importancia componentes devem ser considerados processo otimizacao ordem linhas matriz executadas 
+ notase componentes sistema sistema global compoenete representa custo global sistema somente oito componentes selecionados processo melhoramento tabela 
+ tabela exemplo vetor obtido execucao metodo melhoramento exergoeconomico 
+ observando tabela possivel notar somente linhas possuem variaveis serem otimizadas possuem menos valor igual ordenadas vetor tabela 
+ figura mostra fluxograma metodos possivel visualizar matriz vetor utilizados 
+ novamente matriz apresenta variaves seram modificadas processo otimizacao vetor apresenta ordem compoenentes otimizacao referente sistema executada 
+ ordem execucaooooooooono linha matriz dvetor figura fluxograma processos metodos 
+ completar seis etapas metodo desenvolvida rotina melhoraauto 
+ rotina papel executar otimizacao matematica sistema utilizando variaveis decisao subgrupos associados componentes ordenados vetor 
+ tal otimizacao matematica correspondente etapa metodo melhoramento exergoeconomico 
+ otimizacao matematica feita utilizandose algoritmo genetico disponivel programa matlab dito 
+ observado estudos anteriores muitos componentes seguidamente ordenados partilham mesmos subgrupos variaveis decisao conforme mostrado tabela 
+ analise sensibilidade matlab ponto inicialalgoritmo genetico matlab xx xy xz 
+ resultado parcialcomponente xalgoritmo genetico matlab xx xy xz 
+ resultado parcialcomponente yalgoritmo genetico matlab xx xy xz 
+ resultado parcialcomponente zalgoritmo genetico matlab xx xy xz 
+ resultado finalcusto global sistemamodelo termodinamico ipsepro modelo economico matlab aplicacao matriz daplicacao vetor note linhas cinza matriz tabela correspondem subgrupos variaveis repetindo seguidamente linhas negrito 
+ importante lembrar ordem seguida definida vetor coincidencia exemplo tratado ordem vetor segue ordem numerica 
+ contudo regra geral 
+ fato existirem subgrupos variaveis repetem seguidamente indica aplicacao sucessiva metodo matematico mesmas variaveis decisao escolhidas portanto teoricamente reducoes adicionais funcao objetivo metodo matematico convergir corretamente 
+ ocorrencia problema metodo porem aumenta tempo computacional 
+ neste estudo escolha parametros adotados algoritmo genetico preocupacao garantisse convergencia adequada modificacoes adicionais variaveis decisao reduziam funcao objetivo 
+ componentes variaveisgtgtaststhrsghrsgahhatorre resfriamentocondensadordesaeradorvvvmmssssppappsistema globalmatriz ressaltase otimizacao subgrupos variaveis repetidos pode ter efeito funcao objetivo ocorre forma sucessiva 
+ acelerar processo otimizacao metodo casos escolhidos subgrupos variaveis decisao identicos sucessivos desenvolvido codigo codigo acelerador dentro rotina melhoraatou 
+ impede repeticoes seguidas subgrupos variaveis 
+ codigo acelerador pode ser desabilitada permitindo execucao metodo melhoramento exergoeconomico original 
+ tratar nova implementacao impacto sobre metodo melhoramento exergoeconomico estudado posteriormente secao 
+ detalhes sobre execucao iteracoes metodos codigo acelerador descritos secao 
+ rotina executa otimizacao metodo matematico om otimizaauto 
+ rotina chama toolbox otimizacao algoritmo genetico matlab aplica tal metodo considerando todas nove variaveis problema otimizacao 
+ nesse metodo distinguidos nenhum componente variavel maior importancia 
+ trata metodo iterativo somente execucao rotina necessaria obtencao resultado final 
+ devese lembrar somente chamada metodo matematico corresponde otimizacao todo sistema 
+ algoritmo genetico usado possui configuracoes conforme tabela aplicado minimizacao simultanea nove variaveis decisao 
+ execucao metodo matematico tratado descrita secao 
+ descricao execucao rotinas avaliacoes realizadas conforme tratado anteriormente cada metodo requer execucao rotinas sequencia especifica 
+ possivel dividir execucao metodos etapa preparacao onde compilada rotina programaprincipal 
+ segunda etapa consiste execucao propriamente dita metodo escolhido 
+ execucao otimizacao metodo matematico baseado algoritmo genetico om apos etapa preparacao compilada rotina otimizaauto 
+ execucao metodos apos etapa preparacao compiladas rotinas criterios 
+ metodos derivados metodo eis metodos iterativos execucao rotinas equivale iteracao conforme indicado figura 
+ caso resultado final funcao objetivo referente ultima iteracao apresente grande variacao relacao resultado final iteracao anterior indicativo iteracoes necessarias 
+ neste estudo considerado iteracao propiciar melhora relacao iteracao anterior metodo deve ser interrompido 
+ detalhes podem ser encontrados vieira 
+ figura representacao fluxograma rotinas metodos 
+ estudo caso objetivo comparar desempenho aplicacao metodo matematico baseado algoritmo genetico aplicado simultaneamente todas variaveis decisao om frente metodos derivados metodo eis utilizando algoritmo genetico aplicado subgrupos sucessivos variaveis decisao 
+ contudo implementada nova contribuicao metodo 
+ nova contribuicao tradada secao 
+ trata codigo acelerador impede repeticao otimizacao subgrupos variaveis identicos sequenciais 
+ contribuicao encontrase presente metodo 
+ codigo acelerador codigo presente melhoraauto 
+ pode ser desativado ativado rodar codigo acelerador deve ser comentada rodar codigo acelerador deve estar ativa 
+ tabela indica metodos utilizados comparacao 
+ resultados dessa comparacao tratados capitulo seguinte 
+ tabela definicao metodos utilizados comparacao desempenho ommetodo matematico algoritmo genetico aplicado diretemente problema otimizacao varaveismemetodo melhoramento exergoeconomico eis aplicado uso subrotina smemetodo melhoramento exergoeconomico eis aplicado uso subrotina smetodos utilizados 
+ resultados neste capitulo apresentados resultados metodos modelos desenvolvidos onde mesmos executados computador seguinte configuracao processador intel ghz memoria ram gb ddr mhz video ati hd mobility mb ddrh 
+ windows home edition 
+ metodo om resultados finais obtidos metodo om podem ser observados tabela figura 
+ note valores referentes potencias iso turbinas gas gt gta diferentes 
+ fato acontece pressoes caldeiras recuperacao calor 
+ tal fato indicio resultado final processo otimizacao confiavel 
+ sistema tratado esperado pares elementos semelhantes gt gta hrsg hrsga pa trabalhem mesmas configuracoes 
+ caso contrario pode ocorrer desbalanceamento sistema causando danos perda eficiencia 
+ possivel notar todas variaveis alteradas relacao valores iniciais durante processo 
+ lembrando valores iniciais simbologia variaveis tabela 
+ iteracaotempo funcao objetivo melhoriavalores variaveis decisao xi figura resultado grafico metodo om observado metodo om obteve reducao funcao objetivo tempo aproximadamente 
+ segundos apos segundos ocorre grande reducao funcao objetivo 
+ metodo metodo variacao metodo eis forma original implementacao codigo acelerador 
+ lembrando diferenca eis uso metodo otimizacao profissional algoritmo genetico presente matlab 
+ forneceu resultados apresentados tabela cada iteracao forma grafico figura 
+ cada iteracao consiste execucao rotina criterios 
+ execucao rotina melhoraauto 
+ criterio parada adotado caso iteracao proporcione melhora relacao iteracao anterior metodo deve ser interrompido havendo iteracoes 
+ iteracaotempo funcao objetivo melhoriavalores variaveis decisao xi figura resultado grafico metodo 
+ possivel notar tabela todas variaveis alteradas aplicacao 
+ valor alterado relacao valor inicial tal variavel escolhida interessante tanto ponto vista exergetico quanto ponto vista custo 
+ alem disso observase valores finais variaveis simetricas gt gta gt 
+ semelhantes indicando sistema permanece bem balanceado final processo iterativo 
+ observado quatro iteracoes metodo obteve reducao funcao objetivo tempo segundos 
+ periodo onde metodo conseguiu maior reducao funcao objetivo segundos 
+ metodo tratado secao 
+ desenvolvida subrotina dentro rotina melhoraauto 
+ modifica execucao metodo 
+ codigo acelerador impede otimizacoes desnecessarias metodo melhoramento exergoeconomico 
+ possivel notar observando matriz vetor resultantes primeira iteracao diferentes tabela tabela respectivamente 
+ contudo numero otimizacoes realizadas iteracao diferente 
+ algoritmo genetico usado internamente metodo melhoramento exergoeconomico executado oito vezes algoritmo executado apenas quatro vezes 
+ ultima coluna destas tabelas mostra otimizacao deve ser realizada 
+ ordem execucaooooooooono linha matriz dcomponentes variaveisgtsimgtasimstsimsthrsgsimhrsgasimhhatorre resfriamentosimcondensadorsimdesaeradorvvvmmssssppappsistema globalsimvetor omatriz dotimiza 
+ ordem execucaooooooooono linha matriz dcomponentes variaveisgtsimgtanaostsimsthrsgnaohrsgasimhhatorre resfriamentonaocondensadornaodesaeradorvvvmmssssppappsistema globalsimvetor omatriz dotimiza consequencia menor numero otimizacoes realizadas pode ser observado resultado final iteracao conforme mostrado adiante 
+ notado iteracoes seguintes matriz vetor resultantes diferentes ver anexos embora metodos compartilhem mesmos parametros 
+ resultados obtidos aplicacao metodo apresentados tabela figura 
+ melhoriaiteracaotempo funcao objetivo valores variaveis decisao xi figura resultado grafico metodo 
+ notase tabela metodo convergiu valor final seis iteracoes variavel sp alterada valor inicial pois considerada importancia ponto vista exergetico ponto vista custo total sistema 
+ observado sistema final otimizacao mantevese balanceado pois configuracoes finais componentes semelhantes proximas 
+ metodo conseguiu reduziu funcao objetivo relacao valor inicial intervalo tempo aproximadamente 
+ criterio parada metodo utilizado metodo lembrando caso iteracao proporcione melhora relacao iteracao anterior metodo deve ser interrompido havendo iteracoes 
+ observando figura notase metodo proporciona grande reducao funcao objetivo tempo segundos praticamente estagnando desse periodo 
+ comparacao resultados obtidos apresentado secoes anteriores notado metodo om gerou resultados bem diferentes metodos tanto funcao objetivo valores finais variaveis decisao 
+ figura grafico comparativo comportamento funcao objetivo durante tempo execucao metodos otimizacao 
+ metodotempo funcao objetivo final melhoriavalor final variaveis xi pode ser constatado observando resultados finais metodos apresentados tabela figura metodo om embora metodo converge inicialmente rapidamente metodo pior desempenho final otimizacao reducao somente relacao ponto inicial funcao objetivo 
+ ser modelo puramente matematico algoritmo genetico aplicado diretamente solucao problema otimizacao analise previa sistema 
+ metodo om sensibilidade notar falta balanceamento sistema gera perda eficiencia consequentemente custo final funcao objetivo maior 
+ metodos utilizam procedimentos exergoeconomicos conseguem ter maior sensibilidade sistema todo obtendo assim resultados finais melhores equilibrados 
+ metodos derivados metodo eis garantiram resultados estaveis aplicados desempenho otimizacao relacao ponto inicial superior om 
+ contudo demandam tempo computacional maior 
+ demora quase vezes convergir relacao om 
+ uso codigo acelerador reduziu tempo computacional cerca relacao metodo melhoramento exergoeconomico original 
+ comparando resultados obtidos obtidos notada grande discrepancia funcao objetivo 
+ valor final funcao objetivo cerca superior 
+ entanto nova implementacao demora aproximadamente segundos om 
+ observando tabelas resultados parciais presntes anexo referentes metodo anexo referentes metodo possivel notar metodo utiliza menos variaveis decisao iteracoes metodo contudo fator prevaleceu metodo rapido metodo questao repetitividade otimizacoes 
+ embora metodo execute algoritimo genetico englobando maior numero variaveis iteracoes ocorrem menos execucoes algoritimo genetico fato provou ser decisivo tempo computacinal 
+ conclusoes sugestoes neste trabalho desenvolvidas duas inovacoes cerca metodo melhoramento exergoeconomico 
+ primeira inovacao utilizacao metodos matematicos otimizacao profissionais processo iterativo 
+ algoritmo genetico usado modelagem metodo eis ferramenta software comercial matlab 
+ segunda inovacao desenvolvimento codigo acelerador impede otimizacoes desnecessarias durante execucao metodo 
+ resultados obtidos mostraram metodos derivados metodo eis poderosas ferramentas otimizacao 
+ contrario metodos matematicos algoritmo genetico utilizam somente poder computacional otimizacao metodos melhoramento exergoeconomicos embora lentos conta calculos exergoeconomicos possibilitam maior sensibilidade compreensao situacao sistema 
+ dessa forma metodos apresentaram resultados condizentes realidade melhor qualidade menor valor funcao objetivo 
+ relacao uso codigo acelerador possivel concluir tal codigo desempenhou bem papel reduzir tempo computacional relacao metodo sendo assim contribuicao importante metodo melhoramento exergoeconomico 
+ metodos desenvolvidos nesse trabalho podem ser adaptados uso qualquer sistema termodinamico sendo assim avanco dentro setor oleo gas biocombustiveis onde possivel aplicar metodos apresentados amplamente diversas instalacoes existentes desenvolvimento novas instalacoes producao energia eletrica refino combustivel 
+ possivel sugerir estudos futuros investigacao outros metodos computacionais serem utilizados internamente metodo melhoramento exergoeconomico 
+ trabalho baseado alternativa metodo eis vieira 
+ alternativa ainda investigada conjunto inovacoes desenvolvidas neste estudo 
+ sugerese avaliar efeito utilizacao novos valores parametros metodos 
+ fim sugerese avaliar possibilidade relaxar criterio convergencia metodo algoritmo genetico visando reducao adicional tempo computacional metodo 
+ referencias bibliograficas abusoglu 
+ exergoeconomic analysis optimization combined heat power production review renewable sustainable energy reviews 
+ biogas cogeracao utilizacao subprodutos agroindustriais geracao energia unidades co geradoras biotecnologia ciencia desenvolvimento pp 
+ cogeracao geracao combinada eletricidade calor 
+ florianopolis editora universidade federal santa catarina 
+ advanced engineering thermodynamics 
+ new york john wiley sons 
+ thermal design optimization 
+ new york john wiley sons 
+ avaliacao termica economica sistemas cogeracao aplicados industria ceramica revestimento 
+ sc ufsc florianopolis sc brasil 
+ estado arte biogas 
+ cenbio centro nacional referencia biomassa 
+ otimizacao melhoramento exergoeconomico sistemas termicos modelados simulador processos utilizando metodos busca direta estocastico 
+ coppe ufrj rio janeiro rj brasil 
+ otimizacao lucratividade plantas cogeracao modelagem problema pclm 
+ coppe ufrj rio janeiro rj brasil 
+ thermoeconomics design heat systems 
+ asme journal engineering power 
+ thermoeconomic functional analysis optimization energy 
+ application thermoeconomic functional approach cgam problem energy 
+ concept available energy chemical engineering science 
+ thermodynamics nonequilibrium system 
+ dissertation university wisconsin madison wisconsin usa 
+ operation optimization industrial cogeneration system genetic algorithm energy conversion management 
+ cogeracao tornando produto setor jornal cana agosto 
+ otimizacao melhoramento exergoeconomicos sistemas termicos utilizando operadores geneticos simulador processos 
+ coppe ufrj rio janeiro rj brasil 
+ optimization combined cycle power plants using evolutionary algorithms chemical engineering processing 
+ exergy method thermal plant analysis 
+ process optimization utilizing external simulation model 
+ proceedings sims th scandinavian conference simulation modeling trondheim 
+ cogeracao estado rio janeiro oportunidades desafios instituto economia industrial ufrj rio janeiro padilha 
+ otimizacao sistema cogeracao referencia utilizado metodos gradiente evolucionario hibrido estudo comparativo 
+ coppe ufrj rio janeiro rj brasil 
+ analise exergetica termoeconomica ambiental sistema geracao energia 
+ estudo caso usina termoeletrica ute rio madeira 
+ universidade brasilia brasilia df brasil 
+ implantacao unidade demostrativa geracao energia eletrica partir biogas estacao tratamento esgoto residencial usp estudo caso 
+ programa interunidades pos graduacao energia pipge universidade paulo paulo 
+ metodo superficie resposta aplicado otimizacao termoeconomica sistemas cogeracao modelados simulador processos dissertacao 
+ coppe ufrj rio janeiro rj brasil setembro 
+ notas aula sistemas termicos ufmg acessado dezembro http www 
+ br disciplinas ema gasosos biogas biogas 
+ geracao distribuida folego renovado brasil energia marco 
+ analise exergoeconomica planta cogeracao baseada microturbina gas natural refrigeracao absorcao teoria custo exergetico 
+ ufsc florianopolis sc brasil 
+ exergoeconomic analysis optimization cogeneration system using evolutionary programming applied thermal engineering 
+ estimativa potencial geracao energia eletrica diferentes fostes biogas brasil biomassa energia 
+ analise energetica exergetica plantas cogeracao 
+ sc ufrgs porto alegre rs brasil 
+ application engineering functional analysis analysis optimization cgam problem energy 
+ cogeracao brasil energia agosto n° toffolo 
+ evolutionary algorithms multiobjective energetic economic optimization thermal system design energy 
+ report ucla department engineering california 
+ exergoeconomic analysis evaluation energy conversion plants 
+ new general methodology 
+ analysis coalfired steam power plant energy 
+ exergoeconomics new name chemical engineering technology 
+ exergoeconomic evaluation optimization energy systems application cgam problem 
+ definitions nomenclature exergy analysis exergoeconomics energy vol 
+ general theory exergy saving 
+ computeraided engineering energy systems 
+ asme advanced energy systems division ed 
+ gaggioli new york pp 
+ general theory exergy saving 
+ computeraided engineering energy systems 
+ asme advanced energy systems division ed 
+ gaggioli new york pp 
+ general theory exergy saving 
+ energy saving thermoeconomics 
+ computeraided engineering energy systems 
+ asme advanced energy systems division ed 
+ gaggioli new york pp 
+ cgam problem definition conventional solution energy 
+ application exergetic cost theory cgam problem energy 
+ exergy accounting capabilities drawbacks energy vol 
+ cogeracao desenvolvimento metodologia avaliacao energetica estudo caso aplicado industria papel celulose tese 
+ pucmg minas gerais mg brasil 
+ modelo exergoeconomico iterativo melhoria sistemas termicos complexos integrado simulador processos profissional 
+ coppe ufrj rio janeiro rj brasil 
+ integration iterative methodology exergoeconomic improvement thermal systems process simulator energy conversion management 
+ integration mathematical exergoeconomic optimization procedure process simulator application cgam system revista engenharia termica reterm 
+ mathematical exergoeconomic optimization complex cogeneration plant aided professional process simulator applied thermal engineering 
+ exergoeconomic improvement complex cogeneration system integrated professional process simulator energy conversion management 
+ anexo resultados parciais metodo om abaixo consta tabela resultados parciais metodo om 
+ tabela resultados parciais metodo om geracaofuncao objetivo tempo 
+ anexo resultados parciais metodo abaixo consta tabelas resultados parciais metodo 
+ tabela resultado iteracao metodo note tal resultado semelhante primeira iteracao ver tabela 
+ xi matriz dfuncao objetivo vetor ome iteracao tabela resultado iteracao metodo note partir segunda iteracao resultados diferenciam resultados ver tabela 
+ tempo melhoria gtgtagt 
+ xi matriz dfuncao objetivo vetor ome iteracao tabela resultado iteracao metodo 
+ xi matriz dfuncao objetivo vetor ome iteracao tabela resultado iteracao metodo 
+ xi matriz dfuncao objetivo vetor ome iteracao 
+ anexo resultados parciais metodo abaixo consta tabelas resultados parciais metodo 
+ tabela resultado iteracao metodo note semelhante primeira iteracao metodo ver tabela 
+ xi iteracao funcao objetivo vetor omatriz tabela resultado iteracao metodo note partir segunda iteracao resultados iteracoes diferentes resultados iteracoes metodo ver tabela 
+ tempo melhoria gtgtagt 
+ funcao objetivo iteracao vetor omatriz dxi tabela resultados iteracao metodo 
+ xi funcao objetivo matriz dme iteracao vetor tabela resultado iteracao metodo 
+ tempo melhoria gtgtagt 
+ vetor omatriz dxi funcao objetivo iteracao tabela resultado iteracao metodo 
+ tempo melhoria gtgtagt 
+ vetor oxi funcao objetivo iteracao matriz tabela resultado iteracao metodo 
+ tempo melhoria gtgtagt 
+ iteracao funcao objetivo vetor omatriz dxi 
+ anexo rotina programaprincipal 
+ clear format long clc warning feature comactxprogidcheck global af afeta alt anos ap bk cdesthor cdesthorold cespec cf cf cfhor chor coefbeta coefc coefcdest comp cont cp cphor crf ctotalhor global ctotalhorold ctotalhorordem custocomphor custocomphorold custogeralhor custogeralhorold decisao decisao decisao deltaefic deltaeficold global deltar deltarold desvioctotalhor dominante ed efex efexold efexopt efextotal efextotalold equim equim error etot fatorcusto fatorotimiz global fatorvar fexerg fexergold fi fk fopt fuel fun incremento li ls mediactotalhor mk ncompotimiz nk numvar nvar nvarotimiz nvarotimiz ordemotimiz global otindividual prod ptotal rold ropt somactotalhor somactotalhorold somadesthor somadesthorold taxa variacao zhor zhorold global app projpath fun strfunc calculodentrootimizacao numvar start ipsepro app actxserver pse 
+ application open simulation model 
+ pro ipsepro projpath cipseworksistema complexosistemacomplexov 
+ pro proj invoke app openproject projpath parametrosiniciais limites superior inferior variaveis tomar limites automaticamente funcoes limites variaveis wgt wgta loadgt loadgta pa oc ta oc li 
+ xlsx dummy xlsread filename aa dummy calculoforaotimizacao 
+ anexo rotina criterios 
+ function criterios global af afeta alt anos ap bk cdesthor cdesthorold cespec cf cf cfhor chor coefbeta coefc coefcdest comp cp cphor crf ctotalhor global ctotalhorold ctotalhorordem custocomphor custocomphorold custogeralhor custogeralhorold decisao decisao decisao deltaefic deltaeficold global deltar deltarold desvioctotalhor dominante ed efex efexold efexopt efextotal efextotalold equim equim error etot fatorcusto fatorotimiz global fatorvar fexerg fexergold fi fk fopt fuel fun incremento li ls mediactotalhor mk ncompotimiz nk numvar nvar nvarotimiz nvarotimiz ordemotimiz global otindividual prod ptotal rold ropt somactotalhor somactotalhorold somadesthor somadesthorold taxa variacao zhor zhorold global app projpath criterio selecao componentes serem otimizados individualmente custo destruicao exergia custo investimento deve ser elevado mediactotalhor mean ctotalhor desvioctotalhor std ctotalhor otindividual zeros ctotalhor mediactotalhor fatorotimiz desvioctotalhor otindividual otim 
+ else ctotalhor mediactotalhor fatorotimiz desvioctotalhor otindividual otim 
+ else otindividual otimiz 
+ end end end identificacao variaveis afetam simultaneamente custo eficiencia exergetica total incrementos variaveis incremento matriz variacao onde ivariavel decisao associada jcomponente obsj sistema global variacao calculada cada componente efex zhor cdesthor ctotalhorzhorcdesthor fexerg deltar deltaefic efexold zeros ctotalhorold zeros cdesthorold zeros zhorold zeros rold zeros fexergold zeros deltarold zeros deltaeficold zeros efexold efex ctotalhorold ctotalhor cdesthorold cdesthor zhorold zhor rold fexergold fexerg deltarold deltar deltaeficold deltaefic end custogeralhorold custogeralhor soma custos somadesthorold somadesthor somactotalhorold somactotalhor soma custos efextotalold efextotal custocomphorold custocomphor decisao variacao zeros numvar numvar cada variavel decisao alterando valor variavel decisao valor incremento especificado decisao incremento decisao decisao calculoforaotimizacao calculando variacoes cada componente cada componente variacao efex efexold efexold variacao zhor zhorold zhorold variacao cdesthor cdesthorold cdesthorold variacao ctotalhor ctotalhorold ctotalhorold variacao rold rold variacao fexerg fexergold fexergold deltarold variacao deltar deltarold deltarold else variacao end deltaeficold variacao deltaefic deltaeficold deltaeficold else variacao end end calculando variacoes sistema global sistema global error variacao custogeralhor custogeralhorold custogeralhorold else variacao incremento neste caso variavel afeta custo global end variacao somadesthor somadesthorold somadesthorold variacao somactotalhor somactotalhorold somactotalhorold variacao custocomphor custocomphorold custocomphorold error variacao efextotal efextotalold efextotalold else variacao incremento neste caso variavel afeta eficiencia global variacao neste caso variavel afeta eficiencia global end retornando variavel decisao valor original decisao decisao incremento decisao end retornando matrizes valor original calculoforaotimizacao stop identificacao variaveis afetam eficiencia custo cada componente cada variavel decisao cada componente abs variacao fatorvar incremento abs variacao fatorvar incremento afeta afeta dois end abs variacao fatorvar incremento abs variacao fatorvar incremento afeta afeta apenas eficiencia end abs variacao fatorvar incremento abs variacao fatorvar incremento afeta afeta apenas custo end abs variacao fatorvar incremento abs variacao fatorvar incremento afeta afeta end end end identificacao variaveis afetam eficiencia custo geral afeta zeros numvar numvar cada variavel abs variacao fatorvar incremento && abs variacao fatorvar incremento afeta afeta dois end abs variacao fatorvar incremento && abs variacao fatorvar incremento afeta afeta apenas custo end abs variacao fatorvar incremento && abs variacao fatorvar incremento afeta afeta apenas eficiencia end abs variacao fatorvar incremento && abs variacao fatorvar incremento afeta afeta end end dominante zeros identificacao principais elementos custo cada componente cada componente abs cdesthor ctotalhor fatorcusto dominante custo destruicao dominante end abs zhor ctotalhor fatorcusto dominante custo investimento dominante end abs cdesthor ctotalhor fatorcusto && abs zhor ctotalhor fatorcusto dominante termo dominante end end alternativa coeficientes ligacao estrutural modificado deltacomponente deltatotal coeficientes ligacao funcao eficiencia exergetica coefef coefcdest zeros numvar numvar cada variavel decisao cada componente variacao && isnan variacao coefcdest variacao variacao else coefcdest end end end coeficientes ligacao funcao soma zhor componentes invest 
+ o&m coefinv cada variavel decisao cada componente coefinv variacao variacao end end coeficientes ligacao funcao soma zinvcdestruicao horario coefc coefc zeros numvar numvar cada variavel decisao cada componente variacao coefc variacao variacao else coefc end end end alternativa variacoes cada componente calculadas analise sensibilidade variacao deltar deltarold deltarold variacao deltaefic deltaeficold deltaeficold matrizes decisao determinacao matrizes decisao alternativa coeficiente ligacao estrutural decisao alternativa variacoes deltar delta efic 
+ matrizes apresentam variaveis escolhidas serem usadas processo otimizacao valor variavel disposta coluna respectiva escolhida valor variavel escolhida numero linhas matriz igual numero componentes acrescido otimizacao individual numero colunas igual numero veriaveis decisao identificacao variaveis serem otimizadas isoladamente decisao zeros numvar decisao zeros numvar numvar afeta afeta apenas custo decisao decisao else decisao decisao end end deterninacao matriz decisao alternativa coeficientes ligacao determinacao elementos matriz cada componente otindividual otimiz 
+ numvar decisao end end otindividual otindividual otim 
+ numvar cada variavel afeta afeta decisao end afeta afeta apenas custo decisao end afeta afeta afeta dois afeta afeta apenas eficiencia dominante custo destruicao dominante coefcdest decisao else decisao end end dominante dominante termo dominante dominante custo investimento dominante coefc decisao else decisao end end end end end end deterninacao matriz decisao alternativa variacoes determinacao elementos matriz cada componente otindividual otimiz 
+ numvar decisao end end otindividual otindividual otim 
+ numvar cada variavel afeta afeta decisao end afeta afeta apenas custo decisao end afeta afeta afeta dois afeta afeta apenas eficiencia dominante custo destruicao dominante variacao decisao else decisao end end dominante dominante termo dominante dominante custo investimento dominante variacao decisao else decisao end end end end end end ordenacao processo otimizacao ordemotimiz vetor armazena ordem otimizacao ncompotimiz numero componentes otimizar nvarotimiz numero variaveis serem otimizadas componente alternativa nvarotimiz numero variaveis serem otimizadas componente alternativa numero componentes otimizar ncompotimiz otindividual otindividual otim 
+ ncompotimiz ncompotimiz end end numvar diferente codigo leonardo decisao end end ncompotimiz ncompotimiz nvarotimiz zeros nvarotimiz zeros numero variaveis serem otimizadas componente nvarotimiz numero vatiaveis alternativa nvarotimiz numero variaveis alternativa numvar decisao nvarotimiz nvarotimiz end decisao nvarotimiz nvarotimiz end end end ordenacao componentes ordemotimiz vetor armazena ordem otimizacao ctotalhorordem sort ctotalhor descend ordemotimiz zeros otindividual && ctotalhorordem ctotalhor otimiz 
+ individual ordemotimiz else otindividual ctotalhor ctotalhorordem end ordemotimiz end end end numvar decisao ordemotimiz ncompotimiz end end ordemotimiz decisao 
+ anexo rotina melhoraauto 
+ function melhoraautoga global af afeta alt anos ap bk cdesthor cdesthorold cespec cf cf cfhor chor coefbeta coefc coefcdest comp cont cp cphor crf ctotalhor global ctotalhorold ctotalhorordem custocomphor custocomphorold custogeralhor custogeralhorold decisao decisao decisao deltaefic deltaeficold global deltar deltarold desvioctotalhor dominante ed efex efexold efexopt efextotal efextotalold equim equim error etot fatorcusto fatorotimiz global fatorvar fexerg fexergold fi fk fopt fuel fun incremento li ls mediactotalhor mk ncompotimiz nk numvar nvarotimiz nvarotimiz ordemotimiz global otindividual prod ptotal rold ropt somactotalhor somactotalhorold somadesthor somadesthorold taxa variacao zhor zhorold global app projpath ncompotimiz comp ordemotimiz comp ordemotimiz comp nvar nvarotimiz ordemotimiz comp nvar yi zeros nvar ys zeros nvar zeros nvar cont numvar var decisao ordemotimiz comp var variavel deve ser modificada cont cont cont var yi cont li var ys cont ls var end end end decisao otimizar elemento codigo acelerador rep comp rep compold comp decisao ordemotimiz comp decisao ordemotimiz compold rep rep end end end comp rep genetic algorithm toolbox ir yiys populationsize nvar generations nvar stallgenlimit nvar ip options gaoptimset display iter plotfcns gaplotbestf populationsize popul ationsize popinitrange ir generations generations stallgenlimit stal lgenlimit initialpopulation ip otimizacao strfunc ga reason output finalpopulation finalscores otimizacao fun nvar ir ir options atualizacao variaveis decisao apos otimizacao atualizacao end end end end 
+ anexo rotina otimizaauto 
+ function otimizaautoga global af afeta alt anos ap bk cdesthor cdesthorold cespec cf cf cfhor chor coefbeta coefc coefcdest comp cont cp cphor crf ctotalhor global ctotalhorold ctotalhorordem custocomphor custocomphorold custogeralhor custogeralhorold decisao decisao decisao deltaefic deltaeficold global deltar deltarold desvioctotalhor dominante ed efex efexold efexopt efextotal efextotalold equim equim error etot fatorcusto fatorotimiz global fatorvar fexerg fexergold fi fk fopt fuel fun incremento li ls mediactotalhor mk ncompotimiz nk numvar nvarotimiz nvarotimiz ordemotimiz global otindividual prod ptotal rold ropt somactotalhor somactotalhorold somadesthor somadesthorold taxa variacao zhor zhorold global app projpath ti tic genetic algorithm toolbox fun strfunc calculoforaotimizacao ir lils populationsize numvar generations numvar stallgenlimit numvar ip options gaoptimset display iter plotfcns gaplotbestf populationsize popul ationsize popinitrange ir generations generations stallgenlimit stal lgenlimit initialpopulation ip otimizacao strfunc ga reason output finalpopulation finalscores otimizacao fun numvar options toc ti end 
+ anexo subrotina calculodentrootimizacao 
+ tal sub rotina utilizada internamente rotina melhoraauto 
+ function calculodentrootimizacao global af afeta alt anos ap bk cdesthor cdesthorold cespec cf cf cfhor chor coefbeta cont coefc coefcdest comp cp cphor crf ctotalhor global ctotalhorold ctotalhorordem custocomphor custocomphorold custogeralhor custogeralhorold decisao decisao decisao deltaefic deltaeficold global deltar deltarold desvioctotalhor dominante ed efex efexold efexopt efextotal efextotalold equim equim error etot fatorcusto fatorotimiz global fatorvar fexerg fexergold fi fk fopt fuel fun incremento li ls mediactotalhor mk ncompotimiz nk numvar nvar nvarotimiz nvarotimiz ordemotimiz global otindividual prod ptotal rold ropt somactotalhor somactotalhorold somadesthor somadesthorold taxa variacao zhor zhorold global app projpath ordemotimiz comp cont numvar var decisao ordemotimiz comp var variavel deve ser modificada cont cont var cont end end end parametrosiniciais testels testeli klength ls testels testels ls entao testels end li testeli testeli li entao testeli end end skip testels testeli limites entao vou pular calculo skip end skip 
+ else warning error enviarrodar proj invoke app openproject projpath colhe propriedades termodinamicas ipsepro gera vetores equim etot modelo termodinamico dados obtidos ipse warning ipse error dira qdo ipse converge objetos correntes stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream variavel decisao streama invoke proj findobject streama variavel decisao stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream variavel decisao stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream equipamentos tg invoke proj findobject tg variavel decisao tga invoke proj findobject tga variavel decisao tv invoke proj findobject tv tva invoke proj findobject tva bomba invoke proj findobject bomba bombaa invoke proj findobject bombaa bomba invoke proj findobject bomba bomba invoke proj findobject bomba condensador invoke proj findobject condensador evap invoke proj findobject evap evapa invoke proj findobject evapa superaq invoke proj findobject superaq preaq invoke proj findobject preaq aquec invoke proj findobject aquec superaqa invoke proj findobject superaqa preaqa invoke proj findobject preaqa aqueca invoke proj findobject aqueca torre invoke proj findobject torre eixos shaft invoke proj findobject shaft shafta invoke proj findobject shafta shaft invoke proj findobject shaft shafta invoke proj findobject shafta shaft invoke proj findobject shaft shaft invoke proj findobject shaft shaft invoke proj findobject shaft shafttv invoke proj findobject shafttv shafttv invoke proj findobject shafttv variaveis decisao 
+ potencia iso turbina gas tg kw tgpower invoke tg finditem powerel invoke tgpower value 
+ potencia iso turbina gas tga kw tgapower invoke tga finditem powerel invoke tgapower value 
+ carga turbina gas tg tgload invoke tg finditem load invoke tgload value 
+ carga turbina gas tga tgaload invoke tga finditem load invoke tgaload value 
+ pressao vapor gerado caldeira hrsg streamp invoke stream finditem invoke streamp value 
+ pressao vapor gerado caldeira hrsga streamap invoke streama finditem invoke streamap value 
+ pressao saida turbina vapor extracao tv streamp invoke stream finditem invoke streamp value 
+ temperatura vapor gerado caldeira hrsg streamt invoke stream finditem invoke streamt value 
+ temperatura vapor gerado caldeira hrsga streamat invoke streama finditem invoke streamat value run simulation ipsepro run invoke proj runsimulation erro invoke proj checkandinserterror resultados ipse correntes vazao massica kg exergia kj kg corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value trabalhos kw turbina gas tg temp invoke tg finditem powerel wtg invoke temp value turbina gas tga temp invoke tga finditem powerel wtga invoke temp value eixo shaft temp invoke shaft finditem power wshaft invoke temp value eixo shafta temp invoke shafta finditem power wshafta invoke temp value eixo shaft temp invoke shaft finditem power wshaft invoke temp value eixo shafta temp invoke shafta finditem power wshafta invoke temp value eixo shaft temp invoke shaft finditem power wshaft invoke temp value eixo shaft temp invoke shaft finditem power wshaft invoke temp value eixo shaft temp invoke shaft finditem power wshaft invoke temp value eixo shafttv temp invoke shafttv finditem power wshafttv invoke temp value eixo shafttv temp invoke shafttv finditem power wshafttv invoke temp value turbina vapor tv wtv wshafttv turbina vapor tv wtv wshafttv wshafttv wtv wshafttv calculo vetor massa elementos potencia igual zero calculo vetor exergia especifica kj kg ea ea ea ea ea ea ea ea ea ea exergia elementos potencia depende massa wtg wtga wtv wtv wshaft wshaft wshaft wshaft wshaft wshafta wshafta end calculo exergia quimica exergia quimica especifica kj kg equim zeros equim equim exergia quimica equim equim end equim equim end etot eequim calculomatrizes erro sum sum error end calculo vetor combustivel fuel afetot calculo vetor produto prod apetot calculo vetor efex efex zeros efex prod fuel end calculo vetor destruicao exergia ed zeros ed fuel prod end calculo custos pec custo aquisicao us$ todos componentes pec zeros pec bk abs efex efex nk prod mk end pec pec vetor linha tci capital total investimento tci coefbetasum pec custo unidade tempo us$ associado investimento zin zeros zin crfcoefbetapec end custo unidade tempo us$ associado manutencao zom zeros zom ficoefbetapec end construcao vetor zhor zhor zeros zhor zin zom end custo relativo entradas admitido conhecido calculado base exergia quimica zhor cf equim us$ combustivel tg zhor cf equim us$ combustivel tga zhor cf etot us$ zhor cf etot us$ zhor cf etot us$h zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor end custo total componentes investimento o$m custocomphor custocomphor custocomphor abs zhor end custo total componentes investimento o&m insumos custogeralhor custogeralhor custogeralhor abs zhor end eficiencia exergetica total exergia total produtos ptotal energia eletrica calor etot etot etot eletricidade etot etot etot etot etot calor ptotal exergia total insumos ftotal etot etot etot etot etot etot etot eletricidade etot etot etot etot etot outros ftotal efextotal ptotal ftotal construccao matriz custos zeros end end custo entradas conhecidos equacoes auxiliares etot turbina tg etot turbina tg etot turbina tga etot turbina tga etot turbina tv etot turbina tv etot turbina tv etot turbina tv etot hrsg etot hrsg etot hrsga etot hrsga etot condensador etot condensador etot aquecedor etot aquecedor etot aquecedora etot aquecedora etot splitter etot splitter etot splitter etot splitter etot splitter etot splitter etot splitter etot splitter etot torre etot torre calculocustos construcao vetor chor chor zhor preparacao caculo cespec cespec zeros caculo cespec cespec chor etot end calculo cfhor cfhor afchor calculo cfhor cphor apchor preparacao calculo cf cf zeros calculo cf cf cfhor fuel end preparacao calculo cp cp zeros calculo cp cp cphor prod end preparacao calculo cdesthor cdesthor zeros calculo cdesthor cdesthor cf ed end preparacao calculo ctotalhor ctotalhor zeros calculo ctotalhor ctotalhor cdesthor abs zhor end calculo somadesthor somadesthor sum cdesthor calculo somactotalhor somactotalhor sum ctotalhor calculofatores determinacao variaveis exergoeconomicas zeros fexerg zeros fk zeros efexopt zeros ropt zeros fopt zeros deltar zeros deltaefic zeros cp cf cf fexerg abs zhor abs zhor cf ed variaveis utilizadas otimizacao metodo fi constante 
+ numerador crf fi bk coefbeta nk denominador cf prod mk fk numerador denominador nk efexopt fk ropt nk nk fk fopt nk deltar ropt ropt deltaefic efex efexopt efexopt end funcaoobj abs custogeralhor ptotal isreal error sum zhor end end end fim limites definido la cima primeira vez roda warning 
+ anexo subrotina calculoforaotimizacao 
+ tal sub rotina utilizada internamente rotina programaprincipal 
+ function calculoforaotimizacao global af afeta alt anos ap bk cdesthor cdesthorold cespec cf cf cfhor chor coefbeta coefc coefcdest comp cp cphor crf ctotalhor global ctotalhorold ctotalhorordem custocomphor custocomphorold custogeralhor custogeralhorold decisao decisao decisao deltaefic deltaeficold global deltar deltarold desvioctotalhor dominante ed efex efexold efexopt efextotal efextotalold equim equim error etot fatorcusto fatorotimiz global fatorvar fexerg fexergold fi fk fopt fuel fun incremento li ls mediactotalhor mk ncompotimiz nk numvar nvar nvarotimiz nvarotimiz ordemotimiz global otindividual prod ptotal rold ropt somactotalhor somactotalhorold somadesthor somadesthorold taxa variacao zhor zhorold global app projpath testels testeli klength ls testels testels ls entao testels end li testeli testeli li entao testeli end end skip testels testeli limites entao vou pular calculo skip end skip 
+ else parametrosiniciais warning error entrada matrizes incidencia combustivel produto filename cusershugomobiledocumentsmatlabentrada 
+ xlsx xlsread filename cbb af xlsread filename cbb ap xlsread filename cbb custos especifico insumos conhecidos combtg combtga artg artga artorre aguaspliter aguadesaerador bomba bomba bomba bomba bomba bombaa bombaa cf 
+ numero horas operacao planta ano annual capital recovery factor taxa 
+ taxa juros anos crf taxa taxa anos taxa anos fator manutencao fi 
+ constantes coeficiente beta coefbeta fator multiplicativo pec fatorotimiz xlsread filename fator necessidade otimizacao individual incremento xlsread filename incremento avaliacao variaveis decisao fatorvar xlsread filename fator avaliacao efeito variaveis decisao fatorcusto xlsread filename fator comparacao custos cada componente alt xlsread filename alternativa otimizacao coeficientes bk nk mk bk zeros nk zeros mk ones bk 
+ turbina gas tg bk 
+ turbina gas tga bk 
+ turbina vapor tv bk 
+ turbina vapor tv bk 
+ caldeira recuperacao hrsg bk 
+ caldeira recuperacao hrsga bk 
+ aquecedor aquec bk 
+ aquecedor aqueca bk 
+ torre resfriamento torre bk 
+ condensador condensador bk 
+ desaerador desaerador bk valvula valv bk valvula valv bk valvula valv bk misturador mixer bk misturador mixer bk divisor split bk divisor split bk divisor split bk divisor split bk 
+ bomba condensado mb bk 
+ bomba condensado mba bk 
+ bomba condensado mb bk 
+ bomba condensado mb enviarrodar proj invoke app openproject projpath colhe propriedades termodinamicas ipsepro gera vetores equim etot modelo termodinamico dados obtidos ipse warning ipse error dira qdo ipse converge objetos correntes stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream variavel decisao streama invoke proj findobject streama variavel decisao stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream variavel decisao stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream streama invoke proj findobject streama stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream stream invoke proj findobject stream equipamentos tg invoke proj findobject tg variavel decisao tga invoke proj findobject tga variavel decisao tv invoke proj findobject tv tva invoke proj findobject tva bomba invoke proj findobject bomba bombaa invoke proj findobject bombaa bomba invoke proj findobject bomba bomba invoke proj findobject bomba condensador invoke proj findobject condensador evap invoke proj findobject evap evapa invoke proj findobject evapa superaq invoke proj findobject superaq preaq invoke proj findobject preaq aquec invoke proj findobject aquec superaqa invoke proj findobject superaqa preaqa invoke proj findobject preaqa aqueca invoke proj findobject aqueca torre invoke proj findobject torre eixos shaft invoke proj findobject shaft shafta invoke proj findobject shafta shaft invoke proj findobject shaft shafta invoke proj findobject shafta shaft invoke proj findobject shaft shaft invoke proj findobject shaft shaft invoke proj findobject shaft shafttv invoke proj findobject shafttv shafttv invoke proj findobject shafttv variaveis decisao 
+ potencia iso turbina gas tg kw tgpower invoke tg finditem powerel invoke tgpower value 
+ potencia iso turbina gas tga kw tgapower invoke tga finditem powerel invoke tgapower value 
+ carga turbina gas tg tgload invoke tg finditem load invoke tgload value 
+ carga turbina gas tga tgaload invoke tga finditem load invoke tgaload value 
+ pressao vapor gerado caldeira hrsg streamp invoke stream finditem invoke streamp value 
+ pressao vapor gerado caldeira hrsga streamap invoke streama finditem invoke streamap value 
+ pressao saida turbina vapor extracao tv streamp invoke stream finditem invoke streamp value 
+ temperatura vapor gerado caldeira hrsg streamt invoke stream finditem invoke streamt value 
+ temperatura vapor gerado caldeira hrsga streamat invoke streama finditem invoke streamat value run simulation ipsepro run invoke proj runsimulation erro invoke proj checkandinserterror resultados ipse correntes vazao massica kg exergia kj kg corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value correntea temp invoke streama finditem mass invoke temp value temp invoke streama finditem exergy ea invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value corrente temp invoke stream finditem mass invoke temp value temp invoke stream finditem exergy invoke temp value trabalhos kw turbina gas tg temp invoke tg finditem powerel wtg invoke temp value turbina gas tga temp invoke tga finditem powerel wtga invoke temp value eixo shaft temp invoke shaft finditem power wshaft invoke temp value eixo shafta temp invoke shafta finditem power wshafta invoke temp value eixo shaft temp invoke shaft finditem power wshaft invoke temp value eixo shafta temp invoke shafta finditem power wshafta invoke temp value eixo shaft temp invoke shaft finditem power wshaft invoke temp value eixo shaft temp invoke shaft finditem power wshaft invoke temp value eixo shaft temp invoke shaft finditem power wshaft invoke temp value eixo shafttv temp invoke shafttv finditem power wshafttv invoke temp value eixo shafttv temp invoke shafttv finditem power wshafttv invoke temp value turbina vapor tv wtv wshafttv turbina vapor tv wtv wshafttv wshafttv wtv wshafttv calculo vetor massa elementos potencia igual zero calculo vetor exergia especifica kj kg ea ea ea ea ea ea ea ea ea ea exergia elementos potencia depende massa wtg wtga wtv wtv wshaft wshaft wshaft wshaft wshaft wshafta wshafta end calculo exergia quimica exergia quimica especifica kj kg equim zeros equim equim exergia quimica equim equim end equim equim end etot eequim calculomatrizes erro sum sum error end calculo vetor combustivel fuel afetot calculo vetor produto prod apetot calculo vetor efex efex zeros efex prod fuel end calculo vetor destruicao exergia ed zeros ed fuel prod end calculo custos pec custo aquisicao us$ todos componentes pec zeros pec bk abs efex efex nk prod mk end pec pec vetor linha tci capital total investimento tci coefbetasum pec custo unidade tempo us$ associado investimento zin zeros zin crfcoefbetapec end custo unidade tempo us$ associado manutencao zom zeros zom ficoefbetapec end construcao vetor zhor zhor zeros zhor zin zom end custo relativo entradas admitido conhecido calculado base exergia quimica zhor cf equim us$ combustivel tg zhor cf equim us$ combustivel tga zhor cf etot us$ zhor cf etot us$ zhor cf etot us$h zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor cf etot us$ zhor end custo total componentes investimento o$m custocomphor custocomphor custocomphor abs zhor end custo total componentes investimento o&m insumos custogeralhor custogeralhor custogeralhor abs zhor end eficiencia exergetica total exergia total produtos ptotal energia eletrica calor etot etot etot eletricidade etot etot etot etot etot calor ptotal exergia total insumos ftotal etot etot etot etot etot etot etot eletricidade etot etot etot etot etot outros ftotal efextotal ptotal ftotal construccao matriz custos zeros end end custo entradas conhecidos equacoes auxiliares etot turbina tg etot turbina tg etot turbina tga etot turbina tga etot turbina tv etot turbina tv etot turbina tv etot turbina tv etot hrsg etot hrsg etot hrsga etot hrsga etot condensador etot condensador etot aquecedor etot aquecedor etot aquecedora etot aquecedora etot splitter etot splitter etot splitter etot splitter etot splitter etot splitter etot splitter etot splitter etot torre etot torre calculocustos construcao vetor chor chor zhor preparacao caculo cespec cespec zeros caculo cespec cespec chor etot end calculo cfhor cfhor afchor calculo cfhor cphor apchor preparacao calculo cf cf zeros calculo cf cf cfhor fuel end preparacao calculo cp cp zeros calculo cp cp cphor prod end preparacao calculo cdesthor cdesthor zeros calculo cdesthor cdesthor cf ed end preparacao calculo ctotalhor ctotalhor zeros calculo ctotalhor ctotalhor cdesthor abs zhor end calculo somadesthor somadesthor sum cdesthor calculo somactotalhor somactotalhor sum ctotalhor calculofatores determinacao variaveis exergoeconomicas zeros fexerg zeros fk zeros efexopt zeros ropt zeros fopt zeros deltar zeros deltaefic zeros cp cf cf fexerg abs zhor abs zhor cf ed variaveis utilizadas otimizacao metodo fi constante 
+ numerador crf fi bk coefbeta nk denominador cf prod mk fk numerador denominador nk efexopt fk ropt nk nk fk fopt nk deltar ropt ropt deltaefic efex efexopt efexopt end funcaoobj abs custogeralhor ptotal isreal error sum zhor end end end fim limites definido la cima primeira vez roda warning

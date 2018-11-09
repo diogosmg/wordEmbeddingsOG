@@ -1,0 +1,10844 @@
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ANÁLISE DA PRODUÇÃO DE ÓLEO EM ROCHAS CARBONÁTICAS DE 
+
+DIFERENTES ESCALAS PARA DISTINTOS CENÁRIOS DE MOLHABILIDADE 
+
+UTILIZANDO SIMULAÇÃO NUMÉRICA BIDIMENSIONAL 
+
+Adriano Guedes Barros e Carlos Eduardo Siqueira Marinho 
+
+ 
+
+ 
+
+ 
+
+Projeto  de  Graduação  apresentado  ao  Curso  de 
+
+Engenharia  de  Petróleo  da  Escola  Politécnica, 
+
+Universidade  Federal  do  Rio  de  Janeiro  como 
+
+parte  dos  requisitos  necessários  à  obtenção  do 
+
+título de Engenheiro de Petróleo. 
+
+Orientador: Paulo Couto 
+
+Co-orientador: Patrick Corbett 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RIO DE JANEIRO 
+
+Janeiro de 2016 
+
+i 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Barros, Adriano Guedes e Marinho, Carlos Eduardo Siqueira 
+
+Análise da produção de óleo em rochas carbonáticas de 
+
+diferentes  escalas  para  distintos  cenários  de  molhabilidade 
+
+utilizando  simulação  numérica  bidimensional/  Adriano 
+
+Guedes Barros e Carlos Eduardo Siqueira Marinho – Rio de 
+
+Janeiro: UFRJ/Escola Politécnica, 2016. 
+
+XIII, 117 p.: il.; 29,7 cm. 
+
+Orientador: Paulo Couto 
+
+Projeto  de  Graduação  –  UFRJ/  Escola  Politécnica/ 
+
+Curso de Engenharia de Petróleo, 2016. 
+
+Referências Bibliográficas: p. 53-55 
+
+1. Carbonatos. 2. Simulação. 3. Molhabilidade  
+
+4.  Estromatólito.  5.  Coquinas  6.  Produção  Final  I.  Couto, 
+
+Paulo.  II.  Universidade  Federal  do  Rio  de  Janeiro,  Escola 
+
+Politécnica, Curso de Engenharia de Petróleo. III. Título. 
+
+ 
+
+iii 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+“Não há nada nobre em ser superior ao seu semelhante. A verdadeira nobreza é ser                          
+
+superior ao seu antigo eu.”                               
+
+(Ernest Hemingway) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+iv 
+
+AGRADECIMENTOS 
+
+Em  primeiro  lugar,  gostaríamos  de  agradecer  nossas  famílias  pelo  apoio 
+
+incondicional ao longo de toda a graduação, sempre acreditando em nós e fazendo parte 
+
+de uma base sólida que foi fundamental para nos tornar quem somos. Aos caros colegas 
+
+da  Engenharia  de  Petróleo  da  UFRJ  que  contribuíram  para  que  este  fosse  um  dos 
+
+melhores períodos de nossas vidas. 
+
+Agradecemos  também  ao  nosso  Orientador  Paulo  Couto,  que  sempre  se 
+
+mostrou engajado em nos auxiliar e resolver nossas questões, assim como o Geólogo 
+
+Patrick  Corbett,  que  nos  guiou  desde  o  início  e  nos  forneceu  ferramentas  para  que 
+
+pudéssemos nos inserir no universo da simulação.  
+
+À  ANP  e  a  equipe  do  PRH  02,  especialmente  o  Professor  Luiz  Landau,  que 
+
+sempre  acreditaram  no  nosso  projeto  e  trabalho,  contribuindo  sempre  para  o 
+
+desenvolvimento do mesmo.  
+
+Também  gostaria  de  agradecer  a  Empresa  Schlumberger  pela  licença  e 
+
+utilização  do  programa  Eclipse,  especialmente  o  Gerente  Pedro  Paulo  Moreira  e  a 
+
+Engenheira de Reservatórios Yanury Benavides, que sempre se mostraram dispostos a 
+
+contribuir  com  a  pesquisa,  contribuindo  para  essa  etapa,  sem  a  qual  não 
+
+conseguiríamos seguir adiante. 
+
+À  Petrobras,  também  gostaria  de  agradecer  imensamente  pela  utilização  de 
+
+computadores  compatíveis  com  a  necessidade  do  programa,  pelos  dados  reais 
+
+liberados  para  a  nosso  projeto,  os  quais,  indubitavelmente,  elevaram  o  grau  de 
+
+relevância deste trabalho. Assim, agradecemos a Economista Maria Augusta Colnago 
+
+Teles  Alves,  Geóloga  Vânia  Maria  Quariguasi  Franca  Legrand,  ao  Geólogo  David 
+
+Sarmento, ao Geólogo Guilherme Vasquez e ao Engenheiro André Compan. 
+
+Gostaríamos de agradecer sempre a Deus, por ter nos iluminado e nos guiado 
+
+sempre. 
+
+ 
+
+ 
+
+Resumo do Projeto de Graduação apresentado à Escola Politécnica/ UFRJ como parte 
+
+dos requisitos necessários para a obtenção do grau de Engenheiro de Petróleo. 
+
+ 
+
+ 
+
+ANÁLISE DA PRODUÇÃO DE ÓLEO EM ROCHAS CARBONÁTICAS DE 
+
+DIFERENTES ESCALAS PARA DISTINTOS CENÁRIOS DE MOLHABILIDADE 
+
+UTILIZANDO SIMULAÇÃO NUMÉRICA BIDIMENSIONAL 
+
+ 
+
+Adriano Guedes Barros e Carlos Eduardo Siqueira Marinho 
+
+Janeiro/2016 
+
+Orientador: Paulo Couto 
+
+Co-orientador: Patrick Corbett 
+
+Curso: Engenharia de Petróleo 
+
+ 
+
+A demanda mundial por óleo, gás e seus derivados tem aumentado significativamente, 
+
+a  ponto  de  vermos  a  necessidade  de  incrementar  nossa  capacidade  de  recuperação 
+
+de  hidrocarbonetos.  Assim,  buscar  o  melhor  entendimento  dos  mecanismos  e 
+
+interações  presentes  em  reservatórios  de  origem  carbonáticas  se  faz  estritamente 
+
+necessário.  Neste  trabalho  serão  apresentados,  portanto,  uma  revisão  sobre  tópicos 
+
+relevantes,  seguido  de  um  estudo  detalhado  a  respeito  das  diferentes  respostas  da 
+
+recuperação  de  óleo  dados  diferentes  cenários  de  molhabilidade  da  rocha.  Duas 
+
+amostras de rocha reservatório em diferentes escalas  serão analisadas e discussões 
+
+serão  conduzidas  acerca  dos  resultados  obtidos  através  das  simulações  bifásicas  e 
+
+bidimensionais para cada escala de modelo e cenário de molhabilidade (óleo, água e 
+
+neutro), tendo a injeção de água como principal mecanismo de produção.  
+
+ 
+
+Palavras-chave: Carbonatos, Simulação, Molhabilidade, Estromatólito, Coquinas, 
+
+Produção Final 
+
+ 
+
+ 
+
+ 
+
+ 
+
+vi 
+
+ 
+
+Abstract of Undergraduate Project presented to POLI/UFRJ as a partial fulfillment of 
+
+the requirements for the degree of Petroleum Engineer. 
+
+ 
+
+ 
+
+ANALYSIS OF OIL PRODUCTION IN CARBONATE ROCKS OF DIFFERENT 
+
+SCALES FOR DIFFERENT SCENARIOS OF WETTABILITY USING TWO-
+
+DIMENSIONAL NUMERICAL SIMULATION 
+
+ 
+
+Adriano Guedes Barros e Carlos Eduardo Siqueira Marinho 
+
+January/2016 
+
+Advisor: Paulo Couto 
+
+Co-advisor: Patrick Corbett 
+
+Course: Petroleum Engineering 
+
+ 
+
+The worldwide demand of oil, gas and their derivates  has increased significantly,  at a 
+
+level  that  forces  us  to  overcome  our  capacity  of  reservoir’s  recovery  factor.  Thus,  a 
+
+better understanding about the mechanisms and interactions happening on carbonates 
+
+reservoirs is extremely necessary. This thesis will present a review about the relevant 
+
+topics followed by a detailed study about the different responses on the recovery factor 
+
+generated  by  different  wettability  scenarios.  Two  samples  with  distinct  scales  will  be 
+
+presented.  The  results  and  analysis  will  be  conducted  based  on  bidimensional,  two-
+
+phase simulation having water injection as the main producer mechanism.  
+
+. 
+
+Keywords: Carbonates, Simulation, Wettability, Stromatolite, Coquine, Final Production  
+
+ 
+
+vii 
+
+ 
+
+ 
+
+SUMÁRIO 
+
+1. INTRODUÇÃO ______________________________________________________________ 1 
+
+1.1.  Motivação ___________________________________________________________ 4 
+
+1.2.  Objetivo  ____________________________________________________________ 4 
+
+2. REVISÃO BIBLIOGRÁFICA _____________________________________________________ 6 
+
+2.1.       Conceitos fundamentais sobre molhabilidade  ______________________________ 6 
+
+2.2. 
+
+Definição da molhabilidade _____________________________________________ 6 
+
+2.3. 
+
+Fatores que regem a molhabilidade das rochas  _____________________________ 7 
+
+2.4.   Medição da molhabilidade ______________________________________________ 8 
+
+2.4.1. Medição por ângulo de contato _________________________________________ 9 
+
+2.4.2. O método Amott  ___________________________________________________ 10 
+
+2.4.3. Índice de molhabilidade USBM  ________________________________________ 11 
+
+2.5.  
+
+Impactos da molhabilidade na produção de óleo ___________________________ 12 
+
+2.5.1. Características petrofísicas ____________________________________________ 12 
+
+2.5.2. Produção de óleo ___________________________________________________ 15 
+
+2.5.3. Erros de ferramentas de leitura ________________________________________ 17 
+
+2.6.   Reservatórios carbonáticos e seu contexto no pré-sal  _______________________ 17 
+
+2.7.   O programa de simulação  _____________________________________________ 19 
+
+3.  METODOLOGIA DE ANÁLISE ________________________________________________ 20 
+
+3.1. 
+
+Descrição do modelo _________________________________________________ 20 
+
+3.1.1. Modelo macroescala - geometria, heterogeneidades e malha ________________ 21 
+
+3.1.2. Modelo microescala - geometria, heterogeneidades e malha  ________________ 23 
+
+3.2. Propriedades dos fluidos da rocha _________________________________________ 25 
+
+3.2.1. Parâmetros referentes às diferentes permeabilidades ______________________ 25 
+
+3.3. 
+
+Cenários de simulação ________________________________________________ 27 
+
+3.3.1. Parâmetros ________________________________________________________ 27 
+
+3.3.2. Análise curvas Sw x kro,w para diferentes cenários e permeabilidades ___________ 30 
+
+3.4. 
+
+Considerações finais __________________________________________________ 31 
+
+4.  DISCUSSÃO DOS RESULTADOS ______________________________________________ 33 
+
+4.1.  
+
+Evolução da saturação de água  _________________________________________ 34 
+
+4.1.1. Molhável a óleo  ____________________________________________________ 34 
+
+4.1.2. Molhável a água ____________________________________________________ 38 
+
+4.1.3. Molhabilidade neutra ________________________________________________ 41 
+
+ 
+
+viii 
+
+ 
+
+4.2. Análise da produção ____________________________________________________ 45 
+
+4.3. Considerações finais ____________________________________________________ 49 
+
+5.  Conclusões e sugestões para trabalhos futuros _________________________________ 51 
+
+6 .  
+
+B I B L I O G R A F I A   _____________________________________________________ 53 
+
+ANEXOS  ___________________________________________________________________ 56 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ix 
+
+ 
+
+ 
+
+LISTA DE FIGURAS 
+
+Figura 1 - Demanda mundial de matrizes energéticas (World Energy Outlook, International 
+Energy Agency)  ______________________________________________________________ 2 
+Figura 2 - Ilustração da ação dos componentes polares compostos no óleo cru, adaptado de 
+[16]. ________________________________________________________________________ 8 
+Figura 3 - Medição da molhabilidade através do ângulo de contato Ө e tensões interfaciais 
+sólido/óleo (𝜎𝑜𝑠), sólido/água (𝜎𝑤𝑠) e óleo/água (𝜎𝑜𝑤), adaptado de Anderson [17]  ________ 9 
+Figura 4 - Método da gota séssil modificado ilustrando a amostra em seu tempo inicial (a) e 
+depois de ser perturbada (b) (adaptado de Anderson [17]  ____________________________ 10 
+Figura 5 - Permeabilidades relativas ao óleo e à água em função da molhabilidade da rocha. 
+
+Quanto mais positivo o índice USBM de molhabilidade, mais molhável à água, e quanto mais 
+negativo, mais molhável ao óleo, adaptado de [18]. _________________________________ 13 
+Figura 6 - Impacto do ângulo de contato na pressão capilar de drenagem e embebição, 
+adaptado de Morrow, et al. [13]._________________________________________________ 14 
+Figura 7 - Curvas de pressão capilar e permeabilidades relativas ao óleo à água nas condições 
+de molhabilidade à água e mista, adaptado de Abdallah et al [14].  _____________________ 15 
+Figura 8 - Disposição inicial dos fluidos para os casos de molhabilidade à água, molhabilidade 
+mista e molhabilidade ao óleo, adaptado de Abdallah et al [14] ________________________ 16 
+Figura 9 - Esquema de drenagem para o caso de reservatório fortemente molhado por água, 
+adaptado de [20]  ____________________________________________________________ 16 
+Figura 10 - Esquema de drenagem para o caso de reservatório fortemente molhado por óleo, 
+adaptado de [20]. ____________________________________________________________ 17 
+Figura 11 - Afloramento composto por coquinas e argila (macroescala)  _________________ 22 
+Figura 12 - Discretização do modelo físico de macroescala ___________________________ 23 
+Figura 13 - Amostra física usada como base para o modelo em microescala  _____________ 24 
+Figura 14 - O modelo em microescala ____________________________________________ 24 
+Figura 15 - Gráfico Saturação de água x Permeabilidade relativa - caso molhável a óleo (baixa 
+permeabilidade) _____________________________________________________________ 27 
+Figura 16 - Curvas de permeabilidades relativas ao óleo e a água sob cenário de molhabilidade 
+à água para 10, 100 e 1000mD, respectivamente ___________________________________ 30 
+Figura 17 - Curvas de permeabilidades relativas ao óleo e a água sob cenário de molhabilidade 
+ao óleo para 10, 100 e 1000mD, respectivamente  __________________________________ 30 
+Figura 18 - Curvas de permeabilidades relativas ao óleo e a água sob cenário de molhabilidade 
+neutra para 10, 100 e 1000mD, respectivamente ___________________________________ 31 
+Figura 19 - Molhável a óleo - estágio 1  ___________________________________________ 35 
+Figura 20 - Molhável a óleo - estágio 2  ___________________________________________ 36 
+Figura 21 - Molhável a óleo - estágio 3  ___________________________________________ 36 
+Figura 22 - Molhável a óleo - estágio 4  ___________________________________________ 37 
+Figura 23 - Molhável a óleo - estágio 5  ___________________________________________ 37 
+Figura 24 - Molhável a água - estágio 1 ___________________________________________ 39 
+Figura 25 - Molhável a água - estágio 2 ___________________________________________ 39 
+Figura 26 - Molhável a água - estágio 3 ___________________________________________ 39 
+
+ 
+
+x 
+
+ 
+
+Figura 27 - Molhável a água - estágio 4 ___________________________________________ 40 
+Figura 28 - Molhável a água - estágio 5 ___________________________________________ 41 
+Figura 29 - Molhabilidade neutra - estágio 1 _______________________________________ 42 
+Figura 30 - Molhabilidade neutra - estágio 2 _______________________________________ 43 
+Figura 31 - Molhabilidade neutra - estágio 3 _______________________________________ 43 
+Figura 32 - Molhabilidade neutra - estágio 4 _______________________________________ 44 
+Figura 33 - Molhabilidade neutra - estágio 5 _______________________________________ 44 
+Figura 34 - Curvas de produção de óleo amostra macro-escala ________________________ 45 
+Figura 35 - Curvas de produção de óleo amostra micro-escala  ________________________ 46 
+Figura 36 - Gráfico Water Cut x Volume poroso injetado – macroescala _________________ 48 
+Figura 37 - Gráfico Water Cut x Volume poroso injetado – microescala __________________ 48 
+
+ 
+
+ 
+
+ 
+
+ 
+
+xi 
+
+ 
+
+LISTA DE TABELAS 
+
+ 
+Tabela 1 - Ranking de reservas provadas por país   _______________________________________ 3 
+Tabela 2 - Classificação das rochas carbonáticas quanto a presença de MgO _________________ 18 
+Tabela 3 - Diferenças entre amostra macroescala e microescala  ______________________24 
+Tabela 4 - Dados discretos para curva de permeabilidade relativa molhado a óleo com k=10 md  __ 26 
+Tabela 5 - Valores dos parâmetros para formação de cada cenário __________________________ 29 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+xii 
+
+ 
+
+LISTA DE SÍMBOLOS 
+
+𝑎𝑜 – parâmetro referente ao óleo da correlação de Brooks & Corey para distribuição de 
+
+poros 
+
+𝑎𝑤 – parâmetro referente a água da correlação de Brooks & Corey para distribuição de 
+
+poros 
+
+𝑐𝑜 – parâmetro referente ao óleo usado na correlação de Brooks & Corey para 𝑃𝑐 
+
+𝑐𝑤 – parâmetro referente a água usado na correlação de Brooks & Corey para 𝑃𝑐 
+
+𝐸𝑑 – eficiência de deslocamento 
+
+𝐸𝑣 – eficiência de varrido 
+
+𝑓𝑟 – fração de água 
+
+K – permeabilidade absoluta 
+
+𝑘𝑓 – permeabilidade efetiva do fluido 
+
+𝐾𝑟𝑜 – permeabilidade relativa ao óleo 
+
+𝐾𝑟𝑜𝑚á𝑥 – máximo valor de permeabilidade relativa ao óleo 
+
+𝐾𝑟𝑤 – permeabilidade relativa à água 
+
+𝐾𝑟𝑤𝑚á𝑥 – máximo valor de permeabilidade relativa à água 
+
+𝑀 – razão de mobilidade 
+
+𝑁𝑐 – número capilar 
+
+𝑁𝑐𝑐𝑟 – número capilar crítico 
+
+𝑛𝑜 – expoente para o cálculo de 𝐾𝑟𝑜 usado na correlação de Brooks & Corey 
+
+𝑛𝑤 – expoente para a o cálculo de 𝐾𝑟𝑤 usado na correlação de Brooks & Corey 
+
+𝑃𝑐 – pressão capilar 
+
+𝑃𝑛𝑚 – pressão da fase não-molhante 
+
+𝑃𝑚 – pressão da fase molhante 
+
+𝑆𝑜 – saturação de óleo 
+
+𝑆𝑜𝑟 – saturação de óleo residual 
+
+𝑆𝑤 – saturação de água 
+
+𝑆𝑤𝑖 – saturação de água irredutível 
+
+Ө – ângulo de contato entre superfície e fluido 
+
+𝜇𝑓𝑙𝑢𝑖𝑑𝑜 – viscosidade do fluido 
+
+𝜎𝑜𝑠 – tensão interfacial sólido/óleo 
+
+𝜎𝑜𝑤 – tensão interfacial óleo/água 
+
+𝜎𝑤𝑠 – tensão interfacial sólido/água
+
+ 
+
+xiii 
+
+ 
+
+ 
+
+1 
+
+1. INTRODUÇÃO 
+
+O  vertiginoso  crescimento  demográfico  mundial  notado  a  partir  do  final  do 
+
+século XX segue uma tendência que pode ser traduzida pelo aumento do consumo de 
+
+energia.  Em  2014,  o  consumo  de  energia  primária  -  recurso  energético  que  se 
+
+encontra disponível na natureza (petróleo, gás natural, energia hídrica, energia eólica, 
+
+biomassa, solar) -  teve um incremento de 0,9% comparado ao ano anterior de acordo 
+
+com  dados  fornecidos  pela  British  Petroleum  (BP)  [1].  Países  emergentes  foram 
+
+responsáveis  por  80%  do  crescimento  de  demanda  energética  em  2013,  o  que 
+
+caracteriza  suas  influências  no  cenário  atual.  Entretanto,  para  suprir  essa  demanda 
+
+global  de  energia,  são  necessárias  produção  em  larga  escala  e  alta  eficiência 
+
+energética. Por essa razão, países como EUA, China e Rússia, relevantes por serem 
+
+os principais produtores energéticos mundiais, têm uma posição estratégica no que se 
+
+diz respeito ao fornecimento deste recurso. 
+
+Os EUA têm como sua principal matriz energética os combustíveis fósseis, que 
+
+representaram em 2014 aproximadamente 80% de sua produção e 81% do consumo, 
+
+segundo a U.S. Energy Information Agency (EIA) [2]. De acordo com a BP, em 2014, 
+
+os  EUA tiveram  o maior  crescimento  na  produção  de  petróleo  assumindo  o  posto  de 
+
+maior  produtor  mundial  desta  fonte,  antes  ocupado  pela  Arábia  Saudita  [3].  Já  a 
+
+Rússia  permanece,  de  acordo  com  a  BP,  como  o  terceiro  maior  produtor  de 
+
+combustível fóssil (atrás dos EUA e China) e principal fornecedor de óleo e gás para a 
+
+Europa em 2014 [4]. Além disso, se manteve como país líder em exportações de gás 
+
+natural  e  segundo  maior  em  exportações  de  óleo.  Já  a  China,  líder  na  produção  e 
+
+consumo energético mundial [5], teve, em 2014, o carvão como principal combustível 
+
+consumido, representando 66%, seguido pelo petróleo (18%) e pelo gás natural (5%), 
+
+que dobrou sua parcela na última década [6].  
+
+Dessa 
+
+forma,  é 
+
+indiscutível  a  relevância  dos  combustíveis 
+
+fósseis  e 
+
+principalmente do petróleo no âmbito global de geração de energia. Segundo dados da 
+
+Agência Internacional de Energia (AIE), o petróleo representa aproximadamente 33% 
+
+da  matriz  de  demanda  energética  mundial,  ocupando  a  primeira  posição  dentre  os 
+
+principais  recursos  utilizados  (Figura  1).  Além  disso,  de  acordo  com  previsões  feitas 
+
+pela British Petroleum, o petróleo permanecerá em 2035 como o líder nesse quesito, 
+
+ 
+
+ 
+
+representando cerca de 28% da matriz, enquanto o carvão (27%) figurará na segunda 
+
+posição, seguido pelo gás natural (26%) e pelas matrizes energéticas renováveis (7%) 
+
+2 
+
+[7]. 
+
+ 
+
+ 
+
+Figura 1 - Demanda mundial de matrizes energéticas (World Energy Outlook, International Energy Agency) 
+
+ 
+
+Tais  afirmações  e  conjecturas  ratificam  o  fato  de  que  os  combustíveis  fósseis 
+
+são indispensáveis na sociedade atual e continuarão presentes por um longo período. 
+
+No entanto, há muitos campos convencionais já “maduros” (campos que já produzem 
+
+há muitos anos e avançam para declínio em sua produção), o que faz com que exista 
+
+uma  necessidade  de  desenvolver  novas  tecnologias  de  modo  a  não  só  viabilizar  a 
+
+produção  de  campos  ainda  não  explorados,  como  também  a  descoberta  de  novas 
+
+jazidas.  
+
+O  Brasil  surge,  então,  como  protagonista  no  cenário  atual  da  prospecção  de 
+
+petróleo.  Com  a  confirmação  da  descoberta  do  pré-sal  em  2006,  a  reserva  brasileira 
+
+está estimada entre 50 e 270 bilhões de barris de petróleo e gás [8], colocando o país 
+
+entre os dez primeiros colocados no ranking de reservas,  atrás de Venezuela, Arábia 
+
+Saudita,  Canadá,  Irã, Iraque, Kuwait, Emirados  Árabes  e  Rússia  (Tabela  1)  [9].  Por 
+
+outro  lado,  tal  posição  privilegiada  implica  em  novos  desafios,  como,  por  exemplo,  a 
+
+dificuldade  de  se  perfurar  a  camada  de  sal,  o  problema  da  formação  de  hidratos 
+
+deposicionados nas linhas de produção devido às baixas temperaturas, entupimentos 
+
+de  dutos  gerados  pela  formação  de  carbonatos  através  da  deposição  de  íons 
+
+ 
+
+ 
+
+provenientes da formação, baixo fator de recuperação observado em reservatórios de 
+
+origem carbonática, dentre outros. 
+
+3 
+
+Tabela 1 - Ranking de reservas provadas por país ([10], [9]) 
+
+Bilhões de barris 
+
+1  Venezuela 
+
+2  Arábia Saudita 
+
+3  Canadá 
+
+4  Irã 
+
+5  Iraque 
+
+6  Kuwait 
+
+7  Emirados Árabes Unidos 
+
+8  Rússia 
+
+  
+
+Brasil com pré-sal 
+
+9  Líbia 
+
+10  Estados Unidos 
+
+11  Nigéria 
+
+12  Cazaquistão 
+
+13  Catar 
+
+14  China 
+
+15  Brasil 
+
+16  Angola 
+
+17  Argélia 
+
+18  México 
+
+19  Noruega 
+
+20  Equador 
+
+ 
+
+298,3 
+
+265,9 
+
+174,3 
+
+157,0 
+
+150,0 
+
+101,5 
+
+97,8 
+
+93,0 
+
+62,4 
+
+48,5 
+
+44,2 
+
+37,1 
+
+30,0 
+
+25,1 
+
+18,1 
+
+15,6 
+
+12,7 
+
+12,2 
+
+11,1 
+
+8,7 
+
+8,2 
+
+O pré-sal possui aproximadamente 800 km de comprimento ao longo do litoral 
+
+brasileiro e está localizado a cerca de 300 km da costa, entre os Estados de Espírito 
+
+Santo e Santa Catarina, com uma profundidade que varia entre 5000 e 7000 metros a 
+
+partir da superfície, distribuída abaixo de uma camada de sal (daí a natureza do nome) 
+
+com 2 km de espessura [11] [12]. 
+
+Atualmente,  o  Brasil  produz  72,67%  de  sua  demanda  por  petróleo  [10].  Nos 
+
+próximos 20 anos, a produção de óleo poderá crescer 134%, atingindo 4,9 milhões de 
+
+barris de óleo equivalentes por dia, enquanto a demanda poderá crescer apenas 52% 
+
+igualando  a  produção.  Tal  cenário  poderia  alterar  a  posição  de  país  importador  para 
+
+exportador de energia visto que a produção através de outras fontes também espera 
+
+crescimento 
+
+(energia  gerada  por  hidroelétricas  (66%), 
+
+renováveis 
+
+(270%)  e 
+
+biocombustíveis (109%)) [7]. 
+
+ 
+
+ 
+
+  
+
+1.1.  Motivação 
+
+ 
+
+4 
+
+Devido à posição que o petróleo ocupa como principal fonte energética mundial 
+
+e às perspectivas de que tal cenário não se modifique em um futuro próximo, a busca 
+
+por  soluções  para  superarmos  os  principais  obstáculos  encontrados  que  viabilizem 
+
+sua melhor recuperação se faz indispensável. Desta forma, o que motiva este estudo é 
+
+a  ampliação  do  conhecimento  sobre  a  produção  de  óleo  através  de  rochas 
+
+carbonáticas,  rochas  essas  que  se  apresentam  com  grande  frequência  como  rochas 
+
+reservatórios do pré-sal brasileiro e que podem possuir características bem diferentes 
+
+da de outros tipos de formações. Mais especificamente podemos ressaltar que rochas 
+
+carbonáticas  apresentam  diferentes  características  de  molhabilidade,  o  que  significa 
+
+dizer  que  possuem,  em sua  maioria,  maior  preferência  a  estar  em  contato  com  óleo, 
+
+diferentemente dos arenitos. Tal diferença deve ser levada em consideração pois pode 
+
+impactar diretamente no fator de recuperação de hidrocarbonetos.   
+
+ 
+
+1.2. 
+
+ Objetivo  
+
+   
+
+A produção de óleo através da injeção de água em rochas carbonáticas é um 
+
+tema  que  ainda  não  foi  profundamente  estudado.  As  propriedades  dessas  rochas 
+
+exibem  uma  complexidade  muito  maior  do  que  as  observadas  noutras  mais  comuns 
+
+em reservatórios, como arenitos, turbiditos, entre outros. 
+
+Podemos  encontrar,  na  literatura,  estudos  com  certa  ênfase  nos  diferentes 
+
+cenários de molhabilidade das rochas que constituem reservatórios de óleo e gás. Tais 
+
+estudos,  no  entanto,  costumam  não  considerar  as 
+
+rochas  carbonáticas 
+
+especificamente  como  formadoras  do  reservatório.  Alguns  dos  estudos  mencionados 
+
+foram usados como referências para o presente estudo, figurando dentre a referência 
+
+bibliográficas citadas mais à frente. 
+
+A  finalidade  do  presente  trabalho  consiste  em  compreender  o  fluxo  bifásico 
+
+óleo/água  através  de  rochas  carbonáticas  em  duas  amostras  distintas  –  um 
+
+estromatólito  de  escala  laboratorial  e  uma  coquina  em  escala  real  -  considerando 
+
+diferentes cenários de molhabilidade. Objetiva-se, portanto, evidenciar, através do uso 
+
+do programa comercial Eclipse da empresa Schlumberger, a evolução do processo de 
+
+ 
+
+5 
+
+ 
+
+embebição  de  uma  rocha  previamente  saturada  por  óleo,  introduzindo  informações 
+
+relevantes para a discriminação de cada cenário em questão. Assim, usaremos dados 
+
+apresentados  em  outras  publicações,  visando  a  comparação  do  resultado  alcançado 
+
+com o esperado para, finalmente, obter um padrão do comportamento do fluxo através 
+
+de rochas carbonáticas.  
+
+Após  alcançar  os  resultados,  será  feita  uma  comparação  entre  as  duas 
+
+amostras  de  diferentes  escalas,  para  assim,  podermos  avaliar  a  confiabilidade  na 
+
+aplicação  de  informações  auferidas  a  partir  de  rochas  com  dimensões menores  para 
+
+afloramentos em escala de campo reais. 
+
+É  importante  esclarecermos  que  a  relevância  do  trabalho  se  dá  pelo  fato  de 
+
+coquinas aparecerem como rochas reservatório do pré-sal e estromatólitos serem o tipo de 
+
+rocha  carbonática  que  mais  se  assemelham  em  suas  características  às  de  microbialitos 
+
+também presentes no pré-sal [13]. Com isso, visamos esclarecer que a rocha estromatólito 
+
+desempenha papel de servir apenas como analogia e não como rocha que de fato esteja 
+
+presente em campos explorados. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+6 
+
+2. REVISÃO 
+
+BIBLIOGRÁFICA 
+
+ 
+
+ 
+
+2.1.     Conceitos fundamentais sobre molhabilidade 
+
+ 
+
+Apresenta-se  aqui,  uma 
+
+revisão  dos  diversos  conceitos  e  aspectos 
+
+relacionados  à  molhabilidade,  tais  como  definições,  medições,  causas  e impactos  na 
+
+produção de óleo. 
+
+O  perfeito  entendimento  da  molhabilidade  da  rocha  é  de  fundamental 
+
+importância para que possamos aprimorar o modo de desenvolvimento de campos de 
+
+petróleo, maximizando assim nosso produto final e, consequentemente, o lucro. 
+
+Com o monotônico crescimento da demanda por óleo e gás nos últimos anos, 
+
+métodos de recuperação avançada como injeção de água, injeção de CO2, combustão 
+
+in  situ,  entre  outros,  têm  sido  cada  vez  mais  considerados  para  a melhor  exploração 
+
+dos  recursos,  e  no  caso  do  primeiro método,  os  diferentes modos de  interação  entre 
+
+óleo,  água  e  rocha  são  fatores  de  forte  relevância  para  uma  melhor  efetividade  do 
+
+processo. 
+
+Exemplos  de  como  a  molhabilidade  exerce  sua  significância  podem  ser 
+
+facilmente encontrados em nosso dia-a-dia, como no uso de detergentes para retirar a 
+
+gordura  de  um  material  mais  facilmente  ou  até  mesmo  no  processo  de  enceramento 
+
+de um carro, que faz com que a água deslize sobre a cera, estando por menos tempo 
+
+em contato com a superfície de metal, evitando, assim, a ocorrência de oxidação. 
+
+ 
+
+2.2.  Definição da molhabilidade 
+
+ 
+
+No contexto do presente estudo, Agbalaka et al. [14] diz que “[...]molhabilidade 
+
+é a tendência da superfície da rocha reservatório estar preferencialmente em contato 
+
+com um determinado fluido em um sistema bifásico ou multifásico”. Logo, para o caso 
+
+ 
+
+7 
+
+ 
+
+de um sistema óleo/água, podemos resumir a molhabilidade como sendo a tendência 
+
+da rocha a estar em contato com a água ou com o óleo na presença de ambos. 
+
+Por  muito  tempo  no  estudo  do  comportamento  de  reservatórios,  aceitou-se  a 
+
+premissa de que praticamente todos os reservatórios seriam fortemente molhados por 
+
+água, e a explicação para tal seria o fato de que “[...]a água originalmente ocupara a 
+
+rocha reservatório; com o acúmulo de óleo, a água teria sido retida nos poros por força 
+
+da  pressão  capilar e teria formado um filme na superfície dos poros, envolvendo o óleo” 
+
+[15]. No entanto, muitas análises de amostras de rochas apontavam evidências de óleo cru 
+
+desempenhando  papel  de  fluido  molhante,  o  que  trouxe  mais  importância  para  a  análise 
+
+da  molhabilidade  das  rochas  e  levou  os  estudiosos  a  aceitarem  cenários  diferentes  de 
+
+apenas  “muito  fortemente  molhado  por  água”.  Hoje  em  dia,  sabe-se  que  a  definição  de 
+
+molhabilidade  da  rocha  como  “molhado  por  água”  e  “molhado  por  óleo”  são  apenas 
+
+simplificações  da  realidade  dado  que  as  rochas  reservatório  são  estruturas  complexas 
+
+geralmente  constituídas  por  uma  variedade  de  tipos  de  minerais,  cada  um  com  uma 
+
+molhabilidade diferente [16].   
+
+ 
+
+2.3.  Fatores que regem a molhabilidade das rochas 
+
+ 
+
+A premissa citada acima de que todo reservatório seria inicialmente fortemente 
+
+molhado por água, não está inteiramente errada. De fato ela é verdadeira para a maior 
+
+parte  dos  reservatórios  em  seus  estados  iniciais  de  molhabilidade,  mas  estes  estão 
+
+sujeitos a alterações que dependem de inúmeros fatores. 
+
+O  que  define  se  a  rocha  será  fortemente  molhada  por  óleo  ou  água  é  a 
+
+composição química dos fluidos, que resultará na atração entre as moléculas de água 
+
+e/ou  óleo.  Já  o  grau  da  molhabilidade  é  fortemente  afetado  por:  (1)  adsorção  ou 
+
+dessorção dos constituintes da fase óleo; (2) mineralogia da rocha reservatório; (3) a 
+
+deposição do filme e capacidade de espalhamento da fase óleo [14]. 
+
+Como descrito por Anderson [17], os constituintes da fase óleo (principalmente 
+
+resinas  e  asfaltenos)  também  desempenham  papel  relevante  na  mudança  da 
+
+molhabilidade  original  da  rocha,  pois  tais  componentes  são  formados  por  uma 
+
+terminação  polar,  que  busca  o  contato  com  uma  superfície  de  carga  oposta  e  outra 
+
+apolar  ou  hidrofóbica, que  busca  o contato com  o  óleo.  Sendo  assim,  a  adsorção  da 
+
+parte polar dos componentes à superfície da rocha deixa a parte apolar exposta. Esta, 
+
+por  sua  vez,  atrai  a  fase  óleo  e  faz  com  que  este  seja  o  fluido  com  maior 
+
+ 
+
+ 
+
+susceptibilidade a contactar a rocha, tornando-a molhada por óleo. Anderson [17] cita, 
+
+ainda,  a  importância  dos fatores  pressão,  temperatura,  PH  e  composição química  da 
+
+água  na  definição  do  grau  da  molhabilidade.  Na  Figura  2  pode-se  ver  o 
+
+comportamento dos componentes polares e apolares do óleo cru quando em contato 
+
+com a rocha. 
+
+8 
+
+Figura 2 - Ilustração da ação dos componentes polares compostos no óleo cru, adaptado de [18]. 
+
+ 
+
+ 
+
+2.4.   Medição da molhabilidade 
+
+ 
+
+Os  diferentes  métodos  utilizados  para  medição  da  molhabilidade  de  um 
+
+sistema podem ser separados em duas classificações: métodos qualitativos e métodos 
+
+quantitativos.  Dentre  os  métodos  qualitativos,  podemos  citar  taxas  de  embebição, 
+
+exames  microscópicos,  curvas  de  permeabilidade 
+
+relativa, 
+
+relações  entre 
+
+permeabilidade  e  saturação,  curvas  de  pressão  capilar,  entre  outros.  Dos  métodos 
+
+quantitativos  podemos  listar  ângulo  de  contato,  embebição  e  deslocamento  forçados 
+
+(Amott) e o método de molhabilidade USBM. 
+
+Embora  não  haja  nenhuma  aceitação  geral  a  respeito  de  qual/quais  métodos 
+
+devem  ser  usados,  três  métodos  quantitativos  são  praticados  com  maior  frequência. 
+
+São  eles:  (1)  medição  por  ângulo  de  contato;  (2)  o  método  Amott  (embebição  e 
+
+deslocamento forçados); (3) o método USBM [19]. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2.4.1. Medição por ângulo de contato 
+
+ 
+
+9 
+
+Morrow  [15]  afirma  que  o  método  do  ângulo  de  contato  é  a  medida  mais 
+
+universal de se medir a molhabilidade de uma superfície. No entanto, devemos atentar 
+
+para o fato de que tal método possui restrições, como apontado por Anderson [19], a 
+
+respeito  da  presença  de  surfactantes  ou  outros  componentes  que  podem  alterar  a 
+
+molhabilidade  do  sistema.  Sendo  assim,  o  método  do  ângulo  de  contato  é  uma  das 
+
+melhores  alternativas  quando  na  presença  de  um  fluido  puro  permeando  amostras 
+
+artificiais de rocha. 
+
+Figura 3 – Medição da molhabilidade através do ângulo de contato Ө e tensões interfaciais sólido/óleo (𝝈𝒐𝒔), 
+
+sólido/água (𝝈𝒘𝒔) e óleo/água (𝝈𝒐𝒘), adaptado de Anderson [19]. 
+
+ 
+
+ 
+
+Anderson  descreve,  ainda,  claramente  dois  dos  processos  de  medição  por 
+
+ângulo de contato mais utilizados na indústria do petróleo: o método da gota séssil e o 
+
+método  da  gota  séssil  modificado.  Em  ambos  os  métodos,  o  cristal  do  mineral  a  ser 
+
+testado  é  montado  em  uma  célula  composta  inteiramente  por  materiais  inertes  para 
+
+prevenir  contaminação.  O  método  da  gota  séssil  usa  um  único  cristal  polido  do 
+
+mineral,  enquanto  o  método  modificado  utiliza  dois  cristais  minerais  montados 
+
+paralelamente  em  posições  ajustáveis.  Como  arenitos  são  compostos  primariamente 
+
+por  quartzo  e  calcários  por  calcitas  e  cristais  de  quartzo,  estes  são  utilizados  para 
+
+simular a superfície porosa da rocha reservatório.  
+
+Após a limpeza minuciosa de todo o aparato a fim de prevenir contaminações, 
+
+a célula é preenchida com água salgada. Para o método modificado, uma gota de óleo 
+
+ 
+
+10 
+
+ 
+
+é colocada entre os cristais de modo que grande parte da área de cada cristal esteja 
+
+em contato com a gota. Depois de deixar o sistema estático por alguns dias,  os dois 
+
+cristais são movimentados paralelamente um ao outro. Isso movimenta a gota de óleo 
+
+e faz com que a água salgada possa entrar em contato com parte do mineral antes em 
+
+contato  com  o  óleo.  O  ângulo  de  contato  é  então  medido  através  da  água,  como 
+
+mostra a Figura  3 e quando medido desta forma, denomina-se “ângulo de contato do 
+
+avanço  de  água”.  O  verdadeiro  ângulo  de  contato  será  alcançado  após  um  período 
+
+médio  de  quatro  dias,  quando  a  situação  de  equilíbrio  entre  sólido  e  líquido  se 
+
+reestabelecer.  
+
+ 
+
+Figura 4 - Método da gota séssil modificado ilustrando a amostra em seu tempo inicial (a) e depois de ser 
+
+perturbada (b) (adaptado de Anderson [19]) 
+
+Um  procedimento  similar  é  aplicado  no  caso  do  método  da gota  séssil. Neste 
+
+caso,  porém,  um tubo  capilar  é  usado  para gerar  a  situação  de  desequilíbrio  através 
+
+da contração e expansão da gota de óleo. 
+
+ 
+
+2.4.2. O método Amott 
+
+ 
+
+O  método  Amott  combina  embebição  e  deslocamento  forçado  para  medir  a 
+
+molhabilidade média da amostra. O método se baseia no fato de que o fluido molhante 
+
+ 
+
+11 
+
+ 
+
+é  geralmente  absorvido  espontaneamente  pela  rocha,  deslocando  o  fluido  não-
+
+molhante.    A  razão  entre  embebição  espontânea  e  embebição  forçada  é  usada  para 
+
+reduzir a influência de outros fatores. 
+
+O core (amostra de rocha) é preparado por centrifugação em água salgada até 
+
+que a saturação residual de óleo seja alcançada. O método é composto, então, pelos 
+
+quatro passos seguintes: (1) imersão do core em óleo e medição do volume de água 
+
+deslocado  pela  embebição  espontânea  de  óleo  depois  de  passadas  20  horas;  (2) 
+
+centrifugação  do  core  em  óleo  até  que  a  saturação  de  óleo  irredutível  seja  atingida, 
+
+seguido  da  medição  da  quantidade  total  de  água  deslocada,  incluindo  o  volume 
+
+deslocado  pela  embebição  espontânea;  (3)  imersão  do  core  em  água  salgada  e 
+
+medição  do  volume  de  óleo  deslocado  espontaneamente  pela  embebição  de  água 
+
+depois  de  20  horas;  (4)  centrifugação  do  core  em  óleo  até  que  a  saturação  de  óleo 
+
+residual seja atingida, e medição da quantidade total de óleo deslocado [19]. 
+
+ 
+
+2.4.3. Índice de molhabilidade USBM 
+
+ 
+
+O  método  USBM  também  mede  a  molhabilidade  média  do  core.  O  teste  é 
+
+relativamente  rápido  e  apresenta  como  principal  vantagem  em  relação  ao  método 
+
+Amott o fato de ser sensível à molhabilidade neutra [19]. 
+
+No  método  USBM,  uma  centrífuga  gira  o  core  a  velocidades  crescentes.  A 
+
+amostra  começa  na  saturação  de  água  irredutível, 𝑆𝑤𝑖,  em  um  tubo  preenchido  por 
+
+água.  Depois  de  alguns  períodos  a  diferentes  velocidades  de  rotação,  a  amostra 
+
+atinge a saturação de óleo residual, 𝑆𝑜𝑟, e é colocada em um tubo preenchido por óleo 
+
+para outra série de medições. As áreas entre cada uma das curvas de pressão capilar 
+
+e a linha que representa pressão capilar igual a zero são calculadas, e o logaritmo da 
+
+razão  entre  a  área  referente  ao  aumento  de  água  e  a  área  referente  ao  aumento  de 
+
+óleo  nos  dá  o  índice  de  molhabilidade  USBM,  que  pode  variar  de  +∞  (fortemente 
+
+molhado  por  água)  a  -∞  (fortemente  molhado  por  óleo).  No  entanto,  a  maioria  das 
+
+medições apresenta valores que variam de +1 a -1 [16]. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2.5.  
+
+Impactos da molhabilidade na produção de óleo 
+
+12 
+
+ 
+
+ 
+
+A molhabilidade pode afetar praticamente todas as etapas ligadas a exploração 
+
+de um campo de petróleo. Como seus impactos se estendem desde a escala de poros 
+
+até  a  escala  de  reservatório,  atividades  como  injeção  de  água,  injeção  de  gás, 
+
+deslocamento  de  óleo  no  meio  poroso  e  até  mesmo  leitura  de  logs  podem  ser 
+
+influenciados por tal característica. 
+
+ 
+
+2.5.1. Características petrofísicas 
+
+ 
+
+ 
+
+Antes de prosseguirmos com o desenvolvimento deste tópico, é absolutamente 
+
+necessário esclarecer que em alguns momentos como forma de apresentar, comparar 
+
+e  exemplificar  as  diferenças  entre  certos  cenários  de  molhabilidade  a  expressão 
+
+molhabilidade  mista  aparecerá  com  certa frequência.  Tal  cenário,  no  entanto,  não foi 
+
+simulado  e  difere  do  que  chamamos  molhabilidade  neutra,  esta  sim  modelada.  A 
+
+diferença  entre  os  dois  cenários  encontra-se  no  fato  de  que  no  cenário  de 
+
+molhabilidade  neutra  a  rocha  não  apresenta  afinidade  com  qualquer  um  dos  fluidos 
+
+que  com  ela  interagem,  enquanto  que  no  cenário  misto,  há  partes  da  rocha 
+
+reservatório que são molháveis a um fluido enquanto outras são a outro. 
+
+A melhor maneira de se estudar o impacto da molhabilidade nas características 
+
+petrofísicas de uma rocha é através da análise das curvas de permeabilidade relativa 
+
+e  pressão  capilar.  Foi  assim  que  Donalson,  E.  C.  e  Thomas,  R.  D  [20]  constataram 
+
+que,  quanto  maior  a  molhabilidade  ao  óleo,  maior  era  a  taxa  de  crescimento  da 
+
+permeabilidade  relativa  à  água,  assim como  a  taxa  de  diminuição  da  permeabilidade 
+
+relativa ao óleo. Ou seja, maior era a quantidade de água móvel no centro dos poros a 
+
+competir  com  o  óleo  a  se  movimentar  pelo  mesmo  caminho.  A  seguir,  na  Figura  5, 
+
+observa-se um exemplo de curva de permeabilidade relativa ao óleo e água em função 
+
+da molhabilidade. 
+
+ 
+
+ 
+
+13 
+
+ 
+
+Figura  5  –  Permeabilidades  relativas  ao  óleo  e  à  água  em  função  da  molhabilidade  da  rocha.  Quanto  mais 
+positivo  o  índice  USBM  de  molhabilidade,  mais  molhável  à  água,  e  quanto  mais  negativo,  mais  molhável  ao 
+óleo, adaptado de [20]. 
+
+ 
+
+ 
+
+Já  as  pressões  capilares  de  drenagem  e  embebição  foram  analisadas  por 
+
+Morrow [15] por meio do ângulo de contato e verificou-se que quanto maior o ângulo 
+
+de  contato,  menores  são  os  valores  de  pressão  capilar  de  drenagem  primária  e 
+
+embebição.  Assim,  na  Figura  6,  o  impacto  do  ângulo  de  contato  na  pressão  capilar  de 
+
+drenagem e embebição. 
+
+ 
+
+ 
+
+14 
+
+ 
+
+Figura 6 – Impacto do ângulo de contato na pressão capilar de drenagem e embebição, adaptado de Morrow, et 
+al. [15]. 
+
+ 
+
+A  Figura  7  ilustra  uma  comparação  entre  as  permeabilidades  relativas  e 
+
+pressões  capilares  para  os  casos  de  molhabilidade  à  água  e  molhabilidade  mista.  A 
+
+primeira  curva  a  ser  analisada  é  a  curva  de  pressão  capilar  para  drenagem  primária 
+
+(pontilhada),  que  indica  uma  determinada  pressão  na  fase  óleo  necessária  para  que 
+
+um  deslocamento  substancial  de  água  possa  ocorrer.  Como  a  maioria  dos 
+
+reservatórios  é  definida  como  molhada  por  água  quando  o  óleo  tem  sua  primeira 
+
+migração,  a  mesma  curva  é  usada  para  o  caso  de  molhabilidade  mista.  As  outras 
+
+curvas (tracejada representa o aumento da saturação de água e sólida o aumento da 
+
+saturação de óleo) diferem baseadas na alteração da molhabilidade devido ao contato 
+
+do  óleo  com  as  superfícies  dos  poros  maiores.  Na  situação  de  forte  molhabilidade  à 
+
+água,  a  curva  de  pressão  capilar  permanece  positiva  por  quase  todo  o  intervalo  da 
+
+saturação,  enquanto  que  na  molhabilidade  mista  ela  apresenta  parte  positiva  e 
+
+negativa,  o que significa que algumas partes da superfície absorvem água,  enquanto 
+
+outras absorvem óleo como explicado pela equação 1 (Pnm está relacionada ao fluido 
+
+não  molhante  enquanto  Pm  ao  fluido  molhante).  Os  valores  de  kro  são  menores  para 
+
+menores  saturações  de  água  no  caso  da  molhabilidade  mista  porque  o  óleo  está 
+
+competindo  com  a  água  nos  poros  maiores.  Similarmente,  os  valores  de  krw  são 
+
+reduzidos quando temos alta saturação de água no caso molhado à água porque é o 
+
+óleo que ocupa preferencialmente os grandes poros [16]. 
+
+𝑃𝑐 = 𝑃𝑛𝑚 − 𝑃𝑚                                                                                                                       (1) 
+
+ 
+
+15 
+
+ 
+
+Figura 7 – Curvas de pressão capilar e permeabilidades relativas ao óleo à água nas condições de 
+
+molhabilidade à água e mista, adaptado de Abdallah et al [16]. 
+
+ 
+
+ 
+
+ 
+
+2.5.2. Produção de óleo 
+
+ 
+
+ 
+
+Dados  da  Schlumberger  [21]  mostram  que  a  média  do  fator  de  recuperação 
+
+para todos os reservatórios do mundo seja de 35%. Sabe-se, no entanto, que menos 
+
+óleo  é  recuperado  de  reservatórios  carbonáticos  quando  comparados  a  arenitos,  e  é 
+
+visando  aumentar  tal  índice  que  cada  vez  mais  atividades  de  recuperação  avançada 
+
+como injeção de gás, água e combustão in situ vem sendo realizadas.  
+
+A  principal  consequência  dos  impactos  da  molhabilidade  nas  características 
+
+petrofísicas das rochas é a mudança no fluxo dos fluidos no meio poroso, afetando a 
+
+eficiência  de  manobras  de 
+
+recuperação  e 
+
+impactando  na  produção  de 
+
+hidrocarbonetos. 
+
+A  Figura  8  ilustra  a  disposição  inicial  dos  fluidos  para  os  casos  de 
+
+molhabilidade  à  água,  molhabilidade  mista  e  molhabilidade  ao  óleo,  enquanto  as 
+
+Figuras  9  e  10  ilustram  os  processos  de  drenagem  nos  reservatórios  fortemente 
+
+molháveis  à  água  e  fortemente  molhados  ao  óleo,  respectivamente.  Percebe-se  que 
+
+no  caso  de  forte  molhabilidade  à  água,  é  esta  quem  ocupa  os  menores  poros  da 
+
+rocha, enquanto o óleo é encontrado nos poros de maior geometria. Tal característica 
+
+ 
+
+ 
+
+faz  com  que  algumas  partículas  de  óleo  percam  mobilidade  por  acabarem  sendo 
+
+envolvidas  por  filmes  de  água  e  separadas  de  grandes  massas,  fazendo  com  que 
+
+quase todo o óleo residual seja irredutível [22]. 
+
+16 
+
+ 
+
+Figura 8 – Disposição inicial dos fluidos para os casos de molhabilidade à água, molhabilidade mista e 
+
+molhabilidade ao óleo, adaptado de Abdallah et al [16]. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 9 – Esquema de drenagem para o caso de reservatório fortemente molhado por água, adaptado de [22] 
+
+ 
+
+ 
+
+Por outro lado, no caso de forte molhabilidade ao óleo, percebemos a canalização da 
+
+água  injetada  por  entre  os  poros  de  maior  geometria,  o  que  reduz  a  eficiência  do 
+
+processo, como pode ser visto na Figura 10 abaixo. 
+
+ 
+
+ 
+
+17 
+
+Figura 10 – Esquema de drenagem para o caso de reservatório fortemente molhado por óleo, adaptado de [22]. 
+
+ 
+
+ 
+
+2.5.3. Erros de ferramentas de leitura  
+
+ 
+
+ 
+
+Abdallah [16] cita um fato ocorrido no Oriente Médio no qual um campo que já 
+
+produzia há mais de 35 anos exibiu resultados totalmente diferentes do esperado para 
+
+a produção de poços horizontais recentemente perfurados. Enquanto a leitura dos logs 
+
+sugeria  uma  saturação  de  óleo  maior  que  50%,  os  poços  apresentavam  produção 
+
+100%  de  água.  A  explicação  para  o  fato  é:  ferramentas  que  trabalham  por  meio  de 
+
+resistividade podem não fornecer valores de saturação acurados quando submetidas a 
+
+regiões  de  molhabilidade  mista  dependendo  do  histórico  de  saturação  de  tais 
+
+formações.  
+
+ 
+
+2.6.   Reservatórios carbonáticos e seu contexto no pré-sal 
+
+ 
+
+Boggs  [23]  define  as  rochas  carbonáticas  como  sendo  rochas  de  origem 
+
+sedimentar  que  passaram  por  processos  químicos/bioquímicos  nos  quais  houve 
+
+precipitação de minerais presentes na água.  
+
+A  química  das  rochas  é  dominada  pelos  íons  cálcio  ( 𝐶𝑎2+) ,  magnésio 
+
+  
+(𝑀𝑔2+)e  carbonato (𝐶𝑂3
+percentual de óxido de magnésio como mostrado na Tabela 2 abaixo: 
+
+2−),  havendo  uma  classificação  de  acordo  com  a  presença 
+
+ 
+  
+
+ 
+
+Tabela 2 - Classificação das rochas carbonáticas quanto a presença de MgO (adaptado de [24]) 
+
+18 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Estima-se que mais de 60% das reservas provadas de óleo e em torno de 40% 
+
+das  reservas  provadas  de  gás  natural  do  mundo  estejam  armazenadas  em 
+
+reservatórios  carbonáticos 
+
+[25],  o  que  por  si  só 
+
+já  motivaria  estudos  mais 
+
+aprofundados  sobre  este  tipo  de  rocha.  Não  obstante,  quando  nos  voltamos  para  o 
+
+imenso  potencial  petrolífero  das  margens  continentais  brasileiras  nos  deparamos 
+
+novamente  com  tais  formações  desempenhando  papel  de  reservatório  para  os 
+
+hidrocarbonetos  ali  acumulados.  Mais  precisamente,  sobre  a  seção  do  pré-sal  nas 
+
+bacias de Campos, os reservatórios podem ser considerados de três tipos principais: 
+
+rochas  calcárias  com  coquinas  [26],  calcários  microbialíticos  da  porção  superior  da 
+
+seção  rifte [27] [28]  e fraturas em rochas  vulcânicas  de  porção  inferior da  seção  rifte 
+
+[26] [29]. 
+
+Neste  caso,  coquinas  são  acumulações  de  conchas  de  seres-vivos 
+
+invertebrados,  como  bivalves  e  ostracodes.  Já  os  microbialitos 
+
+(carbonatos 
+
+microbianos)  são  definidos  por  Burne  &  Moore  (apud  [13])  como  sendo  depósitos 
+
+organosedimentares que cresceram como resultado do aprisionamento e acumulação 
+
+de  sedimentos  detríticos  e/ou  formação  de  espaço  para  precipitação  dos  minerais  a 
+
+partir de comunidades microbianas bentônicas. Tal definição foi mais tarde modificada 
+
+e agora inclui produzido pela interação do crescimento microbiano com o metabolismo, 
+
+propriedades  da  superfície  celular  e  substâncias  poliméricas  extracelulares  com 
+
+precipitação mineral e aprisionamento de grãos [30]. 
+
+ 
+
+As rochas que serviram como modelos utilizados nas simulações em menor e 
+
+maior escala e que mais tarde serão apresentadas neste trabalho, pertencem à família 
+
+dos  microbialitos  e  das  coquinas,  respectivamente.  Suas  propriedades  petrofísicas 
+
+impõe  grandes  desafios  a  geólogos,  geofísicos  e  engenheiros  dada  a  complexidade 
+
+estrutural  presente  nos  carbonatos,  como  citado  por  Corbett  et  al. 
+
+[13].  
+
+ 
+
+ 
+
+Denominação% de MgOCalcário0 a 1,1calcário magnesiano1,1 a 2,1calcário dolomítico2,1 a 10,8dolomito calcítico10,8 a 19,5Dolomito19,5 a 21,7 
+
+2.7.   O programa de simulação  
+
+19 
+
+ 
+
+ 
+
+O programa utilizado neste estudo foi o simulador Eclipse 100, opção capaz de 
+
+lidar  com  simulações  Black  Oil.  É  oferecido  como  opção  no  pacote  Eclipse,  que 
+
+também  disponibiliza  o  simulador  Eclipse  300,  cuja  principal  função  é  desempenhar 
+
+simulações para modelos composicionais. A diferença entre os dois simuladores está 
+
+no  fato  de  que  modelos  composicionais  são  mais  complexos,  pois  o  impacto  da 
+
+produção  dos  fluidos  contidos  no  reservatório  altera  a  composição  dos  fluidos  que 
+
+permanecem aprisionados, o que por sua vez altera o produto esperado. Já o modelo 
+
+Black  Oil  admite  que  alterações  na  composição  dos  fluidos  no  reservatório  não 
+
+gerarão  impacto  no  material  produzido.  Portanto,  o  simulador  Eclipse  100  é  utilizado 
+
+para propósitos mais gerais. 
+
+ 
+
+O método de solução usado pelo Eclipse 100 é completamente implícito, o que 
+
+faz com que todos os parâmetros relevantes para o cálculo das pressões e saturações 
+
+nos blocos sejam avaliados no mesmo tempo para o qual queremos nossas respostas, 
+
+o que resulta em expressões lineares e não lineares, matrizes Jacobianas e exige, em 
+
+alguns casos, algumas centenas de iterações. Para nos dar um resultado confiável em 
+
+uma janela aceitável de tempo, o Eclipse 100 utiliza o método de Newton para resolver 
+
+equações  não-lineares, expande  a  matriz  Jacobiana  em  todas  as  variáveis,  reduz  os 
+
+resíduos  de  cálculos  a  tolerâncias  bem  pequenas,  desconsidera  erros  de  balanço  de 
+
+materiais  e  resolve  as  equações  lineares  produto  de  cada  iteração  simultaneamente 
+
+através de fatoração em rede, acelerada por Orthomin [31]. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+20 
+
+3. METODOLOGIA DE 
+
+ANÁLISE 
+
+Como  foi  abordado  na  revisão  bibliográfica,  diversos  autores  tentaram 
+
+descrever  a  influência  dos  diferentes  cenários  de  molhabilidade  no  fluxo  dos  fluidos. 
+
+Entretanto,  esses  estudos  possuíam,  como  principal  enfoque,  a  influência  individual 
+
+dos parâmetros na diferenciação de cada cenário,  a fim de esmiuçar as causas para 
+
+certo  comportamento.  Além  disso,  devido  a  maior  frequência  de  reservatórios 
+
+areníticos,  poucos  estudos  eram  feitos  visando  a  análise  de  rochas  carbonáticas,  as 
+
+quais  são  bastante  desafiadoras  em  razão  da  sua  complexidade  mineralógica  e 
+
+heterogeneidades.  
+
+Dessa forma, em virtude do panorama atual de exploração e produção global, a 
+
+presente investigação tem como objetivo o estudo da produção de óleo por injeção de 
+
+água  em  reservatórios  carbonáticos.  A  fim  de  destacar  a  ampla  influência  da 
+
+molhabilidade  no  fator  de  recuperação,  serão  analisados  estritamente  os  casos 
+
+molhável a óleo, molhável à água e molhabilidade neutra, dado que apresentam maior 
+
+distância entre si. 
+
+Ademais, o uso de um programa de alta performance torna a simulação ainda 
+
+mais precisa, contribuindo também como fator diferenciador do trabalho, ao passo que 
+
+anteriormente  os 
+
+resultados  eram  obtidos  ao  custo  de  grande 
+
+tempo  de 
+
+processamento computacional, com soluções, muitas vezes, pouco realísticas.   
+
+ 
+
+3.1.  Descrição do modelo 
+
+ 
+
+O presente trabalho de simulação descreve o fluxo através de um estromatólito 
+
+em escala laboratorial e de um afloramento de coquina em escala real de campo. As 
+
+duas  rochas  possuem,  como  algumas  de  suas  semelhanças,  as  propriedades  dos 
+
+fluidos  e  da  rocha,  assim  como  o  processo  de  sua  gênesis.  A  disposição  de 
+
+porosidade e permeabilidade assim como a geometria geral, contudo, são particulares 
+
+ 
+
+21 
+
+ 
+
+a  cada  amostra,  resultando  em  modelos  singulares,  os  quais  serão  estudados 
+
+independentemente. 
+
+Os reservatórios em questão são representados por um modelo bidimensional 
+
+retangular,  sendo  o  eixo  x  seu  comprimento,  o  eixo  y  sua  espessura  e  o  eixo  z  sua 
+
+profundidade vertical. Para fazer a simulação do fluxo através desses reservatórios, foi 
+
+utilizado  o  programa  Eclipse  100,  um simulador completamente  implícito  baseado  no 
+
+modelo Black Oil. 
+
+O  estado  inicial  fundamenta-se  na  fase  de  embebição,  ou  seja,  a  rocha  está 
+
+inteiramente saturada de óleo, considerando que já houve, portanto, a migração deste 
+
+fluido a partir da rocha geradora para o reservatório analisado (drenagem primária). A 
+
+produção do mesmo se dará a partir da recuperação secundária, onde um poço injetor 
+
+será  perfurado  na  extremidade  esquerda  do  reservatório,  com  os  canhoneados 
+
+presentes em toda a extensão vertical do mesmo, enquanto um poço vertical produtor 
+
+será perfurado na outra fronteira, nas mesmas condições de completação do anterior. 
+
+Sendo assim, através da injeção de água pelo poço injetor, será promovido o fluxo da 
+
+margem esquerda para a direita, varrendo todo o reservatório.  O diâmetro dos poços 
+
+seguirá  a  mesma  proporção  nos  dois  casos  (30%  do  comprimento  da  célula),  pois 
+
+dessa forma, deixaremos os modelos ainda mais próximos para nível de comparação 
+
+A fim de tornar o trabalho ainda mais verossímil, consideramos que as rochas 
+
+analisadas  estivessem  submetidas  a  condições  de 
+
+reservatório  similares  a 
+
+encontradas  no  Pré-sal  brasileiro.  Assim,  estipulamos  que  ambas  estariam  a  uma 
+
+profundidade  padrão  de  aproximadamente  5000  m  e  o  contato  óleo-água  seria  em 
+
+5700 m (valores coerentes com os encontrados nos reservatórios do campo de Libra, 
+
+por exemplo). 
+
+ 
+
+3.1.1. Modelo macroescala - geometria, heterogeneidades e malha 
+
+ 
+
+ 
+
+O  primeiro  reservatório  faz  parte  do  afloramento  de  carbonato  lacustrino 
+
+composto  essencialmente  por  fácies  de  coquinas  com  intercalações  de  argila,  do 
+
+Membro  Coqueiro  Seco  e  formação  Morro  de  Chaves,  situado  em  Alagoas,  nas 
+
+proximidades de São Miguel dos Campos (localização precisa: 9º 45’ 49” S 36º 8’ 55” 
+
+W).  Por  ser  uma  amostra  de  larga  escala,  trabalharemos  com  dimensões  de  campo. 
+
+Sua imagem real pode ser vista na Figura 11. 
+
+ 
+
+ 
+
+22 
+
+Figura 11 - Afloramento composto por coquinas e argila (macroescala) 
+
+ 
+
+Na  tentativa  de  representar  o  reservatório  e  suas  heterogeneidades  com  a 
+
+maior  acurácia  possível,  definimos  uma  malha  de  células  homogêneas  com 
+
+dimensões (x,y,z) de 26x1x5, totalizando 130 células.  
+
+As células do eixo x foram discretizadas a partir da divisão do comprimento do 
+
+reservatório  pelo  número  de  células  nessa  direção,  fazendo  com  que  cada  uma 
+
+possua um comprimento Dx de 11,5 cm (0,379 ft/célula). O mesmo padrão de cálculo 
+
+foi utilizado para se obter a altura Dz de cada célula, obtendo como resultado um valor 
+
+igual  a  16  cm  (0,526  ft/célula).  Devido  ao  fato  de  retratarmos  o  reservatório  por  um 
+
+modelo de apenas duas dimensões, o eixo y possui apenas uma  camada de células, 
+
+garantindo,  portanto,  essa  característica.  Foi  escolhido,  de  forma  arbitrária,  um  valor 
+
+Dy igual a 11,5 cm (0,379 ft/célula), assim como Dx. 
+
+Foi  possível  notar  a  existência  de  três  principais  valores  de  porosidade  e 
+
+permeabilidade  absoluta:  na  matriz  da  rocha 
+
+foram  computados  valores  de 
+
+permeabilidade de 100 md e porosidade de 25%; na região de maior permeabilidade, 
+
+a  qual  se  encontra  no  centro  da  amostra,  valores  de  1000  md  e  35%  de  porosidade 
+
+foram  adotados;  nas  laterais  temos  a  presença  de  dois  vugs  com  valores  10  md  de 
+
+permeabilidade  e  15%  de  porosidade, representando  uma maior  resistência  ao fluxo; 
+
+temos 
+
+também 
+
+regiões  conhecidas  por  zonas  mortas,  as  quais  possuem 
+
+permeabilidade  de  0  md,  porosidade  de  0%  e  se  encontram  nas  duas  extremidades 
+
+inferiores e também em algumas células no topo da amostra.  
+
+Os canhoneios do poço injetor situam-se através de toda extensão vertical, nas 
+
+posições  (1,1,1)  até  (1,1,5),  enquanto  os  do  poço  produtor  encontram-se  de  (26,1,1) 
+
+até (26,1,5), compreendendo todo o reservatório analisado, com diâmetro interno igual 
+
+a 3,47 cm (de 30% de Dx) sendo, portanto, fiel a descrição anteriormente destacada.  
+
+ 
+
+ 
+
+A  partir  do  fornecimento  dos  dados  geométricos  do  reservatório,  assim  como 
+
+os  dados  de  saturação  inicial  do  poço,  foi  possível  gerar  a  malha  computacional 
+
+destacando a posição do poço injetor e do poço produtor, observada na Figura 12. 
+
+23 
+
+ 
+
+ 
+
+ 
+
+Figura 12 - Discretização do modelo físico de macroescala 
+
+3.1.2. Modelo microescala - geometria, heterogeneidades e malha 
+
+ 
+
+  
+
+A  malha  em  microescala  modela  uma  amostra  de  estromatólito  retirada  da 
+
+Lagoa Salgada, localizada na Região Norte do estado do Rio de Janeiro, no litoral do 
+
+município de Campos, próximo ao Cabo de São Tomé. A malha é composta por (x,y,z) 
+
+23x1x8,  totalizando  184  células,  sendo  todos  os  blocos  de  dimensões  1cm  x  1cm  x 
+
+1cm. Para facilitar o trabalho em menor escala, foram utilizadas unidades laboratoriais 
+
+nesta simulação.  
+
+ 
+
+Os  valores  de  porosidade  e  permeabilidade  foram  atribuídos  de  forma  a 
+
+aproximar  as  heterogeneidades  da  amostra,  aplicando,  portanto,  valores  bem  altos a 
+
+algumas  células  enquanto  que  outras  receberam  valores  mais  baixos.  Para 
+
+permeabilidade,  valores  de  100mD  e  1000mD  foram  usados  atrelados  a  valores  de 
+
+15% e 100% de porosidade, respectivamente. 
+
+ 
+
+Os  poços  foram  localizados  nas  extremidades  do  modelo,  sendo  o  injetor 
+
+situado à esquerda em (1,  1, 1) e completado até (1,  1, 8) e o produtor à direita, em 
+
+(23, 1, 1) e completado até (23, 1, 8). As imagens do estromatólito e da malha podem 
+
+ser vistas na Figura 13 e 14, respectivamente. 
+
+ 
+
+ 
+
+Figura 13 ‐ Amostra física usada como base para o modelo em microescala 
+
+ 
+
+ 
+
+  
+
+24 
+
+ 
+
+Figura 14 ‐ O modelo em microescala 
+
+ 
+Assim,  na  Tabela  3,  é  possível  ver  algumas  diferenças  entre  as  rochas  de  forma  mais 
+explícitas. 
+
+Tabela 3 ‐ Diferenças entre modelo macroescala e microescala 
+
+Macroescala
+Campo
+
+Microescala
+Dimensões
+Laboratoriais
+Vazão de injeção 1 ft³/dia (1179,87 cm³/hora) 12,7 cm³/hora
+Volume poroso
+Tempo para 
+injeção de um 
+volume poroso
+
+4,23 horas
+
+2,13 ft³ (60411,81 cm³)
+
+53.7cm³
+
+51,2 horas
+
+ 
+
+ 
+
+ 
+
+ 
+
+3.2. Propriedades dos fluidos da rocha 
+
+ 
+
+25 
+
+3.2.1. Parâmetros referentes às diferentes permeabilidades 
+
+ 
+
+As  propriedades  da  rocha,  tais  como  permeabilidade  e  porosidade  por  zona, 
+
+foram  retiradas  de  análises  laboratoriais  e  de  campo  das  amostras  analisadas.  Em 
+
+relação a densidade dos fluidos, consideramos densidade do óleo de 0,7 g/cm3 (43,7 
+
+lb/ft3)  e  da  água  de  1  g/cm3 (64,3  lb/ft3).  Além  disso,  adota-se  tanto  a  água  quanto  o 
+
+óleo como fluidos incompressíveis.  
+
+Na  busca  por  valores  realistas  dos  parâmetros  Saturação  de  Água  (Sw), 
+
+Permeabilidade  Relativa  ao  óleo  (kro)  e  Permeabilidade  Relativa  à  Água  (krw)  para  o 
+
+modelo, 
+
+foram  utilizados  dados  de  ensaios 
+
+fornecidos  pela  Petrobras  como 
+
+parâmetros  para  as  permeabilidades  médias  (100  mD)  para  cada  cenário.  Para  os 
+
+outros valores de permeabilidade analisados, assim como para a obtenção da Pressão 
+
+Capilar  (Pc)  em  todos  as  situações,  combinaram-se  os  dados  da  Petrobras  com  as 
+
+correlações de Brooks & Corey, as quais  forneceram valores confiáveis e condizentes 
+
+com as condições do reservatório. As equações em questão são expostas a seguir: 
+
+ 
+
+𝑃𝑐 =  
+
+𝑐𝑤
+𝑆𝑤−𝑆𝑤𝑖
+(
+1−𝑆𝑤𝑖
+
+𝑎𝑤 +  
+)
+
+(
+
+𝑐𝑜
+𝑆𝑜−𝑆𝑜𝑟
+1−𝑆𝑜𝑟
+
+)
+
+𝑎𝑜                                                                                       (2) 
+
+𝑆𝑤𝑑 =
+
+𝑆𝑤−𝑆𝑤𝑖
+
+1−𝑆𝑤𝑖−𝑆𝑜𝑟
+
+                                                                                                        (3) 
+
+𝑘𝑟𝑤 = 𝑘𝑟𝑤𝑚𝑎𝑥 × 𝑆𝑤𝑑
+
+𝑛𝑤                                                                                            (4) 
+
+𝑘𝑟𝑜 = 𝑘𝑟𝑜𝑚𝑎𝑥 × (1 − 𝑆𝑤𝑑)𝑛𝑜                                                                                    (5) 
+
+ 
+
+Em  ambos  os  modelos  foram  simulados  diversos  cenários,  os  quais  serão 
+
+abordados  individualmente  em  seções  posteriores.  Contudo,  tanto  na  amostra  de 
+
+micro quanto na de macro escala adota-se o reservatório molhado por óleo como caso 
+
+base  a  ser  analisado,  devido  ao  fato  dos  reservatórios  carbonáticos  tenderem  a  ser 
+
+mais molháveis a óleo do que à água [17]. 
+
+Ao  variar  a  saturação  de  água  ao  longo  da  produção,  os  outros  parâmetros 
+
+sofreram consequente alteração (saturação de óleo, permeabilidade relativa da água, 
+
+ 
+
+ 
+
+permeabilidade relativa do óleo e pressão capilar). Esses valores discretos podem ser 
+
+26 
+
+vistos na Tabela 4. 
+
+ 
+
+Tabela 4 - Dados discretos para curva de permeabilidade relativa molhado a óleo com k=10 md 
+
+Sw 
+
+krw 
+
+kro 
+
+0,263 
+
+0 
+
+0,253 
+0,274662  8,68E-05  0,212286 
+0,286324  0,000491  0,17699 
+0,297986  0,001353  0,146554 
+0,309648  0,002777  0,120457 
+0,32131  0,004851  0,098217 
+0,332972  0,007652  0,079391 
+0,344634  0,01125  0,063569 
+0,356297  0,015708  0,050376 
+0,367959  0,021086  0,039471 
+0,379621  0,027441  0,030542 
+0,391283  0,034824  0,023307 
+0,402945  0,043286  0,017514 
+0,414607  0,052876  0,012934 
+0,426269  0,063638  0,009367 
+0,437931  0,075618  0,006634 
+0,449593  0,088858  0,00458 
+0,461255 
+0,1034  0,003069 
+0,472917  0,119283  0,001987 
+0,484579  0,136547  0,001233 
+0,496241  0,155229  0,000728 
+0,507903  0,175366  0,000404 
+0,519566  0,196995  0,000207 
+0,531228  0,220149  9,59E-05 
+0,54289  0,244864  3,85E-05 
+0,554552  0,271174  1,26E-05 
+0,566214  0,29911 
+3E-06 
+0,577876  0,328705  3,95E-07 
+0,589538  0,359992  1,23E-08 
+0,393  4,27E-81 
+
+0,6012 
+
+Pc 
+
+(kgf/cm2) 
+
+10 
+
+-0,05664 
+-0,07606 
+-0,09173 
+-0,10654 
+-0,12141 
+-0,13685 
+-0,15322 
+-0,17083 
+-0,18998 
+-0,21103 
+-0,23438 
+-0,2605 
+-0,29001 
+-0,32366 
+-0,36243 
+-0,40762 
+-0,46098 
+-0,52491 
+-0,60287 
+-0,69989 
+-0,82372 
+-0,9868 
+-1,21039 
+-1,53393 
+-2,0392 
+-2,92563 
+-4,82804 
+-11,2336 
+-1,7E+18 
+
+ 
+
+ 
+
+Assim, ao adquirir os valores dos parâmetros citados anteriormente, foi criada a 
+
+curva de saturação de água x permeabilidade relativa – válida para os dois modelos - 
+
+reproduzida na Figura 15 (para k=10 md).  
+
+ 
+
+ 
+
+27 
+
+Molhável ao óleo
+
+Baixa Permeabilidade (10 md)
+
+0,7
+
+0,6
+
+0,5
+
+0,4
+
+0,3
+
+0,2
+
+0,1
+
+0,0
+
+a
+v
+i
+t
+
+l
+
+a
+e
+r
+ 
+e
+d
+a
+d
+
+i
+l
+i
+
+b
+a
+e
+m
+r
+e
+P
+
+0,0
+
+0,1
+
+0,2
+
+0,3
+
+0,4
+
+0,5
+
+0,6
+
+0,7
+
+0,8
+
+0,9
+
+1,0
+
+Saturação de água
+kro
+
+krw
+
+ 
+
+Figura 15 - Gráfico Saturação de água x Permeabilidade relativa - caso molhável a óleo (baixa permeabilidade) 
+
+ 
+
+Ao  analisar  esta  curva  é  possível  notar  que  a  saturação  inicial  de  água  é  de 
+
+26,3% (Swi), logo a saturação de óleo inicial é igual a 73,7% (Soi), já que a simulação é 
+
+bifásica.  Este  valor  de  saturação  inicial  representa  a  porcentagem  de  água  conata 
+
+presente nos poros do reservatório, resultante da drenagem primária.  
+
+Neste  primeiro  momento,  o  reservatório  estava  100%  saturado  de  água  e 
+
+durante  a  invasão  do  óleo,  este  foi  adsorvido  pela  rocha  por  ser  a  fase  molhante, 
+
+fazendo  com  que  ocupasse  inicialmente  os  poros  menores  e,  em  seguida,  as 
+
+gargantas e poros maiores. Dessa forma, a água foi varrida pelo óleo, o qual, através 
+
+de uma pressão capilar de entrada, regia o fluxo.  No entanto,  a preferência da rocha 
+
+estar  em  contato  com  o  óleo  faz  com  que  este  enquanto  permeia  os  poros  maiores, 
+
+crie  um  filme  que  envolva  partículas  de  água,  fazendo  com  que  parte  dela  fique 
+
+acumulada no interior dessas regiões, correspondendo, neste caso, ao valor de 26,3% 
+
+da saturação de líquidos. 
+
+ 
+
+3.3.  Cenários de simulação 
+
+ 
+
+3.3.1. Parâmetros  
+
+ 
+
+Após a definição de parâmetros substanciais para a descrição física do projeto, 
+
+como  as  propriedades  da  rocha  e  fluido,  definição  da  malha  do  modelo  analisado  e 
+
+ 
+
+28 
+
+ 
+
+disposição dos poços, algumas variáveis foram destacadas de modo a estabelecer os 
+
+três  diferentes  cenários  utilizados  como  base  de  comparação  entre  as  simulações: 
+
+molhado à água, molhado a óleo e molhabilidade neutra. 
+
+A  partir  das  correlações  de  Brooks  &  Corey,  explicitadas  anteriormente  e 
+
+aplicadas  em  dados  reais  obtidos  pela  Petrobras  através  de  ensaios  de  laboratório, 
+
+foram  definidas  algumas  propriedades  do  fluido  para  cada  permeabilidade  presente 
+
+nas  amostras,  sendo  premissas  para  a fundamentação  de  cada  cenário.  Assim,  para 
+
+cada um destes, alteram-se parâmetros essenciais como a Saturação inicial de água 
+
+(Swi), constantes utilizadas para a definição da Pressão Capilar (Pc) e Permeabilidade 
+
+relativa máxima ao óleo (kromáx) e à água (krwmáx). 
+
+Como  evidenciado  durante  a  exposição  das  equações,  cw,  co,  aw  e  ao  são 
+
+parâmetros  utilizados  para  se  obter  a  pressão  capilar.  Assim,  cw  e  co  representam  a 
+
+pressão  de  entrada  da  água  e  do  óleo,  respectivamente,  e  são  constantes  para  os 
+
+diferentes  cenários  de  molhabilidade,  alterando-se  somente  para  os  processos  de 
+
+drenagem primária, embebição e drenagem secundária. Em virtude de representarmos 
+
+somente o processo de embebição nesta simulação, usaremos cw igual a 0,1 e co no 
+
+valor  de  -0,1.  Em  contrapartida,  aw  e  ao  variam  para  cada  caso  de  molhabilidade  e 
+
+representam  a  distribuição  de  poros.  Sua  função  é  servir  de  ajuste  para  a  obtenção 
+
+das curvas de pressão capilar em cada cenário.  
+
+Por último temos os expoentes de Corey para água, simbolizado por nw e para 
+
+óleo, por no. Quanto maior a molhabilidade ao óleo, no aumenta, tendo como resposta 
+
+uma  diminuição  de  kro,  que  se  torna  ainda  mais  acentuada  com  o  aumento  de  Sw 
+
+durante a produção. Por outro lado, neste mesmo cenário, nw diminui com o aumento 
+
+de krw em decorrência do aumento de Sw. Os dados base citados podem ser vistos da 
+
+Tabela 5. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Casos 
+K 
+Swi 
+Sor 
+kromax 
+krwmax 
+nw 
+no 
+cw 
+aw 
+co 
+ao 
+ 
+
+Tabela 5 - valores dos parâmetros para formação de cada cenário 
+
+MA 
+
+MO 
+
+MN 
+
+10mD 
+
+100mD  1000mD 
+
+10mD 
+
+100mD  1000mD 
+
+10mD 
+
+100mD  1000mD 
+
+29 
+
+0,144 
+
+0,263 
+
+0,213 
+0,1145  0,3988  0,3488 
+0,203 
+0,343 
+2,5 
+5 
+0,1 
+0,1 
+-0,1 
+1,2 
+
+0,253 
+0,393 
+2,5 
+5 
+0,1 
+0,1 
+-0,1 
+1,2 
+
+0,802 
+0,330 
+4 
+3 
+0,1 
+1 
+-0,1 
+0,7 
+
+0,163  0,2333  0,1833 
+0,2988  0,2725  0,2225 
+0,626 
+0,189 
+3 
+4 
+0,1 
+0,15 
+-0,1 
+0,9 
+
+0,153 
+0,293 
+2,5 
+5 
+0,1 
+0,1 
+-0,1 
+1,2 
+
+0,676 
+0,239 
+3 
+4 
+0,1 
+0,15 
+-0,1 
+0,9 
+
+0,1333 
+0,1725 
+0,576 
+0,139 
+3 
+4 
+0,1 
+0,15 
+-0,1 
+0,9 
+
+0,194 
+0,1645 
+0,852 
+0,380 
+4 
+3 
+0,1 
+1 
+-0,1 
+0,7 
+
+0,244 
+0,2145 
+0,902 
+0,43 
+4 
+3 
+0,1 
+1 
+-0,1 
+0,7 
+
+ 
+
+Cada cenário representa características singulares evidenciadas na produção. 
+
+Dessa  forma,  a  análise  dos  parâmetros  expostos  reflete  a  particularidades  de  cada 
+
+caso, tanto no âmbito da recuperação quanto na saturação do reservatório de óleo.   
+
+A  saturação  de  água  irredutível  apresenta  um maior  valor  no  caso molhado  a 
+
+água,  seguido  pelo  caso  neutro  e,  por  último, molhado  a  óleo.  Analisando  o  primeiro 
+
+caso,  constata-se que  isto  decorreu  do fato  de que,  durante  o  processo de  migração 
+
+de óleo da rocha geradora para o reservatório, a água se reteve nos poros menores e 
+
+nas  gargantas  dos  mesmos  devido  a  maior  intensidade  na  interação  rocha-água  em 
+
+comparação  a  rocha-óleo.  Nos  outros  casos,  a  justificativa  segue  consolidada,  visto 
+
+que  esta  retenção  da  água  pela  rocha  não  acontecia  na  mesma  proporção,  por  isso 
+
+observam-se valores menores referentes à molhabilidade neutra e molhável ao óleo.  
+
+Em  relação  à  saturação  de  óleo  residual  (Sor),  a  causa  acima  segue 
+
+sustentada,  porém  aplicada  a  etapa  de  embebição  e  com  exceção  da  molhabilidade 
+
+neutra,  que  apresenta  o  menor  dos  valores  (ou  seja,  o  maior  fator  de  recuperação). 
+
+Diversos  autores  defendem  esta  peculiaridade  alegando  que  o  óleo  não  fica 
+
+aprisionado  no  centro  dos  poros  como  no  cenário  molhado  à  água  nem  registra  a 
+
+retenção causada pela rocha no caso molhado ao óleo [32] [33] [34]. 
+
+Quanto  maior  a  molhabilidade  à  água,  maior  será  krmáxo,  pois  o  fluxo  do  óleo 
+
+será pelo trajeto mais permeável, o interior dos poros maiores. Isto advém do fato da 
+
+água interagir intensamente com a rocha, formando um filme na parede dos poros. A 
+
+explicação  análoga  ocorre  para  krwmáx  no  caso  de  molhabilidade  ao  óleo,  como 
+
+proposto por Anderson [35]. 
+
+ 
+
+30 
+
+ 
+
+Partiu-se  dos  valores  de  Swi  para  cada  cenário  como  os  valores  de  Sw0  na 
+
+permeabilidade  média.  Para  as  outras  permeabilidades  presentes  no  trabalho 
+
+variaram-se Swi, Sor, kromáx e krwmáx, aumentando-os em 0,05 os seus valores absolutos 
+
+para  os  casos  de  menor  permeabilidade  (10  md)  e  reduzindo  na  mesma  intensidade 
+
+para  os  casos  de  maior  permeabilidade  (1000  md).  Tal  critério  foi  definido  com  base 
+
+em estudos presentes na literatura acerca do tema [36]. 
+
+ 
+
+3.3.2. Análise curvas Sw x kro,w para diferentes cenários e permeabilidades 
+
+ 
+
+A partir da obtenção desses parâmetros, obtivemos como resultado curvas de 
+
+saturação  de  água  por  permeabilidade  relativa  para  os  diferentes  cenários  de 
+
+molhabilidade e graus de permeabiliadade.   
+
+A seguir, pode-se ver nas Figuras 16, 17 e 18 as curvas para os três cenários, 
+
+cada um distinguido para 10, 100 e 1000 md: 
+
+ 
+
+Figura 16 - Curvas de permeabilidades relativas ao óleo e a água sob cenário de molhabilidade à água para 10, 100 e 1000mD, 
+
+respectivamente 
+
+ 
+
+ 
+Figura 17 - Curvas de permeabilidades relativas ao óleo e a água sob cenário de molhabilidade ao óleo para 10, 100 e 1000mD, 
+
+respectivamente 
+
+ 
+
+ 
+
+31 
+
+Figura 18 - Curvas de permeabilidades relativas ao óleo e a água sob cenário de molhabilidade neutra para 10, 100 e 1000mD, 
+
+ 
+
+ 
+
+respectivamente 
+
+ 
+
+ 
+
+ 
+
+Analisando  estritamente  os  diferentes  cenários  de  molhabilidade  é  possível 
+
+notar que a interseção entre as curvas de permeabilidade relativa da água e do óleo 
+
+se encontra em diferentes pontos. Podemos perceber que quanto maior a preferência 
+
+da  rocha  por  estar  em  contato  com  a  água,  mais  tardiamente  se  dá  o  cruzamento 
+
+entre as curvas. Tal comportamento está de acordo com o que diz a teoria.  
+
+Ao fazer a análise exclusiva do impacto da permeabilidade no comportamento 
+
+dos  fluidos,  é  possível  perceber  que,  para  um  menor  valor  absoluto,  as  curvas 
+
+apresentam  uma  maior  inclinação  e,  logo,  maiores  valores  de  kromax  e  krwmax.  A 
+
+ocorrência  destes  fenômenos  se  dá  principalmente  pelo  fato  de  que  um  menor  valor 
+
+de  permeabilidade  absoluta  promove  uma  maior  resistência  ao  fluxo,  assim  o  fluido 
+
+tem  mais  dificuldade  de  se  mover,  reduzindo  mais  rapidamente  sua  permeabilidade 
+
+relativa. Esta afirmação pode ser ratificada pela fórmula da mesma, 𝑘𝑟𝑓 =
+
+𝑘𝑓
+𝑘
+
+ (onde krf é 
+
+a  permeabilidade  relativa  do  fluido,  kf  é  a  permeabilidade  efetiva  do  fluido  e  k  é  a 
+
+permeabilidade absoluta), a qual evidencia que krf é inversamente proporcional a k. 
+
+ 
+
+3.4.  Considerações finais 
+
+ 
+
+No corrente capítulo foram abordados temas substanciais para a formação da 
+
+metodologia de análise das simulações. Entre eles, destacam-se a passagem sobre o 
+
+estabelecimento da condição inicial do reservatório, assim como a justificativa ligada à 
+
+obtenção das propriedades, tanto da rocha quanto do fluido, em literaturas específicas 
+
+e por empresas com lastro de confiança, os efeitos das diferentes permeabilidades no 
+
+ 
+
+32 
+
+ 
+
+comportamento dos fluidos na rocha, além da apresentação do programa a ser usado 
+
+nas simulações, explicando sua metodologia. 
+
+Ademais,  a  definição  da  malha  para  cada  amostra,  mantendo-se  fiel  as  suas 
+
+respectivas  heterogeneidades  e  geometria,  e  o  impacto  de  cada  parâmetro  na 
+
+descrição dos diferentes cenários, contribuem para fundamentar a base de exploração 
+
+de resultados, sendo estes examinados individual e conjuntamente na seção seguinte. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+33 
+
+4. DISCUSSÃO DOS 
+
+RESULTADOS 
+
+ 
+
+ 
+
+Após  serem  definidos  os 
+
+três  diferentes  cenários  e  divulgados  as 
+
+particularidades  inerentes  às  amostras  as  quais  serão  analisadas,  foram  criados  os 
+
+alicerces necessários para, finalmente, dar início a simulação de injeção de água nos 
+
+respectivos  meios  porosos.  Sendo  assim,  neste  capítulo  serão  discutidos  os 
+
+resultados visando a comparação do fator de recuperação entre os cenários propostos 
+
+assim  como  a  comparação  entre  o  regime  de  fluxo  entre  as  amostras  de  diferentes 
+
+escalas, destacando a influência que este parâmetro possui na produtividade.  
+
+A escolha do volume de água injetado é fundamental, pois, como visa-se fazer 
+
+uma  comparação  entre  uma  amostra  de  rocha  em  escala  real  de  campo  e  uma  em 
+
+escala  laboratorial,  é  crucial  analisar  o  comportamento  de  ambas  num  mesmo 
+
+momento.  Porém,  devido  a  esta  diferença  de  tamanho,  se  fossem  comparados  num 
+
+dado instante de tempo igual para as duas amostras seriam analisadas duas situações 
+
+distintas,  visto  que  a  menor  requer  muito  menos  tempo  do  que  a  maior  para  ser 
+
+completamente  varrida. A fim  de  contornar  esse  obstáculo,  não  utilizaremos  o  tempo 
+
+como  variável  e  sim  a  porcentagem  de  varredura  das  amostras.  Dessa  forma, 
+
+independe a escala do reservatório, garantindo a comparação num mesmo estágio, o 
+
+que torna as discussões verossímeis.  
+
+Seguindo a explicação anterior, nesta simulação serão injetados o equivalente 
+
+a somente 1 volume poroso, o que seria o volume de água correspondente ao volume 
+
+poroso das amostras. Esta informação foi obtida através de cálculos feitos pelo próprio 
+
+programa Eclipse que, quando solicitado, gera saídas como dados de volume de óleo 
+
+e  de  água  in  place.  Como  foi  definido  que  a  rocha  estava  100%  saturada  desses 
+
+fluidos, essas duas parcelas somadas resultam no volume poroso.  
+
+A  amostra  de  macroescala  possui  um  volume  poroso  igual  a  60411,81  cm3 
+
+(2,13  ft3).  A  vazão  injetora  adotada  foi  de  1  ft3/dia,  equivalente  a  1179,87  cm3/hora, 
+
+sugerindo  que  seriam  necessárias  51,2  horas  para  varrer  completamente  um 
+
+reservatório  de  60411,81  cm3  de  volume  poroso  a  uma  taxa  de  injeção  de  1179,87 
+
+cm3/hora. Já para a de microescala temos um volume poroso igual a 53,7 cm3 e uma 
+
+ 
+
+34 
+
+ 
+
+vazão  de  injeção  de  12,7  cm3/horas,  sendo  necessárias,  portanto,  4,23  horas  para 
+
+varrê-la.  
+
+Durante  a  aquisição  de  resultados,  a  fim  de  aprofundar  a  compreensão  da 
+
+trajetória  do  fluxo  e  do  fator  de  recuperação  obtido,  foi  realizada  a  interpretação  da 
+
+evolução  da  fração  de  água  na  produção  e  do  tempo  de  breakthrough  em  cada 
+
+cenário.  Não  existe  ainda  uma  tradução  ideal  para  o  português,  porém  sua  definição 
+
+para o contexto deste trabalho seria o tempo necessário para que, a partir do início da 
+
+recuperação  secundária,  o  primeiro  volume  de  água  injetada  alcançasse  a  zona 
+
+completada  do  poço  produtor.  O  entendimento  destes  fatores  corrobora  para  a 
+
+tradução  do  fator  de  recuperação,  assim  como  para  a  explicação  de  caminhos  de 
+
+fluxo.  
+
+O  tempo  de  breakthrough  foi,  de  fato,  alcançado  em  todas  as  rodadas  de 
+
+simulação,  como  planejado  incialmente.  O  simulador  não  apresentou  nenhum 
+
+problema de convergência, garantindo um resultado fidedigno.  
+
+ 
+
+4.1.   Evolução da saturação de água 
+
+ 
+
+Conforme descrito, foram realizadas seis simulações: para o cenário molhável 
+
+ao  óleo,  molhável  à  água  e  molhabilidade  neutra,  cada  um  tanto  para  o  microbialito 
+
+(microescala) quanto para o afloramento de coquinas (macroescala). 
+
+Inicialmente,  os  resultados  referentes  a  cada  cenário  serão  interpretados 
+
+individualmente, expondo lado a lado as duas amostras, com o objetivo de evidenciar 
+
+as diferenças causadas estritamente pelo fator escala.  
+
+Sendo  assim,  foram  gerados,  a  partir  do  programa  FloViz,  as  progressões  de 
+
+embebição para cada cenário, na respectiva amostra.  
+
+ 
+
+4.1.1. Molhável a óleo 
+
+ 
+
+Nas  Figuras  19,  20,  21,  22  e  23, foi representado  o  cenário molhado  a  óleo, 
+
+destacando  cinco  estágios  de  embebição  das  amostras:  inicial,  três  intermediários 
+
+(3,33%, 33,33% e 66,67% de volume poroso injetado), e final, quando as amostras já 
+
+não  apresentavam  mais  movimentação  significativa  de  fluidos  (aproximadamente  1 
+
+ 
+
+ 
+
+volume  poroso  para  cada  amostra).  A  imagem  superior  se  refere  ao  modelo  de 
+
+microescala e a inferior ao de macroescala.  
+
+35 
+
+Figura 19 - Molhável a óleo - estágio 1 
+
+ 
+
+ 
+
+ 
+
+ 
+
+36 
+
+ 
+
+ 
+
+Figura 20 - Molhável a óleo - estágio 2 
+
+Figura 21 - Molhável a óleo - estágio 3 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+37 
+
+ 
+
+ 
+
+Figura 22 - Molhável a óleo - estágio 4 
+
+Figura 23 - Molhável a óleo - estágio 5 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+38 
+
+ 
+
+Analisando  a  evolução  da  saturação  de  água,  é  possível  notar  que, 
+
+inicialmente, tanto no modelo de menor escala quanto no de maior, apresenta-se um 
+
+avanço  uniforme.  Entretanto,  no  decorrer  do  processo  evolutivo,  evidencia-se  uma 
+
+diferença  entre  os  comportamentos  nas  duas  amostras:  no  microbialito  vemos  uma 
+
+preferência  do  fluido  invasor,  que  no  caso  é  não  molhante,  pelas  zonas  de  maior 
+
+permeabilidade,  enquanto  no  afloramento  de  coquinas  detecta-se  um  avanço 
+
+preferencial  pela  parte  inferior,  destacando  a  relevância  da  ação  gravitacional  no 
+
+processo  migratório  –  isto  pode  ser  visto  na  Figura  23  correspondente  ao  último 
+
+estágio. 
+
+Com  isso,  conclui-se  que  no  primeiro  caso  a  influência  das  heterogeneidades 
+
+da rocha é o fator preponderante para descrição da trajetória do fluxo,  ao passo que 
+
+na  segunda  amostra,  a  segregação  gravitacional  apresenta  maior  relevância.  Esta 
+
+diferença  denota  uma  grande  influência  da  diferença  de  escala  na  trajetória  do  fluxo 
+
+para o cenário molhável a óleo.  
+
+ 
+
+4.1.2. Molhável a água 
+
+ 
+
+De forma análoga ao cenário molhável a óleo, as Figuras  24,  25,  26,  27  e  28 
+
+representam  a  progressão  do  volume  de  água  injetado  até  o  volume  total  de 
+
+aproximadamente um volume poroso de cada amostra.  
+
+ 
+
+39 
+
+Figura 24 - Molhável a água - estágio 1 
+
+ 
+
+Figura 25 - Molhável a água - estágio 2 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+40 
+
+Figura 26 - Molhável a água - estágio 3 
+
+ 
+
+ 
+
+ 
+
+Figura 27 - Molhável a água - estágio 4 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+41 
+
+Figura 28 - Molhável a água - estágio 5 
+
+ 
+
+Pode-se  observar  que,  neste  caso,  tem-se  um  padrão  de  avanço  de  fluido 
+
+injetado similar entre as amostras. As duas amostras apresentam um avanço de frente 
+
+uniforme,  caracterizando  o  efeito  pistão.  A  única  diferença  observada  neste  caso  é o 
+
+padrão  inicial  apresentado  pelo  menor  modelo,  o  qual  desconsidera  as  diferentes 
+
+zonas  de  permeabilidade  (isto  fica  claro  no  estágio  3).  A  partir  desse  estágio,  em 
+
+ambos os modelos, observa-se a tendência do fluido molhante (água) em se deslocar 
+
+pelas zonas de maior permeabilidade. Isto pode ser confirmado pelo fato de que essas 
+
+zonas  ficam  com  tons  mais  fortes  de  azul  em  comparação  com  o  resto  da  matriz,  o 
+
+que simboliza um nível de saturação de água mais elevado neste segmento. 
+
+A diferença de tamanho entre as amostras apresenta pouca influência no que 
+
+diz respeito a evolução da saturação de água nos modelos neste cenário.  
+
+ 
+
+4.1.3. Molhabilidade neutra 
+
+ 
+
+Por  último, foi simulado o  cenário  de molhabilidade  neutra,  caracterizado  pela 
+
+falta  de  afinidade  da  rocha  com  qualquer  um  dos  fluidos  que  com  ela  interagem. 
+
+ 
+
+ 
+
+Seguindo  a  mesma  metodologia  dos  cenários  anteriormente  expostos,  segue  nas 
+
+Figuras 29, 30, 31, 32 e 33 a evolução de saturação de água. 
+
+42 
+
+Figura 29 - Molhabilidade neutra - estágio 1 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 30 - Molhabilidade neutra - estágio 2 
+
+Figura 31 - Molhabilidade neutra - estágio 3 
+
+ 
+
+43 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 32 - Molhabilidade neutra - estágio 4 
+
+ 
+
+ 
+
+Figura 33 - Molhabilidade neutra - estágio 5 
+
+44 
+
+ 
+
+ 
+
+45 
+
+ 
+
+Neste  cenário,  ao  atentar  para  a  amostra  de  microbialito,  percebe-se  que  o 
+
+avanço  mantém  o  padrão  uniforme  do  cenário  anterior,  porém,  agora,  procurando 
+
+desde o começo as zonas de maior permeabilidade, como podemos ver no estágio 3. 
+
+O  mesmo  comportamento  é  notado  no  afloramento  de  coquinas,  o  qual  destaca  a 
+
+influência  preponderante  das  heterogeneidades  dos  carbonatos  na  descrição  da 
+
+trajetória  do  fluido  injetor  no  caso  de  uma  rocha  sem  preferência  de  molhabilidade. 
+
+Além disso, conclui-se que, neste caso, a diferença de escala entre as amostras não 
+
+apresenta nenhuma influência no caminho percorrido.  
+
+ 
+
+4.2. Análise da produção 
+
+ 
+
+Ao  final  da  realização  das  simulações,  foram  geradas  as  curvas  de  fator  de 
+
+recuperação  de  óleo  x  volume  poroso  injetado  para  as  duas  amostras  divididas  por 
+
+cenário. Estas podem ser vistas nas Figuras 34 e 35. 
+
+Figura 34  - Curvas de fator de recuperação de óleo amostra macroescala. 
+
+ 
+
+ 
+
+ 
+
+46 
+
+Figura 35 - Curvas de fator de recuperação de óleo amostra microescala 
+
+ 
+
+ 
+
+Fica  evidente  que  o  comportamento  das  curvas  por  amostra  não  é  igual.  No 
+
+entanto,  elas  seguem  um  padrão  coerente  uma  com  a  outra  e,  ao  mesmo  tempo, 
+
+plausível  tendo  como  base  o  que  foi  explicado  na  revisão  bibliográfica  do  presente 
+
+trabalho.  
+
+Em  ambos resultados  obtidos  com  as  simulações  de  cada  amostra,  o cenário 
+
+molhável  à  água  apresenta  a  maior  recuperação  de  óleo  (aproximadamente  70%  do 
+
+volume de óleo presente no reservatório para o modelo de macroescala e 60% para o 
+
+modelo de micro), seguido por molhabilidade neutra e por último, molhável à óleo. Ao 
+
+analisar as curvas de fração de água – o que será feito mais adiante – será observado 
+
+que  as mesmas  corroboram  para  um  entendimento  mais  aprofundado  das  curvas  de 
+
+recuperação de óleo. 
+
+Estudos teóricos mostram que o cenário de molhabilidade neutra é o de maior 
+
+recuperação  devido  ao  fato  da  água  fluir  melhor  quando  comparado  ao  cenário 
+
+molhável  à  água.  Este  último  se  mostra  “pior”  devido  ao  fato  da  água  criar  canais 
+
+preferenciais e, portanto, não lavar o reservatório homogeneamente. No entanto, esta 
+
+“escolha”  da  água  de  fluir  por  caminhos  com  menor  resistência  só  existe  porque  há 
+
+diferenças  nas  interações  entre  rocha  e  água  nos  diferentes  poros  resultantes  da 
+
+complexidade  da  rocha.  Como  esta  é  formada  por  grãos  de  diferentes  materiais,  há 
+
+ 
+
+47 
+
+ 
+
+lugares  que  demonstram  maior  afinidade  com  a  água  quando  comparados  a  outros. 
+
+No  entanto,  nós  não  conseguimos  representar  tal  grau  de  complexidade  em  nosso 
+
+modelo  de  forma  tão  próxima  quanto  presente  na  realidade.  Por  isso,  por  mais  que 
+
+fosse  possível  representar,  de  certo  modo,  a  formações  de  canais,  sabemos  que, 
+
+neste  ponto,  a  simulação  não  está  totalmente  de  acordo  com  o  encontrado  em 
+
+reservatórios carbonáticos reais. Essa pode ser considerada uma das razões para que 
+
+o  cenário  de  molhabilidade  neutra  não  tenha  apresentado  o  de  maior  fator  de 
+
+recuperação, como esperado de acordo com os trabalhos teóricos.  
+
+A  relação  do  comportamento  disposto  nas  curvas  de  fração  de  água  com  os 
+
+resultados obtidos nas curvas de produção total de óleo estão diretamente ligadas aos 
+
+conceitos  de  Eficiência  de  Varrido  (Ev)  e  Eficiência  de  Deslocamento  (Ed),  uma  vez 
+
+que  o  fator  de  recuperação  pode  ser  representado  como  o  produto  desses  dois 
+
+parâmetros. 
+
+A  eficiência  de  varrido  tem  como  um  de  seus  parâmetros  a  razão  de 
+
+mobilidade,  representada  na  equação  𝑀 =
+
+𝑘𝑤. 𝜇𝑜
+⁄
+𝜇𝑤. 𝑘𝑜
+
+.  A 
+
+fim  de  reduzir  a 
+
+canalização  e  melhorar a  Ev,  a mobilidade  do fluido  injetado  –  nas  simulações  deste 
+
+estudo é a água – deve ser menor que a do óleo a ser varrida, assim M tem que ser 
+
+menor  do  que  1.  Assim,  quanto  menor  o  valor  de  M,  o  fluido  injetor  percorre  o 
+
+reservatório  de  forma  mais  homogênea,  evitando  os  canais  preferenciais  de  fluxo 
+
+causado  pelas  heterogeneidades  e  também  reduzindo  a  influência  dos  efeitos 
+
+gravitacionais. Dessa forma, consegue varrer o óleo que muitas vezes fica aprisionado 
+
+em  poros  de  difícil  acesso,  traduzindo,  como  consequência,  num  aumento  da 
+
+produtividade.  Partindo dessas  afirmações,  sabe-se que quanto mais  tempo  demora-
+
+se para alcançar o breakthrough, menor é a razão de mobilidade, já que, como o fluido 
+
+demorou  mais  para  percorrer  o  reservatório,  passou  por  caminhos  menos  favoráveis 
+
+ao fluxo. 
+
+Analisando  as  curvas  de  Water  Cut  obtidas  como  resultado  das  simulações 
+
+(Figuras 36 e 37), o cenário molhado a óleo foi o que apresentou maior velocidade na 
+
+varredura da amostra, considerando todo o volume poroso injetado, uma vez que este 
+
+foi  o  primeiro  a  alcançar  um  comportamento  constante  (fração  de  água  produzida 
+
+próxima  de  100%)  em  função  do  tempo  de  produção.  Seguindo  esta  ordem 
+
+decrescente, vemos o cenário de molhabilidade neutra e molhável à água.  
+
+ 
+
+48 
+
+Water Cut - Macroescala
+
+0
+
+0,1
+
+0,2
+
+0,3
+
+0,5
+
+0,4
+0,6
+Pore Volume Injetado
+
+0,7
+
+0,8
+
+0,9
+
+1
+
+MA
+
+MN
+
+MO
+
+Figura 36  -Gráfico Water Cut x Volume poroso injetado – macroescala 
+
+ 
+
+Water Cut - Microescala
+
+ 
+
+ 
+
+ 
+
+t
+u
+C
+ 
+r
+e
+t
+a
+W
+
+1
+
+0,9
+
+0,8
+
+0,7
+
+0,6
+
+0,5
+
+0,4
+
+0,3
+
+0,2
+
+0,1
+
+0
+
+t
+u
+C
+ 
+r
+e
+t
+a
+W
+
+1,0
+
+0,9
+
+0,8
+
+0,7
+
+0,6
+
+0,5
+
+0,4
+
+0,3
+
+0,2
+
+0,1
+
+0,0
+
+0,0
+
+0,1
+
+0,2
+
+0,3
+
+0,4
+
+0,5
+
+0,6
+
+0,7
+
+0,8
+
+0,9
+
+1,0
+
+Volume Poroso Injetado
+
+MA
+
+MN
+
+MO
+
+ 
+
+Figura 37 - Gráfico Water Cut x Volume poroso injetado – microescala 
+
+ 
+
+Fazendo  o  paralelo  do  que  foi  constatado  acima  com  o  conceito  de  razão  de 
+
+mobilidade,  observa-se  que  o  cenário  molhado  a  óleo  apresenta  a  maior  razão  de 
+
+ 
+
+49 
+
+ 
+
+mobilidade,  seguido  pelo  cenário  de  molhabilidade  neutra  e,  por  último, o  molhado  a 
+
+água.  Assim,  como  Ev  é  inversamente  proporcional  a  M,  o  cenário  molhável  a  água 
+
+apresenta  menor  canalização  de  fluxo,  maior  Eficiência  de  varrido  e  maior  fator  de 
+
+recuperação,  seguido  pelo  cenário  de  molhabilidade  neutra  e  molhável  a  óleo, 
+
+ordenadamente,  como  observado  anteriormente  nas  curvas  de  produção  e  na 
+
+evolução da saturação de água.  
+
+ 
+
+A  Eficiência  de  deslocamento,  como  dito  anteriormente,  também  precisa  ser 
+
+levada  em  consideração  para  o  entendimento  das  curvas  de  recuperação  de  óleo. O 
+
+principal parâmetro que será destacado é o número capilar (Nc). 
+
+O  número  capilar  é  um  fator  de  alta  relevância  para  um  diagnóstico 
+
+aprofundado  e  realista  sobre  a  tendência  comportamental  das  curvas  acima. 
+
+Conceitualmente,  Nc  representa  a  razão  entre  as  forças  viscosas  e  as  tensões 
+
+interfaciais ou superficiais, constituindo um parâmetro para a obtenção de eficiência de 
+
+deslocamento.  A  fim  de  deslocar  o  óleo  residual,  o  Nc  dever  ser  maior  que  uma 
+
+constante,  usualmente  chamado  de  Número  Capilar  Crítico.  O  Nccr  é  maior  para  se 
+
+deslocar  a  fase  molhante,  pois  este  ocupa  os  poros  menores,  sendo  mais  difícil 
+
+deslocá-lo, devido ao seu alto grau de interação com a rocha. Assim, visando otimizar 
+
+o fator de recuperação, busca-se um fluido que apresente um Nccr menor, o que traduz 
+
+uma menor demanda energética para o deslocamento da fase molhante.  
+
+Esta  afirmação  pode  ser  confirmada  através  da  análise  dos  gráficos  de 
+
+produção.  Em  ambos  os  casos,  o  cenário  molhável  ao  óleo  apresenta,  em 
+
+comparação  com  o  cenário  molhável  a  água,  pior  fator  de  recuperação,  como 
+
+esperado.  
+
+ 
+
+4.3. Considerações finais 
+
+ 
+
+Neste  capítulo,  foram  divulgados  os  resultados  obtidos  com  as  simulações  dos 
+
+dois modelos em questão, em cada cenário de molhabilidade planejado. Ao analisar a 
+
+estritamente  a  evolução  da  saturação,  observou-se  que  o  cenário  molhável  a  óleo 
+
+apresenta  maior  influência  da  diferença  de  escala,  enquanto  os  cenários  molhável  a 
+
+água  e  de  molhabilidade  neutra  apresentaram  um  comportamento  similar,  sendo  em 
+
+alguns estágios características de avanço uniforme. Com isso, esperava-se a partir da 
+
+análise da trajetória dos fluidos que o cenário molhável a óleo apresentasse um fator 
+
+ 
+
+50 
+
+ 
+
+de recuperação mais baixo que os outros, e isso foi, de fato, confirmado nas curvas do 
+
+fator de recuperação por volume poroso injetado.  
+
+A  investigação  posterior  sobre  a  eficiência  de  deslocamento  serviu  para  explicar 
+
+uma das possíveis razões pelo qual o cenário molhável a água apresentou maior fator 
+
+de recuperação que o cenário molhável a óleo. Já a análise da eficiência de varrido e 
+
+seus parâmetros assim como o refinamento da malha serviram de justificativas para a 
+
+disposição das curvas de fator de recuperação, especialmente para o fato do cenário 
+
+molhável  a  óleo  apresentar  maiores  resultados  em  comparação  com  o  de 
+
+molhabilidade neutra, diferentemente do esperado na literatura analisada.  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+51 
+
+5. CONCLUSÕES E 
+SUGESTÕES PARA 
+
+TRABALHOS FUTUROS 
+
+ 
+
+ 
+
+O presente trabalho apresentou o comportamento dos fluidos injetado e produzido 
+
+em dois reservatórios carbonáticos durante a recuperação secundária com enfoque na 
+
+influência  causada  pela  diferença  de  escala  entre  as  amostras  assim  como  os 
+
+diferentes cenários de molhabilidade,  levando em conta a aplicação de um simulador 
+
+comercial de alta performance.  
+
+Na  revisão  bibliográfica  foram  destacados  os  conceitos  fundamentais  para  a 
+
+compreensão  dos  temas  envolvidos  no  trabalho,  como  o  estágio  de  formação  das 
+
+condições iniciais, definição do conceito de molhabilidade, diferença entre os cenários 
+
+de  molhabilidade  no  que  tange  a  produção  e  suas  definições,  relevância  e  desafios 
+
+atrelados  ao  reservatório  carbonático  e,  por  último,  a  explicação  do  método  de 
+
+simulação adotado pelo programa. 
+
+Em  seguida,  na  metodologia  de  análise,  foram  descritos  os  dois  modelos  em 
+
+questão - o estromatólito em microescala e o alforamento de coquina em macroescala 
+
+–  em  malhas  compatíveis  com  o  requisitado  para  entrada  de  dados  do  programa, 
+
+respeitando suas propriedades e heterogeneidades. As propriedades dos fluidos foram 
+
+esmiuçadas, com o objetivo de esclarecer o uso de certos valores e correlações, além 
+
+de explicar a resposta de cada parâmetro à mudança de cenário de molhabilidade. Por 
+
+fim,  nesta  seção  foram  divulgados  os  resultados  esperados  para  cada  simulação, 
+
+tendo como base os conceitos anteriormente abordados na revisão bibliográfica.  
+
+É  importante  destacar  que  as  simulações  foram  realizadas  a  partir  de  uma 
+
+condição  de  embebição  forçada,  característica  da  recuperação  secundária,  enquanto 
+
+que nas bibliografias analisadas muito se aborda sobre a embebição natural, caso de 
+
+produção surgente. Entretanto, a nível conceitual, os comportamentos esperados são 
+
+muito  similares,  não  tendo  influência,  portanto,  diferenças  relevantes  a  nível  de 
+
+resultados. 
+
+ 
+
+52 
+
+ 
+
+No  último  capítulo,  fez-se  a  análise  dos  resultados  obtidos,  assim  como  a 
+
+explicação  por  meio  da  teoria  de  reservatórios  para  determinado  comportamento.  As 
+
+curvas de produção e de fração de água se mostraram coerentes, entretanto, mesmo 
+
+que  plausíveis,  apresentaram  ligeiro  desvio  do  esperado  na teoria,  especialmente  na 
+
+amostra de microescala.  
+
+Assim, com o intuito de contornar as dificuldades encontradas, espera-se que em 
+
+trabalhos futuros possam ser usadas ferramentas mais modernas para a medição de 
+
+propriedades  específicas  num  maior  range  de  condições  e,  principalmente,  para 
+
+discretização das amostras. A comparação entre duas rochas iguais, porém de distinta 
+
+escala  (duas  amostras de  coquinas  de  diferentes  escalas  ou  dois microbialitos)  pode 
+
+trazer  mais  informações  sobre  a  influência  deste  parâmetro  na  obtenção  de 
+
+resultados.  Além  disso,  o  estudo  mais  profundo  sobre  as  heterogeneidades  dos 
+
+carbonatos assim como sobre sua complexibilidade na molhabilidade a nível granular, 
+
+certamente  serão  de  grande  valia  no  direcionamento  para  um  perfeito  entendimento 
+
+deste reservatório de fundamental importância para o Brasil e o mundo.   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+53 
+
+6. BIBLIOGRAFIA 
+
+1. British Petroleum. [Online] [Citado em: 10 de 01 de 2016.] 
+
+http://www.bp.com/en/global/corporate/energy-economics/statistical-review-of-world-
+energy/2014-in-review.html. 
+
+2. U.S. Energy Information Administration. [Online] [Citado em: 10 de 01 de 2016.] 
+
+http://www.eia.gov/energyexplained/index.cfm?page=us_energy_home. 
+
+3. British Petroleum. [Online] [Citado em: 10 de 01 de 2016.] 
+
+http://www.bp.com/en/global/corporate/energy-economics/statistical-review-of-world-
+
+energy/country-and-regional-insights/us-insights.html. 
+
+4. —. [Online] [Citado em: 10 de 01 de 2016.] http://www.bp.com/en/global/corporate/energy-
+
+economics/statistical-review-of-world-energy/country-and-regional-insights/russia-insights.html. 
+
+5. —. [Online] [Citado em: 10 de 01 de 2016.] http://www.bp.com/en/global/corporate/energy-
+
+economics/statistical-review-of-world-energy/country-and-regional-insights/china-insights.html. 
+
+6. Mearns, Euan. Energy Matters. [6]. [Online] [Citado em: 10 de 01 de 2016.] 
+
+http://euanmearns.com/china-post-industrial-revolution/. 
+
+7. British Petroleum. [Online] [Citado em: 10 de 01 de 2016.] 
+
+http://www.bp.com/content/dam/bp/pdf/energy-economics/energy-outlook-
+
+2015/Energy_Outlook_2035_booklet.pdf. 
+
+8. Reuters, Da. [Online] 10 de 08 de 2015. [Citado em: 10 de 01 de 2016.] 
+
+http://g1.globo.com/economia/noticia/2015/08/pre-sal-do-brasil-contem-176-bilhoes-de-barris-
+
+de-petroleo-e-gas-diz-estudo.html. 
+
+9. Central Intelligence Agency. [Online] [Citado em: 10 de 01 de 2016.] 
+
+https://www.cia.gov/library/publications/resources/the-world-factbook/fields/2244.html#36. 
+
+10. ANP. Anuário Estatístico 2015. [Online] 20 de 07 de 2015. [Citado em: 24 de 01 de 2016.] 
+
+http://www.anp.gov.br/?pg=76798#Se__o1. 
+
+11. —. Pré-sal, desenvolvimento e soberania. [Online] [Citado em: 24 de 01 de 2016.] 
+
+https://www.google.com.br/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved
+
+=0ahUKEwixxNfpmcPKAhWC9R4KHcyGCbYQFggcMAA&url=http%3A%2F%2Fwww.anp.gov.br%2F%
+
+3Fdw%3D57407&usg=AFQjCNFvdsQhBhxuReVj44ueZeEQ9fugSQ&bvm=bv.112454388,d.dmo. 
+
+12. Petrobras. Pré-sal. [Online] [Citado em: 24 de 01 de 2016.] 
+
+http://www.petrobras.com.br/pt/nossas-atividades/areas-de-atuacao/exploracao-e-producao-de-
+
+petroleo-e-gas/pre-sal/. 
+
+13. Corbett et al., Patrick. Microbial carbonates: a sampling and measurement challenge for 
+
+petrophysics addressed by capturing the bioarchitectural components. 2015. 
+
+ 
+
+ 
+
+14. The Effect of Wettability on Oil Recovery: A Review. Agbalaka et al. 2008, SPE. 
+
+15. Wettability and Its Effect on Oil Recovery. Morrow, Norman R. 1990, SPE. 
+
+16. Fundamentals of Wettability. Abdallah et al, Wael. 2007, Schlumberger. 
+
+54 
+
+17. Wettability Literature Survey - Part 1: Rock/Oil/Brine Interactions and the Effects of Core 
+
+Handling on Wettability. Anderson, William G. 1986, Journal of Petroleum Technology. 
+
+18. Wikipédia. Sulfonato de alquilbenceno lineal. [Online] 09 de Outubro de 2015. 
+
+http://es.wikipedia.org/wiki/Sulfonato_de_alquilbenceno_lineal. 
+
+19. Wettability Litterature Survey - Part 2: Wettability Measurement. Anderson, William G. 1986, 
+
+Journal of Petroleum Technology. 
+
+20. Donalson, E. C. e Thomas, R. D. Microscopic Observations of Oil Displacement in Water-Wet 
+
+and Oil-Wet Systems. SPE3555 Reprint Series. 1971. 
+
+21. Schlumberger. www.slb.com/carbonates. [Online] 07 de 10 de 2007. 
+
+http://www.slb.com/~/media/Files/industry_challenges/carbonates/brochures/cb_carbonate_rese
+
+rvoirs_07os003.pdf. 
+
+22. Raza, S. H., Treiber, L. E. e Archer, D. L. Wettability of Reservoir Rocks and Its Evaluation. Abril 
+
+de 1968. 
+
+23. Boggs Jr., Sam. Principles of Sedimentology and Stratigraphy. 2006. 
+
+24. Mineropar - Serviço Geológico do Paraná. [Online] 06 de Outubro de 2015. 
+
+http://www.mineropar.pr.gov.br/modules/conteudo/conteudo.php?conteudo=31. 
+
+25. Ahmed, Tarek. Reservoir Engineering Handbook 4ªEd. 2010. 
+
+26. Sistemas petrolíferos e modelos de acumulação de hidrocarbonetos na bacia de Santos. Chang, 
+
+H.K., et al. s.l. : Revista Brasileira de Geociências, 2008. 
+
+27. Estrella, G.O., Azevedo, R.L.M. e Formigli Filho, J.M. Pré-sal: Conhecimentos, estratégia e 
+
+oportunidades. Rio de Janeiro : s.n., 2009. 
+
+28. Dorobek et al. Carbonate rock-forming processesin the pre-salt 'sag' sucessions of Campos 
+
+basin, offshore Brazil: Evidence for seasonal, dominantly abiotic carbonate precipitation, substrate 
+
+controls and broader geologic implications. Hedberg Conference Microbial Carbonate Reservoir 
+
+Characterization. 2012. 
+
+29. Pré-Sal: Geologia e Exploração. Riccomini, Claudio, Sant'Anna, Lucy Gomes e Tassinari, 
+
+Colombo Celso Gaeta. 2012, Revista USP, p. 38. 
+
+30. Riding, Robert. The Nature of Stromatolites: 3,500 million years of history and a century of 
+
+research. 2011. 
+
+31. Schlumberger. Eclipse Reference Manual. 2010. 
+
+ 
+
+55 
+
+ 
+
+32. Jadhunandan, P.P. e Morrow, N.R. Efect of wettability on waterflood recovery for crude-
+
+oil/brine/rock systems. SPE Reservoir Engineering 10. 1, 1995. 
+
+33. Kennedy, H.T., Burja, E.O. e Boykin, R.S. An investigation of the effects of wettability on the 
+
+recovery of oil by water flooding. J. Phys. Chem. . 867, 1955, Vol. 59. 
+
+34. Moore, T.F. e Slobod, R.L. Effect of viscosity and capillarity on displacement of oil by water. 
+
+1956. 
+
+35. Wettability Literature Survey - Part 5: The Effects of Wettability on Relative Permeability. 
+
+Anderson, Willian G. 1987, Journal of Petroleum Technology. 
+
+36. Controls on two-phase fluid flow in heterogeneous sandstones. Ringrose, P.S. e Corbett, P.W.M. 
+
+Edinburgh : s.n., 1994. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+56 
+
+ANEXOS 
+
+ 
+
+ 
+
+-- Simulação bifásica através de rocha carbonática - MICRO MO 
+
+-- 
+
+--========================================================================= 
+
+RUNSPEC 
+
+TITLE 
+
+ Test run with oil and water 
+
+DIMENS 
+
+-- NX  NY  NZ 
+
+   23  1   8   /  
+
+OIL 
+
+WATER 
+
+LAB 
+
+WELLDIMS 
+
+-- NWMAXZ NCWMAX NGMXAZ NWGMAX 
+
+        2   8      1     2 /   
+
+-- 
+
+TABDIMS 
+
+-- NTSFUN NTPVT NSSFUN NPPVT NTFIP NRPVT NTENDP 
+
+        2     1    30 /      
+
+ 
+
+-- 
+
+NSTACK 
+
+ 50 / 
+
+ 
+
+ 
+
+57 
+
+ 
+
+-- Unify output files 
+
+UNIFOUT 
+
+ 
+
+-- 
+
+START 
+
+-- DAY MONTH YEAR 
+
+    08 'JAN' 2016  /  
+
+-- 
+
+--========================================================================= 
+
+GRID 
+
+OLDTRAN 
+
+ 
+
+--Output initial values 
+
+INIT 
+
+ 
+
+-- 
+
+EQUALS 
+
+  DX  1 /  --  1 cm     
+
+  DY  1 /  -- 1 cm 
+
+  DZ  1 /  --  1 cm  
+
+/     
+
+ 
+
+-- 
+
+PERMX 
+
+10*0 7*100 6*0 
+
+3*0 18*100 2*0 
+
+1*0 11*100 1*1000 5*100 1*1000 2*100 2*0 
+
+4*100 3*1000 3*100 1*1000 6*100 1*1000 5*100 
+
+3*100 8*1000 1*100 1*1000 3*100 1*1000 2*100 1*1000 1*100 1*1000 1*100 
+
+ 
+
+58 
+
+ 
+
+5*100 5*1000 2*100 6*1000 1*100 2*1000 2*100 
+
+13*100 2*1000 4*100 2*1000 2*100 
+
+5*0 17*100 1*0 
+
+/ 
+
+  
+
+-- 
+
+PORO 
+
+10*0 7*0.15 6*0 
+
+3*0 18*0.15 2*0 
+
+1*0 11*0.15 1*1.0 5*0.15 1*1.0 2*0.15 2*0 
+
+4*0.15 3*1.0 3*0.15 1*1.0 6*0.15 1*1.0 5*0.15 
+
+3*0.15 8*1.0 1*0.15 1*1.0 3*0.15 1*1.0 2*0.15 1*1.0 1*0.15 1*1.0 1*0.15 
+
+5*0.15 5*1.0 2*0.15 6*1.0 1*0.15 2*1.0 2*0.15 
+
+13*0.15 2*1.0 4*0.15 2*1.0 2*0.15 
+
+5*0 17*0.15 1*0 
+
+/ 
+
+ 
+
+-- 
+
+COPY 
+
+ 'PERMX' 'PERMZ' / 
+
+ 'PERMX' 'PERMY' / 
+
+/ 
+
+-- 
+
+BOX 
+
+ 1 23 1 1 1 1 /   
+
+-- 
+
+TOPS 
+
+ 23*500000 /  
+
+-- 
+
+ 
+
+59 
+
+ 
+
+ENDBOX 
+
+-- 
+
+-- 
+
+-- 
+
+--========================================================================== 
+
+PROPS 
+
+--            OIL      WAT       GAS 
+
+DENSITY 
+
+              0.7     1.0        0.061 / 
+
+-- 
+
+--       P           Bo         Vis 
+
+PVDO 
+
+         1         1.0000001    5.0 
+
+       100         0.9999999    5.0 / 
+
+-- 
+
+--       P           Bw         Cw                 Vis     Viscosibility 
+
+PVTW 
+
+        100          1.00        0.00000001        1.0          0.0 / 
+
+-- 
+
+--       P             Cr 
+
+ROCK 
+
+        100            0.0000000001 / 
+
+-- 
+
+SWOF    
+
+-- 
+
+--Sw 
+
+krw 
+
+0.213 
+
+0 
+
+ 
+
+ 
+
+kro 
+
+0.203 
+
+ 
+
+ 
+
+Pc 
+
+10 
+
+ 
+
+100 mD 
+
+0.2263  0.00603782 
+
+0.189663 -0.0165341542274768 
+
+0.2396  0.0124992 
+
+0.176585 -0.0330983852012817 
+
+ 
+
+60 
+
+ 
+
+0.2573  0.0217039 
+
+0.159599 -0.049468563874455 
+
+0.2705  0.0289977 
+
+0.147234 -0.0605334022438036 
+
+0.2882  0.0391669 
+
+0.131304 -0.0751700236228535 
+
+0.3015  0.047075 0.119809 -0.0864500354395551 
+
+0.3192  0.0579178 
+
+0.105141 -0.10225975679913 
+
+0.3325  0.066222 0.0946703 
+
+-0.114978637559737 
+
+0.3502  0.0774476 
+
+0.0814718 
+
+-0.133364849679367 
+
+0.3635  0.0859298 
+
+0.0721814 
+
+-0.14853014813783 
+
+0.3768  0.0944215 
+
+0.0634443 
+
+-0.165100947374302 
+
+0.3945  0.105689 0.0527045 
+
+-0.189794654925135 
+
+0.4078  0.114047 0.0453691 
+
+-0.210756808671068 
+
+0.4255  0.124991 0.0366018 
+
+-0.242642610920369 
+
+0.4387  0.133001 0.0308218 
+
+-0.270073677687025 
+
+0.4564  0.143518 0.0241602 
+
+-0.313098391525374 
+
+0.4697  0.151466 0.0198911 
+
+-0.351384345728712 
+
+0.4874  0.162422 0.015083 -0.412827325641457 
+
+0.5007  0.171095 0.0120817 
+
+-0.469393754717427 
+
+0.514 
+
+0.180322 0.009549 -0.537997334027249 
+
+0.5317  0.193735 0.00682318 
+
+-0.65545862701708 
+
+0.545 
+
+0.204816 0.00520899 
+
+-0.772253345923669 
+
+0.5627  0.22123   
+
+0.00354489 
+
+-0.988345116820497 
+
+0.576 
+
+0.234957 0.00260473 
+
+-1.22546319328717 
+
+0.5937  0.255425 0.00167632 
+
+-1.73262878420734 
+
+0.6069  0.272588 0.00116566 
+
+-2.40919369167282 
+
+0.6246  0.298165 0.00064692 
+
+-4.53417252335877 
+
+0.6379  0.319556 0.000321247 
+
+-10.5555594257041 
+
+0.6512  0.343 
+
+ 
+
+0 
+
+ 
+
+-10.66 
+
+/ 
+
+ 
+
+ 
+
+ 
+
+--Sw 
+
+0.163 
+
+ 
+
+ 
+
+ 
+
+ 
+
+krw 
+
+0 
+
+ 
+
+ 
+
+ 
+
+ 
+
+kro 
+
+0.153 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Pc 
+
+10 
+
+61 
+
+ 
+
+1000 mD 
+
+0.181558620689655 
+
+0.0000646952842876 
+
+0.128378293385709 
+
+0.00308502659991364 
+
+0.20011724137931 0.000365971793844458 
+
+0.107033631855534 
+
+-0.0131072302149939 
+
+0.218675862068965 
+
+0.00100849967456621 
+
+0.0886274351573381 
+
+-0.0254672976965351 
+
+0.237234482758621 
+
+0.00207024909720337 
+
+0.072845291358373 
+
+-0.036732436594984 
+
+0.255793103448276 
+
+0.003616576337269 
+
+0.0593960617223345 
+
+-0.0477851471373333 
+
+0.274351724137931 
+
+0.00570493566968153 
+
+0.0480109855864243 
+
+-0.05906901642445 
+
+0.292910344827586 
+
+0.00838721402795781 
+
+0.0384427852384086 
+
+-0.0708805938688999 
+
+0.311468965517241 
+
+0.0117110974030227 
+
+0.0304647707936791 
+
+-0.0834648680753126 
+
+0.330027586206897 
+
+0.0157209540818881 
+
+0.0238699450723116 
+
+-0.0970574665169402 
+
+0.348586206896552 
+
+0.0204584452220937 
+
+0.0184701084761268 
+
+-0.111909411332 
+
+0.367144827586207 
+
+0.0259629680261709 
+
+0.0140949638657493 
+
+-0.128306550537324 
+
+0.385703448275862 
+
+0.0322719895861186 
+
+0.0105912214376679 
+
+-0.146589164465524 
+
+0.404262068965517 
+
+0.0394213058477662 
+
+0.00782170360129507 
+
+-0.167175407083991 
+
+0.422820689655173 
+
+0.0474452473154553 
+
+0.00566444985602707 
+
+-0.190592254558179 
+
+0.441379310344828 
+
+0.0563768456904114 
+
+0.0040118216683034 
+
+-0.217518848706495 
+
+0.459937931034483 
+
+0.0662479711105081 
+
+0.00276960734866681 
+
+-0.248849736951395 
+
+0.478496551724138 
+
+0.0770894467825793 
+
+0.00185612692882295 
+
+-0.285790403219847 
+
+0.497055172413793 
+
+0.0889311459042036 
+
+0.00120133703870026 
+
+-0.330006639240695 
+
+0.515613793103448 
+
+0.101802074486324 
+
+0.000745935783509735 
+
+-0.3838670347441 
+
+0.534172413793104 
+
+0.115730442792608 
+
+0.000440467620804663 
+
+-0.450853939701453 
+
+0.552731034482759 
+
+0.130743727473396 
+
+0.000244428237540469 
+
+-0.536296290856578 
+
+0.571289655172414 
+
+0.14686872600828 0.000125369427134481 
+
+-0.648759571384862 
+
+0.589848275862069 
+
+0.164131604728178 
+
+0.000058003966525716 
+
+-0.80289284218946 
+
+0.608406896551724 
+
+0.182557941429809 
+
+0.000023310493234679 
+
+-1.02586648121522 
+
+0.62696551724138 0.202172763398767 
+
+0.0000076383824231395 
+
+-1.37399644876994 
+
+0.645524137931035 
+
+0.223000581505475 
+
+0.0000018126239539286 
+
+-1.98464395055873 
+
+0.66408275862069 0.245065420919589 
+
+0.00000023869945072310 
+
+-3.29505299347268 
+
+ 
+
+ 
+
+0.682641379310345 
+
+0.26839084889465 0.00000000745935783509 
+
+-7.70699574462802 
+
+0.7012 
+
+ 
+
+ 
+
+0.293 
+
+ 
+
+ 
+
+0 
+
+ 
+
+ 
+
+-10 
+
+62 
+
+/ 
+
+-- 
+
+--========================================================================== 
+
+REGIONS 
+
+-- 
+
+SATNUM 
+
+10*2 7*1 6*2 
+
+3*2 18*1 2*2 
+
+1*2 11*1 1*2 5*1 1*2 2*1 2*2 
+
+4*1 3*2 3*1 1*2 6*1 1*2 5*1 
+
+3*1 8*2 1*1 1*2 3*1 1*2 2*1 1*2 1*1 1*2 1*1 
+
+5*1 5*2 2*1 6*2 1*1 2*2 2*1 
+
+13*1 2*2 4*1 2*2 2*1 
+
+5*2 17*1 1*2 
+
+/ 
+
+ 
+
+-- 
+
+--========================================================================== 
+
+SOLUTION 
+
+-- 
+
+--     DATUM   Pi@DATUM   WOC    Pc@WOC    GOC  Pc@GOC 
+
+EQUIL 
+
+       500000.0   495.0    570000    49.5        0    0     / 
+
+-- 
+
+-- 
+
+RPTSOL 
+
+  1  0  1 3*0  1  / 
+
+ 
+
+ 
+
+--========================================================================= 
+
+63 
+
+SUMMARY 
+
+RPTONLY 
+
+EXCEL 
+
+-- 
+
+WWCT 
+
+  'PROD' / 
+
+WOPT 
+
+  'PROD' / 
+
+WWPT 
+
+  'PROD' / 
+
+FOPR 
+
+FWCT 
+
+FPR 
+
+FWPT 
+
+FOPT 
+
+FOIP 
+
+-- 
+
+RUNSUM 
+
+--========================================================================= 
+
+SCHEDULE 
+
+-- 
+
+RPTSCHED 
+
+ 'RESTART=3', 'POIL', 'PWAT', 'SWAT' / 
+
+-- 
+
+--        WELL  WELL   LOCATION   BHP          PREF. 
+
+--        NAME  GROUP   I    J    DATUM [cm]   PHASE 
+
+--       -----  ----    -    -    ---------    ----- 
+
+WELSPECS 
+
+ 
+
+64 
+
+ 
+
+         'INJ'  'G'     1   1      500000      'WATER' / 
+
+         'PROD' 'G'    23   1      500000      'OIL' / 
+
+/ 
+
+-- 
+
+--        WELL   LOCATION   INTERVAL STATUS 
+
+--        NAME    I    J    K1  K2   O or S   DEFAULTS   ID [cm] 
+
+--        ----    -    -    --  --   ------   --------   ------ 
+
+COMPDAT 
+
+          'INJ'    1   1     1  8   'OPEN'     2*       0.3 / 
+
+-- 
+
+          'PROD'  23   1     1  8   'OPEN'     2*       0.3 / 
+
+/ 
+
+--        WELL   STATUS  CONTROL  TARGET RATES or UPPER LIMITS  BHP 
+
+--        NAME            MODE      OIL    WAT    GAS    LIQ    BAR 
+
+--        ----   ------  ------     ---    ---    ---    ---    --- 
+
+WCONPROD 
+
+         'PROD'  'OPEN'  'BHP'  5*                              495 / 
+
+/ 
+
+-- 
+
+--        WELL   FLUID   STATUS  CONTROL     RESERV FLOW 
+
+--        NAME   TYPE             MODE       RATE [cm3/hour] 
+
+--        ----   -----   ------  -------     -------------- 
+
+WCONINJ    
+
+          'INJ'  'WATER'   'OPEN'  'RATE'       12.7  /  
+
+/ 
+
+-- 
+
+ 
+
+TUNING  
+
+-- TSINIT  TSMAX (hours) 
+
+ 
+
+65 
+
+ 
+
+   0.01     0.1 
+
+/ 
+
+--    TRGTTE   TRGCNV   TRGMBE   TRGLCV   XXXTTE 
+
+/ 
+
+--    NEWTMX    NEWTMN   LITMAX   LITMIN    MXWSIT 
+
+       100        1      50       1         50 
+
+/ 
+
+-- 
+
+TSTEP    
+
+ 
+
+ 150*0.02819 
+
+/ 
+
+-- 
+
+-- 
+
+--========================================================================== 
+
+END 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+-- Simulação bifásica através de rocha carbonática - MICRO MA 
+
+-- 
+
+--========================================================================= 
+
+66 
+
+RUNSPEC 
+
+TITLE 
+
+ Test run with oil and water 
+
+DIMENS 
+
+-- NX  NY  NZ 
+
+   23  1   8   /  
+
+OIL 
+
+WATER 
+
+LAB 
+
+WELLDIMS 
+
+-- NWMAXZ NCWMAX NGMXAZ NWGMAX 
+
+        2   8      1     2 /   
+
+-- 
+
+TABDIMS 
+
+-- NTSFUN NTPVT NSSFUN NPPVT NTFIP NRPVT NTENDP 
+
+        2     1    30 /      
+
+ 
+
+-- 
+
+NSTACK 
+
+ 50 / 
+
+ 
+
+-- Unify output files 
+
+UNIFOUT 
+
+ 
+
+-- 
+
+START 
+
+ 
+
+ 
+
+-- DAY MONTH YEAR 
+
+    08 'JAN' 2016  /  
+
+-- 
+
+--========================================================================= 
+
+67 
+
+GRID 
+
+OLDTRAN 
+
+ 
+
+--Output initial values 
+
+INIT 
+
+ 
+
+-- 
+
+EQUALS 
+
+  DX  1 /  --  1 cm     
+
+  DY  1 /  -- 1 cm 
+
+  DZ  1 /  --  1 cm  
+
+/     
+
+ 
+
+-- 
+
+PERMX 
+
+10*0 7*100 6*0 
+
+3*0 18*100 2*0 
+
+1*0 11*100 1*1000 5*100 1*1000 2*100 2*0 
+
+4*100 3*1000 3*100 1*1000 6*100 1*1000 5*100 
+
+3*100 8*1000 1*100 1*1000 3*100 1*1000 2*100 1*1000 1*100 1*1000 1*100 
+
+5*100 5*1000 2*100 6*1000 1*100 2*1000 2*100 
+
+13*100 2*1000 4*100 2*1000 2*100 
+
+5*0 17*100 1*0 
+
+/ 
+
+  
+
+ 
+
+68 
+
+ 
+
+-- 
+
+PORO 
+
+10*0 7*0.15 6*0 
+
+3*0 18*0.15 2*0 
+
+1*0 11*0.15 1*1.0 5*0.15 1*1.0 2*0.15 2*0 
+
+4*0.15 3*1.0 3*0.15 1*1.0 6*0.15 1*1.0 5*0.15 
+
+3*0.15 8*1.0 1*0.15 1*1.0 3*0.15 1*1.0 2*0.15 1*1.0 1*0.15 1*1.0 1*0.15 
+
+5*0.15 5*1.0 2*0.15 6*1.0 1*0.15 2*1.0 2*0.15 
+
+13*0.15 2*1.0 4*0.15 2*1.0 2*0.15 
+
+5*0 17*0.15 1*0 
+
+/ 
+
+ 
+
+-- 
+
+COPY 
+
+ 'PERMX' 'PERMZ' / 
+
+ 'PERMX' 'PERMY' / 
+
+/ 
+
+-- 
+
+BOX 
+
+ 1 23 1 1 1 1 /   
+
+-- 
+
+TOPS 
+
+ 23*500000 /  
+
+-- 
+
+ENDBOX 
+
+-- 
+
+-- 
+
+-- 
+
+--========================================================================== 
+
+ 
+
+69 
+
+ 
+
+PROPS 
+
+--            OIL      WAT       GAS 
+
+DENSITY 
+
+              0.7     1.0        0.061 / 
+
+-- 
+
+--       P           Bo         Vis 
+
+PVDO 
+
+         1         1.0000001    5.0 
+
+       100         0.9999999    5.0 / 
+
+-- 
+
+--       P           Bw         Cw                 Vis     Viscosibility 
+
+PVTW 
+
+        100          1.00        0.00000001        1.0          0.0 / 
+
+-- 
+
+--       P             Cr 
+
+ROCK 
+
+        100            0.0000000001 / 
+
+-- 
+
+SWOF    
+
+-- 
+
+-- Sw 
+
+0.194 
+
+0.2134 
+
+0.2329 
+
+0.2588 
+
+0.2782 
+
+0.3042 
+
+0.3236 
+
+0.3495 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+krw 
+
+0 
+
+ 
+
+ 
+
+ 
+
+ 
+
+kro 
+
+0.852 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Pc 
+
+ 
+
+100 mD 
+
+10.0 
+
+0.012013  
+
+0.763375  
+
+4.03170846891602 
+
+0.0226375 
+
+0.0349173 
+
+0.0429175 
+
+0.0522725 
+
+0.05851   
+
+0.0660889 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+0.682032  
+
+1.94627745147276 
+
+0.584278  
+
+1.11419953910913 
+
+0.518519  
+
+0.824474584483295 
+
+0.440227  
+
+0.594111966420225 
+
+0.388077  
+
+0.481006463872721 
+
+0.326613  
+
+0.372205462312521 
+
+ 
+
+0.369 
+
+0.3949 
+
+0.4143 
+
+0.4338 
+
+0.4597 
+
+0.4791 
+
+0.505 
+
+0.5245 
+
+0.5504 
+
+0.5698 
+
+0.5957 
+
+0.6152 
+
+0.6346 
+
+0.6605 
+
+0.68 
+
+0.7059 
+
+0.7253 
+
+0.7513 
+
+0.7707 
+
+0.7966 
+
+0.8161 
+
+0.8355 
+
+/ 
+
+ 
+
+--Sw 
+
+0.144 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+70 
+
+0.0714249 
+
+0.0783764 
+
+0.0836726 
+
+0.0892154 
+
+0.0972631 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+0.286098  
+
+0.310199640379177 
+
+0.238831  
+
+0.244688486833324 
+
+0.207975  
+
+0.204346828137565 
+
+0.180655  
+
+0.169146200354287 
+
+0.149101  
+
+0.128408171073615 
+
+0.103997  
+
+0.12862   
+
+ 
+
+0.101153692445169 
+
+0.114207  
+
+0.104869  
+
+0.0677637404063107 
+
+0.122988  
+
+0.0892589 
+
+0.136312  
+
+0.0709543 
+
+ 
+
+ 
+
+0.0441489242890116 
+
+0.0138921982640333 
+
+0.14747   
+
+ 
+
+0.0589884 
+
+ 
+
+-0.00851577711895871 
+
+0.163831  
+
+0.0452173 
+
+0.177165  
+
+0.0364128 
+
+0.191369  
+
+0.0288171 
+
+0.211595  
+
+0.0204182 
+
+0.227681  
+
+0.0153019 
+
+0.250281  
+
+0.00989069 
+
+0.268045  
+
+0.00677648 
+
+0.292745  
+
+0.00371644 
+
+0.311982  
+
+0.00212694 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+-0.0389424227277372 
+
+-0.0628869455353294 
+
+-0.0882594403903095 
+
+-0.125924463388714 
+
+-0.158608966558091 
+
+-0.211133526568619 
+
+-0.261187616991123 
+
+-0.353849896411149 
+
+-0.45900926628363 
+
+0.33851   
+
+ 
+
+0.000781602 
+
+ 
+
+-0.722096546072111 
+
+0.359015  
+
+0.000239438 
+
+0.38 
+
+krw 
+
+0 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+0 
+
+kro 
+
+0.802 
+
+ 
+
+ 
+
+ 
+
+ 
+
+-1.26327908161265 
+
+ 
+
+ 
+
+ 
+
+-10.0 
+
+Pc 
+
+ 
+
+1000 mD 
+
+10.0 
+
+0.169568965517241 
+
+0.000000466575519489 
+
+0.721862478986428 
+
+3.23176463702054 
+
+0.195137931034483 
+
+0.000007465208311830 
+
+0.647249415720202 
+
+1.55486829583654 
+
+0.220706896551724 
+
+0.000037792617078643 
+
+0.577963508138915 
+
+0.993713586824219 
+
+ 
+
+71 
+
+ 
+
+0.246275862068966 
+
+0.000119443332989293 
+
+0.513807454180163 
+
+0.711327498722577 
+
+0.271844827586207 
+
+0.000291609699680891 
+
+0.454583951781541 
+
+0.540295518821293 
+
+0.297413793103448 
+
+0.000604681873258294 
+
+0.400095698880643 
+
+0.42479290026846 
+
+0.32298275862069 0.00112024782229411 
+
+0.350145393415064 
+
+0.340874118677807 
+
+0.348551724137931 
+
+0.00191109332782868 
+
+0.3045357333224   
+
+0.276544402976787 
+
+0.374120689655172 
+
+0.00306120198337011 
+
+0.263069416540244 
+
+0.225115926976247 
+
+0.399689655172414 
+
+0.00466575519489424 
+
+0.225549141006192 
+
+0.182549090838436 
+
+0.425258620689655 
+
+0.00683113218084465 
+
+0.191777604657838 
+
+0.146242527480777 
+
+0.450827586206896 
+
+0.0096749099721327 
+
+0.161557505432777 
+
+0.114426215551764 
+
+0.476396551724138 
+
+0.0133258634121374 
+
+0.134691541268605 
+
+0.0858322293448278 
+
+0.501965517241379 
+
+0.0179239651567057 
+
+0.110982410102915 
+
+0.0595033001609826 
+
+0.527534482758621 
+
+0.0236203856741521 
+
+0.0902328098733036 
+
+0.0346734275358778 
+
+0.553103448275862 
+
+0.0305774932452589 
+
+0.0722454385173644 
+
+0.0106868662947347 
+
+0.578672413793103 
+
+0.0389688539632762 
+
+0.0568229939726927 
+
+-0.0130636181089412 
+
+0.604241379310345 
+
+0.0489792317339219 
+
+0.043768174176883 
+
+-0.0371919920638688 
+
+0.629810344827586 
+
+0.0608045882753813 
+
+0.0328836770675304 
+
+-0.0623788669055888 
+
+0.655379310344828 
+
+0.074652083118308 
+
+0.0239722005822297 
+
+-0.0894497926953233 
+
+0.680948275862069 
+
+0.0907400736058229 
+
+0.0168364426585756 
+
+-0.119494214264149 
+
+0.70651724137931 0.109298114893515 
+
+0.0112791012341629 
+
+-0.154068467140995 
+
+0.732086206896552 
+
+0.13056695994944 0.00710287424658655 
+
+-0.19557860422085 
+
+0.757655172413793 
+
+0.154798559554124 
+
+0.0041104596334413 
+
+-0.248081218484285 
+
+0.783224137931035 
+
+0.182256062300557 
+
+0.00210455533232194 
+
+-0.31918424807943 
+
+0.808793103448276 
+
+0.2132138145942   
+
+0.000887859280823319 
+
+-0.425414381941107 
+
+0.834362068965518 
+
+0.24795736065298 0.000263069416540239 
+
+-0.612064671385663 
+
+0.859931034482759 
+
+0.286783442507292 
+
+0.000032883677067529 
+
+-1.07616447508529 
+
+0.8855 
+
+ 
+
+ 
+
+0.33 
+
+ 
+
+ 
+
+0 
+
+ 
+
+ 
+
+-10.0 
+
+/ 
+
+-- 
+
+--========================================================================== 
+
+ 
+
+72 
+
+ 
+
+REGIONS 
+
+-- 
+
+SATNUM 
+
+10*2 7*1 6*2 
+
+3*2 18*1 2*2 
+
+1*2 11*1 1*2 5*1 1*2 2*1 2*2 
+
+4*1 3*2 3*1 1*2 6*1 1*2 5*1 
+
+3*1 8*2 1*1 1*2 3*1 1*2 2*1 1*2 1*1 1*2 1*1 
+
+5*1 5*2 2*1 6*2 1*1 2*2 2*1 
+
+13*1 2*2 4*1 2*2 2*1 
+
+5*2 17*1 1*2 
+
+/ 
+
+ 
+
+-- 
+
+--========================================================================== 
+
+SOLUTION 
+
+-- 
+
+--     DATUM   Pi@DATUM   WOC    Pc@WOC    GOC  Pc@GOC 
+
+EQUIL 
+
+       500000.0   495.0    570000    49.5        0    0     / 
+
+-- 
+
+-- 
+
+RPTSOL 
+
+  1  0  1 3*0  1  / 
+
+--========================================================================= 
+
+SUMMARY 
+
+RPTONLY 
+
+EXCEL 
+
+-- 
+
+ 
+
+73 
+
+ 
+
+WWCT 
+
+  'PROD' / 
+
+WOPT 
+
+  'PROD' / 
+
+WWPT 
+
+  'PROD' / 
+
+FOPR 
+
+FWCT 
+
+FPR 
+
+FWPT 
+
+FOPT 
+
+FOIP 
+
+-- 
+
+RUNSUM 
+
+--========================================================================= 
+
+SCHEDULE 
+
+-- 
+
+RPTSCHED 
+
+ 'RESTART=3', 'POIL', 'PWAT', 'SWAT' / 
+
+-- 
+
+--        WELL  WELL   LOCATION   BHP          PREF. 
+
+--        NAME  GROUP   I    J    DATUM [cm]   PHASE 
+
+--       -----  ----    -    -    ---------    ----- 
+
+WELSPECS 
+
+         'INJ'  'G'     1   1      500000      'WATER' / 
+
+         'PROD' 'G'    23   1      500000      'OIL' / 
+
+/ 
+
+-- 
+
+--        WELL   LOCATION   INTERVAL STATUS 
+
+ 
+
+74 
+
+ 
+
+--        NAME    I    J    K1  K2   O or S   DEFAULTS   ID [cm] 
+
+--        ----    -    -    --  --   ------   --------   ------ 
+
+COMPDAT 
+
+          'INJ'    1   1     1  8   'OPEN'     2*       0.3 / 
+
+-- 
+
+          'PROD'  23   1     1  8   'OPEN'     2*       0.3 / 
+
+/ 
+
+--        WELL   STATUS  CONTROL  TARGET RATES or UPPER LIMITS  BHP 
+
+--        NAME            MODE      OIL    WAT    GAS    LIQ    BAR 
+
+--        ----   ------  ------     ---    ---    ---    ---    --- 
+
+WCONPROD 
+
+         'PROD'  'OPEN'  'BHP'  5*                              495 / 
+
+/ 
+
+-- 
+
+--        WELL   FLUID   STATUS  CONTROL     RESERV FLOW 
+
+--        NAME   TYPE             MODE       RATE [cm3/hour] 
+
+--        ----   -----   ------  -------     -------------- 
+
+WCONINJ    
+
+          'INJ'  'WATER'   'OPEN'  'RATE'       12.7  /  
+
+/ 
+
+-- 
+
+ 
+
+TUNING  
+
+-- TSINIT  TSMAX (hours) 
+
+   0.01     0.1 
+
+/ 
+
+--    TRGTTE   TRGCNV   TRGMBE   TRGLCV   XXXTTE 
+
+/ 
+
+--    NEWTMX    NEWTMN   LITMAX   LITMIN    MXWSIT 
+
+ 
+
+75 
+
+ 
+
+       100        1      50       1         50 
+
+/ 
+
+-- 
+
+TSTEP    
+
+ 
+
+ 150*0.02819 
+
+/ 
+
+-- 
+
+-- 
+
+--========================================================================== 
+
+END 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+-- Simulação bifásica através de rocha carbonática - MICRO MN 
+
+-- 
+
+--========================================================================= 
+
+76 
+
+RUNSPEC 
+
+TITLE 
+
+ Test run with oil and water 
+
+DIMENS 
+
+-- NX  NY  NZ 
+
+   23  1   8   /  
+
+OIL 
+
+WATER 
+
+LAB 
+
+WELLDIMS 
+
+-- NWMAXZ NCWMAX NGMXAZ NWGMAX 
+
+        2   8      1     2 /   
+
+-- 
+
+TABDIMS 
+
+-- NTSFUN NTPVT NSSFUN NPPVT NTFIP NRPVT NTENDP 
+
+        2     1    30 /      
+
+ 
+
+-- 
+
+NSTACK 
+
+ 50 / 
+
+ 
+
+-- Unify output files 
+
+UNIFOUT 
+
+ 
+
+-- 
+
+START 
+
+ 
+
+ 
+
+-- DAY MONTH YEAR 
+
+    08 'JAN' 2016  /  
+
+-- 
+
+--========================================================================= 
+
+77 
+
+GRID 
+
+OLDTRAN 
+
+ 
+
+--Output initial values 
+
+INIT 
+
+ 
+
+-- 
+
+EQUALS 
+
+  DX  1 /  --  1 cm     
+
+  DY  1 /  -- 1 cm 
+
+  DZ  1 /  --  1 cm  
+
+/     
+
+ 
+
+-- 
+
+PERMX 
+
+10*0 7*100 6*0 
+
+3*0 18*100 2*0 
+
+1*0 11*100 1*1000 5*100 1*1000 2*100 2*0 
+
+4*100 3*1000 3*100 1*1000 6*100 1*1000 5*100 
+
+3*100 8*1000 1*100 1*1000 3*100 1*1000 2*100 1*1000 1*100 1*1000 1*100 
+
+5*100 5*1000 2*100 6*1000 1*100 2*1000 2*100 
+
+13*100 2*1000 4*100 2*1000 2*100 
+
+5*0 17*100 1*0 
+
+/ 
+
+  
+
+ 
+
+78 
+
+ 
+
+-- 
+
+PORO 
+
+10*0 7*0.15 6*0 
+
+3*0 18*0.15 2*0 
+
+1*0 11*0.15 1*1.0 5*0.15 1*1.0 2*0.15 2*0 
+
+4*0.15 3*1.0 3*0.15 1*1.0 6*0.15 1*1.0 5*0.15 
+
+3*0.15 8*1.0 1*0.15 1*1.0 3*0.15 1*1.0 2*0.15 1*1.0 1*0.15 1*1.0 1*0.15 
+
+5*0.15 5*1.0 2*0.15 6*1.0 1*0.15 2*1.0 2*0.15 
+
+13*0.15 2*1.0 4*0.15 2*1.0 2*0.15 
+
+5*0 17*0.15 1*0 
+
+/ 
+
+ 
+
+-- 
+
+COPY 
+
+ 'PERMX' 'PERMZ' / 
+
+ 'PERMX' 'PERMY' / 
+
+/ 
+
+-- 
+
+BOX 
+
+ 1 23 1 1 1 1 /   
+
+-- 
+
+TOPS 
+
+ 23*500000 /  
+
+-- 
+
+ENDBOX 
+
+-- 
+
+-- 
+
+-- 
+
+--========================================================================== 
+
+ 
+
+79 
+
+ 
+
+PROPS 
+
+--            OIL      WAT       GAS 
+
+DENSITY 
+
+              0.7     1.0        0.061 / 
+
+-- 
+
+--       P           Bo         Vis 
+
+PVDO 
+
+         1         1.0000001    5.0 
+
+       100         0.9999999    5.0 / 
+
+-- 
+
+--       P           Bw         Cw                 Vis     Viscosibility 
+
+PVTW 
+
+        100          1.00        0.00000001        1.0          0.0 / 
+
+-- 
+
+--       P             Cr 
+
+ROCK 
+
+        100            0.0000000001 / 
+
+-- 
+
+SWOF    
+
+-- 
+
+--Sw 
+
+krw 
+
+0.1833  0 
+
+ 
+
+ 
+
+kro 
+
+0.626 
+
+ 
+
+ 
+
+Pc 
+
+10 
+
+ 
+
+100 mD 
+
+0.2013  0.00232486 
+
+0.548799 0.0462696651167526 
+
+0.2193  0.00528735 
+
+0.479021 0.0249746055981654 
+
+0.2433  0.0101653 
+
+0.396815 0.00775688010210041 
+
+0.2613  0.0144719 
+
+0.342746 -0.0023440141130345 
+
+0.2853  0.0210077 
+
+0.279979 -0.0142831527638689 
+
+0.3033  0.0264571 
+
+0.239359 -0.0227191022393441 
+
+0.3273  0.0343825 
+
+0.193019 -0.0337835846763476 
+
+ 
+
+80 
+
+ 
+
+0.3454  0.0407733 
+
+0.16359   
+
+-0.0422191746855855 
+
+0.3694  0.0498199 
+
+0.130665 -0.0537860721095292 
+
+0.3874  0.056951 0.110168 -0.0629040689655752 
+
+0.4054  0.0643378 
+
+0.0928079 
+
+-0.0725347785813742 
+
+0.4294  0.0745205 
+
+0.0738227 
+
+-0.0863955301893054 
+
+0.4474  0.08236   
+
+0.0621674 
+
+-0.0977443914363058 
+
+0.4714  0.0930122 
+
+0.0492831 
+
+-0.114477613132904 
+
+0.4894  0.101103 0.0410815 
+
+-0.128507334347274 
+
+0.5134  0.111925 0.0316432 
+
+-0.149709876556529 
+
+0.5314  0.119983 0.025602 -0.167952318236734 
+
+0.5554  0.130518 0.018816 -0.196327210501969 
+
+0.5734  0.138177 0.0146002 
+
+-0.221530616735909 
+
+0.5914  0.145553 0.0110664 
+
+-0.251157954668929 
+
+0.6154  0.15483   
+
+0.00731162 
+
+-0.300019426090088 
+
+0.6335  0.161284 0.00513519 
+
+-0.346801349446215 
+
+0.6575  0.169088 0.00297175 
+
+-0.428989743176542 
+
+0.6755  0.174254 0.00182503 
+
+-0.514251251211127 
+
+0.6995  0.180096 0.000816117 
+
+-0.684912559698246 
+
+0.7175  0.183607 0.000371469 
+
+-0.89640990355194 
+
+0.7415  0.186999 0.0000802373 
+
+-1.48251913522782 
+
+0.7595  0.188488 0.0000100297 
+
+-2.8586755629313 
+
+0.7775  0.189 
+
+ 
+
+0 
+
+/ 
+
+ 
+
+--Sw 
+
+0.1333 
+
+ 
+
+ 
+
+ 
+
+ 
+
+krw 
+
+0 
+
+ 
+
+ 
+
+ 
+
+-10 
+
+ 
+
+ 
+
+kro 
+
+0.576 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Pc 
+
+10 
+
+ 
+
+1000md 
+
+0.157237931034483 
+
+0.000005699290663823 
+
+0.500567463285455 
+
+0.0504390409363357 
+
+0.181175862068965 
+
+0.000045594325310590 
+
+0.432798302230655 
+
+0.0294987848983297 
+
+0.205113793103448 
+
+0.000153880847923244 
+
+0.372155021837148 
+
+0.0160722560497783 
+
+ 
+
+81 
+
+ 
+
+0.229051724137931 
+
+0.000364754602484726 
+
+0.318119672379153 
+
+0.00529298609241111 
+
+0.252989655172414 
+
+0.000712411332977981 
+
+0.270193849403561 
+
+-0.00429739515800123 
+
+0.276927586206897 
+
+0.00123104678338595 
+
+0.227898693729932 
+
+-0.0133505734687674 
+
+0.300865517241379 
+
+0.00195485669769158 
+
+0.190774891450498 
+
+-0.0222335387065881 
+
+0.324803448275862 
+
+0.00291803681987782 
+
+0.158382673930163 
+
+-0.0311924453726632 
+
+0.348741379310345 
+
+0.00415478289392759 
+
+0.130301817806501 
+
+-0.0404188604151495 
+
+0.372679310344828 
+
+0.00569929066382386 
+
+0.106131644989757 
+
+-0.050082226153878 
+
+0.39661724137931 0.00758575587354956 
+
+0.0854910226628454 
+
+-0.0603490590962983 
+
+0.420555172413793 
+
+0.00984837426708764 
+
+0.0680183632813549 
+
+-0.0713969595273 
+
+0.444493103448276 
+
+0.012521341588421 
+
+0.0533716245735428 
+
+-0.083427344048293 
+
+0.468431034482759 
+
+0.0156388535815327 
+
+0.0412283095403382 
+
+-0.0966794140912824 
+
+0.492368965517241 
+
+0.0192351059904055 
+
+0.0312854664553409 
+
+-0.11144765948261 
+
+0.516306896551724 
+
+0.0233442945590225 
+
+0.0232596888648217 
+
+-0.128105753524354 
+
+0.540244827586207 
+
+0.0280006150313666 
+
+0.0168871155877225 
+
+-0.14714110970242 
+
+0.56418275862069 0.0332382631514207 
+
+0.0119234307156561 
+
+-0.169207155154851 
+
+0.588120689655172 
+
+0.0390914346631678 
+
+0.00814386361290632 
+
+-0.195205758456135 
+
+0.612058620689655 
+
+0.0455943253105908 
+
+0.00534318891642784 
+
+-0.226423005345578 
+
+0.635996551724138 
+
+0.0527811308376727 
+
+0.00333572653584643 
+
+-0.264764222044837 
+
+0.659934482758621 
+
+0.0606860469883964 
+
+0.00195534165345881 
+
+-0.313185578422522 
+
+0.683872413793103 
+
+0.0693432695067448 
+
+0.00105544472423266 
+
+-0.376546823441242 
+
+0.707810344827586 
+
+0.0787869941367009 
+
+0.000508991475806648 
+
+-0.463461567428495 
+
+0.731748275862069 
+
+0.0890514166222477 
+
+0.000208482908490404 
+
+-0.590848672224559 
+
+0.755686206896551 
+
+0.100170732707368 
+
+0.000065965295264542 
+
+-0.797318060444237 
+
+0.779624137931034 
+
+0.112179138136045 
+
+0.000013030181780650 
+
+-1.19532994957324 
+
+0.803562068965517 
+
+0.125110828652261 
+
+0.0000008143863612906 
+
+-2.32163622375756 
+
+0.8275 
+
+ 
+
+ 
+
+0.139 
+
+ 
+
+ 
+
+0 
+
+ 
+
+ 
+
+-10 
+
+/ 
+
+-- 
+
+--========================================================================== 
+
+ 
+
+82 
+
+ 
+
+REGIONS 
+
+-- 
+
+SATNUM 
+
+10*2 7*1 6*2 
+
+3*2 18*1 2*2 
+
+1*2 11*1 1*2 5*1 1*2 2*1 2*2 
+
+4*1 3*2 3*1 1*2 6*1 1*2 5*1 
+
+3*1 8*2 1*1 1*2 3*1 1*2 2*1 1*2 1*1 1*2 1*1 
+
+5*1 5*2 2*1 6*2 1*1 2*2 2*1 
+
+13*1 2*2 4*1 2*2 2*1 
+
+5*2 17*1 1*2 
+
+/ 
+
+ 
+
+-- 
+
+--========================================================================== 
+
+SOLUTION 
+
+-- 
+
+--     DATUM   Pi@DATUM   WOC    Pc@WOC    GOC  Pc@GOC 
+
+EQUIL 
+
+       500000.0   495.0    570000    49.5        0    0     / 
+
+-- 
+
+-- 
+
+RPTSOL 
+
+  1  0  1 3*0  1  / 
+
+--========================================================================= 
+
+SUMMARY 
+
+RPTONLY 
+
+EXCEL 
+
+-- 
+
+ 
+
+83 
+
+ 
+
+WWCT 
+
+  'PROD' / 
+
+WOPT 
+
+  'PROD' / 
+
+WWPT 
+
+  'PROD' / 
+
+FOPR 
+
+FWCT 
+
+FPR 
+
+FWPT 
+
+FOPT 
+
+FOIP 
+
+-- 
+
+RUNSUM 
+
+--========================================================================= 
+
+SCHEDULE 
+
+-- 
+
+RPTSCHED 
+
+ 'RESTART=3', 'POIL', 'PWAT', 'SWAT' / 
+
+-- 
+
+--        WELL  WELL   LOCATION   BHP          PREF. 
+
+--        NAME  GROUP   I    J    DATUM [cm]   PHASE 
+
+--       -----  ----    -    -    ---------    ----- 
+
+WELSPECS 
+
+         'INJ'  'G'     1   1      500000      'WATER' / 
+
+         'PROD' 'G'    23   1      500000      'OIL' / 
+
+/ 
+
+-- 
+
+--        WELL   LOCATION   INTERVAL STATUS 
+
+ 
+
+84 
+
+ 
+
+--        NAME    I    J    K1  K2   O or S   DEFAULTS   ID [cm] 
+
+--        ----    -    -    --  --   ------   --------   ------ 
+
+COMPDAT 
+
+          'INJ'    1   1     1  8   'OPEN'     2*       0.3 / 
+
+-- 
+
+          'PROD'  23   1     1  8   'OPEN'     2*       0.3 / 
+
+/ 
+
+--        WELL   STATUS  CONTROL  TARGET RATES or UPPER LIMITS  BHP 
+
+--        NAME            MODE      OIL    WAT    GAS    LIQ    BAR 
+
+--        ----   ------  ------     ---    ---    ---    ---    --- 
+
+WCONPROD 
+
+         'PROD'  'OPEN'  'BHP'  5*                              495 / 
+
+/ 
+
+-- 
+
+--        WELL   FLUID   STATUS  CONTROL     RESERV FLOW 
+
+--        NAME   TYPE             MODE       RATE [cm3/hour] 
+
+--        ----   -----   ------  -------     -------------- 
+
+WCONINJ    
+
+          'INJ'  'WATER'   'OPEN'  'RATE'       12.7  /  
+
+/ 
+
+-- 
+
+ 
+
+TUNING  
+
+-- TSINIT  TSMAX (hours) 
+
+   0.01     0.1 
+
+/ 
+
+--    TRGTTE   TRGCNV   TRGMBE   TRGLCV   XXXTTE 
+
+/ 
+
+--    NEWTMX    NEWTMN   LITMAX   LITMIN    MXWSIT 
+
+ 
+
+85 
+
+ 
+
+       100        1      50       1         50 
+
+/ 
+
+-- 
+
+TSTEP    
+
+ 
+
+ 150*0.02819 
+
+/ 
+
+-- 
+
+-- 
+
+--========================================================================== 
+
+END 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+-- Simulação bifásica através de rocha carbonática - MACRO MO 
+
+-- 
+
+--========================================================================= 
+
+86 
+
+RUNSPEC 
+
+TITLE 
+
+ MACROESCALA 
+
+DIMENS 
+
+-- NX  NY  NZ 
+
+   26  1  5   / 
+
+OIL 
+
+WATER 
+
+FIELD 
+
+WELLDIMS 
+
+-- NWMAXZ NCWMAX NGMXAZ NWGMAX 
+
+        2   5      1    2 / 
+
+-- 
+
+TABDIMS 
+
+-- NTSFUN NTPVT NSSFUN NPPVT NTFIP NRPVT NTENDP 
+
+       3     1    30 / 
+
+-- 
+
+NSTACK 
+
+ 50 / 
+
+ 
+
+-- Unify output files 
+
+UNIFOUT 
+
+ 
+
+-- 
+
+START 
+
+-- DAY MONTH YEAR 
+
+ 
+
+ 
+
+     08 'JAN' 2016 / 
+
+-- 
+
+--========================================================================= 
+
+87 
+
+GRID 
+
+OLDTRAN 
+
+ 
+
+--Output initial values 
+
+INIT 
+
+ 
+
+-- 
+
+EQUALS 
+
+  DX 0.379 / 
+
+-- ft por cel 
+
+  DY 0.379 / 
+
+-- ft por cel 
+
+  DZ 0.526 / 
+
+-- ft por cel 
+
+/ 
+
+ 
+
+-- 
+
+PERMX 
+
+ 8*100 13*0 5*100 
+
+ 5*100 3*10 15*100 3*10 
+
+ 3*100 2*10 1*100 11*1000 4*100 2*10 3*100 
+
+ 8*100 7*1000 11*100 
+
+ 3*0 20*100 3*0 / 
+
+ 
+
+-- 
+
+PORO 
+
+ 8*0.25 13*0 5*0.25 
+
+ 5*0.25 3*0.15 15*0.25 3*0.15 
+
+ 3*0.25 2*0.15 1*0.25 11*0.35 4*0.25 2*0.15 3*0.25 
+
+ 
+
+88 
+
+ 
+
+ 8*0.25 7*0.35 11*0.25 
+
+ 3*0 20*0.25 3*0 / 
+
+-- 
+
+ 
+
+COPY 
+
+ 'PERMX' 'PERMZ' / 
+
+ 'PERMX' 'PERMY' / 
+
+ / 
+
+-- IX1-IX2 JY1-JY2 KZ1-KZ2 
+
+BOX  
+
+ 1 26 1 1 1 1 / 
+
+-- PROFUNDIDADE DO TOPO DE CADA CAMADA 
+
+TOPS 
+
+ 26*16404.2 / 
+
+-- 
+
+ENDBOX 
+
+-- 
+
+-- 
+
+-- 
+
+--========================================================================== 
+
+PROPS 
+
+--            OIL      WAT       GAS       lb por ft cubico 
+
+DENSITY 
+
+              43.7    62.42       3.81 / 
+
+-- 
+
+--       Pref(psia) Bo(adimen)  Vis(cp) 
+
+PVDO 
+
+         14.7         1.0000001    5.0 
+
+       1469.6         0.9999999    5.0 / 
+
+ 
+
+89 
+
+ 
+
+-- 
+
+--       P           Bw         Cw                 Vis     Viscosibility 
+
+PVTW 
+
+        1469.6          1.00        0.00000001        1.0          0.0 / 
+
+-- 
+
+--       rock reference pressure P (psia)            rock compressibility Cr (1/psia) 
+
+ROCK 
+
+        1469.6            0.0000000001 / 
+
+-- 
+
+SWOF 
+
+-- 
+
+--Sw 
+
+0.263 
+
+ 
+
+ 
+
+ 
+
+ 
+
+krw 
+
+0 
+
+ 
+
+ 
+
+ 
+
+ 
+
+kro 
+
+0.253 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Pc 
+
+ 
+
+10 md 
+
+142.2 
+
+0.274662068965517 
+
+0.0000867755860922492 
+
+0.212285674683559 
+
+-0.805399072595683 
+
+0.286324137931035 
+
+0.000490876842938131 
+
+0.176990253983334 
+
+-1.08150407667616 
+
+0.297986206896552 
+
+0.00135269751571508 
+
+0.146553863364749 
+
+-1.30446898204922 
+
+0.309648275862069 
+
+0.00277681875495197 
+
+0.120456592899793 
+
+-1.51496736433949 
+
+0.321310344827586 
+
+0.00485090273224136 
+
+0.0982170170964093 
+
+-1.72646593711637 
+
+0.332972413793103 
+
+0.00765201269005066 
+
+0.079390714727878 
+
+-1.94606522385039 
+
+0.344634482758621 
+
+0.0112497444129263 
+
+0.0635687886622051 
+
+-2.17881363416313 
+
+0.356296551724138 
+
+0.0157080589740202 
+
+0.0503763856915085 
+
+-2.42913921632018 
+
+0.367958620689655 
+
+0.0210864674204165 
+
+0.0394712163614042 
+
+-2.70150637541448 
+
+0.379620689655172 
+
+0.0274408497347537 
+
+0.0305420748003927 
+
+-3.00082785090506 
+
+0.39128275862069 0.0348240492637719 
+
+0.0233073585492455 
+
+-3.33281495661457 
+
+0.402944827586207 
+
+0.0432863205028827 
+
+0.017513588390392 
+
+-3.70435403292889 
+
+0.414606896551724 
+
+0.0528756764442734 
+
+0.0129339281773049 
+
+-4.12397363499679 
+
+0.426268965517241 
+
+0.0636381644879656 
+
+0.00936670466388789 
+
+-4.60247305177808 
+
+0.437931034482759 
+
+0.0756180899533505 
+
+0.00663392733386119 
+
+-5.1538104012388 
+
+0.449593103448276 
+
+0.0888582001584631 
+
+0.00457980823014838 
+
+-5.79640373577061 
+
+ 
+
+90 
+
+ 
+
+0.461255172413793 
+
+0.103399838175951 
+
+0.00306928178426278 
+
+-6.55510023106877 
+
+0.47291724137931 0.119283072833966 
+
+0.0019865246456939 
+
+-7.46425787954492 
+
+0.484579310344828 
+
+0.136546809805888 
+
+0.00123347551129388 
+
+-8.57275033130787 
+
+0.496241379310345 
+
+0.155228887431723 
+
+0.00072835495466392 
+
+-9.95245043276819 
+
+0.507903448275862 
+
+0.175366160058173 
+
+0.000404185255540777 
+
+-11.7133592757715 
+
+0.519565517241379 
+
+0.1969945710623   
+
+0.000207310229183161 
+
+-14.0323026377737 
+
+0.531227586206897 
+
+0.220149217263392 
+
+0.0000959150557582114 
+
+-17.2117102958425 
+
+0.542889655172414 
+
+0.244864406081621 
+
+0.0000385461097279333 
+
+-21.8125292573086 
+
+0.554551724137931 
+
+0.271173706538278 
+
+0.0000126307892356492 
+
+-28.9974482179573 
+
+0.566213793103448 
+
+0.299109994988572 
+
+0.00000299734549244407 
+
+-41.6024183812859 
+
+0.577875862068966 
+
+0.328705496318765 
+
+0.00000039471216361403 
+
+-68.6547761173629 
+
+0.589537931034483 
+
+0.359991821213643 
+
+0.000000012334755112938  -159.741531367264 
+
+0.6012 
+
+ 
+
+/ 
+
+ 
+
+--Sw 
+
+krw 
+
+0.213 
+
+0 
+
+ 
+
+ 
+
+ 
+
+0.393 
+
+ 
+
+ 
+
+0 
+
+ 
+
+ 
+
+-24800822363722900000 
+
+kro 
+
+0.203 
+
+ 
+
+ 
+
+Pc 
+
+ 
+
+100 md 
+
+142.2 
+
+0.2263  0.00603782 
+
+0.189663 -0.235115673114721 
+
+0.2396  0.0124992 
+
+0.176585 -0.470659037562226 
+
+0.2573  0.0217039 
+
+0.159599 -0.70344297829475 
+
+0.2705  0.0289977 
+
+0.147234 -0.860784979906887 
+
+0.2882  0.0391669 
+
+0.131304 -1.06891773591698 
+
+0.3015  0.047075 0.119809 -1.22931950395047 
+
+0.3192  0.0579178 
+
+0.105141 -1.45413374168362 
+
+0.3325  0.066222 0.0946703 
+
+-1.63499622609946 
+
+0.3502  0.0774476 
+
+0.0814718 
+
+-1.89644816244059 
+
+0.3635  0.0859298 
+
+0.0721814 
+
+-2.11209870651994 
+
+0.3768  0.0944215 
+
+0.0634443 
+
+-2.34773547166257 
+
+0.3945  0.105689 0.0527045 
+
+-2.69887999303542 
+
+ 
+
+91 
+
+ 
+
+0.4078  0.114047 0.0453691 
+
+-2.99696181930259 
+
+0.4255  0.124991 0.0366018 
+
+-3.45037792728765 
+
+0.4387  0.133001 0.0308218 
+
+-3.8404476967095 
+
+0.4564  0.143518 0.0241602 
+
+-4.45225912749081 
+
+0.4697  0.151466 0.0198911 
+
+-4.99668539626229 
+
+0.4874  0.162422 0.015083 -5.87040457062152 
+
+0.5007  0.171095 0.0120817 
+
+-6.67477919208182 
+
+0.514 
+
+0.180322 0.009549 -7.65032208986748 
+
+0.5317  0.193735 0.00682318 
+
+-9.32062167618288 
+
+0.545 
+
+0.204816 0.00520899 
+
+-10.9814425790346 
+
+0.5627  0.22123   
+
+0.00354489 
+
+-14.0542675611875 
+
+0.576 
+
+0.234957 0.00260473 
+
+-17.4260866085436 
+
+0.5937  0.255425 0.00167632 
+
+-24.6379813114284 
+
+0.6069  0.272588 0.00116566 
+
+-34.2587342955875 
+
+0.6246  0.298165 0.00064692 
+
+-64.4759332821618 
+
+0.6379  0.319556 0.000321247 
+
+-150.100055033513 
+
+0.6512  0.343 
+
+ 
+
+0 
+
+/ 
+
+ 
+
+--Sw 
+
+0.163 
+
+ 
+
+ 
+
+ 
+
+ 
+
+krw 
+
+0 
+
+ 
+
+ 
+
+ 
+
+-172 
+
+ 
+
+ 
+
+kro 
+
+0.153 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Pc 
+
+ 
+
+1000 md 
+
+142.2 
+
+0.181558620689655 
+
+0.00000646952842876054  0.128378293385709 
+
+0.0438690782507719 
+
+0.20011724137931 0.000365971793844458 
+
+0.107033631855534 
+
+-0.186384813657213 
+
+0.218675862068965 
+
+0.00100849967456621 
+
+0.0886274351573381 
+
+-0.362144973244729 
+
+0.237234482758621 
+
+0.00207024909720337 
+
+0.072845291358373 
+
+-0.522335248380673 
+
+0.255793103448276 
+
+0.003616576337269 
+
+0.0593960617223345 
+
+-0.679504792292879 
+
+0.274351724137931 
+
+0.00570493566968153 
+
+0.0480109855864243 
+
+-0.83996141355568 
+
+0.292910344827586 
+
+0.00838721402795781 
+
+0.0384427852384086 
+
+-1.00792204481576 
+
+0.311468965517241 
+
+0.0117110974030227 
+
+0.0304647707936791 
+
+-1.18687042403095 
+
+ 
+
+92 
+
+ 
+
+0.330027586206897 
+
+0.0157209540818881 
+
+0.0238699450723116 
+
+-1.38015717387089 
+
+0.348586206896552 
+
+0.0204584452220937 
+
+0.0184701084761268 
+
+-1.59135182914104 
+
+0.367144827586207 
+
+0.0259629680261709 
+
+0.0140949638657493 
+
+-1.82451914864075 
+
+0.385703448275862 
+
+0.0322719895861186 
+
+0.0105912214376679 
+
+-2.08449791869975 
+
+0.404262068965517 
+
+0.0394213058477662 
+
+0.00782170360129507 
+
+-2.37723428873435 
+
+0.422820689655173 
+
+0.0474452473154553 
+
+0.00566444985602707 
+
+-2.71022185981731 
+
+0.441379310344828 
+
+0.0563768456904114 
+
+0.0040118216683034 
+
+-3.09311802860636 
+
+0.459937931034483 
+
+0.0662479711105081 
+
+0.00276960734866681 
+
+-3.53864325944883 
+
+0.478496551724138 
+
+0.0770894467825793 
+
+0.00185612692882295 
+
+-4.06393953378623 
+
+0.497055172413793 
+
+0.0889311459042036 
+
+0.00120133703870026 
+
+-4.69269441000268 
+
+0.515613793103448 
+
+0.101802074486324 
+
+0.000745935783509735 
+
+-5.4585892340611 
+
+0.534172413793104 
+
+0.115730442792608 
+
+0.000440467620804663 
+
+-6.41114302255466 
+
+0.552731034482759 
+
+0.130743727473396 
+
+0.000244428237540469 
+
+-7.62613325598054 
+
+0.571289655172414 
+
+0.14686872600828 0.000125369427134481 
+
+-9.22536110509274 
+
+0.589848275862069 
+
+0.164131604728178 
+
+0.0000580039665257167 
+
+-11.4171362159341 
+
+0.608406896551724 
+
+0.182557941429809 
+
+0.000023310493234679 
+
+-14.5878213628804 
+
+0.62696551724138 0.202172763398767 
+
+0.00000763838242313956 
+
+-19.5382295015086 
+
+0.645524137931035 
+
+0.223000581505475 
+
+0.00000181262395392862 
+
+-28.2216369769452 
+
+0.66408275862069 0.245065420919589 
+
+0.000000238699450723104  -46.8556535671815 
+
+0.682641379310345 
+
+0.26839084889465 0.00000000745935783509 
+
+-109.59347948861 
+
+0.7012 
+
+ 
+
+ 
+
+0.293 
+
+ 
+
+ 
+
+0 
+
+ 
+
+ 
+
+-142.2 
+
+/ 
+
+ 
+
+-- 
+
+--========================================================================== 
+
+REGIONS 
+
+-- 
+
+SATNUM 
+
+ 8*2 13*3 5*2 
+
+ 
+
+93 
+
+ 
+
+ 5*2 3*1 15*2 3*1 
+
+ 3*2 2*1 1*2 11*3 4*2 2*1 3*2 
+
+ 8*2 7*3 11*2 
+
+ 3*3 20*2 3*3 / 
+
+-- 
+
+--========================================================================== 
+
+SOLUTION 
+
+-- 
+
+--     DATUM(ft) Pi@DATUM(psia)   WOC(ft)    Cap Pressure@WOC(psia)    GOC  Pc@GOC 
+
+EQUIL 
+
+       16404.2     7275          18700.79             727.5                0    0     / 
+
+-- 
+
+-- 
+
+RPTSOL 
+
+  1  0  1 3*0  1  / 
+
+--========================================================================= 
+
+SUMMARY 
+
+RPTONLY 
+
+EXCEL 
+
+-- 
+
+WWCT 
+
+  'PROD' / 
+
+WOPT 
+
+  'PROD' / 
+
+WWPT 
+
+  'PROD' / 
+
+FOPR 
+
+FWCT 
+
+FPR 
+
+ 
+
+94 
+
+ 
+
+FWPT 
+
+FOPT 
+
+FOIP 
+
+-- 
+
+RUNSUM 
+
+--========================================================================= 
+
+SCHEDULE 
+
+-- 
+
+RPTSCHED 
+
+ 'RESTART=3', 'POIL', 'PWAT', 'SWAT' / 
+
+-- 
+
+--        WELL  WELL   LOCATION   BHP          PREF. 
+
+--        NAME  GROUP   I    J    DATUM [ft]   PHASE 
+
+--       -----  ----    -    -    ---------    ----- 
+
+WELSPECS 
+
+         'INJ'  'G'     1   1   16404.2    'WATER' / 
+
+         'PROD' 'G'    26   1   16404.2    'OIL' / 
+
+/ 
+
+-- 
+
+--        WELL   LOCATION   INTERVAL STATUS 
+
+--        NAME    I    J    K1  K2   O or S   DEFAULTS   ID [ft] 
+
+--        ----    -    -    --  --   ------   --------   ------ 
+
+COMPDAT 
+
+          'INJ'    1   1     1  5   'OPEN'     1*  1*       0.114 / 
+
+-- 
+
+          'PROD'  26   1     1  5   'OPEN'     1*  1*       0.114 / 
+
+/ 
+
+--        WELL   STATUS  CONTROL  TARGET RATES or UPPER LIMITS  Reservoir Fluid    BHP 
+
+--        NAME            MODE      OIL    WAT    GAS    LIQ         Volume       PSI 
+
+ 
+
+ 
+
+--        ----   ------  ------     ---    ---    ---    ---    --------------- 
+
+WCONPROD 
+
+         'PROD'  'OPEN'  'BHP'  5*                                                7275   /                              
+
+95 
+
+/ 
+
+-- 
+
+--        WELL   FLUID   STATUS  CONTROL     RESERV FLOW 
+
+--        NAME   TYPE             MODE       RATE [ft3/dia] 
+
+--        ----   -----   ------  -------     -------------- 
+
+WCONINJ 
+
+          'INJ'  'WATER'   'OPEN'  'RATE'         1 /  
+
+/ 
+
+-- 
+
+-- 
+
+TUNING  
+
+-- TSINIT  TSMAX (days) 
+
+   0.001      0.1 
+
+/ 
+
+--    TRGTTE   TRGCNV   TRGMBE   TRGLCV   XXXTTE 
+
+/ 
+
+--    NEWTMX    NEWTMN   LITMAX   LITMIN    MXWSIT 
+
+       100        1      50       1         50 
+
+/ 
+
+-- 
+
+TSTEP 
+
+-- 2.13 days for 1 PV (days) 
+
+   300*0.0071 
+
+/ 
+
+-- 
+
+-- 
+
+ 
+
+ 
+
+--========================================================================== 
+
+96 
+
+END 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+-- Simulação bifásica através de rocha carbonática - MACRO MA 
+
+-- 
+
+--========================================================================= 
+
+97 
+
+RUNSPEC 
+
+TITLE 
+
+ MACROESCALA 
+
+DIMENS 
+
+-- NX  NY  NZ 
+
+   26  1  5   / 
+
+OIL 
+
+WATER 
+
+FIELD 
+
+WELLDIMS 
+
+-- NWMAXZ NCWMAX NGMXAZ NWGMAX 
+
+        2   5      1    2 / 
+
+-- 
+
+TABDIMS 
+
+-- NTSFUN NTPVT NSSFUN NPPVT NTFIP NRPVT NTENDP 
+
+       3     1    30 / 
+
+-- 
+
+NSTACK 
+
+ 50 / 
+
+ 
+
+-- Unify output files 
+
+UNIFOUT 
+
+ 
+
+-- 
+
+START 
+
+-- DAY MONTH YEAR 
+
+ 
+
+ 
+
+     08 'JAN' 2016 / 
+
+-- 
+
+--========================================================================= 
+
+98 
+
+GRID 
+
+OLDTRAN 
+
+ 
+
+--Output initial values 
+
+INIT 
+
+ 
+
+-- 
+
+EQUALS 
+
+  DX 0.379 / 
+
+-- ft por cel 
+
+  DY 0.379 / 
+
+-- ft por cel 
+
+  DZ 0.526 / 
+
+-- ft por cel 
+
+/ 
+
+ 
+
+-- 
+
+PERMX 
+
+ 8*100 13*0 5*100 
+
+ 5*100 3*10 15*100 3*10 
+
+ 3*100 2*10 1*100 11*1000 4*100 2*10 3*100 
+
+ 8*100 7*1000 11*100 
+
+ 3*0 20*100 3*0 / 
+
+ 
+
+-- 
+
+PORO 
+
+ 8*0.25 13*0 5*0.25 
+
+ 5*0.25 3*0.15 15*0.25 3*0.15 
+
+ 3*0.25 2*0.15 1*0.25 11*0.35 4*0.25 2*0.15 3*0.25 
+
+ 
+
+99 
+
+ 
+
+ 8*0.25 7*0.35 11*0.25 
+
+ 3*0 20*0.25 3*0 / 
+
+-- 
+
+ 
+
+COPY 
+
+ 'PERMX' 'PERMZ' / 
+
+ 'PERMX' 'PERMY' / 
+
+ / 
+
+-- IX1-IX2 JY1-JY2 KZ1-KZ2 
+
+BOX  
+
+ 1 26 1 1 1 1 / 
+
+-- PROFUNDIDADE DO TOPO DE CADA CAMADA 
+
+TOPS 
+
+ 26*16404.2 / 
+
+-- 
+
+ENDBOX 
+
+-- 
+
+-- 
+
+-- 
+
+--========================================================================== 
+
+PROPS 
+
+--            OIL      WAT       GAS       lb por ft cubico 
+
+DENSITY 
+
+              43.7    62.42       3.81 / 
+
+-- 
+
+--       Pref(psia) Bo(adimen)  Vis(cp) 
+
+PVDO 
+
+         14.7         1.0000001    5.0 
+
+       1469.6         0.9999999    5.0 / 
+
+ 
+
+100 
+
+ 
+
+-- 
+
+--       P           Bw         Cw                 Vis     Viscosibility 
+
+PVTW 
+
+        1469.6          1.00        0.00000001        1.0          0.0 / 
+
+-- 
+
+--       rock reference pressure P (psia)            rock compressibility Cr (1/psia) 
+
+ROCK 
+
+        1469.6            0.0000000001 / 
+
+-- 
+
+SWOF 
+
+-- 
+
+--Sw 
+
+0.244 
+
+ 
+
+ 
+
+ 
+
+ 
+
+krw 
+
+0 
+
+ 
+
+ 
+
+ 
+
+ 
+
+kro 
+
+0.902 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Pc 
+
+ 
+
+10 md 
+
+142.2 
+
+0.262672413793103 
+
+0.000000607962040546 
+
+0.811870269383739 
+
+55.6824507747846 
+
+0.281344827586207 
+
+0.00000972739264874 
+
+0.727953831645414 
+
+26.8470603674121 
+
+0.30001724137931 0.0000492449252842932 
+
+0.650028783467957 
+
+17.1995916397829 
+
+0.318689655172414 
+
+0.000155638282379988 
+
+0.577873221534298 
+
+12.3463856956283 
+
+0.337362068965517 
+
+0.000379976275341768 
+
+0.511265242527369 
+
+9.40838633386303 
+
+0.356034482758621 
+
+0.00078791880454869 
+
+0.449982943130099 
+
+7.42558375146057 
+
+0.374706896551724 
+
+0.00145971685935294 
+
+0.393804420025421 
+
+5.98620898271899 
+
+0.393379310344828 
+
+0.00249021251807981 
+
+0.342507769896264 
+
+4.88401893119194 
+
+0.412051724137931 
+
+0.00398883894802775 
+
+0.29587108942556 4.00404199118134 
+
+0.430724137931035 
+
+0.00607962040546829 
+
+0.25367247529624 3.27685682235007 
+
+0.449396551724138 
+
+0.00890117223564612 
+
+0.215690024191233 
+
+2.65778577508193 
+
+0.468068965517242 
+
+0.012606700872779 
+
+0.181701832793472 
+
+2.11646080374085 
+
+0.486741379310345 
+
+0.017364003840058 
+
+0.151485997785887 
+
+1.63116495128117 
+
+0.505413793103449 
+
+0.023355469749647 
+
+0.124820615851408 
+
+1.18554521110437 
+
+0.524086206896552 
+
+0.0307780783026832 
+
+0.101483783672967 
+
+0.766566504012971 
+
+0.542758620689656 
+
+0.039843400289277 
+
+0.0812535979334943 
+
+0.363128714030684 
+
+ 
+
+101 
+
+ 
+
+0.561431034482759 
+
+0.0507775975885117 
+
+0.0639081553159208 
+
+-0.0349801048949218 
+
+0.580103448275862 
+
+0.0638214231684439 
+
+0.0492255525031774 
+
+-0.43801100081597 
+
+0.598775862068966 
+
+0.0792302210861033 
+
+0.0369838861781949 
+
+-0.857248925903898 
+
+0.617448275862069 
+
+0.0972739264874927 
+
+0.026961253023904 
+
+-1.3063014613877 
+
+0.636120689655173 
+
+0.118237065607588 
+
+0.0189357497232357 
+
+-1.80304638003139 
+
+0.654793103448276 
+
+0.142418755770338 
+
+0.0126854729591208 
+
+-2.37294602494621 
+
+0.67346551724138 0.170132705388665 
+
+0.00798851941449005 
+
+-3.05529009585082 
+
+0.692137931034483 
+
+0.201707213964465 
+
+0.00462298577227432 
+
+-3.91624803219884 
+
+0.710810344827587 
+
+0.237485172088605 
+
+0.00236696871540444 
+
+-5.07984365594096 
+
+0.72948275862069 0.277824061440928 
+
+0.000998564926811241 
+
+-6.81541409072068 
+
+0.748155172413794 
+
+0.323095954790247 
+
+0.000295871089425548 
+
+-9.86100927228747 
+
+0.766827586206897 
+
+0.373687515994352 
+
+0.0000369838861781 
+
+-17.4270706778716 
+
+0.7855 
+
+ 
+
+/ 
+
+ 
+
+ 
+
+--Sw 
+
+krw 
+
+0.194 
+
+0 
+
+ 
+
+ 
+
+ 
+
+0.43 
+
+kro 
+
+0.852 
+
+ 
+
+ 
+
+ 
+
+ 
+
+0 
+
+ 
+
+ 
+
+-142.2 
+
+Pc 
+
+ 
+
+100 md 
+
+142.2 
+
+0.2134  0.012013 0.763375 57.3308944279859 
+
+0.2329  0.0226375 
+
+0.682032 27.6760653599426 
+
+0.2588  0.0349173 
+
+0.584278 15.8439174461319 
+
+0.2782  0.0429175 
+
+0.518519 11.7240285913525 
+
+0.3042  0.0522725 
+
+0.440227 8.4482721624956 
+
+0.3236  0.05851   
+
+0.388077 6.8399119162701 
+
+0.3495  0.0660889 
+
+0.326613 5.29276167408405 
+
+0.369 
+
+0.0714249 
+
+0.286098 4.4110388861919 
+
+0.3949  0.0783764 
+
+0.238831 3.47947028276987 
+
+0.4143  0.0836726 
+
+0.207975 2.90581189611618 
+
+0.4338  0.0892154 
+
+0.180655 2.40525896903796 
+
+0.4597  0.0972631 
+
+0.149101 1.8259641926668 
+
+ 
+
+102 
+
+ 
+
+0.4791  0.103997 0.12862   
+
+1.4384055065703 
+
+0.505 
+
+0.114207 0.104869 0.963600388577738 
+
+0.5245  0.122988 0.0892589 
+
+0.627797703389745 
+
+0.5504  0.136312 0.0709543 
+
+0.197547059314553 
+
+0.5698  0.14747   
+
+0.0589884 
+
+-0.121094350631593 
+
+0.5957  0.163831 0.0452173 
+
+-0.553761251188422 
+
+0.6152  0.177165 0.0364128 
+
+-0.894252365512384 
+
+0.6346  0.191369 0.0288171 
+
+-1.2550492423502 
+
+0.6605  0.211595 0.0204182 
+
+-1.79064586938751 
+
+0.68 
+
+0.227681 0.0153019 
+
+-2.25541950445605 
+
+0.7059  0.250281 0.00989069 
+
+-3.00231874780577 
+
+0.7253  0.268045 0.00677648 
+
+-3.71408791361377 
+
+0.7513  0.292745 0.00371644 
+
+-5.03174552696654 
+
+0.7707  0.311982 0.00212694 
+
+-6.52711176655321 
+
+0.7966  0.33851   
+
+0.000781602 
+
+-10.2682128851454 
+
+0.8161  0.359015 0.000239438 
+
+-17.9638285405319 
+
+0.8355  0.38 
+
+/ 
+
+ 
+
+--Sw 
+
+0.144 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+0 
+
+krw 
+
+0 
+
+ 
+
+ 
+
+ 
+
+-142.2 
+
+ 
+
+ 
+
+kro 
+
+0.802 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Pc 
+
+ 
+
+1000 md 
+
+142.2 
+
+0.169568965517241 
+
+0.0000004665755194894 
+
+0.721862478986428 
+
+45.955693138432 
+
+0.195137931034483 
+
+0.0000074652083118308 
+
+0.647249415720202 
+
+22.1102271667956 
+
+0.220706896551724 
+
+0.0000377926170786434 
+
+0.577963508138915 
+
+14.1306072046404 
+
+0.246275862068966 
+
+0.000119443332989293 
+
+0.513807454180163 
+
+10.115077031835 
+
+0.271844827586207 
+
+0.000291609699680891 
+
+0.454583951781541 
+
+7.68300227763879 
+
+0.297413793103448 
+
+0.000604681873258294 
+
+0.400095698880643 
+
+6.0405550418175 
+
+0.32298275862069 0.00112024782229411 
+
+0.350145393415064 
+
+4.84722996759842 
+
+0.348551724137931 
+
+0.00191109332782868 
+
+0.3045357333224   
+
+3.93246141032992 
+
+ 
+
+103 
+
+ 
+
+0.374120689655172 
+
+0.00306120198337011 
+
+0.263069416540244 
+
+3.20114848160223 
+
+0.399689655172414 
+
+0.00466575519489424 
+
+0.225549141006192 
+
+2.59584807172257 
+
+0.425258620689655 
+
+0.00683113218084465 
+
+0.191777604657838 
+
+2.07956874077665 
+
+0.450827586206896 
+
+0.0096749099721327 
+
+0.161557505432777 
+
+1.62714078514608 
+
+0.476396551724138 
+
+0.0133258634121374 
+
+0.134691541268605 
+
+1.22053430128345 
+
+0.501965517241379 
+
+0.0179239651567057 
+
+0.110982410102915 
+
+0.846136928289173 
+
+0.527534482758621 
+
+0.0236203856741521 
+
+0.0902328098733036 
+
+0.493056139560182 
+
+0.553103448275862 
+
+0.0305774932452589 
+
+0.0722454385173644 
+
+0.151967238711127 
+
+0.578672413793103 
+
+0.0389688539632762 
+
+0.0568229939726927 
+
+-0.185764649509144 
+
+0.604241379310345 
+
+0.0489792317339219 
+
+0.043768174176883 
+
+-0.528870127148214 
+
+0.629810344827586 
+
+0.0608045882753813 
+
+0.0328836770675304 
+
+-0.887027487397473 
+
+0.655379310344828 
+
+0.074652083118308 
+
+0.0239722005822297 
+
+-1.2719760521275 
+
+0.680948275862069 
+
+0.0907400736058229 
+
+0.0168364426585756 
+
+-1.6992077268362 
+
+0.70651724137931 0.109298114893515 
+
+0.0112791012341629 
+
+-2.19085360274495 
+
+0.732086206896552 
+
+0.13056695994944 0.00710287424658655 
+
+-2.78112775202048 
+
+0.757655172413793 
+
+0.154798559554124 
+
+0.0041104596334413 
+
+-3.52771492684654 
+
+0.783224137931035 
+
+0.182256062300557 
+
+0.00210455533232194 
+
+-4.53880000768949 
+
+0.808793103448276 
+
+0.2132138145942   
+
+0.000887859280823319 
+
+-6.04939251120254 
+
+0.834362068965518 
+
+0.24795736065298 0.000263069416540239 
+
+-8.70355962710413 
+
+0.859931034482759 
+
+0.286783442507292 
+
+0.0000328836770675297 
+
+-15.3030588357128 
+
+0.8855 
+
+ 
+
+ 
+
+0.33 
+
+ 
+
+ 
+
+0 
+
+ 
+
+ 
+
+-142.2 
+
+/ 
+
+-- 
+
+--========================================================================== 
+
+REGIONS 
+
+-- 
+
+SATNUM 
+
+ 8*2 13*3 5*2 
+
+ 5*2 3*1 15*2 3*1 
+
+ 
+
+104 
+
+ 
+
+ 3*2 2*1 1*2 11*3 4*2 2*1 3*2 
+
+ 8*2 7*3 11*2 
+
+ 3*3 20*2 3*3 / 
+
+-- 
+
+--========================================================================== 
+
+SOLUTION 
+
+-- 
+
+--     DATUM(ft) Pi@DATUM(psia)   WOC(ft)    Cap Pressure@WOC(psia)    GOC  Pc@GOC 
+
+EQUIL 
+
+       16404.2     7275          18700.79             727.5                0    0     / 
+
+-- 
+
+-- 
+
+RPTSOL 
+
+  1  0  1 3*0  1  / 
+
+--========================================================================= 
+
+SUMMARY 
+
+RPTONLY 
+
+EXCEL 
+
+-- 
+
+WWCT 
+
+  'PROD' / 
+
+WOPT 
+
+  'PROD' / 
+
+WWPT 
+
+  'PROD' / 
+
+FOPR 
+
+FWCT 
+
+FPR 
+
+FWPT 
+
+ 
+
+105 
+
+ 
+
+FOPT 
+
+FOIP 
+
+-- 
+
+RUNSUM 
+
+--========================================================================= 
+
+SCHEDULE 
+
+-- 
+
+RPTSCHED 
+
+ 'RESTART=3', 'POIL', 'PWAT', 'SWAT' / 
+
+-- 
+
+--        WELL  WELL   LOCATION   BHP          PREF. 
+
+--        NAME  GROUP   I    J    DATUM [ft]   PHASE 
+
+--       -----  ----    -    -    ---------    ----- 
+
+WELSPECS 
+
+         'INJ'  'G'     1   1   16404.2    'WATER' / 
+
+         'PROD' 'G'    26   1   16404.2    'OIL' / 
+
+/ 
+
+-- 
+
+--        WELL   LOCATION   INTERVAL STATUS 
+
+--        NAME    I    J    K1  K2   O or S   DEFAULTS   ID [ft] 
+
+--        ----    -    -    --  --   ------   --------   ------ 
+
+COMPDAT 
+
+          'INJ'    1   1     1  5   'OPEN'     1*  1*       0.114 / 
+
+-- 
+
+          'PROD'  26   1     1  5   'OPEN'     1*  1*       0.114 / 
+
+/ 
+
+--        WELL   STATUS  CONTROL  TARGET RATES or UPPER LIMITS  Reservoir Fluid    BHP 
+
+--        NAME            MODE      OIL    WAT    GAS    LIQ         Volume       PSI 
+
+--        ----   ------  ------     ---    ---    ---    ---    --------------- 
+
+ 
+
+ 
+
+WCONPROD 
+
+         'PROD'  'OPEN'  'BHP'  5*                                                7275   /                              
+
+106 
+
+/ 
+
+-- 
+
+--        WELL   FLUID   STATUS  CONTROL     RESERV FLOW 
+
+--        NAME   TYPE             MODE       RATE [ft3/dia] 
+
+--        ----   -----   ------  -------     -------------- 
+
+WCONINJ 
+
+          'INJ'  'WATER'   'OPEN'  'RATE'         1 /  
+
+/ 
+
+-- 
+
+-- 
+
+TUNING  
+
+-- TSINIT  TSMAX (days) 
+
+   0.001      0.1 
+
+/ 
+
+--    TRGTTE   TRGCNV   TRGMBE   TRGLCV   XXXTTE 
+
+/ 
+
+--    NEWTMX    NEWTMN   LITMAX   LITMIN    MXWSIT 
+
+       100        1      50       1         50 
+
+/ 
+
+-- 
+
+TSTEP 
+
+-- 2.13 days for 1 PV (days) 
+
+   300*0.0071 
+
+/ 
+
+-- 
+
+--========================================================================== 
+
+END 
+
+ 
+
+ 
+
+-- Simulação bifásica através de rocha carbonática - MACRO MN 
+
+-- 
+
+--========================================================================= 
+
+107 
+
+RUNSPEC 
+
+TITLE 
+
+ MACROESCALA 
+
+DIMENS 
+
+-- NX  NY  NZ 
+
+   26  1  5   / 
+
+OIL 
+
+WATER 
+
+FIELD 
+
+WELLDIMS 
+
+-- NWMAXZ NCWMAX NGMXAZ NWGMAX 
+
+        2   5      1    2 / 
+
+-- 
+
+TABDIMS 
+
+-- NTSFUN NTPVT NSSFUN NPPVT NTFIP NRPVT NTENDP 
+
+       3     1    30 / 
+
+-- 
+
+NSTACK 
+
+ 50 / 
+
+ 
+
+-- Unify output files 
+
+UNIFOUT 
+
+ 
+
+-- 
+
+START 
+
+-- DAY MONTH YEAR 
+
+ 
+
+ 
+
+     08 'JAN' 2016 / 
+
+-- 
+
+--========================================================================= 
+
+108 
+
+GRID 
+
+OLDTRAN 
+
+ 
+
+--Output initial values 
+
+INIT 
+
+ 
+
+-- 
+
+EQUALS 
+
+  DX 0.379 / 
+
+-- ft por cel 
+
+  DY 0.379 / 
+
+-- ft por cel 
+
+  DZ 0.526 / 
+
+-- ft por cel 
+
+/ 
+
+ 
+
+-- 
+
+PERMX 
+
+ 8*100 13*0 5*100 
+
+ 5*100 3*10 15*100 3*10 
+
+ 3*100 2*10 1*100 11*1000 4*100 2*10 3*100 
+
+ 8*100 7*1000 11*100 
+
+ 3*0 20*100 3*0 / 
+
+ 
+
+-- 
+
+PORO 
+
+ 8*0.25 13*0 5*0.25 
+
+ 5*0.25 3*0.15 15*0.25 3*0.15 
+
+ 3*0.25 2*0.15 1*0.25 11*0.35 4*0.25 2*0.15 3*0.25 
+
+ 
+
+109 
+
+ 
+
+ 8*0.25 7*0.35 11*0.25 
+
+ 3*0 20*0.25 3*0 / 
+
+-- 
+
+ 
+
+COPY 
+
+ 'PERMX' 'PERMZ' / 
+
+ 'PERMX' 'PERMY' / 
+
+ / 
+
+-- IX1-IX2 JY1-JY2 KZ1-KZ2 
+
+BOX  
+
+ 1 26 1 1 1 1 / 
+
+-- PROFUNDIDADE DO TOPO DE CADA CAMADA 
+
+TOPS 
+
+ 26*16404.2 / 
+
+-- 
+
+ENDBOX 
+
+-- 
+
+-- 
+
+-- 
+
+--========================================================================== 
+
+PROPS 
+
+--            OIL      WAT       GAS       lb por ft cubico 
+
+DENSITY 
+
+              43.7    62.42       3.81 / 
+
+-- 
+
+--       Pref(psia) Bo(adimen)  Vis(cp) 
+
+PVDO 
+
+         14.7         1.0000001    5.0 
+
+       1469.6         0.9999999    5.0 / 
+
+ 
+
+110 
+
+ 
+
+-- 
+
+--       P           Bw         Cw                 Vis     Viscosibility 
+
+PVTW 
+
+        1469.6          1.00        0.00000001        1.0          0.0 / 
+
+-- 
+
+--       rock reference pressure P (psia)            rock compressibility Cr (1/psia) 
+
+ROCK 
+
+        1469.6            0.0000000001 / 
+
+-- 
+
+SWOF 
+
+-- 
+
+--Sw 
+
+0.2333 
+
+ 
+
+ 
+
+ 
+
+ 
+
+krw 
+
+0 
+
+ 
+
+ 
+
+ 
+
+ 
+
+kro 
+
+0.676 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Pc 
+
+ 
+
+10 md 
+
+142.2 
+
+0.250341379310345 
+
+0.0000097994997744885 
+
+0.587471536772514 
+
+0.438396855810236 
+
+0.26738275862069 0.000078395998195908 
+
+0.507936896367922 
+
+0.120695966318675 
+
+0.284424137931034 
+
+0.00026458649391119 
+
+0.436765268683875 
+
+-0.0873553788840111 
+
+0.301465517241379 
+
+0.000627167985567264 
+
+0.373348782167201 
+
+-0.257335325206842 
+
+0.318506896551724 
+
+0.00122493747181106 
+
+0.317102503813901 
+
+-0.410767550030204 
+
+0.335548275862069 
+
+0.00211669195128952 
+
+0.267464439169156 
+
+-0.557341476254474 
+
+0.352589655172414 
+
+0.00336122842264956 
+
+0.223895532327321 
+
+-0.702584504033217 
+
+0.369631034482759 
+
+0.00501734388453811 
+
+0.185879665931928 
+
+-0.850274037829176 
+
+0.386672413793103 
+
+0.00714383533560212 
+
+0.152923661175685 
+
+-1.00341688830701 
+
+0.403713793103448 
+
+0.00979949977448851 
+
+0.124557277800478 
+
+-1.16473424886716 
+
+0.420755172413793 
+
+0.0130431341998442 
+
+0.100333214097367 
+
+-1.3369544461356 
+
+0.437796551724138 
+
+0.0169335356103161 
+
+0.0798271069065901 
+
+-1.52303315943102 
+
+0.454837931034483 
+
+0.0215295010045512 
+
+0.0626375316175607 
+
+-1.72636017544214 
+
+0.471879310344828 
+
+0.0268898273811965 
+
+0.0483860021688692 
+
+-1.95099202568678 
+
+0.488920689655172 
+
+0.0330733117388987 
+
+0.036716971048282 
+
+-2.20194807723933 
+
+0.505962068965517 
+
+0.0401387510763049 
+
+0.0272978292927422 
+
+-2.4856181339112 
+
+ 
+
+111 
+
+ 
+
+0.523003448275862 
+
+0.048144942392062 
+
+0.0198189064883688 
+
+-2.81035436891043 
+
+0.540044827586207 
+
+0.0571506826848169 
+
+0.0139934707704576 
+
+-3.18736854095727 
+
+0.557086206896552 
+
+0.0672147689532166 
+
+0.00955772882348034 
+
+-3.63214812930545 
+
+0.574127586206896 
+
+0.0783959981959079 
+
+0.00627082588108547 
+
+-4.16679004496894 
+
+0.591168965517241 
+
+0.0907531674115379 
+
+0.00391484572609757 
+
+-4.82404103524542 
+
+0.608210344827586 
+
+0.104345073598753 
+
+0.00229481069051764 
+
+-5.65471827079633 
+
+0.625251724137931 
+
+0.119230513756201 
+
+0.00123868165552306 
+
+-6.74237107182499 
+
+0.642293103448276 
+
+0.135468284882529 
+
+0.000597358051467529 
+
+-8.23509472702304 
+
+0.65933448275862 0.153117183976382 
+
+0.000244677857881102 
+
+-10.4237877409064 
+
+0.676375862068965 
+
+0.172236008036409 
+
+0.0000774176034701931 
+
+-13.9723098262845 
+
+0.69341724137931 0.192883554061257 
+
+0.0000152923661175694 
+
+-20.8143176456275 
+
+0.710458620689655 
+
+0.215118619049571 
+
+0.00000095577288234815 
+
+-40.1788209435936 
+
+0.727499999999999 
+
+0.238999999999999 
+
+0 
+
+ 
+
+ 
+
+-52644580204953.7 
+
+/ 
+
+ 
+
+--Sw 
+
+krw 
+
+0.1833  0 
+
+ 
+
+ 
+
+kro 
+
+0.626 
+
+ 
+
+ 
+
+Pc 
+
+ 
+
+100 md 
+
+142.2 
+
+0.2013  0.00232486 
+
+0.548799 0.657954637960222 
+
+0.2193  0.00528735 
+
+0.479021 0.355138891605913 
+
+0.2433  0.0101653 
+
+0.396815 0.110302835051868 
+
+0.2613  0.0144719 
+
+0.342746 -0.0333318806873506 
+
+0.2853  0.0210077 
+
+0.279979 -0.203106432302215 
+
+0.3033  0.0264571 
+
+0.239359 -0.323065633843473 
+
+0.3273  0.0343825 
+
+0.193019 -0.480402574097663 
+
+0.3454  0.0407733 
+
+0.16359   
+
+-0.600356664029026 
+
+0.3694  0.0498199 
+
+0.130665 -0.764837945397505 
+
+0.3874  0.056951 0.110168 -0.894495860690479 
+
+0.4054  0.0643378 
+
+0.0928079 
+
+-1.03144455142714 
+
+0.4294  0.0745205 
+
+0.0738227 
+
+-1.22854443929192 
+
+ 
+
+112 
+
+ 
+
+0.4474  0.08236   
+
+0.0621674 
+
+-1.38992524622427 
+
+0.4714  0.0930122 
+
+0.0492831 
+
+-1.6278716587499 
+
+0.4894  0.101103 0.0410815 
+
+-1.82737429441823 
+
+0.5134  0.111925 0.0316432 
+
+-2.12887444463385 
+
+0.5314  0.119983 0.025602 -2.38828196532636 
+
+0.5554  0.130518 0.018816 -2.791772933338 
+
+0.5734  0.138177 0.0146002 
+
+-3.15016536998463 
+
+0.5914  0.145553 0.0110664 
+
+-3.57146611539217 
+
+0.6154  0.15483   
+
+0.00731162 
+
+-4.26627623900105 
+
+0.6335  0.161284 0.00513519 
+
+-4.93151518912517 
+
+0.6575  0.169088 0.00297175 
+
+-6.10023414797043 
+
+0.6755  0.174254 0.00182503 
+
+-7.31265279222223 
+
+0.6995  0.180096 0.000816117 
+
+-9.73945659890906 
+
+0.7175  0.183607 0.000371469 
+
+-12.7469488285086 
+
+0.7415  0.186999 0.0000802373 
+
+-21.0814221029396 
+
+0.7595  0.188488 0.0000100297 
+
+-40.6503665048831 
+
+0.7775  0.189 
+
+ 
+
+0 
+
+/ 
+
+ 
+
+--Sw 
+
+0.1333 
+
+ 
+
+ 
+
+ 
+
+ 
+
+krw 
+
+0 
+
+ 
+
+ 
+
+ 
+
+-142.2 
+
+ 
+
+ 
+
+kro 
+
+0.576 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Pc 
+
+ 
+
+1000 md 
+
+142.2 
+
+0.157237931034483 
+
+0.00000569929066382385  0.500567463285455 
+
+0.717243162114693 
+
+0.181175862068965 
+
+0.0000455943253105908 
+
+0.432798302230655 
+
+0.419472721254249 
+
+0.205113793103448 
+
+0.000153880847923244 
+
+0.372155021837148 
+
+0.228547481027848 
+
+0.229051724137931 
+
+0.000364754602484726 
+
+0.318119672379153 
+
+0.0752662622340859 
+
+0.252989655172414 
+
+0.000712411332977981 
+
+0.270193849403561 
+
+-0.0611089591467775 
+
+0.276927586206897 
+
+0.00123104678338595 
+
+0.227898693729932 
+
+-0.189845154725872 
+
+0.300865517241379 
+
+0.00195485669769158 
+
+0.190774891450498 
+
+-0.316160920407683 
+
+0.324803448275862 
+
+0.00291803681987782 
+
+0.158382673930163 
+
+-0.443556573199271 
+
+ 
+
+113 
+
+ 
+
+0.348741379310345 
+
+0.00415478289392759 
+
+0.130301817806501 
+
+-0.574756195103425 
+
+0.372679310344828 
+
+0.00569929066382386 
+
+0.106131644989757 
+
+-0.712169255908145 
+
+0.39661724137931 0.00758575587354956 
+
+0.0854910226628454 
+
+-0.858163620349362 
+
+0.420555172413793 
+
+0.00984837426708764 
+
+0.0680183632813549 
+
+-1.01526476447821 
+
+0.444493103448276 
+
+0.012521341588421 
+
+0.0533716245735428 
+
+-1.18633683236673 
+
+0.468431034482759 
+
+0.0156388535815327 
+
+0.0412283095403382 
+
+-1.37478126837804 
+
+0.492368965517241 
+
+0.0192351059904055 
+
+0.0312854664553409 
+
+-1.58478571784272 
+
+0.516306896551724 
+
+0.0233442945590225 
+
+0.0232596888648217 
+
+-1.82166381511631 
+
+0.540244827586207 
+
+0.0280006150313666 
+
+0.0168871155877225 
+
+-2.09234657996841 
+
+0.56418275862069 0.0332382631514207 
+
+0.0119234307156561 
+
+-2.40612574630198 
+
+0.588120689655172 
+
+0.0390914346631678 
+
+0.00814386361290632 
+
+-2.77582588524623 
+
+0.612058620689655 
+
+0.0455943253105908 
+
+0.00534318891642784 
+
+-3.21973513601412 
+
+0.635996551724138 
+
+0.0527811308376727 
+
+0.00333572653584643 
+
+-3.76494723747758 
+
+0.659934482758621 
+
+0.0606860469883964 
+
+0.00195534165345881 
+
+-4.45349892516826 
+
+0.683872413793103 
+
+0.0693432695067448 
+
+0.00105544472423266 
+
+-5.35449582933446 
+
+0.707810344827586 
+
+0.0787869941367009 
+
+0.000508991475806648 
+
+-6.59042348883321 
+
+0.731748275862069 
+
+0.0890514166222477 
+
+0.000208482908490404 
+
+-8.40186811903324 
+
+0.755686206896551 
+
+0.100170732707368 
+
+0.0000659652952645421 
+
+-11.337862819517 
+
+0.779624137931034 
+
+0.112179138136045 
+
+0.0000130301817806504 
+
+-16.9975918829315 
+
+0.803562068965517 
+
+0.125110828652261 
+
+0.000000814386361290671  -33.0136671018325 
+
+0.8275 
+
+ 
+
+ 
+
+0.139 
+
+ 
+
+ 
+
+0 
+
+ 
+
+ 
+
+-511621265813913 
+
+/ 
+
+ 
+
+-- 
+
+--========================================================================== 
+
+REGIONS 
+
+-- 
+
+SATNUM 
+
+ 8*2 13*3 5*2 
+
+ 
+
+114 
+
+ 
+
+ 5*2 3*1 15*2 3*1 
+
+ 3*2 2*1 1*2 11*3 4*2 2*1 3*2 
+
+ 8*2 7*3 11*2 
+
+ 3*3 20*2 3*3 / 
+
+-- 
+
+--========================================================================== 
+
+SOLUTION 
+
+-- 
+
+--     DATUM(ft) Pi@DATUM(psia)   WOC(ft)    Cap Pressure@WOC(psia)    GOC  Pc@GOC 
+
+EQUIL 
+
+       16404.2     7275          18700.79             727.5                0    0     / 
+
+-- 
+
+-- 
+
+RPTSOL 
+
+  1  0  1 3*0  1  / 
+
+--========================================================================= 
+
+SUMMARY 
+
+RPTONLY 
+
+EXCEL 
+
+-- 
+
+WWCT 
+
+  'PROD' / 
+
+WOPT 
+
+  'PROD' / 
+
+WWPT 
+
+  'PROD' / 
+
+FOPR 
+
+FWCT 
+
+FPR 
+
+ 
+
+115 
+
+ 
+
+FWPT 
+
+FOPT 
+
+FOIP 
+
+-- 
+
+RUNSUM 
+
+--========================================================================= 
+
+SCHEDULE 
+
+-- 
+
+RPTSCHED 
+
+ 'RESTART=3', 'POIL', 'PWAT', 'SWAT' / 
+
+-- 
+
+--        WELL  WELL   LOCATION   BHP          PREF. 
+
+--        NAME  GROUP   I    J    DATUM [ft]   PHASE 
+
+--       -----  ----    -    -    ---------    ----- 
+
+WELSPECS 
+
+         'INJ'  'G'     1   1   16404.2    'WATER' / 
+
+         'PROD' 'G'    26   1   16404.2    'OIL' / 
+
+/ 
+
+-- 
+
+--        WELL   LOCATION   INTERVAL STATUS 
+
+--        NAME    I    J    K1  K2   O or S   DEFAULTS   ID [ft] 
+
+--        ----    -    -    --  --   ------   --------   ------ 
+
+COMPDAT 
+
+          'INJ'    1   1     1  5   'OPEN'     1*  1*       0.114 / 
+
+-- 
+
+          'PROD'  26   1     1  5   'OPEN'     1*  1*       0.114 / 
+
+/ 
+
+--        WELL   STATUS  CONTROL  TARGET RATES or UPPER LIMITS  Reservoir Fluid    BHP 
+
+--        NAME            MODE      OIL    WAT    GAS    LIQ         Volume       PSI 
+
+ 
+
+ 
+
+--        ----   ------  ------     ---    ---    ---    ---    --------------- 
+
+WCONPROD 
+
+         'PROD'  'OPEN'  'BHP'  5*                                                7275   /                              
+
+116 
+
+/ 
+
+-- 
+
+--        WELL   FLUID   STATUS  CONTROL     RESERV FLOW 
+
+--        NAME   TYPE             MODE       RATE [ft3/dia] 
+
+--        ----   -----   ------  -------     -------------- 
+
+WCONINJ 
+
+          'INJ'  'WATER'   'OPEN'  'RATE'         1 /  
+
+/ 
+
+-- 
+
+-- 
+
+TUNING  
+
+-- TSINIT  TSMAX (days) 
+
+   0.001      0.1 
+
+/ 
+
+--    TRGTTE   TRGCNV   TRGMBE   TRGLCV   XXXTTE 
+
+/ 
+
+--    NEWTMX    NEWTMN   LITMAX   LITMIN    MXWSIT 
+
+       100        1      50       1         50 
+
+/ 
+
+-- 
+
+TSTEP 
+
+-- 2.13 days for 1 PV (days) 
+
+   300*0.0071 
+
+/ 
+
+-- 
+
+-- 
+
+ 
+
+ 
+
+--========================================================================== 
+
+117 
+
+END 
+
+ 
+
+ 
+
+

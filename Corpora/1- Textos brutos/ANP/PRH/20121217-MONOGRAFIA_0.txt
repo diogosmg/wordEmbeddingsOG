@@ -1,0 +1,6897 @@
+PRH-ANP 45 
+
+PROGRAMA MULTIDISCIPLINAR EM TECNOLOGIA DE 
+
+PETRÓLEO, GÁS NATURAL E BIOCOMBUSTÍVEIS 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Controle Avançado de Técnicas de Perfuração com Pressão Controlada 
+
+ 
+
+ 
+
+Taís de Carvalho Calado 
+
+ 
+
+ 
+
+Orientador: 
+
+Oscar Alberto Zanabria Sotoayor, D. Sc., 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Controle Avançado de Técnicas de Perfuração com Pressão Controlada 
+
+ 
+
+Taís de Carvalho Calado 
+
+ 
+
+Trabalho de Conclusão de Curso submetido ao Corpo Docente do Departamento de Engenharia 
+Elétrica (DEL) e do Programa de Recursos Humanos da ANP/Universidade Federal de Sergipe, 
+como parte dos requisitos necessários à obtenção do grau de Engenheira Eletricista com 
+habilitação em eletrônica especialização em Tecnologia de Petróleo, Gás Natural e 
+Biocombustíveis. 
+
+ 
+
+ 
+
+Examinado em 03/07/2012. 
+
+ 
+
+Examinado por: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+_________________________________________ 
+
+Oscar Alberto Zanabria Sotomyaor 
+
+(D. Sc., Engenharia Elérica – DEL/CCET/UFS) 
+
+ (Orientador) 
+
+ 
+
+_________________________________________ 
+
+José Jailton Marques 
+
+(D. Sc., Engenharia Química – DEQ/CCET/UFS) 
+
+ 
+
+_________________________________________ 
+
+Eduardo Oliveira Freire 
+
+(D. Sc., Engenharia Elétrica – DEL/CCET/UFS) 
+
+ii 
+
+Agradecimentos 
+
+ 
+
+Aos meus pais Heliana e Murilo, meus amores e maiores exemplos do que eu devo ser 
+como pessoa e profissional. 
+
+Aos meus irmãos Bruna e Leandro por todo o apoio que vocês me derem desde o início 
+da minha jornada até esse final. 
+
+Ao meu namorado Renan por estar sempre comigo e me ajudar nas horas que achei que 
+não fosse conseguir, por não me deixar desistir e por a melhor coisa que me aconteceu 
+dentro da UFS. 
+
+Aos  meus  amigos  da  turma  07  e  agregados  pelas  horas  de  estudo  que  vocês  tornaram 
+divertidas e pelos momentos fora classe. 
+
+Ao  meu  orientador  Oscar  Sotomayor  pelo  apoio  e  dedicação  ao  longo  desses  quase  2 
+anos sob o qual estou em sua tutoria. 
+
+A  ANP  e  principalmente  ao  PRH-45  pelo  incentivo  financeiro  ao  longo  da  minha 
+participação nesse projeto. 
+
+ 
+
+ 
+
+ 
+
+iii 
+
+Resumo 
+ 
+
+Enquanto  que  a  demanda  por  petróleo  tem  aumentado,  as  reservas  de  petróleo 
+
+estão  cada  vez  mais  difíceis  de  serem  acessadas  e  perfuradas.  Assim  para  conseguir 
+
+perfurá-las  um  gradiente  de  pressão  no  poço  deve  ser  mantido  entre  as  restrições  de 
+
+pressão  da  formação.  A  pressão  no  poço  pode  ser  controlada  restringindo  o  fluxo  do 
+
+fluido  de  perfuração  do  poço,  através  de  uma  válvula  na  entrada  do  poço,  ou 
+
+manipulando  o  escoamento  vindo  da  região  anular  do  poço,  através  da  válvula  choke. 
+
+Neste trabalho,  dois  algoritmos de controle preditivo  baseado em  modelos (MPC), um 
+
+linear  (LMPC)  e  outro  não  linear  (NMPC),  para  controle  de  pressão  manipulando  a 
+
+válvula  choke  e  bomba  de  entrada  de  lama,  são  apresentados  como  alternativa  para 
+
+melhorar a eficiência da técnica de perfuração com pressão controlada (MPD). 
+
+ 
+
+O  objetivo  desse  trabalho  visa  efetuar  uma  comparação  entre  os  dois  algoritmos 
+
+MPC e sua efetiva aplicação e utilização no controle da pressão durante o processo de 
+
+perfuração de poços de petróleo.  
+
+ 
+
+Palavras-chave: MPC, MPD, perfuração de poço, controle da pressão. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+iv 
+
+Abstract 
+ 
+
+While  oil  demand  has  increased,  the  remaining  reserves  of  oil  are  increasingly 
+difficult to be accessed and drilled. Then to get them drilled, a pressure gradient in the 
+well  must  be  maintained  between  the  restrictions  of  the  formation  pressure.  The 
+pressure in the well can be controlled by restricting the flow of drilling fluid through a 
+valve  at  the  entrance  of  the  well,  or  by  manipulating  the  flow  from  the  annulus,  by 
+manipulating  a  choke  valve.  In  this  work  two  model  predictive  control  (MPC) 
+algorithms,  a  linear  and  a  nonlinear,  for  bottom  hole  pressure  control  of  an  oil  well 
+drilling system, by manipulating the choke valve and the mud pump, were presented as 
+an  alternative  way  to  improve  the  operational  effectiveness  of  the  managed  pressure 
+drilling (MPD) technology. 
+
+ 
+This  work  aim  a  comparison  between  the  two  MPC  algorithms  and  their 
+
+application and utilization on the pressure control of an oil well drilling process. 
+
+ 
+
+Keywords: MPC, MPD, oil well drilling, pressure control. 
+
+ 
+
+ 
+
+v 
+
+Sumário 
+ 
+
+Agradecimentos ............................................................................................................................ iii 
+
+Resumo ..........................................................................................................................................iv 
+
+Abstract ......................................................................................................................................... v 
+
+Lista de Tabelas ........................................................................................................................... viii 
+
+Lista de Figuras ............................................................................................................................. ix 
+
+Capítulo 1 .................................................................................................................................... 11 
+
+1.1 – Perfuração de Poços de Petróleo .................................................................................... 11 
+
+1.2 – Controle da Pressão no Poço ...................................................................................... 15 
+
+1.2.1 - Gradiente de pressão ................................................................................................ 15 
+
+1.2.2 – Técnicas de perfuração para o controle da pressão ................................................. 17 
+
+1.2.2.1 – Perfuração sobre balanceada (OBD) .................................................................... 18 
+
+1.2.2.2 – Perfuração sub-balanceada (UBD) ....................................................................... 18 
+
+1.3 – Objetivos do Trabalho .................................................................................................... 21 
+
+1.4 - Motivação ....................................................................................................................... 21 
+
+1.5 – Revisão do Estado da Arte ............................................................................................. 25 
+
+1.6 – Escopo do Trabalho ........................................................................................................ 29 
+
+Capítulo 2 .................................................................................................................................... 31 
+
+2.1 – Breve Histórico .............................................................................................................. 31 
+
+2.2 – Definição ........................................................................................................................ 32 
+
+2.3 – Técnicas MPD ................................................................................................................ 32 
+
+Capítulo 3 .................................................................................................................................... 35 
+
+3.1 – Introdução ...................................................................................................................... 35 
+
+3.2 – Modelo de Nygaard ........................................................................................................ 36 
+
+3.3 – Modelo de Stamnes ........................................................................................................ 41 
+
+ 
+
+vi 
+
+3.3 – Escolha do Modelo ......................................................................................................... 45 
+
+3.4 – Simulação em MatLab/Simulink® - Análise em Malha Aberta .................................... 46 
+
+Capítulo 4 .................................................................................................................................... 54 
+
+4.1 – Introdução ...................................................................................................................... 54 
+
+4.2 – LMPC Convencional - O Controlador QDMC .............................................................. 57 
+
+4.3 – NMPC Convencional ..................................................................................................... 60 
+
+Capítulo 5 .................................................................................................................................... 64 
+
+5.1 – Introdução .......................................................................................................................... 64 
+
+5.1 – Controle LMPC do Processo de Perfuração ................................................................... 65 
+
+5.3 – Controle NMPC do Processo de Perfuração .................................................................. 69 
+
+5.4 – Discussão de Resultados ................................................................................................ 74 
+
+Capítulo 6 .................................................................................................................................... 76 
+
+6.1 – Conclusões ..................................................................................................................... 76 
+
+6.2 – Trabalho Futuros ............................................................................................................ 77 
+
+Apêndice A .................................................................................................................................. 84 
+
+ 
+
+ 
+
+ 
+
+ 
+
+vii 
+
+ Lista de Tabelas  
+ 
+
+Tabela 1 - Parâmetros de simulação do modelo de Stamnes ...................................................... 46 
+
+Tabela 2 - Funções de transferência do modelo linear ................................................................ 65 
+
+Tabela 3 - Parâmetros de sintonia do controlador LMPC ........................................................... 65 
+
+Tabela 4 - Parâmetros de sintonia do controlador NMPC ........................................................... 70 
+
+ 
+
+ 
+
+viii 
+
+Lista de Figuras 
+ 
+
+Figura 1- Perfuração rotacional e caminho do fluido de perfuração ........................................... 12 
+
+Figura 2 - Sistema de circulação de lama .................................................................................... 13 
+
+Figura 3 - Perfil do gradiente de pressão de um poço ................................................................. 16 
+
+Figura 4 - Vazamento de óleo na plataforma Deepwater Horizon no Golfo do México. ........... 17 
+
+Figura 5 – Camada pré-sal .......................................................................................................... 22 
+
+Figura 6 - Localização do poço Tupi .......................................................................................... 23 
+
+Figura 7 - Esquema de uma estratégia MPD ............................................................................... 34 
+
+Figura 8 - Exemplo de uma sonda de perfuração ........................................................................ 35 
+
+Figura 9 - Balanço de massa no modelo de Nygaard .................................................................. 37 
+
+Figura 10 - Balanço de pressões no modelo de Nygaard ............................................................ 38 
+
+Figura 11 - Divisão do sistema proposto no modelo de Stamnes ............................................... 42 
+
+Figura 12 – Implementação do modelo de Stamnes em ambiente MatLab/Simulink® .............. 47 
+
+Figura 13 – Sequência de variações na abertura da válvula choke.............................................. 47 
+
+Figura 14 - Comportamento da pressão de fundo (    ) a variações na abertura da válvula 
+choke ........................................................................................................................................... 48 
+
+Figura 15 – Resposta dos estados a variações na abertura da válvula choke .............................. 49 
+
+Figura 16 – Variações na vazão da bomba de lama .................................................................... 49 
+
+Figura 17 - Comportamento da pressão de fundo a variações no fluxo da bomba de lama ........ 50 
+
+Figura 18 - Resposta dos estados a variações no fluxo de lama .................................................. 50 
+
+Figura 19 – Sequência de variações na vazão do influxo ............................................................ 51 
+
+Figura 20 - Comportamento da pressão de fundo a variações na vazão do influxo .................... 52 
+
+Figura 21 - Resposta dos estados a variações na vazão do influxo ............................................. 52 
+
+Figura 22 – Sequência de variações na vazão da bomba de pressão reversa .............................. 53 
+
+Figura 23 – Resposta da pressão de fundo à variações na vazão da bomba de pressão reversa.. 53 
+
+Figura 24 – Respostas dos estados a variações na vazão da bomba de pressão reversa ............. 53 
+
+ 
+
+ix 
+
+Figura 25 - Esquema de implementação dos algoritmos MPC ................................................... 56 
+
+Figura 26 - Estrutura de um sistema de controle MPC ............................................................... 57 
+
+Figura 27 – Controle MPC da coluna de perfuração ................................................................... 64 
+
+Figura 28 – Resposta da pressão de fundo com LMPC a variações no setpoint ......................... 66 
+
+Figura 29 - Comportamento das variáveis manipuladas com LMPC a variações no setpoint .... 66 
+
+Figura 30 - Resposta da pressão de fundo com LMPC a variação na vazão de influxo do 
+reservatório .................................................................................................................................. 67 
+
+Figura 31 - Comportamento das variáveis manipuladas com LMPC a variação na vazão de 
+influxo do reservatório ................................................................................................................ 67 
+
+Figura 32 - Resposta da pressão de fundo com LMPC a variação na vazão da bomba de pressão 
+reversa ......................................................................................................................................... 68 
+
+Figura 33 - Comportamento das variáveis manipuladas com LMPC a variação na vazão da 
+bomba de pressão reversa ............................................................................................................ 68 
+
+Figura 34 - Resposta da pressão de fundo com LMPC a perda de controle da válvula choke .... 69 
+
+Figura 35 - Comportamento das variáveis manipuladas com LMPC a perda de controle da 
+válvula choke ............................................................................................................................... 69 
+
+Figura 36 - Resposta da pressão de fundo com NMPC a variações no setpoint ......................... 70 
+
+Figura 37 - Comportamento das variáveis manipuladas com NMPC a variações no setpoint .... 71 
+
+Figura 38 - Resposta da pressão de fundo com NMPC a variação na vazão de influxo do 
+reservatório .................................................................................................................................. 71 
+
+Figura 39 - Comportamento das variáveis manipuladas com NMPC a variação na vazão de 
+influxo do reservatório ................................................................................................................ 72 
+
+Figura 40 - Resposta da pressão de fundo com NMPC a variação na vazão da bomba de pressão 
+reversa ......................................................................................................................................... 72 
+
+Figura 41 - Comportamento das variáveis manipuladas com NMPC a variação na vazão da 
+bomba de pressão reversa ............................................................................................................ 73 
+
+Figura 42 - Resposta da pressão de fundo com NMPC a perda de controle da válvula choke .... 73 
+
+Figura 43 - Comportamento das variáveis manipuladas com NMPC a perda de controle da 
+válvula choke ............................................................................................................................... 74 
+
+ 
+
+ 
+
+ 
+
+x 
+
+Capítulo 1 
+
+Introdução 
+
+ 
+
+1.1 – Perfuração de Poços de Petróleo 
+ 
+
+Para  satisfazer  o  aumento  da  demanda  por  petróleo  e  gás  em  escala  mundial,  há  uma 
+
+necessidade em encontrar novas reservas e extraí-las. As reservas restantes são mais difíceis 
+
+de  extrair  já  que  as  mais  acessíveis  já  foram  exploradas.  Desafios  relacionados  a  poços  de 
+
+perfuração  com  margens de pressão estreitas exigem um  controle de pressão preciso.  Assim 
+
+há uma demanda por novas tecnologias de perfuração que forneçam  um  controle de pressão 
+
+adequado (Hydro, 2007). 
+
+ 
+
+A perfuração de um poço consiste em perfurar a crosta terrestre objetivando a extração 
+
+de  recursos  naturais  tais  como  água,  gás  natural  ou  petróleo.  Os  primeiros  poços  foram 
+
+perfurados com o intuito de obter água diretamente de aquíferos, reserva de água subterrânea, 
+
+para suprir a necessidade de uma determinada localização. Porém com o desenvolvimento da 
+
+indústria e a urgência de obtenção de novas fontes de energia,  as técnicas de perfuração  até 
+
+então  conhecidas  foram  aprimoradas  permitindo  a  exploração  do  petróleo  subterrâneo  em 
+
+grande  escala,  tornando  a  indústria  petrolífera  um  dos  principais  expoentes  econômicos  da 
+
+sociedade atual. 
+
+ 
+
+Existem basicamente dois métodos de perfuração (Rosenblatt, 2010): 
+
+ 
+
+ 
+
+Perfuração percussiva; 
+
+Perfuração rotacional. 
+
+ 
+
+A  perfuração  percussiva  é  a  mais  antiga  das  técnicas  de  perfuração  de  poços.  Ela 
+
+consiste  em  golpear  a  rocha  utilizando  uma  broca  a  fim  de  fragmentá-la  através  do  seu 
+
+esmagamento.  É  um  método  lento  e  com  um  alcance  limitado,  sendo  pouco  utilizado 
+
+atualmente. 
+
+ 
+
+ 
+
+11 
+
+A  perfuração  rotacional  consiste  em  realizar  o  esmerilhamento  da  rocha  através  do 
+
+movimento  de  rotação  da  broca.  Um  fluido  é  bombeado  através  da  coluna  de  perfuração  e 
+
+retorna  pelo  anular,  espaço  compreendido  entre  a  coluna  de  perfuração  e  a  parede  do  poço 
+
+conforme a Figura 1, levando consigo o cascalho gerado por esse processo. Esse método pode 
+
+ser considerado como o atual padrão da indústria. 
+
+ 
+
+Figura 1- Perfuração rotacional e caminho do fluido de perfuração 
+
+ 
+
+ 
+
+A eliminação dos cascalhos produzidos ao longo da perfuração fica a cargo do sistema 
+
+de circulação do fluido de perfuração, neste caso lama ou lodo de perfuração, representado na 
+
+Figura  2.  Na  sonda,  encontra-se  um  reservatório  de  lama  de  perfuração  que  alimenta  uma 
+
+bomba de lama, responsável por injetá-la na coluna de perfuração. A cabeça de injeção separa 
+
+os elementos rotativos dos estacionários, com isso, somente permite a rotação dos elementos 
+
+encontrados  em  sua  parte  inferior,  como  coluna  de  perfuração,  broca  etc.  O  elemento 
+
+responsável por transmitir o movimento rotacional à coluna de perfuração é o kelly. 
+
+ 
+
+ 
+
+12 
+
+Após a passagem do lama pela coluna de perfuração, e seu eventual retorno pelo anular 
+
+com  os  cascalhos  provenientes  do  processo,  esse  lama  volta  ao  reservatório,  passando  pela 
+
+linha  de  retorno  e  posteriormente  por  uma  peneira  vibratória  com  o  intuito  de  separar  os 
+
+sólidos mais grosseiros do lama de perfuração. 
+
+ 
+
+Figura 2 - Sistema de circulação de lama 
+
+ 
+
+O lama de perfuração tem várias funções: 
+
+1. Arrastar os fragmentos de rocha para a superfície;  
+
+2. Limpar e esfriar a broca;  
+
+3. Atuar como lubrificante onde houver atrito;  
+
+4. Exercer uma contrapressão de forma a evitar a entrada de fluidos no poço;  
+
+5.  Evitar  que  os  fragmentos  de  rocha  se  sedimentem  no  fundo  nas  paradas  das 
+
+perfurações;  
+
+6. Obturar os orifícios das camadas porosas atravessadas na perfuração;  
+
+13 
+
+ 
+
+ 
+
+E as seguintes características:  
+
+ 
+
+1. Ser inerte em relação aos detritos;  
+
+2. Ser bombeável;  
+
+3. Proteger contra a corrosão e  
+
+4. Ser formada por materiais baratos e disponíveis.  
+
+ 
+
+A lama pode ser constituído a base de água ou a base de óleo. A água leva a vantagem 
+
+de ser mais disponível e refrigerar melhor e a desvantagem de encharcar tudo por onde passa, 
+
+desestabilizando  a  rocha.  As  lamas  a  base  de  óleo  tem  a  principal  desvantagem  de  serem 
+
+poluentes. Para dar propriedades pseudo-plásticas a lama, uma argila, por exemplo, bentonita, 
+
+é adicionada à água. Para dar mais densidade à lama e aumentar a contrapressão, um mineral 
+
+denso,  por  exemplo,  barita,  pode  ser  adicionada.  Outras  substâncias  podem  ser  adicionadas 
+
+para adequar as camadas que vão sendo atravessadas. 
+
+ 
+
+Existem no mercado diversas técnicas de perfuração de poços de petróleo, porém duas 
+
+delas  merecem  destaque,  a  perfuração  com  pressão  controlada  (MPD-  Managed  Pressure 
+
+Drilling) e a perfuração sub-balanceada (UBD – Underbalanced Drilling). Ambas as técnicas 
+
+consistem em executar ações de controle com o intuito de manter a pressão a um determinado 
+
+nível. A UBD visa manter o valor da pressão introduzida no poço abaixo do valor da pressão 
+
+do  fluido,  ao  longo  de  toda  a  formação  rochosa.  Já  a  MPD  é  utilizada  para  controlar 
+
+precisamente  o  perfil  da  pressão  anular  do  poço,  mantendo-a  dentro  de  um  determinado 
+
+gradiente,  definido  entre  a  pressão  de  fraturamento  (limite  superior)  e  a  pressão  dos  poros 
+
+(limite inferior). 
+
+ 
+
+O enfoque desses dois métodos é distinto. A UBD foca na preservação do reservatório e 
+
+na aquisição de dados do mesmo já que esse método visa manter a pressão sub-balanceada. A 
+
+MPD visa o processo de perfuração, tendo como objetivo a eliminação de problemas como a 
+
+perda  de  circulação  e  entupimento  do  cano.  Outra  distinção  desses  dois  métodos  é  com 
+
+relação  ao  equipamento  utilizado.  Para  a  UBD  é  necessário  um  equipamento  no  local  para 
+
+lidar com os hidrocarbonetos ali produzidos, tornando esse método mais caro se comparado a 
+
+MPD.  Além  disso,  algumas  agências  reguladoras  não  permitem  a  utilização  da  UBD  em 
+
+operações  offshore.  Em  termos  de  segurança,  o  método  MPD  pode  ser  considerado  mais 
+
+ 
+
+14 
+
+seguro, pois qualquer incidente com o fluxo durante a operação pode ser seguramente contido 
+
+através do seu sistema de controle.  
+
+MPD  é  uma  poderosa  tecnologia  emergente  para  controlar  precisamente  a  pressão  do 
+
+poço  dentro  de  uma  margem  estreita  de  pressão.  Ele  conta  com  certo  número  de  variáveis, 
+
+onde cada uma possui uma técnica diferente para controlar a pressão através da criação de um 
+
+sistema fechado de pressurização de lama. Enquanto MPD oferece capacidade de controlar a 
+
+pressão, ele cria uma complexidade operacional no sistema. Isso ocorre porque a MPD requer 
+
+diversas  ferramentas  (bombas,  válvulas  choke,  válvulas  em  geral,  etc.)  que  devem  ser 
+
+coordenadas  simultaneamente,  uma  tarefa  onde  operadores  humanos  podem  não  ser 
+
+particularmente  eficientes.  Uma  solução  para  esse  problema  é  o  uso  de  ferramentas  de 
+
+automação.  Essas  ferramentas  podem  confiavelmente  integrar  atividades  relativas  ao  MPD 
+
+usando uma hierarquia  multi-nível, permitindo aos operadores se concentrarem  nas decisões 
+
+de  mais  alto-nível,  enquanto  deixam  a  execução  das  atividades  de  nível  mais  baixo  para  a 
+
+automação (Breyholtz et al., 2010a). A tecnologia MPD aposta no emprego da automatização 
+
+do  processo,  tornando  o  sistema  mais  seguro  e  melhorando  seu  desempenho,  permitindo  ao 
+
+operador o controle da situação como um todo dando a ele a possibilidade de definir ações e 
+
+objetivos daquela determinada atividade. 
+
+ 
+
+1.2 – Controle da Pressão no Poço 
+
+1.2.1 - Gradiente de pressão 
+
+ 
+
+Para entender as técnicas de perfuração com pressão controlada é preciso antes explicar 
+
+os valores e tipos de pressão que são utilizados para compor a janela de gradiente de pressão 
+
+que  serve  como  parâmetro  para  manter  os  níveis  de  controle.  À  medida  que  o  poço  é 
+
+perfurado, o fluido de perfuração é circulado dentro dele para obter uma pressão de fundo de 
+
+poço  específica.  A  densidade  do  fluido  é  determinada  pelos  gradientes  da  pressão  de 
+
+formação e porosidade e pela estabilidade do poço (Martin, 2006). 
+
+ 
+
+Todas as formações penetradas pela broca de perfuração são porosas em algum grau. Os 
+
+espaços  porosos  podem  conter  fluidos  como:  petróleo,  gás,  água  salgada  ou  uma  mistura 
+
+deles. A pressão de porosidade é exercida pelos fluidos contidos nos espaços porosos (Skalle, 
+
+ 
+
+15 
+
+2009). Já a pressão de fraturamento é aquela onde o poço irá começar a apresentar avarias, ou 
+
+fraturar, sendo assim um ponto crucial na determinação da estabilidade do poço. 
+
+ 
+
+A  Figura  3  mostra  o  comportamento  do  perfil  de  um  gradiente  de  pressão  de  um 
+
+determinado  poço  relacionado  à  profundidade.  O  objetivo  ao  perfurar  o  poço  é  manter  a 
+
+pressão  de  lama  dentro  dessa  janela  delimitada  pela  pressão  de  porosidade  e  a  pressão  de 
+
+fraturamento.  É  fundamental  que  essa  janela  seja  mantida.  Quando  a  pressão  do  fluido  é 
+
+menor que a pressão de porosidade ocorre os chamados kicks. A denominação kick deriva do 
+
+fenômeno observado fora do poço, e quando ele acontece, o lama é lançado para fora dele. 
+
+ 
+
+ 
+
+Figura 3 - Perfil do gradiente de pressão de um poço 
+
+ 
+
+É necessária uma extrema cautela quando ocorrem os  kicks, pois caso esses não sejam 
+
+controlados  de  maneira  adequada  podem  levar  a  situações  de  blowout,  pondo  em  risco  a 
+
+segurança dos trabalhadores e, a depender do caso, podem inutilizar o reservatório. Além de 
+
+causar prejuízos financeiros e pessoais, esses acidentes podem vir a gerar um grave problema 
+
+ambiental  como  no  caso  do  acidente  ocorrido  em  2010  na  plataforma  Deepwater  Horizon, 
+
+localizada  no  Golfo  do  México  que  culminou  na  morte  de  11  funcionários  e  um  prejuízo 
+
+bilionário para a empresa detentora da plataforma, a BP (British Petroleum). 
+
+ 
+
+ 
+
+16 
+
+A Figura 4 mostra a extensão do acidente com a plataforma da BP. Com um vazamento 
+
+estimado em 205,8 milhões de galões de óleo desde o dia do acidente, em 20 de abril de 2010, 
+
+até o fechamento provisório do poço em 15 de Junho de 2010, essa tragédia deixou profundas 
+
+marcas  no  ecossistema  e  na  economia  local,  uma  vez  que  prejudicou  a  biodiversidade  bem 
+
+como a atividade pesqueira e o turismo na região. 
+
+ 
+
+Figura 4 - Vazamento de óleo na plataforma Deepwater Horizon no Golfo do México. 
+
+ 
+
+ 
+
+1.2.2 – Técnicas de perfuração para o controle da pressão 
+
+ 
+
+Com  as  reservas  atuais  de  petróleo  se  esgotando,  é  necessária  a  perfuração  de  poços 
+
+mais  profundos  e  complexos.  Alguns  profissionais  da  indústria  diriam  que  70%  das  atuais 
+
+reservas  offshore  são  economicamente  imperfuráveis  usando  técnicas  convencionais  de 
+
+perfuração (Coker, 2004), técnicas estas conhecidas como perfuração sobre balanceada (OBD 
+
+- Overbalanced Drilling). Assim, novas técnicas de perfuração foram implementadas, as quais 
+
+tomam  como  base  a  pressão  do  poço,  podendo  ser  colocada  uma  pressão  menor  ou  uma 
+
+pressão  igual  ao  gradiente  de  pressão  do  poço.  A  técnica  para  o  primeiro  caso  é  conhecida 
+
+como  perfuração  sub-balanceada  (UBD)  e,  para  o  segundo  caso,  perfuração  com  pressão 
+
+controlada (MPD), (Shayegi, 2007). 
+
+ 
+
+Cada uma dessas técnicas em especial possui suas vantagens e desvantagens que devem 
+
+ser analisadas caso a caso, verificando o perfil do poço que será perfurado bem como os riscos 
+
+ 
+
+17 
+
+e valores intrínsecos a cada operação. O conhecimento da área a ser explorada bem como das 
+
+técnicas  que  possam  ser  utilizadas  torna-se  fundamental  para  o  sucesso  do  processo  de 
+
+perfuração e da produtividade do poço em questão. 
+
+1.2.2.1 – Perfuração sobre balanceada (OBD) 
+
+ 
+
+A prática de manter uma pressão no poço que exceda a pressão dos poros é chamada de 
+
+perfuração sobre balanceada (OBD). Esse foi o método adotado na perfuração da maioria dos 
+
+poços desde o início do século 20 (Elliot et al., 2011). Esse método possui alguns reveses, tais 
+
+como: 
+
+ 
+
+ 
+
+Danos excessivos à formação, podendo levar o poço a um eventual colapso;  
+
+Possuir  gradiente  de  pressão  relativamente  pequeno,  o  que  torna  sua  operação 
+
+mais delicada e minuciosa a fim de evitar erros  que possam provocar problemas 
+
+no poço e àqueles que o operam, fazendo assim com que o processo de perfuração 
+
+mediante tal técnica seja menos seguro se comparado aos demais métodos; 
+
+ 
+
+Custo mais elevado, uma vez que para prevenir as perdas do fluido de perfuração 
+
+durante tal processo é necessária à utilização de diversos tubos de revestimento de 
+
+poços  para  manter  a  densidade  de  fluido  necessária  à  contenção  da  pressão  da 
+
+formação; 
+
+ 
+
+Possuir baixa taxa de penetração (ROP – Rate of Penetration), que é a velocidade 
+
+com  a  qual  a  broca  perfura  a  formação.  Uma  ROP  baixa  significa  uma  maior 
+
+lentidão  no  processo  de  perfuração,  fazendo  com  que  o  tempo  que  o  poço  passe 
+
+inativo seja maior que nos demais casos. 
+
+ 
+
+Por ser a técnica de perfuração mais antiga, é possível observar que a aplicabilidade da 
+
+OBD  pode  não  mais  suprir  as  necessidades  do  mercado  atual  que  busca  uma  maior 
+
+produtividade,  num  menor  tempo  com  custos  menores  e  cujos  riscos  sejam  pequenos.  Em 
+
+resposta  a  essa  tendência  da  indústria  petrolífera,  as  duas  técnicas  a  seguir  foram 
+
+desenvolvidas objetivando suplantar essas brechas proporcionadas pelo OBD. 
+
+ 
+
+1.2.2.2 – Perfuração sub-balanceada (UBD) 
+
+ 
+
+ 
+
+18 
+
+Quando a pressão hidrostática de um fluido de perfuração é intencionalmente projetada 
+
+para  ser  menor  que  a  pressão  da  formação  a  ser  perfurada,  essa  operação  será  considerada 
+
+perfuração sub-balanceada (UBD). Essa pressão hidrostática do fluido de perfuração pode ser 
+
+naturalmente menor que a pressão da formação ou pode ser induzida. O estado induzido pode 
+
+ser criado a partir da injeção de gás natural, nitrogênio, ou ar à fase líquida do fluido (AEUB, 
+
+1994). 
+
+ 
+
+Existem algumas técnicas para modificar a pressão hidrostática do fluido de perfuração 
+
+durante a UBD, sendo os mais conhecidos os seguintes (Perfuração Underbalanced, 2012): 
+
+ 
+
+Dry  air  –  Ou  empoeiramento,  como  também  é  conhecida,  consiste  na  utilização 
+
+de  compressores  de  ar  combinados  com  um  booster  (intensificadores  que 
+
+aumentam  a  pressão  do  ar  vindo  do  compressor,  mas  não  altera  o  seu  volume). 
+
+Além disso, uma pequena quantidade de fluido é injetada com o único objetivo de 
+
+diminuir a corrosão; 
+
+  Mist – Uma pequena quantidade de agente espumante é adicionada ao fluxo de ar 
+
+dando origem a uma “neblina” que remove os cascalhos resultantes da perfuração 
+
+até a superfície; 
+
+ 
+
+Foam  –  Semelhante  ao  Mist,  divergindo  somente  quanto  à  quantidade  de  agente 
+
+espumante  adicionada,  que  é  um  pouco  mais  elevada,  e  quanto  à  consistência, 
+
+nesse caso formam-se bolhas e são elas que auxiliam na eliminação dos cascalhos; 
+
+ 
+
+Stable  foam  –  Semelhante  ao  Mist  e  ao  Foam,  e  com  o  mesmo  objetivo,  porém 
+
+agora uma grande quantidade de agente espumante é adicionada ao fluxo de ar, a 
+
+consistência agora é semelhante a uma espuma de barbear; 
+
+ 
+
+Gasified  muds  –  Ar  ou  outro  gás,  como  nitrogênio,  é  injetado  à  lama  de 
+
+perfuração. 
+
+ 
+
+As principais  vantagens  desse método são a  redução de danos à formação, redução na 
+
+perda  de  circulação  e  aumento  no  ROP.  Quanto  às  desvantagens,  a  perfuração  UBD  é  mais 
+
+cara se comparada a outros métodos já que é necessária uma estrutura maior e uma quantidade 
+
+de equipamentos maior para tornar esse processo realizável. 
+
+ 
+
+1.2.2.3 – Perfuração com pressão controlada (MPD) 
+
+ 
+
+ 
+
+19 
+
+Este item é tratado com maiores detalhes no capítulo 2. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+20 
+
+1.3 – Objetivos do Trabalho 
+ 
+
+O objetivo principal deste trabalho é: 
+
+ 
+
+Estudo,  implementação  e  avaliação  mediante  simulações  computacionais  de  um 
+
+sistema  de  controle  avançado,  baseado  em  controle  preditivo  (MPC  –  Model  Predictive 
+
+Control),  para  manipulação  simultânea  da  bomba  de  lama  de  perfuração  e  válvula  choke  de 
+
+recirculação de lama, visando manter a pressão anular de fundo (BHP – Bottomhole Pressure) 
+
+no nível de operação desejado. 
+
+ 
+
+São objetivos secundários deste trabalho: 
+
+ 
+
+Propiciar  um  melhor  entendimento  do  problema  de  perfuração  e  avaliar  uma 
+
+determinada solução visando o pré-sal; 
+
+ 
+
+Aumentar  a  eficiência,  desempenho  e  segurança  nas  operações  de  perfuração  de 
+
+poços de petróleo; 
+
+ 
+
+Contribuir ao desenvolvimento de novas tecnologias de perfuração. 
+
+ 
+
+1.4 - Motivação 
+ 
+
+A camada pré-sal, Figura 5, compreende um conjunto de rochas que se encontra abaixo 
+
+da  camada  de  sal.  Sua  formação  ocorreu  em  períodos  anteriores  à  quebra  da  Gondwana,  o 
+
+supercontinente  formado  pelas  Américas  do  Sul  e  África,  há  milhões  de  anos  atrás.  Após  a 
+
+separação  do  supercontinente,  devido  aos  movimentos  das  placas  tectônicas,  uma  região 
+
+pantanosa  se  formou  no  fundo  da  fenda  originaria  dessa  separação.  Matéria  orgânica  se 
+
+misturou a partículas de calcário, argila e areia, dando origem a uma camada rochosa. Com a 
+
+continuidade das atividades tectônicas, água salgada passou  a invadir essa região pantanosa, 
+
+porém  ao  evaporar  deixava  uma  camada  de  sal.  A  continuidade  desses  depósitos  de  sal  deu 
+
+então origem à conhecida camada de sal, composta principalmente por halita e anidrita (Como 
+
+foi formada a camada do Pré-sal, 2010). 
+
+ 
+
+As  rochas  que  compõem  os  reservatórios  da  camada  pré-sal  são  formadas  por 
+
+carbonatos  microbiais  ou microbiolitos,  colônia de cianobactérias mortas e calcificadas. Sua 
+
+complexidade  vai  além  da  baixa  porosidade  e  da  possibilidade  de  permeabilidade.  Por  ser 
+
+ 
+
+21 
+
+uma formação de ocorrência cujos precedentes são raros, pouco se sabe sobre a sua estrutura e 
+
+comportamento com relação à recuperação de óleo (Fraga, 2008). 
+
+ 
+
+ 
+
+Figura 5 – Camada pré-sal 
+
+ 
+
+Esses  reservatórios  da  camada  pré-sal  podem  ser  encontrados  ao  longo  da  costa 
+
+brasileira numa área compreendida entre a região Nordeste e Sul, na costa Oeste africana bem 
+
+como no Golfo do México. O pré-sal recebeu esse nome por ser uma região cujo deposito de 
+
+materiais rochosos ocorreu de forma anterior à formação da camada de sal, dessa forma sua 
+
+profundidade pode chegar a superar os 7.000 metros com relação à superfície marítima. 
+
+ 
+
+A  descoberta  da  camada  pré-sal  gerou  uma  especulação  sobre  a  sua  capacidade  de 
+
+produção de petróleo. No Brasil diversos testes foram realizados, sendo o teste no poço agora 
+
+nomeado  Tupi,  cuja  profundidade  ultrapassou  os  5.000  metros  da  superfície  marítima,  que 
+
+atestou positivamente os indícios de produção petrolífera dessa camada. Após isso, mais sete 
+
+poços  foram  perfurados  e  todos  reafirmam  a  existência  de  petróleo  nessa  região  (Entenda  o 
+
+que é a Camada Pré-Sal, 2010). 
+
+ 
+
+ 
+
+22 
+
+A perfuração do poço Tupi foi somente o início das descobertas a cerca do pré-sal. Em 
+
+uma faixa compreendida entre os litorais de Espírito Santo e Santa Catarina, testes realizados 
+
+detectaram a presença de um grande volume de óleos leves e de alta qualidade, podendo vir a 
+
+produzir uma elevada quantidade de barris por dia, com expectativas de superação, em termos 
+
+de  produção,  dos  poços  da  camada  de  sal  hoje  explorados  na  região  (Entenda  o  que  é  a 
+
+Camada Pré-Sal, 2010). 
+
+ 
+
+Figura 6 - Localização do poço Tupi 
+
+ 
+
+ 
+
+Com  a  confirmação  da  existência  de  petróleo  nessa  região,  ocorrem  também  as 
+
+problemáticas  com  relação  à  sua  exploração.  O  desconhecimento  do  comportamento  das 
+
+rochas dessa camada, as elevadas profundidades e consequentemente pressão e temperatura e 
+
+a distância com relação ao litoral, são exemplos de desafios que deverão ser vencidos para só 
+
+assim começar efetivamente a exploração do pré-sal (COPPE, 2009).  
+
+ 
+
+O  principal  custo  para  o  pré-sal  está  na  perfuração  dos  poços,  a  qual  exige 
+
+equipamentos complexos, tais como sondas em alto mar, e a busca por novas soluções para os 
+
+diversos problemas da perfuração, visando aumentar a eficiência e reduzir o tempo e custo da 
+
+operação.  A  exemplo  do  poço  Tupi,  a  distância  entre  esses  poços  e  a  costa  brasileira  pode 
+
+superar  os  300  km,  com  isso,  todo  um  aparato  logístico  de  apoio  em  alto-mar  deve  ser 
+
+preparado  para  transportar  funcionários,  equipamentos,  matérias  etc.  Além  disso  todo  um 
+
+ 
+
+23 
+
+sistema de ancoragem e operação de poço deve ser idealizado para suprir a necessidade dessas 
+
+plataformas (COPPE, 2009). 
+
+ 
+
+Com relação à profundidade, por superar os 5.000 metros, ela exige uma maior cautela 
+
+com  relação à perfuração desses poços  e  a extração dos óleos lá encontrados. Para atingir a 
+
+camada pré-sal será necessário ultrapassar 1 km de lâmina d’água, 2 km de sedimentos e mais 
+
+2 km da camada de sal, sendo que essa última possui um comportamento de difícil previsão já 
+
+que  ela  age  como  uma  massa  plástica  impermeável,  que  volta  a  se  fechar  poucos  instantes 
+
+após aberto o poço. Além disso, a presença do sal provoca distorções nas ondas sísmicas que 
+
+são  emitidas  na  região  com  o  intuito  de  averiguar  a  estrutura  geológica  em  análise, 
+
+dificultando a obtenção de dados sobre as camadas adjacentes. Uma tecnologia de perfuração 
+
+e de revestimento de poços mais avançada do que as hoje utilizadas se faz necessária para só 
+
+assim  evitar  um  colapso  nas  paredes  do  poço  e  amenizar  os  efeitos  da  plasticidade  do  sal 
+
+(COPPE, 2009). 
+
+ 
+
+Como  a  pressão  e  temperatura  são  características  intimamente  ligadas  à  profundidade, 
+
+quanto mais profundo for o poço, maior a pressão com que o óleo ou gás sairá dele e maior a 
+
+diferença  de  temperatura  à  qual  essa  produção  será  submetida.  Dutos  para  escoá-la  deverão 
+
+ser projetados para aguentar pressões de até 400 atm, cerca de 400 vezes maior que a pressão 
+
+no nível do mar, e uma gradiente de temperatura que pode variar entre 150° C e 4° C. Esse 
+
+choque térmico pode vir a causar entupimento dos dutos, ou risers, com a possível coagulação 
+
+do óleo, demandando assim a necessidade da inserção de um produto químico que seja capaz 
+
+de evitar que isso ocorra (COPPE, 2009). 
+
+ 
+
+A hostilidade do ambiente onde estão inseridas as rochas do pré-sal é outro ponto a ser 
+
+vencido.  A  presença  abundante  de  gases  corrosivos  como  o  dióxido  de  carbono  (CO2)  e  o 
+
+ácido sulfídrico (H2S) nessa região exigem a utilização de materiais capazes de suportar esses 
+
+efeitos  por  um  longo  tempo,  dada  a  dificuldade  de  manutenção  das  peças  aí  localizadas.  A 
+
+presença  de  grande  quantidade  de  CO2  nos  reservatórios  prejudica  também  o  escoamento. 
+
+Essa  quantidade  aumentada  desse  gás  pode  formar  padrões  de  escoamento  que  aumentam  a 
+
+perda  de  carga  exigindo  consequentemente  um  aumento  na  pressão  para  que  esse  fluido 
+
+continue a escoar normalmente pela tubulação. Com um aumento das perdas a produtividade 
+
+se reduz e há um aumento do custo de produção (COPPE, 2009). 
+
+ 
+
+24 
+
+A  exploração  da  camada  pré-sal  vai  exigir  antes  de  tudo  um  investimento  no  setor  de 
+
+pesquisa e tecnologia devido à inedicidade dessas operações, as adversidades encontradas no 
+
+local e de um conhecimento um tanto quanto escasso se comparada à exploração das demais 
+
+camadas.  O  início  das  atividades  ligadas  a  essa  região  não  será  algo  imediato,  mas  a 
+
+superação  desses  desafios  é  possível  e  estão  fortemente  ligados  a  um  esforço  coletivo  e 
+
+multitarefa  envolvendo  diversos  setores  da  sociedade  acadêmica  e  desenvolvedora  de 
+
+tecnologia (COPPE, 2009). 
+
+ 
+
+1.5 – Revisão do Estado da Arte 
+ 
+
+Baseada na dificuldade de perfurar novos poços, sendo que estes por ventura podem se 
+
+encontrar em ambientes hostis, e vista a necessidade de prover maior segurança para aqueles 
+
+envolvidos nesse processo, a perfuração de poços usando a técnica MPD vem sendo alvo de 
+
+inúmeros estudos e publicações na área, alguns dos quais são resumidamente apresentados a 
+
+seguir: 
+
+ 
+
+  Martim (2006) observou que ao passo que a demanda por novos poços aumenta, 
+
+principalmente aqueles localizados em águas profundas, é necessário uma técnica 
+
+mais  eficiente  que  reduza  não  só  os  custos  do  processo,  em  especial  os 
+
+relacionados  ao  valor  excessivo  da  lama  de  perfuração,  como  também  mitigue 
+
+alguns  problemas  tais  como  entupimento  nos  dutos,  perdas  de  circulação,  etc.  A 
+
+introdução  da  MPD,  possibilita  a  solução  desses  problemas, 
+
+tornando 
+
+economicamente viável perfurar poços onde anteriormente não seriam possíveis. 
+
+ 
+
+Nygaard  et  al.  (2006)  apresentaram  um  esquema  de  controle  proporcional-
+
+integrativo  (PI)  e  controle  preditivo  não  linear  (NMPC)  para  estabilizar  a  BHP 
+
+(Bottomhole  Pressure  –  Pressão  de  fundo)  durante  o  processo  de  perfuração  de 
+
+poços  de  petróleo.  Os  parâmetros  do  controlador  PI  foram  estimados  através  do 
+
+método  de  Ziegler-Nichols  em  malha  fechada.  Resultados  de  simulações 
+
+numéricas  evidenciaram  que  o  esquema  de  controle  manual  apresentou 
+
+desempenho  inferior  aos  esquemas  de  controle  PI  e  NMPC.  No  entanto,  no 
+
+esquema  de  controle  PI,  foi  necessário  re-estimar  os  parâmetros  do  controlador 
+
+quando as condições de operação se afastavam das condições originais de projeto. 
+
+ 
+
+25 
+
+ 
+
+Stamnes  (2007)  manifesta  que  o  controle  da  pressão  durante  o  processo  de 
+
+perfuração é de extrema importância para prevenir influxo no reservatório, o que 
+
+poderia  levar  a  um  blowout  e  consequentemente  a  uma  tragédia  ambiental  e 
+
+econômica, e resultar também na perda de vidas humanas. Além disso, controlar a 
+
+pressão  na  perfuração  pode  evitar  danos  à  parede  do  reservatório  e  eventuais 
+
+colapsos na sonda. Com isso ele desenvolveu um observador adaptativo que pode 
+
+ser utilizado em controladores que  por ventura  viessem  a ser desenvolvidos para 
+
+tal finalidade. 
+
+ 
+
+Para  compensar  a  falta  de  medições  contínuas  da  BHP  durante  as  operações  de 
+
+perfuração, Breyholtz (2008) apresenta um observador adaptativo capaz de inferir 
+
+a  BHP  e  o  coeficiente  de  fricção  no  poço.  O  observador  é  então  usado  no 
+
+desenvolvimento  de  um  NMPC  para  manter  pressão  dentro  de  limites  pré-
+
+estabelecidos.  O  desempenho  do  observador  e  do  NMPC  são  testados  por 
+
+simulações usando um pacote comercial, com resultados muito promissores. 
+
+ 
+
+Zhou  et  al.  (2008)  apresentam  um  esquema  de  controle  baseado  em  um 
+
+observador não-linear para estabilizar e seguir assintoticamente o perfil da BHP, 
+
+manipulando a válvula choke e a bomba de pressão reversa. Um modelo dinâmico 
+
+simples,  que  captura  o  fenômeno  dominante  do  processo  de  perfuração,  é  usado 
+
+na implementação do observador e do controlador. O observador é desenvolvido 
+
+usando  técnicas  de  Lyapunov,  para  estimar  o  estado  não-medido.  Simulações 
+
+apresentadas ilustram a efetividade do esquema de controle proposto. 
+
+ 
+
+Stamnes  et  al.  (2008)  desenvolvem  um  observador  de  ordem  reduzida  para 
+
+estimar  o  coeficiente  de  fricção,  densidade  e  BHP  de  um  poço  durante  a 
+
+perfuração. O projeto se baseia no uso de um  modelo  não-linear de  3ª  ordem  de 
+
+um sistema MPD e de uma abordagem via Lyapunov. Aplicação do observador a 
+
+dados provenientes de um poço de petróleo no Mar do Norte mostra que a pressão 
+
+estimada converge à pressão verdadeira sob condições razoáveis de operação. 
+
+ 
+
+Li  et  al.  (2009)  propõem  um  esquema  controlador-estimador  integrado  para 
+
+controlar a BHP de um sistema de perfuração. Um estimador adaptativo rápido é 
+
+aplicado para estimar os estados não-medidos, os quais são usados no controlador 
+
+adaptativo      que  se  adapta  a  perturbações  e  parâmetros  variantes  no  tempo  do 
+
+sistema.  Simulações  numéricas  mostram  que  o  controlador  tem  desempenho 
+
+garantido, verificando os resultados teóricos. 
+
+ 
+
+26 
+
+ 
+
+Breyholtz et al. (2009) avaliam a aplicação de um NMPC, baseado em um modelo 
+
+de ordem reduzida, na coordenação da abertura da válvula choke e das vazões da 
+
+bomba  principal  de  lama  e  da  bomba  de  pressão reversa  no  controle  da  BHP.  O 
+
+desempenho  do  NMPC  é  comparado  com  o  desempenho  de  um  controlador  PI, 
+
+sendo  o  desenvolvimento  de  ambos  os  sistemas  de  controle  combinado  com  um 
+
+observador  da  pressão  de  fundo.  Os  controladores  são  avaliados  por  simulações 
+
+numéricas  usando  um  modelo  de  alta  fidelidade  com  dados  de  um  processo  de 
+
+perfuração offshore no  Mar do Norte. Resultados das simulações mostram  que o 
+
+NMPC  melhora  o  controle  da  BHP  e  simplifica  de  forma  significativa  os 
+
+procedimentos para a equipe de perfuração. 
+
+ 
+
+Breyholtz  et  al.  (2010a)  introduzem  o  conceito  de  controle  multi-camadas  nas 
+
+operações  MPD.  O  controle  hierárquico  é  composto  de  três  diferentes  camadas: 
+
+um  nível  inferior  de  malhas  independentes  de  controle  regulatório;  um  nível 
+
+intermediário  de  controle  supervisório  baseado  em  MPC,  que  coordena  os 
+
+diferentes controladores de malha, otimizando-os; e finalmente um nível superior 
+
+de  otimização  que  tenta  encontrar  metas  operacionais  enquanto  maximiza  os 
+
+aspectos  econômicos  da  operação.  Resultados  das  simulações  mostraram  que  o 
+
+controle  proposto  foi  capaz  de  manter  a  BHP  no  valor  desejado  com  pequenos 
+
+desvios durante períodos transitórios. 
+
+ 
+
+Breyholtz  et  al.  (2010b)  usam  um  MPC  para  controlar  a  BHP  e  a  posição  do 
+
+gancho  de  sustentação  da  coluna  de  perfuração,  para  evitar  a  ocorrência  de 
+
+deslizes  da  coluna,  manipulando  a  bomba  de  lama,  a  bomba  submarina  e  a 
+
+velocidade  da  broca  em  um  sistema  de  perfuração  com  gradiente  dual,  uma 
+
+variante MPD. Simulações realizadas em um modelo de alta fidelidade atestaram 
+
+a  habilidade  do  controlador  em  manter  as  variáveis  do  processo  dentro  das  suas 
+
+restrições  operacionais,  comprovando  o  MPC  como  a  escolha  natural  para  esses 
+
+tipos de sistemas. 
+
+ 
+
+Carvalho  Neto  (2010)  propôs  um  MPC  baseado  em  múltiplos  modelos  lineares 
+
+para controlar a BHP pela manipulação da válvula choke. O MPC multi-modelos 
+
+é  desenvolvido  em  dois  estágios.  No  estágio  off-line,  modelos 
+
+lineares 
+
+identificados  em  determinados  pontos  de  operação  são  usados  para  construir  um 
+
+banco  de  controladores  MPC  sem  restrições.  No  estágio  on-line,  resolve-se  um 
+
+problema de otimização com restrições, combinando os controladores obtidos no 
+
+ 
+
+27 
+
+primeiro  estágio.  Simulações  realizadas  mostraram  a  efetividade  e  maior 
+
+desempenho  do  MPC  proposto  quando  comparado  ao  desempenho  de  um  MPC 
+
+convencional baseado num único modelo. 
+
+ 
+
+Zhou  et  al.  (2010)  desenvolveram  um  sistema  de  controle  chaveado  para 
+
+regulação  da  BHP,  manipulando  a  válvula  choke  e  a  bomba  de  pressão  reversa. 
+
+Um  modelo  matemático  simples,  que  descreve  os  fenômenos  dominantes  do 
+
+sistema  de  perfuração,  forma  a  base  para  o  projeto  do  observador  e  do 
+
+controlador.  Propriedades  de  estabilidade  assintótica  são  estabelecidas  e  a 
+
+atenuação de  kick é garantida, para um  conjunto de modelos de poços, incluindo 
+
+os  mais  comuns.  Simulações  efetuadas  com  um  simulador  de  alta  fidelidade 
+
+mostraram a efetividade do esquema de controle proposto. 
+
+ 
+
+Helgestad (2010)  desenvolve um  modelo simplificado em  estado  estacionário de 
+
+um processo de perfuração o qual é usado para otimizar o processo. O objetivo da 
+
+otimização é a minimização do custo total da perfuração, incluindo  as operações 
+
+ativas  e  não-ativas  (tempo  para  realizar  as  conexões  dos  tubos,  viagens  de 
+
+perfuração  etc)  do  processo.  A  razão  para  a  separação  nos  modos  operação  do 
+
+processo  é  a  diferença  de  objetivos  de  controle.  Variáveis  controladas  foram 
+
+identificadas,  do  ponto  de  vista  de  controle  auto-otimizante,  para  atingir  a  perda 
+
+mínima quando o processo está sujeito a perturbações esperadas. Finalmente, um 
+
+modelo  dinâmico  simplificado  foi  usado  para  simular  o  desempenho  de  uma 
+
+estrutura de controle, baseada em controladores PI, implementada para controlar a 
+
+BHP  pela  manipulação  da  bomba  de  pressão  reversa  e  a  válvula  choke.  A 
+
+estrutura  de  controle  foi  capaz  cumprir  os  objetivos  estabelecidos,  mantendo  a 
+
+BHP dentro de uma janela de pressão de    bar. 
+
+ 
+
+Bellumat  et  al.  (2011)  fazem  um  estudo  de  controlabilidade  de  um  processo  de 
+
+perfuração,  visando  obter  o  melhor  emparelhamento  entrada/saída  para  o 
+
+desenvolvimento de controladores PI multi-malha. As saídas   consideradas são a 
+
+BHP  e  a  ROP,  tendo  como  entradas  manipuladas  a  abertura  da  válvula  choke,  a 
+
+vazão  da  bomba  de  lama,  a  rotação  da  coluna  e  o  peso  sobre  a  broca.  O  estudo 
+
+conclui que a BHP  é  controlada de forma mais  eficiente  através da manipulação 
+
+da  abertura  da  válvula  choke  do  que  empregando  a  vazão  da  bomba  de  lama. 
+
+Além  disso,  a  rotação  da  coluna  e  o  peso  sobre  a  broca  apresentam  a  mesma 
+
+eficiência no controle da ROP. 
+
+ 
+
+28 
+
+ 
+
+Kaasa et al. (2011) propuseram um modelo simplificado, baseado na dinâmica de 
+
+fluidos, que captura as características hidráulicas dominantes de um sistema MPD. 
+
+Aplicando  algoritmos  de  estimação  de  parâmetros  on-line,  o  modelo  é  calibrado 
+
+automaticamente, usando medições de variáveis existentes, para alcançar um nível 
+
+de  precisão  adequado,  comparável  a  um  modelo  mais  rigoroso.  Resultados  são 
+
+demonstrados  usando  dados  reais  de  um  sistema  MPD  em  operação  no  Mar  do 
+
+Norte. 
+
+ 
+
+1.6 – Escopo do Trabalho 
+ 
+
+O corpo do presente trabalho de conclusão de curso está estruturado da seguinte forma: 
+
+ 
+
+Capítulo  1  –  Introdução.  Este  capítulo  apresenta  uma  breve  explanação  sobre  o 
+
+processo de perfuração de poços de petróleo, as principais técnicas aplicadas, bem 
+
+como  os objetivos do trabalho,  a motivação para  o desenvolvimento do mesmo  e 
+
+uma revisão bibliográfica de trabalhos correlatos publicados na literatura. 
+
+ 
+
+Capítulo  2  –  Perfuração  com  Pressão  Controlada  (MPD).  Neste  capítulo 
+
+aborda-se  com  maiores  detalhes  a  técnica  de  perfuração  com  pressão  controlada, 
+
+técnica  que  vem    sendo  atualmente  amplamente  adotada  nos  processos  de 
+
+perfuração de poços de petróleo. 
+
+ 
+
+Capítulo  3  –  Modelagem  do  Processo  de  Perfuração.  Este  capítulo  apresenta 
+
+dois modelos de ordem reduzida, amplamente divulgados na literatura, que tratam 
+
+de  descrever  o  processo  de  perfuração.  Discute-se  a  escolha  do  modelo  a  ser 
+
+utilizado  neste  trabalho  para  representar  o  processo,  assim  como  uma  análise  da 
+
+resposta dinâmica do mesmo a perturbações nas condições de operação nominal. 
+
+ 
+
+Capítulo 4 – Teoria de Controle Preditivo (MPC). Este capítulo trata da teoria 
+
+básica  dos  controladores  MPC  convencionais,  linear  (LMPC)  e  não-linear 
+
+(NMPC),  que  serão  usados  no  desenvolvimento  do  sistema  de  controle  avançado 
+
+proposto neste trabalho. 
+
+ 
+
+Capítulo 5 – Controle Preditivo do Processo de Perfuração. Neste capítulo são 
+
+mostrados  os  resultados  das  aplicações  dos  controladores  LMPC  e  NMPC.  Os 
+
+desempenhos  destes  controladores  são  discutidos  e  comparados,  quando 
+
+submetidos a diversas condições de operação.  
+
+ 
+
+29 
+
+ 
+
+Capítulo 6 – Conclusões e Recomendações. Aqui são apresentadas as conclusões 
+
+gerais do trabalho assim como algumas propostas para dar continuidade ao projeto. 
+
+ 
+
+30 
+
+Capítulo 2 
+
+Perfuração com Pressão Controlada 
+
+(MPD) 
+
+ 
+
+2.1 – Breve Histórico 
+
+ 
+
+Os  conceitos  das  diversas  técnicas  que  compõem  a  MPD  não  são  exatamente  novos. 
+
+Ideias  iniciais  surgiram  no  século  XV,  com  os  esboços  de  Leonardo  da  Vinci,  e  foram 
+
+efetivadas recentemente em 2003. O MPD é resultado da observação e evolução do processo 
+
+de  perfuração  partindo  dos  métodos  tradicionais  de  perfuração  OBD  e  alcançando  outro 
+
+patamar na tentativa de otimizar a UBD (Tercan, 2010). 
+
+ 
+
+Os  dispositivos  RCD  foram  mostrados  pela  primeira  vez  em  1937  no  catálogo  da 
+
+Shaffer  Tool  Company.  Essas  ferramentas  permitiram  dar  início  a  perfuração  com  fluidos 
+
+compressíveis  tais  como  gás,  ar,  névoa  e  espuma,  processo  que  ficou  conhecido  com 
+
+performance  drilling  (PD).  Essa  técnica  viabilizou  uma  melhora  nos  índices  de  penetração, 
+
+uma maior durabilidade das brocas e permitiu a redução de custos na indústria da perfuração 
+
+(Tercan, 2010). 
+
+ 
+
+Algumas idéias MPD foram formalmente apresentadas nos anais do Abnormal Pressure 
+
+Symposium,  realizados  na  Universidade  do  Estado  da  Louisiana  entre  os  anos  1967  e  1972. 
+
+Esses simpósios visavam discutir e avaliar técnicas parar prever as pressões no fundo do poço 
+
+e  gradiente  de  fraturamento  a  partir  de  dados  disponíveis.  Em  1970,  houve  a  primeira  real 
+
+tentativa  de  realizar  uma  perfuração  controlada.  Uma  empresa  de  petróleo  perfurou  kick  to 
+
+kick  de  forma  a  evitar  perdas  com  o  retorno  e  aumentar  a  taxa  de  perfuração,  essa  tentativa 
+
+ocorreu em um poço offshore no Golfo do México (Tercan, 2010). 
+
+ 
+
+Com  o  passar  do  tempo,  o  uso  dos  RCD’s  foi  aprimorado  e  com  isso  houve  a 
+
+possibilidade de manipular de forma precisa o perfil da pressão hidráulica do anular. Assim, 
+
+em  2003,  foi  finalmente  reconhecida  a  técnica  MPD.  Desde  2005,  a  técnica  vem  sendo 
+
+31 
+
+ 
+
+amplamente aplicada o que ocasionou o aumento de sua popularidade tanto na indústria como 
+
+na academia (Tercan, 2010). 
+
+ 
+
+2.2 – Definição 
+
+ 
+
+Segundo  a  IADC  (International  Association  of  Drilling  Contactors),  MPD  é  um 
+
+processo  de  perfuração  adaptativo  usado  para  controlar  de  maneira  mais  precisa  o  perfil  da 
+
+pressão anular em todo o poço. Os objetivos são verificar a os limites da pressão de fundo do 
+
+ambiente  e  manipular  o  perfil  da  pressão  hidráulica  de  acordo  com  esses  limites.  Isso  pode 
+
+incluir o controle da pressão de retorno usando um sistema de circulação de  lama fechado e 
+
+pressurizado, bomba de fundo ou qualquer outro equipamento mecânico. A MPD geralmente 
+
+evitará o fluxo para dentro do poço (Rehm et al., 2008). 
+
+ 
+
+A  MPD  pode  ser  adaptativa  às  condições  propostas  pelo  poço.  Para  isso,  esse  método 
+
+utiliza  um  fluido  de  perfuração  monofásico  com  o  intuito  de  minimizar  as  perdas  causadas 
+
+pelo  atrito  durante  o  escoamento  (Rehm  et  al.,  2008)  Além  disso,  a  técnica  MPD  apresenta 
+
+uma redução significativa no tempo não produtivo (NPT), o que é uma característica bastante 
+
+apreciada na indústria petrolífera, pois dessa forma pode vir a minimizar os gastos e elevar os 
+
+ganhos. 
+
+ 
+
+2.3 – Técnicas MPD 
+
+ 
+
+As principais técnicas MPD são (Rehm et al., 2008): 
+
+ 
+
+Pressão  de  fundo  constante  (CBHP  –  Constant  Bottomhole  Pressure)  –  Onde  as 
+
+ações de controle são tomadas para corrigir ou reduzir o efeito da perda causada 
+
+pelo atrito durante a circulação de lama, de forma a manter a pressão dentro dos 
+
+limites impostos pela pressão de porosidade e pressão de fraturamento. 
+
+ 
+
+Perfuração  com  camada  de  lama  pressurizada  (PMCD  –  Pressurized  Mud-cap 
+
+Drilling)  –  É  uma  técnica  de  perfuração  sem  retornos  (perfuração  sem  riser)  à 
+
+superfície e com uma coluna de fluido no anular mantida cheia, com o fluido de 
+
+perfuração  juntamente  com  os  cascalhos  produzidos  pelo  processo,  sobre  a 
+
+formação,  A  coluna  de  fluido  no  anular  requer  uma  pressão  de  superfície 
+
+32 
+
+ 
+
+observável  para equilibrar a pressão de fundo. Essa técnica é segura com o total 
+
+retorno das perdas geradas pela perfuração. Além disso, é uma técnica viável em 
+
+áreas  onde  outras  maneiras  de  perfuração  que  preveem  as  perdas  não  são 
+
+aplicáveis  ou  são  mais  caras.  Ela  pode  usar  água  como  fluido  durante  a 
+
+perfuração. 
+
+ 
+
+Gradiente  dual  (DG  –  Dual  Gradiente)  –  Termo  utilizado  para  as  mais  variadas 
+
+tentativas de controlar a pressão anular de topo através do manuseio da densidade 
+
+de circulação equivalente (ECD – Equivalente Circulating Density), em operações 
+
+de perfuração em águas profundas. 
+
+ 
+
+No tocante ao nível de planejamento e otimização, decisões são tomadas visando obter 
+
+valores  para  as  variáveis  como  trajetória  de  perfuração,  peso  na  broca,  RPM  da  haste  de 
+
+perfuração  e  modo  de  perfuração.  No  nível  de  controle,  variáveis  como  pressão,  taxa  de 
+
+escoamento, densidade e viscosidade do lama são continuamente usados para fazer ajustes ou 
+
+manipular  variáveis  como  a  taxa  de  escoamento  da  bomba,  válvulas  choke,  velocidade  da 
+
+haste  de  perfuração  entre  outras  baseadas  em  otimização  em  tempo  real.  O  objetivo  dessas 
+
+ações  é  maximizar  a  ROP  juntamente  com  objetivos  adicionais  tais  como  minimizar  o 
+
+desgaste da broca de perfuração, diminuir a necessidade da utilização de químicos e aditivos, 
+
+etc.  Da  mesma  forma,  otimização  em  tempo  real  assegura  que  um  número  explícito  de 
+
+restrições  seja  satisfeito,  sendo  a  mais  crítica  dessas  restrições  os  limites  de  pressão 
+
+(Breyholtz et al, 2010a). 
+
+ 
+
+A Figura 7 representa um sistema MPD. Este sistema utiliza um dispositivo de controle 
+
+de  rotação  (RCD  –  Rotating  Control  Device)  para  selar  o  anular,  uma  válvula  choke  e  uma 
+
+bomba  de  pressão  reversa.  A  aplicação  desse  hardware  permite  ao  operador  controlar  mais 
+
+precisamente  o  perfil  de  pressão  no  poço.  Porém  ao  inserir  uma  instrumentação  adicional 
+
+juntamente com esse hardware, o sistema torna-se mais complexo, o que dificulta ao operador 
+
+manter  o  processo  controlado.  A  implementação  de  um  sistema  de  controle  utilizando  a 
+
+válvula choke vem sendo discutida em diversos artigos (Zhou, 2008; Zhou, 2009; Zhou, 2010; 
+
+Nygaard et  al.  2007a, 2007b;  Kaasa et  al,  2011;  Stamnes et  al,  2008; Breyholtz et  al,  2009;  
+
+Breyholtz et al, 2010;  Helgestad, 2010; Erdem, 2010; Li et al, 2009). Sua aplicação auxilia o 
+
+operador,  tornando  mais  viável  sua  tarefa.  A  aplicação  desse  sistema  já  foi  testada  com 
+
+ 
+
+33 
+
+sucesso em algumas perfurações offshore, o que representa um avanço no controle da pressão 
+
+durante a perfuração de poços. 
+
+ 
+
+ 
+
+Figura 7 - Esquema de uma estratégia MPD 
+
+ 
+
+Integrar  toda  essa  variedade  de  informações  obtidas  do  sistema  requer  uma  definição 
+
+dos níveis de abstração de cada dado obtido. Para tanto, é necessária uma definição do nível 
+
+hierárquico  de  cada  tarefa  para  só  assim  ter  uma  melhor  visão  do  processo  como  um  todo 
+
+para,  com  isso,  ver  como  a  informação  irá  ser  processado  com  o  intuito  de  melhorar  o 
+
+desempenho  do  controle.  Quanto  mais  complexo  o  sistema  a  ser  controlado,  mais  níveis 
+
+hierárquicos ele possui (Breyholtz et al., 2010a). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+34 
+
+Capítulo 3 
+
+Modelagem do Processo de Perfuração 
+
+ 
+
+3.1 – Introdução 
+
+ 
+
+A  Figura  8  ilustra  o  exemplo  de  uma  sonda  marítima  de  perfuração  de  um  poço  de 
+
+petróleo. A coluna de perfuração é presa ao top drive, um motor responsável pela rotação da 
+
+coluna, que se situa na parte superior do mastro ou derrick. A essa coluna é permitida também 
+
+uma  movimentação  vertical  uma  vez  que  o  top  drive  encontra-se  preso  a  um  ganho, 
+
+permitindo  que  a  coluna  se  movimente  tanto  para  cima  quanto  para  baixo,  conforme  for 
+
+necessário  para  penetrar  a  formação  rochosa.  Depois  de  aproximadamente  27  metros  uma 
+
+nova  seção  de  encanamento  da  coluna  é  conectada  ao  topo  coluna  anterior  e  com  isso  a 
+
+perfuração é retomada. Este procedimento é conhecido como conexão de tubo. Para uma taxa 
+
+regular  de  perfuração  de  15m/h  uma  conexão  de  tubo  é  feita  a  cada  duas  horas  (Stamnes, 
+
+2007). 
+
+Figura 8 - Exemplo de uma sonda de perfuração 
+
+ 
+
+ 
+
+35 
+
+Durante o processo de perfuração, um componente conhecido como lama de perfuração 
+
+é  injetado  na  coluna  de  perfuração.  A  função  do  lama  é  unicamente  transportar  os  detritos 
+
+resultantes  da  perfuração.  Ela  também  é  responsável  pelo  controle  da  pressão  durante  a 
+
+perfuração  de  um  poço.  Em  técnicas  convencionais  o  anular  não  é  selado,  isso  torna  o 
+
+processo  menos  complexo  e  mais  barato.  Porém  um  sistema  selado  e  contando  com  uma 
+
+válvula de estrangulamento,  ou válvula  choke, e  uma bomba de pressão  reversa permite um 
+
+melhor controle de sua pressão. 
+
+ 
+
+O principal motivo para o controle da pressão é prevenir o kick (influxo incontrolável do 
+
+reservatório), que no pior dos casos pode causar o blowout de superfície, que em geral causa 
+
+grandes perdas financeiras, danos ao meio ambiente e possíveis perdas de vidas humanas. O 
+
+controle  da  pressão  também  é  importante  para  prevenir  o  colapso  do  poço  ou  o  seu 
+
+fraturamento,  como  também  para  reduzir  o  dano  à  superfície  das  paredes  do  poço.  Danos  à 
+
+parede  do  poço  são  causados  quando  o  lama  penetra  ou  entope  as  partes  porosas  do 
+
+reservatório, o que diminui a produção em estágios posteriores (Stamnes, 2007). 
+
+ 
+
+Na  literatura  existem  diversos  modelos  matemáticos  que  tratam  de  reproduzir  a 
+
+dinâmica  do  processo  de  perfuração,  alguns  deles  rigorosos  e  outros  mais  simplificados. 
+
+Dentre  destes  últimos  dois  modelos  se  sobressaem,  o  modelo  de  Nygaard  et  al.  (2006)  e  o 
+
+modelo de Stamnes (2007), os quais serão apresentados a seguir. 
+
+ 
+
+3.2 – Modelo de Nygaard 
+ 
+
+No  trabalho  de  Nygaard  et  al.  (2006)  foram  propostos  dois  modelos,  um  modelo  de 
+
+ordem  reduzida  e  outro  modelo  que  contém  um  maior  detalhamento  dos  fenômenos  que 
+
+podem  ocorrer  no  poço  durante  o  processo  de  perfuração.  O  modelo  de  ordem  reduzida  foi 
+
+desenvolvido a partir da observação do comportamento de um fluido bifásico (líquido + gás) 
+
+de perfuração no que diz respeito à pressão de fundo. 
+
+ 
+
+A  Figura  9  apresenta  o  esquema  de  balanço  de  massa  de  um  processo  de  perfuração, 
+
+dividido em dois sistemas: coluna de perfuração e anular. Seguindo esta divisão, o balanço de 
+
+massa na coluna de perfuração (denotado pelo sub-índice  ) é dado por: 
+
+ 
+
+ 
+
+36 
+
+Figura 9 - Balanço de massa no modelo de Nygaard 
+
+ 
+
+ 
+
+  
+
+                         
+
+                  
+
+ 
+
+ 
+
+  
+
+                         
+
+                  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(1) 
+
+(2) 
+
+(3) 
+
+(4) 
+
+Sendo     um  índice,  que  quando  substituído  por     faz  referência  à  parte  gasosa  do 
+
+sistema e   à parte líquida, os parâmetros da equação ficam da seguinte forma: 
+
+ 
+
+ 
+
+        é o fluxo de massa na bomba; 
+
+       é o fluxo de massa na broca de perfuração; 
+
+       é a massa na coluna de perfuração. 
+
+ 
+
+O balanço de massa no anular (denotado pelo sub-índice  ) é dado por: 
+
+ 
+
+  
+
+                                     
+
+                  
+
+ 
+
+ 
+
+ 
+
+  
+
+                                   
+
+                  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(5) 
+
+(6) 
+
+(7) 
+
+(8) 
+
+ 
+
+onde: 
+
+ 
+
+37 
+
+ 
+
+ 
+
+       é o fluxo de massa no reservatório; 
+
+         é o fluxo de massa na saída da válvula choke; 
+
+       é a massa no anular. 
+
+ 
+
+Além  disso,  é  importante  inserir  no  sistema  a  influência  da  pressão  de  fricção 
+
+introduzida  pela  velocidade  do  líquido.  Quando gás  é  injetado  no  poço, o  volume  de  gás  se 
+
+altera  da  mesma  forma  que  muda  a  pressão  hidrostática  devido  à  variação  da  densidade  da 
+
+mistura.  Portanto,  as  pressões  que  atuam  sobre  o  sistema  estão  representadas  e  divididas 
+
+conforme Figura 10. Esse balanço é avaliado em dois pontos distintos, de onde são obtidas as 
+
+acelerações de massa no final da broca e no topo do anular. 
+
+ 
+
+Figura 10 - Balanço de pressões no modelo de Nygaard 
+
+ 
+
+ 
+
+A  variação  na  taxa  do  fluxo  de  massa  da  mistura  gás-líquido  na  coluna  de  perfuração 
+
+(           é  dependente  das  pressões  de  compressão  da  própria  coluna  (    )  e  do  anular 
+
+(    ),  da  pressão  hidrostática  da  coluna  (    )  e  do  anular  (    ),  das  perdas  causadas  pela 
+
+fricção da coluna de perfuração (    ) e do anular (    ). Assim, temos a Equação (9), sendo 
+
+que    é a área seccional da coluna de perfuração. 
+
+ 
+
+ 
+
+  
+
+          
+
+ 
+  
+
+ 
+
+                                                     
+
+(9) 
+
+38 
+
+                 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(10) 
+
+ 
+
+Adotando    como a área seccional do anular, a variação do fluxo de massa da mistura 
+
+gás-líquido na válvula choke é dada por:  
+
+ 
+
+ 
+
+  
+
+            
+
+ 
+  
+
+                           
+
+                  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(11) 
+
+(12) 
+
+Outro fator que influencia na pressão de fundo é a profundidade do poço. À medida que 
+
+essa profundidade vai se tornando cada vez maior, ocorre um acréscimo na taxa de perfuração 
+
+  .  Sendo  assim,  a  profundidade,  representada  por   ,  é  considerada  também  um  estado  do 
+
+sistema dinâmico proposto por Nygaard et al. (2006), da forma: 
+
+ 
+
+ 
+
+        
+
+  
+           
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(13) 
+
+(14) 
+
+ 
+
+Organizando  as  equações  de  balanço  de  massa,  e  definindo  as  entradas  e  saída  do 
+
+sistema, o modelo de ordem reduzida pode ser descrito da seguinte forma: 
+
+ 
+
+ ⃗                                                     
+
+ ⃗             
+
+ ⃗⃗            
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(15) 
+
+(16) 
+
+(17) 
+
+ 
+
+Sendo  ⃗ o vetor contendo os sete estados de entrada do modelo,  ⃗ a saída, onde        
+
+representa a pressão anular de fundo (BHP), que é a variável que deverá ser controlada, e  ⃗⃗ é 
+
+o vetor contendo a variável manipulada       , que corresponde ao parâmetro de abertura da 
+
+válvula choke. 
+
+ 
+
+Quando  um  poço  de  petróleo  é  modelado  usando  a  coluna  de  perfuração  e  o  anular 
+
+como  dois  compartimentos,  é  assumido  que  o  gás  está  uniformemente  disperso  no  líquido. 
+
+(Nygaard et al., 2006). Assim, a densidade da mistura gás-líquido em cada parte do poço      
+
+é dada pela seguinte relação: 
+
+ 
+
+39 
+
+      
+
+     
+
+ 
+
+    
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(18) 
+
+Sendo  que      é  a  massa  de  gás,      é  a  massa  de  líquido  e     é  o  volume  total  no 
+
+compartimento analisado. 
+
+ 
+
+A porosidade do líquido na mistura (    é usada para calcular a taxa de massa do gás e 
+
+do líquido, e é dada por: 
+
+ 
+
+    
+
+    
+
+  
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(19) 
+
+Se a velocidade é reduzida, as perdas devido à pressão de fricção são reduzidas e o gás 
+
+se expande, o que causa a fuga do líquido  para fora do poço e leva o gás a ficar contido na 
+
+parte  de  dentro.  Com  isso,  a  taxa  da  massa  de  gás  deve  ser  modificada  para  misturas  com 
+
+baixa velocidade e nesse caso é dada por: 
+
+ 
+
+                    (
+
+ 
+
+            )  
+
+ 
+
+ 
+
+ 
+
+ 
+
+(20) 
+
+ 
+
+Os cálculos do fluxo de massa da parte gasosa e líquida na broca e na válvula choke são 
+
+obtidos a partir do fluxo de massa da mistura e utilizando a Equação (20). Assim, os fluxos de 
+
+massa ficam da seguinte maneira: 
+
+ 
+
+                           
+
+                    
+
+ 
+
+ 
+
+ 
+
+                               
+
+                         
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+A pressão de fundo        é dada: 
+
+ 
+
+                                               
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(21) 
+
+(22) 
+
+(23) 
+
+(24) 
+
+(25) 
+
+Sendo   o fator de compressão do líquido,    a densidade do gás,   a constante do gás, 
+
+      a  massa  molecular  do  gás,     a  temperatura  média,        a  pressão  atmosférica,     a 
+40 
+
+ 
+
+gravidade,   a profundidade do poço,   o fator de fricção que ocorre entre o líquido e a parede 
+
+do  poço  e     a  velocidade  da  mistura,  os  termos  que  compõe  a  Equação  (25)  estão 
+
+representadas pelas equações: 
+
+ 
+
+                 (  
+
+ 
+
+    
+
+        )  
+
+                 
+
+      
+
+               
+
+ 
+
+   
+
+ 
+
+ 
+
+ 
+
+       
+
+ 
+
+      
+
+(
+
+        
+        
+
+)
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         
+
+ 
+
+      
+
+(
+
+          
+            
+
+)
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(26) 
+
+(27) 
+
+(28) 
+
+(29) 
+
+(30) 
+
+Os  valores  de          e          são  obtidos  da  Equação  (18),     é  o  coeficiente  de 
+
+descarga da restrição, que é a relação da taxa de fluxo de massa no final da tubulação, e   é a 
+
+área de restrição, que no caso da válvula choke representa a sua abertura. 
+
+ 
+
+3.3 – Modelo de Stamnes 
+ 
+
+Esse  modelo  foi  originalmente  proposto  por  Kaasa  (2007)  e  posteriormente 
+
+desenvolvido por Stamnes (2007). Nele é considerado um fluido de perfuração monofásico e 
+
+o  poço  dividido  em  dois  compartimentos  distintos,  de  maneira  semelhante  à  proposta  de 
+
+Nygaard  et  al.  (2006).  A  Figura  11  mostra  a  divisão  do  sistema  nas  duas  regiões,  isto  é  a 
+
+coluna de perfuração e o anular, sendo estas conectadas pela broca de perfuração. 
+
+ 
+
+ 
+
+41 
+
+Figura 11 - Divisão do sistema proposto no modelo de Stamnes 
+
+ 
+
+ 
+
+Neste sistema, uma bomba de lama bombeia a lama de perfuração para dentro da coluna 
+
+de perfuração. Em condições normais o lama flui da bomba para a coluna de perfuração, para 
+
+a  broca,  e  depois  o  anular  e  sai  pela  válvula  choke.  Depois  da  válvula  choke,  a  lama  é 
+
+reciclada  e  retorna  ao  seu  reservatório.  O  propósito  da  circulação  da  lama  de  perfuração  é 
+
+limpar  os  cascalhos  e  ajudar  a  manter  o  perfil  de  pressão  correto  no  poço.  O  maior 
+
+componente é o peso hidrostático da lama, seguido da pressão da choke e por último a pressão 
+
+devido  à  fricção  (Brill  &  Mukhrtjee,  1999).  A  Equação  (31)  mostra  a  equação  em  estado 
+
+estacionário para a pressão na broca de perfuração (        e seus principais componentes. 
+
+ 
+
+                          |  |    
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(31) 
+
+ 
+
+Sendo    a densidade da lama de perfuração,   a gravidade,      a profundidade,    a 
+
+pressão  na  válvula  choke,      o  fator  de  fricção  e      o  volume  do  fluido  no  anular,  pode-se 
+
+perceber que modificando qualquer um  desses parâmetros é possível  modificar a pressão na 
+
+broca  de  perfuração.  Porém,  variar  a  densidade      leva  um  tempo  considerável  para  obter 
+
+uma resposta, pois essa alteração tem que atingir todo a lama para causar algum efeito e isso 
+
+ 
+
+42 
+
+demanda tempo. As formas mais rápidas de conseguir uma variação na pressão da broca são 
+
+alterando a pressão na válvula choke (    ou modificando o volume de fluido no anular (  ). 
+
+Para  produzir  uma  alteração  na  pressão  na  choke  basta  modificar  a  sua  abertura,  e  para 
+
+modificar o volume do fluido no anular é só alterar o fluxo na bomba de lama. Caso a choke 
+
+esteja  completamente  fechada,  é  possível  modificar  essa  pressão  controlando  a  bomba  de 
+
+pressão reversa. 
+
+ 
+
+Aplicando o princípio do balanço de massa, o sistema mostrado na Figura 11 pode ser 
+
+descrito pelo seguinte conjunto de equações: 
+
+ 
+
+  
+  
+
+  
+  
+
+  ̇                   
+
+ 
+
+ 
+
+ 
+
+  ̇      ̇                                  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(32) 
+
+(33) 
+
+             ̇                   
+
+                                       (34) 
+
+ 
+
+onde    é a pressão na bomba de lama,      é o fluxo através da broca de perfuração,       é 
+
+o fluxo através da bomba de lama,       é o fluxo na bomba de pressão reversa,         é o 
+
+fluxo na válvula choke,      é o influxo do reservatório (uma perturbação que pode ocorrer no 
+
+sistema). Os demais fatores são: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  : Volume na coluna de perfuração; 
+
+  : Volume no anular; 
+
+  : Módulo de elasticidade da coluna de perfuração; 
+
+  : Módulo de elasticidade do anular; 
+
+    : Massa da coluna de perfuração; 
+
+    : Massa do anular; 
+
+ 
+
+ 
+
+ 
+
+  : Fator de fricção da coluna de perfuração; 
+
+  : Fator de fricção do anular; 
+
+  : densidade do anular. 
+
+   e    tem os seus valores obtidos por meio das Equações (35) e (36): 
+
+ 
+
+43 
+
+  
+      ̅  ∫
+ 
+
+ 
+
+     
+
+  
+
+    
+
+   
+      ̅  ∫
+ 
+
+ 
+
+     
+
+  
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(35) 
+
+(36) 
+
+sendo  ̅  a densidade média no anular,    é o comprimento do anular,    é a área seccional 
+
+do  anular,   ̅   é  a  densidade  média  na  coluna,       é  o  comprimento  total  da  coluna  de 
+
+perfuração e   é a área seccional da coluna de perfuração. 
+
+ 
+
+O  fluxo  na  válvula  choke  (         é  dependente  de  sua  abertura  (  )  e  de  sua  pressão 
+
+(  ). Com isso, o fluxo é dado por: 
+
+ 
+
+             √
+
+ 
+  
+
+             
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(37) 
+
+ 
+
+onde      é  a  constante  de  fluxo  da  válvula  e      é  a  pressão  de  saída  na  válvula,  sendo  a 
+abertura da válvula normalizada, i.e.           . 
+
+ 
+
+Os fluxos na bomba de lama e na bomba de pressão reversa são dados pelas  seguintes 
+
+relações: 
+
+ 
+
+                  
+
+                  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(38) 
+
+(39) 
+
+ 
+
+Ambos os fluxos são dependentes da velocidade rotacional da bomba (   para a bomba 
+
+de lama e   para a bomba de pressão reversa), do número de pistão de cada bomba (   e   ) 
+
+e do volume do golpe por pistão (   e   ). 
+
+ 
+
+Assumindo as relações: 
+
+ 
+
+              
+
+ 
+
+ 
+
+            
+
+            
+
+ 
+
+44 
+
+e substituindo as Equações (37), (38) e (39) nas Equações (32), (33) e (34), o modelo pode ser 
+
+descrito por: 
+
+ 
+
+  ̇                      
+
+ 
+
+    ̇     (       )     |    |      
+
+                        
+
+  ̇  
+
+  
+  
+
+ 
+
+ 
+
+  
+ 
+
+ 
+
+Sendo   a entrada de controle dada por: 
+
+ 
+
+                     
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(40) 
+
+|           |                   
+
+(41) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(42) 
+
+(43) 
+
+As  constantes  são      
+
+  
+  
+
+;      
+
+ 
+
+ 
+
+;      
+
+  
+ 
+
+;      
+
+        
+
+ 
+
+;         ;      
+
+  
+  
+
+;      
+
+  ;        √
+
+ 
+  
+
+,            ,        ̇  e          . 
+
+ 
+
+A saída do modelo, que nesse caso corresponde à pressão da broca de perfuração que é 
+
+equivalente a pressão de fundo (BHP), pode ser representada por: 
+
+ 
+
+      
+
+  
+ 
+
+    
+
+  
+ 
+
+     (
+
+  
+ 
+
+    
+
+  
+ 
+
+  ) |             |                (
+
+  
+ 
+
+ ̅   
+
+  
+ 
+
+ ̅ )       
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(44) 
+
+3.3 – Escolha do Modelo 
+ 
+
+Na  avaliação  dos  modelos  apresentados,  foi  observado  que  o  modelo  de  Nygaard 
+
+apresenta  um  problema  quando  posto  em  prática  o  conceito  de  MPD.  Ele  é  válido  para  um 
+
+fluido de perfuração bifásico, e com isso sua aplicabilidade melhor se adéqua ao enunciado de 
+
+UBD, onde gás é injetado ao líquido para mudar a densidade do fluido e em geral fazer com 
+
+que a pressão de fundo seja inferior à pressão da estrutura. Por isso o modelo de Stamnes, que 
+
+considera  um  fluido  de  perfuração  monofásico,  foi  adotado  no  presente  trabalho  como  a 
+
+principal ferramenta de suporte à simulação do processo de perfuração e aplicação de técnicas 
+
+MPD. 
+
+ 
+
+45 
+
+3.4 – Simulação em MatLab/Simulink® - Análise em Malha Aberta 
+
+ 
+
+Usando  as  Equações  (40),  (41),  (42)  e  (44)  e  os  valores  dos  parâmetros  listados  na 
+
+Tabela  1,  foi  possível  desenvolver  um  simulador  em  ambiente  MatLab/Simulink®,  cujo 
+
+layout  é  apresentado  na  Figura  12.  Este  simulador  tem  como  entradas  o  fluxo  da  bomba  de 
+
+lama  (     )  e  o  percentual  de  abertura  da  válvula  choke  (  ),  e  como  saída  a  pressão  da 
+
+broca (    ), que equivale à pressão anular de fundo (BHP). Além disso, é possível observar 
+
+os estados como a pressão da bomba de entrada (  ), o fluxo na broca (    ) e a pressão da 
+
+válvula choke (  ). 
+
+ 
+
+ 
+
+Tabela 1 - Parâmetros de simulação do modelo de Stamnes 
+
+Parâmetro 
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   
+
+     
+
+  
+
+   
+
+     
+
+Valor 
+
+      
+
+      
+
+        
+
+        
+
+       
+
+       
+
+       
+
+       
+
+     
+
+     
+
+     
+
+    
+
+         
+
+      
+
+      
+
+      
+
+Unidade 
+
+    
+
+    
+
+   
+
+   
+       
+   
+       
+   
+      
+    
+      
+    
+       
+   
+       
+   
+
+m 
+
+ 
+   
+- 
+
+  
+ 
+  
+ 
+
+ 
+
+ 
+
+46 
+
+Figura 12 – Implementação do modelo de Stamnes em ambiente MatLab/Simulink® 
+
+ 
+
+ 
+
+Para analisar a resposta dinâmica do processo, primeiro foi mantida constante a variável 
+correspondente à vazão de lama (     ) no valor de          , já a variável correspondente 
+
+ao  percentual  de  abertura  da  válvula  choke  (  ),  sendo  0%  totalmente  fechada  e  100% 
+
+totalmente  aberta,  e  tendo  como  ponto  de  partida  da  simulação  uma  abertura  de  20%,  teve 
+
+esse valor variado em      conforme mostrado na Figura 13. 
+
+ 
+
+ 
+
+Figura 13 – Sequência de variações na abertura da válvula choke 
+
+ 
+
+ 
+
+47 
+
+A resposta da saída BHP a variações na abertura da válvula choke é mostrada na Figura 
+
+14, onde se visualiza claramente que o fechamento da válvula choke resultou no aumento da 
+
+pressão  no  fundo  do  poço  e  a  abertura  resultou  na  diminuição  dessa  pressão.  Além  disso, 
+
+embora as variações na entrada sejam simétricas, a resposta é assimétrica ressaltando a grande 
+
+não-linearidade do processo. 
+
+ 
+
+ 
+
+Figura 14 - Comportamento da pressão de fundo (    ) a variações na abertura da válvula choke 
+
+ 
+
+A  Figura  15  mostra  o  comportamento  dos  estados,  pressão  na  bomba  de  lama  (  ), 
+
+fluxo  na  broca  (    )  e  pressão  na  válvula  choke  (  ).  Nela  é  possível  observar  o 
+
+comportamento das pressões de forma análoga ao comportamento da pressão de fundo. Se a 
+
+abertura  da  válvula  choke  for  alterada,  a  pressão  nela  e  a  pressão  na  bomba  de  lama 
+
+acompanham inversamente essa alteração, apresentando um aumento na pressão caso ela seja 
+
+fechada e um alívio na pressão se ela for aberta. O fluxo na broca tende a responder em forma 
+
+direta à abertura da válvula, voltando a estabilizar no ponto de operação nominal. 
+
+ 
+
+ 
+
+ 
+
+48 
+
+ 
+
+ 
+
+Figura 15 – Resposta dos estados a variações na abertura da válvula choke 
+
+ 
+
+Noutro  caso,  a  abertura  da  válvula  choke  é  mantida  constante  em  20%  e  o  fluxo  na 
+
+bomba  de  lama  (     )  é  modificado.  Essa  variável  de  entrada  é  inicializada  no  valor  de 
+
+          e com o tempo sofre alterações em      conforme mostrado na Figura 16. 
+
+ 
+
+ 
+
+Figura 16 – Variações na vazão da bomba de lama 
+
+A Figura 17 mostra o perfil de resposta da pressão de fundo. Nela é possível visualizar 
+
+que  a  pressão  varia  de  maneira  diretamente  proporcional  a  variação  do  fluxo  na  bomba  de 
+
+lama.  Quando  o  fluxo  de  lama  aumenta,  aumenta  a  pressão  hidrostática  e,  portanto,  a  BHP 
+
+também aumenta, e quando o fluxo de lama diminui a pressão também o acompanha. 
+
+49 
+
+ 
+
+Figura 17 - Comportamento da pressão de fundo a variações no fluxo da bomba de lama 
+
+ 
+
+A Figura 18 mostra o comportamento dos estados, pressão da bomba de entrada (  ), 
+
+fluxo  na  broca  (    )  e  pressão  da  válvula  choke  (  ),  respectivamente.  Neste  caso,  os  três 
+
+estados  se  comportam  de  maneira  semelhante  à  BHP,  sendo  também  diretamente 
+
+proporcionais à variação do fluxo na bomba de lama. Isto é, o aumento (diminuição) de fluxo 
+
+de  lama  no  sistema,  aumenta  (diminui)  a  pressão  hidrostática  que  aumenta  (diminui)  as 
+
+pressões e a vazão na broca. 
+
+ 
+
+ 
+
+ 
+
+Figura 18 - Resposta dos estados a variações no fluxo de lama 
+
+50 
+
+ 
+
+ 
+
+Outras  respostas  analisadas  foram  a  influencia  de  perturbações.  Enquanto  a  vazão  da 
+
+bomba de lama       e a abertura da válvula  choke    foram mantidos constantes nos seus 
+
+estados estacionários, ou seja,           e      respectivamente, foram simulados variações 
+
+no influxo no reservatório (    ) e variações na vazão da bomba de pressão reversa (      . 
+
+Nas  simulações  anteriores,  estas  variáveis  permaneceriam  em  seu  valor  estacionário 
+
+mostrados na Tabela 1. 
+
+ 
+
+A primeira perturbação simulada consistiu em variações no influxo no reservatório     . 
+
+Nesse  caso,  seu  valor  estacionário  foi  modificado  em       de  seu  valor  inicial,  conforme 
+
+mostra a Figura 19. 
+
+ 
+
+ 
+
+Figura 19 – Sequência de variações na vazão do influxo 
+
+ 
+
+O  comportamento  da  pressão  de  fundo        é  apresentado  na  Figura  20.  É  possível 
+
+observar que uma modificação no valor de       gera uma variação diretamente proporcional 
+
+na  pressão  de  fundo.  Essa  tendência  se  repete  nos  estados  mostrados  na  Figura  21  com 
+
+exceção do comportamento da vazão na broca de perfuração     . Como a vazão na broca de 
+
+perfuração  está  intimamente  ligada  com  o  valor  de        é  ela  quem  sofre  uma  alteração 
+
+inversamente proporcional a essa modificação do influxo. 
+
+ 
+
+51 
+
+ 
+
+ 
+
+Figura 20 - Comportamento da pressão de fundo a variações na vazão do influxo 
+
+Figura 21 - Resposta dos estados a variações na vazão do influxo 
+
+ 
+
+ 
+
+A  segunda  perturbação  analisada  é  a  influência  de  mudanças  na  vazão  da  bomba  de 
+
+pressão  reversa       .  Neste  caso  seu  valor  estacionário  foi  modificado  em       de  seu 
+
+valor  inicial,  conforme  mostrado  na  Figura  22.  O  perfil  do  comportamento  da  pressão  de 
+
+fundo      é apresentado na Figura 23. É possível observar que uma modificação no valor de 
+
+      também gera uma variação diretamente proporcional na pressão de fundo. Os estados, 
+
+representados na Figura 24, se comportam de maneira semelhante com exceção da vazão na 
+
+broca de perfuração     . Isso acontece graças à influência que a pressão    na válvula choke 
+
+tem sobre o fluxo na broca     . Nesse caso como ocorre o aumento da pressão na choke há 
+
+uma diminuição no valor de      e vice-versa. 
+
+52 
+
+ 
+
+Figura 22 – Sequência de variações na vazão da bomba de pressão reversa 
+
+Figura 23 – Resposta da pressão de fundo à variações na vazão da bomba de pressão reversa 
+
+Figura 24 – Respostas dos estados a variações na vazão da bomba de pressão reversa 
+
+53 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Capítulo 4  
+
+Teoria de Controle Preditivo (MPC) 
+
+ 
+
+4.1 – Introdução 
+ 
+
+O  termo  “controle  preditivo”  (MPC)  ou  “controle  preditivo  baseado  em  modelo” 
+
+(MBPC)  se  refere  a  uma  classe  de  algoritmos  de  controle  avançado  que  controla  a  resposta 
+
+futura de uma planta através do uso de um modelo explícito do processo. Em cada instante de 
+
+amostragem,  o  MPC  soluciona  on-line  um  problema  LQ  (linear  quadrático)  de  horizonte 
+
+finito,  usando  o  estado  atual  da  planta  como  estado  inicial.  O  resultado  da  otimização  gera 
+
+uma  sequência  de  controle  ótimo,  que  é  aplicada  de  acordo  com  a  filosofia  do  controle  de 
+
+horizonte móvel (moving horizon control ou receding horizon control, RHC), fornecendo ao 
+
+controlador  as características de realimentação desejadas (Sotomayor, 2002). 
+
+ 
+
+O MPC não é uma estratégia de controle específica, mas é o nome dado a um conjunto 
+
+de  métodos  de  controle  que  foram  desenvolvidos  considerando  algumas  ideias  comuns 
+
+baseadas  no  conceito  de  predição.  O  modelo  de  predição  é  provavelmente  o  elemento  mais 
+
+importante dentro do controlador dado que ele deve ser capaz de representar adequadamente a 
+
+dinâmica  do  processo  para  permitir  o  cálculo  das  predições  de  sua  saída,  ser  intuitivo  e  ao 
+
+mesmo tempo permitir uma análise teórica do sistema (Plucenio et al., 2007). 
+
+ 
+
+O  MPC  surgiu  da  necessidade  prática  de  lidar  com  problemas  multivariáveis,  pois  os 
+
+controladores convencionais de malha simples foram incapazes de satisfazer os requerimentos 
+
+crescentes do desempenho das indústrias. As idéias do MPC tiveram  início  a partir de 1960 
+
+(Garcia et al., 1989), porém, o real interesse neste campo começou a crescer a partir de 1980, 
+
+depois  da  publicação  dos  primeiros  trabalhos  sobre  o  MPHC  (model  predictive  heuristic 
+
+control) e o DMC (dynamic matrix control), e particularmente, depois do QDMC (quadratic 
+
+dynamic  matrix  control),  que  ficaram  muito  populares  na  indústria  petroquímica  e  nas 
+
+estações  de  força.  Desde  essa  época,  têm  surgido  novas  variantes  do  MPC.  Sem  entrar  em 
+
+detalhes,  alguns  dos  algoritmos  MPC  são:  MAC  (model  algorithm  control),  IMC  (internal 
+
+model  control),  GPC  (generalized  predictive  control),  MOCCA  (multivariable,  optimal, 
+
+54 
+
+ 
+
+constrained  control  algorithm),  HIECON  (hierarchical  constraint  control),  PFC  (predictive 
+
+funtional control), OPC (optimum predictive control), PCT (predictive control technology), e 
+
+o  mais  recente  RMPCT  (robust  model  predictive  control  technology).  Apesar  da  enorme 
+
+quantidade de abreviações introduzidas, não existem muitas diferenças entre estes algoritmos. 
+
+Tipicamente,  estes  algoritmos  diferem  no  modelo  do  processo  usado,  tais  como  modelos  de 
+
+parâmetros  de  Markov  (resposta  ao  impulso),  resposta  ao  degrau,  função  de  transferência, 
+
+modelos polinomiais, modelos em espaço de estados, perturbações (constantes, retardos, ruído 
+
+branco, etc) e adaptação (Sotomayor, 2002). 
+
+ 
+
+Desde  1990,  a  teoria  de  controle  MPC  tem  evoluído  substancialmente.  Questões 
+
+teóricas e práticas são tratadas em vários livros (Maciejowski, 2001), (Morari et al., 2002) e 
+
+centenas de artigos. Um excelente ponto de partida é o artigo de Qin e Badgwell (1997), que 
+
+apresenta  uma  breve  história  e  comparações  de  algoritmos  MPC,  reportando  mais  de  2200 
+
+aplicações  industriais.  Morari  e  Lee  (1999)  discutem  o  passado,  o  presente  e  o  futuro  do 
+
+MPC, enquanto  que Rawlings (2000) mostra uma visão geral  desta tecnologia. Mayne  et  al. 
+
+(2000)  e  Löfberg  (2001)  tratam  de  otimização,  estabilidade  e  robustez  do  MPC.  No  mais 
+
+recente  trabalho,  Nicolaou  (2001)  trata  dos  últimos  desenvolvimentos  do  MPC,  e  discute  as 
+
+implicações para o futuro da teoria e prática deste controle (Sotomayor, 2002). 
+
+ 
+
+Mesmo com o aparecimento de algoritmos MPC não-lineares (NMPC) (Henson, 1998), 
+
+(Qin  e Badgwell, 2000), a geração corrente de algoritmos MPC comercialmente disponíveis 
+
+são baseados em modelos lineares (LMPC, ou simplesmente MPC). Mais ainda, atualmente, 
+
+na literatura de pesquisa, o MPC é quase sempre formulado em espaço de estados (Morari e 
+
+Lee, 1999). Isto tem simplificado, unificado e generalizado a teoria, incluindo fácil extensão a 
+
+sistemas  multivariáveis,  fácil  análise  das  propriedades  em  malha  fechada  e  cálculo  on-line 
+
+(Sotomayor,  2002).  As  principais  vantagens  do  LMPC  estão  vinculadas  as  facilidades  de 
+
+obtenção de modelos lineares, se comparados aos não lineares, e as menores dificuldades para 
+
+se resolver os problemas de otimização associados. Porém, quando os processos têm dinâmica 
+
+muito não linear ou quando a faixa de operação é variável, então necessariamente deverá ser 
+
+tomado em conta o modelo não linear no projeto do controle, de forma que permita manter o 
+
+desempenho desejado para o sistema em malha fechada (Plucenio et al., 2007). 
+
+ 
+
+A Figura 25 ilustra a implementação básica de todos os algoritmos de controle MPC. 
+
+ 
+
+55 
+
+Figura 25 - Esquema de implementação dos algoritmos MPC 
+
+ 
+
+ 
+
+No instante de tempo atual usualmente definido como o instante 
+
+, o comportamento 
+
+do processo ao longo de um horizonte de tempo    é considerado. O intervalo de tempo    é 
+
+conhecido como horizonte de predição. Utilizando um modelo do processo, as respostas deste 
+
+processo  às  mudanças  nas  variáveis  manipuladas  são  previstas.  As  ações  das  variáveis 
+
+manipuladas  são  selecionadas  de  tal  forma  que  a  resposta  prevista  apresenta  determinadas 
+
+características que sejam desejáveis. As ações de controle podem variar apenas dentro de um 
+
+horizonte          conhecido  como  horizonte  de  controle.  De  forma  geral,  minimiza-se  um 
+
+critério  de  desempenho  desejado  sujeito  à  dinâmica  do  modelo  e  às  possíveis  restrições  nas 
+
+variáveis  de  entrada/saída.  Apenas  a  primeira  ação  de  controle  calculada  é  de  fato 
+
+implementada  no  processo  real.  As  variáveis  controladas  da  planta  são  então  medidas.  No 
+
+próximo  instante  de  amostragem,  isto  é,  em 
+
+,  o  mesmo  problema  de  otimização  é 
+
+resolvido  com  a  nova  condição  inicial  obtida  mediante  informação  tirada  das  medidas  da 
+
+planta  em 
+
+  (é  desta  maneira  que  se  introduz  retroalimentação  ou  feedback  no 
+
+controlador)  e  com  o  horizonte  movido  adiante  por  um  intervalo  de  amostragem  (Qin  e 
+
+Badgwell, 2003). 
+
+ 
+
+A  estrutura  inerente  a  todos  os  algoritmos  MPC  é  ilustrada  na  Figura  26,  onde  o 
+
+controlador é também chamado de otimizador. 
+
+ 
+
+56 
+
+kk1k1 
+
+Figura 26 - Estrutura de um sistema de controle MPC 
+
+ 
+
+4.2 – LMPC Convencional - O Controlador QDMC 
+ 
+
+Os  primeiros  controladores  aplicados  na  indústria  no  início  dos  anos  70  utilizavam  a 
+
+estratégia  MPC  sem  restrições  também  conhecido  como  DMC1,  que  usavam  um  modelo  de 
+
+convolução  linear  de  resposta  ao  degrau  e  geração  da  sequência  de  controle  por  otimização 
+
+analítica. Porém, com o aparecimento de restrições presentes nos processos que necessitavam 
+
+a sua inclusão no desenvolvimento do controlador, foi necessária uma evolução do algoritmo 
+
+de controle. A otimização neste caso passou a ser numérica e a solução do problema convexo 
+
+DMC por meio de programação quadrática (QP) deu origem ao QDMC, proposto por Garcia e 
+
+Morshedi (1986). 
+
+ 
+
+O QDMC usa as mesmas equações de predição do DMC, ou seja: 
+
+ 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(45) 
+
+                                                           
+1 A síntese do desenvolvimento do DMC pode ser encontrada no Apêndice A deste trabalho. 
+
+57 
+
+ 
+
+´euAeonde: 
+
+   - é o vetor de erros entre os valores previstos e o valor desejado. 
+
+    -  é  o  vetor  de  erros  entre  o  valor  desejado  e  os  valores  previstos  se  não  houver 
+
+nenhuma ação de controle futura (sistema em malha aberta). 
+
+  - é a matriz dinâmica. 
+
+ 
+
+Considerando a seguinte função objetivo: 
+
+ 
+
+sendo que: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(46) 
+
+ 
+
+ 
+
+  - é a matriz de fatores de supressão que atenua as variações das ações de controle 
+
+   -  é  a  matriz  diagonal  de  ponderação  onde  os  valores  da  diagonal  principal  são 
+
+proporcionais à importância da variável controlada 
+
+ 
+
+Substituindo a Equação (45) na Equação (46), temos: 
+
+                                  (47) 
+
+           (48) 
+
+ 
+
+ 
+
+ 
+
+Como o último termo do segundo membro, não depende da variável de interesse 
+
+, a 
+
+função objetivo do controlador pode ser escrita como: 
+
+ 
+
+onde: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (49) 
+
+58 
+
+uRRu21WeWe21TTTTuRRu21euAWWeuA21TTTT´´´´´WeWe21uWAWeuRRWAWAu21TTTTTTTTuucuHuTTu21min  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (50) 
+
+ 
+
+         (51) 
+
+ 
+
+Ao  problema  definido  na  Equação  (49)  podemos  incluir  as  restrições  nas  variáveis 
+
+manipuladas e controladas: 
+
+ 
+
+1.  Nos incrementos das manipuladas: 
+
+ 
+
+ 
+
+ou seja: 
+
+1a)   
+
+ ou 
+
+1b)   
+
+ ou 
+
+ 
+
+ 
+
+As condições 1a) e 1b) podem ser resumidas em: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(52) 
+
+2.  Nos valores das manipuladas: 
+
+ 
+
+ 
+
+Como: 
+
+ou  
+
+ 
+
+ 
+
+59 
+
+RRWAWAHTTTWAWecTTT´maxmaxuuumaxuumax.uuImNmmaxuumax.uuImNmmaxmax..uuuIImmNmNmmaxminuuu1111111000kkkmkkkNNNNNNmkkkuuuuuuIIIIIIuuuummmmmm 
+
+Portanto: 
+
+2a)  
+
+2b) 
+
+ equivale a 
+
+ equivale a 
+
+ 
+
+ 
+
+ 
+
+Daí as condições 2a) e 2b) podem ser resumidas em: 
+
+              
+
+ 
+
+ 
+
+ 
+
+ 
+
+                (53) 
+
+ 
+
+Resumindo,  o  problema  de  otimização  que  o  QDMC  resolve  tem  a  função  objetivo 
+
+definida  na  Equação  (49)  e  as  restrições  representadas  pelas  Equações  (52)  e  (53).  É  fácil 
+
+observar  que  a  função  objetivo  é  quadrática  em 
+
+  e  as  restrições  são  todas  lineares.  Esse 
+
+tipo  de  problema  é  clássico  dentro  da  área  otimização  e  é  conhecido  como  o  problema  de 
+
+programação quadrática (PQ). Do resultado da otimização, só a primeira ação de controle do 
+
+vetor 
+
+ é usado na planta. 
+
+ 
+
+4.3 – NMPC Convencional 
+ 
+
+Embora  os  processos  industriais  sejam  em  geral  não-lineares,  a  maior  parte  das 
+
+aplicações  MPC  são  baseadas  no  uso  de  modelos  lineares.  Existem  duas  principais  razões 
+
+para isso: por um lado, a identificação de um modelo linear baseado nos dados do processo é 
+
+relativamente  fácil  e,  por  outro  lado,  modelos  lineares  produzem  bons  resultados  quando  a 
+
+planta opera na vizinhança do ponto de operação. Nas indústrias de processos, onde o LMPC 
+
+é  amplamente  difundido,  o  objetivo  é  manter  o  processo  próximo  ao  estado  estacionário  ao 
+
+invés de mudar frequentemente de um ponto de operação para outro, e, por isso, um modelo 
+
+linear preciso é suficiente. Além disso, o uso de um modelo linear em  conjunto com função 
+
+objetivo quadrática leva a um problema QP que converge e cuja solução é implementada em 
+
+diversos  produtos  comerciais  disponíveis.  A  existência  de  algoritmos  que  garantem  uma 
+
+solução  convergente  em  um  período  mais  curto  que  o  período  de  amostragem  é  crucial  em 
+
+processos com grande número de variáveis (Camacho et al., 2005). 
+
+60 
+
+ 
+
+1kuuNumaxuu1maxkuuuNminuumin1uuuNkmin11maxuuuuuNNkkuuEntretanto, a resposta dinâmica resultante de um controlador linear é inaceitável quando 
+
+aplicada  ao  um  processo  não-linear  com  vários  graus  de  severidade.  Embora  em  muitas 
+
+situações o processo possa estar operando na vizinhança do estado estacionário, e com isso a 
+
+representação linear seria adequada, existem diversas situações onde isso não ocorre. Por um 
+
+lado, há processos onde a não linearidade é tão severa (até mesmo na proximidade do estado 
+
+estacionário), e tão crucial para a estabilidade em malha fechada, que um modelo linear não é 
+
+suficiente.  Por  outro  lado,  há  alguns  processos  que  experimentam  transições  contínuas 
+
+(partidas, desligamentos, etc.) e passam um bom tempo longe da região de operação no estado 
+
+estacionário,  ou  até  mesmo  processos  que  nunca  estão  em  operação  no  estado  estacionário, 
+
+como  no  caso  dos  fornos,  onde  toda  a  operação  é  levada  no  modo  transiente.  Para  esses 
+
+processos  uma  lei  de  controle  linear  não  será  muito  eficiente,  sendo  os  controladores  não-
+
+lineares  essenciais  para  melhorar  a  performance  ou  estabilizar  a  operação  (Camacho  et  al., 
+
+2005). 
+
+ 
+
+Do  ponto  de  vista  conceitual  o  NMPC  não  apresenta  dificuldades.  Considerando  a 
+
+mesma  função  objetivo  que  no  caso  linear  e  um  modelo  não-linear  para  o  cálculo  das 
+
+predições,  o  objetivo  consiste  novamente  em  encontrar  o  controle  que  minimize  a  função 
+
+objetivo  num  algoritmo  de  horizonte  móvel.  Já,  do  ponto  de  vista  prático,  são  várias  as 
+
+dificuldades encontradas neste problema (se comparado ao caso linear): (a) a determinação do 
+
+modelo  do  processo,  quando  deve  ser  obtido  por  identificação,  (b)  a  obtenção  do  sinal  de 
+
+controle requer, em geral, a solução de um problema otimização não-convexo, e (c) a análise 
+
+de  estabilidade  e  robustez  da  solução.  Por  estes  motivos  o  NMPC  é  um  campo  aberto  para 
+
+pesquisas tanto na área de determinação de modelos como nos procedimentos e algoritmos de 
+
+otimização para o cálculo do controle (Plucenio et al., 2007). 
+
+ 
+
+Existe  uma  grande  quantidade  de  técnicas  MPC  que  direta  ou  indiretamente  tratam 
+
+sistemas  não-lineares  (Findeisen  &  Allgöwer,  2002).  Uma  possível  classificação  destas 
+
+técnicas  as  divide  em  3  grupos:  (a)  as  que  utilizam  diretamente  um  modelo  não-linear 
+
+genérico  e  um  algoritmo  de  otimização  não-linear  de  propósito  geral;  (b)  as  que  utilizam 
+
+modelos  não-lineares  particulares  (como  séries  de  Volterra  ou  modelos  de  Hammerstein)  e 
+
+métodos de otimização específicos para o modelo escolhido; (c) as que utilizam um ou vários 
+
+modelos  lineares  para  representar  o  processo  e  algoritmos  de  otimização  lineares. 
+
+ 
+
+61 
+
+Evidentemente  as  vantagens  e  desvantagens  de  uma  ou  outra  alternativa  estão  diretamente 
+
+relacionadas ao compromisso desempenho-custo computacional (Plucenio et al., 2007). 
+
+ 
+
+Definido  o  modelo  não  linear  que  será  utilizado  no  controlador,  é  hora  de  montar  o 
+
+algoritmo de controle. No presente trabalho, adotou-se a técnica do grupo (a), onde é utilizado 
+
+um  modelo  não-linear  geral  do  processo  e  um  algoritmo  de  otimização  de  propósito  geral. 
+
+Uma  versão  simplificada  deste  algoritmo  NMPC  foi  desenvolvida  por  Qin  &  Badgwell 
+
+(2000), a qual é apresentada a seguir. 
+
+ 
+
+Levando em  consideração que a planta a ser controlada pode ser descrita  pelo  modelo 
+
+em espaço de estados, não-linear e discreto no tempo definido pelas seguintes equações: 
+
+ 
+
+                          
+                 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(54) 
+
+(55) 
+
+ 
+
+onde               é  um  vetor  de      entradas  do  processo  ou  variáveis  manipuladas,       
+     é um vetor de    saídas do processo ou variáveis controladas,            é o vetor de   
+variáveis  de  estado,               é  o  vetor  de      variáveis  de  perturbações  medidas,       
+     é um vetor de    perturbações não medidas ou ruído, e             é o vetor de ruído. 
+
+ 
+
+Para  resolver  o  problema  de  controle  é  necessário  resolver  computacionalmente  uma 
+
+sequência de entradas    que levarão o processo do seu estado atual    para o estado desejado 
+
+  .  Perturbações  feedfoward  são  removidas  incorporando  seus  efeitos  ao  modelo   . 
+
+Perturbações  feedback  são  tipicamente  manuseadas  assumindo  que  uma  perturbação  em 
+
+degrau  foi  colocado  na  saída  e  ela  permanecerá  constante  por  todo  o  tempo  futuro.  Para 
+
+alcançar isso, um  termo  que compara  a saída prevista atual     com  a  atual  medida da saída 
+
+ é dado por: 
+
+  
+
+ 
+
+       
+
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(56) 
+
+sendo que o termo    será utilizado para as predições subseqüentes, da forma: 
+
+ 
+
+        (    )        
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(57) 
+
+ 
+
+62 
+
+O algoritmo de controle aqui descrito minimiza a seguinte função: 
+
+ 
+
+  ‖
+    ∑ ‖    
+
+ 
+   
+
+ 
+
+ 
+
+  ∑
+
+   
+   
+
+‖     ‖
+
+ 
+
+ 
+
+   
+
+ 
+
+sujeita às seguintes restrições: 
+
+ 
+
+        (              )                    
+
+        (    )                                  
+
+ 
+
+ 
+
+ 
+
+                                                    
+
+                                               
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(58) 
+
+(59) 
+
+(60) 
+
+(61) 
+
+(62) 
+
+Sendo     o  horizonte  de  predição  e     o  horizonte  de  controle,  o  comportamento  das 
+
+futuras saídas é controlado penalizando os desvios do estado estacionário desejado   , ou seja, 
+
+ela verifica o valor atual e o valor desejado e calcula o erro     
+
+ 
+
+ representado por: 
+
+ 
+
+                
+    
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(63) 
+
+O  termo         corresponde  às  variações  na  entrada,        representa  a  entrada  num 
+
+determinado  instante       ,  sendo  que  nesse  caso,     varia  de  acordo  com  o  horizonte  de 
+
+controle   .  As  matrizes     e     são  as  matrizes  de  peso,  elas  definem  os  ganhos  que  serão 
+
+atribuídos  a  cada  variável  controlada  e  manipulada,  ou  seja,  é  possível  atribuir  uma 
+
+“importância” a cada saída ou entrada e dessa forma ajustar o controlador parar funcionar de 
+
+maneira mais próxima à desejada. 
+
+ 
+
+Do  ponto  de  vista  prático  a  principal  vantagem  desse  método  reside  no  uso  de  um 
+
+modelo não linear, que  permite em  geral, obter  predições muito  próximas  às saídas reais  da 
+
+planta. Como desvantagens devem citar-se as questões iterativas dos métodos de otimização, 
+
+a incerteza no tempo que levam para entregar uma resposta, a convergência, as soluções em 
+
+mínimos locais, etc. que fazem com que sua utilização para controle em tempo real seja ainda 
+
+pouco difundida (Plucenio et al., 2007). 
+
+ 
+
+ 
+
+ 
+
+63 
+
+Capítulo 5  
+
+Controle Preditivo do Processo de 
+
+Perfuração 
+
+ 
+
+5.1 – Introdução 
+
+ 
+
+Neste capítulo são apresentados os resultados das simulações da aplicação do sistema de 
+
+controle avançado no processo de perfuração, cujo layout em ambiente MatLab/Simulink® é 
+
+mostrado na Figura 27. Dois sistemas de controle avançado são implementados: um baseado 
+
+no  LMPC  e  outro  no  NMPC,  apresentados  no  capítulo  anterior.  O  objetivo  é  analisar  o 
+
+comportamento  de  ambos  os  sistemas,  bem  como  tecer  comparações  acerca  de  seus 
+
+desempenhos quando submetidos a diversas variações nas condições de operação. Seguindo a 
+
+estratégia  proposta  por  Breyholtz  et  al.  (2009),  aqui  a  BHP  (        )  é  controlada  pela 
+
+manipulação  da  vazão  da  bomba  de  lama  (          )  e  da  abertura  da  válvula  choke 
+
+(       ). A vazão de influxo do reservatório (    ) e a vazão da bomba de pressão reversa 
+
+(       são consideradas como perturbações. 
+
+Figura 27 – Controle MPC da coluna de perfuração 
+
+ 
+
+ 
+
+64 
+
+5.1 – Controle LMPC do Processo de Perfuração 
+ 
+
+A implementação do LMPC usa um modelo linear do processo, em forma de matriz de 
+
+funções  de  transferência,  como  mostrado  na  Tabela  2,  para  predição  e  os  parâmetros  de 
+
+sintonia  listados  na  Tabela  3.  As  funções  de  transferência  foram  obtidas  pela  aplicação  do 
+
+teste  de  resposta  ao  degrau  no  sistema  em  malha  aberta.  Os  parâmetros  de  sintonia  do 
+
+controlador foram definidos após extensivas simulações, usando algumas regras heurísticas da 
+
+literatura e o procedimento da tentativa e erro. 
+
+Tabela 2 - Funções de transferência do modelo linear 
+
+      
+
+      
+
+   
+
+ 
+         
+
+   
+
+ 
+         
+
+Tabela 3 - Parâmetros de sintonia do controlador LMPC 
+
+Parâmetro 
+
+Descrição 
+
+ 
+
+ 
+
+ 
+
+   
+
+N 
+
+   
+
+   
+
+   
+
+  
+
+     
+
+     
+
+       
+
+  
+
+  
+
+Tempo de amostragem 
+
+Horizonte do modelo 
+
+Número de saídas 
+
+Número de entradas 
+
+Horizonte de predição (otimização) 
+
+Horizonte de controle 
+
+Valor 
+
+0,5 s 
+
+400 
+
+1 
+
+2 
+
+20 
+
+2 
+
+Limite mínimo das entradas 
+
+[0  0] 
+
+Limite máximo das entradas 
+
+[0,03  1] 
+
+Incremento máximo das entradas  
+
+[0,001  0,01] 
+
+Fator de ponderação da saída 
+
+1 
+
+Fator de supressão das entradas 
+
+[1000  200] 
+
+A resposta do processo a mudanças no ponto de operação é mostrada na Figura 28. Na 
+
+primeira  mudança  de  setpoint,  e  após  uma  oscilação  moderada,  o  sistema  demora  para 
+
+estabilizar  aproximadamente  65  s.  Já  na  segunda  e  terceira  mudança  de  setpoint,  o  sistema 
+
+estabiliza em 25s e 15s, respectivamente, com um pequeno sobressinal na segunda mudança. 
+
+ 
+
+65 
+
+A Figura 29 mostra a coordenação das variáveis manipuladas para atingir o ponto de operação 
+
+desejado. 
+
+ 
+
+Figura 28 – Resposta da pressão de fundo com LMPC a variações no setpoint 
+
+Figura 29 - Comportamento das variáveis manipuladas com LMPC a variações no setpoint 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Influência  da  variação  de  influxo  do  reservatório  é  apresentada  na  Figura  30.  Neste 
+caso, o valor de       é alterado de             para           , no tempo t  = 100 s.  Como 
+
+pode ser observado, depois de um aumento da BHP, esta não volta a seu ponto de operação, 
+
+exibindo  um  offset  com  respeito  ao  setpoint.  Esta  falta  de  controle  pode  ser  explicada  pela 
+
+saturação das duas variáveis manipuladas, conforme mostrado na Figura 31. 
+
+ 
+
+ 
+
+66 
+
+ 
+
+ 
+
+Figura 30 - Resposta da pressão de fundo com LMPC a variação na vazão de influxo do reservatório 
+
+Figura 31 - Comportamento das variáveis manipuladas com LMPC a variação na vazão de influxo do reservatório 
+
+ 
+
+ 
+
+Efeito da variação da vazão da bomba de pressão reversa é mostrado na Figura 32. Esta 
+perturbação acontece no tempo t = 100s, quando a vazão       muda de            e para 
+         , provocando um pico positivo considerável no valor da pressão que estabiliza no 
+
+ponto  de  operação  nominal  depois  de  aproximadamente  100  s.  As  variações  das  variáveis 
+
+manipuladas para compensar a perturbação são mostradas na Figura 33, exigindo um aumento 
+
+da abertura da válvula choke e a diminuição quase total da vazão de lama de perfuração. 
+
+ 
+
+ 
+
+67 
+
+ 
+
+ 
+
+Figura 32 - Resposta da pressão de fundo com LMPC a variação na vazão da bomba de pressão reversa 
+
+ 
+
+Figura 33 - Comportamento das variáveis manipuladas com LMPC a variação na vazão da bomba de pressão reversa 
+
+ 
+
+Finalmente, verifica-se a resposta do processo  a uma perda de efetividade do controle, 
+
+provocada por um travamento da válvula choke em 25% da sua abertura, ocorrendo no tempo 
+
+t  =  100  s.  Este  aumento  repentino  e  sustentado  da  abertura  da  válvula  choke  produz  o 
+
+decaimento da pressão, como mostrado na Figura 34. O controlador consegue acomodar esta 
+
+falha em aproximadamente 30 s, aumentando a vazão de lama conforme visto na Figura 35. 
+
+ 
+
+ 
+
+ 
+
+68 
+
+ 
+
+ 
+
+Figura 34 - Resposta da pressão de fundo com LMPC a perda de controle da válvula choke 
+
+Figura 35 - Comportamento das variáveis manipuladas com LMPC a perda de controle da válvula choke 
+
+ 
+
+ 
+
+5.3 – Controle NMPC do Processo de Perfuração 
+ 
+
+A implementação do NMPC usa o  mesmo modelo  não-linear que descreve o processo 
+
+para  predição  da  saída  e  os  parâmetros  de  sintonia  listados  na  Tabela  4.  De  maneira 
+
+semelhante  ao  caso  linear,  os  parâmetros  de  sintonia  do  controlador  foram  definidos  após 
+
+extensivas  simulações,  usando  algumas  regras  heurísticas  da  literatura  e  o  procedimento  da 
+
+tentativa e erro. Para efeitos de comparação de desempenho do NMPC com o LMPC, foram 
+
+praticadas  as  mesmas  variações  nas  condições  de  operação  que  no  caso  linear,  apresentadas 
+
+na seção 5.2. 
+
+ 
+
+ 
+
+69 
+
+Tabela 4 - Parâmetros de sintonia do controlador NMPC 
+
+Parâmetro 
+
+Descrição 
+
+ 
+
+ 
+
+   
+
+   
+
+   
+
+   
+
+  
+
+     
+
+     
+
+  
+
+R 
+
+Tempo de amostragem 
+
+Números de saídas 
+
+Número de entradas 
+
+Horizonte de predição (otimização) 
+
+Horizonte de controle 
+
+Valor 
+
+0,5 s 
+
+1 
+
+2 
+
+10 
+
+1 
+
+Limite mínimo das entradas 
+
+[0  0] 
+
+Limite máximo das entradas 
+
+[0,03  1] 
+
+Fator de ponderação da saída 
+
+1 
+
+Fator de supressão das entradas 
+
+[200 200] 
+
+A resposta do processo a uma sequência de mudanças no setpoint é mostrada na Figura 
+
+36.  Na  primeira  mudança  de  setpoint,  o  sistema  atinge,  sem  oscilações,  o  novo  ponto  de 
+
+operação  em  25s  e  aí  permanece.  Na  segunda  mudança  de  setpoint  o  acompanhamento  é 
+
+quase  que  imediato,  estabilizando  em  3s,  e  na  terceira  mudança,  o  sistema  alcança  o  novo 
+
+ponto de operação em aproximadamente 13s. O comportamento das variáveis manipuladas é 
+
+mostrado  na  Figura  37.  Há  uma  oscilação  brusca  em       ,  principalmente  na  segunda 
+
+variação  de  setpoint,  mas  em  geral  as  respostas  das  variáveis  manipuladas  foram  rápidas,  o 
+
+que  permitiu  que  o  processo  alcance  rapidamente  os  novos  pontos  de  operação  sem 
+
+oscilações. 
+
+ 
+
+Figura 36 - Resposta da pressão de fundo com NMPC a variações no setpoint 
+
+ 
+
+ 
+
+70 
+
+ 
+
+ 
+
+Figura 37 - Comportamento das variáveis manipuladas com NMPC a variações no setpoint 
+
+A  Figura  38  apresenta  o  perfil  de  resposta  da  BHP  a  uma  variação  no  influxo  do 
+
+reservatório. Diferente do caso linear, esta perturbação provoca uma diminuição acentuada da 
+
+pressão  de  fundo,  mas  que  se  recupera  rapidamente,  voltando  ao  setpoint  em 
+
+aproximadamente 10s. A Figura 39 mostra o comportamento das variáveis manipuladas para 
+
+contornar os efeitos desta perturbação. 
+
+ 
+
+Figura 38 - Resposta da pressão de fundo com NMPC a variação na vazão de influxo do reservatório 
+
+71 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figura 39 - Comportamento das variáveis manipuladas com NMPC a variação na vazão de influxo do reservatório 
+
+ 
+
+Ação  regulatória  do  sistema  a  uma  variação  da  vazão  da  bomba  de  pressão  reversa  é 
+
+mostrada  na  Figura  40.  Como  pode  ser  visualizado,  o  controle  compensa  perfeitamente  a 
+
+perturbação,  não  mostrando  nenhuma  alteração  na  BHP.  Para  conseguir  este  objetivo,  o 
+
+controlador  aumenta  a  abertura  da  válvula  choke,  mantendo  constante  a  vazão  de  lama 
+
+conforme ilustrado na Figura 41. 
+
+ 
+
+Figura 40 - Resposta da pressão de fundo com NMPC a variação na vazão da bomba de pressão reversa 
+
+ 
+
+ 
+
+ 
+
+72 
+
+Figura 41 - Comportamento das variáveis manipuladas com NMPC a variação na vazão da bomba de pressão reversa 
+
+ 
+
+ 
+
+Como  último  caso  de  avaliação,  consideramos  a  válvula  choke  presa  em  25%  de 
+
+abertura. Da Figura 42, pode-se observar que a falha provoca uma queda repentina da pressão, 
+
+porém  de  magnitude  menor  que  se  comparada  ao  caso  linear,  que  é  acomodada  em 
+
+aproximadamente  13s.  O  controlar  compensa  a  perda  da  efetividade  de  controle  da  válvula 
+
+choke com o aumento rápido da vazão de lama de perfuração, como mostrada na Figura 43. 
+
+ 
+
+ 
+
+ 
+
+Figura 42 - Resposta da pressão de fundo com NMPC a perda de controle da válvula choke 
+
+ 
+
+73 
+
+Figura 43 - Comportamento das variáveis manipuladas com NMPC a perda de controle da válvula choke 
+
+ 
+
+ 
+
+5.4 – Discussão de Resultados 
+ 
+
+Foram realizadas simulações equivalentes em  ambos os controladores, a primeira diz 
+
+respeito  a  variação  do  setpoint.  Nesse  caso  é  possível  observar  a  rapidez  com  que  o 
+
+controlador  LMPC  responde  se  comparado  ao  NMPC.  Um  exemplo  disso  é  que  para  a 
+
+primeira entrada de um degrau positivo no sistema o LMPC demora apenas 25 segundos para 
+
+efetivamente controlar o processo já o NMPC demora cerca de 65 segundos. 
+
+ 
+
+Mediante a ocorrência de um aumento na vazão do influxo do reservatório, o NMPC 
+
+sofre  uma  alteração  mais  brusca  em  sua  saída,  porém  rapidamente  compensada,  levando  a 
+
+pressão de fundo novamente ao valor desejado. O mesmo não ocorre no LMPC. Nesse caso a 
+
+variação  da  saída  é  um  pouco  mais  branda,  mas  o  controlador  após  a  ocorrência  dessa 
+
+perturbação não consegue levar a saída ao valor desejado. 
+
+ 
+
+Quando  alterada  a  vazão  da  bomba  de  pressão  reversa  novamente  o  NMPC  possui 
+
+uma melhor resposta, pois mesmo com a inserção dessa perturbação a saída não foi afetada, 
+
+graças à rápida ação das variáveis manipuladas. Já a saída do LMPC sofreu uma modificação 
+
+que resultou em uma demora do sistema a controlar a pressão de fundo novamente. 
+
+ 
+
+Ao  simular  um  problema  na  válvula  choke,  nesse  caso  seu  travamento  em  um 
+
+determinado  valor,  o  tempo  de  resposta  de  ambos  os  controladores  foram  bem  próximos, 
+
+74 
+
+ 
+
+ficando a diferença entre eles a variação que ocorreu na saída do controlador. O NMPC teve 
+
+uma variação ligeiramente menor que o LMPC. 
+
+ 
+
+Ao serem realizadas as devidas comparações de desempenho dos sistemas de controle 
+
+avançado,  foi  possível  notar  a  superioridade  do  NMPC  quando  comparado  ao  LMPC.  Nas 
+
+simulações realizadas, o controlador NMPC obteve um comportamento mais suave da saída e 
+
+mesmo  nos  momentos  em  que  houve  a  presença  de  variações  e  perturbações,  as  variáveis 
+
+manipuladas,  nesse  caso  a  bomba  de  entrada  de  lama  e  a  válvula  choke,  não  apresentaram 
+
+oscilações que pudessem prejudicar o desempenho do sistema ao longo de sua utilização. 
+
+ 
+
+O  fato  de  algoritmo  NMPC  responder  de  forma  rápida  resulta  inclusive  em  uma 
+
+diferença  entre  as  repostas  quando  é  inserida  no  sistema  a  ocorrência  de  um  influxo  sob  a 
+
+forma da variável     . De acordo com o modelo (Figuras 19 e 20) quando o valor do influxo 
+
+aumenta,  a  pressão  de  fundo        deveria  aumentar.  Esse  evento  pode  ser  observado  nas 
+
+Figuras  30  e  31  que  representam  essa  variação  no  controlador  linear  (LMPC).  Porém,  no 
+
+controlador não linear (NMPC), as Figuras 38 e 39 mostram que isso não ocorre. 
+
+ 
+
+Esse fenômeno se deve ao fato de que como o esse controlador possui duas entradas e 
+
+uma saída, e seu grau de liberdade é positivo, podem, nesse sistema, ocorrer variações quanto 
+
+ao comportamento das entradas. E como nesse caso, o controlador responde de maneira muito 
+
+rápida ele gera  distúrbios nos comportamentos das variáveis  de entrada  e consequentemente 
+
+retorna a resposta mostrada na Figura 38.  
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+
+75 
+
+Capítulo 6  
+
+Conclusões e Recomendações 
+
+ 
+
+6.1 – Conclusões 
+ 
+
+É de extrema importância durante o processo de perfuração ter controle sobre a pressão 
+
+de fundo do poço a ser perfurado, tanto para evitar acidentes que possam vir a causar perdas 
+
+de vidas humanas, ambientais e financeiras quanto para minimizar o desperdício da lama de 
+
+perfuração,  que  é  quem  encarece  o  processo  como  um  todo,  e  diminuir  o  tempo  em  que  a 
+
+sonda  passa  não  operante.  Esse  trabalho  teve  como  objetivo  estudar  algumas  técnicas  de 
+
+controle avançado aplicadas a perfuração de poços de petróleo. 
+
+ 
+
+No  desenvolvimento  e  implementação  do  modelo  da  coluna  de  perfuração,  dois 
+
+modelos foram  estudados, porém vista a necessidade de um fluido monofásico imposta pelo 
+
+MPD,  o  modelo  de  Nygaard  (2006)  foi  descartado  e  foi  utilizado  como  base  das 
+
+implementações  o  modelo  de  Stamnes  (2007).  As  simulações  realizadas  em  malha  aberta 
+
+condizem com o esperado de um sistema real. 
+
+ 
+
+No tocante as técnicas de controle, dois controladores foram implementados. O primeiro 
+
+foi baseado em um modelo linearizado da coluna de perfuração resultando em um algoritmo 
+
+de  controle  LMPC.  Já  o  segundo  controlador,  um  NMPC,  foi  obtido  a  partir  de  um  modelo 
+
+não linear do processo. Para efeitos de comparação, foram realizadas  as mesmas simulações 
+
+em  ambos os controladores.  Ao longo  do trabalho foi possível  visualizar a superioridade do 
+
+algoritmo NMPC, algoritmo esse que resultou em respostas mais rápidas e um controle mais 
+
+suave com poucas penalizações aos componentes manipulados do sistema, o que, para o caso 
+
+do processo de perfuração, é algo bastante útil visto que uma demora em controlar a pressão 
+
+pode resultar em acidentes que possam a levar a perdas financeiras, ecológicas e até humanas. 
+
+ 
+
+A utilização de algoritmos LMPC é mais difundida no mercado, mas isso não significa 
+
+que algoritmos NMPC sofrem de deméritos, sua aplicação é mais escassa devido à dificuldade 
+
+76 
+
+ 
+
+intrínseca a um processo não linear. Porém como visto nesse trabalho é possível implementar 
+
+um controlador NMPC de maneira relativamente simples e cujos resultados são satisfatórios 
+
+e, como nesse caso, superiores àqueles obtidos com a utilização de algoritmos LMPC. 
+
+ 
+
+6.2 – Trabalho Futuros 
+ 
+
+A  vertente  dos  controladores  NMPC  vem  ganhando  espaço  diante  as  publicações 
+
+acadêmicas e científicas. Os algoritmos  de controle não-linear são ferramentas poderosas na 
+
+manutenção  e  controle  de  processos  industriais  dos  mais  variados  graus  de  complexidade. 
+
+Com  isso  a  continuidade  do  estudo  desse  tipo  de  controle  é  válida  principalmente  quando 
+
+aplicada  a  setores  cuja  exploração  tende  a  crescer  como  no  caso  da  indústria  de  petróleo  e 
+
+mais especificamente no processo de perfuração de poços. 
+
+ 
+
+Como  trabalho  futuros,  recomenda-se  usar  modelos  mais  rigorosos  de  processos  de 
+
+perfuração,  visto  que  os  contidos  nesse  trabalho  são  modelos  de  ordem  reduzida  de 
+
+parâmetros concentrados. Outra sugestão  é a avaliação dos  controladores  sujeita a  variações 
+
+nos  parâmetros  do  processo,  como  densidade  do  lama  de  perfuração,  ou  que  levem  em 
+
+consideração  outras  variáveis  manipuladas,  como  a  bomba  de  pressão  reversa,  ou  outras 
+
+variáveis controladas como a ROP. Além disso, os controladores avançados LMPC e NMPC 
+
+aqui  testados,  podem  ser  implementados  como  sendo  parte  de  uma  estrutura  de  controle 
+
+hierárquica, conforme proposto em Breyholtz (2010a). Estruturas de controle hierárquico são 
+
+comumente  adotadas  para  controlar  plantas  completas,  não  só  relacionadas  à  indústria  do 
+
+petróleo, como também em setores da indústria em geral, cujos processos são dotadas de uma 
+
+certa complexidade. 
+
+ 
+
+77 
+
+Referências Bibliográficas 
+
+ 
+
+Alberta Energy and Utilities Board (1994). ID 94-3: Underbalanced drilling. Technical 
+
+Report. Alberta, Canadá. 
+
+ 
+
+Bellumat,  E.;  Perezynski,  W.  C.;  Araújo,  N.  F.;  Freitas,  M.  G.;  Veja,  M.  P.  (2011). 
+
+Controle de pressão anular de fundo e da taxa de penetração durante a perfuração de poços de 
+
+petróleo. In: Anais do IX Congresso Brasileiro de Engenharia Química – Iniciação Científica 
+
+(COBEQ-IC 2009), Maringá, Brasil. 
+
+ 
+
+Breyholtz,  Ø.  (2008).  Nonlinear  model  predictive  pressure  control  during  drilling 
+
+operations. Master Thesis. Norwegian University of Science and Technology. Noruega. 
+
+ 
+
+Breyholtz, Ø.; Nygaard, G.; Godhavn, J. M.; Vefring, E. H. (2009). Evaluating control 
+
+designs  for  co-ordinating  pump  rates  and  choke  valve  during  managed  pressure  drilling 
+
+operations.  In:  Proceeding  of  the  IEEE  Multi-conference  on  Systems  and  Control  (MSC 
+
+2009), São Petersburgo, Rússia. 
+
+ 
+
+Breyholtz,  Ø.;  Nygaard,  G.;  Siahaan,  H.;  Nikolaou,  M.  (2010a).  Managed  pressure 
+
+drilling: a multi-level control approach. In Proceeding of SPE Intelligent Energy Conference 
+
+and Exhibition, Utrecht, Holanda. 
+
+ 
+
+Breyholtz,  Ø.;  Nygaard,  G.;  Nikolaou,  M.  (2010b).  Automatic  control  of  managed 
+
+pressure  drilling.  In:  Proceeding  of  the  2010  American  Control  Conference  (ACC’2010), 
+
+Baltimore, USA.  
+
+ 
+
+Camacho,  E.  F;  Bordons,  C.  (2005).  Nonlinear  model  preditive  control:  an 
+
+introductory  review.  In:  International  Workshop  on  Assessment  and  Future  Directions  of 
+
+Nonlinear Model Predictive Control (NMPC05), Freudenstadt-Lauterbad, Germany. 
+
+ 
+
+ 
+
+78 
+
+Carvalho Neto, H. S. (2010). Controle preditivo multi-modelos da pressão anular de 
+
+fundo  na  perfuração  de  poços  de  petróleo.  Trabalho  de  Conclusão  de  Curso,  Universidade 
+
+Federal de Sergipe. 
+
+Coker, I. (2004). Managed pressure drilling applications index. In: Proceeding of the 
+
+Offshore Technology Conference, Houston, USA. 
+
+ 
+
+Como 
+
+foi 
+
+formada 
+
+a 
+
+camada 
+
+do 
+
+pré-sal. 
+
+Disponível 
+
+em: 
+
+<http://mundoestranho.abril.com.br/materia/como-foi-formada-a-camada-do-presal> 
+
+Acessado em: 05/09/2010. 
+
+ 
+
+COPPE (2009). Corrida para o mar: os desafios tecnológicos e ambientais do pré-sal. 
+
+UFRJ, Rio de Janeiro, Brasil. 
+
+ 
+
+Deepwater  Horizon.  Disponível  em  <http://deepwaterhorizon.com/>.  Acessado  em: 
+
+18/09/2011. 
+
+ 
+
+Elliot,  D.;  Montilva,  J.;  Francis,  P.;  Reistman,  D.;  Shelton,  J.;  Roes,  V.  (2011). 
+
+Managed pressure drilling erases the lines. Oilfield Review, 23(1):14-23. 
+
+ 
+
+Entenda 
+
+o 
+
+que 
+
+é 
+
+a 
+
+camada 
+
+pré-sal. 
+
+Disponível 
+
+<http://www1.folha.uol.com.br/folha/dinheiro/cult91u440468.shtml> 
+
+Acessado 
+
+em 
+
+em: 
+
+05/09/2010 
+
+ 
+
+Fraga, C.T.C. (2008). O pré-sal e seus desafios. Audiência Pública no Senado Federal, 
+
+Brasília, Brasil. 
+
+ 
+
+Findeisen,  R;  Allgöwer,  F.  (2002).  An  Introduction  to  nonlinear  model  predictive 
+
+control.  In:  Proceedings  of  the  21st  Benelux  Meeting  on  Systems  and  Control,  Veldhoven, 
+
+Holanda. 
+
+ 
+
+Garcia,  C.  E;  Morshedi,  A.  M.  (1986).  Quadratic  programming  solution  of  dynamic 
+
+matrix control (QDMC). Chemical Engineering Communications, 46(1-3):73-87. 
+
+ 
+
+ 
+
+79 
+
+Helgestad, D.-E. (2010).  The drilling  process: a  plantwide control  approach.  Master 
+
+Thesis, Norwegian University of Science and Technology, Noruega. 
+
+ 
+
+Henson,  M.E.  (1998).  Nonlinear  model  predictive  control:  current  status  and  future 
+
+directions. Computers and Chemical Engineering, 23(2):187-202.  
+
+ 
+
+Hydro.  (2007).  Technology  outlook  2007  -  efﬁcient  well  construction.  Technical 
+
+report, Hydro. 
+
+ 
+
+Kaasa,  G.-O.  (2007).  A  simple  dynamic  model  of  drilling  for  control.  Technical 
+
+Report, Statoil Hydro Resarch Centre Porsgrunn. 
+
+ 
+
+Kaasa, G.-O.; Stamnes, Ø. N.; Imsland, L.; Aamo, O. M. (2011). Intelligent estimation 
+
+of  downhole  pressure  using  a  simple  hydraulic  model.  In:  Proceedings  of  the  IADC/SPE 
+
+Managed  Pressure  Drilling  and  Underbalanced  Operations  Conference  and  Exhibition, 
+
+Denver, USA. 
+
+ 
+
+Li,  Z.,  Hovakimyan,  N.;  Cao  C.;  Kaasa,  G.-O.  (2009).  Integrated  estimator  and     
+
+adaptive  controller  for  well  drilling  systems.  In:  Proceedings  of  the  2009  American  Control 
+
+Conference (ACC’09), St. Louis, USA. 
+
+ 
+
+Löfberg,  J.  (2001).  Linear  model  predictive  control:  stability  and  robustness.  PhD. 
+
+Thesis, Linköping University, Suécia. 
+
+ 
+
+Martin, M.D. (2006).  Managed pressure drilling  techniques and tools. Mater Thesis, 
+
+A&M University. Texas, EUA. 
+
+ 
+
+Mayne, D.Q.; Rawlings, J.B.; Rao, C.V.; Scokaert, P.O.M (2000). Constrained model 
+
+predictive control: stability and optimality. Automatica, 36(6): 789-814. 
+
+ 
+
+Morari,  M.;  lee,  J.H.  (1999).  Model  predictive  control:  past,  present  and  future. 
+
+Computers and Chemical Engineering, 23(4-5): 667-682. 
+
+ 
+
+ 
+
+80 
+
+Morari,  M.;  Lee,  J.H.;  Garcia,  C.E.  (2002).  Model  predictive  control.  Prentice-Hall, 
+
+2002. 
+
+ 
+
+Nygaard,  G.;  Nævdal,  G.  (2006).  Nonlinear  model  predictive  control  scheme  for 
+
+stabilizing annulus pressure during oil well drilling. Journal of Process Control, 16(7): 719-
+
+732. 
+
+ 
+
+Perfuração 
+
+underbalanced.  Disponível 
+
+em 
+
+<http://www.qgdopetroleo.com/ 
+
+2012/01/perfuracao-underbalanced.html>. Acessado em: 19/04/2012. 
+
+ 
+
+Plucenio,  A;  Rico,  J.  E.  N;  Pagano;  D.  J;  Bruciapaglia,  A.  H.  (2007).  Controle 
+
+preditivo  não linear na  indústria do petróleo e gás.  In: Anais do IV Congresso Brasileiro de 
+
+P&D em Petróleo e Gás (4º PDPETRO), Campinas, Brasil. 
+
+ 
+
+Qin, S.J.; Badgwell, T.A. (2000). An overview of nonlinear model predictive  control 
+
+applications.  In:  “Nonlinear  model  predictive  control”,  Allgöwer,  F.;  Zheng,  A.  (Eds.), 
+
+Progressin Systems and Control Theory Series, v.26. Switzerland: Birkhauser Boston. 
+
+ 
+
+Qin, S.J.; Badgwell, T. A. (2003). An overview of industrial model predictive control 
+
+technology. Control Engineering Practice, 11(7): 733-764. 
+
+ 
+
+Rawlings,  J.B.  (2000).  Tutorial  overview  of  model  predictive  control.  IEEE  Control 
+
+Systems Magazine, 20(3):38-52. 
+
+ 
+
+Rehm, B.; Schubert, J.; Haghshenas, A; Paknejad, A. S; Hughes,  J. (2008). Managed 
+
+pressure drilling. Gulf Publishing Company, Houston, EUA. 
+
+ 
+
+Roosenblatt, L. (2006). Aplicação dinâmica de sistemas ao estudo do comportamento 
+
+das  taxas  diárias  de  aluguel  de  sondas  de  perfuração  off-shore.  Trabalho  de  Conclusão  de 
+
+Curso, UFRJ, Rio de Janeiro, Brasil. 
+
+ 
+
+Stamnes,  N.  Ø.  (2007).  Adaptive  observer  for  bottomhole  pressure  during  drilling. 
+
+Master Thesis. Norwegian University of Science and Technology. Noruega. 
+
+ 
+
+81 
+
+Stamnes,  Ø.  N.;  Zhou,  J.;  Kaasa,  G.-O.;  Aamo,  O.  M.  (2008).  Adaptive  observer 
+
+design for the bottomhole pressure of a managed pressure drilling system. In: Proceedings of 
+
+47th IEEE Conference on Decision and Control (CDC 2008), Cancun, Mexico. 
+
+ 
+
+Shayegi,  S.  (2007).  Underbalanced  drilling  and  managed  pressure  drilling  –  two 
+
+methods  for  optimising  drilling.  Exploration  &  Production,  Oil  &  Gas  Review.  Disponível 
+
+em: <www.touchbriefings.com/pdf/2590/Shayegi.pdf>. 
+
+ 
+
+Skalle,  P.  (2009).  Pressure  control  during  oil  well  drilling.  Ventus  Publishing. 
+
+Disponível em: < www.bookboon.com>. 
+
+ 
+
+Sotomayor,  O.  A.  Z.  (2002).  Modelagem,  identificação  e  controle  de  sistemas  de 
+
+tratamento  de  lodo  ativado  com  remoção  de  nitrogênio.  PhD.  Thesis,  Escola  Politécnica  da 
+
+Universidade de São Paulo, Brasil. 
+
+ 
+
+Tercan,  E.  (2010).  Managed  pressure  drilling  techniques,  equipment  &  applications. 
+
+Mater Thesis, Middle East Technical University. 
+
+ 
+
+Zhou,  J.;  Stamnes,  Ø.  N.;  Aamo,  O.  M.;  Kaasa,  G.-O.  (2008).  Adaptive  output 
+
+feedback control of a dynamic drilling system. In: Proceedings of the 47th IEEE Conference 
+
+on Decision and Control (CDC 2008), Cancun, Mexico. 
+
+ 
+
+Zhou, J.; Stamnes, Ø. N.; Aamo, O. M.; Kaasa, G.-O. (2008). Observer-based control 
+
+of  a  managed  pressure  drilling  system.  In:  Proceedings  of  the  27th  Chinese  Control  and 
+
+Decision Conference (CCDC’08), Yantai, China. 
+
+ 
+
+Zhou, J.; Stamnes, Ø. N.; Aamo, O. M.; Kaasa, G.-O. (2009). Pressure regulation with 
+
+kick  attenuation  in  a  managed  pressure  drilling  system.  In:  Proceedings  of  the  48th  IEEE 
+
+Conference  on  Decision  and  Control  and  28th  Chinese  Control  Conference  (CDC/CCC’09), 
+
+Shanghai, China. 
+
+ 
+
+ 
+
+82 
+
+Zhou,  J.;  Stamnes,  Ø.  N.;  Aamo,  O.  M.;  Kaasa,  G.-O.  (2010).  Swicthed  control  for 
+
+pressure  regulation  and  kick  attenuation  in  a  managed  pressure  drilling  system.  IEEE 
+
+Transactions on Control System Technology. 19(2): 337-350. 
+
+ 
+
+Zhou,  J.;  Nygaard,    G.;  Godhavn,  J.;  Breyholtz,  Ø.;  Vefring,  E.  H.  (2010).  Adaptive 
+
+observer for kick detection and switched control for bottomhole pressure regulation and kick 
+
+attenuation during managed pressure drilling. In: Proceedings of the 2010 American Control 
+
+Conference (ACC’2010), Baltimore, EUA. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+83 
+
+Apêndice A 
+
+O Controlador DMC sem Restrições2 
+
+ 
+
+Seja um processo com as respostas ao degrau e pulsos unitários representadas na Figura 
+
+A1. Sejam 
+
+ os valores  de  y correspondentes  à resposta ao degrau unitário, 
+
+nos instantes de amostragem   , onde   é o período de amostragem e N o instante a partir do 
+
+qual  a  resposta  estabiliza.  Analogamente,  sejam 
+
+  os  valores  de    
+
+correspondentes  à  resposta  ao  pulso  unitário  nos  mesmos  instantes  de  amostragem.  Nesse 
+
+caso, para       o valor de    pode ser considerado desprezível. Pode-se demonstrar que: 
+
+ 
+
+Ou a forma equivalente: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                         
+
+(A1) 
+
+                         
+
+(A2) 
+
+Figura A1: Respostas de um sistema de 2ª ordem ao degrau e pulso unitários. 
+
+Com  base  nessas  informações  podemos  escrever  para  o  instante  (     ),  o  seguinte 
+
+modelo de convolução discreta (no domínio do tempo) para a predição da variável  : 
+
+ 
+
+                                                           
+2 Cutlher, C.R.; Ramaker, B.C. (1980). Dynamic matrix control (DMC) – A computer control algorithm. In: Proc. 
+Join Automatic Control Conference, San Francisco – CA. 
+
+84 
+
+ 
+
+N21iai,,,,N21ihi,,,,,,,23312211aahaahah,,,123312211hhhahhaha 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+A equação acima pode também ser escrita para o instante  : 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Subtraindo a equação (A4) da (A3) temos: 
+
+ 
+
+ 
+
+Definindo 
+
+ 
+
+ 
+
+ 
+
+Substituindo (A5) em (A6), temos: 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(A3) 
+
+(A4) 
+
+                         
+
+(A5) 
+
+        
+
+ 
+
+ 
+
+(A6) 
+
+                         
+
+(A7) 
+
+A equação (A7) fornece uma estimativa da saída do sistema no instante (     ) futuro, 
+
+a  partir  das  variações  nas  entradas  do  sistema,  até  o  instante  .  Se     for  o  instante  atual, 
+
+teremos uma estimativa futura em função de dados atuais e passados. 
+
+Para  se  obter  uma  estimativa  mais  precisa  de   
+
+,  a  equação  (A7)  deve  ser 
+
+corrigida, por exemplo, com o erro no valor calculado de   no instante  :  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                         
+
+ (A8) 
+
+Onde  
+
+ é o valor real medido 
+
+     é o valor calculado no instante k 
+
+   é a previsão corrigida no instante k+1 
+
+Consideremos  agora  o  valor  desejado  para   
+
+  e  vamos  designá-lo  de 
+
+.  Em 
+
+geral ele pode estar relacionado com o setpoint dessa variável através de um filtro de primeira 
+
+ordem. A introdução desse filtro visa tornar as ações de controle mais suaves. No nosso caso 
+
+vamos desconsiderar esse filtro e adotar: 
+
+ 
+
+85 
+
+Niikikuhy111ˆNiikikuhy1ˆNiikikikkuuhyy111ˆˆ1kkkuuuNiikikkuhyy111ˆˆ1kyˆkkkcyyyykˆˆ11kykyˆc1ky1kyˆd1ky 
+
+ 
+
+ 
+
+ 
+
+Onde  
+
+ é o valor do setpoint. 
+
+No caso ideal, temos: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+             
+
+(A9) 
+
+                        
+
+(A10) 
+
+Daí, substituindo as equações (A9) e (A10) em (A8), ficamos com: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                                 
+
+ 
+
+(A11) 
+
+Onde    é o desvio (erro) no instante   . 
+
+Combinando as equações (A11) e (A8) obtemos: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         
+
+ 
+
+(A12) 
+
+Se   é o instante atual, na equação (A12) apenas não conhecemos 
+
+ que contém a 
+
+ação de controle no instante   . As demais ações  de controle aconteceram no passado e são, 
+
+portanto, conhecidas. Então, resolvendo essa equação para o instante k, obtemos: 
+
+ 
+
+ 
+
+E podemos calcular   : 
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+              
+
+                    
+
+ 
+
+(A13) 
+
+ 
+
+                                
+
+ 
+
+(A14) 
+
+A  equação  (A13)  define  o  controlador  preditivo  mais  simples  possível.  Esse  é  o 
+
+chamado  controlador  dead-beat,  onde  o  valor  desejado  é  atingido  apenas  um  período  de 
+
+amostragem após a aplicação da ação de controle. Esse algoritmo de controle tem os seguintes 
+
+inconvenientes: 
+
+ 
+
+a)  não é aplicável para processos com tempo morto, pois neste caso       ; 
+
+b)  não  é  aplicável  se      for  pequeno  (o  que  é  muito  freqüente),  pois  a  ação  de 
+
+controle seria muito grande; 
+
+c)    é muito influenciado por ruídos espúrios. 
+
+ 
+
+86 
+
+spkdyyk1spkydckkyy11kkspkkkeyyyyˆˆ1kNiikieuh11kuNiikikkuhehu21111kkkuuuPara  melhorar  a  robustez  e  incorporar  processos  com  tempo  morto  é  necessário 
+
+considerar  um  número  maior  de  instantes  futuros  (além  do  instante       ).  Desta  forma,  a 
+
+ação  de  controle  é  amenizada,  pois  o  processo  terá  mais  tempo  para  atingir  o  seu  objetivo 
+
+(atingir  o  setpoint).  Portanto  a  intervenção  do  controlador  sobre  o  processo  poderá  ser  mais 
+
+suave. 
+
+com: 
+
+A  equação  (A7)  é  válida  para  qualquer  instante           futuro.  Nesse  caso,  ficamos 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                  
+
+ 
+
+(A15) 
+
+Onde                        ,  sendo      denominado  de  horizonte  de  otimização  ou  de 
+
+predição do controlador, podendo ser usado como um parâmetro de sintonia do controlador. 
+
+Vamos admitir agora, que o erro na predição feita pela equação (A15), seja o mesmo 
+
+para  qualquer  valor  de   .  Também,  vamos  admitir  que  esse  erro  seja  aquele  observado  no 
+
+instante  . Isto equivale a impor que: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                   
+
+                               
+
+ 
+
+ 
+
+(A16) 
+
+(A17) 
+
+ 
+
+ 
+
+e 
+
+ 
+
+Substituindo a equação (A16) em (A15) obtemos 
+
+ 
+
+Portanto para         : 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Usando a equação (A17) e abrindo a somatória, temos: 
+
+                  
+
+ 
+
+(A18) 
+
+ 
+
+      
+
+ 
+
+(A19) 
+
+ 
+
+                  
+
+ 
+
+(A20) 
+
+ 
+
+Vamos definir   : 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                  
+
+ 
+
+(A21) 
+
+87 
+
+ 
+
+Niijkijkjkuhyy11ˆˆ1jkc1jkjkcjkyyyyˆˆkckyyN1iijkic1jkcjkuhyyN1ii1kickc1kuhyyN1kN2k31k2k1kc1kuhuhuhuhyyN2ii1ki1uhS 
+
+Daí (A20) fica: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+      
+
+ 
+
+(A22) 
+
+Observe  que  o  valor  de      é  conhecido,  pois  só  depende  das  ações  de  controle 
+
+passadas. 
+
+Analogamente, aplicando a equação (A18) para         , temos: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                             
+
+Abrindo a somatória: 
+
+                  
+
+ 
+
+ 
+
+(A23) 
+
+(A24) 
+
+ 
+
+Definindo   : 
+
+ 
+
+Obtemos: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+              
+
+    
+
+(A25) 
+
+                
+
+ 
+
+(A26) 
+
+O  valor  de      é  conhecido,  pois  ele  também  só  depende  das  ações  de  controle 
+
+passadas. 
+
+Substituindo a equação (A22) na equação (A26), segue: 
+
+ 
+
+ 
+
+               
+
+ 
+
+(A27) 
+
+ 
+
+Analogamente, para          obtemos: 
+
+             (A28) 
+
+ 
+
+Onde: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+           (A29) 
+
+88 
+
+1k1kc1kSuhyyN1ii2kic1kc2kuhyyN2kN1k3k21k1c1kc2kuhuhuhuhyyN3ii2ki2uhS2k21k1c1kc2kSuhuhyyyyhhuhuSSkckkk2121112yyhhhuhhuhuSSSkckkkk312312112123N4ii3ki3uhS 
+
+Podemos assim definir: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+(A30) 
+
+           (A31) 
+
+           (A32) 
+
+ 
+
+E as equações (A22), (A27) e (A28) podem ser escritas da seguinte maneira: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Assim, por indução podemos generalizar para qualquer   e obter: 
+
+  
+
+ 
+
+ 
+
+Considerando todos instantes de predição, temos: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+           (A33) 
+
+ 
+
+ 
+
+(A34) 
+
+(A35) 
+
+      
+
+(A36) 
+
+ 
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         (A37) 
+
+ 
+
+Ou 
+
+ 
+
+Onde: 
+
+ 
+
+vetor dos valores previstos de  y 
+
+  
+
+matriz dinâmica 
+
+ 
+
+vetor das ações de controle no instante k (será calculado) 
+
+89 
+
+ 
+
+ 
+
+ 
+
+ 
+
+N1niinkinuhSi1nniSPi1jjiha1k1kc1kPuayy21k1k2kc2kPuauayy32k11k2k3kc3kPuauauayyj1jk11k1jkjkcjkPuauauayynpknpkkknpknpkkknpnpnpnpcnpkcnpkckckPyPyPyPyuuuuaaaaaaaaaayyyy12112112112112112100000000PyuAykccyu  
+
+vetor de predições decorrentes das ações de controle passadas 
+
+ 
+
+ 
+
+Suponhamos que a trajetória desejada seja dada por: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Escrevendo (A27) para todos os instantes futuros: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Subtraindo a equação (A39) pela (A37), obtemos: 
+
+ 
+
+ 
+
+ 
+
+Onde 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ou em uma notação vetorial, a equação (A40) fica: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Onde 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+        (A38) 
+
+        (A39) 
+
+ 
+
+         (A40) 
+
+         (A41) 
+
+         (A42) 
+
+ 
+
+ 
+
+   -  é o vetor de erros entre os valores previstos e o valor desejado. 
+
+    -  é  o  vetor  de  erros  entre  o  valor  desejado  e  os  valores  previstos  se  não  houver 
+
+nenhuma ação de controle futura (sistema em malha aberta). 
+
+ 
+
+ 
+
+Podemos desejar que o valor calculado para y seja igual à trajetória desejada, portanto 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+                 (A43) 
+
+Ou seja: 
+
+90 
+
+spkdjkyyspkspkspkspkdnpkd1npkd2kd1kyyyyyyyynpknpkkknpknpkkknpnpnpnpcnpkdnpkcnpkdnpkckdkckdkPePePePeuuuuaaaaaaaaaayyyyyyyy12112112112112111221100000000kspkkyye´euAenp21jyycjkdjk...,,,, 
+
+ 
+
+ 
+
+ 
+
+ 
+
+       (A44) 
+
+ 
+
+Porém  as  dimensões  das  matrizes  e  vetores                         )  da  equação 
+
+(A44),  podem  tornar  complicada  a  manipulação  computacional  das  mesmas.  Também  a 
+
+matriz A pode ser singular (não tem inversa) no caso em que o sistema tem tempo morto. Para 
+
+contornar esses problemas consideramos apenas os m primeiros elementos do vetor       
+
+     assumindo que os demais valores desse vetor sejam nulos. Deste modo a equação (A40) 
+
+é escrita da seguinte forma: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ou na forma vetorial: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+   (A45) 
+
+   (A46) 
+
+ 
+
+Seguindo este procedimento o controlador estará calculando sua saída em m instantes 
+
+futuros, ou seja, do instante atual   (  ) até o instante           (
+
+). 
+
+Para  calcular  as       ações  de  controle  futuras,  o  MPC  minimiza  o  erro  entre  as 
+
+trajetórias prevista e desejada, ou seja, ele minimiza o seguinte índice de desempenho: 
+
+ 
+
+ 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+   (A47) 
+
+Queremos então encontrar as ações de controle que minimizem  , isto é: 
+
+ 
+
+Portanto: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+   (A48) 
+
+91 
+
+´´eAu0euA0e1npkmkmkkkmkkkmnpmnpnpnpmmmmcnpkdnpkcmkdmkcmkdmkckdkckdkPePePePePeuuuaaaaaaaaaaaaaaayyyyyyyyyy1211111112111121112211000000000001xnp1xmmxnp1xnpeuAe´1mku´´euAeuAeeJTT0eAuAA0uJJTT´min´eAAAuT1TOu  explicitando  as  dimensões  dos  vetores  e  matrizes  envolvidos  na  equação  acima, 
+
+temos: 
+
+   
+
+ 
+
+             (A49) 
+
+A equação (A48) determina as   futuras ações de controle (vetor 
+
+), porém apenas 
+
+a  ação  do  instante      será  implementada.  No  instante  seguinte       ,  repetimos  todo  o 
+
+processo,  fazendo este instante assumir a posição k e calculando tudo  novamente. Com  este 
+
+procedimento,  apenas  precisamos  multiplicar  a  primeira  linha  da  matriz 
+
+  pelo 
+
+vetor   . 
+
+Os parâmetros de sintonia do MPC introduzidos até agora são: 
+
+  - horizonte de convolução ou de estabilização do processo 
+
+   - horizonte de predição ou otimização 
+
+  - horizonte de controle 
+
+ 
+
+ 
+
+ 
+
+ 
+
+A implementação do índice de desempenho definido na equação (A42), conduz a uma 
+
+ação de controle muito violenta. Para atenuar este comportamento é acrescentado um peso na 
+
+variação da ação de controle conforme a seguinte equação: 
+
+ 
+
+                         
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ (A50) 
+
+Onde     é  a  matriz  de  fatores  de  supressão  que  pondera  (atenua)  as  variações  das 
+
+ações  de  controle,  é  normalmente  uma  matriz  diagonal  com  todos  os  valores  constantes  e 
+
+iguais.  Quanto  maior  o  valor  de   ,  mais  suave  à  ação  de  controle  resultante.  Esta  matriz  é 
+
+outro parâmetro de sintonia do controlador. 
+
+ 
+
+Daí o índice de desempenho definido em (A47), resulta em: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+    
+
+                             
+
+ 
+
+ 
+
+ 
+
+ 
+
+  (A51) 
+
+ 
+
+    
+
+  
+
+   
+
+ 
+
+Além  disso,  existem  variáveis  controladas  que  são  mais  importantes  que  outras,  i.e. 
+
+existem  variáveis  que  devem  seguir  o  setpoint  com  maior  fidelidade,  enquanto  que  outras 
+
+podem oscilar em torno do valor desejado. Nesse caso é necessário ponderar diferentemente a 
+
+ 
+
+92 
+
+1xnpnpxmT1mxnpnpxmT1xmeAAAu´uT1TAAAinfluência das variáveis controladas na função objetivo. Para implementar tal efeito, basta pré-
+
+multiplicar  a  equação  (A42)  por  uma  matriz  diagonal  de  ponderação     cujos  valores  da 
+
+diagonal principal são proporcionais à importância da variável controlada: 
+
+ 
+
+ 
+
+   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+         
+
+(A52) 
+
+ 
+
+Neste caso, queremos minimizar os quadrados dos erros ponderados, portanto obtemos 
+
+uma expressão análoga à equação (A51): 
+
+ 
+
+ 
+
+ 
+
+  
+
+   
+
+ 
+
+                                  
+
+ 
+
+ 
+
+ 
+
+  (A53) 
+
+Que  é  a  expressão  mais  usual  para  o  controlador  DMC  sem  restrições  nas  variáveis 
+
+manipuladas. 
+
+ 
+
+ 
+
+93 
+
+´WeWAuWe

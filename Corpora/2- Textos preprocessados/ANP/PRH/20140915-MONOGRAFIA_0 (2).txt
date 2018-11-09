@@ -1,0 +1,608 @@
+universidade federal alagoas centro tecnologia universidade federal alagoas centro tecnologia modelagem controle separador trifasico aluno seldis fernando santos junior orientadores cristiane holanda sodre arioston araujo moraes junior resumo corrente proveniente producao petroleo mistura constituida agua oleo residuos solidos gas natural associado tal mistura primeiramente separada utilizando separador trifasico 
+ separacao deve ocorrer maneira eficiente controle adequado desse separador necessario 
+ objetivo deste trabalho modelar controlar separador trifasico utilizando software matlab simulink® avaliar desempenho separador trifasico mediante estrutura controle variaveis nivel pressao 
+ separador trifasico possui duas camaras primeira camara chamada camara separacao recebe mistura promove separacao diferenca densidade 
+ fase aquosa densa depositase base parte retirada 
+ fase oleosa menos densa forma camada acima fase aquosa vertendo atraves chincana camara oleo 
+ separacao fases operacao importante vez petroleo gas apresentam relevante interesse economico industria outra vantagem controle processo bem realizado permite absorver bem flutuacoes geradas producao petroleo exemplo golfadas evitando flutuacoes alcancem outros equipamentos deixando operacao separacao estavel 
+ simulacao processo malha aberta sistema atuacao controle leva variaveis referencia niveis extremos 
+ processo malha fechada realizadas quatro perturbacoes variaveis controladas utilizando controlador proporcional integral pi controle todas perturbacoes eficiente atingindo resultados bastante satisfatorios 
+ perturbacoes positivas onde alcancaram novo estado estacionario rapidamente niveis pressao altos portanto demorou tempo fato ser perturbacao maior controle atingido perturbacoes negativas variaveis controladas onde nade rapidamente atingido novo estado estacionario pra perturbacao oscilacao maior resposta demorada fato ser perturbacao maior 
+ palavraschaves separador trifasico modelar controlar avaliar desempenho evitando flutuacoes 
+ abstract chain production oil mixture consisting water oil solid waste associated natural gas mixture first separated using threephase separator 
+ separation must occur efficiently adequate control separator required 
+ objective work model control threephase separator using matlab simulink® software evaluate performance threephase separator control structure variables level pressure 
+ three phase separator two chambers first chamber called separation chamber receives mixture promotes separation density difference 
+ denser water phase settles bottom part removed 
+ oily phase less dense form layer aqueous phase pouring chincana oil chamber 
+ separation phases important operation since oil gas great economic interest industry another advantage control process performed well allow absorb fluctuations generated oil production example slug preventing fluctuations reach others leaving equipment stable operation separation 
+ simulation process open loop system takes action control variables refer extreme levels 
+ closed loop process four disorders performed variables controlled using proportional integral pi controller control disturbances efficient reaching satisfactory results 
+ positive perturbations reached new steady state quickly levels high pressure therefore took longer larger disturbance control achieved negative disturbances subsidiaries variables swim quickly reached new steady state disturbance greater response oscillation longer greater disturbance 
+ keywords threephase separator modeling control evaluate performance avoiding fluctuations 
+ lista figuras figura historico producao petroleo brasil 
+ figura metas petrobras producao petroleo lgn 
+ figura investimentos exploracao producao 
+ figura localizacao geografica camada presal 
+ figura esquema instalacao producao processamento primaria complexa 
+ figura esquema ilustrativo separador bifasico 
+ figura esquema separador bifasico 
+ figura mostra valvulas controladoras pressao niveis vazoes saida entrada gas oleo agua 
+ figura esquema separador trifasico 
+ figura tipos defletores utilizados mudar direcao velocidade fluido 
+ figura prato quebraespumas 
+ figura prato quebraondas 
+ figura quebravortice tubo perfurado plataforma cruzeta 
+ figura extratores nevoa telas arame wiremesh aletas tp vane placas cilindricas 
+ figura placa coalescedora 
+ figura jatos espalhadores areia sander jat 
+ figura separador trifasico internos 
+ figura diagrama blocos controlador ligadesliga 
+ figura resposta acao proporcional malha aberta 
+ figura comportamento acao derivativa 
+ figura resposta acao derivativa variacao tipo degrau 
+ figura comparacao acoes pid 
+ figura separador trifasico variaveis 
+ figura simulacao processo malha aberta 
+ figura controle nivel agua funcao cinco variaveis utilizando diagrama blocos simulink 
+ figura controle nivel agua funcao cinco variaveis utilizando diagrama blocos simulink 
+ figura controle nivel oleo funcao tres variaveis utilizando diagrama blocos simulink 
+ figura controle pressao funcao variaveis utilizando diagrama blocos simulink 
+ figura grafico nivel total tempo perturbacao degrau 
+ figura grafico nivel agua tempo perturbacao 
+ figura grafico nivel oleo tempo perturbacao 
+ figura grafico pressao tempo perturbacao 
+ figura grafico nivel agua tempo perturbacao degrau 
+ figura grafico nivel total tempo total perturbacao degrau nivel 
+ figura grafico nivel oleo tempo perturbacao degrau nivel oleo 
+ figura grafico pressao tempo perturbacao degrau valor inicial pressao 
+ figura grafico nivel agua tempo perturbacao degrau 
+ figura grafico nivel total tempo perturbacao degrau 
+ figura grafico nivel oleo tempo perturbacao degrau 
+ figura grafico pressao tempo perturbacao degrau valor inicial pressao 
+ figura grafico nivel agua tempo perturbacao degrau nivel agua inicial 
+ figura grafico nivel total tempo perturbacao degrau nivel total 
+ figura grafico nivel oleo tempo perturbacao degrau nivel oleo 
+ figura grafico pressao tempo perturbacao grau valor inicial pressao 
+ lista tabelas tabela faixa valores variaveis controladas processo malha aberta 
+ tabela parametros operacionais separador trifasico 
+ lista abreviaturas siglas comprimento tanque cl camara oleo cs camara separacao diametro tanque aceleracao gravitacional vazao gas altura vazao oleo numero mols mm massa molecular constante universal gases ra raio area volume vazao agua fracao abertura valvula θ angulo ρ massa especifica oleo area secao circular diametro zcs comprimento camara separacao zco comprimento camara oleo zt comprimento total separador trifasico hvert altura vertedouro po pressao descarga oleo psi pg pressao descarga gas psi pw pressao descarga agua psi cv maxo constante valvula oleo coeficiente maximo vazao oleo cv maxa constante valvula agua coeficiente maximo vazao agua cv maxg constante valvula gas coeficiente maximo vazao gas pressao inicial separador psi pi controlador proporcionalintegral temperatura separador mmar massa molar ar kg gmol mmg massa molecular gas kg gmol ρo densidade oleo kg ρa densidade agua kg xl fracao abertura valvula oleo xw fracao abertura valvula agua xg fracao abertura valvula gas subscritos entrada saida total verte vert vertedouro sumario 
+ secao separacao primaria 
+ secao acumulacao coleta liquido 
+ secao separacao secundaria 
+ acessorios internos vaso separador 
+ jatos espalhadores areia sander jet 
+ problemas operacionais vasos separadores 
+ acao ligadesliga onoff 
+ acao proporcional integral derivativa 
+ area segmentos circulares 
+ volume cilindro segmento circular 
+ balanco liquido cs 
+ balanco oleo cl 
+ balanco agua cs 
+ balanco gas tanque 
+ funcoes transferencia nivel total camara separacao 
+ funcoes transferencia nivel agua camara separacao 
+ funcoes transferencia nivel oleo camara oleo 
+ funcoes transferencia pressao separador trifasico 
+ teste malha aberta 
+ teste malha fechada 
+ introducao petroleo atualmente principais fontes energia maioria paises 
+ alem relevancia fonte energia empregado materiaprima plasticos borrachas sinteticas tintas corantes adesivos solventes detergentes explosivos produtos farmaceuticos cosmeticos outros torna evidente importancia sociedade 
+ petroleo raramente produzido forma fluido homogeneo ocorrendo longo vida campo petrolifero producao simultanea oleo gas agua contaminantes 
+ geral campos petroliferos constituidos plantas processamento primario equipadas instrumentos sistemas visam promover separacao primaria hidrocarbonetos oleo gas brasil al 
+ demanda hidrocarbonetos acompanha crescimento populacional torna extrema importancia otimizacao exploracao producao campos petroleo tendem diminuir gradativamente 
+ figura pode ser observado historico producao petroleo brasil junho junho conta descobertas jazidas petroliferas neste periodo producao oscilou bastante 
+ figura historico producao petroleo brasil 
+ fonte diegues armando 
+ corrente proveniente producao petroleo mistura constituida agua oleo residuos solidos gas natural associado 
+ mistura primeiramente separada utilizando separador trifasico 
+ separador trifasico responsavel separacao fase oleosa fase aquosa gas proveniente pocos produtores 
+ separadores formato cilindrico possuem internos auxiliam separacao fases encontram misturadas 
+ petroleo gas apresentam relevante interesse economico industria sendo agua contaminantes indesejados processo producao petroleo apresentar elevado teor sal composicao provoca serie problemas sistema bombeio transferencia operacao processos refinarias 
+ presal termo presal referese conjunto rochas localizadas porcoes marinhas grande parte litoral brasileiro potencial geracao acumulo petroleo 
+ convencionouse chamar presal porque forma intervalo rochas estende baixo extensa camada sal certas areas costa atinge espessuras 
+ termo pre utilizado porque longo tempo rochas sendo depositadas antes camada sal 
+ profundidade total dessas rochas distancia superficie mar reservatorios petroleo abaixo camada sal pode chegar mil metros petrobras 
+ exploracao producao petroleo gas natural atividades centrais petrobras 
+ producao presal aguas ultraprofundas realidade consolidada seguir figura mostra quais metas empresa 
+ figura metas petrobras producao petroleo lgn 
+ petrobras desenvolve tecnologias otimizar producao aumentar vida util campos maduros exemplo programa aumento eficiencia operacional proef conseguiu reverter tendencia queda eficiencia unidades operacionais bacia campos rio janeiro 
+ muitos investimentos feitos torno presal ser altamente rentavel objetivos alcancados figura mostra quanto investimentos exploracao producao petrobras 
+ figura investimentos exploracao producao 
+ localizacao geografica presal encontra logo abaixo camada aproximadamente quilometros extensao quilometros largura 
+ figura localizacao geografica camada presal 
+ palavra controle normalmente utilizada diversos contextos termos controle qualidade controle financas controle producao outros cobrem vasto espectro atividades 
+ todos contextos baseados existencia sistema cujo comportamento queira influenciar liberdade tomar acoes quais ira forcar sistema agir forma desejada bissell 
+ termo sistema usado descrever serie componentes interagem torno condicao imaginaria limite havendo particular interesse entradas saidas relacao mesmas 
+ sistema controle assim chamado saida controlada assumir valor particular seguir determinada entrada bolton 
+ advento computadores rapida expansao capacidade processamento mesmos cada vez tarefas desempenhadas sistema controle sendo executada forma automatica facilidade simplicidade seguranca 
+ fato permitiu tanta ampla difusao utilizacao controle automatico desenvolvimento tecnologia tal balchen 
+ objetivos objetivos deste trabalho mostrados logo abaixo  fornecer visao geral processo extracao producao petroleo detalhar processo separacao carga trifasico  simulacao separador trifasico malha aberta controle intuito observar comportamento variaveis niveis pressao utilizando matlab  simulacao separador trifasico utilizando estrutura controle partir simulink controlar variaveis niveis pressao  realizar perturbacao degrau variaveis controle mantelas dentro valor referencia onde malha controle utilizase controlador proporcional integral pi 
+  comparacao resultados malha aberta fechada 
+ trabalho organizado cinco capitulos 
+ capitulo traz introducao trabalho 
+ capitulo traz revisao bibliografica temas abordados 
+ capitulo encontrase modelagem dinamica separador trifasico aguaoleogas funcoes transferencia pressao separador nivel total agua camara separacao nivel oleo camara oleo 
+ capitulo apresenta resultados discussoes obtidos atraves uso controlador proporcional integral 
+ finalmente capitulo expoe conclusoes deste trabalho 
+ processamento primario petroleo processamento primario petroleo consiste primeira etapa fase producao petroleo passa apos sair reservatorio alcancar superficie 
+ normalmente producao simultanea gas oleo agua juntamente impurezas brasil al 
+ plataformas offshore producao petroleo possuem plantas processamento separacao oleo gas agua produzidos 
+ qualidade desta separacao local extracao fundamental agregar valor oleo produzido 
+ bom desempenho malhas controle planta principais fatores manter produtos dentro especificacoes qualidade 
+ apesar relativa simplicidade processos separacao plantas operam grande variacao vazao devido caracteristicas metodos elevacao escoamento pocos produtores 
+ principal interesse economico dessa atividade producao hidrocarbonetos oleo gas sendo necessario dotar campos maritimos terrestres facilidades producao instalacoes destinadas efetuar sob condicoes controladas separacao oleo gas agua 
+ processamento primario petroleo objetivos  separacao fases oleosa gasosa aquosa equipamentos conhecidos separadores trifasicos  tratar fase oleosa reducao agua emulsionada sais dissolvidos  tratar fase gasosa reducao teor agua necessario outros contaminantes  tratar fase aquosa descarte reinjecao pocos produtores 
+ dependendo tipo fluidos produzidos viabilidade tecnico economica planta processamento primario pode ser simples complexa simples efetuam apenas separacao gas oleo agua enquanto complexas incluem condicionamento compressao gas tratamento estabilizacao oleo tratamento agua reinjecao descarte thomas 
+ objetivo processamento primario petroleo separar gas oleo agua tratar correntes maneira especificalas padroes envio terminais refinarias oleo agua descarte agua oleosa 
+ normalmente separacao tratamento dessas fases feitos planta processamento meio uso produtos quimicos aquecimento vasos separadores 
+ figura apresenta esquema principais etapas processamento primario petroleo 
+ termino processamento primario temse fluxos separados oleo gas alem descarte agua produzida 
+ figura esquema instalacao producao processamento primaria complexa 
+ fonte brasil la 
+ fonte bra sil al 
+ vasos separadores gravitacionais podem ser cilindricos esfericos horizontais verticais bifasicos trifasicos 
+ separacao bifasica separacao fase gasosa fase liquida gas separado liquido corresponde oleo agua souza 
+ esquema seguir mostra separador cilindrico horizontal bifasico ilustrando secoes internas funcionamento onde ocorrem meios mecanismos fisicos varias etapas separacao gas liquido bifasico 
+ figura esquema ilustrativo separador bifasico 
+ meios fisicos atuam interior vaso separar gas liquido basicamente separacao inercial forca centrifuga diferenca densidades aglutinacao particulas acao gravidade 
+ ocorre forma descrita quadro seguir quadro descricao meios fisicos existem interior vaso 
+ chocarse dada superficie fluido sofre mudanca brusca velocidade direcao separacao inercial fazendo gas desprenderse liquido devido inercia possui ser impelido movimento giratorio forca centrifuga diferenca difusor fases fluido separam densidades adquirirem forcas centrifugas diferentes funcao diferenca densidades 
+ aglutinacao particulas contato superficie goticulas liquido dispersas gas facilita aglutinacao consequente decantacao 
+ acao gravidade diferenca fluido pesado decantado durante certo densidades tempo retencao continua liberando bolhas gas 
+ ocorrencia desses quatro mecanismos pode ser identificada quatros secoes vaso separador secao separacao primaria secao acumulacao coleta liquido secao separacao secundaria secao aglutinacao 
+ secao separacao primaria fluido chocase defletores entrada vaso onde ocorre mudanca brusca velocidade direcao fazendo gas desprenda liquido precipite fundo vaso nunes la 
+ nesta secao ocorre absorcao golfadas fluido separacao maior parte liquido precipitando goticulas maior diametro fundo 
+ separadores verticais costumase direcionar fluido movimento giratorio paredes vaso promovendo separacao liquidogas forca centrifuga diferenca densidades fases fluido 
+ secao acumulacao coleta liquido nesta secao separadas bolhas gas ainda dispersas interior liquido apos separacao primaria 
+ liquido deve permanecer retido durante certo tempo chamado tempo retencao residencia deve variar minutos nunes la 
+ secao separacao secundaria aqui separadas goticulas menores liquido carreadas gas apos separacao primaria ocorrendo decantacao gravidade 
+ quanto menor turbulencia gas melhor eficiencia separacao nesta secao nunes la 
+ secao aglutinacao goticulas liquido arrastadas gas separadas secoes anteriores aglutinadas meio porosos recuperadas gravidade extratores nevoa demister instalados parte superior vaso nunes la 
+ oleo resultante poco atende especificacoes comercializacao devendo passar pretratamento entao possa ser refinado comercializado forma bruta 
+ emulsoes agua oleo prontamente formadas processo extracao oleo cru causando problemas diversas operacoes downstream 
+ corrosao tubulacoes bombas equipamentos processos assim desativacao catalisadores consequencias presenca goticulas agua oleo behin aghajari 
+ geral separadores horizontais figura eficientes pois apresentam maior area interfacial permite melhor separacao gas liquido 
+ separadores costumam ser usados sistemas apresentam emulsoes altas razoes gas oleo 
+ desvantagens relacionadas manuseio solidos produzidos geometria vasos verticais facilita remocao menor capacidade absorver grandes golfadas variacoes fluxo thomas 
+ figura esquema separador bifasico 
+ separacao trifasica separacao trifasica separacao gas oleo agua livre 
+ devido diferenca densidades oleo agua tempo retencao fluido secao acumulacao liquido apareceram  camada agua fundo vaso agua livre  camada sobre emulsao aguaoleo  camada oleo sobre ultima 
+ separar remover agua livre decantada utilizados separadores trifasicos chamados extratores agua livre identicos separadores bifasicos apenas alguns dispositivos finalidade possuem espaco espaco deve ser deixado decantacao liquido 
+ separadores trifasicos utilizados separar remover qualquer agua livre camada agua limpa aparece fundo apos decantacao emulsao oleo agua possa estar presente processo 
+ separadores gravitacionais dispositivos separacao hidrodinamicos desenvolvidos remover material particulado oleos gorduras particulas flutuantes agua atraves assentamento gravitacional barreiras fisicas stormwater 
+ figura ilustra separador trifasico horizontal trifasico dotada camara acumulo oleo obtida instalacao placa vertedoura finalidade verter oleo parte superior separar camara secao acumulo liquido 
+ esquema abaixo mostra valvulas controladoras pressao niveis oleo interface meio equipamentos eletropneumaticos fazem controle fluxo saida fluidos variaveis operacao vaso pressao niveis 
+ figura mostra valvulas controladoras pressao niveis vazoes saida entrada gas oleo agua 
+ entrar vaso chocarse defletor entrada placa defletora fluido sofre mudanca brusca direcao velocidade fazendo gas desprender liquido precipitarse fundo vaso 
+ parcela gas bolhas gas separam lentamente liquido acumulado fundo seguem saida parte superior vaso onde deixam aglutinadas meio poroso extrator nevoa goticulas liquido arrastadas seguindo tubulacao saida 
+ goticulas liquido suspensao corrente gas interior vaso retidas extrator nevoa recuperadas gravidade fundo vaso 
+ diferenca densidade acao gravidade durante certo tempo retencao liquido interior vaso agua separa oleo criando camada inferior agua relativamente limpa agua livre superior oleo relativamente limpo 
+ agua livre segue tubulacao saida fundo vaso dotada valvula controle nivel interface aguaoleo regula vazao saida agua 
+ oleo apos verter parte superior vertedouro acumula camara oleo segue tubulacao saida fundo camara dotada valvula controle nivel oleo regula vazao saida oleo 
+ acessorios internos vaso separador maioria metodos separacao oleo agua possui aplicacoes reduzidas devido alto custo capital operacional baixa eficiencia separacao alto tempo residencia processos separacao 
+ tradicionalmente separacao primaria acontece atraves separadores gravitacionais horizontais vezes utilizado separador trifasico vertical behin aghajari 
+ figura mostra esquema tipico separador trifasico thomas 
+ figura esquema separador trifasico 
+ seguir mostrado cada acessorios internos vaso separador souza fonte thomas 
+ defletor entrada defletor entrada considerado dispositivo primario separacao finalidade causa mudanca brusca velocidade direcao fluidos assim separar gas liquido 
+ muitos tipos desse dispositivo 
+ proximas ilustracoes mostram tres modelos utilizados placa plana calota esferica defletor centrifugo 
+ dois primeiros defletores defletores impacto placa plana calota esferica 
+ tipo placa plana costuma promover espalhamento maior liquido leva aumentar problemas arraste liquido tubulacao saida gas maiores emulsoes agua oleo 
+ vantagem uso tipo calota esferica cria menor perturbacao fluido menor espalhamento placas planas minimizando tais problemas 
+ terceiro tipo defletor centrifugo contendo entrada tipo ciclone usa forca centrifuga agitacao mecanica separacao liquido gas 
+ figura tipos defletores utilizados mudar direcao velocidade fluido 
+ pratos quebraespuma normalmente ocorre formacao espuma interface gasoleo gas liberadas mistura liquida 
+ espuma pode ser estabilizada adicao produtos quimicos antiespumante corrente entrada separador 
+ uso antiespumante prejudica refino oleo solucao eficaz reduzir utilizacao deste produto fazer espuma passar atraves placas paralelas inclinadas mostra ilustracao 
+ entrarem contato placas bolhas espuma quebram conduzindo coalescimento parte liquida nelas contida 
+ figura prato quebraespumas 
+ placas quebraondas vasos horizontais vezes necessario instalar quebraondas 
+ placas verticais estendem nivel oleo interface oleoagua plano perpendicular direcao fluxo evitar propagacao ondas causadas golfadas liquido permitindo maior eficiencia controle desses niveis 
+ plataformas maritimas flutuantes tais placas reduzem efeito balanco mar sobre nivel liquido vasos 
+ comum uso placas verticais perfuradas mostra ilustracao 
+ figura prato quebraondas 
+ quebravortice quebra vortice dispositivo instalado bocal saida liquido fundo vaso finalidade interromper desenvolvimento vortice valvula controle aberta liquido comeca fluir 
+ fluxo liquido bocal saida fundo vaso pode criar vortice redemoinho liquido criado ponto saida vaso 
+ vortice pode succionar algum gas arrastalo liquido saida arrastar oleo saida agua 
+ figura mostra tres tipos quebravortice tubo perfurado plataforma cruzeta 
+ figura quebravortice tubo perfurado plataforma cruzeta 
+ extrator nevoa extrator nevoa chamado demister dispositivo instalado saida gas parte superior vaso composto meio poroso cuja finalidade aglutinar goticulas liquido arrasta gas seguida serem recuperadas gravidade 
+ ilustracao frente apresenta tres tipos comuns    almofadas telas arame wiremesh aletas tp vane placas cilindricas 
+  extratores nevoa tipo wiremesh feitos esteiras tecidos fios aco inox finamente entrelacados matriz envolta cilindro hermeticamente empacotado 
+ goticulas liquidos presentes corrente gas colidem fios esteira coalescem 
+ eficiencia deste dispositivo depende amplamente velocidade fluxo gas 
+ velocidade baixa gas passara atraves malha arames goticulas colidam coalescam velocidade alta goticulas coalescidas novamente arrastadas 
+ tipo extrator nevoa susceptivel obstrucoes demais 
+  extratores nevoa tipo tp vane vane type feitos aletas placas corrugadas 
+ corrente gas forcada ter fluxo laminar corrugadas fazendo goticulas colidirem superficie placas onde coalescem caem acao gravidade 
+  extratores nevoa tipo placas cilindricas placas configuradas cilindros concentricos algumas vezes corrugados cuja superficie goticulas liquido colidem coalescem 
+ todos tipos ocorre fenomeno aglutinacao particulas goticulas liquido dispersas gas aglutinacao facilitada contato superficie consequentemente decantacao 
+ figura extratores nevoa telas arame wiremesh aletas tp vane placas cilindricas 
+ pratos coalescedores pratos coalescedores podem ser utilizados aumentar aglutinacao goticulas oleo presentes agua gotas agua presentes oleo 
+ placas metalicas cruzadas si normalmente angulo graus conforme figura seguir permite goticulas oleo percorram superficie inferior cada placa sentido ascendente juntandose gotas maiores 
+ modo permitem gotas agua percorram superficie superior cada placa sentido descendente acao gravitacional promovendo coalescencia gotas fases dispersas resultando numero menor gotas diametro maior 
+ conforme lei stokes perry chilton gotas diametro maior favorecem separacao 
+ figura placa coalescedora 
+ instalacao pratos coalescedores possivel aumentar capacidade separacao vasos instalados reduzir tamanho vasos separadores novos 
+ jatos espalhadores areia sander jet problemas operacionais separadores acumulo areia solidos fundo vaso tornarem menos volume alem criar obstrucoes bocais tubulacoes saida 
+ minimizar frequencia parada vaso remocao destes solidos utilizase sistema jatos agua espalhar areia sander jet 
+ fluido alta pressao usualmente agua produzida bombeado tubulacao ramifica fundo vaso saindo forma jatos agua suspendem areia carreandoa drenos 
+ prevencao obstrucao drenos areia sedimentada coletores areia usados cobrir saidas 
+ coletores calhas invertidas aberturas laterais 
+ figura jatos espalhadores areia sander jat 
+ variaveis operacionais condicoes operacao separador definidas pressao temperatura nivel souza 
+ pressao pressao otima separacao determina ajuste pressao operacao separador 
+ pressao reduzida volume gas liberado oleo aumenta 
+ portanto quanto menor pressao separacao maior quantidade gas ocupando espaco interior vaso 
+ consequencia aumento velocidade gas podendo arrastar goticulas oleo corrente gas 
+ ocorra vazao entrada devera ser reduzida fazendo separador ter capacidade diminuida 
+ logo reducao pressao separacao diminui capacidade separador 
+ sentido contrario aumento pressao separacao permite aumento capacidade separador embora diminua volume gas liberado oleo 
+ temperatura temperatura separacao parametro depende caracteristicas oleo processado 
+ normalmente quanto maiores viscosidade densidade fluido maior devera temperatura separacao 
+ aumento temperatura geralmente provoca reducao densidade oleo aumento diferenca relacao agua facilitando separacao meio sedimentacao 
+ aumento temperatura permite minimizar formacao espuma separacao gasoleo 
+ contudo aumento temperatura separador causa vazao gas efeito semelhante reducao pressao separacao 
+ nivel separador recebe fluxo regular entao possivel manter estaveis nivel oleo velocidade circulacao gas obtendo maxima eficiencia separacao 
+ entretanto separador pode ser ajustado condicoes diferentes operacao tais  maxima capacidade oleo  maxima capacidade oleo gas  maxima capacidade gas 
+ tanto instrumentos controle ajustados modo obter condicao operacional desejada 
+ separadores gravitacionais dispositivos separacao hidrodinamicos desenvolvidos remover material particulado oleos gorduras particulas flutuantes agua atraves assentamento gravitacional barreiras fisicas stormwater 
+ separadores gravitacionais baseiamse principio fluidos imisciveis separam repouso fluidos leves topo fluidos pesados fundo 
+ funcionamento simples mistura fluidos exemplo gas oleo sai reservatorio entra tanque separacao 
+ gas separado parte superior tanque enquanto liquido coletado parte inferior asskildt hansson 
+ planta processo convencional figura separador gravitacional trifasico primeiro equipamento sistema separacao 
+ alem dividir mistura tres correntes agua oleo gas separador trifasico deve amortecer perturbacoes carga conhecidas golfadas slugs 
+ figura separador trifasico internos 
+ separador trifasico deve prover separacao adequada fases aquosa oleosa gasosa ainda absorver flutuacoes carga devido fenomeno golfadas descrito anteriormente 
+ equipamento conhecido industria petroleo separador producao exerce funcao tanque pulmao surge tank recebendo vazao flutuante fornecendo proximos equipamentos jusante vazao estavel comprometer operacao 
+ atraves figura notase separador trifasico constituido duas camaras chamadas camara separacao camara oleo possui vazao entrada tres saida agua oleo gas 
+ principais variaveis serem controladas neste tipo equipamento associadas inventario sendo nivel oleo camara oleo nivel agua total camara separacao pressao gas 
+ fase oleosa verte camara oleo onde nivel controlado manipulandose vazao saida 
+ controle pressao atua sobre vazao saida gas 
+ separacao promovida separador gravitacional trifasico completa 
+ termos dessa separacao funcao deste equipamento somente manter dentro limites toleraveis seguintes quantidades  liquido arrastado gas  agua arrastada oleo bsw  oleo arrastado agua tog 
+ problemas operacionais vasos separadores separacao vasos bifasicos trifasicos possuem alguns problemas operacionais comuns destacandose formacao espuma formacao espuma ocorre devido caracteristicas fisicoquimicas oleo impurezas presentes queda pressao imposta mistura gasliquido escoamento entrada separador 
+ presente espuma dificulta controle nivel liquido dentro separador pois ocupa volume poderia estar disponivel coleta liquido podendo ser arrastada corrente gas oleo desgaseificado 
+ portanto possivel prever formacao espuma separador deve ser equipado dispositivo interno removela assegurando tempo superficie coalescedora suficientes quebrala thomas 
+ obstrucao parafinas operacoes separacao podem ser afetadas acumulo parafina 
+ placas coalescedoras secao liquida extratores nevoa secao gasosa particularmente susceptiveis obstrucoes 
+ parafina problema real potencial extratores alternativos devem ser considerados bocas visitas orificios devem ser providenciadas permitir entrada vapor solvente limpeza elementos internos separador thomas 
+ areia sedimentos areia sedimentos eventualmente chegam liquido separador causa erosao valvulas obstrucao elementos internos vaso reducao tempo residencia liquido devido acumulo fundo separador 
+ vaso possui dispositivos internos remocao areia sedimentos necessario interromper producao realizar limpeza separadores brasil al 
+ emulsoes formadas interface oleo agua podem ser problematicas operacao separador alem causar problemas controle nivel acumulo emulsao diminui tempo retencao efetivo resultando reducao eficiencia processo 
+ adicao calor produtos quimicos minimiza formacao emulsao porem procedimentos preferencialmente aplicados fase tratamento oleo brasil al 
+ arraste tratase problema operacional tipico 
+ arraste oleo corrente gas ocorre nivel liquido alto existe algum dano algum componente interno formacao espuma saida liquido obstruida projeto improprio simplesmente porque vaso operando producao superior projeto 
+ arraste gas liquido pode ser indicativo nivel baixo liquido falha sistema controle nivel thomas 
+ controladores automatizar controlar processo significa atuar sobre sobre condicoes quais processo sujeito modo manter variaveis quantidades estaveis passar tempo interferencias externas tentem desvialo desta condicao bayer araujo 
+ controle manual permite eliminacao erro resultando amplitude variacao excessiva valor variavel deseja controlar 
+ contrapartida tipo controle surge entao controle automatico bem eficiente 
+ regulacao controle automatico sistemas industriais desempenha papel vital importancia desenvolvimento ciencia engenharia 
+ alem possuir importancia fundamental sistemas pilotagem navios avioes misseis veiculos espaciais etc 
+ passaram tornarse parte integrante funcionamento processos industriais tipicos manufatura producao energia produtos quimicos transportes instalacoes frio ar condicionado etc 
+ dentre diversas demandas controle automatico processos controle pressao temperatura umidade viscosidade ainda operacao montagem partes mecanicas industrias fabricacao 
+ podemos citar objetivos operacionais controle processos industriais bayer araujo 
+ adaptacao perturbacoes externas adaptacao restricoes equipamentos materiais aumento estabilidade operacional atendimento especificacao produto otimizacao uso recursos materiaprima melhora resultados economicos processo seguranca operacional pessoal reducao impacto ambiental 
+ principio industrial operario procurava atingir objetivos citados atraves controles manuais instrumentos manometro termometro valvulas 
+ suficiente devido simplicidade processos 
+ passar tempo mesmos tornaram sofisticados exigindo automacao atraves instrumentos medicao controle 
+ operadores puderam liberar atuacao fisica direta processo 
+ simultaneamente ocorreu centralizacao atividades unica sala monitoramento controle processos 
+ todos controles compartilham mesmas estrategias basicas duas controle realimentado feedback controle antecipatorio feedforward 
+ ainda terceira combinacao duas estrategias controle resolver problemas estabilidade bayer araujo 
+ grande maioria casos utilizada estrategia controle realimentado 
+ nesse caso valor variavel controlada medido sensor comparado valor referencia setpoint 
+ diferenca encontrada setpoint variavel controlada determina erro desvio utilizada definicao saida controlador ajustar variavel manipulada bayer araujo 
+ desvantagem controle realimentado reside fato atuar somente apos detectar erro valor variavel controlada setpoint 
+ idealmente melhor evitar erros ocorressem 
+ controle antecipatorio baseado nesta filosofia 
+ existe possibilidade modificar variavel manipulada prevenir menos minimizar erros surgidos variavel controlada sempre forma predizer variacoes carga efeitos 
+ qualquer controle antecipatorio necessario definir modelo matematico descreva adequadamente processo leve conta relacao variaveis carga respectivos efeitos variavel controlada bayer araujo 
+ desvantagem controle antecipatorio fato deste efetuar medicoes variavel controlada dependendo exclusivamente precisao relacao valores estabelecidos setpoint variavel manipulada 
+ forma superar desvantagens combinacao duas estrategias controle bayer araujo 
+ existe enorme gama controladores comerciais mercado cada vantagens desvantagens relacao funcao 
+ onde principais tipos acoes basicas controle acao ligadesliga onoff acao proporcional acao integral acao derivativa acao proporcional integral derivativa pid onde acoes podem ser utilizadas isoladamente associadas bayer araujo 
+ acao ligadesliga onoff muitos sistemas basicos controle pode ser efetuado partir simples chave ligadesliga acionada desacionada exemplo partir determinada temperatura nivel reservatorio 
+ nesse tipo acao controlador compara sinal entrada realimentacao saida superar entrada desliga atuador realimentacao menor liga atuador bayer araujo 
+ diferenca sinal entrada sinal realimentacao chamado erro area controle deseja fazer erro nulo porem acontecer devese ter boa malha controle parametros bem determinados 
+ acao controle basica geralmente controlador modelado rele conforme diagrama blocos representado figura 
+ figura diagrama blocos controlador ligadesliga 
+ acao proporcional acao proporcional controle pode ser considerada evolucao modo controle ligadesliga 
+ tipo acao atua conforme valor erro 
+ acao ligadesliga variavel controlada desvia setpoint controle oscila sinal brusco liga desliga 
+ controle proporcional desenvolvido evitar oscilacao produzir acao corretiva proporcional valor desvio bayer araujo 
+ melhor entendimento figura apresenta resposta acao proporcional malha aberta aplicado desvio degrau controlador 
+ figura resposta acao proporcional malha aberta fonte ctism observe existe sinal inicial controlador desvio zero cuja finalidade manter variavel controlada valor desejado setpoint 
+ ocorre desvio repentino valor variavel controlada sinal degrau sinal controle varia proporcionalmente desvio acordo ganho bayer araujo 
+ embora acao proporcional elimine oscilacoes processo controle ligadesliga malha fechada possivel eliminar erro offset visto apos disturbio qualquer processo persiste diferenca setpoint valor medido 
+ principal vantagem deste controlador eliminacao oscilacoes provocadas controle ligadesliga devido correcao proporcional desvio 
+ desvantagem aparecimento erro offset sempre ocorrer variacao carga 
+ acao especialmente util grandes variacoes carga processo improvaveis podem tolerar pequenos erros offset 
+ controlador util processos tempo morto pequeno ganho controle pode ser alto faixa proporcional pequena gerar menor erro offset bayer araujo 
+ acao integral forma eliminar erro offset acao proporcional reajustar valor setpoint 
+ acao integral atua processo longo tempo enquanto diferenca valor desejado setpoint valor mensurado persistir 
+ diferentemente acao proporcional corrige erros instantaneamente sinal correcao age forma lenta eliminar completo offset 
+ quanto tempo desvio perdurar maior saida controlador 
+ acao integral isoladamente tecnica controle pois pode ser empregada estando separada acao proporcional 
+ acao integral corrige valor variavel manipulada intervalos regulares somando valor desvio relacao setpoint 
+ intervalo atuacao chama tempo integral pode ser expresso inverso chamado ganho integral taxa integral 
+ matematicamente relacao expressa ti ki 
+ onde ti tempo integral ki ganho integral 
+ acao integral unico objetivo eliminar erro offset regime permanente adocao tempo integral excessivamente longo pode levar processo instabilidade 
+ vez adocao tempo integral curto retarda demasia estabilizacao 
+ quanto maior desvio maior velocidade correcao 
+ entanto depende tempo resposta lenta desvios grandes curtos espacos tempo devidamente corrigidos 
+ dase portanto necessidade associar acao acao proporcional 
+ acao derivativa acao derivativa isoladamente tecnica controle pois pode ser empregada separadamente acao proporcional 
+ acao derivativa atua variavel manipulada proporcionalmente velocidade variacao desvio 
+ objetivo diminuir velocidade variacoes variavel controlada evitando eleve abaixe rapidamente 
+ principio basico reside proporcionar correcao antecipada desvio presenca tendencia subita aumento desvio acao derivativa atua forma preventiva diminuindo tempo resposta 
+ acao derivativa calcula intervalos regulares variacao desvio processo somando valor desta variacao variavel manipulada 
+ intensidade acao ajustada variandose intervalo calculo diferenca 
+ parametro chamado tempo derivativo ganho derivativo 
+ tempo derivativo aumenta velocidade variacao variavel controlada reduzida 
+ figura apresenta graficos exemplificam comportamento caracteristico acao derivativa controle bayer araujo 
+ figura comportamento acao derivativa fonte ctism onde vc variavel controlada vm variavel manipulada 
+ ocorre variacao degrau velocidade variacao praticamente instantanea 
+ nesse caso acao derivativa proporcional velocidade desvio causa mudanca subita variavel manipulada 
+ figura mostra resposta acao derivativa situacao 
+ figura resposta acao derivativa variacao tipo degrau fonte ctism figura mostra acao derivativa deve ser utilizada processos resposta rapida mesma forma pode ser utilizada processos apresentem ruidos sinal medicao pois acao derivativa provoca mudancas subitas saida controle podendo levar processo instabilidade 
+ acao derivativa apropriada processos possuem grandes constantes tempo processos lentos 
+ porem acao derivativa sensivel ruido sinal medicao sensivel mudancas rapidas entrada setpoint 
+ devese escolher controlador acao derivativa baseado variacao variavel processo erro 
+ alem disso sintonia deste controlador complicada 
+ acao proporcional integral derivativa combinacao acoes proporcional integral derivativa gerar sinal controle origem denominamos controlador proporcionalintegralderivativo simplesmente pid comumente conhecido 
+ controladores pid largamente utilizados vez capazes solucionar grande maioria problemas controle surgem processos industriais 
+ expressiva utilizacao devese fato desse controlador ser facil implementacao baixo custo versatil capacidade estabilizar comportamentos transitorios regime permanente processos sob controle 
+ devemos utilizar acao pid desejamos rapidez correcao erro ausencia offset aliado desvio maximo reduzido 
+ entanto combinacao dessas tres acoes sempre melhor opcao 
+ exemplo caso controle vazao podemos utilizar somente modo proporcional integral vez associar modo derivativo vazao vantajoso 
+ modo derivativo adicionado normalmente controle temperatura ser considerado variavel reacao lenta 
+ figura apresenta comparacao respostas comportamento tipico sistema controlado apos introducao perturbacao externa degrau 
+ controlador proporcional torna resposta rapida reduz erro 
+ adicao acao integral elimina erro estacionario tende fazer resposta torne oscilatoria 
+ introduzida acao derivativa considerase resposta acao ocorre reducao tanto intensidade oscilacoes tempo resposta 
+ figura comparacao acoes controladores pid 
+ modelagem modelo qualquer objeto concreto abstrato utilizado explicar algum tipo fenomeno 
+ matematicamente obtemse modelo torna possivel estabelecer relacoes quantitativas variaveis problema apresentado 
+ entao modelagem forma identificar qualitativamente principalmente quantitativamente processo estudado fim obter explicacoes respeito caracteristicas sistema fazendose algumas consideracoes hipoteses basicas necessarias simplificacoes 
+ separador trifasico modelado simplificadamente baseado balanco massa oleo agua gas compartimentos separador cs cl 
+ figura exibe separador trifasico controlado tres controladores atuando valvulas saida agua oleo gas bem alguns simbolos utilizados modelagem dinamica onde cs camara separacao cl camara oleo 
+ figura separador trifasico variaveis fonte pinto descricao abreviaturas malhas figura descritas abaixo malha controle pressao saida pressao  sensor transmissor pressao pt  controlador indicador pressao pic  transdutor convertem sinais entrada corrente saida pneumatica diretamente proporcional 
+ malha controle nivel saida oleo  sensor transmissor oleo lt  controlador indicador oleo lic  transdutor convertem sinais entrada corrente saida pneumatica diretamente proporcional 
+ malha controle nivel interface saida agua  sensor transmissor nivel interface lt  controlador indicador nivel interface oleo agua lic  transdutor convertem sinais entrada corrente saida pneumatica diretamente proporcional 
+ lin win gin pi respectivamente vazao oleo vazao agua vazao gas pressao entrada 
+ lo wo go po respectivamente vazao oleo vazao agua vazao gas pressao saida pl pw pg respectivamente pressoes descarga oleo agua gas pressao separador ccs ccl respectivamente comprimento camara separacao comprimento camara oleo lv nivel oleo camara oleo diametro separador trifasico equacoes diferenciais encontradas efetuandose balancos massas camara separacao camara oleo equacoes mostradas seguir 
+ area segmentos circulares primeiramente aproximase geometria separador cilindro perfeito onde area seguimentos circulares dada equacao 
+ pois equacao possivel encontrar relacao volume altura 
+ √ onde area secao circular diametro altura nivel pinto 
+ volume cilindro segmento circular volume cilindro ocupado liquido dado equacao 
+ relacao linear volume vl altura hl separador trifasico 
+ √ onde volume total cilindro altura nivel diametro separador pinto 
+ derivando equacao volume relacao altura encontrase derivada temporal volume cilindro segmento circular dada equacao 
+ √ dv dt diferencial volume nivel dh dt diferencial nivel comprimento camara 
+ balanco liquido cs entao aplica balanco compartimento camara separacao cs 
+ possivel obter relacao altura liquido agua oleo cs separador tempo mostrada equacao 
+ √ dht dt diferencial nivel total li wi nivel entrada oleo agua variando tempo lv wo respectivamente nivel oleo verte nivel agua variando tempo ht nivel total variando tempo pinto 
+ balanco oleo cl camara oleo cl condicoes normais operacao unico liquido existente oleo compartimento feito balanco somente camara oleo 
+ relacao altura oleo camara oleo tempo mostrada equacao 
+ onde deve atentar fato altura liquido compartimento cl poder ser maior altura liquido compartimento camara separacao cs assim √ dhl dt diferencial nivel oleo hl nivel total variando tempo respectivamente vazao oleo verte vazao oleo saida variando tempo 
+ balanco agua cs equacao 
+ obtida mesma realizado secoes 
+ ficando assim √ dhw dt diferencial nivel agua hw nivel agua variando tempo respectivamente vazao agua entrada vazao agua saida variando tempo 
+ balanco gas tanque fase gasosa separador modelada forma ideal onde numero moles gas dado equacao clapeyron 
+ ng numero mols total gas volume total separador volume camara separacao volume camara oleo respectivamente 
+ constante universal gases temperatura pressao total separador 
+ gi go correspondem vazao entrada gas go corresponde vazao saida gas variando tempo 
+ vazao molar gas entrada saida apresentada respectivamente equacoes 
+ balanco gas temse substitui equacoes 
+ calculando dng dt atraves equacao 
+ dng dt dvcs dt diferencial volume camara separacao dvcl dt diferencial volume camara oleo 
+ comportamento dinamico pressao separador dado equacao 
+ dp dt diferencial pressao pressao total separador varia tempo vazoes entrada oleo ague gas variando tempo respectivamente vazoes saida vazao oleo agua gas variando tempo 
+ calculo volumes calculo volumes liquidos oleo agua oleo agua camaras separacao oleo cs cl 
+ representa volume liquido oleo agua segmento cs equacao 
+ representa volume oleo segmento cl 
+ volume liquido compartimento cs √ 
+ onde volume camara variando tempo ccs comprimento camara separacao diametro separador hw nivel agua variando tempo 
+ hw nivel agua 
+ √ onde volume camara oleo variando tempo ccl comprimento camara oleo diametro separador hw nivel agua variando tempo 
+ volume agua compartimento cs √ oleo verte atraves vertedouro dado relacao francis vertedouro retangular mostrada equacao 
+ equacao francis perry chilton 
+ √ ⁄ lv vazao oleo varia tempo dependente aceleracao gravidade hvert altura vetedouro liquido transborda camara separacao 
+ ht nivel total variando tempo 
+ vazoes saida valvulas saida oleo agua gas modeladas valvulas escoamento perry 
+ representam vazoes saida oleo agua gas respectivamente 
+ √ onde lo vazao saida oleo variando tempo cv maxl constante valvula oleo xl fracao abertura valvula oleo 
+ √ onde wo vazao saida agua variando tempo cv maxw constante valvula agua xw fracao abertura valvula agua 
+ onde densidade agua hw altura agua densidade oleo ht altura agua 
+ √ onde go vazao saida gas variando tempo cv maxg constante valvula gas xg fracao abertura valvula gas 
+ funcoes transferencia utilizando equacoes diferenciais ordinarias edo lineares obtidas topico 
+ necessario fazer linearizacao dessas equacoes poder aplicara transformada laplace 
+ obtidas funcoes transferencia nivel total nivel agua nivel oleo pressao funcoes utilizadas simulacao simulink funcoes transferencias mostradas abaixo 
+ funcoes transferencia nivel total camara separacao 
+ funcoes transferencia nivel agua camara separacao 
+ funcoes transferencia nivel oleo camara oleo 
+ funcoes transferencia pressao separador trifasico resultados discussoes primeiramente realizadas simulacoes processo malha aberta sistema atuacao controle intuito verificar comportamento variaveis controladas nivel agua nivel total camara separacao nivel oleo camara oleo pressao separador 
+ teste malha aberta objetivo manter valores dessas variaveis controlados dentro faixa valores mostrados tabela tabela valida somente analise processo malha aberta tabela faixa valores variaveis controladas somente processo malha aberta 
+ variaveis controladas faixa valores pressao bar nivel total nt nt nivel agua 
+ fonte elaboracao propria 
+ simulacao realizada programa matlab resultados malha aberta mostrados graficos seguir 
+ realizadas perturbacoes degrau alterando valor referencia variaveis questao observando respostas 
+ figura mostra resultados variaveis interesse 
+ pode ser observado todas variaveis interesse alcancam estado estacionario simulacao processo malha aberta leva separador niveis extremos 
+ deter aumento variavel malha controle estrategia realimentacao proposta visto secao 
+ evitando assim processo atingisse valores incoerentes exemplo transbordamento separado pois observado figura valores niveis agua oleo total determinado instante tempo atingiram valores bem superiores faixa valores variaveis controladas tabela 
+ figura simulacao processo malha aberta 
+ fonte elaboracao propria 
+ teste malha fechada 
+ apos testes malha aberta realizados testes malha fechada 
+ estrategia controle utilizada serviu evitar colapso separador controlar todas variaveis desejadas pois malha aberta obtido nenhum sucesso 
+ parametros separador trifasico utilizados simulacao encontramse tabela abaixo 
+ separador trifasico inicialmente pressurizado bar possuindo altura agua 
+ liquido camara separacao oleo camara oleo 
+ tabela parametros operacionais separador trifasico 
+ parametro valor diametro comprimento cs comprimento cl altura vertedouro pressao descarga oleo bar pressao descarga gas bar pressao descarga agua bar maxl cv cv maxw cv maxg 
+ massa molecular ar kg gmol 
+ massa molecular gas kg gmol densidade oleo kg densidade agua kg fonte elaboracao propria 
+ utilizando equacoes diferenciais ordinarias edo lineares lineares obtidas capitulo realizadas simulacoes 
+ edos lineares aplicada transformada laplace edos lineares feita primeiro linearizacao seguida aplicada transformada laplace 
+ obtidas funcoes transferencia simulacoes efetuadas 
+ realizadas perturbacoes degraus alterando valor referencia variaveis questao observando respostas 
+ realizar simulacao controle processos utilizouse simulink ferramenta matlab 
+ possivel encontrar funcoes transferencias entao utilizando simulink aplicativo matlab processo simulado controlado intuito manter variaveis referencias valores desejados 
+ simulink trabalha diagrama blocos onde funcoes transferencias escritas estrategia controle proposta simulacoes abaixo estrategia realimentacao importante ajustar parametros simulink ganhos proporcional integral 
+ construidas quatro malhas controle objetivo controlar nivel oleo camara oleo nivel total nivel agua camara separacao pressao total separador 
+ primeiramente construida malha controle nivel agua notase nivel agua funcao tempo depende cinco variaveis 
+ figura controle nivel agua funcao cinco variaveis utilizando diagrama blocos simulink 
+ fonte elaboracao propria 
+ seguida construida malha controle nivel total funcoes transferencia obtidas atraves processo linearizacao 
+ podese observar variavel nivel total funcao sete variaveis 
+ figura controle nivel total funcao sete variaveis utilizando diagrama blocos simulink 
+ fonte elaboracao propria 
+ malha controle nivel oleo camara oleo construida simulink nivel oleo funcao tres variaveis 
+ figura controle nivel oleo funcao tres variaveis utilizando diagrama blocos simulink 
+ fonte elaboracao propria 
+ fim malha controle pressao construida simulink funcao variaveis 
+ figura controle pressao funcao variaveis utilizando diagrama blocos simulink 
+ fonte elaboracao propria 
+ controlador proporcional integral pi implementado visto figuras acima tempo simulacao utilizado segundos tempo suficiente sistema alcancasse estado estacionario 
+ graficos seguir mostram resultados obtidos 
+ perturbacao valor referencia ht 
+ nivel total realizada 
+ figura mostra controlador agiu forma eficiente 
+ partir estado estacionario perturbacao degrau efetuada tempo segundos tempo segundos novo estado estacionario alcancado obtendo novo valor nivel total 
+ sendo assim controle nivel total camara separacao bem satisfatorio 
+ figura grafico nivel total tempo perturbacao degrau 
+ fonte elaboracao propria 
+ perturbacao valor referencia hw 
+ nivel agua realizada 
+ figura mostra resposta controlador controlador agiu forma eficiente alcancando estado estacionario logo apos sofre perturbacao 
+ perturbacao degrau efetuada tempo segundos tempo segundos novo estado estacionario alcancado obtendo novo valor nivel agua 
+ sendo assim controle nivel oleo camara separacao atingido sucesso 
+ figura grafico nivel agua tempo perturbacao 
+ fonte elaboracao propria 
+ perturbacao valor referencia ho 
+ nivel oleo realizada mostra figura 
+ perturbacao degrau efetuada tempo segundos tempo segundos novo estado estacionario alcancado obtendo novo valor nivel oleo 
+ sendo assim controle nivel oleo camara oleo bem satisfatorio 
+ figura grafico nivel oleo tempo perturbacao 
+ fonte elaboracao propria 
+ pressao realizada perturbacao bar pressao realizada 
+ partir estado estacionario perturbacao degrau efetuada tempo segundos rapidamente estado estacionario alcancado obtendo novo valor pressao 
+ bar sendo assim controle pressao separador trifasico atingido sucesso 
+ figura grafico pressao tempo perturbacao 
+ fonte elaboracao propria realizada perturbacao degrau variaveis controladas intuito comparar resultados comportamento niveis pressao perturbacao degrau graficos perturbacao degrau mostrados seguir perturbacao valor referencia hw 
+ nivel agua realizada 
+ figura mostra comportamento curva grafico 
+ partir estado estacionario perturbacao degrau efetuada tempo segundos tempo segundos novo estado estacionario alcancado obtendo novo valor nivel total 
+ sendo assim controle nivel total camara separacao bem satisfatorio 
+ figura grafico nivel agua tempo perturbacao degrau 
+ fonte elaboracao propria 
+ perturbacao valor referencia ht 
+ nivel total realizada 
+ figura mostra controlador pi proporcional integral realizou controle tempo curto porque parametros bem ajustados entao partir estado estacionario perturbacao degrau efetuada tempo segundos tempo segundos novo estado estacionario alcancado novo valor nivel total obtido perturbacao negativa 
+ controle nivel total camara separacao bem satisfatorio 
+ figura grafico nivel total tempo total perturbacao degrau nivel 
+ fonte elaboracao propria 
+ perturbacao valor referencia ht 
+ nivel total realizada 
+ entao partir estado estacionario perturbacao degrau efetuada tempo segundos tempo segundos novo estado estacionario alcancado novo valor nivel oleo obtido perturbacao negativa 
+ figura grafico nivel oleo tempo perturbacao degrau nivel oleo 
+ fonte elaboracao propria 
+ perturbacao valor referencia bar pressao realizada 
+ pressao figura mostra controlador pi proporcional integral realizou controle tempo curto estado estacionario alcancado fezse perturbacao tempo segundos tempo segundos novo estado estacionario alcancado novo valor nivel oleo obtido perturbacao negativa 
+ figura grafico pressao tempo perturbacao degrau valor inicial pressao 
+ fonte elaboracao propria 
+ realizada perturbacao degrau variaveis entrada iminencia separador transbordar nessa situacao goticulas liquidos arrastadas gas objetivo analisar comportamento variaveis controle situacoes extremas pois nesta situacao niveis pressao variando bastante novo valor estado estacionario alcancando pode ser notado graficos acima atingido tempo maior justamente porque perturbacao efetuada nessas situacoes tempo segundos controle efetuado maneira satisfatorio 
+ entao casos anteriores realizada perturbacao valor referencia psi pressao 
+ entao comparacao resultados perturbacao tempo resposta maior logicamente situacoes extremas 
+ fato nivel agua sofrer perturbacao maior tempo resposta lento oscilatorio entretanto novo estado estacionario alcancado rapidamente valor novo estado estacionario 
+ figura grafico nivel agua tempo perturbacao degrau 
+ fonte elaboracao propria 
+ figura mostra nivel total comportamento perturbacao valor inicial tempo simulacao segundos estado estacionario alcancado segundos novo valor estado estacionario 
+ diametro separador metros entao nivel total bastante elevado 
+ figura grafico nivel total tempo perturbacao degrau 
+ fonte elaboracao propria 
+ nivel oleo sofre perturbacao valor inicial notase sofre perturbacao tempo segundos alcanca rapidamente novo estado estacionario comparacao perturbacao sofre oscilacao maior alcancar valor 
+ verificado figura abaixo figura grafico nivel oleo tempo perturbacao degrau 
+ fonte elaboracao propria 
+ novo valor pressao 
+ bar apos sofrer perturbacao alcanca estado estacionario tao rapidamente leva cerca segundos poder alcancar 
+ figura grafico pressao tempo perturbacao degrau valor inicial pressao 
+ fonte elaboracao propria 
+ realizada perturbacao degrau variaveis entrada niveis fase liquida bem reduzida nessa situacao goticulas gas arrastadas fase liquida 
+ tempo variaveis pressao niveis alcancarem estado estacionario bem maior comparacao perturbacoes 
+ exatamente casos anteriores tempo simulacao segundos tempo necessario novo estado estacionario atingido 
+ primeiramente realizada perturbacao valor inicial nivel agua observado figura oscilacao bem maior novo estado estacionario alcancado tempo segundos valor novo estado estacionario 
+ figura grafico nivel agua tempo perturbacao degrau nivel agua inicial 
+ fonte elaboracao propria 
+ figura abaixo observado comportamento grafico nivel total tempo novo estado estacionario atingido valor nivel total 
+ figura grafico nivel total tempo perturbacao degrau nivel total 
+ fonte elaboracao propria 
+ figura abaixo observado comportamento grafico nivel oleo tempo novo estado estacionario atingido valor nivel oleo 
+ figura grafico nivel oleo tempo perturbacao degrau nivel oleo 
+ fonte elaboracao propria 
+ fim controlador pi agiu controle pressao perturbacao negativa realizada controle alcancado obtendo novo valor estado estacionario 
+ bar variacao significativa perturbacao realizada 
+ figura grafico pressao tempo perturbacao degrau valor inicial pressao 
+ fonte elaboracao propria 
+ portanto todos casos controle atingido utilizando controlador proporcional integral pi tempo simulacao necessario apenas segundos 
+ conclusao feitas simulacoes malha aberta malha fechada controle intuito comparar resultados simulacoes 
+ visto simulacao malha aberta levou separador trifasico niveis extremos causando transbordamento verificando necessidade controle poia nenhuma variavel desejada alcancou estado estacionario 
+ utilizando controlador proporcional integral pi controle eficiente atingindo resultados bastante satisfatorios porque quatro tipos perturbacoes realizadas controlador atingiu valores desejados todas 
+ perturbacoes niveis elevados nivel baixo situacoes extremas oscilaram perturbacao valor perturbacao ser elevado entanto controle observado 
+ mostra controlador pi pode ser empregado controle niveis pressao pois controla tempo minimo ajustado parametros forma correta 
+ modelagem simulacao realizada grande importancia estudo separador trifasico 
+ primeiramente modelo fenomenologico construido acrescentou conhecimento relacoes hidraulica controle separador alem parte matematica construcao modelo onde linearizacoes equacoes necessarias obtencao modelo final simulink 
+ simulacao pode ser observada dinamica funcionamento separador limites seguranca equipamento eficiencia apos implementacao sistema controle 
+ observada funcao separador trifasico vaso absorvedor flutuacoes processo separacao onde alteracoes frequentes vazao producao petroleo verificadas necessitam serem absorvidas processo 
+ new measuring sensor pump control subsea separators 
+ arrived present state pf knowledge process control lesson learned journal process control cap 
+ controle automatico processos 
+ escola aberta tecnica brasil 
+ universidade federal santa maria 
+ rio grande sul 
+ influence water level oilwater separation residence time distribution curves investigations separation purification technology 
+ london chapman hall 
+ paulo makron books brasil 
+ processamento primario petroleo gas 
+ rio janeiro ltc 
+ identificacao modelos armax narmax poco petroleo operando injecao continua gas 
+ dissertacao mestrado ciencias dept 
+ eletrica universidade federal santa catarina 
+ petroleo gas natural producao recorde junho demonstrativos graficos 
+ postado agosto blog coluna 
+ disponivel http fmanha 
+ br blogs blogdacoluna petroleoegas naturaltemproducaorecordeemjunho 
+ producao presal iltrapassa mil barris dia bate novo recorde 
+ riodejaneiro noticia producaodopresal ultrapassamilbarrispordiaebatenovorecorde 
+ process modeling simulation control chemical engineers 
+ nd ed mcgrawhill internationaleditions 
+ modelagem controle producao petroleo aplicacoes matlab 
+ editora edgard blucher ltda 
+ modelagem simulacao dinamica separador trifasico aguaoleo gas 
+ dissertacao mestrado ciencias coppe ufrj rio janeiro rj 
+ perrys chemical engineers handbook th edition macgraw hill 
+ petrobras http www 
+ br pt nossasatividades areasdeatuacao exploracaoeproducao depetroleoegas 
+ br producaonopresalbatenovorecorde ealcancamilbarrisdepetroleopordia 
+ exploracao disponivel producao 
+ disponivel fatos dados 
+ estrategias controle contra intermitencia severa alimentacao separadores offshore 
+ dissertacao mestrado ciencias ufrj ct eg tpqbq rio janeiro rj 
+ sistema estimacao vazao gas pocos produzindo plunger lift vaso separador teste plataformas petroleo 
+ dissertacao mestrado ciencias faculdade engenharia eletrica universidade federal rio grande norte natal 
+ contole processo tratamento primario petroleo dissertacao mestrado ciencias coppe universidade federal rio janeiro rio janeiro 
+ estudo sobre processamento primario petroleo 
+ monografia graduacao ciencia tecnologia faculdade ciencia tecnologia universidade federal rural semi arido ufersa rio grande norte 
+ nocoes processamento primario petroleo 
+ puc rio pontificia universidade catolica rio janeiro 
+ stormwater best management practicespermanent treatment management practices 
+ disponivel http www 
+ gov stormwater docs pdfs swmm volumebmps gravity oilgritseparator 
+ fundamentos engenharia petroleo 
+ rio janeiro interciencia petrobras 

@@ -1,0 +1,2517 @@
+UNIVERSIDADE FEDERAL DE ALAGOAS 
+
+CENTRO DE TECNOLOGIA 
+
+ 
+
+ 
+
+ 
+
+UNIVERSIDADE FEDERAL DE ALAGOAS 
+
+CENTRO DE TECNOLOGIA 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ANÁLISE DA ESTABILIDADE DE POÇOS VERTICAIS  
+
+DE PETRÓLEO ATRAVÉS DO MÉTODO DOS  
+
+ELEMENTOS FINITOS 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Aluno: Victor Costa Pontes 
+
+ Orientadores: Francisco Patrick Araujo Almeida 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+iv 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Dedico este trabalho à minha família pelo apoio e 
+
+dedicação que me deram e aos amigos conquistados ao 
+
+longo deste percurso. 
+
+ 
+
+ 
+
+v 
+
+AGRADECIMENTOS 
+
+ 
+
+Agradeço  primeiramente  aos  meus  pais,  Iran  e  Pollenya,  por  todo  o  apoio, 
+
+dedicação e conselhos que possibilitaram este momento. 
+
+Ao  meu  irmão,  Bruno,  pelo  apoio  e  auxílio  tanto  no  desenvolvimento  deste 
+
+trabalho, quanto nos momentos compartilhados. 
+
+Ao  professor  Francisco  Patrick  pela  paciência  e  por  acreditar  na  minha 
+
+capacidade de desenvolver este trabalho. 
+
+À  todos  os professores  e  amigos que  contribuíram  para  o desenvolvimento 
+
+deste trabalho. 
+
+Ao  apoio  financeiro  da  Agência  Nacional  do  Petróleo,  Gás  Natural  e 
+
+Biocombustíveis  –  ANP  –,  da  Financiadora  de  Estudos  e  Projetos  –  FINEP  –  e  do 
+
+Ministério  da  Ciência  e  Tecnologia  –  MCT  –  por  meio  do  Programa  de  Recursos 
+
+Humanos da ANP para o setor de Petróleo e Gás – PRH-ANP/MCT. 
+
+Victor Costa Pontes 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+RESUMO 
+
+vi 
+
+PONTES,  V.  C.  Análise  da  estabilidade  de  poços  verticais  de  petróleo  através  do 
+método dos elementos finitos. 2014. Trabalho de Conclusão de Curso (Graduação em 
+Engenharia Civil) – Universidade Federal de Alagoas, Maceió. 
+
+ 
+
+Este trabalho tem como objetivo a avaliação da estabilidade de poços verticais 
+de petróleo após a perfuração e aplicação do revestimento. A relevância desse estudo 
+surgiu da necessidade de prevenir e minimizar as instabilidades estruturais em poços 
+verticais de petróleo, com o intuito de evitar custos adicionais, visto que a perfuração 
+é  o  processo  onde  estão  inseridos  os  maiores  custos.  Afim  de  prevenir  as 
+instabilidades  estruturais,  desenvolveu-se  um  programa,  através  do  software 
+MATLAB, baseado no método dos elementos finitos para o cálculo de deformações 
+em  materiais  elásticos,  que  faz  a  comparação  das  deformações  reais  (através  do 
+estado  de  tensão  em  que  a  rocha  está  submetida)  e  das  deformações  máximas  a 
+partir de seções transversais ao longo do poço. Essas são calculadas a partir de um 
+estado  de  tensão  fictício  que  leva  em  consideração  a  envoltória  de  resistência  da 
+rocha  e  o  estado  de  tensão  real.  Utilizou-se  primeiramente  benchmarks,  que 
+apresentam resultados coerentes e satisfatórios. Com o programa apresentando bons 
+resultados  analisou-se  seções  que  apresentam  a  convergência  da  curva  da 
+deformação real com a curva da deformação máxima. Outro fator observado é que 
+através  das  curvas  de  deformações, existe  uma faixa  segura  de deformação, onde 
+rochas  com  propriedades  viscosas  teriam  um  limite  de  deformação  até  o  suposto 
+colapso. 
+
+ 
+
+Palavras-chave: Método dos elementos finitos, estabilidade, poço vertical 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ABSTRACT 
+
+vii 
+
+PONTES, V. C. Stability analysis of vertical oil wells through the finite element method. 
+2014. Undergraduate Project (Degree in Civil Engineering) – Universidade Federal de 
+Alagoas, Maceió. 
+
+ 
+
+This  study  aims  to  assess  the  stability  of  vertical  oil  wells  after  drilling  and 
+coating application. The relevance of this study stemmed from the need to prevent and 
+minimize the structural instabilities in vertical oil wells, in order to avoid additional costs, 
+since  the  drilling  is  the  process  where  the  highest  costs  are  included.  In  order  to 
+prevent structural instability, a program developed by MATLAB software, based on the 
+finite  element  method  for  the  calculation  of  deformations  in  elastic  materials,  which 
+makes the comparison of actual deformations (through the stress state in the rock is 
+submitted) and the maximum deformation from cross-sections along the well. These 
+are calculated from a fictional state of tension that takes into account the envelope of 
+rock strengths and the actual state of tension. First we used benchmarks that show 
+consistent  and  satisfactory  results.  With  the  program  with  satisfactory  results  was 
+analyzed sections that present the convergence of the actual deformation curve with 
+the curve of maximum deformation. Another observation is that through the curves of 
+deformation, there is a safe range of deformation, where rocks with viscous properties 
+have a limit of deformation to the supposed collapse. 
+
+Keywords: Finite element method, stability, vertical oil well. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+viii 
+
+ 
+
+Sumário 
+
+1 
+
+INTRODUÇÃO ....................................................................................... 14 
+
+2  REFERENCIAL TEÓRICO .................................................................... 18 
+
+2.1  Mecânica das Rochas ..................................................................... 18 
+
+2.1.1  Ensaio uniaxial e triaxial ............................................................. 19 
+
+2.1.2  Ensaio brasileiro ......................................................................... 20 
+
+2.2  Teoria das Estruturas ...................................................................... 21 
+
+2.3  Método dos Elementos Finitos ........................................................ 23 
+
+3  METODOLOGIA .................................................................................... 26 
+
+3.1  Entrada de Dados ........................................................................... 27 
+
+3.2  Cálculo das Tensões ....................................................................... 27 
+
+3.3  Cálculo das Deformações ............................................................... 30 
+
+3.3.1  Matriz de rigidez ......................................................................... 30 
+
+3.3.2  Resolução do sistema de equações ........................................... 34 
+
+3.4  Comparação das deformações ....................................................... 35 
+
+3.5 
+
+Impressão dos Resultados .............................................................. 36 
+
+4  RESULTADOS E DISCUSSÕES ........................................................... 37 
+
+4.1  Benchmarks .................................................................................... 37 
+
+4.2  Análise de uma Seção .................................................................... 44 
+
+4.2.1  Determinação das tensões ......................................................... 45 
+
+4.2.2  Deformações .............................................................................. 47 
+
+4.3  Análise de Múltiplas Seções ........................................................... 50 
+
+4.4  Deformação Viscosa ....................................................................... 53 
+
+4.5  Análise do Método em Diferentes Raios. ........................................ 54 
+
+5  CONCLUSÃO ........................................................................................ 55 
+
+6  REFERÊNCIAS ..................................................................................... 56 
+
+ 
+
+ 
+
+LISTA DE FIGURAS 
+
+ 
+
+ix 
+
+Figura 1 – Estado tridimensional de tensão .............................................................. 18 
+
+Figura 2 – Determinação da envoltória de resistência .............................................. 19 
+
+Figura 3 – Demonstração do ensaio brasileiro .......................................................... 20 
+
+Figura 4 – Prolongamento da envoltória ................................................................... 21 
+
+Figura 5 – Barragem - Exemplo de estrutura em estado plano de deformação ........ 24 
+
+Figura 6 – Viga parede – Exemplo de estrutura em estado plano de tensão ............ 25 
+
+Figura 7 – Organograma do programa ...................................................................... 27 
+
+Figura 8 – Determinação do estado de tensão máximo ............................................ 28 
+
+Figura 9 – Transformação da tensão em forças nodais ............................................ 29 
+
+Figura 10 – Matriz de rigidez do elemento CST ........................................................ 32 
+
+Figura 11 – Elemento isoparamétrico de 4 nós da família Serendipity ...................... 33 
+
+Figura 12 – Mapeamento do elemento ...................................................................... 34 
+
+Figura 13 – Resultados das forças e deformações ................................................... 36 
+
+Figura 14 – Chapa tracionada ................................................................................... 37 
+
+Figura 15 – Resultados obtidos pelo programa ......................................................... 38 
+
+Figura 16 – Representação e resultados do problema obtidos por Zienkiewicz ....... 39 
+
+Figura 17 – Malha utilizada para comparação dos resultados .................................. 40 
+
+Figura 18 – Resultado obtido pela utilização dos elementos finitos .......................... 41 
+
+Figura 19 – Resultado obtido com a introdução dos elementos infinitos ................... 42 
+
+Figura 20 – Sobreposição dos resultados ................................................................. 43 
+
+Figura 21 – Perfil do poço – Cotas em metro ............................................................ 44 
+
+Figura 22 – Círculo de Mohr ...................................................................................... 46 
+
+Figura 23 – Determinação do estado de tensão máximo .......................................... 46 
+
+Figura 24 – Discretização da malha .......................................................................... 47 
+
+Figura 25 – Discretização com o incremento do revestimento .................................. 48 
+
+Figura 26 – Impressão dos resultados ...................................................................... 49 
+
+Figura 27 – Entrada e saída de dados para múltiplas seções ................................... 50 
+
+Figura 28 – Representação dos estados de tensões presentes e máximos ............. 51 
+
+Figura 29 – Representação gráfica das deformações de cada seção ....................... 52 
+
+Figura 30 – Deformação máxima viscosa ao longo da profundidade ........................ 53 
+
+ 
+
+Figura 31 – Discretização da malha para os raios de 4 e 6 polegadas respectivamente
+
+ .................................................................................................................................. 54 
+
+x 
+
+ 
+
+ 
+
+ 
+
+ 
+
+LISTA DE TABELAS 
+
+xi 
+
+Tabela 1 – Propriedades da rocha ............................................................................ 44 
+
+Tabela 2 – Propriedades da seção transversal, do fluido de perfuração e da água .. 45 
+
+Tabela 3 – Tensões nas seções ................................................................................ 50 
+
+Tabela 4 – Deformações das seções ........................................................................ 51 
+
+ 
+
+ 
+
+ 
+
+LISTA DE ABREVIATURAS E SIGLAS 
+
+xii 
+
+ANP  Agência Nacional de Petróleo, Gás Natural e Biocombustíveis 
+
+PRH  Programa de Recursos Humanos 
+
+∅ 
+
+Ângulo de atrito 
+
+S0 
+
+Coesão 
+
+T0 
+
+Tensão determinada pelo ensaio brasileiro 
+
+τ 
+
+Tensão cisalhante 
+
+s 
+
+Tensão normal 
+
+s’ 
+
+Tensão efetiva normal 
+
+s1 s3  Tensões principais 
+
+MEF  Método dos Elementos Finitos 
+
+Ѳ 
+
+Ângulo de rotação dos sistemas de coordenadas 
+
+ρ 
+
+Densidade 
+
+g 
+
+Aceleração da gravidade 
+
+γ 
+
+Peso específico 
+
+CST  Constant Strain Triangle (Triângulo com deformação constante) 
+
+PTV  Princípio dos Trabalhos Virtuais 
+
+UFAL  Universidade Federal de Alagoas 
+
+Π 
+
+U 
+
+Energia potencial total 
+
+Energia de deformação total 
+
+xiii 
+
+ 
+
+Wp 
+
+Trabalho potencial das forças externas 
+
+d 
+
+T 
+
+δ 
+
+u 
+
+v 
+
+a 
+
+Deslocamentos 
+
+Trabalho da forças externas/internas 
+
+Operador diferencial 
+
+Deformação na direção x 
+
+Deformação na direção y 
+
+Coeficientes a serem determinados 
+
+x,y 
+
+Variáveis 
+
+xi 
+
+yi 
+
+Abcissas dos nós 
+
+Ordenadas dos nós 
+
+A  
+
+Área do elemento 
+
+ξ   
+
+Função de forma 
+
+Matriz de rigidez 
+
+Matriz constitutiva 
+
+k  
+
+D 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+14 
+
+ 
+
+1 
+
+INTRODUÇÃO 
+
+A indústria do petróleo mobiliza grandes somas de recursos econômicos para 
+
+sustentar as operações de exploração e produção de óleo e gás. Deter reservas de 
+
+óleo  e  gás  e  dominar  as  tecnologias  para  obtê-las  é  fator  essencial  para  o 
+
+desenvolvimento da nação e para o mundo. 
+
+O  caminho  do  petróleo,  desde  a  pesquisa  para  sua  descoberta  até  sua 
+
+chegada a uma refinaria passa por diversas etapas sendo uma das principais, e que 
+
+tem um custo mais dispendioso, a de perfuração de poços. 
+
+São comuns, em uma operação de perfuração, dois modos de ruptura ou falha 
+
+que  podem  ocorrer  nas  paredes  do  poço:  falha  por  cisalhamento  (decorrentes  de 
+
+esforços compressivos) e falha por tração (decorrentes de esforços distensivos). São 
+
+os  problemas  relacionados  a  esses  modos  de  ruptura  que  deixam  a  operação 
+
+dispendiosa (Rocha e Azevedo, 2007). 
+
+A ocorrência de instabilidade de poços se dá devido a diversos mecanismos, 
+
+sendo  o  mais  significativo  deles  a  relação  entre  o  estado  de  tensões  no  poço  e  a 
+
+resistência  da  rocha.  Esse  fato  torna  a  avalição  da  estabilidade  de  um  poço  um 
+
+problema clássico de mecânica das rochas, uma vez que é necessária a previsão da 
+
+resposta das rochas a um determinado carregamento mecânico. 
+
+Desta forma, a análise da mecânica das rochas é fundamental para operações 
+
+de perfurações estáveis. Como parte dessa análise, é necessário o conhecimento dos 
+
+esforços  a  que  estão  submetidas  as  formações  e  a  determinação  dos  parâmetros 
+
+relacionados  à  resistência  da  rocha,  para  que  possam  ser  estudadas  as  situações 
+
+onde ocorrerá colapso ou fratura da formação. 
+
+Os  avanços  tecnológicos  na  área  da  computação  têm  permitido  o  uso  de 
+
+modelos cada vez mais complexos e refinados os quais possibilitam simulações cada 
+
+vez  mais  realistas,  culminando  na  otimização  dos  projetos  e  redução  dos  custos 
+
+(Azevedo, 2011). 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+As  simulações  descritas  são  realizadas  através  do  método  dos  elementos 
+
+15 
+
+finitos (MEF) que surgiu com o intuito de resolver problemas de teoria da elasticidade, 
+
+superando os métodos dos resíduos ponderados. Este método é baseado na divisão 
+
+do domínio de integração, contínuo, em um número finito de sub-regiões denominados 
+
+elementos finitos (ASSAN, 2003). 
+
+A  ideia  básica  do  MEF  para  a  estrutura  consiste  em  usar  funções 
+
+aproximadoras  descritas  em  subdomínios  ou  elementos  finitos,  para  descrever  os 
+
+campos de deslocamentos da estrutura. A melhora da solução deve ser obtida com o 
+
+uso de mais subdomínios ou elementos e não apenas o uso de polinômios de mais 
+
+alto  grau.  Para  sistematizar  as  operações  matemáticas  do  problema,  as  funções 
+
+aproximadoras devem ser descritas em cada subdomínio por funções de interpolação 
+
+previamente definidas (VAZ, 2011). 
+
+A motivação para realização deste trabalho partiu da preocupação em reduzir 
+
+os altos custos na área de produção de óleo e gás.  
+
+No surgimento da indústria do petróleo, no final do século XIX, o refino era 
+
+para a obtenção de querosene de iluminação que representava a etapa onde estava 
+
+a maior rentabilidade. 
+
+Durante o desenvolvimento da indústria do petróleo no século XX foram sendo 
+
+descobertas novas reservas que garantiam a manutenção do preço da matéria-prima 
+
+de  uma  indústria  milionária.  Porém  com  o  passar  dos  anos  essas  reservas  foram 
+
+sendo  descobertas  cada  vez mais  afastadas  dos maiores mercados  consumidores, 
+
+apresentando  uma  concentração  muito  elevada  na  região  do  Oriente  Médio, 
+
+principalmente em países como Arábia Saudita e Iraque.  
+
+Crises como a de 1973 e a de 1978 resultaram em um aumento no valor do 
+
+petróleo, levando a rentabilidade da indústria do refino para a produção, pois com o 
+
+aumento  da  matéria-prima  as  empresas  de  refino  foram  obrigadas  a  reduzir  sua 
+
+margem  de  lucro  para  manutenção  de  suas  vendas.  Essa  transferência  da 
+
+lucratividade gerou um importante fator para a indústria moderna. O desenvolvimento 
+
+da  produção  de  petróleo  se  tornou  um  fator  estratégico  no  mundo,  campos  de 
+
+produção  “off-shore”  se  tornaram  economicamente  viáveis  devido  ao  alto  custo  do 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+petróleo  e  países  onde  não  se  produzia  petróleo  passaram  a  investir  no 
+
+desenvolvimento tecnológico dessa etapa da cadeia. 
+
+16 
+
+Com o passar dos anos a indústria precisou tornar cada vez mais rentável o 
+
+processo  de  extração  do  petróleo,  levando  a  necessidade  de  reduzir  custos  na 
+
+perfuração  de  poços  e  aumentar  a  qualidade  da  análise  das  informações  obtidas 
+
+antes, durante e após a perfuração. 
+
+A  instabilidade  dos  poços  gera  um  aumento  de  custos  adicionais  na 
+
+perfuração,  podendo  chegar  ao  seu  abandono  devido  a  prisão  de  coluna  de 
+
+perfuração. Entre os custos da instabilidade estão a necessidade de limpeza do poço, 
+
+de injeção de mais fluido de perfuração devido à perda e a prisão da mesma, que em 
+
+determinados  níveis  pode  ser  tratada  permitindo  que  se  continue  a  perfuração. 
+
+Contudo, mesmo que continue a perfuração os problemas já causaram um atraso que 
+
+pode representar perdas que comprometem a rentabilidade do poço (Tisser, 2004). 
+
+Trabalhos  que  seguem  a  mesma  linha  de  pensamento,  como  o  de  Tisser 
+
+(2004) que apresentou, através de modelos volumétricos, os dois modelos de ruptura 
+
+associados  a  uma  superfície  elíptica  que  limita  o  estado  de  tensão  hidrostático 
+
+admissível. 
+
+De  forma  a  encontrar  resultados  analíticos  sobre  a  densidade  do  fluido  de 
+
+perfuração, Rodrigues (2007) propôs uma solução de engenharia baseada no método 
+
+de equilíbrio limite para auxiliar no problema de instabilidade de poços de petróleo em 
+
+rochas fraturadas. As soluções analíticas são propostas para se determinar a faixa de 
+
+valores da massa específica do fluido de perfuração (janela operacional). 
+
+Azevedo (2011) apresentou outra forma de avaliar a estabilidade da formação 
+
+analisando  o  comportamento  das 
+
+rochas  quando  submetidas  a  esforços 
+
+característicos  da  fase  de  perfuração,  como  subsídio  a  realização  de  perfurações 
+
+estáveis. 
+
+De forma a prevenir e minimizar as instabilidades estruturais dos poços são 
+
+utilizados métodos que definem limites seguros para a operação. Este trabalho visa a 
+
+análise  de  um  poço  vertical  de  petróleo  pelo  MEF,  através  de  um  programa 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+desenvolvido na plataforma MATLAB a partir de uma proposta desenvolvida durante 
+
+o período de iniciação científica patrocinada pela Agência Nacional do Petróleo, Gás 
+
+Natural e Biocombustíveis (ANP) através do Programa de Recursos Humanos (PRH). 
+
+17 
+
+As principais contribuições deste trabalho são: Apresentar uma proposta de 
+
+um  modelo  de  análise  de  poços  verticais  para  posteriormente  ser  utilizado  para 
+
+análises  de  rochas  com  propriedades  viscosas  através  das  deformações  que 
+
+apresentam  sob  o  estado  de  tensão  em  que  está  submetida;  desenvolver  um 
+
+programa capaz de calcular as deformações a partir do estado de tensão da rocha; 
+
+avaliar a partir do modelo proposto a estabilidade das seções estudadas. 
+
+O modelo possui diversas limitações devido principalmente aos modelos de 
+
+cálculo utilizados, como por exemplo a análise de apenas o comportamento elástico 
+
+linear dos materiais, não levar em consideração os efeitos térmicos e químicos, não 
+
+poder utilizar seções próximas a mudanças de diâmetros, só utilizar seções propícias 
+
+à ruptura por cisalhamento. 
+
+A  metodologia  empregada  é  baseada  em  um  modelo  proposto  que  visa  a 
+
+comparação  de  deformações  através  do  estado  de  tensão  em  que  a  rocha  está 
+
+submetida  e  pelo  estado  de  tensão  máximo  definido  ao  longo  deste  trabalho.  As 
+
+deformações são calculadas a partir do MEF. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+2  REFERENCIAL TEÓRICO 
+
+18 
+
+A base teórica para o desenvolvimento deste trabalho é fundamentada a partir 
+
+do  estudo  da  mecânica  da  rocha  (estudo  do  comportamento  da  formação  após  a 
+
+perfuração), da teoria das estruturas (conceitos relacionados aos trabalhos virtuais) e 
+
+do MEF (determinação das deformações nas seções ao longo do poço). 
+
+2.1  Mecânica das Rochas 
+
+Durante a perfuração de um poço, a rocha da formação é exposta a cargas 
+
+externas, devido à retirada de fragmentos de rochas, que alteram o estado de tensão 
+
+original  existente  no  subsolo,  podendo  levar  a  graves  problemas,  tais  como  o 
+
+desmoronamento  total  das  paredes  do  poço.  Quando  a  rocha  é  exposta  a  esse 
+
+carregamento externo, forças internas são induzidas. Estas, por sua vez, afetam tanto 
+
+o comportamento do corpo quanto a sua deformação (Rocha e Azevedo, 2007). 
+
+Para  se  ter  uma  descrição  completa  do  estado  de  tensão  em  um  ponto  é 
+
+necessário 
+
+identificar  as 
+
+tensões 
+
+relacionadas  a 
+
+três  planos  orientados 
+
+ortogonalmente. A figura 1 representa o estado tridimensional de tensões. 
+
+Figura 1 – Estado tridimensional de tensão 
+
+ 
+
+Fonte: Rocha e Azevedo 
+
+O  círculo  de  Mohr  representa  graficamente  a  transformação  do  tensor  de 
+
+tensão,  facilitando  a  identificação  das  tensões  principais  e  a  tensão  cisalhante 
+
+máxima. A construção do círculo de Mohr pode ser feita facilmente quando conhecidas 
+
+as tensões principais (onde as tensões cisalhantes nestes pontos são iguais a zero). 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+O centro do círculo neste caso é a média aritmética das tensões principais e o raio é 
+
+19 
+
+igual a metade da diferença das mesmas. 
+
+Para a determinação da tensão de ruptura da rocha são realizados ensaios, 
+
+como por exemplo ensaio uniaxial, ensaio triaxial e ensaio brasileiro. Estes ensaios 
+
+propiciam informações sobre a resistência da rocha. 
+
+2.1.1  Ensaio uniaxial e triaxial 
+
+Um dos resultados mais importantes obtidos dos testes uniaxiais e triaxiais é 
+
+o de propiciar informações sobre a resistência das rochas para o estabelecimento de 
+
+um  critério  de  ruptura,  isto  é,  uma  equação  que  represente  situações  em  que  um 
+
+estado de tensão pode levar à ruptura da rocha. 
+
+Um dos critérios de ruptura devido à compressão mais utilizados na indústria 
+
+do petróleo é o chamado critério Mohr-Coulomb, o qual tem sido escolhido pela sua 
+
+simplicidade. Baseado no círculo de Mohr, utilizando círculos que descrevem estados 
+
+de tensão onde a falha da rocha tenha ocorrido. A Figura 2 demonstra como a partir 
+
+destes valores é definido o ângulo de atrito (Φ) e a coesão (S0). Os valores de tensão 
+
+geralmente utilizados correspondem ao pico de tensão da curva tensão-deformação 
+
+(Rocha e Azevedo, 2007). 
+
+Figura 2 – Determinação da envoltória de resistência 
+
+Fonte: Rocha e Azevedo 
+
+ 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+20 
+
+ 
+
+2.1.2  Ensaio brasileiro 
+
+Diferente dos ensaios de resistência à compressão, a resistência à tração em 
+
+rochas é difícil de ser medida diretamente, pois as rochas apresentam baixos valores 
+
+de resistência à tração. Além disso, a maioria das rochas possuem fraturas, e no caso 
+
+destas fraturas serem normais a direção da tensão de tração aplicada, a resistência à 
+
+tração  da  rocha  pode  se  aproximar  de  zero,  sendo  esta  uma  hipótese  comumente 
+
+assumida. 
+
+O método mais comum para se estimar a resistência à tração das rochas é o 
+
+ensaio brasileiro ou ensaio de compressão diametral. Método indireto, onde se aplica 
+
+uma  carga  de  compressão  sobre  o  eixo  vertical  de  uma  amostra  de  rocha  de 
+
+comprimento geralmente inferior ou igual ao seu diâmetro conforme figura 3. A falha 
+
+ocorrerá  devido  à  tensão  de  tração,  no  plano  que  contenha  o  eixo  do  cilindro  e  as 
+
+cargas de compressão. 
+
+Figura 3 – Demonstração do ensaio brasileiro 
+
+ 
+
+Fonte: Rocha e Azevedo 
+
+Para o estabelecimento do critério de falha de ruptura por tração será utilizada 
+
+a teoria de Mohr-Coulomb. Para tanto, basta prolongar a envoltória de Mohr-Coulomb 
+
+para a região de tração até o ponto da tensão determinada pelos ensaios (Rocha e 
+
+Azevedo, 2007). 
+
+A  figura  4  apresenta  tanto  o  critério  de  ruptura  por  cisalhamento,  quanto  o 
+
+critério de ruptura por tração, que é representado pelo termo T0. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+Figura 4 – Prolongamento da envoltória 
+
+21 
+
+ 
+
+2.2  Teoria das Estruturas 
+
+Fonte: Rocha e Azevedo 
+
+Os  conceitos  relativos  a  deslocamentos  virtuais  e  trabalho  virtual  são 
+
+usualmente  introduzidos  durante  o  estudo  da  Mecânica  Geral  quando  são  usados 
+
+para resolver problemas sobre equilíbrio estático.  
+
+ A palavra virtual significa que as quantidades são puramente imaginárias e 
+
+que não precisam existir no sentido real ou físico. Assim, um deslocamento virtual é 
+
+um  pequeno  deslocamento  imaginário,  arbitrariamente  imposto  sobre  um  sistema 
+
+estrutural.  Não  há  necessidade  de  se  tratar  de  um  deslocamento  real,  como  por 
+
+exemplo  os  deslocamentos  de  flexão  causada  por  cargas  atuantes  na  estrutura.  O 
+
+trabalho  realizado  por  forças  reais  durante  um  deslocamento  virtual  é  chamado 
+
+trabalho virtual. 
+
+O  Princípio  dos  Trabalhos  Virtuais  (PTV)  afirma:  A  condição  necessária  e 
+
+suficiente para o equilíbrio de um ponto ou sistema de pontos materiais qualquer, é 
+
+que a soma dos trabalhos virtuais em qualquer deslocamento virtual compatível com 
+
+as ligações do sistema seja nula, ou matematicamente conforme equação 1. 
+
+∑ Τvirtual externo =0 
+
+(1) 
+
+O deslocamento virtual deve ser suposto infinitesimal, de modo a não alterar 
+
+a  configuração  estática  e  geométrica  do  sistema  das  forças  que  nele  agem,  não 
+
+violando as condições de equilíbrio que tais forças obedecem. O deslocamento virtual 
+
+é causado por uma ação externa qualquer, cuja origem não é objeto de discussão, 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+sendo completamente independente das forças externas que mantém a estrutura em 
+
+22 
+
+equilíbrio. 
+
+O  PTV  aplicado  às  estruturas  isostáticas  em  equilíbrio  resolve  o  problema 
+
+estático através do geométrico. Como o PTV consiste de apenas uma equação, ele 
+
+se torna seletivo, ou seja, sua aplicação determina apenas uma incógnita, havendo 
+
+necessidade  de  se  repetir  o  procedimento  para  cada  incógnita  procurada.  Não 
+
+obstante este fato  – e  inclusive  por  isto  -  é  muito útil  quando  se  deseja  determinar 
+
+apenas um esforço, como é o caso de determinação de linhas de influência. 
+
+A  aplicação  do  PTV  às  estruturas  isostáticas  para  a  determinação  de  um 
+
+determinado esforço requer que seja aplicado um deslocamento virtual, que só pode 
+
+ser  realizado  se  o  sistema  for  móvel,  o  que  é  obtido  retirando-se  o  vínculo 
+
+correspondente à  incógnita  e  substituindo-o pelo esforço  correspondente.  Como os 
+
+deslocamentos virtuais são supostos infinitesimais, estes deslocamentos seguem as 
+
+leis dos pequenos deslocamentos, mais simples que as dos deslocamentos finitos. 
+
+No estudo da análise estrutural deve-se estender o Princípio dos Trabalhos 
+
+Virtuais  para  o  caso  de  estruturas  deformáveis.  Neste  caso  deve-se  levar  em 
+
+consideração não apenas o trabalho realizado pelas ações externas mas também o 
+
+trabalho associado aos esforços internos na deformação dos elementos da estrutura.  
+
+ Este  princípio  é  extremamente  valioso  e  tem  muitas  aplicações  na  análise 
+
+estrutural.  Durante o desenvolvimento do princípio nota-se que as propriedades do 
+
+material não entram em discussão, e consequentemente o PTV aplica-se a todas as 
+
+estruturas, independente do material se comportar linearmente ou não. 
+
+O PTV enuncia  para corpos deformáveis que em uma estrutura deformável 
+
+em equilíbrio, a soma dos trabalhos virtuais das ações externas, em um deslocamento 
+
+compatível  com  as  ligações,  é  igual  ao  trabalho  virtual  interno,  realizado  pelos 
+
+esforços  internos  na deformação  dos  elementos  da estrutura,  ou matematicamente 
+
+explícita conforme equação 2 (Serra). 
+
+Τexterno=Τinterno na deformação 
+
+(2) 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+23 
+
+ 
+ 
+
+2.3  Método dos Elementos Finitos 
+
+O  MEF  se  baseia  no princípio  da  mínima  energia  potencial  total. A  energia 
+
+potencial total é definida para sistemas conservativos como a equação 3. 
+
+Π(d)=U(d)+Wp(d) 
+
+(3) 
+
+onde: 
+
+Π 
+
+U 
+
+– Energia potencial total; 
+
+– Energia de deformação total; 
+
+Wp 
+
+– Trabalho potencial das forças externas; 
+
+d 
+
+– Deslocamentos. 
+
+O princípio da mínima energia potencial total enuncia que os deslocamentos 
+
+de  uma  estrutura  em  equilíbrio  estável  tornam  mínima  a  energia  potencial  total  da 
+
+estrutura, ou seja, uma estrutura que está em equilíbrio estável se deformou de modo 
+
+a  gastar  o  mínimo  de  energia  potencial  total.  Matematicamente,  a  condição  de 
+
+primeira ordem de mínimo de uma função é dada pela equação 4 (Vaz, 2011). 
+
+δΠ(d) δd⁄
+
+=0 
+
+onde: 
+
+δ 
+
+– Operador diferencial. 
+
+(4) 
+
+Após  definir  as  equações  de  equilíbrio  é  necessário  definir  as  equações 
+
+constitutivas que serão definidas através da geometria da estrutura e do carregamento 
+
+em que ela está submetida. 
+
+Os dois tipos de estruturas planas estudadas são as estruturas que estão em 
+
+estado plano de deformação e as que estão em estado plano de tensão. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+Problemas  que  envolvem  corpos  longos  cuja  geometria  e  estado  de 
+
+24 
+
+carregamento não mudam muito ao longo de seu eixo longitudinal estão sob o estado 
+
+plano  de  deformação  (Assan,  2003).  O  estado  plano  de  deformação  apresenta 
+
+deformações impedidas ao longo do eixo longitudinal. A figura 5 mostra uma barragem 
+
+que é um exemplo desse estado de carregamento. 
+
+Figura 5 – Barragem - Exemplo de estrutura em estado plano de deformação 
+
+Fonte: Elaborado pelo autor 
+
+ 
+
+Ao contrário do estado plano de deformação, o estado plano de tensão ocorre 
+
+em  sólidos  cuja  dimensão  na  direção  perpendicular  ao  plano  principal  do  sólido  é 
+
+muito  pequena  em  relação  às  outras  dimensões  (Assan,  2003). O  estado  plano de 
+
+tensão é caracterizado por apresentar tensão normal ao plano principal igual a zero. 
+
+A figura 6 mostra uma viga parede que é um exemplo desse estado de carregamento. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+Figura 6 – Viga parede – Exemplo de estrutura em estado plano de tensão 
+
+25 
+
+Fonte: Elaborado pelo autor 
+
+ 
+
+Neste  trabalho  foi  considerado  apenas  o  estado  plano  de  deformação,  o 
+
+estado plano de tensões foi utilizado apenas para a  comparação dos resultados do 
+
+programa. 
+
+ 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+26 
+
+ 
+
+3  METODOLOGIA 
+
+Para  a  realização  da  análise,  primeiramente  é  proposto  um  método  de 
+
+avaliação que é definido a partir da comparação entre deformações máximas, que a 
+
+rocha pode suportar, e deformações reais a partir do estado de tensão em que a rocha 
+
+está submetida.  
+
+As deformações são calculadas a partir de um programa desenvolvido através 
+
+do software MATLAB (escolhido por ser o software estudado na graduação do curso 
+
+de engenharia civil da Universidade Federal de Alagoas - UFAL). Para facilitar o seu 
+
+desenvolvimento o programa é dividido em duas partes. A primeira parte diz respeito 
+
+aos  cálculos  referentes  às  tensões  provenientes  do  peso  do  maciço  rochoso,  da 
+
+pressão de poros e da pressão exercida pelo fluido de perfuração. A segunda parte é 
+
+definida pelos cálculos da deformação, ou seja, pela aplicação do MEF. 
+
+A figura 7 representa um organograma do processo de cálculo do programa. 
+
+O programa é composto estruturalmente: 
+
+  Principal:  Entrada  de  dados;  cálculo  das  tensões;  compatibilizações 
+
+das 
+
+tensões;  aplicação  do  MEF;  comparação  dos  resultados; 
+
+impressão dos resultados; 
+
+  Secundária:  Malha,  propriedades  e  seções  (entrada  de  dados); 
+
+pressão  de  poros,  tensão  total,  tensão  efetiva  e  tensão  do  fluido 
+
+(cálculo  das  tensões);  matriz  de  rigidez,  condições  de  contorno  e 
+
+sistema de equações (aplicação do MEF).  
+
+  Terciária:  Elementos  e  condições  de  contorno  (malha  –  entrada  de 
+
+dados). 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+Figura 7 – Organograma do programa 
+
+27 
+
+ 
+
+3.1  Entrada de Dados 
+
+Fonte: Elaborado pelo autor 
+
+A entrada de dados é parte fundamental do programa. É neste ponto que são 
+
+definidas a malha, as condições de contorno, as propriedades da rocha e as seções. 
+
+A entrada de dados é feita através de arquivos de texto e pela interface do 
+
+MATLAB. Os arquivos de texto referem-se aos dados necessários para o cálculo das 
+
+tensões e do método dos elementos finitos. Os dados inseridos pela interface são a 
+
+quantidade de seções e a profundidades de cada seção. 
+
+3.2  Cálculo das Tensões 
+
+As tensões exercidas pelo peso da coluna de água (pressão de poros), pelo 
+
+peso do maciço rochoso (pressão total) e pelo peso da coluna do fluido de perfuração 
+
+(pressão do fluido) são calculadas a partir da equação 5. 
+
+σ= ∑ ρi*g*hi
+
+n
+i=1
+
+= ∑ γi*hi
+
+n
+i=1
+
+ 
+
+(5) 
+
+onde: 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+28 
+
+ 
+– Densidade; 
+
+– Aceleração da gravidade 
+
+– Profundidade; 
+
+ρ 
+
+g  
+
+h 
+
+γ  
+
+– Peso específico; 
+
+n 
+
+– Número de camadas, no caso da água e do fluido de perfuração n=1. 
+
+As  tensões  efetivas  (tensão  total  e  do fluido)  são  calculadas  pela diferença 
+
+entre a tensão e a pressão de poros. 
+
+Para o cálculo, as tensões principais para definir o círculo de Mohr real são a 
+
+tensão efetiva total e a tensão efetiva do fluido. 
+
+Para  determinar  o  estado  de  tensão  máximo,  primeiramente,  é  definido  o 
+
+critério  de  segurança  que  é  desenvolvido  de  forma  a  levar  em  consideração  a 
+
+envoltória  de  resistência  e  o  estado  de  tensão  da  rocha. A figura  8  mostra  como  é 
+
+calculado  o  estado  de  tensão  máximo:  a)  Estado  de  tensão  em  que  a  rocha  está 
+
+submetida;  b)  Criação  do  círculo  de  Mohr  fictício;  c)  Criação  do  estado  de  tensão 
+
+máximo; d) Estado de tensão máximo. 
+
+Figura 8 – Determinação do estado de tensão máximo 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+29 
+
+Fonte: Elaborado pelo autor 
+
+ 
+
+Determinado o estado de tensão real e o estado de tensão máximo é feita a 
+
+compatibilização  das  tensões  principais  com  os  nós  da  malha.  A  figura  9  mostra 
+
+graficamente  como  as 
+
+tensões  em  uma  seção  de  espessura  unitária  são 
+
+transformadas em forças nodais: a) Tensões aplicadas na seção; b) Forças aplicadas 
+
+nos nós. 
+
+Figura 9 – Transformação da tensão em forças nodais 
+
+Fonte: Elaborado pelo autor 
+
+ 
+
+Em consequência das etapas anteriores é criado o vetor de forças nodais. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+3.3  Cálculo das Deformações 
+
+30 
+
+Definido  o  vetor  forças  nodais,  é  iniciado  o  processo  de  cálculo  das 
+
+deformações pelo programa desenvolvido.  
+
+3.3.1  Matriz de rigidez 
+
+Primeiramente  é  calculado  a  matriz  de  rigidez  de  cada  elemento,  conforme 
+
+apresentado nas seções 3.3.1.1 e 3.3.1.2. 
+
+3.3.1.1  Elemento CST 
+
+Este  elemento  tem  como  funções  interpoladoras  para  os  deslocamentos 
+
+polinômios do primeiro grau, conforme equações 6 e 7. 
+
+(6) 
+
+(7) 
+
+u(x,y)=a1+a2x+a3y 
+
+v(x,y)=a4+a5x+a6y 
+
+onde: 
+
+u 
+
+v 
+
+a 
+
+– Deformação na direção x; 
+
+– Deformação na direção y; 
+
+– Coeficientes a serem determinados; 
+
+x,y 
+
+– Variáveis. 
+
+As funções de forma para este elemento são calculadas conforme equação 8. 
+
+ξi=1/2A [xjyk-xkyj+x (yj-yk) +y(xk-xj)] ;i,j,k=1,2,3 
+
+(8) 
+
+onde: 
+
+xi 
+
+yi 
+
+– Abcissas dos nós; 
+
+– Ordenadas dos nós; 
+
+A  
+
+– Área do elemento; 
+
+ξ   
+
+– Função de forma. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+A matriz de rigidez é determinada através da equação 9. 
+
+k =  ∫ BtDB dv 
+
+B=1/2A [
+
+0
+a1
+
+b2
+b1
+0
+0
+a1 b1 a2
+
+b3
+0
+
+0
+0
+a2
+a3
+b2 a3 b3
+
+] 
+
+31 
+
+(9) 
+
+(10) 
+
+D=
+
+E
+
+(1+υ)(1-2v)
+
+1-υ
+υ
+
+[
+
+0
+
+υ
+1-υ
+
+0
+
+0
+0
+1-2υ
+
+2
+
+], para o estado plano de deformação 
+
+(11) 
+
+ai=xk-xj 
+
+bi=yj-yk 
+
+onde: 
+
+k – Matriz de rigidez. 
+
+(12) 
+
+(13) 
+
+Estruturas em estado plano de deformação adota-se a espessura igual a uma 
+
+unidade de comprimento. 
+
+A matriz de rigidez para o elemento CST com a forma generalizada da matriz 
+
+dos coeficientes elásticos fica conforme figura 10 (Assan, 2003). 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+Figura 10 – Matriz de rigidez do elemento CST 
+
+32 
+
+ 
+
+3.3.1.2  Elemento Serendipity 
+
+Fonte: Assan (2003) 
+
+Um  elemento  finito  é  dito  isoparamétrico  quando  as  mesmas  funções  de 
+
+interpolação  são  usadas  para  interpolar  não  apenas  grandezas  cinemáticas 
+
+(deslocamentos),  como  é  usual  nos  elementos  convencionais,  mas  também 
+
+grandezas  geométricas  (no  caso,  coordenadas).  A  família  desses  elementos  é 
+
+denominada  de  família  Serendipity,  uma  referência  ao  conto  infantil  persa  “Os  três 
+
+príncipes de Serendip”. Esta história conta as aventuras de três príncipes do Ceilão, 
+
+atual Sri Lanka, que viviam fazendo descobertas inesperadas, cujos resultados eles 
+
+não  estavam  procurando  realmente.  Graças  à  sua  capacidade  de  observação  e 
+
+sagacidade,  descobriram  “acidentalmente”  a  solução  para  diversos  dilemas 
+
+impensados. Essa característica tornava-os especiais e importantes, não apenas por 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+terem  um  dom  especial,  mas  por  terem  a  mente  aberta  para  as  múltiplas 
+
+33 
+
+possibilidades (Vaz, 2011). 
+
+Para facilitar o cálculo são feitas parametrizações conforme figura 11. 
+
+Figura 11 – Elemento isoparamétrico de 4 nós da família Serendipity 
+
+Desta  forma  as  funções  interpoladoras  paramétricas,  estão  conforme  as 
+
+Fonte: Vaz (2011) 
+
+ 
+
+equações 14 e 15. 
+
+u(ξ,η)=a1+a2ξ+a3η+a4ξη 
+
+v(ξ,η)=a5+a6ξ+a7η+a8ξη 
+
+(14) 
+
+(15) 
+
+As  considerações  feitas  por  Zienkiewicz,  Taylor  e  Zhu  (2005),  definem  um 
+
+“polo”, onde os nós que irão para o infinito estão contidos nas retas que passam pelo 
+
+polo  e  pelo  nó  do  elemento  que  compõe  a  malha,  os  nós  que  irão  para  o  infinito 
+
+possuem deslocamentos prescritos e iguais a zero. 
+
+As funções de forma para este  elemento foram  calculadas  por  Zienkiewicz, 
+
+Taylor e Zhu (2005), conforme equações 16 e 17. 
+
+x=𝑁1(𝜂) [(−
+
+𝜉
+
+1−𝜉
+
+𝑥𝑐) + (1 +
+
+𝜉
+
+1−𝜉
+
+) 𝑥𝑞] + 𝑁0(𝜂) [(−
+
+𝜉
+
+1−𝜉
+
+𝑥𝑐1) + (1 +
+
+𝜉
+
+1−𝜉
+
+) 𝑥𝑞1]  (16) 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+𝑁1(𝜂) =
+
+1
+
+2
+
+(1 + 𝜂);  𝑁0(𝜂) =
+
+1
+
+2
+
+(1 − 𝜂)   
+
+34 
+
+(17) 
+
+A figura 12 demonstra onde estão localizados os pontos “q” e “c”. 
+
+Figura 12 – Mapeamento do elemento 
+
+Fonte: Zienkiewicz, Taylor e Zhu (2005) 
+
+A matriz de rigidez é calculada conforme equação 9. 
+
+ 
+
+A matriz deste tipo de elemento não possui uma configuração definida como 
+
+a  do  elemento  CST,  pois  são  feitas  integrações  ao  longo  de  um  domínio  infinito,  a 
+
+posição do polo e da parametrização utilizada influenciam na determinação da matriz 
+
+de rigidez. 
+
+3.3.2  Resolução do sistema de equações 
+
+Com a matriz de rigidez da estrutura e o vetor de forças nodais definidos, o 
+
+próximo  passo  é  a  aplicação  das  condições  de  contorno.  Matematicamente  são                                                                                                                                                                                                                                                                                                                                                                                                                                               
+
+substituídos  os  valores  desconhecidos  do  vetor  de  forças  nodais  (reações)  pelos 
+
+valores  conhecidos  dos  deslocamentos  nodais  (deslocamentos  prescritos),  a 
+
+substituição implica na mudança da matriz de rigidez. 
+
+Para  facilitar  o  entendimento,  as  equações  18,  19  e  20  exemplificam  este 
+
+processo. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+x=a*u+b*v
+{
+y=c*u+d*v
+
+ 
+
+Matricialmente: 
+
+1 0
+[
+0 1
+
+x
+] * {
+y} = [
+
+a b
+c d
+
+] * {
+
+u
+v
+
+} 
+
+1 -b
+[
+0 -d
+
+] * {
+
+x
+v
+
+} = [
+
+a
+c
+
+] * {
+
+u
+y} 
+
+0
+-1
+
+onde: 
+
+a,b,c,d  - Valores conhecido da matriz; 
+
+u,y 
+
+- Incógnitas; 
+
+x,v 
+
+- Valores conhecidos. 
+
+35 
+
+(18) 
+
+(19) 
+
+(20) 
+
+No  software  MATLAB  existe  uma  função  que  calcula  a  matriz  inversa.  O 
+
+sistema de equações é  resolvido  pelo  produto  da  inversa  da  matriz  de  rigidez  pelo 
+
+vetor de forças nodais conforme equação 21. 
+
+U=K-1*F 
+
+(21) 
+
+3.4  Comparação das deformações 
+
+Com  a  resolução  dos  sistema  de  equações,  são  obtidos  os  valores  das 
+
+deformações de cada nó e as reações. A deformação nodal é calculada pela equação 
+
+22. 
+
+ε = √ux
+
+2+uy
+2 
+
+(22) 
+
+Com  os  valores  de  todas  as  deformações  nodais,  escolhesse  a  maior 
+
+deformação para representar a seção de interesse. E finalmente são comparadas as 
+
+deformações calculadas pelo estado de tensão real com o estado de tensão máximo, 
+
+conforme equação 23. 
+
+εMÁX ≥ ε 
+
+(23) 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+3.5  Impressão dos Resultados 
+
+Os resultados são impressos em arquivos de texto conforme figura 13. 
+
+Figura 13 – Resultados das forças e deformações 
+
+36 
+
+ 
+
+Fonte: Elaborado pelo autor 
+
+E  o  resultado,  se  haverá  colapso  da  seção,  é  impresso  na  interface  do 
+
+MATLAB.  Se  houver  mais  de  uma  seção  são  impressos  a  comparação  das 
+
+deformações e plotado um gráfico deformação X profundidade. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+4  RESULTADOS E DISCUSSÕES 
+
+37 
+
+Para a utilização do programa, primeiramente são utilizados benchmarks para 
+
+comparar os resultados e determinar se os mesmos estão coerentes e satisfatórios. 
+
+4.1  Benchmarks 
+
+Benchmark  é  o  termo  utilizado  na  computação,  visando  a  avalição  da 
+
+performance de um programa de computador, normalmente executando uma série de 
+
+testes padrões. 
+
+Para o primeiro exemplo foi utilizada uma chapa tracionada  conforme figura 
+
+14. 
+
+Figura 14 – Chapa tracionada 
+
+Fonte: Elaborado pelo autor  
+
+ 
+
+Para comparar os resultados, utilizou-se o software Abaqus. O Abaqus é um 
+
+pacote de software comercial para análise através de elementos finitos desenvolvido 
+
+pela HKS Inc. de Rhode Island, E.U.A. e agora comercializado sob a SIMULIA marca 
+
+da Dassault Systemes S.A. 
+
+A  comparação  dos  resultados  do  programa  com  os  do  software  Abaqus 
+
+apresentou erro de cerca de 0,25%. A figura 15 apresenta os resultados obtidos para 
+
+os quatro nós mostrados na figura 14. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+Figura 15 – Resultados obtidos pelo programa 
+
+38 
+
+ 
+
+Fonte: Elaborado pelo autor 
+
+De acordo com este resultado o programa apresenta resultados coerentes e 
+
+satisfatórios. 
+
+Para  um  segundo  exemplo  foi  utilizado  o  problema  apresentado  por 
+
+Zienkiewicz, Taylor e Zhu (2005), figura 16. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+ 
+
+Figura 16 – Representação e resultados do problema obtidos por Zienkiewicz, Taylor e Zhu 
+
+39 
+
+Fonte: Zienkiewicz, Taylor e Zhu 
+
+ 
+
+O problema apresenta um solo sendo comprimido por uma força pontual de 
+
+intensidade  igual  a  1,  o  solo  possui  módulo  de  elasticidade  e  Poisson  iguais  a, 
+
+respectivamente, 1 e 0,1. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+A malha utilizada foi composta por 16 elementos triangulares conforme figura 
+
+40 
+
+17. 
+
+Figura 17 – Malha utilizada para comparação dos resultados 
+
+Fonte: Elaborado pelo autor 
+
+Os resultados obtidos pelo programa estão apresentados na figura 18. 
+
+ 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+Figura 18 – Resultado obtido pela utilização dos elementos finitos 
+
+41 
+
+Fonte: Elaborado pelo autor  
+
+Os resultados obtidos pela combinação dos 16 elementos finitos e 4 infinitos 
+
+estão presentes na figura 19. 
+
+ 
+
+ 
+
+ 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+Figura 19 – Resultado obtido com a introdução dos elementos infinitos 
+
+42 
+
+A figura 20 sobrepõe as curvas encontradas. 
+
+Fonte: Elaborado pelo autor 
+
+ 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+Figura 20 – Sobreposição dos resultados 
+
+43 
+
+Fonte: Elaborado pelo autor  
+
+Pela análise dos gráficos, figura 20, tanto os resultados obtidos pelo programa 
+
+quanto os da literatura, observa-se que a introdução dos elementos infinitos melhora 
+
+consideravelmente os resultados apresentados.  
+
+ 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+4.2  Análise de uma Seção 
+
+44 
+
+A figura 21 apresenta um poço vertical com lâmina de água igual à 1500m e 
+
+a profundidade da seção de interesse igual a 1600m. 
+
+Figura 21 – Perfil do poço – Cotas em metro 
+
+Fonte: Elaborado pelo autor 
+
+As propriedades da rocha estão presentes na tabela 1. 
+
+Tabela 1 – Propriedades da rocha 
+
+ 
+
+Densidade  média 
+
+Coesão 
+
+Ângulo  de 
+
+Poisson  Módulo 
+
+de 
+
+(g/cm³) 
+
+(psi) 
+
+atrito 
+
+elasticidade (GPa) 
+
+2,52 
+
+480 
+
+28° 
+
+0,2 
+
+20 
+
+ 
+
+As propriedades da seção transversal, do fluido de perfuração e da água estão 
+
+presentes na tabela 2. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+Tabela 2 – Propriedades da seção transversal, do fluido de perfuração e da água 
+
+45 
+
+Raio (pol)  Densidade do fluido (lb/gal)  Peso específico da água (kN/m³) 
+
+8,5 
+
+9,5 
+
+9,79 
+
+ 
+
+4.2.1  Determinação das tensões 
+
+A  pressão  de  poros,  tensão  total  e  a  pressão  exercida  pelo  fluido  de 
+
+perfuração estão presentes na equações 24, 25 e 26. 
+
+σPoros=γÁgua*hÁgua=9,79*(1500*1600)=30350,24 kN/m² 
+
+σTotal=ρRocha*g*hRocha=2,52*9,81*1600=39553,92 kN/m² 
+
+(24) 
+
+(25) 
+
+σFluido=ρFluido*c*g*hFluido=9,5*0,12*9,81*(1500*1600)=34668,54 kN/m² 
+
+(26) 
+
+As tensões efetivas estão presentes nas equações 27 e 28. 
+
+σ'Total=σTotal-σPoros=9203,68 kN/m² 
+
+σ'Fluido=σFluido-σPoros=4318,30 kN/m² 
+
+(27) 
+
+(28) 
+
+As tensões efetivas são as tensões principais para a determinação do círculo 
+
+de  Mohr.  A  figura  22  representa  o  círculo  de  Mohr  desse  estado  de  tensão  e  a 
+
+envoltória de resistência. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+Figura 22 – Círculo de Mohr 
+
+46 
+
+ 
+
+Fonte: Elaborado pelo autor 
+
+O estado de tensão máximo está representado na figura 23 e a equação 29 
+
+representa a tensão principal máxima. 
+
+Figura 23 – Determinação do estado de tensão máximo 
+
+Fonte: Elaborado pelo autor 
+
+ 
+
+σ'Máx=12857,18  kN/m² 
+
+(29) 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+47 
+
+ 
+
+4.2.2  Deformações 
+
+Após determinar as tensões, para o cálculo das deformações primeiramente 
+
+criasse a malha. A criação da malha pode ser feita de duas formas: manualmente – 
+
+pela  criação  dos  arquivos  para  a  entrada  de  dados,  ou  a  partir  de  um  programa 
+
+secundário. Este programa cria a malha a partir do raio interno, raio externo, divisão 
+
+da malha radialmente e angularmente.  
+
+ A  figura  24  representa  a  malha  utilizada  composta  por  40  elementos 
+
+triangulares e 5 elementos quadrangulares (infinitos). Os elementos quadrangulares 
+
+não estão representados na figura. 
+
+Figura 24 – Discretização da malha 
+
+Fonte: Elaborado pelo autor 
+
+ 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+Com a malha definida e todos os parâmetros conhecidos o programa calcula 
+
+48 
+
+as  deformações  nodais.  Para  o  estado  de  tensão  que  a  rocha  está  submetida  a 
+
+deformação que representa esta seção é igual a: 
+
+ε=1,6667 
+
+(30) 
+
+O  cálculo  também  foi  realizado  com  a  introdução  de  um  revestimento  de  1 
+
+polegada com módulo de elasticidade e coeficiente de Poisson iguais respectivamente 
+
+a 30 GPa e 0,2. A figura 25 representa a discretização desta nova configuração. Os 
+
+elementos quadrangulares não estão representados na figura. 
+
+Figura 25 – Discretização com o incremento do revestimento 
+
+Fonte: Elaborado pelo autor 
+
+ 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+A deformação calculada para esta configuração é igual a: 
+
+εRev=1,4404 
+
+49 
+
+(31) 
+
+Observa-se que o incremento do revestimento diminui consideravelmente as 
+
+deformações,  considerando  a  proporção  entre  a  espessura  do  revestimento  e  do 
+
+maciço. 
+
+A  deformação  máxima  que  esta  seção  pode  suportar  a  partir  do  estado  de 
+
+tensão máximo é igual a: 
+
+εMáx=2,3234 
+
+(32) 
+
+De posse das deformações, o programa faz a comparação dos resultados e 
+
+exibe os resultados conforme figura 26. 
+
+Figura 26 – Impressão dos resultados 
+
+Fonte: Elaborado pelo autor  
+
+Os  resultados  obtidos  acima  comprovam  a  coerência  com  o  problema 
+
+proposto. 
+
+ 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+4.3  Análise de Múltiplas Seções 
+
+50 
+
+Para a análise de múltiplas seções o programa recebe a quantidade de seções 
+
+e  a  profundidade  pela  interface  do  MATLAB.  A  figura  27  mostra  como  é  feita  a 
+
+introdução dos parâmetros. 
+
+Figura 27 – Entrada e saída de dados para múltiplas seções 
+
+ 
+
+Fonte: Elaborado pelo autor 
+
+A tabela 3 apresenta os valores das tensões para cada seção. 
+
+Tabela 3 – Tensões nas seções 
+
+Profundidade 
+(m) 
+
+Tensão 
+total 
+(kN/m²) 
+
+Pressão 
+de poros 
+(kN/m²) 
+
+Tensão do 
+Fluido 
+(kN/m²) 
+
+Tensão 
+Efetiva da 
+Rocha  
+(kN/m²) 
+
+Tensão 
+Efetiva do 
+Fluido 
+(kN/m²) 
+
+1600 
+1700 
+1800 
+
+ 
+
+39553,92 
+42026,04 
+44498,16 
+
+30350,24 
+31329,28 
+32308,32 
+
+34668,54 
+35786,88 
+36905,22 
+
+9203,68 
+10696,76 
+12189,84 
+
+4318,3 
+4457,6 
+4596,9 
+
+A figura 28 apresenta os estados de tensões reais e os estados de tensões 
+
+máximos para estas seções. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+Figura 28 – Representação dos estados de tensões presentes e máximos 
+
+51 
+
+ 
+
+Fonte: Elaborado pelo autor 
+
+A malha utilizada para as três seções é igual à utilizada para a análise de uma 
+
+seção. 
+
+As deformações encontradas estão presentes na tabela 4. 
+
+Tabela 4 – Deformações das seções 
+
+Seção  Deformação presente  Deformação máxima 
+
+1600m  1,6667 
+
+1700m  1,7121 
+
+1800m  1,7625 
+
+ 
+
+2,3234 
+
+2,3402 
+
+2,3611 
+
+A figura 29 apresenta um gráfico com as deformações presentes e máximas 
+
+das seções. Esta função só está habilitada para o cálculo de múltiplas seções. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+Figura 29 – Representação gráfica das deformações de cada seção 
+
+52 
+
+Fonte: Elaborado pelo autor 
+
+Pelo  gráfico  (figura  29),  nota-se  uma  leve  convergência  entre  a  curva  da 
+
+deformação real e a curva da deformação máxima, o que era esperado, pelo fato da 
+
+tensão  real  crescer  mais  rapidamente  que  a  tensão  máxima  e  as  deformações 
+
+causadas serem diretamente proporcionais às tensões.  
+
+ 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+4.4  Deformação Viscosa 
+
+53 
+
+Analisando  as  curvas  do  gráfico  (figura  29),  observa-se  uma  faixa  entre  as 
+
+curvas onde não ocorreria a ruptura da rocha. Essa faixa representa a diferença entre 
+
+as deformações reais e máximas. Essa diferença é o quanto a rocha pode fluir antes 
+
+de  supostamente  romper.  A figura 30  apresenta a  variação da  deformação  viscosa 
+
+máxima que a rocha pode suportar. 
+
+Figura 30 – Deformação máxima viscosa ao longo da profundidade 
+
+Fonte: Elaborado pelo autor 
+
+ 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+ 
+
+4.5  Análise do Método em Diferentes Raios. 
+
+54 
+
+Para a avaliação do método proposto são utilizados além do raio já descrito 
+
+(8,5 polegadas), utilizou-se também os raios de 4 e 6 polegadas. O estado de tensão 
+
+máximo  utilizado  é  o  mesmo  que  o  utilizado  para  a  seção  de  1600m.  A  figura  30 
+
+representa  a  malha  utilizada  para  essas  novas  configurações.  Os  elementos 
+
+quadrangulares não estão representados na figura. 
+
+Figura 31 – Discretização da malha para os raios de 4 e 6 polegadas respectivamente 
+
+Fonte: Elaborado pelo autor 
+
+As deformações máximas encontradas para esses diâmetros são igual a: 
+
+ 
+
+ε8=2,2755 
+
+ε12=2,2901 
+
+ε17=2,3234 
+
+(33) 
+
+(34) 
+
+(35) 
+
+Desta  forma  observa-se  que,  para  pequenos  diâmetros,  a  variação  da 
+
+deformação máxima é mínima. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+55 
+
+ 
+
+5  CONCLUSÃO 
+
+Pelos resultados obtidos pelos benchmarks observou-se que os resultados do 
+
+programa  são  satisfatórios  e  coerentes  com  os  problemas  propostos,  o  resultado 
+
+obtido com a introdução dos elementos infinitos também melhora consideravelmente 
+
+os resultados com um aumento imperceptível do custo computacional. 
+
+O  programa  foi  desenvolvido  para  facilitar  o  cálculo  e  a  visualização  dos 
+
+resultados em poços verticais, por isso foram implementadas funções auxiliares, como 
+
+por  exemplo  a  criação  da  malha  e  exibição  de  gráficos  correspondentes  às 
+
+deformações. 
+
+As  malhas  utilizadas,  compostas  por  poucos  elementos,  podem  apresentar 
+
+erros significantes, contudo os resultados não apresentaram erros que comprometam 
+
+a análise das seções. 
+
+A utilização dos revestimentos nas paredes do poço diminui as deformações 
+
+reais apresentadas considerando a proporção entre a espessura do revestimento e a 
+
+espessura do maciço rochoso. 
+
+Percebe-se que, para pequenos diâmetros, a mudança do raio do poço tem 
+
+pouca  influência  na  deformação  máxima  calculada,  o  que  era  esperado  para  uma 
+
+seção com o mesmo estado de tensão e com os mesmo parâmetros de resistência. 
+
+O  estudo  do método para  avaliar  o  comportamento  viscoso  da  rocha  ainda 
+
+carece  de  mais  análises,  principalmente  pela  dificuldade  de  encontrar  dados 
+
+concretos sobre rochas com essa propriedade. 
+
+Análise da Estabilidade de Poços Verticais de Petróleo Através do Método dos Elementos Finitos 
+
+56 
+
+ 
+
+6  REFERÊNCIAS 
+
+ALVES FILHO, A., 2007. Elementos Finitos a Base da Tecnologia CAE. São Paulo, 
+Editora Érica; 
+
+ASSAN,  A.  E.,  2003.  Métodos  Dos  Elementos  Finitos  Primeiros  Passos.  São 
+Paulo, Editora UNICAMP; 
+
+AZEVEDO, M. S., 2011. Análise Geomecânica Aplicada à Análise de Estabilidade 
+de Poços. Rio de Janeiro, UFRJ – Escola Politécnica; 
+
+HIBBELER, R. C., 2004. Resistência dos Materiais. São Paulo, Pearson Education 
+do Brasil; 
+
+MARTINS, F. F., 1988. Aplicação de Elementos Finitos e Infinitos na Análise de 
+Problemas de Carácter Geotécnico, Porto, Dissertação de Mestrado; 
+
+ROCHA,  L.  A.  S.,  AZEVEDO,  C.  T.,  2007.  Projeto  de  Poços  de  Petróleo.  Rio  de 
+Janeiro, Editora Interciência;  
+
+RODRIGUES.  C.  S.,  2007.  Estabilidade  de  Poços  de  Petróleo  em  Rochas 
+Fraturadas:  Modelagens  Computacionais  e  Solução  Analítica.  Ouro  Preto, 
+Dissertação de Mestrado; 
+
+SANTOS,  J.  P.  L.,  Perfuração  de  Poços.  Material  didático.  Perfuração  de  poços 
+ECIV134, Centro de Tecnologia – Universidade Federal de Alagoas, Brasil; 
+
+SERRA.  J.  L.  F.  A.,  Teoria  das  Estruturas  –  O  Princípio  dos  Trabalhos  Virtuais. 
+Material Didático, Faculdade de Engenharia de Sorocaba, Brasil. 
+
+SORIANO, H. L., 2009. Elementos Finitos Formulação e Aplicação na Estática e 
+Dinâmica das Estruturas. Rio de Janeiro, Editora CIÊNCIA MODERNA; 
+
+TISSER,  A.  D.,  2004.  Um  Modelo  Constitutivo  para  Análise  de  Estabilidade  de 
+Poços de Petróleo. Rio de Janeiro, UFRJ – COPPE; 
+
+THOMAS,  J.  E.,  2004.  Fundamentos  de  engenharia  de  petróleo.  2.  ed.  Rio  de 
+Janeiro, Interciência; 
+
+VAZ, L. E., 2011. Método dos Elementos Finitos em Análise de Estruturas. Rio de 
+janeiro, Elsevier; 
+
+ZIENKIEWICZ, O. C., TAYLOR R. L., ZHU J. Z., 2005. The Finite Element Method 
+Its Basis & Fundamentals. Oxford, Edition published by Butterworth-Heinemann. 
+
+ 
+
+

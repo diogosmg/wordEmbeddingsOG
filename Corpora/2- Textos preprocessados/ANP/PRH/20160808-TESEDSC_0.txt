@@ -1,0 +1,1534 @@
+geovani bresolin modelo viscopl astico dano local aplicado rochas salinas sob deformac oes finitas florian opolis universidade federal santa catarina programa osgraduac engenharia mec ˆanica modelo viscopl astico dano local aplicado rochas salinas sob deformac oes finitas universidade federal santa catarina parte requisitos obtenc grau tese submetida doutor engenharia mecˆanica geovani bresolin florian opolis abril ficha identificac obra elaborada autor atrav es programa gerac autom atica biblioteca universit aria ufsc 
+ bresolin geovani modelo viscopl astico dano local aplicado rochas salinas sob deforma coes finitas geovani bresolin orientador marcelo krajnc alves florian opolis sc 
+ tese doutorado universidade federal santa catarina centro tecnol ogico 
+ programa osgradua cao engenharia mecanica 
+ mecanica elementos finitos 
+ alves marcelo krajnc 
+ universidade federal santa catarina 
+ programa osgradua cao engenharia mecanica 
+ modelo viscopl astico dano local aplicado rochas salinas sob deformac oes finitas geovani bresolin tese julgada adequada obtenc ıtulo doutor engenharia mecˆanica area concentrac alise projeto mecˆanico aprovada forma final programa osgraduac engenharia mecˆanica universidade federal santa catarina 
+ marcelo krajnc alves ph 
+ orientador coordenador programa osgraduac engenharia mecˆanica armando albertazzi gonc alves jr 
+ banca examinadora marcelo krajnc alves ph 
+ ufsc presidente rodrigo rossi dr 
+ ufrgs relator lindaura maria steffens dra 
+ udesc jos carlos carvalho pereira dr 
+ ufsc hazim ali alqureshi ph 
+ ufsc rog erio marczak dr 
+ ufrgs vi enorme gratid dedico trabalho pais sempre apoiaram amor ensinaram persistir objetivos ajudando alcanc alos 
+ vii viii agradecimentos agradec deus dar sa ude perseveranc inteligˆencia realizac desta tese 
+ nal apoio incentivo sempre 
+ agradec pais irene olintho todo amor incondicio orientador professor marcelo toda atenc dedicac sobretudo aprendizado proporcionou 
+ agradec todos professores posmec colaboraram aperfeic oamento profissional 
+ agradec namorada suelen todo carinho paciˆencia apoio 
+ agradec colegas gmac troca conhecimento momentos descontrac 
+ agradec professores rodrigo rossi rog erio marczak lindaura maria steffens jos carlos carvalho pereira hazim ali alqureshi terem participado banca examinadora contribuic oes sugeridas melhoraram tese 
+ agradec posmec infraestrutura oferecida ter pro porcionado oportunidade poder crescer pessoa pro fissional 
+ agradec agˆencia nacional petr oleo anp apoio finan ceiro concedido atrav es bolsa estudos 
+ agradec todos familiares amigos apoiaram alguma forma envolveram contribu ıram trabalho 
+ ix realizar grandes conquis tas devemos apenas agir tamb sonhar apenas plane jar tamb acreditar 
+ anatole france xii resumo tese apresentada ufsc parte requisitos necess arios obtenc grau doutor engenharia mecˆanica 
+ modelo viscopl astico dano local aplicado rochas salinas sob deformac oes finitas geovani bresolin abril orientador marcelo krajnc alves ph 
+ area concentrac alise projeto mecˆanico 
+ palavraschave rochas salinas viscoplasticidade deformac oes finitas dano local 
+ presente trabalho consiste propor modelo constitutivo elasto viscopl astico dano local alise comportamento uctil fr agil rochas salinas ˆambito grandes deformac oes desenvolver sistema computacional baseado etodo elementos finitos visando soluc problemas estado plano deformac oes axissim etricos 
+ formulac modelo procede descric lagrangeana total con sidera equac oes constitutivas escritas termos medida deformac hencky tens rotacionada kirchhoff 
+ modelagem resposta uctil fluˆencia prim aria secund aria descrita adotando crit erio escoamento druckerprager lei fluˆencia multimecanismos deformac md vers modificada lei mecanismo duplo 
+ descric degradac rocha baseada modelo constitutivo desenvolvido alise comportamento geomateriais consi dera dano perante deformac oes volum etricas expansivas permite estimar comportamento fr agil rocha 
+ modelo orico proposto considerase ainda teoria local dano baseada teoria primeiro gradiente dano tendo objetivo principal reduzir sensibilidade malha elementos finitos resposta problemas 
+ al disso propˆosse etodo erico semiimpl ıcito formulac incremental problema finalidade obter soluc oes ericas aproximadas utilizando etodo elementos finitos galerkin 
+ fim validar modelo proposto odigo implementado simulados numericamente alguns ensaios mecˆanicos rochas al simulac comportamento distintos uneis formac oes salinas fins avaliac qualitativa respostas fluˆencia dano 
+ modelo constitutivo proposto atrav es odigo xiii desenvolvido forneceu representac adequada comportamento fluˆencia rochas salinas descreveu qualitativamente bem dano gerado nestas rochas 
+ xiv abstract thesis presented ufsc partial fulfillment requirements degree doctor mechanical engineering 
+ geovani bresolin april advisor marcelo krajnc alves ph 
+ area concentration mechanical analysis design 
+ keywords rock salt viscoplasticity finite strains nonlocal damage 
+ objectives study propose elastoviscoplastic cons titutive model nonlocal damage analysis ductile brittle behavior rock salt finite strains develop computer system based finite element method order solve plane strain axisymmetric problems 
+ model formulation proceeds total la grangian description considers constitutive equations written terms hencky strain measure rotated kirchhoff stress 
+ modeling ductile response primary secondary creep described employing druckerprager yield criterion multimechanism deformation md model creep modified version double mechanism creep law 
+ description rock degradation based constitutive model developed analysis behavior geomaterials considers damage expansive volumetric strains allows brittle behavior rock estimated 
+ proposed theoretical model nonlocal mage theory based first gradient theory damage also considered mainly order reduce sensitivity response finite elements mesh problems 
+ moreover incremental formulation problem semiimplicit numerical scheme proposed aimed obtaining approximate numerical solutions using galerkin finite element method 
+ order validate proposed model code implemented rock mechanical tests numerically simulated along behavior different tunnels saline formations obtain qualitative evaluation creep damage responses 
+ proposed constitutive model code developed provided acceptable representation creep behavior rock salt good qualitative description damage generated rocks 
+ xv xvi lista figuras 
+ mundo perez al 
+ amostras alguns tipos evaporitos mohriak szatmari 
+ maiores dep ositos sal aguas profundas redor 
+ potenciais problemas durante perfurac camadas sali 
+ deslocamento poc devido movimentac sal perez 
+ modelo caverna rocha salina distribuic 
+ ruptura flex comum aberturas macic rochoso teto minas subterrˆaneas sal jeremic 
+ tens oes corpo prova ensaio triaxial fluˆencia 
+ corpo prova sob tens confinante aplicac tens diferencial adaptado damin 
+ comportamento cl assico deformac fluˆencia sal 
+ comportamento fluˆencia sal ◦c press oes con finantes mpa fossum fredrich 
+ tens oes direita torno caverna bary al 
+ coloumb souza neto peric owen 
+ mapa mecanismos deformac sal munson 
+ desenvolvimento abertura microfissuras amos tra sal submetida baixa tens confinante adaptado chan al 
+ cinem atico processo deformac adaptado 
+ sec plano π superf ıcie escoamento mohr 
+ corpo prova cil ındrico antes ap deformac adap 
+ malha condic oes contorno simulac ensaios 
+ resultados experimentais ericos halita brasileira lei mecanismo duplo modificada 
+ evoluc vari avel κ func ε 
+ resultados experimentais ericos halita brasileira 
+ aproximac oes drukerprager 
+ lei multimecanismos deformac 
+ tado alfredsson stigh 
+ resultados experimentais ericos sal west hack 
+ resultados experimentais ericos sal west hack 
+ condic oes contorno malha simulac ensaio 
+ curva tens aodeformac simulac ensaio trac 
+ evoluc dano func tempo 
+ malha condic oes contorno simulac unel cir 
+ deslocamentos direc sal brasileiro 
+ deformac efetiva tens equivalente von mises sal 
+ tens oes cauchy σxx σyy sal brasileiro 
+ tens oes cauchy σxy σzz sal brasileiro 
+ deslocamentos direc sal west hackberry 
+ deformac efetiva tens equivalente von mises sal 
+ tens oes cauchy σxx σyy sal west hackberry 
+ tens oes cauchy σxy σzz sal west hackberry 
+ malha condic oes contorno simulac unel 
+ deformac viscopl astica efetiva tens equivalente von 
+ tens oes cauchy σxx σyy 
+ tens oes cauchy σxy σzz 
+ malha condic oes contorno simulac unel west hackberry 
+ tens equivalente von mises tens hidrost atica 
+ tens oes cauchy σxx σyy 
+ tens oes cauchy σxy σzz 
+ xviii lista tabelas 
+ adaptado mohriak szatmari 
+ fluˆencia mecanismo duplo modificada 
+ fluˆencia multimecanismos deformac 
+ principais minerais formadores rochas evapor ıticas 
+ conjunto equac oes primeiro modelo constitutivo lei 
+ conjunto equac oes segundo modelo constitutivo lei 
+ especificac ensaios triaxiais fluˆencia rochas sali brasileiras costa al 
+ poiate jr costa falcao 
+ parˆametros viscopl asticos rochas salinas brasileiras lei 
+ parˆametros viscopl asticos rochas salinas brasileiras lei 
+ especificac ensaios triaxiais fluˆencia rochas sa 
+ parˆametros el asticos func oes ψ ηα g∗ multimecanismos deformac 
+ mecanismo duplo modificada 
+ linas west hackberry wawersik hannum lauson 
+ parˆametros viscopl asticos rochas salinas west hack 
+ berry lei multimecanismos deformac 
+ xix xx σc σd μo β ξ ωo ωt cid φ cid cid cid cid τττ ρo ρ σσσ τττr pa pi pe υt γ cid γt lista imbolos tens confinante tens diferencial odulo cisalhamento vari avel escalar dano tensor alongamento encurtamento direito tensor gradiente deformac estado local tencionado configurac referˆencia configurac corrente atual func movimento deformac ponto material vetor posic material vetor posic espacial campo deslocamentos vetor velocidade tensor taxa deformac tensor gradiente velocidade tensor taxa rotac tensor rotac pura tensor deformac cauchygreen direita tensor deformac hencky tensor tens kirchhoff jacobiano deformac densidade massa configurac referˆencia densidade massa configurac atual tensor tens cauchy taxa trabalho unidade massa primeiro tensor tens piolakirchhoff segundo tensor tens piolakirchhoff tensor tens rotacionado kirchhoff potˆencia virtual forc inerciais potˆencia virtual forc internas potˆencia virtual forc externas parte arbitr aria corpo configurac atual velocidade ligac oes microsc opicas trabalho interno dano vetor fluxo trabalho interno dano contorno dom ınio xxi cid cid cid γt γu γt γu kc eint ˆp cid ψ φ ψo ik cid hr reac vk ak cid hi cid dr g∗ g∗ vp φ∗ λp λo forc corpo prescrita trac externa prescrita fonte volum etrica trabalho dano fonte superficial trabalho dano normal externa γt regi contorno trac prescrita regi contorno deslocamento prescrito regi contorno inicial trac prescrita regi contorno inicial deslocamento prescrito energia cin etica energia interna potˆencia forc externas fluxo energia ermica energia interna espec ıfica densidade volum etrica produc calor interno vetor fluxo calor temperatura absoluta produc entropia entropia espec ıfica potencial energia livre helmholtz potencial dissipac parcela suave potencial energia livre helmholtz func indicadora conjunto forc termodinˆamica revers ıvel associada β forc termodinˆamica revers ıvel associada cid ∇ cid xβ forc termodinˆamica reac associada β vetor vari aveis internas associadas endurecimento esima vari avel termodinˆamica associada vari avel interna vk forc termodinˆamica irrevers ıvel associada β forc termodinˆamica irrevers ıvel associada cid ∇ cid xβ dissipac associada problema mecˆanico taxa deformac rotacionada potencial dissipac potencial dissipac viscopl astico potencial dissipac dano multiplicador viscopl astico func escoamento tensor constitutivo el astico quarta ordem constante lam xxii tensor identidade quarta ordem tensor identidade segunda ordem δ delta kronecker odulo young ν coeficiente poisson parte hidrost atica τττr τrh εvol deformac volum etrica cid ◦ cid operador macaulay kg ηα ko τττd κ η ξ τvm eq φ co θ ε dpd ε τe ω ε parˆametro mede influˆencia dano vizinhanc func penalidade exterior parˆametro penalidade odulo volum etrico forc termodinˆamica associada κ tensor tens deviat orico efetivo rotacionado kirchhoff vari avel interna associada encruamento isotr opico coes real parˆametro material parˆametro material raiz quadrada segundo invariante τττd tens equivalente efetiva tipo von mises ˆangulo atrito interno constante material parˆametro dilatˆancia parte hidrost atica taxa deformac viscopl astica rotacionada parte deviat orica taxa deformac viscopl astica rotacionada taxa deformac viscopl astica efetiva medida tens efetiva taxa trabalho inel astico efetivo taxa deformac viscopl astica efetiva estacion aria constante material constante material constante material constante material energia ativac energia ativac constante universal gases parˆametro func tens aplicada parˆametro func tens aplicada constante material xxiii τd Ip δ δ ε∗ ko cb αw αr χw χr a∗ εo τo ε vm ω vm c∞ rβ pa iI ηβ r∗ β cβ kt ku kγ vu limite tens mecanismo deslizamento discordˆancias func heaviside func transiente equac constitutiva gen erica parˆametros endurecimento parˆametros recuperac limite deformac transiente constante material constante material constante material constante material constante material constante material constante material parˆametro incorpora efeito temperatura taxa deformac fluˆencia referˆencia tens equivalente referˆencia energia ativac temperatura referˆencia taxa deformac inel astica equivalente taxa trabalho inel astico constante material constante material constante material func limite dano func resistˆencia odulo resiliˆencia raz odulo resiliˆencia odulo tenacidade odulo tenacidade func indicadora conjunto I parˆametro penalidade resistˆencia efetiva constante material matriz rigidez tangente local conjunto deslocamentos danos admiss ıveis conjunto deslocamentos admiss ıveis conjunto danos admiss ıveis conjunto variac oes admiss ıveis conjunto variac oes deslocamentos admiss ıveis xxiv vγ dep σv σh π conjunto variac oes danos admiss ıveis tensor quarta ordem associado odulo tangente global tensor quarta ordem associado parte material odulo tangente consistente elastoviscopl astico tensor quarta ordem odulo tangente consistente elastopl astico tensor quarta ordem associado parte geom etrica tens vertical tens horizontal func carregamento xxv xxvi sum ario 
+ projetos importantes vinculados rochas salinas 
+ revis bibliogr afica 
+ associac oes campos petr oleo evaporitos 
+ desafios projeto poc atrav es sec oes eva 
+ desafios aplicac oes contenc sec oes eva 
+ comportamento fluˆencia sal 
+ mecanismos deformac fluˆencia prim aria 
+ comportamento fr agil semifr agil uctil 
+ modelos constitutivos fluˆencia rochas salinas 
+ secund aria ıticas 
+ xxvii leis constitutivas meios cont ınuos danifica 
+ princ ıpio potˆencias virtuais 
+ pares conjugados tens deformac 
+ leis termodinˆamica meios cont ınuos 
+ resultados decomposic multiplicativa 
+ decomposic multiplicativa tensor gradiente 
+ equac oes equil ıbrio configurac referˆencia 
+ potencial energia livre helmholtz 
+ independˆencia dissipac viscopl astica dano taxa deformac viscopl astica modificada 
+ vari aveis observ aveis 
+ vari aveis internas 
+ primeira lei termodinˆamica 
+ segundo lei termodinˆamica 
+ restric interna sobre vari avel dano 
+ etodo estado local 
+ modelo elastoviscopl astico dano local 
+ derivac equac oes estado 
+ definic potencial energia livre 
+ regularizac potencial energia livre helmholtz 
+ relac constitutiva hiperel astica 
+ forc termodinˆamica associada encruamento 
+ forc termodinˆamicas associadas dano 
+ forc termodinˆamica associada influˆencia dano 
+ definic potencial dissipac viscopl astico 
+ modelos constitutivos fluˆencia rochas salinas 
+ definic func escoamento 
+ definic equac oes complementares 
+ modelo multimecanismos deformac 
+ modelo mecanismo duplo deformac incorporac lei endurecimento 
+ endurecimento deformac strain hardening 
+ regularizac potencial dissipac 
+ forma forte equac evoluc dano local 
+ definic potencial dissipac dano 
+ preditor el astico 
+ soluc erica modelo 
+ problema constitutivo valor inicial elastoviscopl astico 
+ etodo decomposic operadores operator split method formulac mapeamento retorno viscopl astico 
+ corretor elastoviscopl astico dano 
+ mapeamento integrac exponencial 
+ problema valor contorno global 
+ formulac forte problema 
+ formulac fraca problema 
+ formulac incremental problema elatoviscopl astico dano 
+ linearizac etodo newton odulo tan 
+ linearizac etodo newton odulo tan 
+ gente consistente dano gente consistente 
+ ensaios triaxiais fluˆencia sal brasileiro 
+ modelo mecanismo duplo modificado 
+ modelo multimecanismos deformac 
+ ensaios triaxiais fluˆencia sal west hackberry 
+ ensaio trac uniaxial 
+ alises uneis formac oes salinas 
+ sugest oes trabalhos futuros refer ˆencias bibliogr aficas 
+ xxix xxx introduc 
+ motivac primeiros estudos engenharia relacionados rochas salinas fo ram impulsionados necessidade desenvolver minas sal profundas seguras 
+ ultimas ecadas arias investigac oes detalhadas propri edades mecˆanicas rochas salinas realizadas resposta neces sidade destas seguintes atividades descarte res ıduos nucleares minerac armazenamento estrat egico hidrocarbonetos armazenamento energia ar comprimido verificac problemas poc perfura pr oximos atrav es destas rochas 
+ rochas salinas tamb conhecidas evaporitos raz formaremse evaporac aguas marinhas materiais geol ogicos im portantes ind ustria pois possuem baixa porosidade permeabilidade estado natural apresentam habilidade suportar grandes deformac oes fissuramento manifestam fenˆomeno autocicatrizac fissura 
+ caracter ısticas proporcionam rochas evapor ıticas grande capa cidade selante tornandoas formac oes geol ogicas ideais operac oes armazenamento 
+ interesse ind ustria petrol ıfera sal surge pois maiores campos petr oleo redor mundo est vinculados estruturas 
+ logo sal evidenciase geomaterias eficientes natureza aprisionamento hidrocarbonetos 
+ entretanto perfurac poc aguas ultraprofundas atrav es camadas espes sas sal apresenta ainda grandes desafios tecnol ogicos devido fluˆencia fissuramento provenientes destas rochas 
+ ultimo caso operac oes press insuficiente fluido perfurac 
+ dentre principais proble operacionais registrados ind ustria petr oleo quanto perfurac atrav es sal est fechamento poc torques elevados repasses apri sionamento coluna perfurac desvios colapso revestimento 
+ es tes problemas podem levar perda poc gerar preju ızos milh oes olares 
+ umeras aplicac oes contenc material tamb devido problemas pertinentes poc petr oleo verificase necessi dade amplo entendimento comportamento evaporitos 
+ portanto investigac oes experimentais formulac oes teorias constitutivas alise comportamento rochas salinas incluindo dependˆencia tempo diferentes mecanismos degradac interna material introduc fundamental importˆancia aplicac oes engenharia 
+ objetivos principais objetivos deste trabalho propor modelo constitutivo elastoviscopl astico dano lo cal alise comportamento uctil fr agil rochas salinas regime deformac oes finitas 
+ fim obter modelo consti tutivo termodinamicamente consistente formulac modelo pro posto procede dentro contexto termodinˆamica processos ir revers ıveis lemaitre chaboche admitindo teoria dano local primeiro gradiente proposta fremond nedjar 
+ objetivo teoria dano local reduzir dependˆencia malha elementos finitos resposta problemas 
+ desenvolver sistema computacional baseado etodo mentos finitos capaz resolver equac oes modelo proposto simular processo deformac fluˆencia degradac rochas salinas problemas estado plano deformac oes axis sim etricos 
+ finalidade sistema computacional analisar portamento rochas salinas submetidas carregamentos mecˆanicos monotˆonicos 
+ revis bibliogr afica 
+ evaporitos evaporitos rochas sedimentares origem qu ımica cons titu ıdas camadas minerais salinos formadas evaporac precipitac minerais partir soluc salina concentrada sal moura 
+ formamse ambientes sedimentac baixo aporte terr ıgenos onde perda agua evaporac excede taxa influxo aguas local evaporac 
+ segundo mohriak szatmari nome evaporito vem palavra evapore sufixo grego litho significa pedra 
+ arias classes minerais precipitados durante formac dep ositos evapor ıticos principais encontramse cloretos sulfatos carbonatos 
+ revis bibliogr afica tabela 
+ principais minerais formadores rochas evapor ıticas adaptado mohriak szatmari 
+ classe mineral nome mineral composic qu ımica cloretos sulfatos carbonatos halita silvita taquidrita carnalita bischofita anidrita gipsita kainita kieserita polihalita langbeinita dolomita calcita magnesita trona nacl kcl camg 
+ ho caso caso 
+ ho kmg cl 
+ ho kmg ca fe mg co caco mgco nah co 
+ ho ambientes formac evaporitos ocorrem tanto situac oes car ater continental quanto marinho sendo ultimo normalmente maior express pois composto dep ositos salinos concebidos longo tempo geol ogico 
+ principais minerais evapor ıticos geralmente encontrados dep ositos salinos marinhos apresentados tab 
+ poss ıvel observar alguns destes minerais evapor ıticos 
+ rochas constitu ıdas maior quantidade sulfato alcio caso cloreto odio nacl sendo evaporito predominante halita nacl 
+ virtude disso geralmente costumase utilizar termo sal definir dep ositos evapor ıticos constitu ıdos predominantemente halita 
+ rochas salinas formadas predominantemente halita possuem laminac oes intercaladas menos significativas distintas variedades sais anidrita carnalita podendo apresentar tamb composic impurezas devido processos deposic bientes sedimentares 
+ impurezas correspondem diferentes materiais geol ogicos folhelhos distintos precipitados qu ımicos silva 
+ rochas sedimentares argilosas podem esfoliar segundo camadas finas paralelas 
+ amostras alguns tipos evaporitos mohriak szatmari 
+ associac oes campos petr oleo evaporitos evaporitos costumam estar associados ambientes altamente produtivos mat eria orgˆanica 
+ registro geol ogico conhecidas associac oes campos gigantescos petr oleo sequˆencias espessas evaporitos freitas 
+ acordo florencio cerca maiores campos petr oleo entorno mundo est vinculados estruturas 
+ materiais ucteis podem mover defor mar sedimentos circundantes criando armadilhas salinas propiciam ac umulo hidrocarbonetos 
+ al disso virtude baixo percentual porosidade apresentado rochas quase imperme aveis hidrocarbonetos atuando camadas selantes reservat orios 
+ devido caracter ısticas evaporitos considerados agentes efi cientes natureza aprisionamento petr oleo farmer al 
+ material geol ogico encontrado arias bacias hidrocarbo netos redor mundo areas cor branca fig 
+ existem dep ositos significativos aguas profundas golfo exico regi oes offshore oeste africa leste brasil mar norte mar mediterrˆaneo 
+ revis bibliogr afica figura 
+ maiores dep ositos sal aguas profundas redor mundo perez al 
+ arios novos campos petr oleo localizados prov ıncias sal redor mundo ser explorados desenvolvidos pr oximos anos aguas profundas golfo exico regi oes offshore gola nig eria akpo agbami brasil bacias campos santos esp ırito santo 
+ maior parte objetivos ser subsal abaixo sal cama bastante espessas sal serem perfuradas borges 
+ projetos importantes vinculados rochas salinas primeiras pesquisas globais relacionadas comportamento ro chas salinas conduzidas especificamente ind ustria minerac 
+ partir ecada estudo destas rochas tornouse tamb ne cess ario outras aplicac oes armazenamento estrat egico hidrocarbonetos principalmente descarte res ıduos radioativos costa poiate jr 
+ rochas salinas evaporitos suportam ıveis elevados deformac desenvolver fraturas conforme mencionado praticamente imperme aveis 
+ sob efeito altas press oes temperatu ras desenvolvem consequˆencia particular reologia estrutura cristalina fenˆomeno autocicatrizac selfhealing fra turas cicatrizamse retomando tempo excelente qualidade estanqueidade costa poiate jr 
+ virtude destas caracter ısticas rochas evapor ıticas princi palmente halita nacl despertam grande interesse aplicac oes introduc contenc dep ositos descarte res ıduos nucleares arma zenamento hidrocarbonetos 
+ portanto grandes investimentos realizados investigar propriedades mecˆanicas destas rochas sob dife rentes condic oes tens temperatura intuito avaliar tanto comportamento reol ogico quanto integridade estrutural tempo sendo umeros trabalhos desenvolvidos discutindo tema literatura cient ıfica costa poiate jr 
+ ultimas ecadas realizados rochas salinas arios pro jetos armazenamento estrat egico hidrocarbonetos descarte res ıduos radioativos 
+ contexto dep ositos res ıduos podese desta car projeto planta piloto isolamento rejeitos waste isolation pilot plant wipp desenvolvido departamento energia norteamericano doe localizado remoto deserto chihuahuan estado novo exico 
+ tornouse primeiro reposit orio geol ogico profundo licenci ado mundo armazenamento permanente lixo atˆomico entrando operac costa poiate jr 
+ alemanha poss ıvel citar mina sal asse localizada baixa saxˆonia deixou ser economicamente explorada tornandose instalac pesquisa desenvolvimento deposic todos tipos rejeitos freire tello 
+ atualmente est sendo colocados rejeitos local 
+ segundo ayres paredes mina asse apresentam fissuras sinais instabilidade 
+ al disso dep osito sofre inundac oes podem ocasionar caso vazamento material radioativo barris contaminac lenc ol fre atico 
+ devido circunstˆancias instalac encontrase processo fechamento 
+ armazenamento hidrocarbonetos destacase projeto serva estrat egica petr oleo strategic petroleum reserve spr desenvol vido doe 
+ neste projeto cavernas salinas localizadas parte emersa bacia golfo exico pr oximas litoral estados texas lousiana utilizadas armazenamento petr oleo 
+ acordo doe cavernas sal proporcionam maior seguranc custam cerca vezes menos armazenamento tanques costa poiate jr 
+ programa possui cavernas subterrˆaneas possi bilitam armazenar milh oes barris concebendo capacidade ac umulo milh oes barris 
+ segundo costa poiate jr 
+ aprovado governo norteamericano expans deste projeto armazenamento bilh barris 
+ projetos mencionados acima principais impulsionado res grandes investimentos ind ustria pesquisa mecˆanica ro 
+ revis bibliogr afica chas salinas proporcionado melhor entendimento comportamental deste geomaterial distintas aplicac oes interesse 
+ resultados alcanc ados projetos desempenham base maioria novos projetos relacionados rochas salinas principalmente ind ustria petrol ıfera recentes descobertas petr oleo abaixo camadas sal 
+ desafios projeto poc atrav es sec oes evapor ıticas ponto vista explorac petr oleo regi oes presenc rochas salinas aumentam chances sucesso explorat orio 
+ ocorre porque sedimentos podem deformar dissolver migrar criar trapas estratigr aficas gerando diversas estruturas prop ıcias acumulac hidrocarbonetos falc 
+ entretanto perfurac rochas eva ıticas proporciona desafios unicos operac oes petr oleo devido associac destas grande umero problemas estabilidade poc comparado outras litologias 
+ rochas salinas raz estrutura cristalina subme tidas estado tens constante apresentam fenˆomeno denominado fluˆencia creep 
+ portanto neste material poss ıvel esperar consider avel deformac func tempo carregamento 
+ fenˆomeno ısico evaporitos localizados subsuperf ıcie sensivelmente influenciado espessura camada temperatura formac composic mineral ogica conte udo agua presenc impurezas argila tamb modo deposic sal sequˆencia cont ınua descont ınua inter calado outros sedimentos costa poiate jr 
+ cloretos sais contˆem agua exemplo carnalita sil vinita taquidrita apresentam maiores taxas fluˆencia 
+ sais sulfato exemplo anidrita gipsita carbonato exemplo cal cita dolomita essencialmente im oveis 
+ halita sal comum natureza menos ovel sais cloreto entretanto dependendo condic oes tens temperatura pode apresentar consider aveis taxas fluˆencia falc 
+ etapa perfurac fenˆomeno fluˆencia apresentado geomaterial pode ocasionar tempo apido fechamento poc fig 
+ causando restric passagem coluna perfurac podendo prendˆela modo irrecuper avel 
+ nesta situac alguns casos ne cess ario desvio abandono poc 
+ al disso durante perfurac fechamento poc tamb poder provir relaxac tens oes outro fenˆomeno apresentado rochas fig 
+ introduc menos agravante falc 
+ ainda outros problemas durante perfurac camadas evaporitos alargamento excessivo pa rede poc washout devido processo dissoluc sal enfra quecimento parede consequˆencia processo lixiviac fig 
+ potenciais problemas durante perfurac camadas salinas perez al 
+ contudo ap revestimento poc movimentac sal pode produzir cargas uniformes coluna revestimento provocando dobramento fig 
+ restringindo passagem ferramentas casos cr ıticos ocasionando ruptura caso coluna sido dimen sionada adequadamente 
+ portanto projetos poc fluˆencia sal deve ser considerada toda vida util poc somente fase perfurac falc 
+ processo extrac substˆancia presente componentes olidos atrav es dissoluc ıquido 
+ termo utilizado arios campos ciˆencia geologia ciˆencias solo metalurgia qu ımica 
+ revis bibliogr afica figura 
+ deslocamento poc devido movimentac sal perez al 
+ desafios aplicac oes contenc sec oes evapor ıticas aplicac oes contenc comportamento fluˆencia fissu ramento sal podem provocar reduc volume colapso caverna respetivamente 
+ portanto existem normas regulamentadoras requerem dep ositos subterrˆaneos constru ıdos operados mantidos forma segura caso contr ario ambiente pode sofrer danos severos george 
+ caso aplicac oes descarte res ıduos nucleares fechamento caverna requerido logo comportamento fluˆencia sal essencial pois tempo ocorrer eventual encapsulamento res ıduos radioati minimizando assim possibilidade vazamento contaminac ambiente 
+ dep ositos subterrˆaneos hidrocarbonetos sofrem flutuac oes ıclicas press interna devido operac oes armazenamento injec retirada fluidos 
+ evaporitos possuem baixa resistˆencia trac cisalhamento flutuac oes ıclicas press reduzem temporaria mente press confinamento produzindo tens oes trac provo cam gradual enfraquecimento rocha microfissuramento fig 
+ crescimento distribuic microfissuras ocorre progressiva deteriorac rocha gerando regi oes instabilidade su perf ıcies caverna 
+ modelo caverna rocha salina distribuic tens oes di reita torno caverna bary al 
+ tens oes trativas tamb respons aveis gradual enfraqueci mento teto minas sal operac desativadas podem estar sendo utilizadas armazenamento lixo atˆomico 
+ nestas minas pro blema ainda agravante visto press confinante sempre nula sobrecarga sedimentos produz flex camada sal acarretando desenvolvimento propagac fraturas trac fig 
+ ruptura flex comum aberturas macic rochoso teto minas subterrˆaneas sal jeremic 
+ revis bibliogr afica 
+ comportamento fluˆencia sal rochas salinas materiais policristalinos possuem compor tamento similar rochas regime fr agil metais regime uctil 
+ assim outros geomateriais submetidas carrega mento constante sofrem deformac lenta tempo fenˆomeno denomi nado creep fluˆencia 
+ entretanto efeitos tempo pronunci ados nestas rochas maioria outras rochas baixa porosidade yahya aubertin julien 
+ comportamento mecˆanico deste geomaterial dominado proces sos deformac inel astica pois apresenta limite el astico geralmente baixo temperatura ambiente 
+ submetido press uniaxial triaxial exibe resposta uctil maioria outras rochas 
+ neste contexto sido observado tanto ensaios labo ratoriais quanto campo tens confinante suficientemente alta combinada tens diferencial menor resistˆencia axima rocha provoca resposta uctil ocorrˆencia microfissuramento aubertin yahya julien 
+ observac oes experimentais mostram rochas salinas possuem limite escoamento baixo σe mpa tendˆencia apreci avel endurecimento aubertin yahya julien 
+ sultados ensaios tamb evidenciam perante tens oes confinantes tens oes hidrost aticas menores mpa σc mpa temperatura ambiente sal sofre dilatac tempo sob aplicac tens diferencial 
+ sujeita tens oes confinantes acima mpa σc mpa flui volume constante processo fluˆencia isoc orico fredrich fossum hickman 
+ ensaios triaxiais fluˆencia fig 
+ mostram dependendo tens confinamento aplicada sal pode apresentar dois trˆes est agios fluˆencia 
+ tens oes confinantes menores mpa aplicadas sal exibe trˆes est agios fluˆencia mostra fig 
+ primeiro est agio denominado fluˆencia prim aria transiente taxa deformac inicia valor alto diminui tempo taxa aproxima damente constante 
+ tempo durante corpo prova deforma taxa aproximadamente constante denominado fluˆencia secund aria regime estacion ario 
+ entretanto sob baixas tens oes confinantes σc mpa ocorre ap determinado per ıodo microfissuramento rocha diferenc tens axial tens confinante aplicadas amostra ensaio compress triaxial σd σa − σc 
+ introduc processo deformac tornase volum etrico variac vo lum etrica caracterizando assim terceiro est agio chamado fluˆencia terci aria taxa deformac volta aumentar devido cresci mento acelerado microfissuras fratura material 
+ tens oes corpo prova ensaio triaxial fluˆencia 
+ corpo prova sob tens confinante aplicac tens diferencial adap tado damin 
+ corpos prova sujeitos tens oes confinantes acima mpa somente regimes prim ario secund ario evidenciados experimental mente 
+ ilustra comportamento fluˆencia sal trˆes di ferentes ıveis tens confinamento 
+ acordo fredrich fossum hickman curvas fluˆencia tens oes confinantes maiores mpa idˆenticas conduzidas mpa 
+ revis bibliogr afica figura 
+ comportamento cl assico deformac fluˆencia sal council 
+ comportamento fluˆencia sal ◦c press oes confinantes mpa fossum fredrich 
+ mecanismos deformac fluˆencia prim aria secund aria regime uctil deformac inel astica sal isovolum etrica corre gerac movimento discordˆancias 
+ logo comportamento uctil rochas salinas bastante similar arios metais envolvendo praticamente mesmos mecanismos deformac yahya aubertin ju lien 
+ escala atˆomica evidenciados processos ısicos asicos go vernam deformac endurecimento recuperac rochas salinas 
+ processos denominados mecanismos deformac identi ficados atrav es observac microestrutural fossum fredrich 
+ endurecimento durante deformac resulta ac umulo discordˆancias obst aculos contornos gr devido intersec discordˆancias 
+ recuperac neutraliza endurecimento leva progressivamente mi croestrutura retornar estado virgem yahya aubertin julien 
+ influˆencia determinado mecanismo deformac sobre outro pende fortemente condic oes tens temperatura 
+ cada mecanismo representado equac constitutiva especifica deformac taxa deformac func condic oes impostas 
+ deste modo compreens mecanismos deformac rochas salinas essencial construc equac oes constitutivas adequadas aplicac oes engenharia 
+ diagrama tens aotemperatura define regi cada canismo deformac opera denominado mapa mecanismos deformac 
+ mapas desenvolvidos muitos materiais cris talinos incluindo sal 
+ mostra mapa mecanismos deformac sal frequentemente citado constru ıdo munson 
+ neste diagrama temperatura hom ologa tsal tm sal mostrada eixo ordenadas expressa raz temperatura material tsal tempera tura fus tm sal sendo tm sal 
+ eixo abscissas mostra tens normalizada σd μo σd tens diferencial μo odulo cisalhamento 
+ mm diˆametro gr sal 
+ revis bibliogr afica figura 
+ mapa mecanismos deformac sal munson 
+ mapa ilustra regi destacada prov aveis condic oes relevantes projetos engenharia tais minas convencionais instalac oes armazenamento dep osito res ıduos poc petr oleo 
+ regi engloba trˆes mecanismos deformac quais des lizamento discordˆancias dislocation glide caso altas tens oes cisalhantes escalagem discordˆancias dislocation climb caso altas temperaturas mecanismo bem caracterizado experimentalmente indefinido undefined mechanism caso tens oes cisalhantes temperaturas baixas munson 
+ geral trˆes mecanismos espec ıficos deformac sal devido movimento discordˆancias portanto envolvidos unico mecanismo deformac tamb denominado fluˆencia discordˆancias dislocation creep loken statham 
+ segundo costa al 
+ mecanismo indefinido undefined mechanism identificado recentemente mecanismo solubilizac sob press pressure solution 
+ ocorre contatos gr sal sujeitos altas tens oes provocando aumento solubi lidade material assim dissoluc 
+ informac oes adicionais sobre mecanismo pressure solution apresentadas meer al 
+ costa introduc poiate jr 
+ maiores detalhes sobre mecanismos deformac fluˆencia mencionados acima encontrados bresolin firme 
+ base mapa mecanismos deformac arios auto res propuseram teorias constitutivas exemplo munson dawson modelo multimecanimos deformac aubertin yahya ju lien modelo suvic costa al 
+ modelo mecanismo duplo 
+ vers recente mapa mecanismos deformac sal incluindo novos dados fluˆencia proposta munson daw son 
+ outra vers adaptada munson apresentado hansen apud carter al 
+ estudos realizados sal avery island efetuado pequeno ajuste inclus regi onde atua mecanismo escorregamento transversal discordˆancias elice crossslip screw dislocations 
+ comportamento fr agil semifr agil uctil segundo aubertin sgaoula gill trata rochas comum identificar trˆes regimes inel asticos deformac chamados regime fr agil uctil semifr agil 
+ localizac limites diferen tes regimes pode depender condic oes carregamento temperatura taxa deformac 
+ comportamento inel astico rochas salinas basicamente controlado dois tipos mecanismos deformac envolvendo movimento discordˆancias associados propagac mi crofissuras sgaoula aubertin gill 
+ regime uctil mecanismos predominantemente viscopl asticos geralmente associados movimento discordˆancias estrutura cristalina respons aveis endurecimento rocha regime estacion ario deformac ser atingido 
+ provocam fluˆencia prim aria conduzindo material fluˆencia secund aria conforme discutido sec anterior 
+ deformac inel astica regime uctil portanto essencialmente isoc orica independente tens confinamento 
+ regime fr agil mecanismos associados microfissuramento acarretam enfraquecimento amolecimento material devido degradac progressiva propriedades mecˆanicas exemplo diminuic odulo elasticidade 
+ deformac inel astica neste gime ocorre essencialmente devido propagac microfissuras 
+ tanto conforme aubertin sgaoula gill raz suscetibilidade 
+ revis bibliogr afica plasticidade intracristalina rochas salinas comportamento puramente fr agil frequentemente verificado rochas duras raramente observado nestas rochas 
+ regimes fr agil uctil existe regime transic nominado regime semifr agil onde ambos tipos mecanismos deformac est ativos proporc depende condic oes car regamento 
+ ensaio compress triaxial dada temperatura passagem regime uctil regime semifr agil ocorre tens diferencial excede determinado limite chamado limiar dano par tir microfissuras tornamse ativas 
+ abaixo deste limite portamento mecˆanico rocha salina uctil independente tens con finante 
+ acima comportamento rocha tornase semifr agil sgaoula aubertin gill 
+ neste regime microfissuramento produz alterac oes volum etricas inel asticas rocha 
+ logo contr ario fluxo plenamente viscopl astico deformac inel astica material danificado pode provocar consider avel aumento volume aubertin sgaoula gill 
+ au mento volume associado fissurac denominado dilatˆancia 
+ mecanismos dano mecanismos asicos dano podem ser consensualmente iden tificados partir observac oes experimentais rochas salinas dano cisalhamento dano trac 
+ dano cisalhamento est associ ado escorregamento microfissuras desencadeamento fissuras forma asa extremos microfissuras 
+ dano trac sal ocorre forma microfissuras clivagem alinhadas perpendicularmente tens trac aplicada 
+ acordo chan al 
+ necess ario distinguir dano trac dano cisalhamento pois cin etica dano sal significativamente diferente sob cargas trativas cisalhantes 
+ ensaios triaxiais fluˆencia dano fluˆencia assemelhase dano cisalhamento 
+ neste caso tornase dependente tempo 
+ estudos destes ensaios mostram processo dano fluˆencia depen dente tens confinante dilatacional 
+ tanto aparecimento fluˆencia terci aria quanto ruptura fluˆencia podem ser adiados ainda contidos presenc elevada tens confinamento chan al 
+ durante fluˆencia baixas tens oes confinantes microfissuras pr existentes rocha escorregam propagamse cisalhamento podendo desenvolver fissuras forma asa wingcracks extremidades fig 
+ abertura destas fissuras conduz dilatˆancia 
+ introduc exemplo consideram modelo mdfc componente deviat orica taxa deformac inel astica dano produzida devido escorregamento microfissuras componente volum etrica devido abertura microfissu ras 
+ entretanto sob altas tens oes confinantes microfissuras podem ser fechadas raz altas tens oes normais compress atrito atu ando superf ıcies microfissuras 
+ deste modo propagac destas tanto abertura quanto escorregamento contida 
+ consequentemente contribuic inel astica deformac ac microfissuras tornase ausente deformac inel astica resulta mecanismos envolvendo mo vimento discordˆancias sendo portanto isoc orica independente tens confinamento chan al 
+ desenvolvimento abertura microfissuras amostra sal submetida baixa tens confinante adaptado chan al 
+ maiores detalhes sobre ısica mecanismos dano sal podem ser encontrados trabalhos chan al 
+ chan fossum munson 
+ mapas mecanismo fratura sal tamb constru ıdos conforme mostrado chan al 
+ permitindo identificac regi oes operac mecanismos fratura 
+ modelos constitutivos fluˆencia rochas salinas modelos constitutivos aplic aveis descric comportamento fluˆencia rochas salinas podem ser classificados trˆes categorias emp ıricos reol ogicos baseados mecanismos deformac 
+ modelos emp ıricos prov ajuste atrav es equac oes aticas curva resultados ensaio quais comum suposic 
+ revis bibliogr afica deformac depende apenas tens aplicada temperatura determinado momento 
+ dentre leis emp ıricas fluˆencia poss ıvel des tacar leis potenciais norton apud munson wawersik lomenick bradshaw 
+ ambas desenvolvidas inicialmente descrever comportamento fluˆencia prim aria metais estendidas posteriormente representac fluˆencia rochas 
+ lei potencial norton descreve fluˆencia estacion aria possui ampla utilizac mode los anal ıticos ericos previs comportamental rochas gra vina 
+ lei potencial lomenick bradshaw representa fluˆencia transiente sendo utilizada literatura virtude simplici dade bom ajuste primeiros resultados obtidos fluˆencia botelho 
+ ultima adotada costa projeto pain eis ga lerias mina taquarivassouras gravina simulac fechamento poc petr oleo zonas sal 
+ existem tamb diversas outras leis emp ıricas literatura oriundas estudo metais tentam representar comportamento fluˆencia cund aria 
+ relacionam taxa deformac regime permanente tens aplicada 
+ dentre leis encontramse leis ludwik senohiperb olico nadai eyrich gravina 
+ acordo costa lei eyrich possui maior apli cabilidade estudo fluˆencia cavernas sal armazenamento res ıduos nucleares 
+ exemplos relac oes constitutivas uniaxiais descrever curvas padr fluˆencia podem ser encontradas boyle spence naumenko yao al 
+ modelos reol ogicos idealizados representar fenomeno logicamente comportamento tens aodeformac tempo macrosc opico adotando quatro elementos mola amortecedor deslizante ruptura veja yang emulam aspectos asicos comportamento olidos 
+ adotando elementos paralelo erie realizando combinac oes diversificadas variando parˆametros elementos extensa parte comportamento rochas pode ser modelada yang 
+ nesta classe ressaltase modelo reol ogico desenvolvido serata modelo constitutivo lubby proposto lux heusermann apud munson wawersik 
+ modelo reol ogico serata descreve fluˆencia transiente estacion aria amplamente pregado projetos minas cavernas sal 
+ aplicac pro jeto minas profundas pot assio apresentada serata 
+ lei lubby viscoel astica baseada modelo reol ogico burgers 
+ repre senta fase transiente estacion aria fluˆencia 
+ apresenta duas vers oes introduc descric evoluc deformac fluˆencia prim aria 
+ primeira considera etodo endurecimento deformac strain hardening segunda etodo endurecimento tempo transcorrido time harde ning detalhes sobre etodos encontrados naumenko 
+ lei desenvolvida intuito simular comportamento li near fluˆencia rochas salinas heusermann rolfs schmidt 
+ heusermann rolfs schmidt utilizaramna projeto cavernas sal fins armazenamento 
+ apesar bastante pr aticos segundo costa poiate jr 
+ mo delos reol ogicos exibem correspondˆencia direta comportamento mecˆanico rochas salinas visto desconsideram efeito expl ıcito temperatura estrutura intr ınseca rocha sobretudo fornecem compreens essencial mecanismos ısicos fluˆencia 
+ modelos representac avanc ada fluˆencia verificados literatura baseados mecanismos deformac vez descrevem comportamento intr ınseco rochas salinas 
+ nesta classe poss ıvel enfatizar modelo multimecanismos deformac multi mechanism deformation md desenvolvido munson fossum senseny exaustivamente empregado validado projeto planta piloto isolamento rejeitos waste isolation pilot plant wipp modelo mecanismo duplo proposto costa al 
+ formulado base amostras sal brasil tornandoo opc interessante alise rochas salinas camada pr esal brasileira modelo composto posite model mc apresentado weidinger al 
+ possui grande avanc ponto vista ısico micromecˆanico 
+ modelo viscopl astico multimecanismos deformac mulada inicialmente munson dawson representa fluˆencia prim aria estacion aria rochas salinas 
+ vers modificada tra balho munson dawson obteve ultima atualizac munson fossum senseny munson fossum senseny 
+ modo ge ral modelo md classe unificada vez plasticidade fluˆencia tratadas mesma vari avel taxa deformac inel astica 
+ consequentemente crit erios escoamento carga descarga necess arios modelar fluxo pl astico munson 
+ algumas aplicac oes deste modelo alise fluˆencia sal estrutu ras subterrˆaneas principal interesse projeto dep ositos rejeitos radioativos podem ser encontradas trabalhos munson al 
+ munson munson weatherby devries fossum munson 
+ revis bibliogr afica lei constitutiva fluˆencia mecanismo duplo deformac proposta costa al 
+ simplificac lei fluˆencia desenvolvida munson dawson 
+ representa somente fase secund aria fluˆencia considerando dois mecanismos deformac 
+ al gumas aplicac oes desta lei projeto poc petrol ıferos encontramse poiate jr 
+ costa falcao costa al 
+ modelo composto mc originalmente proposto mughrabi descreve primeira segunda fase fluˆencia aplicado tra balho weidinger al 
+ segundo hunsche hampel avanc ado aspecto ısico micromecˆanico visto descric fluˆencia baseada mecanismos ısicos deformac atuam micros copicamente 
+ outra classe modelos fluˆencia sal tamb desenvolvidos contexto teoria unificada denominados plasticidade fluˆencia unificadas unified creep plasticity ucp propostos inicialmente krieg krieg descrever fase prim aria secund aria fluˆencia 
+ posteriormente base nesta abordagem aubertin gill ladanyi propuseram modelo constitutivo suvic yahya auber tin julien apresentaram nova vers deste chamandoo 
+ nesta classe modelos nenhuma diferenc identificada suvicsh plasticidade fluˆencia componente deformac inel astica descrita unica lei cin etica considerando mesmos mecanis mos controlam componente pl astica fluˆencia deformac inel astica aubertin yahya julien 
+ modelos constitutivos fluˆencia terci aria sal extens oes leis fluˆencia mencionadas anteriormente 
+ nestas acoplada fase terci aria fluˆencia atrav es incorporac teorias falha modelos dano 
+ assim al fases iniciais fluˆencia modelos geral descrevem fase terci aria fluˆencia provocada dano falha portamento osfalha reduc constantes el asticas conforme grau danificac material 
+ leis reol ogicas fluˆencia ampliadas representar fluˆencia terci aria encontramse modelo viscoelastopl astico minkley al 
+ baseado crit erio falha mohrcoulomb modificado acoplado modelo reol ogico linear burgers modelo hou lux hou extens modelo lubby utiliza vari avel escalar dano modelo luxwolters wolters usterloh 
+ vers estendida modelo constitutivo houlux 
+ acrˆonimo modelo suvic lei seno hiperb olico introduc extens oes leis fluˆencia baseadas mecanismos deformac descrevem fase terci aria fluˆencia destacamse modelo multimecanismos deformac acoplado fratura multi mechanism deformation coupled fracture mdfc desenvolvido chan al 
+ adota vari avel escalar dano modelo suvid proposto aubertin sgaoula gill emprega vari avel ten sorial dano segunda ordem 
+ ambos utilizam princ ıpio deformac equivalente proposto lemaitre introduzindo tens efetiva equac oes constitutivas deformac oes 
+ outras leis baseadas mecanis mos deformac ampliadas representar fluˆencia terci aria admitem limite dilatˆanica estabelecer falha material 
+ dentre poss ıvel enfatizar modelo cristescu unther salzer popp modelo composto dilatˆancia composite dilatancy model cdm hampel schulze 
+ nesta classe tamb verificouse modelos zhou al 
+ ambos formulados dentro contexto termodinˆamica processos irrevers ıveis 
+ adicionalmente fenˆomenos ısicos referidos acima modelos chan al 
+ hou consideram cicatrizac dano damage healing modelo hampel schulze efeito umidade deformac fluˆencia modelos chan bodner munson luxwolters wolters usterloh 
+ cicatrizac dano variac permeabilidade rocha raz acr escimo decr escimo dano 
+ levantamento bibliogr afico constatado comportamento fr agil rochas salinas ainda carece modelos dano elaborados teorias maior consistˆencia sofisticac 
+ conduziu procura mo delos constitutivos dano outros materiais comportamento similar sal regime fr agil exemplo modelos constitutivos dano geomateriais concreto enfoque principal contexto mecˆanica meios cont ınuos 
+ dentre modelos concreto encontrados destacamse modelos elastopl asticos dano wu li faria voyiadjis taqieddin modelo elastoviscopl astico dano liu al 
+ desenvolvidos dentro contexto mecˆanica meios cont ınuos 
+ descrever degradac propriedades macromecˆanicas concreto duas vari aveis escalares dano adotadas associada dano trac outra dano cisalhamento 
+ vari aveis conduzem vari avel tensorial dano quarta ordem 
+ crit erios dano derivados potencial energia livre helmholtz baseados taxas liberac 
+ revis bibliogr afica energia dano trac compress 
+ fim considerar res posta material sob diferentes condic oes carregamento reproduzir distintos efeitos mecanismos dano trac cisalhamento utilizado modelo decomposic tensor tens componente positiva outra negativa 
+ algumas aplicac oes modelo voyiadjis taqi eddin mostradas taqieddin voyiadjis 
+ relac geomaterias podese mencionar modelos shao chiarelli hoteit chiarelli shao hoteit salari al 
+ conforme shao chiarelli hoteit alguns materiais rochosos argila xisto ensaios laboratoriais mostram deformac pl astica frequentemente associada degradac propri edades mecˆanicas material devido formac crescimento mi crofissuras 
+ partindo deste princ ıpio shao chiarelli hoteit pro puseram dentro contexto termodinˆamica meios cont ınuos mo delo elastopl atico dano considerando acoplamento deformac pl astica dano proveniente microfissuras 
+ influˆencia dano fluxo pl astico descrita empregando conceito tens efetiva princ ıpio deformac equivalente 
+ shao chiarelli hoteit adotam vari avel escalar dano evoluc atrelada deformac volum etrica dilatante 
+ nesta classe modelos segue tamb modelo elastopl astico dano desenvolvido salari al 
+ geomateriais considera dano trac associado deformac volum etrica expansiva modelos chiarelli shao hoteit shao al 
+ extens oes modelo shao chiarelli hoteit desenvolvidos alise materiais semifr ageis rochas sedimentares 
+ introduc leis constitutivas meios cont inuos danifica objetivo deste cap ıtulo apresentar conceitos asicos formulac adotada resolver problemas relacionados rochas sali problemas elastoviscoplasticidade dano grandes deformac oes 
+ formulac modelo seguir seguintes considerac oes descric lagrangena total decomposic multiplicativa gradi ente deformac equac oes constitutivas dadas termos medida logar ıtmica deformac modelo hencky par conjugado tensor tens kirchhoff rotacionado teoria dano local 
+ desenvolvimento formulac baseado teoria proposta fremond nedjar emprega princ ıpio potˆencias virtu ais termodinˆamica meios cont ınuos 
+ teoria tamb adotada modificac oes trabalho mascarenhas contexto pequenas deformac oes 
+ quanto degradac material conforme fremond nedjar interior olido existem movimentos microsc opicos causadores dano ent ideia asica teoria considerar potˆencia destes movimentos mi crosc opicos incluindo efeitos potˆencia esforc internos 
+ assim velocidade ligac oes microsc opicas relacionada taxa dano enquanto interac oes velocidade ligac oes relacionadas gradiente taxa dano 
+ portanto adotase potˆencia esforc internos dependente taxa dano gradiente taxa dano 
+ desta premissa princ ıpio potˆencias virtuais chegase nova equac evoluc descric vari avel escalar dano β 
+ formulac permite obter modelo dano local menos sens ıvel malha elementos finitos raz gra diente dano incorporar dependˆencia vizinhanc processo dano 
+ considerase β quantidade macrosc opica dano valor zero material ıntegro valor material est pletamente danificado 
+ vari avel relacionada ligac oes pontos materiais pode ser interpretada medida estado coes local material 
+ utilizac medida tens rotacionada kirchhoff dida deformac logar ıtmica ln primeiro descrita eterovic bathe weber anand quais admitiram medidas juntamente mapeamento exponencial obtendo algoritmo peamento retorno similar empregado problemas deformac oes infinitesimais 
+ etodo soluc tamb investigado peri leis constitutivas meios cont ınuos danificados owen honnor simo badrinarayanan zabaras recentemente estudado implementado trabalhos rossi machado deus 
+ decomposic multiplicativa tensor gradiente deformac principal hip otese adotada formulac elastoviscopl astica grandes deformac oes apresentada aqui decomposic multiplicativa tensor gradiente deformac seguinte produto fefp 
+ fe fp respectivamente partes el astica viscopl astica 
+ hip otese sup oe existˆencia estado local tencionado livre tens oes definido fp 
+ ilustra estado refe renciado ındice ξ 
+ ωo representa configurac referˆencia ωt configurac corrente atual 
+ cinem atico processo deformac adaptado machado 
+ func movimento deformac cid φ mapeia ponto cid ∈ ωo 
+ ponto cid ∈ ωt definida cid φ cid cid φ cid cid cid cid cid cid cid cid cid cid ≡ cid φt cid cid cid cid 
+ decomposic multiplicativa tensor gradiente deformac desta forma gradiente deformac dado cid cid cid cid cid cid ∇ cid cid φ 
+ resultados decomposic multiplicativa adoc decomposic multiplicativa produz alguns resulta importantes quanto cinem atica deformac corpo quais apresentados seguir 
+ campo espacial denominado tensor gradiente velocidade defi nido − cid ∇ cid cid cid ff 
+ cid cid descric espacial velocidade tensor taxa deformac correspondente parte sim etrica gradiente velocidade sym tensor taxa rotac correspondente parte antis sim etrica gradiente velocidade skew 
+ tensor gradiente velocidade pode ainda ser decomposto parte el astica outra vis copl astica seguinte maneira cid cid cid f− cid cid cid cid cid cid cid cid cid φ − lp fe fp fp − fe − 
+ reddy implica det det fe det deformac oes isoc oricas 
+ le fe fe posto tensor taxa deformac parte sim etrica pode ser decom dp dp le le cid cid cid lp lp cid 
+ condic imposta sobre deformac oes gurtin leis constitutivas meios cont ınuos danificados det fp assegurando fe fp singulares 
+ deste modo cada termos gradiente deformac admite decomposic polar fp rpup 
+ sendo rp ∈ ort tensores ortogonais pr oprios ue tensores sim etricos positivos definidos 
+ fe reue ainda poss ıvel escrever √ ce 
+ ue ce tensor deformac cauchygreen direita definido ce fet fe 
+ medida deformac adotada neste trabalho medida deformac logar ıtmica ee ln ue 
+ tamb conhecida medida deformac hencky 
+ proposto hencky finalidade modelar borrachas vulcanizadas souza neto peric owen 
+ pares conjugados tens deformac sabendo tensor tens kirchhoff fornecido τττ jσσσ 
+ sendo det ρo raz densidades massa ρ configurac oes referˆencia atual respectivamente σσσ tensor tens cauchy 
+ particularizac fam ılia lagrangiana deformac oes cid − ln cid 
+ cid cid li ⊗ cid li cid ce ∑ λi cid λi cid cid li ⊗ cid li cid ue ∑ 
+ princ ıpio potˆencias virtuais logo conforme estabelecido hill pares tens deformac devem ser tais taxa trabalho unidade massa invariante conduz seguintes pares σσσ · ρ τττ · ρo ρo p· ρo s· τττr · ρo 
+ primeiro tensor tens piolakirchhoff pk segundo tensor tens piolakirchhoff pk τττr tensor tens rotacionado kirchhoff dado τττr τττ 
+ tensor ce sim etrico admite decomposic espectral λi autovalores cid li autovetores ce 
+ implica ue possui mesmos autovalores ce vez ln ue func tensorial isotr opica podese tanto reescrever medida deformac logar ıtmica forma espectral seguinte modo cid cid li ⊗ cid li cid ee ∑ ln λi 
+ princ ıpio potˆencias virtuais princ ıpio potˆencias virtuais consiste descrever poss ıveis movimentos sistema mecˆanico atrav es espac virtual denomi nado espac movimentos virtuais 
+ princ ıpio baseado dois axiomas lemaitre chaboche axioma invariˆancia cargas ternas axioma equil ıbrio 
+ primeiro axioma enuncia potˆencia primeiro tensor piolakirchhoff definido det fσσσf−t 
+ segundo tensor piolakirchhoff definido det f−σσσf−t 
+ detalhes ver souza neto peric owen apˆendices 
+ leis constitutivas meios cont ınuos danificados virtual forc internas associada movimento corpo ıgido nula enquanto segundo axioma expressa potˆencia virtual forc inerci ais pa igual soma potˆencia virtual forc internas pi externas pe 
+ posto definese potˆencias virtuais cada parte υt ⊂ ωt 
+ considerando abordagem apresentada fremond nedjar potˆencia forc internas depende somente taxa deformac tamb velocidade ligac oes microsc opicas γ gradiente velocidade ligac oes cid ∇γ 
+ logo sup oese potˆencia forc internas dada pi cid γ − σσσ · cid dυt − yγ cid · cid ∇γ 
+ cid cid dυt cid cid υt sendo cid campo vetorial velocidade σσσ tensor tens cauchy trabalho interno dano cid vetor fluxo trabalho interno dano 
+ ademais pressup oese potˆencia forc externas fornecida υt cid υt cid ∂υt cid ∂υt cid υt seguinte maneira cid υt pe cid γ ρ cid b· cid dυt cid · cid dγt γ dυt γ dγt 
+ sendo ρ densidade cid forc corpo prescrita unidade massa cid trac externa prescrita 
+ fontes volum etrica superficial trabalho dano respectivamente 
+ fim admitese potˆencia forc inerciais expressa pa cid γ −→ · cid dυt ρ ρca β γ dυt 
+ sendo microsc opicas 
+ −→ campo acelerac ρca β forc acelerac ligac oes princ ıpio potˆencias virtuais afirma cada υt ⊂ ω cid υt pi cid γ pe cid γ pa cid γ 
+ todo cid γ admiss ıvel 
+ consequentemente substituindo eqs 
+ vez cid γ independentes obtˆemse duas equac oes forma forte equac equil ıbrio forc equac equil ıbrio dano segue 
+ princ ıpio potˆencias virtuais equac equil ıbrio forc div σσσ ρ cid ρ −→ ωt submetida seguintes condic oes contorno cid σ cid cid γt cid γu condic oes iniciais cid −→ cid cid equac equil ıbrio dano div cid cid vo cid ωt cid cid cid uo cid ωt 
+ cid −y ρca β ωt submetida seguinte condic contorno cid · cid γt respectivas condic oes iniciais cid β cid ˆαo ωt β cid ˆβo ωt 
+ simplicidade sup oese resultando portanto guinte condic contorno equac diferencial dano cid · cid γt 
+ equac oes equil ıbrio configurac referˆencia equivalentemente podese expressar eq 
+ configurac deformada ωo termos primeiro tensor piolakirchhoff guinte forma div cid ρo cid cid bo cid ρo cid −→ cid ωo 
+ cid cid leis constitutivas meios cont ınuos danificados cid cid cid γt 
+ cid −→ ˆu cid γu cid cid cid submetida condic oes contorno cid cid cid cid cid cid cid condic oes iniciais cid −→ cid cid cid cid cid ρo cid cid vo cid ωo cid cid cid uo cid ωo 
+ cid cid cid cid cid cid cid cid cid cid cid ρ det cid cid bo cid respectivamente 
+ cid cid cid cid cid cid cid ho cid cid cid cid cid −yo indeformada ωo div sendo descric oes lagrangeanas cid cid cid cid modo eq 
+ poder ser reescrita configurac submetida seguinte condic contorno respectivas condic oes iniciais cid cid cid ca β cid ho cid ρo cid cid γo cid cid cid cid cid cid cid cid cid · cid cid cid cid  β cid ˆαo cid cid cid cid cid cid f− cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid ωo ωo 
+ β cid ˆβo yo cid ωo 
+ leis termodinˆamica meios cont ınuos cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid cid 
+ cid cid cid cid respectivamente 
+ cid representando descric oes lagrangeanas 
+ leis termodinˆamica meios cont ınuos 
+ primeira lei termodinˆamica primeira lei termodinˆamica representa afirmac princ ıpio conservac energia sistema termodinˆamico 
+ sistema termodinˆamico corpo pode armazenar energia duas formas energia cin etica kc energia interna eint quais representam capacidade total sistema possui realizar trabalho 
+ formalmente primeira lei termodinˆamica pode ser enunciada taxa variac energia total sistema energia cin etica energia interna igual potˆencia forc externas ˆp aplicada somado fluxo energia ermica sistema recebe dissipa 
+ matematicamente lei pode ser escrita dt kc eint ˆp 
+ obter forma local equac conservac energia introduzse energia total sistema poder ser decomposta seguinte modo cid cid −→ ·−→ cid ρe dυt υt equac global balanc energia 
+ associada υt ⊂ ωt dυt 
+ ρ ρca β dυt 
+ υt υt υt pode ent ser reescrita υt dt ˆp ˆp cid υt ρ cid b·−→ dυt cid ∂υt cid ·−→ dγ β dυt cid υt 
+ cid ∂υt β dγ 
+ cid υt cid −→ cid leis constitutivas meios cont ınuos danificados ρr dυt − q· cid dγt 
+ cid ∂υt nestas equac oes energia interna espec ıfica densidade volum etrica produc calor interno cid vetor fluxo calor −→n vetor externo unit ario normal superf ıcie ∂υt corpo 
+ visto υt ⊂ ωt arbitr ario obt emse ρ σσσ · β cid · cid ∇ β ρr− div cid 
+ forma local primeira lei termodinˆamica 
+ caso processos isot ermicos fonte calor eq 
+ reduzse seguinte forma cid cid cid ρo cid cid cid cid cid cid ho ρ σσσ · cid −→ cid cid · cid cid cid cid cid · ∇ cid cid cid cid β 
+ τττ cid β cid · cid ∇ β 
+ cid cid cid β cid cid cid yo 
+ configurac referˆencia ωo est lei eq 
+ pode ser expressa 
+ segundo lei termodinˆamica segundo lei termodinˆamica enuncia taxa produc entropia corpo sistema termodinˆamico sempre superior igual taxa aquecimento dividido temperatura absoluta cid ≥ ds dt ρr υt · cid dγt 
+ cid ∂υt cid dυt − cid υt ρs dυt nesta equac produc entropia definida 
+ representando entropia espec ıfica 
+ aplicando teorema divergˆencia 
+ sendo υt arbitr ario 
+ leis termodinˆamica meios cont ınuos poss ıvel obter forma local segunda lei termodinˆamica ρ st − ρr div cid − cid · cid ∇t ≥ 
+ substituindo primeira lei termodinˆamica expressa equac 
+ determinase seguinte express cid cid ρ ds dt − dt σσσ · β cid · cid ∇ β − cid · ∇t ≥ 
+ empregando potencial energia livre helmholtz ψ definido mediante introduzindo derivada temporal st − − cid ψ cid 
+ chega ψ e− 
+ σσσ · β cid · cid ∇ β − ρ cid ψ cid − cid · ∇t ≥ 
+ denominada inequac clausiusduhem outra forma local segunda lei termodinˆamica 
+ express demonstra processo termodinˆamico admiss ıvel somente dissipac total sistema positiva igual zero 
+ mesma maneira podese expressar eq 
+ configurac indeformada ωo 
+ caso particular processos isot ermicos est pode ser reescrita cid cid cid · τττ cid cid cid cid ψ cid cid cid cid cid β cid ≥ 
+ cid cid yo cid cid cid −ρo cid cid cid · ∇ cid β cid cid cid cid ho 
+ restric interna sobre vari avel dano valor vari avel dano β situase 
+ β ∈ β visto proporc volum etrica microvazios 
+ logo ≤ β ≤ 
+ restric interna sobre β adotada propriedade ısica quantidade estado 
+ logo deve ser considerada func oes des crevem propriedades ısicas energia livre ψ pseudo leis constitutivas meios cont ınuos danificados potencial dissipac φ 
+ potencial energia livre ψ cid cid ◦ β cid ∇ cid xβ cid ≤ β ≤ cid definido somente processos reais processos tais β ∈ 
+ portanto poss ıvel tamb estender ψ processos onde β ∈ supondo ψ ∞ β ∈ 
+ al disso sup oese ψ localmente subdiferenci avel derivada material fim ψ exista 
+ cid dessa forma suposto existˆencia potencial energia livre cid cid ◦ β cid ∇ cid xβ cid ◦ β cid ∇ cid xβ helmholtz dado cid ◦ β cid ∇ cid xβ ψ 
+ ◦ representa conjunto vari aveis estado quais ser definidas posteriormente ψo potencial suave ik β func indicadora estabelecida ik β cid ψo cid ◦ β cid ∇ cid xβ cid cid cid ◦ β cid ∇ cid xβ cid β ∈ ∞ β ∈ 
+ func indicadora respons avel imposic irreversibilidade processo dano 
+ assim energia livre possui valor ısico quer valor real ısico β 
+ entanto energia livre igual ∞ qualquer valor fisicamente imposs ıvel β qualquer β ∈ 
+ determinac derivadas energia livre evoluc atual evoluc tal ≤ β ≤ qualquer ponto cid ∈ ωo qualquer instante permite definir seguintes forc revers ıveis dissipativas relacionadas β cid ∇β ρo ∂ψo ∂β cid hr ρo ∂ψo ∂ cid ∇ cid xβ 
+ reac reac restric interna considerada introduc forc definida admitindo existˆencia func suave 
+ etodo estado local reac tal cid cid cid ∈ ∂ locik cid ρo reac ∂ locik β subgradiente ik β dado segue cid cid β cid cid cid cid cid  ∂ locik β β ∂ locik r− ∂ locik ∂ locik β ∅ β ∈ 
+ podese perceber relac 
+ implica subdiferencial ∂ locik β vazio portanto restric interna satisfeita 
+ tamb poss ıvel mencionar relac 
+ possui dois significados restric interna satisfeita existe reac restric interna zero β positiva β negativa β 
+ ademais reac ∈ ∂ locψ 
+ ρo sendo parcelas suave suave forc respectivamente 
+ reac func indicadora ik β aproximada func suave simplesmente calculando ent poss ıvel calcular aproximac reac derivada cl assica func suave regularizada 
+ etodo estado local etodo estado local pressup oe estado termodinˆamico meio cont ınuo pode ser definido conhecimento valores conjunto vari aveis denominadas vari aveis estado local definidas instante tempo fixo lemaitre chaboche 
+ hip otese im plica evoluc meio cont ınuo pode ser considerada su cess arios estados equil ıbrio 
+ deste modo fenˆomenos ısicos po dem ser descritos precis depende escolha natureza umero vari aveis estado 
+ processos definidos desta maneira ser termodinamicamente admiss ıveis somente qualquer instante evoluc inequac clausiusduhem satisfeita 
+ vari aveis estado local conforme lemaitre lippmann classificadas vari aveis observ aveis vari aveis internas 
+ leis constitutivas meios cont ınuos danificados 
+ vari aveis observ aveis vari aveis observ aveis interagem dentro fenˆomenos ticidade viscoelasticidade plasticidade viscoplasticidade dano peratura deformac total 
+ fenˆomenos revers ıveis el asticos pendem exclusivamente destas vari aveis qualquer instante lemaitre chaboche 
+ vari aveis internas segundo definic cauchy corpo el astico deformac qualquer ponto corpo completamente determinada tens temperatura agem naquele ponto lubliner 
+ ent definic obvia corpo inel astico algo al tens temperatura determinam ıvel deformac ponto corpo 
+ algo pode ser cogitado exemplo hist oria evoluc tens temperatura ponto 
+ modo alterna tivo representar algo considerar estado deformac corpo dependa exclusivamente deformac total tempera tura tamb vetor vari aveis vk 
+ vari aveis denominadas vari aveis internas dependendo fenˆomenos envolvidos podem representar campos escalares vetoriais tensoriais 
+ portanto fim descrever processos irrevers ıveis dissipativos podese introduzir conjunto vari aveis internas cujo objetivo incor porar hist oria carregamento resposta final material 
+ dentre processos dissipativos exemplo est viscoplastici dade encruamento dano 
+ fenˆomenos exigem introduc vari aveis internas representem deformac viscopl astica estado terno mat eria densidade discordˆancias microfissuras 
+ potencial energia livre helmholtz aqui contexto termodinˆamica processos irrevers ıveis considerase existˆencia potencial termodinˆamico ψ denomindado potencial energia livre helmholtz obtidas equac oes estado 
+ potencial ψ pode ser considerado dependente seguintes vari aveis estado 
+ portanto sup oese cid cid ee vk β cid ∇ cid xβ cid cid ψ ψo ee vk β cid ∇ cid xβ ik β 
+ etodo estado local tendo variac temporal ψ ∂ψo ∂ee · ee ∂ψo ∂vk vk ∂ψo ∂β β ∂ψo ∂ cid ∇ cid xβ · cid ∇ cid β ρo reac β 
+ desigualdade clausiusduhem restrita processos isot ermicos 
+ decomposic aditiva taxa deformac 
+ poss ıvel obter τττ · dp yo β cid ho · ∇ cid β − ρo ψ ≥ 
+ impondo conservac taxa trabalho el astico hill temse τττ · τττr · ee implica τττr · ee τττ · dp yo β cid ho · ∇ cid β − ρo ψ ≥ 
+ incluindo taxa ψ eq 
+ pode ser reescrita β −y reac β 
+ cid τττr − ρo −ρo ∂ψo ∂ee ∂ψo ∂β cid · ee τττ · dp yo β cid ho · cid ∇ cid β − ρo ∂ψo ∂ cid ∇β · cid ∇ cid β − ρo ∂ψo ∂vk vk ≥ 
+ contudo posto eq 
+ deve ser satisfeita todos pro cessos ısicos admiss ıveis chegase lei hiperel astica τττr ρo ∂ψo ∂ee seguintes equac oes estado ak ρo ∂ψo ∂vk ρo cid hr ρo ∂ψo ∂β ∂ψo ∂ cid ∇ cid xβ 
+ leis constitutivas meios cont ınuos danificados ainda considerando yo reac 
+ ρo dissipac reac cid ho cid hr cid hi 
+ ∈ ∂ locik β obt emse seguinte express energia cid τττ · dp β − ak vk ≥ 
+ simplicidade admitese dissipac relac gra diente taxa dano cid ∇ β 
+ resultado temse apenas fenˆomenos dissipativos tipo viscoso taxa dano β 
+ assim cid hi forne cendo finalmente · cid ∇ cid β cid hi cid τττ · dp β − ak vk ≥ 
+ nesta express termo τττ · dp representa energia dissipada lac histerese ak vk representa energia armazenada devido processo β representa energia dissipada devido endurecimento material processo dano 
+ taxa deformac viscopl astica modificada modicac taxa deformac viscopl astica dp consiste pri meiro transportar termo lp eq 
+ configurac local ten cionada atrav es seguinte produto lp fe − lpfe fp fp − lp parte viscopl astica gradiente velocidade escrita relac configurac local tensionada 
+ tamb poss ıvel decompor lp parte sim etrica dp asso ciada estiramento viscopl astico antissim etrica wp associada rotac viscopl astica dp lp dp wp cid lp cid lp cid cid 
+ etodo estado local cid lp − cid lp cid cid 
+ entretanto considerado olido elastoviscopl astico isotr opico cada configurac local tencionada termo rotac viscopl astica torna nulo 
+ irrotacional weber anand souza neto peric owen logo 
+ assim dissipac eq 
+ poder ser reescrita seguinte wp 
+ cid τττ · fe dp fe − β − ak vk ≥ cid fe τττ fe −t · dp β − ak vk ≥ 
+ ainda substituindo decomposic polar eq 
+ obt emse cid reue τττ reue cid ue τττ ue − · dp cid ueτττr ue − dpue cid τττr · ue −t · dp − · dp β − ak vk ≥ β − ak vk ≥ 
+ β − ak vk ≥ β − ak vk ≥ 
+ isotr opica inequac clausius cid τττr · dp β − ak vk ≥ 
+ neira duhem torna 
+ independˆencia dissipac viscopl astica dano neste trabalho sup oese dissipac oes viscopl atica dano respectivamente independentes cid τττr · dp − ak vk ≥ 
+ condic suficiente satisfazer inequac cid β β ≥ 
+ r· st st r· rtt · leis constitutivas meios cont ınuos danificados 
+ potencial dissipac descrever sistemas dissipativos obter equac oes evoluc vari aveis internas sistema termodinˆamico preciso introduzir equac oes complementares 
+ assim sup oese existˆencia pseudopotencial dissipac g∗ ◦ func cont ınua positiva convexa relac vari aveis associadas τττr vk nula origem 
+ al disso pressuposto desacoplamento dissipac oes modo potencial possa ser expresso g∗ ◦ g∗ vp τττr vk◦ φ∗ cid o◦ cid g∗ vp func diferenci avel descreve dissipac vis copl astica φ∗ func diferenci avel representa dissipac dano 
+ posto aplicando crit erio dissipac normal determinase seguintes equac evoluc ∂ g∗ λp dp vp τττr vk◦ ∂τττr vp τττr vk◦ ∂ g∗ vk − λp ∂ ak β ∈ ∂φ∗ cid o◦ cid τττr vk◦ τττr vk◦ ≥ τττr vk◦ λp  I∗ 
+ denominado multiplicador viscopl astico especificado equac constitutiva satisfaz relac λp ≥ τττr vk◦ representa func escoamento ◦ conjunto ee ak β 
+ represen tam respectivamente equac oes evoluc deformac viscopl astica 
+ representa evoluc conjunto dano enquanto eq 
+ var ıavies relacionadas deformac viscopl astica acumulada endureci mento visto vk 
+ modelo elastoviscopl astico dano lo cal rochas salinas neste cap ıtulo apresentado modelo elastoviscopl astico dano local alise comportamento uctil fr agil rochas salinas desenvolvido conforme teoria geral abordada cap ıtulo 
+ desenvolvimento modelo constitutivo introduzido po tencial energia livre helmholtz derivase equac oes es tado func escoamento permite definic dom ınio el astico potencial dissipac potencial dano fornecem mediante aplicac crit erio dissipac normal leis complementares leis evoluc necess arias descric processos irrevers ıveis 
+ simpli cidade considerase processo deformac rochas salinas isot ermico adotase lei encruamento isotr opica restringindo modelo proposto exclusivamente carregamentos monotˆonicos 
+ definic potencial energia livre cid ∇ cid xβ cid seguindo ideias fremond nedjar salari al 
+ considerase potencial energia livre ψo decomposto seguinte maneira ψo ψe ee β ψp ee vk β ψg ee β parcela el astica potencial energia livre ψp cid ∇ cid xβ cid parcela associada processo dano 
+ ee vk β sendo ψe parcela viscopl astica ψg local 
+ parcela el astica potencial energia livre ψe ee β definida ρoψe ee β − β dee · ee 
+ tensor constitutivo el astico quarta ordem dado μoi λo i⊗ 
+ μo λo representando constantes lam tensor identidade quarta ordem tensor identidade segunda ordem 
+ δirδ js δisδ jr cid ei⊗ cid j⊗ cid er⊗ cid es 
+ tensor identidade somente relac tensores sim etricos 
+ modelo elastoviscopl astico dano local rochas salinas 
+ constantes lam relacionadas odulo young coeficiente poisson ν fornecidas δi cid ei⊗ cid μo ν λo νe ν − ν 
+ considerando apenas vari avel cruamento isotr opico ψp quente express parte viscopl astica potencial energia livre interna incorpora en temse caso particular assim ee β 
+ definindo κ prop oemse subse ee vk β ψp ov ee κ cid cid − τrh cid cid − ε vol vol 
+ cid cid dt ρoψp ρoψp vol dt ov ee κ ee κ β − β ρoψp cid cid τττr · dp cid cid cid τrh cid cid ε cid cid τrh vol tr cid dp cid cid ε ov ee κ cid κ cid τrh cid cid parte volum etrica positiva potˆencia deformac viscopl atica dissi pada sendo ε tr τττr taxa deformac viscopl astica volum etrica parte hidrost atica tensor tens rotacionado efetivo kir chhoff respectivamente 
+ tamb pode ser reescrita cid cid cid ρoψp vol ξ ξ cid − τrh cid − ε vol ξ ξ ξ ξ descrevendo dependˆencia κ ε positiva ◦ operador macaulay 
+ vol ◦ cid ◦ cid denotando parte notac cid cid conhecido operador macaulay aplicada func representa parte positiva func 
+ definic matem atica dada cid cid cid max ≥ 
+ definic potencial energia livre parcela associada processo dano local potencial energia livre definida cid ∇ cid xβ cid ρoψg kg cid ∇ cid xβ · cid ∇ cid xβ 
+ termo energia livre respons avel incorporar efeito local dano introduzir dependˆencia vizinhanc 
+ parˆametro kg proposto → fremond nedjar controla intensidade dano 
+ kg teoria local reduzase limite teoria cl assica dano local 
+ regularizac potencial energia livre helmholtz prop osito evitar problema aodiferenciabilidade potencial energia livre helmholtz eq 
+ modo poss ıvel aplicar algoritmos soluc tradicionais empregase processo regularizac 
+ potencial energia livre helmholtz regularizado ψ ηα ee κ β cid ∇β tal cid cid cid cid cid ee κ β cid ∇β ψ ee κ β cid ∇β 
+ cid lim ηα→ ψ ηα visto ψo func suave requerse regularizac somente func indicadora conjunto dada ik β 
+ express gularizada mediante aplicac etodo penalidade exterior 
+ deste modo considerase aproximac diferenci avel ηα β maneira ηα β ik β 
+ construir ηα restric oes desigualdade β representase dom ınio vi avel β −β ≤ β β − ≤ 
+ func regularizadazada ηα β pode ser obtida ρoi ηα β β β 
+ modelo elastoviscopl astico dano local rochas salinas gi β ηα cid cid gi β cid cid tipo func penalidade exterior regularizac definida neira limite represente func indicadora conjunto ηα parˆametro penalidade adequado 
+ ρoi ηα β ηα proporciona seguinte express regularizada energia livre helmholtz cid cid ρoψ ηα ee κ β cid ∇β ρoψo cid cid cid −β cid cid cid cid cid β − cid cid cid cid cid cid cid −β cid cid cid cid β − cid cid cid ee κ β cid ∇ cid xβ ηα 
+ derivac equac oes estado resultado inequac clausiusduhem eq 
+ quais equac oes estado definidas eqs 
+ fornecidas relac oes descritas seguir 
+ relac constitutiva hiperel astica eq 
+ obt emse relac constitutiva hiperel astica τττr − β dee 
+ definindo tensor tens rotacionado efetivo kirchhoff τττr τττr − β possivel reescrever relac seguinte modo τττr dee 
+ derivac equac oes estado al disso podese perceber parte hidrost atica τττr dada τrh tr τττr 
+ koεe vol εe odulo volum etrico 
+ vol tr ee deformac el astica volum etrica ko μoλo 
+ forc termodinˆamica associada encruamento partir eq 
+ considerando definindo chega forc termodinˆamica associada encruamento implicando ρo ∂ψp ee κ β ∂κ ee κ β 
+ forc termodinˆamicas associadas dano eq 
+ obt emse forc termodinˆamica relacionada dano − τττr · ee − ρoψp ov κ 
+ ρoψp ov κ definido 
+ poss ıvel aproximar reac segue virtude processo regularizac energia livre helmholtz 
+ reac ∂ρoi ηα β ∂β cid − cid −β cid cid β − cid cid 
+ ηα valor real reac somente obtido ηα → 
+ tanto observase pr atica limite tomado 
+ ent neste trabalho utilizase valor positivo suficientemente pequeno ηα ηα ∈ cid − − cid 
+ modelo elastoviscopl astico dano local rochas salinas 
+ forc termodinˆamica associada influˆencia dano vizinhanc finalmente eq 
+ chegase forc termodinˆamica relacionada influˆencia dano vizinhanc cid ho cid hr kg ∇ cid cid β 
+ definic func escoamento motivo simplicidade crit erio druckerprager sens ıvel press hidrost atica adotado descrever resposta comportamento viscopl astico rochas salinas 
+ crit erio proposto druker pra ger aproximac suave lei mohrcoulomb souza neto peric owen modificado incluir efeito dano resistˆencia coesiva rochas 
+ express dada τττr kee β κ η q− ξ kee β κ cid cid · τττd τττd 
+ raiz quadrada segundo invariante tensor tens deviat orico efetivo rotacionado kirchhoff τττd τrh denota parte hidrost atica tensor tens efetivo rotacionado kirchhoff eq 
+ κ vari avel interna sociada deformac viscopl astica encruamento β parˆametro dano escalar 
+ termo kee β κ representa coes real ser defi nido posteriormente parˆametros η ξ escolhidos acordo aproximac requerida crit erio mohrcoloumb 
+ observase coes k◦ func cujos coeficientes podem depender ◦ ≡ ee β κ 
+ al disso eq 
+ verificase coeficientes k◦ podem ser modificados indiretamente caso necess ario variando medida tens τττr 
+ neste trabalho k◦ ser tratado independente τττr 
+ diante definic tens equivalente efetiva tipo von mises τvm eq dada τvm eq · τττd τττd 
+ definic func escoamento pode ser redigida √ 
+ potencial fluxo drukerprager representado cone cujo eixo linha hidrost atica 
+ aproximac comumente adotada coinci dir potencial fluxo drukerprager arestas externas internas superf ıcie mohrcoloumb 
+ arestas externas coincidem η sin φ √ − sin φ ξ cos φ √ − sin φ 
+ enquanto arestas internas coincidem escolha η sin φ √ sin φ ξ cos φ √ sin φ 
+ equac oes acima φ representa ˆangulo atrito interno crit erio mohrcoloumb informac oes constam souza neto peric owen 
+ sec plano π superf ıcie escoamento mohrcoloumb aproximac oes drukerprager souza neto peric owen 
+ cone externo cone interno conhecidos respectivamente cone compress cone extens 
+ sec plano π bas superf ıcies est mostrada fig 
+ todos conjuntos parˆametros ertice aproximac cone drukerprager coincide ertice correspondente superf ıcie potencial fluxo mohr coloumb 
+ modelo elastoviscopl astico dano local rochas salinas 
+ definic equac oes complementares 
+ definic potencial dissipac viscopl astico descrever processos dissipativos associados viscoplastici dade caracterizar completamente modelo viscopl astico proposto defi nindo leis evoluc vari aveis internas sup oese existˆencia vp τττr k◦ func escalar cont ınua pseudopotencial dissipac g∗ convexa relac vari aveis duais τττr nula origem satifaz automaticamente inequac clausiusduhem eq 
+ desta forma vp τττr k◦ cid τττr k◦ adotando regra fluxo associativa g∗ determinar direc taxa deformac viscopl astica definese seguinte func druckerprager modificada potencial viscopl astico g∗ vp τττr k◦ θ q− co kee β κ 
+ co kee β κ constante material θ parˆametro di latˆancia valor maior zero 
+ θ utilizado controlar deformac volum etrica inel atica expansiva 
+ substituindo potencial viscopl astico proposto eq 
+ obt cid θ dp λp − β τττd cid ent decomposic taxa deformac viscopl atica rotacio 
+ nada possivel determinar dp dpd ε vol tr cid dp ε cid λp − β ε ε vol λp − β θ θ 
+ definic equac oes complementares dpd λp − β τττd 
+ sendo ε vol taxa deformac viscopl astica volum etrica ε drost atica taxa deformac viscopl astica rotacionada dpd viat orica taxa deformac viscopl astica rotacionada 
+ parte hi parte similarmente evoluc endurecimento isotr opico definida κ obtida substituindo potencial 
+ resultando κ ∂ ∂ co k◦ λp 
+ neste ponto visando definir taxa deformac viscopl astica efe tiva ε cuja equac evoluc define evoluc multiplicador vis copl astico λp necess ario estabelecer medida tens efetiva τe suposta neste trabalho τe θ 
+ seguindo ideias citadas goldberg roberts gilat determinac taxa deformac inel astica efetiva ε aplicase princ ıpio equivalˆencia taxa trabalho inel astico 
+ taxa trabalho inel astico efetivo ω definida permitindo concluir ω τττr · dp τe ε ε λp − β 
+ modelos constitutivos fluˆencia rochas salinas descric evoluc deformac viscopl astica efetiva ε adotase opc dois modelos constitutivos fluˆencia sal 
+ mo delo multimecanismos deformac multimechanism deformation md desenvolvido munson fossum senseny modelo mecanismo duplo deformac proposto costa al 
+ ultimo representa somente fluˆencia estacion aria proposto aqui utilizando func transiente modelo md tornandoo adequado ca racterizar tamb fluˆencia transiente sal 
+ nestes modelos processo modelo elastoviscopl astico dano local rochas salinas deformac fluˆencia estacion aria baseado mapa mecanismos deformac sal fig 
+ constru ıdo munson 
+ mapa ilustra regi oes relevantes projetos engenharia 
+ modelos matem aticos apresentados abaixo segue 
+ modelo multimecanismos deformac md equac constitutiva lei fluˆencia incorpora todas parce las referentes mecanismos deformac presentes regi destacada fig 
+ multimecanismos deformac desenvolvida mun son fossum senseny 
+ neste modelo taxa fluˆencia regime estacion ario descrita taxa deformac viscopl astica efetiva gime estacion ario ε pode ser expressa soma taxas destes mecanismos ε si agindo paralelo ε ∑ ε si 
+ sendo taxas destes mecanismos individuais fluˆencia regime cion ario fornecidas seguintes express oes cid τvm ε eq − τd cid cid sinh exp rt rt 
+ relac oes acima constantes materiais energias ativac mecanismo temperatura absoluta cons tante universal gases μo odulo cisalhamento expoentes tens constante material τd limite tens mecanismo deslizamento discordˆancias τvm eq tens equivalente ε exp ε exp rt cid −q cid −q cid cid −q rt eq μo cid cid τvm cid cid cid cid τvm cid cid cid −q eq μo exp 
+ cid τvm eq −τd μo cid 
+ definic equac oes complementares cid τvm cid 
+ trˆes mecanismos definidos eqs 
+ repre efetiva tipo von mises func heaviside argumento eq − τd sentam escalagem discordˆancias dislocation climb mecanismo bem caracterizado experimentalmente indefinido undefined mechanism deslizamento discordˆancias dislocation glide respectivamente 
+ resposta transiente descrita fator multiplicac aplicado taxa deformac viscopl astica efetiva regime estacion ario 
+ sultado taxa fluˆencia total est relacionada fluˆencia regime cion ario atrav es seguinte relac ε ee κ β ε 
+ sendo func transiente 
+ deste modo definese equac constitutiva 
+ seguinte forma λp −β Ip τττr kee β κ 
+ func transiente possui trˆes partes endurecimento regime cion ario recuperac segue  ee κ β ε cid − cid cid − cid ε∗ ee β κ κ ε∗ ee β  cid cid exp δ ee β exp −δ ee β τττr k◦ ≥ τττr k◦ 
+ cid cid cid cid cid cid κ ≤ ε∗ ee β κ ε∗ ee β ee κ β 
+ sendo δ ee β δ ee β parˆametros endurecimento recuperac respectivamente ε∗ ee β limite deformac transiente 
+ equac evolutiva governa taxa variac vari avel terna κ dada func heaviside definida κ ee κ β − ε  ≥ 
+ modelo elastoviscopl astico dano local rochas salinas cid λp − β cid ee κ β − cid λp ee κ β − β ∂ ∂ κ resultado cid ee κ β − ee κ β κ 
+ co kee β κ λp 
+ permite identificar ∂ ∂ co kee β κ − β cid 
+ cid ee κ β − cid cid τvm ee κ β 
+ limite deformac transiente expresso equac ε∗ ee β ko expcbt eq μo sendo ko cb constantes materiais 
+ parˆametros endurecimento trabalho recuperac dados express oes munson fossum senseny δ ee β αw χw log δ ee β αr χr log cid cid τvm cid cid τvm eq μo eq μo αw αr χw χr constantes materiais 
+ modelo mecanismo duplo deformac equac constitutiva correspondente lei fluˆencia mecanismo duplo deformac proposta costa al 
+ simplificac equac desenvolvida munson fossum senseny munson fossum senseny eq 
+ aplicac portanto restrita intervalos fluˆencia secund aria 
+ previs comportamento poc atravessam grandes espessuras sal caso poc recen tes perfurados bacias campos santos rochas evapor ıticas analisadas segundo comportamento elasto viscoel astico adotandose  ε eq τo εo a∗ cid τvm εo a∗ cid τvm cid cid eq τo cid τvm cid τvm cid cid − rt rto eq ≤ τo eq τo a∗ exp 
+ definic equac oes complementares lei constitutiva cujos parˆametros fluˆencia validados trabalho costa al 
+ nesta lei considerados seguintes mecanismos deformac fluˆencia deslizamento discordˆancias dislocation glide mecanismo indefinido undefined mechanism fig 
+ logo taxa fluˆencia estacion aria descrita seguinte equac constitutiva parˆametro incorpora efeito temperatura modelo 
+ nesta lei εo denota taxa deformac fluˆencia referˆencia τvm eq tens equi valente efetiva tipo von mises τo tens equivalente referˆencia parˆametro func tens aplicada energia ativac constante universal gases temperatura absoluta rocha profundidade τvm estudo temperatura referˆencia 
+ eq representa tens atual en quanto tens referˆencia τo representa valor expoente tens muda instantaneamente 
+ visto modelo reproduz somente fase secund aria fluˆencia prop oemse tamb neste trabalho descric fluˆencia prim aria ado tando inserc multiplicador taxa fluˆencia estacion aria idem modelo multimecanimos deformac sal apresentado munson devries munson wawersik munson 
+ resul tado taxa fluˆencia total relacionada fluˆencia regime estacion ario seguinte relac ee κ β ε ε 
+ desta forma equac oes remanescentes descric fluˆencia prim aria seguem modelo multimecanimos deformac apresentado acima eqs 
+ incorporac lei endurecimento neste ponto incorporase lei endurecimento rochas sali atrav es proposic equac parˆametro ee β κ func escoamento eq 
+ existem dois etodos particularmente modelo elastoviscopl astico dano local rochas salinas populares descric endurecimento isotr opico materiais endure cimento deformac strain hardening endurecimento trabalho work hardening souza neto peric owen 
+ etodo en durecimento deformac frequentemente empregado modelos fluˆencia descric fase transiente representando aptid decr escimo taxa deformac processo endurecimento naumenko 
+ diante disso utilizase aqui etodo endurecimento deformac conforme segue abaixo 
+ endurecimento deformac strain hardening caso etodo endurecimento deformac frequente considerar parˆametro ee β κ dependente deformac viscopl astica equivalente associada tens equivalente efetiva tipo von mises τvm eq notada aqui ε vm 
+ determinac taxa deformac inel astica equivalente ε vm aplicase princ ıpio equivalˆencia taxa trabalho inel astico acordo goldberg roberts gilat 
+ deste modo taxa trabalho inel astico associada distorc deformac ω vm dada ω vm τττd · ddp τvm eq ε vm 
+ ε vm √ ε permitindo identificar ε  ee κ β ε τττr kee β κ ≥ τττr kee β κ cid cid logo partir eq 
+ obtemse ε vm √ ee κ β ee κ β − κ 
+ ee β κ cid ε vm cid 
+ assim definese express cid ε vm visto ee β κ poss ıvel supor caso particular modelo linear encruamento apresentado lemaitre lippmann 
+ definic equac oes complementares segue ε vm c∞ cid vm cid − e−b ε c∞ constantes 
+ partir equac acima tamb identificase vm ε vm sendo eq 
+ soluc equac diferencial 
+ vm c∞ − ε ε 
+ formulac dano formulac dano adotado neste trabalho baseado salari al 
+ considera acoplamento deformac viscopl astica dano provocado microfissuras 
+ dano suposto manter comportamento isotr opico sendo repre sentado vari avel escalar dano evolui perante deformac vo lum etrica expansiva condizendo dano gerado rochas concreto 
+ segundo salari al 
+ dano gerado nestes materiais provocado microfissuras manifestam ıvel macrosc opico forma deformac volum etrica expansiva 
+ deformac oes volum etricas positi vas acoplam mecanismos dissipac dano fluxo viscopl astico introduzindo degradac rigidez el astica amolecimento material 
+ neste contexto seguindo proposta salari al 
+ sup oese principal respons avel evoluc dano contribuic trativa ener gia deformac volum etrica contribuic provinda parcela volum etrica forc termodinˆamica associada dano eq 
+ definic potencial dissipac dano o◦ cid supondo existˆencia pseudopotencial dissipac φ∗ cid func escalar cont ınua convexa positiva nula origem ◦ ee κ β satisfaz desigualdade associada processo dano eq 
+ derteminase impondo crit erio dissipac normal guinte equac evoluc β ∈ ∂φ∗ cid o◦ cid 
+ tamb introduzida func limiar limite dano analogia alguns modelos dano associativos encontrados literatura definindo modelo elastoviscopl astico dano local rochas salinas portanto conjunto convexo cid cid cid cid cid cid cid o◦ cid ≤ 
+ I func limite dano adotada neste trabalho acordo salari al 
+ baseada energia define crit erio ıcio dano atrav es seguinte express cid oβ cid − rβ β 
+ forc termodinˆamica energia unidade volume rβ β func resistˆencia energia 
+ representa demanda densidade diferentes func oes resistˆencia podem ser utilizadas neste trabalho empregase express proposta carol rizzi willam dada rβ β − β pa− 
+ raz odulo resiliˆencia odulo tenacidade 
+ designa odulo resiliˆencia material expoente pa pa 
+ al disso definese func indicadora conjunto I func escalar convexa positiva nula origem dada ∞ caso contr ario 
+ iI ∈ I  o◦ cid cid o◦ cid 
+ cid o◦ cid iI φ∗ cid o◦ cid cid cid o◦ cid 
+ β ∈ ∂ iI afirma β subgradiente iI vez estabelecida func indicadora poss ıvel definir poten 
+ consequentemente podese reescrever eq 
+ seguinte cial dissipac neira 
+ definic equac oes complementares 
+ regularizac potencial dissipac dano dano φ∗ cid dano φ∗ cid contornar problema aodiferenciabilidade potencial o◦ cid maneira poss ıvel aplicar algoritmos soluc o◦ cid tal tradicionais necess ario regularizac deste potencial 
+ potencial φ∗ ηβ lim ηβ→ cid o◦ cid φ∗ ηβ o◦ cid φ∗ cid cid o◦ cid 
+ cid cid o◦ cid cid cid cid ηβ 
+ logo forma regularizada potencial dano fornecida tipo func penalidade exterior definida modo limite represente func indicadora conjunto I 
+ ηβ parˆametro penalidade adequado 
+ resultado processo regularizac determinase apli cando crit erio dissipac normal seguinte equac evoluc vari avel escalar dano ∂φ∗ ηβ cid β ηβ cid o◦ cid o◦ cid cid ∂ cid o◦ cid cid − rβ β cid cid 
+ consequentemte definic func limite dano eq 
+ forma forte equac evoluc dano local equac diferencial evoluc dano fornecida eq 
+ restringindo equac processos quaseest aticos ρoca β substituindo eq 
+ obt emse −y reac cid cid ho −y −y 
+ cid div modelo elastoviscopl astico dano local rochas salinas consequentemente div cid cid cid ho −y −y reac 
+ considerando fonte volum etrica trabalho dano substituindo eqs 
+ chegase ov κ −y reac div ρoψp ko −y ρoψp ov κ 
+ neste ponto poss ıvel reescrever eq 
+ seguinte maneira − cid cid cid ho cid cid εe vol cid cid dee · ee ko cid cid εe vol cid cid cid cid εe vol cid cid cid cid cid τrh cid ε ko cid dt vol 
+ cid − ε vol ov ee κ vol ρoψp cid cid ε cid cid ε cid cid cid ho ηβ eq 
+ assegurando portanto ε vol consequˆencia λp θ vol ≥ 
+ desta forma meio substituic eq 
+ podese expressar equac evoluc dano − r∗ −y β div β β r∗ β β rβ β reac representado resistˆencia efetiva aplic avel β ∈ 
+ fim reescrevese equac evoluc dano segue 
+ cβ β div −y − r∗ β β cid cid parˆametro ηβ renomeando cβ identificado partir dados experimentais 
+ satisfazer irreversibilidade processo deveria permanecer inclu ıdo operador dano eq 
+ termo div cid cid ho cid cid cid ho cid cid 
+ definic equac oes complementares macaulay cid ◦ cid entretanto fim viabilizar soluc erica equac diferencial termo retirado interior operador 
+ portanto necess ario implementar procedimento projec durante soluc aproximada problema evoluc modo irreversibilidade processo dano satisfeita 
+ termo penalidade reac 
+ β evoluc dano decresce pois aumenta valor func resistˆencia rβ β 
+ r∗ β β rβ β cid β − cid ηα 
+ todavia caso β taxa dano cresce raz termo reac diminuir valor resistˆencia rβ β 
+ β β rβ β − cid −β cid r∗ ηα 
+ parcela equac evoluc dano 
+ onde atua operador macaulay equac representa resistˆencia efetiva 
+ tamb podem ser expressas termos func heaviside segue − r∗ −y − r∗ − r∗ cid −y −y β β β β cid cid cid cid cid β β 
+ r∗ β β rβ β ηα β −β β − β − 
+ apresentados resumos mo delos propostos alise comportamento uctil fr agil rochas sa linas 
+ mostrado resumo conjunto equac oes modelo elastoviscopl astico dano cuja fluˆencia descrita lei multime canismos deformac proposta munson fossum senseny 
+ apresenta resumo segunda proposic modelo elastovis copl astico dano fluˆencia prim aria representada lei multimecanismos deformac fluˆencia secund aria lei meca operador macaulay cid cid tamb pode ser definido termos func heaviside gere cid cid  ≥ 
+ modelo elastoviscopl astico dano local rochas salinas nismo duplo deformac desenvolvida costa al 
+ sendo portanto lei fluˆencia denominada neste trabalho lei meca nismo duplo modificada 
+ discretizac equac oes destes modelos apresentada cap ıtulo 
+ definic equac oes complementares tabela 
+ conjunto equac oes primeiro modelo constitutivo lei fluˆencia multimecanismos deformac 
+ τττd λp −β τττr τττr −β cid θ cid ee κ β − resposta tens aodeformac el astica τττr dee regra fluxo lei evoluc endurecimento dp κ ε sendo cid cid λp −β ee κ β − ε cid ee κ β ε τττr kee β κ λp −β ee κ β exp exp δ ee β ε ε ee κ β cid cid −δ ee β  cid −q cid cid τvm cid cid −q cid cid cid τvm ee β ko expcbt cid τvm cid cid cid c∞ ε ε ε exp ε ε∗ satisfazendo √ τvm eq condic escoamento τττr kee β κ η q− ξ kee β κ kee β κ cid ε · τττd cid − e−b ε eq − τd exp τττd cid cid eq μo eq μo rt rt vm vm cid −q ε exp exp rt sendo c∞ constantes 
+ tr τττr τrh ε vm √ ε τττr kee β κ ≥ cid − cid cid − cid cid cid cid cid cid cid ε∗ ee β κ ≤ ε∗ κ ε∗ κ κ ε∗ ee β ee β ee β cid −q cid cid rt cid cid τvm cid cid τvm eq μo sinh eq −τd μo cid modelo elastoviscopl astico dano local rochas salinas tabela 
+ conjunto equac oes segundo modelo constitutivo lei fluˆencia mecanismo duplo modificada 
+ τττr kee β κ ≥ − cid cid cid − cid cid cid cid cid cid cid ε∗ ee β κ ≤ ε∗ κ ε∗ κ κ ε∗ ee β ee β ee β τττd λp −β τττr τττr −β cid θ cid ee κ β − resposta tens aodeformac el astica τττr dee regra fluxo lei evoluc endurecimento dp κ ε sendo cid cid λp −β ee κ β − cid ee κ β ε τττr kee β κ λp −β ee κ β · ε exp exp ε δ ee β ee κ β −δ ee β  cid cid  εo a∗ cid τvm cid τvm εo a∗ cid τvm cid τvm eq ≤ τo eq ≥ τo ee β ko expcbt cid τvm cid cid cid c∞ ε∗ satisfazendo √ τvm eq condic escoamento τττr kee β κ η q− ξ kee β κ kee β κ cid ε − e−b ε 
+ τd τd eq τo eq τo cid cid eq μo vm vm sendo c∞ constantes 
+ cid rto − rt cid a∗ exp tr τr τrh ε vm √ ε soluc erica modelo neste cap ıtulo apresentado soluc erica modelos cons titutivos elastoviscopl asticos dano propostos apresentados tab 
+ soluc erica consiste discretizar modelos espac tempo 
+ discretizac espacial efetuada ˆambito global estrutural meio etodo elementos finitos galerkin 
+ en quanto discretizac temporal considera tempo interesse cid cid subdi vidido sequˆencia intervalos tn tn 
+ neste trabalho tratando deformac oes finitas optouse etodo exponencial impl ıcito discretizac temporal regra fluxo viscopl astico etodo cl assico euler impl ıcito discretizac demais equac oes evoluc 
+ procedimento conduz problema constitutivo valor inicial resolvido adotando etodo aproximac baseada decomposic operadores operator split method 
+ problema constitutivo valor inicial elastoviscopl astico presente contexto vari aveis desconhecidas problema va lor inicial elastovispl astico gradiente deformac viscopl astica fp vari avel interna κ 
+ procedimento tempo incremental ∈ tn tn condic oes iniciais fp tn fp 
+ κ tn κn 
+ problema est sujeito hist oria prescrita gradiente deformac dano β ∈ tn tn 
+ assim problema constitutivo valor inicial consiste encontrar fp vari avel interna κ satisfac todo ∈ tn tn equac oes constitutivas dadas eqs 
+ etodo decomposic operadores operator split method utilizac etodo aproximac baseada decomposic operadores acarreta algoritmo compreende duas etapas asicas preditor el astico problema suposto puramente el astico en tre tn tn 
+ soluc erica modelo corretor elastoviscopl astico dano soluc sistema equac oes discretizadas lineares envolvendo lei elasticidade fluxo viscopl astico evoluc vari aveis internas crit erio car regamento descarregamento 
+ nesta fase adotadas condic oes iniciais resultados obtidos soluc problema preditor el astico 
+ preditor el astico nesta etapa sup oese fp 
+ ent soluc deste problema puramente el astico estado el astico κ 
+ teste trial elastic state obtida fptrial fp κtrial κn 
+ terminado correspondente gradiente deformac el astica teste fetrial 
+ visto lei el astica definida termos medida deformac − 
+ fetrial fn fp logar ıtmica ee tornase necess ario calcular cid cid cetrial fetrial fetrial 
+ seguida determinar deformac logar ıtmica teste eetrial guinte maneira cid cid eetrial ln cetrial 
+ inglˆes straindriven problem 
+ fn ∇ cid cid un 
+ cada incremento cid uk 
+ assim enunciase problema regido temse gradiente deformac fk deformac 
+ etodo decomposic operadores operator split method vez eetrial nada kirchhoff teste τττtrial calculado podese determinar tens rotacio rn lei hiperel astica expressa eq 
+ rn μoeetrial τττtrial λotr aplicando operador trac eq 
+ obt emse parcela hi drost atica tens rotacionada kirchhoff teste cid cid cid cid τττtrial rn 
+ τtrial rhn ptrial tr consequentemente chegase τττdtrial rn τττtrial rn − ptrial cid qtrial rn · τττdtrial τττdtrial rn 
+ parcela deviat orica tens rotacionada kirchhoff teste τττdtrial gundo invariante tens deviat orica teste qtrial 
+ rn al disso coes real eq 
+ temse cid tn tn 
+ cid ε vmdt tn cid tn cid eetrial cid cid eetrial cid cid cid − cid cid cid cid vmn − ε ε ptrial vmn √ κ βn κtrial κtrial κ βn − κn κtrial √ ee κ β ee κ β − κdt logo κtrial κn verificase assim cid cid ε ptrial vmn ε ptrial vmn ε vmn cid c∞ − e−b ε vmn cid 
+ fim realizado verificac crit erio escoamento 
+ soluc erica modelo estado el astico teste pertencer fato dom ınio el astico atual cid ent atualizase 
+ cid τττtrial rn ktrial eetrial βn κtrial · · trial implicando exemplo fptrial fp fp τττrn τττtrial rn κn κtrial vmn ε ptrial ε vmn 
+ caso contr ario cid trial 
+ deste modo algoritmo finalizado avanc pr oximo incre ≥ cid estado el astico teste soluc problema iniciase etapa correc viscopl astica mapea mento retorno viscopl astico conforme descrito abaixo 
+ corretor elastoviscopl astico dano solucionar problema elastoviscopl astico inicial adotase procedimento denominado correc viscopl astica condiz classe algoritmos mapeamento retorno amplamente explorados simo hughes souza neto peric owen 
+ maneira diferente trabalhos envolvendo deformac oes infinitesimais quais adotam geralmente aproximac baseada etodo euler impl ıcito discretizac fluxo viscopl astico neste trabalho empregandose aproximac exponencial impl ıcita proposta eterovic bathe weber anand 
+ deste modo atrav es hip otese decomposic multiplicativa gradiente deformac utilizac medida deformac logar ıtmica conjuntamente aproximac exponencial impl ıcita poss ıvel modificar algoritmo mapeamento retorno maneira permanec formato geral problemas formulados pequenas deformac oes 
+ al disso caso problemas deformac 
+ etodo decomposic operadores operator split method finita emprego etodo euler impl ıcito tradicional garante compressibilidade fluxo viscopl astico materiais insens ıveis press hidrost atica provocando portanto consider aveis perdas precis durante integrac erica equac oes constitutivas modelos desta classe souza neto peric owen 
+ assim regra fluxo viscopl astico fp dpfp fp condic inicial discretizada utilizando aproximac exponencial impl ıcita backward rue exponential configurac tencionada resultando ∂ g∗ vp ∂τττr fp exp dp ue cid cid cid cid − dp 
+ ∆ε cid cid fp 
+ incremento deformac viscopl astica efetiva ∆ε tritamente positivo 
+ ∆ε sob carregamento viscopl astico 
+ deve ser es discretizac deformac viscopl astica efetiva modelo fluˆencia munson fossum senseny tab 
+ aplicase etodo cl assico euler impl ıcito bresolin apˆendice resultando seguinte aproximac sendo ε fn ε fn ∆ε ∆ε ∆ε ∆ε ∆ε ee κ β ∆ε cid cid τvm cid cid τvm cid cid −q cid −q cid cid ∆ε cid cid cid cid eqn μo eqn μo rt rt exp rt exp rt cid ∆t ∆t ∆ε exp ∆ε exp ∆ε τvm eqnτd 
+ cid cid τvm sinh eqn τd μo ∆t 
+ soluc erica modelo modo obt emse seguinte aproximac vari avel associada endurecimento isotr opico κn qn κn − ∆ε qn − κn 
+ implincando subsequente aproximac deformac viscopl astica equivalente von mises cid ee κ β − cid cid cid ee κ β ε vmn ε vmn √ ∆κ 
+ unica diferenc conjunto equac oes modelo constitutivo apresentado tab 
+ contribuic termo ε 
+ conforme mencionado primeiro conjunto equac oes adotase descric deformac viscopl astica efetiva modelo fluˆencia munson fossum senseny enquanto segundo conjunto optou lei fluˆencia munson fossum senseny juntamente lei costa al 
+ ent deformac viscopl astica efetiva estacion aria ε proposta costa al 
+ seguinte aproximac obtida  εo a∗ cid τvm εo a∗ cid τvm eqn τo eqn τo cid cid ∆ε cid ∆t ∆t τvm eqn ≤ τo τvm eqn ≥ τo 
+ mapeamento integrac exponencial eq 
+ poss ıvel chegar forma discreta regra evoluc termos medida deformac logar ıtmica deus eetrial ee − ∆ε ∂ g∗ vp ∂τr 
+ cid cid cid cid logo eq 
+ algoritmo mapeamento retorno pode ser formulado mantendo mesma forma geral problemas pequenas deformac oes 
+ regra evoluc expressa termos medida 
+ etodo decomposic operadores operator split method deformac logar ıtmica eq 
+ relac constitutiva hiperel astica eq 
+ obt emse τττrn τττtrial rn − ∆ε λo θ iμo 
+ cid cid μo cid cid μo cid τττd rn qn cid tomando trac equac anterior dividindo resultado determinase pn ptrial − ∆ε λo θ 
+ al disso partir tens efetiva rotacionada kirchhoff τττrn τττd rn τrhn pn τrhn resulta τττd rn τττdtrial rn cid cid − 
+ μo∆ε qn fim relac 
+ chegase qn qtrial − μo∆ε 
+ partir resultados obtidos acima podese formular algoritmo mapeamento retorno viscopl astico consiste soluc sistema equac oes lineares conforme descrito abaixo 
+ soluc erica modelo 
+ formulac mapeamento retorno viscopl astico  algoritmo retorno viscopl astico pode ser formulado dado fn βn permite obter cid ptrial cid μo soluc qtrial cid determinar pn qn κn cid λo qn κn ∆ε pn qn κn pnθ pn qn κn qnμof qn κn ∆ε pn qn κn κn qn κn ∆ε qn ptrial qn qtrial qn κn 
+ vez determinado conjunto pn qn κn evoluc tens efetiva rotacionada kirchhoff eq 
+ pode ser calculada meio resultados obtidos eqs 
+ ademais poss ıvel terminar gradiente deformac viscopl astica eq 
+ deformac viscopl astica equivalente eq 
+ deformac viscopl astica efetiva eq 
+ soluc sistema equac oes lineares 
+ aplicase etodo newton 
+ procedimento requer determinac matriz rigidez tangente local cujas componentes dadas kt cid ∂ ri cid ∂ cid cid cid ptrial cid pn qn κn 
+ estimativa inicial etodo iterativo etodo newton utilizado neste trabalho encontrados apˆendice trabalho deus 
+ detalhes sobre algoritmo κ qtrial κn 
+ problema valor contorno global definic problema local modelo constitutivo estrat egia atualizac vari aveis tn podese resolver pro blema valor contorno global termos deslocamento dano cid β 
+ neste trabalho adotase formulac lagrangiana total portanto express oes fornecidas configurac referˆencia ωo 
+ assim definic problema valor contorno global inicialmente emprega formulac forte posteriormente formulac fraca forma integral 
+ problema valor contorno global conforme apresentado seguir 
+ formulac forte problema cid formulac forte modelo elastovicopl astico dano lo cal pode ser enunciada determine func oes deslocamento dano diferenciais satisfeitas cid seguinte equac oes cid cid β submetida condic oes contorno submetida condic contorno cid ρo cid cid bo cid ωo cid cid cid cid cid  div tal cada ∈ cid cid cid cid cid cid cid cid cid cid cid cid cid ho cid cid cid · cid cid cid − r∗ cid −→ ˆu cid γu cid cid −y cid cid cid ho γo cid cid cβ β div γt cid β β 
+ condic inicial termos cid ho −y r∗ 
+ β cid ωo 
+ β β fornecidos express oes 
+ formulac fraca problema formulac fraca modelo elastovicopl astico dano local pode ser enunciada determine func oes deslocamento dano admiss ıveis cid β ∈ tal cada ∈ cid fu cid β cid cid ωo p·∇ cid cid dω− cid satisfeitas ∂ωo cid seguintes equac oes − cid cid · cid dγo ωo ρo cid bo · cid dωo ∀ cid ∈ vu 
+ soluc erica modelo fγ cid β γ cid ωo cβ βγ dωo cid − cid cid cid cid cid cid ho · ∇ cid xγ dωo β β ωo − r∗ −y γ dωo ∀γ ∈ vγ 
+ aqui representa conjunto deslocamentos danos ad ωo miss ıveis ku × kγ cid β cid β suficientemente regular cid γu denota conjunto variac oes admiss ıveis vu × vγ cid γ cid γ suficientemente regular cid γu 
+ formulac incremental problema elatoviscopl astico dano formulac incremental problema considerase conhecida soluc intervalo tn imp oese equac oes equil ıbrio tn 
+ logo instante tn tn considerado deslocamento cid dano β dados respectivamente cid un cid un ∆ cid un βn βn ∆βn 
+ deste modo tn forma fraca problema incremental tovicopl astico dano pode ser formulada determine cid un βn ∈ kn tal ωo kg ∇ cid xβn · ∇ cid xγdωo γ dωo ∀γ ∈ vγ 
+ fu cid un βn cid cid fγ cid un βnγ cid cid cid − cid ωo ∂ωo ωo pn·∇ cid cid dω− cid cβ cid βn − βn γdωo cid cid cid ωo −y − r∗ β βn − cid ωo ρo cid bon · cid dωo ∀ cid ∈ vu cid ton · cid dγo 
+ formulac incremental problema elatoviscopl astico dano fu cid un βn cid cid formulac acima eqs 
+ conhecida impl ıcita etodo euler impl ıcito 
+ entretanto simplicidade objetivo desacoplar sistema equac oes associado cid un βn etodo semi impl ıcito adotado 
+ deste modo formulac impl ıcita acima substitu ıda formulac semiimpl ıcita pode ser enunciada dado βn determinar cid un ∈ kn tal ωo pn · ∇ cid cid dω− cid − cid ωo ρo cid bon · cid dωo ∀ cid ∈ vu 
+ atrav es eq 
+ poss ıvel obter dano cid ton · cid dγo ∂ωo seguinte formulac incremental equac evoluc dano fγ cid un βnγ cid cid cid determinado cid un dado cid un βn determinar βn ∈ kn tal cid cid hon · ∇ cid xγdωo ωo ωo γ dωo ∀γ ∈ vγ 
+ cβ cid βn − βn γdωo cid cid cid ωo −y − r∗ β βn − cid ωo 
+ linearizac etodo newton odulo tangente consistente raz problema valor contorno 
+ ser linear relac cid un prop oese etodo newtonraphson solucion alo conforme esquematizado seguir 
+ cid cid un 
+ denota umero iterac etodo newton cid un valor convergido subintervalo tempo anterior tn 
+ desta maneira esima iterac instante tn temse determinar ∆ cid uk cid uk cid uk ∆ cid uk 
+ cid imposta seguinte condic ∀ cid ∈ vu cid uk βn cid fu cid 
+ visto βn conhecido devido aplicac etodo semiimpl ıcito desacopla mento sistema equac oes eq 
+ pode ser resolvida cid un 
+ soluc erica modelo fu fu cid cid fu ∆ cid uk ∆ cid uk ∀ cid ∈ vu 
+ cid uk ∆ cid uk βn cid cid uk βn cid cid cid cid uk cid cid uk 
+ considerando fu ◦ ◦◦ suficientemente regular expandindo fu obt emse aproximac primeira ordem cid βn cid cid erie taylor cid uk cid cid uk βn cid cid fu βn cid cid dfu cid cid uk βn cid cid cid ∆ cid uk cid cid cid cid cid cid cid cid cid cid cid · ∇ cid xδ cid dω cid cid cid ∂τip sendo odulo tangente consistente dado partir eq 
+ poss ıvel escrever cid uk βn cid cid uk βn cid cid cid cid dfu cid uk βn cid ∇ cid ∆ cid ∆ cid uk ∆ cid uk −fu 
+ cid cid cid cid cid uk 
+ dfu cid cid 
+ cid uk jkl ∂ pi ∂ fkl ∂ fkl f− jp − τipf− jk f− 
+ cid cid cid cid cid cid uk ωo eq 
+ observase alculo requer determinac derivada tens kirchhoff relac gradiente deformac 
+ poss ıvel escrever τττ func tens rotacio nada kirchhoff τττrn 
+ cid τττrn cid cid cid 
+ logo derivando express 
+ relac fn seguinte resultado obtido ∂τττn ∂fn ∂re ∂fn τττrn cid cid ∂τττrn ∂fn τττrn ∂ 
+ entretando sabendo τττrn βn τττrn 
+ formulac incremental problema elatoviscopl astico dano escrevendo τττrn termos deformac el astica teste eetrial con junto vari aveis internas αααn souza neto peric owen temse cid cid τττrn ˆ τττrn eetrial αααn 
+ consequentemente aplicando regra cadeia chegase ˆd ∂ τττrn ∂fn ∂ τττrn ∂eetrial ∂eetrial ∂cetrial ∂cetrial ∂fn trial ∂ee ∂cetrial permitindo reescrever eq 
+ ∂ τττrn ∂eetrial trial ∂ce ∂fn 
+ observase tensor quarta ordem operador tangente unica contribuic ˆd eq 
+ proveniente relac constitutiva material 
+ termos restantes todos relacionados parcela geom etrica deformac oes finitas 
+ termo depende estado estado el astico elastoviscopl astico 
+ τr kee β κ sup oese odulo el astico 
+ caso contr ario τr kee β κ ≥ tornase odulo tangente consistente elastoviscopl astico dep identificado atrav es soluc sistema equac oes locais 
+ determinac exige derivada tipo ∂ ln ∂x derivada func isotr opica 
+ classe derivadas investigada souza neto peric owen ortiz radovitzky repetto 
+ neste trabalho adotase implementac proposta ortiz radovitzky repetto 
+ determinac termo segue derivada tensor deformac cauchygreen direita eq 
+ equanto obter tensor quarta ordem ∂re eq 
+ empregase definic decomposic ∂fn polar gradiente deformac identificando 
+ detalhes determinac termos ˆd podem ser encontrados trabalho rossi 
+ retrial soluc erica modelo 
+ linearizac etodo newton odulo tangente consistente dano vez problema valor contorno 
+ linear relac βn prop oese etodo newtonraphson solucion alo conforme esquematizado seguir 
+ denota umero iterac etodo newton βn valor convergido subintervalo tempo anterior tn 
+ desta maneira esima iterac instante tn temse 
+ fγ cid determinar ∆β ∆β β β imposta seguinte condic 
+ cid fγ cid γ nγ fγ fγ aproximac primeira ordem ∆β γ fγ cid un β ∆β cid un β ∀γ ∈ vγ 
+ cid cid un β 
+ cid cid un β considerando fγ ◦ ◦◦ suficientemente regular expandindo obt emse cid cid un β cid ∀γ ∈ vγ cid cid nγ cid erie taylor β cid cid un β nγ cid fγ nγ cid cid ∆β cid cid cid cid partir eq 
+ poss ıvel escrever −fγ nγ cid dfγ cid nγdωo cid cid cid cid cid β cid cid un β cid nγ ∆β ωo − r∗ o∇ cid ∆β ωo kg nε∆β cid β n∆β cid un β nγ cid un β nγ cβ cid ∆β 
+ cid cid dfγ cid un β −y ωo odulo tangente consistente dado 
+ β dε r∗ β cid cid cid cid cid ε · ∇ cid xγdωo γdωo 
+ dfγ ∆β cid 
+ formulac incremental problema elatoviscopl astico dano cid β dε ηα ∆β cid cid cid cid cid ε cid rβ cid cid cid cid ε − cid ε∆β ηα ∆β nh −β cid cid cid cid ε cid pa− cid nh β − 
+ cid − β sendo cid r∗ β cid β ε∆β dε dε 
+ cid rβ cid β ε∆β 
+ resulta func resistˆencia estabelecida eq 
+ ∆β pa − soluc erica modelo exemplos ericos neste cap ıtulo apresentados resultados ericos avaliac performance implementac modelo constitutivo rochas salinas proposto cap ıtulo utilizando etodo elementos finitos 
+ modelo implementado estrutura baseada fortran orientado objeto osprocessamento executado software gid 
+ ensaios triaxiais fluˆencia ensaio uniaxial trac amostras cil ındricas raz proporcionalidade compri mento diˆametro 
+ assim exemplos simulados numericamente tratados axissim etricos sim etricos relac altura fig 
+ alises cavidades sal tratadas sob hip otese estado plano deformac 
+ elemento finito empregado alises quadr atico triangular tri visando evitar aparecimento fenˆomeno travamento volum etrico volumetric locking 
+ discretizac geome tria corpos prova axissim etricos optouse dois elementos finitos devido deformac homogˆenea 
+ resultados ericos alises fluˆencia obtidos tolerˆancia convergˆencia global − alises dano tolerˆancia convergˆencia global − 
+ corpo prova cil ındrico antes ap deformac adaptado al fredsson stigh 
+ simulac oes realizadas rochas salinas brasileiras formac muribeca sergipe rochas salinas estados unidos localizadas golfo exico campo west hackberry 
+ alises rochas salinas brasileiras corpos prova possuem mm primento mm diˆametro conforme especificado experimentos poiate jr 
+ logo amostras exemplos simulados numericamente exemplos ericos tratados axissim etricos sim etricos relac altura apresentam mm comprimento mm raio 
+ enquanto alises sal west hackberry consideramse amostras mm comprimento mm diˆametro wawersik hannum lauson 
+ deste modo corpos prova exemplos ericos apresentam mm comprimento mm raio 
+ conforme mencionado modelo proposto neste trabalho possibi lita duas leis fluˆencia descric resposta viscopl astica sal lei mecanismo duplo deformac modificada tab 
+ multimecanismos deformac tab 
+ validac modelo adotando destas leis fluˆencia realizada mediante reproduc simulac ensaios triaxiais fluˆencia 
+ ensaios triaxiais fluˆencia sal brasileiro validac modelos viscopl asticos implementados alizadas simulac oes ensaios triaxiais fluˆencia 
+ nestas simulac oes extremidade superior corpo prova submetida carga forma degrau carregamento tens axial σa face radial corpo sujeita tens confinante σc 
+ carregamento provoca amostra tens diferencial stress diference dada diferenc tens axial tens confinante aplicadas amostra σd σa − σc 
+ estado tens temperatura mantidos constantes durante ensaio 
+ corpo prova utilizado alises condic oes contorno aplicadas ilustradas fig 
+ malha condic oes contorno simulac ensaios triaxiais 
+ inicialmente modelos avaliados mediante reproduc 
+ ensaios triaxiais fluˆencia sal brasileiro simulac dois ensaios triaxiais fluˆencia 
+ temperatura tens oes durac cada ensaio fluˆencia apresentados tab 
+ especificac ensaios triaxiais fluˆencia rochas salinas brasilei ras costa al 
+ poiate jr costa falcao 
+ ensaio ◦c σc mpa σa mpa resultados experimentais ensaio adotados referˆencia validac modelos fluˆencia constam poiate jr costa falcao costa al 
+ ensaios executados amostras sal formac muribeca sergipe regi pr oxima mina taquarivassouras 
+ modelo mecanismo duplo modificado ajuste modelo admitindo lei mecanismo duplo modificada tab 
+ realizado base parˆametros fluˆencia prim aria forne cidos fossum fredrich fluˆencia secund aria encontrados costa al 
+ mostram parˆametros modelo halita brasileira ap ajuste dados experimentais 
+ parˆametros el asticos func oes ψ ηα g∗ vp rochas salinas 
+ gpa ν μo gpa ηα η ξ mpa c∞ mpa θ × − fig 
+ apresenta pontos experimentais curvas fluˆencia obtidas numericamente ensaio adotandose lei mecanismo duplo deformac modificada 
+ exemplos ericos tabela 
+ parˆametros viscopl asticos rochas salinas brasileiras lei meca nismo duplo modificada 
+ fluˆencia prim aria ko cb k− αw χw αr χr × − − fluˆencia secund aria τo mpa εo h− oc kcal mol kcal mol 
+ × − × − figura 
+ resultados experimentais ericos halita brasileira lei mecanismo duplo modificada 
+ ensaios triaxiais fluˆencia sal brasileiro atualmente modelo mecanismo duplo deformac proposto costa al 
+ avaliado somente partir inclinac reta pro duzida representa fluˆencia secund aria 
+ portando poss ıvel avaliar performance modelo acordo resultado final pois fase prim aria fluˆencia considerada 
+ neste trabalho virtude clus fase transiente poss ıvel avaliar modelo base resultado final conforme mostrado fig 
+ aver ıguase adotando conjunto parˆametros tab 
+ resposta produzida modelo atrav es odigo desenvolvido neste trabalho apresenta boa concordˆancia valores experimentais ensaio 
+ entretanto obteve certa discrepˆancia relac dados experimentais ensaio poi jr costa falcao 
+ disparidade pode estar associada erro processo captura pontos gr afico experimental apresenta escala substancialmente reduzida eixo ordenadas 
+ podese verificar endurecimento provocado rocha evoluc vari avel κ func deformac viscopl astica efetiva ge rada ensaios triaxiais fluˆencia 
+ neste trabalho vari avel κ res pons avel descric fenˆomenos amolecimento endurecimento isotr opicos rocha pertence func transiente inclu ıda modelo canismo duplo fim representar fase prim aria fluˆencia 
+ ensaio simulado tempo alise ensaio 
+ observase quanto maior tens diferencial aplicada corpo maior endureci mento rocha vari avel κ evolui satura rapidamente 
+ evoluc vari avel κ func ε 
+ modelo multimecanismos deformac ajuste modelo empregando lei multimecanismos deformac tab 
+ decorreu referˆencia parˆametros encontrados fossum fredrich firme 
+ apresenta parˆametros fluˆencia obtidos halita brasileira ap ajuste dados experimentais 
+ parˆametros el asticos func oes ψ ηα g∗ vp mesmos tab 
+ parˆametros viscopl asticos rochas salinas brasileiras lei multime canismos deformac 
+ fluˆencia prim aria ko cb k− αw χw αr χr × − − fluˆencia secund aria s− mol s− mol τo mpa s− s− × 
+ × × − fig 
+ ilustrados valores experimentais curvas fluˆencia obtidas simulac oes ensaios empregandose agora lei fluˆencia multimecanismos deformac 
+ ensaios triaxiais fluˆencia sal west hackberry figura 
+ resultados experimentais ericos halita brasileira lei multimecanismos deformac 
+ comparando curvas fluˆencia ilustradas fig 
+ poss ıvel constatar adoc deste conjunto parˆametros tab 
+ obtˆemse bons resultados simulac ensaio comparados dados experimentais encontrados halita brasileira trabalho costa al 
+ consider avel discrepˆancia obtida relac dados experimentais ensaio 
+ conforme comentado anteriormente disparidade pode estar relacionada erro processo captura dados curva experimental fluˆencia 
+ ensaios triaxiais fluˆencia sal west hackberry rochas salinas west hackberry situadas golfo exico exibem comportamento fluˆencia similar rochas salinas brasileiras poiate jr 
+ virtude disso modelo tamb validado sal west hackberry adotandose lei multimecanismos deformac tab 
+ tal reproduziuse nu mericamente trˆes ensaios triaxiais fluˆencia conforme especificados tab 
+ ensaios procedem conforme descrito anteriormente sal bra sileiro aplicandose corpo prova condic oes contorno ilustradas fig 
+ exemplos ericos tabela 
+ especificac ensaios triaxiais fluˆencia rochas salinas west hackberry wawersik hannum lauson 
+ ensaio wh wh wh wh ◦c σc mpa σa mpa resultados ensaios laboratoriais adotados base validac modelo encontramse munson 
+ ajuste modelo dados experimentais realizouse referˆencia parˆametros sais retratados fossum fredrich 
+ apresenta parˆametros viscopl asticos modelo considerados sal west hackbarry 
+ parˆametros el asticos func oes ψ ηα g∗ vp mesmos estabeleci tab 
+ parˆametros viscopl asticos rochas salinas west hackberry lei multimecanismos deformac 
+ fluˆencia prim aria ko cb k− αw χw αr χr × − 
+ − fluˆencia secund aria s− mol s− mol τo mpa s− s− × 
+ × × − curvas fluˆencia obtidas numericamente valores experimen tais ensaios especificados tab 
+ ensaios triaxiais fluˆencia sal west hackberry figura 
+ resultados experimentais ericos sal west hackberry ◦c 
+ resultados experimentais ericos sal west hackberry ◦c 
+ exemplos ericos nestes exemplos odigo desenvolvido adotando lei multime canismos deformac capturou satisfatoriamente deformac oes eleva ensaios triaxiais sujeitos maiores tens oes diferenciais 
+ bons resulta alcanc ados ensaio erico temperatura ◦c comparado dados experimentais fluˆencia fig 
+ modelo possi bilitou calcular tamb curvas fluˆencia ajustes razo aveis dados laborat orio temperatura ◦c fig 
+ resposta fluˆencia variac temperatura bem reproduzida analisados gr aficos simulac oes ◦c ◦c 
+ ensaio trac uniaxial alise trac uniaxial realizada fim verificar res posta qualitativa dano sal brasileiro 
+ neste problema amostra sub metida carregamento prescrito deslocamento forma rampa li near amplitude final × − mm 
+ deslocamento prescrito aplicado incrementos 
+ mostra corpo prova condic oes contorno utilizadas modelo axissim etrico analisado 
+ neste exemplo empregase modelo constitutivo tab 
+ parˆametros sal brasileiro apresentados tabs 
+ parˆametros dano estimados simulac mostrados tab 
+ condic oes contorno malha simulac ensaio trac 
+ ensaio trac uniaxial tabela 
+ kg cβ pa pa diagrama tens aodeformac simulac ensaio trac uni axial ilustrado fig 
+ neste observase trˆes regi oes distintas ca racterizam comportamento puramente fr agil sal 
+ primeira fase mos tra desenvolvimento comportamento el astico linear limite resistˆencia ruptura rocha 
+ segunda fase ap pico curva corpo prova exibe perda resistˆencia acentuada onde deformac axial continua aumentando decr escimo tens uniaxial 
+ terceira fase caracterizada curva suave rocha atinge sistˆencia menor resistˆencia pico denominada resistˆencia resi dual 
+ logo poss ıvel observar modelo dano descreveu qualitativa mente bem curva tens aodeformac sal teste trac uniaxial caracterizandoa plenamente comportamento elastofr agil 
+ curva tens aodeformac simulac ensaio trac 
+ ilustra evoluc vari avel escalar dano func tempo ensaio trac uniaxial simulado 
+ ıcio ensaio exemplos ericos observase evoluc dano permanece constante 
+ β impli cando β 
+ limite resistˆencia material atingido evoluc vari avel dano aumenta descrevendo processo amoleci mento devido degradac progressiva propriedades mecˆanicas mate rial caracterizando portanto segunda fase diagrama tens aodeformac fig 
+ evoluc dano func tempo 
+ nesta simulac obtevese limite resistˆencia trac mpa sal brasileiro 
+ valor est dentro faixa determinada ensaios laboratorias maioria sais investigados 
+ segundo jeremic resistˆencia trac sal varia mpa mpa sendo mpa valor comum 
+ alises uneis formac oes salinas nesta etapa realizadas simulac oes simplificadas comporta mento uneis formac oes sal ıferas 
+ alises propostas corpo salino submetido carregamento prescrito tens forma rampa linear vertical σv horizontal σh atingir amplitude axima tens requerida 
+ σvo σho segundos 
+ vez alcanc ada amplitude axima estado tens mantido constante durante tempo 
+ alises uneis formac oes salinas restante alise 
+ carregamento linear aplicado simultaneamente maneira proporcional seguindo respectivas relac oes tens vertical horizontal σv σvoπ σh σhoπ 
+ queπ π  ≤ 
+ valendose condic oes simetria problemas modelados admitindo quarto sec transversal 
+ alises bidimensionais quais considerase estado plano deformac oes 
+ unel circular inicialmente idealizado duas simulac oes unel circular rochas salinas 
+ nestas alises rocha salina sujeita tens verti cal σvo mpa tens horizontal σho mpa 
+ primeira simulac adotase modelo constitutivo apresentado tab 
+ parˆametros ajustados sal brasileiro tabs 
+ fluˆencia descrita lei mecanismo duplo modificada 
+ segunda simulac optouse modelo constitutivo apresentado tab 
+ utilizando parˆametros sal west hackberry tabs 
+ sendo neste mo delo fluˆencia representada lei multimecanismos deformac 
+ parˆametros dano adotados estimados tab 
+ dimens oes unel condic oes contorno malha sobre geometria inicial mostradas fig 
+ malha elementos finitos composta elementos totalizando 
+ exemplos ericos figura 
+ malha condic oes contorno simulac unel circular 
+ ilustram distribuic curvas ıvel refe rentes resultados obtidos sal brasileiro instante final alise segundos malha deformada fator escala 
+ deslocamentos direc sal brasileiro 
+ alises uneis formac oes salinas figura 
+ deformac efetiva tens equivalente von mises sal brasileiro 
+ tens oes cauchy σxx σyy sal brasileiro 
+ tens oes cauchy σxy σzz sal brasileiro 
+ exemplos ericos figs 
+ apresentam distribuic curvas ıvel referentes resultados obtidos sal west hackberry instante final alise segundos malha deformada fator escala 
+ deslocamentos direc sal west hackberry 
+ deformac efetiva tens equivalente von mises sal west hackberry 
+ alises uneis formac oes salinas figura 
+ tens oes cauchy σxx σyy sal west hackberry 
+ tens oes cauchy σxy σzz sal west hackberry 
+ observase maiores deslocamentos ocor rem parede unel circular evidenciando tendˆencia fechamento unel per ıodo simulado 
+ unel sal brasileiro fig 
+ obtevese deslocamento ho rizontal aximo − cm deslocamento vertical aximo − cm 
+ enquanto unel formac sal ıfera west hackberry fig 
+ deslocamento horizontal aximo − cm deslocamento vertical aximo − cm 
+ conduziu deformac horizontal fecha mento unel sal brasileiro sal west hackberry 
+ disparidade tamb observada ensaios triaxiais fluˆencia apresentados poiate jr 
+ quais verifica sal west hackberry possui maior resistˆencia portanto menor mobilidade taxa fluˆencia sal brasileiro 
+ tanto unel sal brasileiro quanto unel sal west hack exemplos ericos berry observase desenvolvimento tens oes altamente compressivas regi inferior corpo pr oxima circunferˆencia conforme mostram figs 
+ componentes σyy σzz tensor tens 
+ tamb indicam maiores magnitudes tens von mises cisalhamento respectivamente situamse torno cir cunferˆencia unel 
+ similarmente ocorre deformac viscopl astica acumulada figs 
+ instante final alise chegou sal brasileiro sal west hackberry 
+ devido menor rigidez sal brasileiro tens oes obtidas tornamse menos loca lizadas torno unel circular podendo observar curvas ıvel distribuic oes tens oes abrangendo regi oes corpo salino afastadas circunferˆencia 
+ geometria unel condic oes carregamento regi oes propagac dano durante tempo alise 
+ unel arco neste exemplo considerase simulac comportamento unel formato arco 
+ formac salina carregada vertical horizontal respectivas tens oes σvo mpa σho mpa con forme esquematizado fig 
+ adotase alise modelo constitutivo apresentado tab 
+ parˆametros rochas salinas brasileiras tabs 
+ parˆametros dano adotados apresentados tab 
+ ilustra dimens oes unel condic oes contorno utilizadas simulac 
+ malha elementos finitos composta elementos 
+ malha condic oes contorno simulac unel arco 
+ alises uneis formac oes salinas figs 
+ apresentam distribuic curvas ıvel resultados alcanc ados sal brasileiro instante final alise 
+ segundos malha deformada fator escala 
+ deformac viscopl astica efetiva tens equivalente von mises 
+ exemplos ericos figura 
+ tens oes cauchy σxx σyy 
+ tens oes cauchy σxy σzz 
+ poss ıvel observar campo deslocamento horizontal vertical unel rocha salina brasileira 
+ deslocamento horizontal aximo − cm vertical aximo − cm 
+ logo obteve deformac horizontal sentido fechamento lateral unel aproximadamente 
+ resultado mostra reduc unel devido deformac sal causada tens oes aplicadas simulac 
+ fim avaliar melhor unel arco resultados apresentados curvas ıvel tens oes regi oes aplicac cargas des prezados 
+ componente σxx verificase alta concentrac tens compressiva atuando teto unel 
+ componentes σyy σzz tamb indicam tens oes altamente compres sivas atuando parede teto unel 
+ igualmente observase fig 
+ maiores magnitudes tens von mises deformac 
+ alises uneis formac oes salinas viscopl astica desenvolvemse teto parede unel 
+ deformac viscopl astica acumulada axima neste local 
+ ainda teto unel evidenciadas maiores magnitudes tens cisalhamento conforme mostrado curvas ıvel fig 
+ neste exemplo unel tamb ocorreu regi oes desenvol vimento dano durante per ıodo alise 
+ unel retangular aqui representado comportamento unel retangular rocha salina submetida tens vertical σvo mpa tens horizontal σho mpa 
+ neste caso optouse segundos inv ez eq 
+ aplicar carregamento aximo tens vertical horizontal 
+ simulac considerase modelo constitutivo apresentado tab 
+ parˆametros empregados apresentados exemplo ensaio trac uniaxial 
+ ilustra dimens oes unel condic oes contorno utilizadas alise 
+ malha elementos finitos composta elementos 
+ malha condic oes contorno simulac unel retangular 
+ ilustram distribuic curvas ıvel refe rentes resultados obtidos simulac malha deformada fator escala 
+ exemplos ericos figura 
+ tens equivalente von mises tens hidrost atica 
+ tens oes cauchy σxx σyy figura 
+ tens oes cauchy σxy σzz 
+ alises uneis formac oes salinas figura 
+ nesta simulac ocorreu falha fr agil teto unel antes car regamento atingir intensidade axima estabelecida 
+ ruptura teto produzida desenvolvimento σv mpa σh mpa instante segundos 
+ distribuic tens oes horizontais verticais fig 
+ mostra desenvolvimento alta concentrac tens oes compress regi arredondada unel 
+ tamb indicam valores elevados tens von mises cisalhamento neste local 
+ ilustra dano gerado unel instante final alise 
+ dano inicia regi central teto propagase locais distantes centro formac 
+ valor aximo dano atingido centro teto manifesta perda total resistˆencia rocha causada ruptura localizada formac salina 
+ simulac observase cargas aplicadas produzem flex teto unel ent inicialmente altas tens oes horizontais trativas senvolvidas centro teto provocando fissuramento gradual enfra quecimento rocha 
+ entretanto ap falha material regi central observase fig 
+ baixa magnitude tens horizontal lo cal desenvolvimento aximo valor dano 
+ nesta regi devido fissurac completa rocha instante final alise mate rial ıntegro capaz suportar cargas conduz decr escimo tens 
+ decr escimo tamb observado tens equivalente von mises tens hidrost atica ilustradas figs 
+ exemplos ericos conclus oes levantamento bibliogr afico revela comportamento uctil rochas salinas est bastante difundido sendo poss ıvel encontrar mapas canismos deformac oes modelos matem aticos respaldo condic oes simples complexas carregamento dependendo aplicac inte resse 
+ entretanto comportamento fr agil semifr agil apesar explorado compreendido mecanicamente alguns autores ainda carece mode los dano elaborados teorias maior sofisticac 
+ assim principal contribuic deste trabalho tese efetuada fase processo degrada tivo material descric regime fr agil 
+ tal proposto modelo constitutivo elastoviscopl astico dano local regime grandes deformac oes visto presente momento modelos oricos desenvolvidos rochas salinas inclu ıdas apenas teorias locais dano 
+ proposta confere car ater edito descric dano neste geomaterial apesar vasta gama estudos caracterizac desenvolvimento modelos constitutivos 
+ diferencial leis fluˆencia rochas salinas adotadas neste trabalho admitiuse formulac abordando teoria deformac oes fini tas relac oes constitutivas fornecidas termos tens tipo von mises 
+ modelo fluˆencia secund aria costa al 
+ extensiva mente calibrado rochas salinas brasileiras propˆosse representac fase prim aria fluˆencia combinado lei lei multimecanis mos deformac munson fossum senseny 
+ fim desenvolver modelo constitutivo inicialmente estabe lecida medida deformac hencky descric deformac el astica material cujo par conjugado medida tens rotacionada kirchhoff realizouse formulac forte equac oes equil ıbrio forc dano considerando abordagem apresentada fremond ned jar 
+ seguida visando obtenc modelo constitutivo termodi namicamente consistente desenvolveuse modelo orico contexto termodinˆamica meios cont ınuos etodo estado local atrav es definic vari aveis estado potenciais termodinˆamicos 
+ modelo formulado ˆambito mecˆanica aosuave nonsmooth chanics processos regularizac tamb aplicados contornar problemas diferenciabilidade local 
+ etapa subsequente derivouse formulac fraca incremental problema elastoviscopl astico dano 
+ determinar soluc oes ericas conclus oes aproximadas utilizando etodo elementos finitos galerkin pro posto etodo erico semiimpl ıcito 
+ adicionalmente operadores tan gentes consistentes associados etodo erico semiimpl ıcito derivados atrav es processo linearizac forma fraca equac equil ıbrio forc dano respectivamente 
+ simulac oes concretizadas modelo proposto viabiliza utilizac distintas leis fluˆencia representou adequadamente fases prim aria secund aria fluˆencia rochas salinas 
+ maneira geral curvas ensaios triaxiais fluˆencia bem descritas sal brasi leiro west hackberry 
+ simulac ensaios triaxiais fluˆencia permitiu validar modelo odigo implementado viscoplasticidade mediante comparac resultados ericos obtidos dados experimentais sal brasileiro sal west hackberry 
+ deste modo poss ıvel simular tamb comportamento uneis formac oes salinas distintas formas sec analisar gradativo fechamento destes devido deformac rocha per ıodo simulac oes 
+ ensaio trac uniaxial descrito boa qualidade mo delo dano proposto 
+ diagrama tens aodeformac ensaio trativo poss ıvel identificar distintas regi oes caracterizam comportamento sal material elastofr agil 
+ degradac rocha tamb presentada qualitativamente bem modelo dano simulac unel retangular 
+ flex produzida teto unel desenvolveu tens oes trativas conduziram progressiva deteriorac rocha regi central teto ruptura 
+ fim concluise modelo constitutivo proposto atrav es odigo desenvolvido descreveu adequadamente comportamento fluˆencia distintas rochas salinas sal brasileiro west hackberry capturou comportamento qualitativo similar observado literatura dano 
+ logo mostrase opc util alise comportamento uctil fr agil rochas salinas diferentes aplicac oes engenharia 
+ sugest oes trabalhos futuros desenvolvimento modelo considerando dano anisotr opico 
+ introduc fase terci aria fluˆencia admitindo dano uctil descrever falha fluˆencia cavidades subterrˆaneas projetadas formac oes evapor ıticas 
+ sugest oes trabalhos futuros discretizac equac oes etodo elementos livres ga lerkin 
+ introduc formulac contato unilateral simular ensaio compress diametral fundamental determinac resistˆencia trac rochas 
+ implementac modelo software comercial alise simulac poc petr oleo cavidades subterrˆaneas sec oes evapor ıticas junto outras formac oes geol ogicas 
+ realizar calibrac modelo constitutivo base ensaios ex perimentais rochas salinas 
+ considerar outros fenˆomenos modelo modo torn alo fisticado 
+ exemplo introduc efeito cicatrizac dano umidade impurezas 
+ conclus oes refer ˆencias alfredsson 
+ continuum damage mechanics revised principle mechanical thermal equivalence 
+ international jour nal solids structures elsevier 
+ method evaluating transient creep potash 
+ tese doutorado — university alberta edmonton canada january 
+ unified viscoplastic model inelastic flow alkali halides 
+ mechanics materials else vier 
+ viscoplasticdamage model soft rocks low porosity 
+ th international society rock mechanics isrm congress 
+ tokyo japan international society rock mechanics 
+ modeling mixed har dening alkali halides modified version internal state variables model 
+ international journal plasticity elsevier 
+ gorleben meia vida vida inteira 
+ dispon ıvel http opensadorselvagem 
+ org mundo paisalemanha gorlebenameiavidaparaavidainteira 
+ sensitivity analysis opti mal design metalforming processes 
+ computer methods applied mechanics engineering elsevier 
+ storing natural gas underground 
+ avaliac erica perturbac oes tens oes associadas estruturas sal ıferas influˆencias estabilidade poc 
+ dissertac mestrado — universidade federal rio janeiro ufrj rio janeiro 
+ alise erica comportamento mecˆanico sal poc petr oleo 
+ dissertac mestrado — pontif ıcia universi dade cat olica rio janeiro pucrio rio janeiro 
+ stress analysis creep 
+ stoneham massachu setts butterworth publishers 
+ simulac comportamento uctil rochas salinas 
+ dissertac mestrado — universidade federal santa catarina florian opolis 
+ formulation anisotropic tic degradation 
+ theory based pseudologarithmic damage ten sor rate 
+ international journal solids structures elsevier 
+ journal structural geology elsevier 
+ constitutive model inelastic flow damage evo lution solids triaxial compression 
+ mechanics materials elsevier 
+ constitutive representation damage development healing wipp salt 
+ albuquerque new mexico sandia national laboratories 
+ permeability wipp salt damage evolution healing 
+ international journal mage mechanics sage publications 
+ damageinduced nonassociated inelastic flow rock salt 
+ international journal plasticity elsevier 
+ constitutive representation damage healing wlpp salt 
+ symposium rock mechanics usrms 
+ reno nevada american rock mechanics association 
+ fracture healing rock salt related salt caverns 
+ solution mining research institute spring meeting 
+ las vegas nevada smri encinitas ca 
+ cleavage creep fracture rock salt 
+ acta materialia elsevier 
+ constitutive model representing coupled creep frac ture healing rock salt 
+ th conference mechanical behavior salt 
+ clausthalzellerfeld germany trans tech publica tions 
+ modeling elastoplastic mage behavior claystone 
+ international journal plasticity el sevier 
+ aplicac etodos computacionais princ ıpios mecˆanica rochas projeto alise escavac oes destinadas minerac subterrˆanea 
+ tese doutorado — ufrj 
+ geomechanics applied well design salt layers brazil history success 
+ american rock chanics association 
+ th us rock mechanics symposium th uscanada rock mechanics symposium 
+ salt lake city utah 
+ geomechanics applied well design salt layers brazil history success 
+ borja multis cale multiphysics processes geomechanics 
+ stanford sprin ger 
+ triaxial creep tests saltapplied drilling thick salt layers campos basin brazil 
+ spe iadc drilling con ference 
+ amsterdam society petroleum engineers 
+ rocha salina ind ustria petr oleo pectos relacionados reologia perfurac rochas salinas 
+ couto anjos sal geologia tectˆonica exemplos bacias brasileiras 
+ waste isolation pilot plant potential solution disposal transuranic waste 
+ washington dc national aca demies press 
+ dispon ıvel http www 
+ edu catalog thewasteisolationpilotplantapotentialsolutionforthe 
+ general constitutive equation transient statio nary creep rock salt 
+ international journal rock mechanics mining sciences geomechanics elsevier 
+ aplicac oes modelo camclay modificado solo casca vel pr 
+ cascavel pr maio 
+ proposic oes aplicac oes computacionais pol ımeros 
+ tese doutorado — universidade federal santa catarina 
+ continuum modelling numerical simulation material damage finite strains 
+ archives computational methods engineering springer 
+ computational methods plasticity theory applications 
+ new york john wi ley sons 
+ hyperelasticbased large strain elasto plastic constitutive formulation combined isotropickinematic hardening using logarithmic stress strain measures 
+ interna tional journal numerical methods engineering wiley online library 
+ perfurac formac oes sal ıferas 
+ couto anjos sal geologia tectˆonica exemplos ba cias brasileiras 
+ modelagem constitutiva alise probabil ıstica apli cadas poc zonas sal 
+ dissertac mestrado — pontif ıcia universidade cat olica rio janeiro pucrio 
+ couto anjos sal geologia tectˆonica exemplos ba cias brasileiras 
+ salt mechanics primer nearsalt subsalt deepwater gulf mexico field developments 
+ albuquerque new mexico sandia national laboratories july 
+ probabilistic creep analysis ground structures salt 
+ journal engineering mechanics american society civil engineers 
+ mineralogy epwater gulf mexico salt formations implications constitu behavior 
+ journal petroleum science engineering elsevier 
+ revista brasileira pes quisa desenvolvimento 
+ ciclos deposionais evapor ıticos bacia santos alise cicloestratigr afica partir dados poc trac ısmica 
+ dissertac mestrado — universidade federal rio grande sul ufrgs porto alegre 
+ damage gradient damage principle virtual power 
+ international journal solids structures elsevier 
+ underground hydrocarbon storage texas 
+ belmont usa thomson lear ning inc 
+ implementation associative flow rule including hydrostatic stress effects high strain rate deformation analysis polymer matrix composites 
+ jour nal aerospace engineering 
+ simulac erica comportamento mecˆanico sal poc petr oleo 
+ dissertac mestrado — universidade dual campinas unicamp campinas 
+ advanced strainhardening ap proach constitutive model rock salt describing transient stationary accelerated creep dilatancy 
+ th us rock mechanics sym posium th uscanada rock mechanics symposium 
+ salt lake city utah american rock mechanics association 
+ introduction continuum mechanics 
+ new york acade mic press 
+ composite dilatancy model constitu model mechanical behaviour rock salt 
+ hannover germany crc press 
+ nonlinear finiteelement analysis solution mined storage caverns rock salt using lubby constitutive model 
+ computers structures elsevier 
+ aspects invariance solid mechanics 
+ advances applied chanics 
+ mechanical hydraulic behavior rock salt excavation disturbed zone around underground facilities 
+ international journal rock mechanics mining sciences elsevier 
+ rock saltthe mechanical properties host rock material radioactive waste repository 
+ engineering ge ology elsevier 
+ rock mechanics salt mining 
+ balkema crc press 
+ unified creepplasticity model halite 
+ albuquerque new mexico sandia national laboratories 
+ unified creepplasticity model halite 
+ mechanical testing deformation model development astm stp 
+ mechanics solid materials 
+ london cambridge university press 
+ course damage mechanics 
+ use viscoelastoplastic damage constitutive model si mulate nonlinear behavior concrete 
+ acta mechanica solida sinica elsevier 
+ calculation density permeability compacted crushed salt within engineered shaft sealing system 
+ computing civil engineering 
+ deformation rock salt ope nings mined disposal radioactive wastes 
+ rock mechanics springer 
+ new york macmillan 
+ new elastoviscoplastic damage model combined generalized hoek–brown failure criterion bedded rock salt application 
+ rock mechanics rock engineering springer 
+ etodo elementos livres galerkin aplicado es pumas polim ericas 
+ dissertac mestrado — universidade federal santa catarina florian opolis 
+ damage model ductile failure analysis plastic components 
+ tese doutorado — universidade federal santa catarina florian oplois 
+ current issues new developments deformation chanisms rheology tectonics 
+ geological society london spe cial publications geological society london 
+ viscoelastoplastic softening model applica tion solving static dynamic stability problems potash mi ning 
+ proceedings nd flac symposium 
+ lyon numerical mo deling geomechanics 
+ introduc propriedades qu ımicas ısicas evaporitos 
+ couto anjos sal geologia tectˆonica exemplos bacias brasileiras 
+ dislocation wall cell structures longrange internal stresses deformed metal crystals 
+ preliminary deformationmechanism map salt ap plication wipp 
+ albuquerque new mexico sandia national la boratories 
+ constitutive model creep polycrystalline halite based workhardening recovery 
+ albuquerque new mexico sandia national laboratories 
+ constitutive model creep rock salt applied ground room closure 
+ international journal rock mechanics mi ning sciences geomechanics abstracts elsevier 
+ multimechanismdeformation parameters domal salts using transient creep analysis 
+ albuquerque new mexico sandia national laboratories 
+ constitutive model low tempe rature creep salt application wipp 
+ albuquerque new mexico sandia national laboratories 
+ workhardening recovery model tran sient creep salt stress loading unloading 
+ symposium rock mechanics usrms 
+ berkeley california ame rican rock mechanics association 
+ saltconstitutive modeling using mecha nism maps 
+ st conference mechanical behavior salt 
+ clausthal germany tech publications 
+ development validation predictive technology creep closure underground rooms salt 
+ th international congress rock mechanics isrm 
+ balkema rotterdam international society rock mechanics 
+ measured calculated closures open brine filled shafts deep vertical boreholes salt 
+ sympo sium rock mechanics usrms 
+ santa fe new mexico american rock mechanics association 
+ approach first princi ples model prediction measured wipp situ room closure salt 
+ symposium rock mechanics usrms 
+ morgantown west virginia american rock mechanics association 
+ approach first princi ples model prediction measured wipp waste isolation pilot plant insitu room closure salt 
+ tunnelling underground space tech nology elsevier 
+ constitutive modeling salt beha vior state technology 
+ th international society rock mechanics isrm congress 
+ aachen germany international soci ety rock mechanics 
+ twoand three dimensional calculations scaled situ tests using md model salt creep 
+ symposium rock mechanics usrms 
+ madison wisconsin american rock mechanics association 
+ modeling creep structural analysis 
+ foundati ons engineering mechanics 
+ berlin springer verlag 
+ computation exponential logarithmic mappings first second linearizations 
+ international journal numerical methods engi neering wiley online library 
+ meeting subsalt challenge 
+ model finite strain elastoplasticity based logarithmic strains computational issues 
+ computer methods applied mechanics engineering elsevier 
+ mecˆanica rochas mecˆanica computacional projeto poc petr oleo zonas sal 
+ tese doutorado — pontif ıca universidade cat olica rio janeiro pucrio 
+ well design drilling thick evaporite layers 
+ iadc spe drilling conference 
+ miami florida society petroleum engineers 
+ well design drilling th rough thick evaporite layers 
+ society petroleum engi neers 
+ iadc spe drilling conference 
+ miami florida usa 
+ introduction continuum mechanics 
+ new york cam bridge university press 
+ proposic oes aplicac oes considerando etodo galerkin li vre elementos 
+ tese doutorado — universidade federal santa catarina 
+ coupled elastoplastic damage model geomaterials 
+ computer methods applied mechanics engineering elsevier 
+ theory model underground opening support system 
+ th us symposium rock mechanics usrms 
+ rolla mis souri american rock mechanics association 
+ application continuum mechanics design deep potash mines canada 
+ international journal rock mechanics mining sciences geomechanics abstracts 
+ using internal state variables modeling viscoplastic behavior rocksalt semibrittle regime 
+ th us symposium rock mechanics usrms 
+ reno nevada american rock mechanics association 
+ modeling coupled elasto plastic damage rock materials 
+ international journal rock chanics mining sciences 
+ coupled elastoplastic damage model semibrittle terials extension unsaturated conditions 
+ mechanics materi als elsevier 
+ implementac via algoritmo impl ıcito modelos fluˆencia rochas salinas programa elementos finitos 
+ dissertac mestrado — universidade federal pernambuco ufpe 
+ algorithms static dynamic multiplicative plasticity preserve classical return mapping schemes infinitesimal ory 
+ computer methods applied mechanics engineering else vier 
+ new york sprin ger 
+ elastic plastic damage model concrete materials part implementation application concrete reinforced concrete 
+ struct changes solids–mech 
+ elastic plastic damage model concrete materials part itheoretical formulation 
+ international journal structural changes solids 
+ compression extension data dome salt west hackberry louisiana 
+ sandia national laboratories albuquerque new mexico 
+ finite deformation constitutive equations time integration procedure isotropic hyperelasticviscoplastic lids 
+ computer methods applied mechanics engineering else vier 
+ creep behaviour natural rock salt descrip tion composite model 
+ materials science engineering 
+ evaluation rock salt barriers respect tightness influence thermomechanical damage fluid infiltration sealing healing 
+ mechanical behaviour salt vii proceedings th conference mechanical behaviour salt 
+ paris france crc press 
+ energy release ratebased plasticdamage model concrete 
+ international journal solids structures elsevier 
+ unified representation plasticity creep relaxation behavior rocksalt 
+ internatio nal journal rock mechanics mining sciences elsevier 
+ timedependent behavior rock salt experimental investigation theoretical analysis 
+ tese doutorado — university nevada reno 
+ review creep analysis design multiaxial stress states 
+ nuclear engineering design elsevier 
+ thermoplastic viscoplastic damage model geomateri als 
+ acta mechanica solida sinica elsevier 

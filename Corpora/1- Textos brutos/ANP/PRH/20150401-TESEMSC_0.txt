@@ -1,0 +1,5633 @@
+ 
+
+ 
+
+UNIVERSIDADE FEDERAL DO RIO GRANDE 
+
+PROGRAMA DE PÓS-GRADUAÇÃO EM COMPUTAÇÃO 
+
+ 
+
+ 
+
+ 
+
+ 
+
+MARCEL COSTA SALUM 
+
+PROPOSTA DE SERVIÇO BASEADO EM LOCALIZAÇÃO 
+
+PARA DISPOSITIVOS MÓVEIS APLICADO EM 
+
+MONITORAMENTO AMBIENTAL 
+
+Dissertação  de  Mestrado  apresentada  ao 
+Programa  de  Pós-Graduação  em  Computação 
+da Universidade Federal do Rio Grande, como 
+requisito  parcial  para  a  obtenção  do  grau  de 
+Mestre em Engenharia de Computação. 
+ 
+ 
+ 
+ 
+Prof. Vagner Santos da Rosa 
+Orientador 
+
+    
+
+ 
+
+Rio Grande, Fevereiro de 2015 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Dedico este trabalho aos meus pais. 
+
+AGRADECIMENTOS 
+
+Primeiramente, presto meus agradecimentos a ANP – Agência Nacional de Petróleo, 
+Gás  Natural  e  Biocombustíveis,  FINEP  e  PRH-27  por  subsidiar  e  tornar  possível  o 
+desenvolvimento deste projeto. 
+
+Ao  meu  orientador  Vagner  Rosa,  que  sempre  foi  presente  e  prestativo.  Se  cheguei 
+
+até aqui, certamente foi devido ao seu incentivo e profissionalismo. 
+
+Agradeço também a todos os meus colegas e professores que direta ou indiretamente 
+fizeram  parte da minha formação, em  especial ao graduando Matheus Müller pela sua 
+grande contribuição no desenvolvimento da aplicação. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+A vida é como um balão. Quando nos deparamos com ventos fortes, a solução não é 
+lutar contra eles, mas procurar novas altitudes, novos ventos que levem na direção certa. 
+
+— Bertrand Piccard 
+
+RESUMO 
+
+SALUM,  Marcel  Costa.  Proposta  de  Serviço  Baseado  em  Localização  para 
+Dispositivos  Móveis  Aplicado  em  Monitoramento  Ambiental.  2015.  88  f. 
+Dissertação  (Mestrado)  –  Programa  de  Pós-Graduação  em  Computação.  Universidade 
+Federal do Rio Grande, Rio Grande. 
+
+ 
+Diariamente somos cercados por eventos relacionados ao meio ambiente, desde 
+incidentes  de  pequena  proporção,  como  o  lixo  descartado  em  locais  inadequados,  até 
+aqueles de maior repercussão, como queimadas e vazamentos de óleo. Independente do 
+tipo  de  incidente,  o  fator  tempo  é  crucial  para  a  minimização  dos  danos  causados  ao 
+meio  ambiente.  Com  a  crescente  popularização  dos  smartphones,  juntamente  com  os 
+recursos disponíveis nesses dispositivos, foi possível idealizar uma ferramenta capaz de 
+auxiliar na contingência desses eventos. 
+
+A  aplicação  proposta  é  um  serviço  baseado  em  localização  para  dispositivos 
+móveis com foco no monitoramento e contingência de incidentes relacionados ao meio 
+ambiente, sendo uma alternativa para que até mesmo pessoas comuns possam relatar os 
+incidentes  que  ocorram  ao  seu  redor.  Os  incidentes  registrados  pelos  usuários  do 
+aplicativo são georreferenciados e podem contar com arquivos multimídia, como fotos. 
+Uma  aplicação  servidor  é  responsável  pelo  envio  e  recebimento  das  informações 
+armazenadas  no  banco  de  dados.  O  servidor  está  localizado  na  FURG  –  Universidade 
+Federal do Rio Grande. 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Palavras-Chave: Serviço baseado em localização, Smartphone, Tablet, Meio ambiente. 
+
+ABSTRACT 
+
+Daily  we  are  surrounded  by  events  related  to  the  environment,  from  small 
+proportion  of  incidents,  such  as  trash  discarded  in  inappropriate  places,  even  those  of 
+greater  impact,  such  as  wildfire  and  oil  leaks.  With  the  growing  popularity  of 
+smartphones it was possible to devise a tool to assist in contingency these events. 
+
+The  proposed  application  is  a  service  based  on  location  to  mobile  devices  with  a 
+focus  on  monitoring  and  contingency  incidents  related  to  the  environment  and  is  an 
+alternative to that even ordinary people can report incidents occurring around them. The 
+incidents  recorded  by  application  users  are  georeferenced  and  can  rely  on  multimedia 
+files such as pictures. An application server is responsible for sending and receiving the 
+information stored in the database. The server is located in FURG - Federal University 
+of Rio Grande. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+Keywords: Location Based Services, Smartphone, Tablet, Environment. 
+
+SUMÁRIO 
+
+AGRADECIMENTOS .................................................................................... 3 
+
+RESUMO ...................................................................................................... 5 
+
+LISTA DE FIGURA ..................................................................................... 11 
+
+LISTA DE TABELAS .................................................................................. 13 
+
+LISTA DE ABREVIATURAS E SIGLAS ..................................................... 14 
+
+1 
+
+INTRODUÇÃO ...................................................................................... 15 
+
+1.1 
+
+Objetivos do trabalho ............................................................................................................ 17 
+
+1.2  Metodologia ............................................................................................................................ 17 
+
+1.3 
+
+Organização do texto ............................................................................................................. 17 
+
+2  MEIO AMBIENTE .................................................................................. 18 
+
+2.1 
+
+2.1.1 
+
+Incidentes ambientais ............................................................................................................ 18 
+As ocorrências ............................................................................................................... 18 
+2.1.1.1 Vazamento de Petróleo................................................................................................... 18 
+2.1.1.2 Acidente com produtos químicos ................................................................................... 22 
+2.1.1.3 Incêndio Florestal ........................................................................................................... 22 
+2.1.1.4 Desmatamento Ilegal ...................................................................................................... 23 
+2.1.1.5 Tráfico de Animais ......................................................................................................... 25 
+2.1.1.6 Pesca Predatória ............................................................................................................. 26 
+
+2.2 
+
+2.2.1 
+
+Órgãos governamentais ........................................................................................................ 26 
+Reportar incidentes ........................................................................................................ 26 
+2.2.1.1 IBAMA .......................................................................................................................... 26 
+2.2.1.2 FEPAM .......................................................................................................................... 27 
+2.2.1.3 FATMA .......................................................................................................................... 27 
+2.2.1.4 IAP ................................................................................................................................. 27 
+
+2.3 
+
+Considerações Finais do Capítulo ........................................................................................ 27 
+
+3  TECNOLOGIAS MÓVEIS ..................................................................... 29 
+
+3.1 
+
+Dispositivos móveis ................................................................................................................ 29 
+Smartphones .................................................................................................................. 29 
+Tablets............................................................................................................................ 30 
+
+3.1.1 
+3.1.2 
+
+3.2 
+
+3.2.1 
+3.2.2 
+
+Sensores .................................................................................................................................. 32 
+Câmera ........................................................................................................................... 32 
+Sensores utilizados para localização .............................................................................. 32 
+3.2.2.1 GPS ................................................................................................................................ 32 
+3.2.2.2 Rede ............................................................................................................................... 33 
+
+3.3 
+
+3.3.1 
+3.3.2 
+3.3.3 
+
+Software e Recursos .............................................................................................................. 33 
+Web 2.0 .......................................................................................................................... 33 
+Geotagging ..................................................................................................................... 34 
+Serviços Baseados em Localização................................................................................ 35 
+3.3.3.1 Serviços de Informação .................................................................................................. 35 
+3.3.3.2 Serviços de Emergência ................................................................................................. 36 
+3.3.3.3 Serviços de Rastreamento .............................................................................................. 36 
+
+3.4 
+
+Trabalhos Relacionados ........................................................................................................ 37 
+Urbotip ........................................................................................................................... 37 
+Colab .............................................................................................................................. 38 
+De olho na cidade .......................................................................................................... 39 
+
+3.4.1 
+3.4.2 
+3.4.3 
+
+3.5 
+
+3.5.1 
+3.5.2 
+3.5.3 
+
+Tipos de aplicativos ............................................................................................................... 40 
+Aplicação nativa ............................................................................................................ 40 
+Aplicação web................................................................................................................ 40 
+Aplicação hibrida ........................................................................................................... 41 
+3.5.3.1 Phonegap ........................................................................................................................ 42 
+3.5.3.2 Appcelerator Titanium ................................................................................................... 43 
+3.5.3.3 Sencha Touch ................................................................................................................. 43 
+
+3.6 
+
+3.6.1 
+
+Tecnologias para desenvolvimento web ............................................................................... 43 
+HTML ............................................................................................................................ 43 
+3.6.1.1 HTML5 .......................................................................................................................... 43 
+CSS ................................................................................................................................ 44 
+JavaScript ....................................................................................................................... 44 
+3.6.3.1 jQuery ............................................................................................................................. 44 
+DOM .............................................................................................................................. 44 
+
+3.6.2 
+3.6.3 
+
+3.6.4 
+
+3.7 
+
+Serviços de mapas pela Internet ........................................................................................... 45 
+Google Maps .................................................................................................................. 45 
+Here Maps ...................................................................................................................... 46 
+OpenStreetMap .............................................................................................................. 46 
+
+3.7.1 
+3.7.2 
+3.7.3 
+
+3.8 
+
+3.8.1 
+
+Sistemas Operacionais .......................................................................................................... 47 
+Android .......................................................................................................................... 48 
+3.8.1.1 História ........................................................................................................................... 48 
+3.8.1.2 Versões ........................................................................................................................... 48 
+3.8.1.3 Requisitos para o desenvolvimento ................................................................................ 49 
+iOS ................................................................................................................................. 49 
+3.8.2.1 Versões ........................................................................................................................... 49 
+3.8.2.2 Requisitos para o desenvolvimento ................................................................................ 50 
+Windows Phone ............................................................................................................. 50 
+3.8.3.1 História ........................................................................................................................... 51 
+3.8.3.2 Versões ........................................................................................................................... 51 
+
+3.8.2 
+
+3.8.3 
+
+3.9 
+
+Considerações Finais do Capítulo ........................................................................................ 51 
+
+4  ARQUITETURA PROPOSTA ............................................................... 52 
+
+4.1 
+
+Decisões de projeto ................................................................................................................ 52 
+Sistema operacional ....................................................................................................... 52 
+Tipo de aplicação ........................................................................................................... 52 
+Serviço de mapas ........................................................................................................... 53 
+Arquitetura cliente-servidor ........................................................................................... 53 
+
+4.1.1 
+4.1.2 
+4.1.3 
+4.1.4 
+
+4.2.2 
+
+4.2.1 
+
+4.2  Modelagem do sistema .......................................................................................................... 53 
+Diagrama de casos de uso .............................................................................................. 53 
+4.2.1.1 Relatar Incidente ............................................................................................................ 54 
+4.2.1.2 Visualizar incidentes ...................................................................................................... 55 
+4.2.1.3 Apoiar Incidente ............................................................................................................. 56 
+4.2.1.4 Comentar Incidente ........................................................................................................ 57 
+4.2.1.5 Resolver Incidente .......................................................................................................... 58 
+4.2.1.6 Editar Dados ................................................................................................................... 59 
+Diagramas de Sequência ................................................................................................ 59 
+4.2.2.1 Relatar Incidente ............................................................................................................ 59 
+4.2.2.2 Visualizar Incidente........................................................................................................ 60 
+4.2.2.3 Apoiar Incidente ............................................................................................................. 61 
+4.2.2.4 Comentar Incidente ........................................................................................................ 61 
+4.2.2.5 Resolver Incidente .......................................................................................................... 62 
+Modelo entidade-relacionamento ................................................................................... 63 
+4.2.3.1 Usuário ........................................................................................................................... 63 
+4.2.3.2 Incidente ......................................................................................................................... 64 
+4.2.3.3 Mídia .............................................................................................................................. 64 
+4.2.3.4 Categoria ........................................................................................................................ 64 
+4.2.3.5 Apoiar ............................................................................................................................. 65 
+4.2.3.6 Resolver ......................................................................................................................... 65 
+4.2.3.7 Comentário ..................................................................................................................... 65 
+
+4.2.3 
+
+4.3 
+
+Considerações Finais do Capítulo ........................................................................................ 66 
+
+5  DESENVOLVIMENTO ........................................................................... 67 
+
+5.1 
+
+5.1.1 
+
+Comunicação .......................................................................................................................... 67 
+Protocolo ........................................................................................................................ 67 
+5.1.1.1 Base64 ............................................................................................................................ 67 
+5.1.1.2 XML ............................................................................................................................... 67 
+5.1.1.3 Funcionamento ............................................................................................................... 68 
+5.1.1.4 Cliente ............................................................................................................................ 68 
+5.1.1.5 Servidor .......................................................................................................................... 69 
+
+5.2 
+
+Funcionalidades ..................................................................................................................... 72 
+Solicitação de incidentes ao servidor ............................................................................. 72 
+Relatar incidente ............................................................................................................ 72 
+
+5.2.1 
+5.2.2 
+
+5.3 
+
+Considerações Finais do Capítulo ........................................................................................ 73 
+
+6  RESULTADOS ...................................................................................... 74 
+
+6.1 
+
+6.1.1 
+
+Interface ................................................................................................................................. 74 
+Visualizar incidentes ...................................................................................................... 74 
+6.1.1.1 Resolver Incidente .......................................................................................................... 75 
+6.1.1.2 Apoiar Incidente ............................................................................................................. 76 
+6.1.1.3 Comentar incidente ........................................................................................................ 76 
+Relatar incidente ............................................................................................................ 77 
+
+6.1.2 
+
+6.1.3 
+
+Meus dados .................................................................................................................... 78 
+
+6.2 
+
+6.2.1 
+
+Comunicação cliente servidor .............................................................................................. 78 
+Conexões necessárias por ação ...................................................................................... 78 
+6.2.1.1 Visualizar incidente ........................................................................................................ 78 
+6.2.1.2 Apoiar incidente ............................................................................................................. 79 
+6.2.1.3 Resolver incidente .......................................................................................................... 79 
+6.2.1.4 Comentar incidente ........................................................................................................ 79 
+6.2.1.5 Reportar incidente .......................................................................................................... 79 
+6.2.1.6 Meus dados..................................................................................................................... 80 
+
+6.3 
+
+Considerações Finais do Capítulo ........................................................................................ 80 
+
+7  CONCLUSÕES ..................................................................................... 81 
+
+7.1 
+
+Dificuldades Encontradas ..................................................................................................... 81 
+Volatilidade da área de dispositivos móveis .................................................................. 81 
+Rede 3G ......................................................................................................................... 82 
+
+7.1.1 
+7.1.2 
+
+7.2 
+
+7.2.1 
+
+Perspectiva de Continuidade ................................................................................................ 82 
+Substituição do Socket ................................................................................................... 82 
+7.2.1.1 WebSocket ..................................................................................................................... 82 
+Aplicação cliente em outros sistemas operacionais ....................................................... 82 
+Aperfeiçoamento da aplicação servidor ......................................................................... 82 
+Adição de filtros e funções administrativas ................................................................... 83 
+
+7.2.2 
+7.2.3 
+7.2.4 
+
+7.3 
+
+Publicações Realizadas .......................................................................................................... 83 
+
+7.4 
+
+Submissões Previstas ............................................................................................................. 83 
+
+ 
+
+LISTA DE FIGURA 
+
+Figura 1 Produção de petróleo no Brasil em 2012  Fonte: Anuário estatístico 2012 – ANP .................... 19 
+Figura 2 Produção de petróleo segundo regiões geográficas em 2011 (milhões de barris/dia). Fonte: BP 
+Statistical Review of World Energy, 2012. ................................................................................................. 20 
+Figura 3 Consumo mundial de óleo segundo regiões geográficas em 2011 (milhões de barris/dia). Fonte: 
+BP Statistical Review of World Energy, 2012. ........................................................................................... 20 
+Figura 4 Intemperização do óleo no mar. Fonte: CETESB, 2007. ............................................................ 21 
+Figura 5 Números de médios (7-700 ton) a grandes (> 700 ton) derramamentos por década. Fonte: 
+ITOPF (International Tanker Owners Pollution Federation), 2011. ......................................................... 22 
+Figura 6 Taxa de desmatamento (em km²) nos Estados da Amazônia entre 1978 e 2002 (INPE, 2003). .. 24 
+Figura 7 Área total desmatada até o ano de 2001. Cálculo baseado nos dados do PRODES Digital 
+(INPE, 2003). ............................................................................................................................................. 25 
+Figura 8 Smartphones lançados entre os anos de 2013 e 2014 (a) Sony Xperia Z1 (b) Samsung Galaxy S5 
+(c) Apple Iphone 6 ...................................................................................................................................... 29 
+Figura 9 Tablets lançados entre os anos de 2012 e 2013 (a) Samsung Galaxy 3 (b) Google Nexus 7 (c) 
+Google Nexus 10 ........................................................................................................................................ 31 
+Figura 10 Diferença no consumo de energia entre os sensores em um dispositivo Nókia N95:  (a) 
+Consumo do GPS (b) Consumo do WI-FI (c) Consumo do GSM. Fonte: EnLoc: Energy-Efficient 
+Localization for Mobile Phones ................................................................................................................. 33 
+Figura 11 Geotagging no Google Maps ..................................................................................................... 34 
+Figura 12 Aplicativo Posto de Gasolina Fonte: Google Play. ................................................................... 36 
+Figura 13 Aplicativo S.O.S. Emergências Fonte: Google Play ................................................................. 36 
+Figura 14 Aplicativo Family Mobile Tracker Fonte: Google Play ............................................................ 37 
+Figura 15 Urbotip Fonte: Google Play ...................................................................................................... 38 
+Figura 16 Colab Fonte: Google Play ......................................................................................................... 38 
+Figura 17 De Olho na Cidade Fonte: Google Play ................................................................................... 39 
+Figura 18 Estrutura de uma aplicação hibrida .......................................................................................... 42 
+Figura 19 Estrutura de uma aplicação criada do Phonegap ..................................................................... 42 
+Figura 20 Hierarquia dos objetos de um arquivo HTML .......................................................................... 45 
+Figura 21: Google Maps ............................................................................................................................ 46 
+Figura 22 Here Maps ................................................................................................................................. 46 
+Figura 23 OpenStreetMap .......................................................................................................................... 47 
+Figura 24 Mercado de dispositivos móveis por trimestre, a partir de 2011 Fonte: IDC ........................... 47 
+Figura 25 Mercado de dispositivos móveis, durante o primeiro trimestre de cada ano, em detalhes Fonte: 
+IDC ............................................................................................................................................................. 48 
+Figura 26 Arquitetura cliente-servidor Fonte: Wikipédia.......................................................................... 53 
+Figura 27 Diagrama de casos de uso. ........................................................................................................ 54 
+Figura 28 Diagrama de Sequência Relatar Incidente ................................................................................ 60 
+Figura 29 Diagrama de Sequência Visualizar Incidente ........................................................................... 60 
+Figura 30 Diagrama de Sequência Apoiar Incidente ................................................................................. 61 
+Figura 31 Diagrama de Sequência Comentar Incidente ............................................................................ 62 
+Figura 32 Diagrama de Sequência Resolver Incidente .............................................................................. 62 
+Figura 33 Modelo ER do banco de dados .................................................................................................. 63 
+Figura 34 Tabela Usuário .......................................................................................................................... 64 
+Figura 35 Tabela Incidente ........................................................................................................................ 64 
+Figura 36 Tabela Mídia ............................................................................................................................. 64 
+Figura 37 Tabela Categoria ....................................................................................................................... 65 
+
+Figura 38 Tabela Apoiar ............................................................................................................................ 65 
+Figura 39 Tabela Resolver ......................................................................................................................... 65 
+Figura 40 Tabela Comentário .................................................................................................................... 66 
+Figura 41 Função para a conexão entre o cliente e o servidor ................................................................. 67 
+Figura 42 Comunicação cliente-servidor ................................................................................................... 68 
+Figura 43 Realizar Requisição, função javascript que cria o arquivo XML e o envia em base 64 para o 
+servidor....................................................................................................................................................... 69 
+Figura 44 Arquivo XML após receber os dados na função Realizar Requisição ....................................... 69 
+Figura 45 Estrutura que define o protocolo utilizado na troca de informação de incidentes .................... 70 
+Figura 46 Função de conversão de dados ................................................................................................. 70 
+Figura 47 Função responsável pela extração de informações do arquivo XML ....................................... 71 
+Figura 48 Laço para receber as informações extraídas de cada tag do arquivo XML .............................. 71 
+Figura 49 Retorno com atribuições realizadas na função ......................................................................... 72 
+Figura 50 Função JavaScript que realiza a requisição de incidentes ....................................................... 72 
+Figura 51 Função JavaScript para relatar incidentes ............................................................................... 73 
+Figura 52 Componentes da interface cliente, da esquerda para a direita: Inicial, Explorar Incidentes, 
+Inserir Incidente, Meus Dados. O botão em verde representa o componente ativo na tela do usuário. .... 74 
+Figura 53 Interfaces para visualização de incidentes (a) Interface inicial da aplicação (b) Interface 
+Explorar Mapa ........................................................................................................................................... 75 
+Figura 54 Interface de resolução de incidente ........................................................................................... 75 
+Figura 55 Interface Apoiar Incidente ......................................................................................................... 76 
+Figura 56 Interface de comentários ........................................................................................................... 76 
+Figura 57 Interface para inserir incidente ................................................................................................. 77 
+Figura 58 Interface para inserir incidente após a submissão do incidente. (a) Interface de envio de 
+incidente. (b) Interface de confirmação do envio de incidente. .................................................................. 77 
+Figura 59 Interface Meus dados, a tela apresenta campos de preenchimento facultativo ao usuário ...... 78 
+
+ 
+
+LISTA DE TABELAS 
+
+Tabela 1 Configuração dos Smartphones da Figura 8, ordenados da esquerda para a direita.  Fonte: 
+Wikipédia .................................................................................................................................................... 30 
+Tabela 2 Tablets lançados entre os anos de 2012 e 2013 (Figura 9).  Fonte: Wikipédia .......................... 31 
+Tabela 3 Versões do sistema Android e suas respectivas APIs. Fonte: Wikipédia. ................................... 48 
+Tabela 4 Versões do sistema operacional iOS. Fonte: Wikipédia. ............................................................. 50 
+Tabela 5 Versões do sistema operacional Windows Phone. Fonte: Wikipédia. ......................................... 51 
+Tabela 6 Conexões necessárias ao visualizar incidente ............................................................................. 78 
+Tabela 7 Conexões necessárias ao apoiar incidente .................................................................................. 79 
+Tabela 8 Conexões necessárias para resolver incidente ............................................................................ 79 
+Tabela 9 Conexões necessárias para comentar incidente .......................................................................... 79 
+Tabela 10 Conexões necessárias para reportar incidentes ........................................................................ 79 
+Tabela 11 Conexões necessárias para inserir/alterar dados pessoais ....................................................... 80 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+LISTA DE ABREVIATURAS E SIGLAS 
+
+GPS 
+
+SO 
+
+Sistema de Posicionamento Global 
+
+Sistema Operacional 
+
+SBL                   Serviço Baseado em Localização 
+
+SSP 
+
+WPS 
+
+GSM 
+
+ 
+
+ 
+
+ 
+
+GSMPS 
+
+SDK 
+
+ADT 
+
+IDE 
+
+TCP 
+
+WMS 
+
+XML 
+
+API 
+
+   Serviço de Sensoriamento Participativo 
+
+   Sistema de Posicionamento por WI-FI 
+
+   Sistema Global para Comunicações Móveis 
+
+Sistema de Posicionamento pelo Sistema Mundial de Comunicação       
+Móvel 
+
+Pacote de Desenvolvimento de Software 
+
+Ferramentas de Desenvolvimento para Android 
+
+Ambiente Integrado para Desenvolvimento de Software 
+
+Protocolo de Controle de Transmissão 
+
+Serviço de Mapas para Internet 
+
+Linguagem de Marcação Extensível 
+
+Interface de Programação de Aplicativos 
+
+HTML 
+
+Linguagem de Marcação de Hipertexto 
+
+Folhas de Estilo em Cascata 
+
+JavaScript 
+
+Linguagem Unificada de Modelagem 
+
+Entidade Relacionamento 
+
+Modelo de Objeto de Documento 
+
+CSS 
+
+JS 
+
+UML 
+
+ER 
+
+DOM 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+15 
+
+ 
+
+1  INTRODUÇÃO 
+
+Incidentes  ambientais  acontecem 
+
+frequentemente,  desde  aqueles  causados 
+naturalmente  até  aqueles  relacionados  à  atividade  humana  (IBAMA,  2014).  A 
+exploração  de  petróleo,  por  exemplo,  é  uma  atividade  em  constante  crescimento, 
+incentivada  pelo  aumento  mundial  do  consumo  desta  substância  e  de  seus  derivados. 
+Tal  crescimento  incentiva  a  descoberta  e  exploração  de  novos  campos  petrolíferos, 
+sendo  os  mesmos  responsáveis  pelo  aumento  da  produção  e  do  transporte  marítimo, 
+fator que eleva o risco de incidentes com óleo (MARINHO, 2012). 
+
+Em  diversos  tipos  de  incidentes  ambientais,  o  tempo  é  um  fator  crucial  para  a 
+minimização  dos  impactos  ambientais.  Em  incêndios  florestais,  o  fogo  deve  ser 
+rapidamente combatido de modo a diminuir os impactos ambientais dos mesmos. Vale 
+ressaltar  que,  grandes  incêndios  florestais  são  considerados  de  grande  ameaça  para  a 
+conservação  da  biodiversidade  e  manutenção  de  processos  ecológicos  (BRILHANTE, 
+2004). 
+
+Há também  os problemas relacionados ao desmatamento  ilegal,  o  Brasil  é um  país 
+com abundante riqueza natural. O País tem o maior bioma de floresta úmida do mundo, 
+a Amazônia, que contém de longe a maior parcela das florestas úmidas remanescentes. 
+Seu  valor  global  pode  ser  visto  em  sua  rica  biodiversidade  e  no  possível  impacto 
+climático decorrente de seu desaparecimento. A floresta amazônica enfrenta uma grande 
+gama  de  desafios,  incluindo  dificuldades  para  controlar  desmatamentos  e  queimadas 
+(MARGULIS,  2003).  Um  dos  principais  fatores  que  impulsionam  o  desmatamento 
+ilegal  na  Amazônia  é  a  ineficiência  da  fiscalização  da  região,  dada  a  sua  vastidão 
+geográfica  aliada  à  histórica  falta  de  recursos  e  indivíduos  capacitados  nos  órgãos 
+federais e estaduais (MOUTINHO, 2009). 
+
+Ainda relacionado à vastidão geográfica, a Amazônia não é a única região que sofre 
+com a falta de fiscalização. A costa brasileira conta com aproximadamente 8.500 km de 
+litoral,  toda  essa  área  representa  uma  região  complexa,  onde  múltiplas  atividades 
+econômicas  são  desenvolvidas  (JUNIOR,  2006).  Ao  analisar  as 
+informações 
+relacionadas  às  emergências  atendidas  pela  CETESB  (Companhia  de  Tecnologia  e 
+Saneamento Ambiental), órgão ambiental estadual de São Paulo, é possível notar que há 
+o  registro  de  diversos  incidentes  ambientais  relacionados  ao  descarte  de  substâncias 
+oleosas  em  águas  marinhas,  tais  descartes  podem  ser  provenientes  das  mais  diversas 
+fontes, tanto terrestres, quanto  de embarcações  e  na maioria das vezes,  a  identificação 
+do  responsável  é  uma  tarefa  de  difícil  conclusão.  No  caso  das  ocorrências  registradas 
+pela CETESB, os números não correspondem à realidade. Visto que, segundo o próprio 
+órgão,  o  número  de  casos  deve  ser  maior  do  que  o  número  de  ocorrências  em  que  a 
+CETESB foi acionada (CETESB, 2014). 
+
+ 
+
+ 
+
+16 
+
+ 
+
+Dado o cenário atual, é possível assumir que a falta de fiscalização é um fato, assim 
+como  a  importância  da  velocidade  no  combate  a  incidentes  ambientais,  de  modo  a 
+mitigar  os  danos  relacionados  a  esses  incidentes.  Sendo  assim,  o  aumento  na 
+fiscalização poderia contribuir de forma extraordinária a preservação do meio ambiente. 
+Dado  que,  mesmo  em  proporções  insuficientes,  melhoras  na  fiscalização  contribuíram 
+para a contenção do avanço da degradação florestal na Amazônia (MOUTINHO, 2009), 
+por exemplo. 
+
+fiscalização 
+
+Também,  percebemos  que  embora  a 
+
+realizada  por  órgãos 
+governamentais  seja  uma  ação  benéfica  ao  meio  ambiente,  ela  acaba  gerando  grandes 
+custos a essas organizações.  Porém,  o meio ambiente é um  bem  de todos os cidadãos, 
+nas palavras de Ronaldo Maia Kauffmann (1991, p.246): ―Nos últimos anos, o mundo 
+inteiro  tem  voltado  suas  atenções  para  os  problemas  ecológicos,  o  meio  ambiente,  os 
+recursos naturais; enfim, tudo aquilo que se relaciona com a proteção da vida em todas 
+as suas formas existentes no planeta.".  
+
+Sendo assim, é possível a elaboração de um serviço de sensoriamento participativo 
+com  o  objetivo  de  auxiliar  a  fiscalização  ambiental.  Esse  serviço  poderá  ser  utilizado 
+por  todo  e  qualquer  cidadão  que  tenha  um  smartphone  ou  tablet,  proporcionando  um 
+grande  volume  de  usuários  espalhados  por  todo  o  país  a  baixo  custo,  uma  vez  que  os 
+usuários contribuem voluntariamente com o seu esforço e tempo.  
+
+O  smartphone  tornou-se  o  dispositivo  computacional  pessoal  mais  amplamente 
+adotado  e  onipresente  (KRUMM,  2009).  De  acordo  com  os  dados  da  IDC,  o  Brasil 
+terminou 2013 como o quarto maior consumidor de smartphones, com um pouco mais 
+de 35 milhões de unidades vendidas, ficando atrás apenas de China, Estados Unidos e 
+Índia, respectivamente, fato que comprova a grande aceitação dessa tecnologia por parte 
+dos brasileiros.  
+
+O  público  dessa  rede  contará  com  diferentes  níveis  de  entendimento  a  respeito  do 
+meio ambiente, pois a mesma poderá ser utilizada tanto por peritos ou técnicos, quanto 
+por ambientalistas amadores, ou seja, pessoas interessadas em cuidar do meio ambiente. 
+A  socialização  entre  os  usuários  do  serviço  será  possível  devido  ao  perfil  social  da 
+ferramenta,  o  que  tornará  a  rede  mais  efetiva.  Visto  que,  usuários  com  maior 
+conhecimento  técnico  poderão  conversar  com  os  usuários  de  menor  conhecimento,  o 
+diálogo  entre  os  usuários  poderá  ser  realizado  através  de  conversas  particulares  e 
+também  em  grupos.  Com  a  disponibilidade  de  recursos  sociais,  a  rede  fornece  um 
+ambiente não formal  de  aprendizagem  propício  para a educação ambiental,  no qual  os 
+usuários poderão ensinar e aprender sobre o meio ambiente (JACOBI, 2003). 
+
+Os dispositivos móveis atuais contam com os mais diversos tipos de sensores, como 
+GPS, acelerômetro, microfone, câmera e giroscópio, tais sensores possibilitam a criação 
+dos mais diversos tipos de SBLs (Serviços Baseados em Localização) e a aplicação fará 
+uso  de  alguns  deles.  Atualmente  estão  disponíveis  vários  exemplos  de  SBLs  já 
+implementados e utilizados através de smartphones e tablets, como o Waze, para relatar 
+e  visualizar  informações  referentes  às  condições  de  tráfego  em  tempo  real.  O 
+Foursquare,  serviço  no  qual  os  usuários  compartilham  sua  localização.  Além  do 
+Instagram, onde os usuários podem enviar imagens em tempo real (SILVA, 2013). 
+
+ 
+
+ 
+
+17 
+
+ 
+
+1.1  Objetivos do trabalho 
+
+O objetivo geral deste trabalho é fornecer para a população um serviço baseado em 
+localização  para  a  fiscalização  e  monitoramento  de  incidentes  ambientais  através  de 
+dispositivos  móveis.  Contribuindo  para  a  redução  do  tempo  de  resposta  a  incidentes 
+ambientais relacionados à exploração e o descarte de petróleo e seus derivados oleosos, 
+além  de  incêndios  florestais,  desmatamento  ilegal  e  outros  tipos  de  incidentes 
+ambientais, contribuindo assim para minimização dos impactos ambientais causados por 
+essas ocorrências. 
+
+1.2  Metodologia 
+
+Para atingir o seu objetivo, este trabalho prevê a construção de um serviço baseado 
+em  localização  capaz  de  interligar  pessoas  com  informações  produzidas  a  partir  de 
+dispositivos  portáteis  conectados  a  internet  (smartphones  e  tablets  com  acesso  à  web, 
+câmera e GPS) usando como meio primário uma ferramenta de mapas online. O acesso 
+às informações exibidas na aplicação móvel será disponibilizado por uma aplicação em 
+constante execução no servidor. As informações poderão ser visualizadas por qualquer 
+cidadão, instituição e órgão governamental. 
+
+Todos  os 
+
+incidentes 
+
+reportados  no  aplicativo  conterão 
+
+informações  de 
+geolocalização. Essas informações poderão ser geradas pelo GPS e sensores de rede do 
+aparelho e visualizadas através do serviço de mapas online da Google, o Google Maps. 
+A  aplicação  cliente  foi  desenvolvida  com  o  framework  Phonegap  e,  inicialmente,  será 
+disponibilizada  somente para dispositivos  que utilizam  o sistema operacional Android. 
+A  aplicação  servidor  foi  desenvolvida  em  C  e  está  hospedada  em  um  servidor  na 
+Universidade Federal do Rio Grande – FURG. 
+
+O dispositivo móvel se conecta ao servidor utilizando socket. Ambos se comunicam 
+
+através de um protocolo de comunicação baseado em XML e Base64. 
+
+1.3  Organização do texto 
+
+Neste  capítulo,  foi  abordado  o  foco  do  projeto,  contribuir  com  a  fiscalização  e  o 
+monitoramento  de  incidentes  ambientais  por  observadores  casuais  que  possuam  o 
+aplicativo  instalado  em  seu  dispositivo  pessoal,  contribuindo  assim  com  a  diminuição 
+no tempo de resposta a estes incidentes. 
+
+No  capítulo  2  encontram-se  listados  diversos  tipos  de  incidentes  ambientais,  assim 
+como  os  meios  atuais  utilizados  por  órgãos  governamentais  para  que  os  cidadãos 
+reportem esses incidentes. 
+
+Neste  trabalho  serão  empregadas  tecnologias  atuais  para  a  web  e  plataformas 
+móveis:  web  2.0,  redes  sociais,  plataformas  móveis  e  nuvem  computacional,  essas  e 
+outras tecnologias envolvidas serão apresentadas no capítulo 3. 
+
+O capítulo 4 contém a arquitetura da aplicação. 
+
+O  capítulo  5  aborda  o  desenvolvimento  do  projeto,  como  ele  está  estruturado,  as 
+
+classes e seus relacionamentos, assim como suas principais funcionalidades.  
+
+O capítulo 6 exibe os principais casos de uso do projeto, assim como os resultados 
+
+obtidos. Por fim, o capítulo 7 contém as conclusões. 
+
+ 
+
+ 
+
+18 
+
+ 
+
+2  MEIO AMBIENTE 
+
+De acordo com a resolução CONAMA 306:2002: ―Meio Ambiente é o conjunto de 
+condições,  leis,  influencia  e  interações  de  ordem  física,  química,  biológica,  social, 
+cultural  e  urbanística,  que  permite,  abriga  e  rege  a  vida  em  todas  as  suas  formas‖. 
+Encontra-se  na  ISO  14001:2004  a  seguinte  definição  sobre  meio  ambiente: 
+―circunvizinhança em que uma organização opera, incluindo-se ar, água, solo, recursos 
+naturais, flora fauna, seres humanos e suas inter-relações.‖. 
+
+A partir disso, é possível afirmar que o meio ambiente envolve todas as coisas vivas 
+e  não  vivas  que  ocorrem  na  Terra,  ou  em  alguma  região  dela,  que  afetam  os 
+ecossistemas e os seres humanos. 
+
+2.1  Incidentes ambientais 
+
+Segundo o IBAMA, define-se um incidente como uma Emergência ambiental ou um 
+
+Acidente ambiental. 
+
+Emergência ambiental é uma  ameaça súbita ao bem estar do meio ambiente 
+ou  à  saúde  pública  devido  à  liberação  de  alguma  substância  nociva  ou 
+perigosa ou, ainda, devido a um desastre natural (IBAMA, 2014). 
+
+Acidente  ambiental  é  um  acontecimento  inesperado  e  indesejado  que  pode 
+causar,  direta  ou  indiretamente,  danos  ao  meio  ambiente  e  à  saúde.  Esses 
+acontecimentos  perturbam  o  equilíbrio  da  natureza  e,  normalmente,  estão 
+associados  também  a  prejuízos  econômicos.  Os  acidentes  podem  ser 
+causados  pela  própria  natureza,  como  é  o  caso  dos  vulcões,  raios,  ciclones, 
+etc. Porém, na maioria das vezes, são causados pelo próprio homem. São os 
+acidentes "tecnológicos" (IBAMA, 2014). 
+
+2.1.1 
+
+As ocorrências 
+
+Incidentes relacionados ao meio ambiente podem ocorrer das mais diversas formas e 
+gerar  danos  em  diversos  setores  da  fauna  e  flora  de  uma  região,  derramamentos  ou 
+vazamentos  de  produtos  nocivos,  incêndios,  explosões  e  colisões  são  somente  alguns 
+exemplos  de  eventos  que  podem  vir  a  ocorrer  e  que  podem  ser  relatados  através  do 
+projeto que está sendo proposto.  
+
+2.1.1.1 Vazamento de Petróleo 
+
+A  descoberta  e  exploração  de  novos  campos  petrolíferos  é  uma  atividade  em 
+crescimento no Brasil, ela está ligada ao aumento do consumo de petróleo no mundo, e 
+é  responsável  também  pelo  aumento  da  produção  e  do  transporte  marítimo,  principal 
+
+ 
+
+ 
+
+19 
+
+ 
+
+meio de extração de petróleo no Brasil (Figura 1), fator que eleva o risco de incidentes 
+com óleo (MARINHO, 2012). 
+
+O petróleo é um tipo de combustível fóssil de origem animal e vegetal formado  há 
+milhões de anos em rochas sedimentares. É uma substância líquida oleosa de coloração 
+escura encontrada em muitos lugares no mundo e utilizada como matéria-prima para os 
+mais diversos produtos que utilizamos no nosso dia-a-dia, como a gasolina, o diesel, os 
+plásticos, a borracha e diversos compostos químicos (MARINHO, 2012). 
+
+A  extração  do  petróleo  nos  oceanos  é  feita  através  de  máquinas  montadas  em 
+plataformas fixas ou móveis, que bombeiam o petróleo para o navio ou oleodutos e é a 
+metodologia de extração mais utilizada no Brasil (JUNIOR, 2006). 
+
+Figura 1 Produção de petróleo no Brasil em 2012  
+
+Fonte: Anuário estatístico 2012 – ANP 
+
+ 
+
+É possível observar na Figura 2, que as maiores fontes de produção de petróleo estão 
+concentradas no Oriente  Médio, com  valores estimados em  27,7 milhões de barris  por 
+dia.  Sendo  a  Arábia  Saudita,  a  maior  produtora,  com  média  de  11,2  milhões  de  barris 
+por dia. 
+
+Sabendo que a localização dos campos petrolíferos não é, necessariamente, próxima 
+das áreas de maior consumo (Figura 3), torna-se necessário o transporte dessa produção 
+através  de  embarcações,  caminhões  ou  tubulações  (oleodutos  e  gasodutos).  Esses 
+equipamentos  estão  passíveis  de  causar  os  mais  diversos  tipos  de  derramamento  de 
+petróleo, causando danos enormes ao meio ambiente (MARINHO, 2012). 
+
+ 
+
+Figura 2 Produção de petróleo segundo regiões geográficas em 2011 (milhões de barris/dia). 
+
+Fonte: BP Statistical Review of World Energy, 2012. 
+
+ 
+
+ 
+
+ 
+
+20 
+
+ 
+
+ 
+
+Figura 3 Consumo mundial de óleo segundo regiões geográficas em 2011 (milhões de barris/dia). 
+
+Fonte: BP Statistical Review of World Energy, 2012. 
+
+Esses  derramamentos  acontecem  em  razão  de  falhas  estruturais  dos  equipamentos, 
+falhas  humanas  na  execução  e  também  pela  pressão  exercida  no  fundo  do  oceano  que 
+pode  causar  fissuras  ou  falhas  no  assoalho,  escapando  gás  ou  óleo.  Em  um  desastre 
+ambiental  desse  tipo  são  lançadas  no  mar  quantidades  enormes  do  produto,  formando 
+manchas  que  são  espalhadas  pelas  correntes  marítimas  e  pelas  correntes  de  ar.  Ao  ter 
+contato com a água a mancha de óleo passa por múltiplos processos naturais (Figura 2), 
+denominada  de  intemperismo,  o  qual  é  influenciado  pelas  características  físicas  e 
+químicas  do  produto  vazado,  assim  como  pela  irradiação  solar,  pelas  variações  na 
+temperatura do ambiente e da água, pela chegada de frentes frias, pela força dos ventos 
+e por fim, pelo impacto das ondas e correntezas (CETESB, 2007; MARINHO 2012). 
+
+ 
+
+ 
+
+ 
+
+21 
+
+Figura 4 Intemperização do óleo no mar. 
+
+Fonte: CETESB, 2007. 
+
+ 
+
+A poluição causada pelo petróleo é muito tóxica para os animais marinhos e para as 
+aves migratórias, além de prejudicar indiretamente a população que vive no litoral das 
+áreas atingidas, o derramamento de petróleo ou de seus derivados em regiões costeiras 
+pode originar efeitos crônicos ao longo de anos (MARTINHO, 2010). Porém, a grande 
+maioria dos vazamentos ocorre em alto mar, distantes da zona costeira, sem impactar a 
+fauna e trazer prejuízos à pesca e ao turismo (MARINHO 2012).  
+
+Dentre os piores vazamentos que ocorreram nas últimas décadas podemos citar: 
+
+  2000 - Acidente na Baía de Guanabara, RJ. Derramamento de 1,3 milhões de 
+litros  de  óleo  cru.  Causou  grandes  danos  aos  manguezais,  praias  e  à 
+população de pescadores. 
+
+  2002 - Naufrágio do navio Prestige, das Bahamas. Afundou na costa oeste da 
+Galícia deixando vazar 40.000 ton de óleo pesado. A poluição afetou a costa 
+da  Espanha,  Portugal  e  França  (COMISSION  OF  THE  EUROPEAN 
+COMMUNITIES, 2003). 
+
+  2010 - Golfo do México. Uma explosão na plataforma da British Petroleum 
+Deepwater  Horizon  rompeu  tubulações  deixando  escapar  uma  quantidade 
+estimada entre 3 e 4 milhões de barris de petróleo. 
+
+Apesar  do  grande  número  de  vazamentos  houve,  a  partir  dos  anos  70,  um 
+significativo decréscimo nos acidentes (Figura 5), isso foi possível devido à inserção de 
+políticas  mais  rigorosas  e  maiores  cuidados  por  parte  de  algumas  empresas  (ITOPF, 
+2011). 
+
+ 
+
+ 
+
+ 
+
+22 
+
+ 
+
+Figura 5 Números de médios (7-700 ton) a grandes (> 700 ton) derramamentos por década. 
+
+Fonte: ITOPF (International Tanker Owners Pollution Federation), 2011. 
+
+2.1.1.2 Acidente com produtos químicos 
+
+Os  acidentes  envolvendo  substâncias  perigosas  nas  atividades  de  transporte, 
+armazenamento e produção industrial de produtos químicos constituem um sério risco à 
+saúde  e  ao  meio  ambiente.  Os  acidentes  envolvendo  produtos  químicos  perigosos 
+devem  ser  atendidos  por  pessoal  técnico  qualificado  e  com  uso  de  equipamentos 
+apropriados para este fim (FREITAS, 1995). 
+
+As primeiras horas de atuação são de extrema importância para evitar sua extensão e 
+severidade.  Em  decorrência  disso,  a  agilidade  na  comunicação  de  sua  ocorrência  aos 
+órgãos competentes é essencial (MMA, 2014). 
+
+Consideram-se substâncias químicas perigosas àquelas que, isoladas ou em mistura, 
+possam  acarretar  efeitos  prejudiciais  aos  organismos  biológicos,  devido  suas 
+propriedades  tóxicas,  corrosivas,  oxidantes  e  radioativas.  Tais  produtos  podem  ser 
+encontrados em estado sólido, líquido ou gasoso (FERREIRA, 2003). 
+
+Acidentes com produtos químicos tem grande ocorrência em atividades de produção 
+e também  no transporte  (FREITAS, 1995). Sendo que, esses podem  ter consequências 
+catastróficas, sobretudo diante da proximidade de cidades. Além das perdas humanas de 
+valor  social  incalculável,  os  custos  decorrentes  da  contaminação  ambiental  atingem 
+cifras muito elevadas (FERREIRA, 2003). 
+
+2.1.1.3 Incêndio Florestal 
+
+Incêndio florestal é considerado todo o fogo sem controle que incide sobre qualquer 
+
+forma de vegetação e pode ser causado pelo homem ou por causas naturais. 
+
+Há  grandes  perdas  ocasionadas  pelo  fogo  anualmente  no  mundo.  Os  incêndios 
+voluntários  ou  não,  ocasionam  grandes  gastos  tanto  em  recursos  como  em  vidas 
+humanas,  e  semeiam  a  destruição  de  lugares  naturais  que  demoram  muito  tempo  em 
+regenerar-se. 
+
+A  maioria  dos  países  destinam  enormes  quantias  de  dinheiro  para  se  proteger  do 
+fogo  em  zonas  especialmente  sensíveis  a  ele,  como  as  florestas.  Para  isso,  há 
+
+ 
+
+ 
+
+23 
+
+ 
+
+investimentos  em  hidroaviões,  helicópteros,  barreiras  para  conter  incêndios  e  brigadas 
+especializadas de bombeiros. 
+
+Um incêndio florestal pode ser causado de diversas maneiras. Na sua grande maioria 
+são  de  origem  humana,  tanto  acidentais  (queimadas,  queima  de  lixos,  lançamento  de 
+foguetes, cigarros mal apagados, linhas elétricas), quanto intencionais. Os incêndios de 
+causas naturais pertencem a uma pequena percentagem do número total de ocorrências. 
+
+Um incêndio pode propagar-se pela superfície do terreno, pelas copas das árvores e 
+através da manta morta e em grandes proporções podem ser vistos a vários quilômetros, 
+devido aos seus fumos negros e densos. 
+
+Florestas  tropicais  são  enormes  armazéns  de  carbono,  ao  sofrer  com  os  incêndios 
+florestais, tais florestas emitem quantidades significativas de carbono no ar, agravando o 
+aquecimento global (MOUTINHO, 2009).  
+
+Os impactos ambientais causados pelos incêndios florestais vão além da emissão de 
+carbono na atmosfera. Isso porque incêndios florestais aumentam a susceptibilidade da 
+floresta a futuros incêndios. Pois fogo provoca fogo. Ao sofrer com a queima, até 40% 
+das árvores adultas podem morrer. Esta mortalidade aumenta de maneira relativamente 
+alta se um segundo incêndio ocorrer. (MOUTINHO, 2009). 
+
+2.1.1.4 Desmatamento Ilegal 
+
+O  Desmatamento  é  o  processo  de  desaparecimento  completo  e  permanente  de 
+florestas,  atualmente  causado  em  sua  maior  parte  pela  atividade  humana.  Embora  o 
+conceito se aplique em  senso estrito  à perda de florestas, regiões densamente cobertas 
+por  árvores,  muitas  vezes  ele  é  aplicado  para  perdas  em  outras  regiões  com  cobertura 
+vegetal  naturalmente  esparsa,  arbustiva  ou  rasteira,  como  as  savanas,  as  pradarias  e  o 
+cerrado (WILLIAMS, 2000). 
+
+Diferente  de  degradação  florestal,  o  desmatamento  é  uma  perda  quantitativa  de 
+superfície  florestada,  já  a  degradação  ambiental  é  uma  perda  qualitativa  em 
+biodiversidade, estrutura ou função de uma floresta (JEAN-PAUL, 2003). 
+
+Também  é  importante  diferenciar  o  ―desmatamento  legal‖,  realizado  de  forma 
+produtiva,  seguindo  a  legislação  vigente  e  com  finalidades  apropriadas  para  as 
+condições  locais,  daquele  ―desmatamento  ilegal‖,  que  além  de  não  respeitar  as  leis 
+ambientais,  é  utilizado  para  finalidades  apenas  especulativas  ou  para  finalidades 
+inapropriadas  para  as  condições  locais.  O  ordenamento  da  fronteira  deve  ter  como 
+principal objetivo a eliminação do desmatamento ilegal e inapropriado do ponto de vista 
+socioambiental e econômico (ALENCAR, 2004). 
+
+A  floresta  amazônica  brasileira  permaneceu  completamente  intacta  até  o  início  da 
+era  ―moderna‖  do  desmatamento,  com  a  inauguração  da  rodovia  Transamazônica,  em 
+1970.  Os  índices  de  desmatamento  na  Amazônia  vêm  aumentando  desde  1991  com  o 
+processo de desmatamento num ritmo variável, mas rápido (FEARNSIDE, 2005).  
+
+As  três  atividades  responsáveis  pelo  desmatamento  na  Amazônia  são:  pecuária, 
+agricultura familiar e, recentemente, a agricultura mecanizada. A conversão da floresta 
+em pastagens tem sido a principal causa do desmatamento e uma das principais formas 
+de  ―desmatamento  ilegal‖,  especialmente  quando  utilizado  de  forma  especulativa.  A 
+criação extensiva de gado, especialmente em grandes propriedades, tem experimentado 
+um  contínuo 
+longo  da  última  década  e  é  responsável  por 
+aproximadamente  75%  das  florestas  desmatadas  na  região.  Entre  1990  e  2001,  o 
+
+incremento  ao 
+
+ 
+
+ 
+
+24 
+
+ 
+
+rebanho  bovino  da  Amazônia  Legal  praticamente  duplicou,  passando  de  26  milhões 
+para  52  milhões  de  cabeças,  a  uma  taxa  de  crescimento  média  de  6%  ao  ano 
+(FEARNSIDE, 2005). 
+
+Os  impactos  do  desmatamento  incluem  a  perda  de  biodiversidade,  a  redução  da 
+ciclagem  da  água  (e  da  precipitação)  e  também  contribuições  para  o  aquecimento 
+global. As estratégias para desacelerar o desmatamento incluem a repressão através de 
+procedimentos de licenciamento, monitoramento e multas (ALENCAR, 2004). 
+
+Figura 6 Taxa de desmatamento (em km²) nos Estados da Amazônia entre 1978 e 2002 (INPE, 2003). 
+
+Segundo os dados do INPE (2003), Mato Grosso e Pará foram os Estados campeões 
+do desmatamento na Amazônia  Legal  (Figura  6). Ambos foram  responsáveis  por 71% 
+das  florestas  derrubadas  entre  1998  e  2003  (Figura  7,  INPE,  2003).  Mato  Grosso,  no 
+entanto, tem ocupado de forma isolada o primeiro posto.   
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+25 
+
+Figura 7 Área total desmatada até o ano de 2001. Cálculo baseado nos dados do PRODES Digital (INPE, 2003). 
+
+Entre  1998  e  2003,  foram  derrubados,  em  média,  6.500km²  de  floresta  mato-
+grossense por ano, o equivalente a 40% do desmatamento total na região. Entre 2001 e 
+2002,  a  área  desmatada  subiu  para,  aproximadamente,  9.000  km²,  um  crescimento  de 
+37% em relação à média anterior (ALENCAR, 2004). 
+
+ 
+
+2.1.1.5 Tráfico de Animais 
+
+Estimava-se que perto de cinquenta milhões de animais vivam confinados em jaulas 
+e  gaiolas  no  Brasil,  muitos  deles  provenientes  de  capturas  ilegais  (TANGERINO, 
+2006). O tráfico de animais é um conjunto de ações que, cada uma, por si só, constitui 
+crime. Matar, perseguir, caçar, apanhar, utilizar espécimes da fauna silvestre, nativos ou 
+em  rota  migratória,  sem  a  devida  permissão,  licença  ou  autorização  da  autoridade 
+competente. 
+
+O comércio  ilegal  de animais, ao lado das práticas da agropecuária,  extrativismo e 
+urbanização,  da  introdução  de  espécies  exóticas,  da  reintegração  das  espécies,  da 
+poluição,  da  pesca  e  caça  excessiva  é  uma  das  principais  causas  de  extermínio  de 
+espécimes e espécies da fauna silvestre (TANGERINO, 2006). 
+
+Normalmente  a  expressão  ―tráfico  de  animais‖  está  vinculada  ao  transporte  de 
+animais ou a sua manutenção em cativeiro, ambas sendo atividades ilegais. Isso por que 
+essas espécies não tem origem legal ou o seu transporte não está autorizado. 
+
+A  Rede  Nacional  de  Combate  ao  Tráfico  de  Animais  Silvestres  identificou 
+parcialmente os lugares de captura no território brasileiro. A rede começa a se formar a 
+partir  desses  lugares  (ou  nas  redondezas)  onde  residem  desempregados,  lavradores, 
+pescadores que se ligam aos caminhoneiros e motoristas de ônibus que transitam entre 
+estas áreas rurais e centros urbanos médios e grandes. Geralmente, os caçadores vendem 
+os animais capturados para aumentar a renda familiar (TANGERINO, 2006). 
+
+ 
+
+ 
+
+26 
+
+ 
+
+2.1.1.6 Pesca Predatória 
+
+Pesca  predatória  é  aquela  que  retira  do  meio  ambiente,  mais  do  que  ele  consegue 
+repor, diminuindo a população de peixes e mesmo de plantas do ecossistema. A pesca 
+predatória  tem  consequências  desastrosas,  podendo  limitar  a  produtividade  pesqueira, 
+quer seja do ponto de vista biológico, quer econômico.  
+
+A  pesca  é  caracterizada  como  ilegal  quando  praticada  em  regiões  previamente 
+marcadas com restrição de um órgão competente. Também pode ser considerada ilegal 
+se  for  feita  com  o  uso  de  explosivos  ou  substâncias  que,  em  contato  com  a  água, 
+produzam  efeito  semelhante  a  substâncias  tóxicas,  ou  outro  meio  proibido  pela 
+autoridade competente. 
+
+Em um  contexto  global,  devido  à pesca predatória,  um  grande número de espécies 
+tem  sido  incluído  na  lista  vermelha  das  espécies  ameaçadas  da  IUCN,  União  Mundial 
+para a Natureza. Os estudos realizados no Brasil serviram de base para a inclusão nessa 
+lista de espécies ameaçadas em águas brasileiras. 
+
+A  maior  problemática  nacional  consiste  na  sobrepesca  (captura  em  quantidades 
+acima  das  quotas  acordadas  internacionalmente  para  garantir  a  manutenção  dos 
+estoques de peixes ou a sustentabilidade da pesca comercial) (AMARAL, 2005). 
+
+2.2  Órgãos governamentais 
+
+Para  esse  projeto,  foram  pesquisadas  as  formas  de  reportar  incidentes  utilizadas 
+pelos  principais  órgãos  governamentais  relacionados  ao  meio  ambiente.  Para  isso,  foi 
+necessário  acessar  o  site  do  Ministério  do  Meio  Ambiente  em  busca  dos  órgãos 
+licenciadores. 
+
+Os órgãos estão categorizados em dois tipos, federais e estaduais. Na esfera federal 
+o IBAMA é o único órgão licenciador, já na esfera estadual existe ao menos um órgão 
+por estado. 
+
+2.2.1 
+
+Reportar incidentes 
+
+Todos  os  órgãos  governamentais  pesquisados  contam  com  algum  meio  de 
+comunicação  para  que  os  cidadãos  possam  reportar  incidentes  relacionados  ao  meio 
+ambiente.  Grande  parte  deles  disponibilizam  números  telefônicos,  outros  oferecem 
+também  um  formulário  online,  no  qual  o  indivíduo  que  deseja  reportar  um  incidente 
+deverá  preencher  alguns  campos  com  suas  informações  pessoais  e  outros  com 
+informações  relacionados  ao  incidente.  Nessa  seção  serão  expostos  os  métodos  de 
+denúncia  disponibilizados  pelos  órgãos  licenciadores  que  atuam  na  região  sul  do  país, 
+ou seja, nos estados do Rio Grande do Sul, Santa Catarina e Paraná. 
+
+2.2.1.1 IBAMA 
+
+Para  efetuar  uma  denúncia  no  site  do  IBAMA,  o  denunciante  deverá  apresentar 
+dados claros e precisos sobre a denúncia a ser formulada. Visto que, segundo o IBAMA, 
+a  insuficiência  de  dados,  na  maioria  das  vezes,  impossibilita  ou  retarda  o  atendimento 
+da denúncia. Os dados pessoais do informante são mantidos em sigilo, por motivos de 
+segurança. O IBAMA solicita também que seja informado com clareza o tipo de evento 
+que está sendo submetido, assim como, dados de localização do incidente. Sendo assim, 
+caso  o  incidente  tenha  ocorrido  em  área  urbana,  deverão  constar  dados  como:  estado, 
+município, bairro, rua. Caso o incidente tenha se originado em área rural, informações 
+
+ 
+
+ 
+
+27 
+
+ 
+
+como:  nome  da  estrada,  quilômetro  e  direção  (exemplo:  saindo  de  Rio  Grande  em 
+direção a Pelotas) são de extrema importância. 
+
+É possível também entrar em contato com o IBAMA através da Linha Verde, central 
+de  atendimento  na  qual  as  atendentes  poderão  esclarecer  informações  e  registrar  a 
+denúncia. 
+
+2.2.1.2 FEPAM 
+
+A  FEPAM  é  um  órgão  do  estado  do  Rio  Grande  do  Sul  que  tem  a  atribuição  de  
+atender emergências com danos ambientais em todo o estado. A FEPAM disponibiliza 
+uma  linha  telefônica  exclusiva  para  a  denúncia  de  emergências  ambientais  e  solicita 
+que, ao efetuar uma denúncia, o cidadão especifique informações como: nome, detalhes 
+do acidente, condições locais (Área atingida, cursos d’água próximos, riscos à captação 
+d’água  etc.),  condições  de  tempo  no  local  e  outros  detalhes  relativos  a  cada  tipo  de 
+incidente. 
+
+2.2.1.3 FATMA 
+
+A FATMA é o órgão ambiental que atua no estado de Santa Catarina, com sua sede 
+localizada  em  Florianópolis.  A  FATMA  tem  como  principal  missão  garantir  a 
+preservação  dos  recursos  naturais  do  estado.  Para  denunciar  crimes  e  incidentes 
+ambientais  o  órgão  conta  com  uma  linha  telefônica  gratuita.  Caso  a  indivíduo  queira 
+reportar o evento  através da internet,  a  FATMA  utiliza a ouvidoria  geral  do estado de 
+Santa Catarina, a qual oferece a opção de anonimato ao denunciante e solicita que seja 
+fornecido o máximo de informações para que o fato seja investigado. 
+
+2.2.1.4 IAP 
+
+Responsável por proteger, preservar, conservar e recuperar o patrimônio ambiental, 
+o IAP é o órgão ambiental do estado do Paraná. Para possibilitar o envio de denuncias, 
+o órgão disponibiliza um formulário online, que solicita ao denunciante as informações 
+relevantes  para  possibilitar  a  verificação  do  incidente,  caso  o  denunciante  opte  pelo 
+anonimato,  a  denúncia  somente  será  averiguada  se  forem  encaminhados  dados  que 
+possibilitem  a  sua  verificação,  como  nome  e  sobrenome  do  denunciado,  assim  como 
+informações de localização do evento. 
+
+2.3  Considerações Finais do Capítulo 
+
+Neste capítulo foram abordados tipos de incidentes ambientais que influenciam todo 
+o  ecossistema  a  sua  volta.  Também  foram  apresentados  alguns  órgãos  ambientais  que 
+atuam na região sul e os seus principais meios de contato com a população. Esses meios 
+podem ser utilizados para o reporte de incidentes ambientais. 
+
+A forma de reporte utilizada pelos órgãos ambientais se mostra pouco efetiva. Visto 
+que,  sem  a  exatidão  de  um  GPS,  o  usuário  deverá  informar  os  dados  relativos  à 
+localização  do  incidente  através  de  referencias,  dificultando  a  ação  dos  órgãos 
+responsáveis. 
+
+A aplicação proposta pode contribuir no reporte de incidentes ambientais, como os 
+listados neste capítulo. Manchas órfãs podem ser encontradas em cidades litorâneas, que 
+contenham  lagos  ou  lagoas.  Um  vazamento  de  óleo  pode  ocorrer  próximo  à  costa, 
+prejudicando  a  vida  marinha  do  local.  Ainda  relacionado  a  vazamento  de  óleo,  há 
+
+ 
+
+ 
+
+28 
+
+ 
+
+também  a  possibilidade  de  encontrar,  nas  proximidades  da  costa,  animais  debilitados 
+devido  ao  contato  com  petróleo,  ou  seus  derivados.  Acidentes  com  produtos  químicos 
+podem ocorrer m diversos locais, estradas, estabelecimentos comerciais e indústrias. O 
+comércio ilegal de animais é considerado crime, segundo a legislação do Brasil. A partir 
+disso, é de extrema importância o reporte de qualquer tipo de tráfico de animais.  Esse 
+tipo  de  incidente  pode  ocorrer  no  perímetro  urbano  e  deve  ser  combatido.  A  pesca 
+predatória, assim como o tráfico de animais, é considerada crime, segundo a legislação 
+vigente  no  país.  Esse  tipo  de  ocorrência  é  oriundo  de  áreas  costeiras,  como  praias  e 
+lagunas. Princípios de um incêndio florestal podem ser avistados a longas distâncias, o 
+rápido reporte desse tipo de incidente pode contribuir bastante na tomada de decisão das 
+autoridades  responsáveis.  Por  fim,  o  desmatamento  ilegal,  cujo  maior  número  de 
+ocorrências  acontece  nas  áreas  cobertas  pela  floresta  amazônica,  também  pode  ser 
+reportado  pelo  aplicativo.  A  derrubada  das  árvores  para  beneficiar  obras  urbanas, 
+construir pastos e fazer enormes plantações, produção de carvão vegetal e as constantes 
+queimadas são fatores que ocorrem em todo território nacional.  
+
+ 
+
+ 
+
+29 
+
+ 
+
+3  TECNOLOGIAS MÓVEIS 
+
+3.1  Dispositivos móveis 
+
+A  popularização  dos  dispositivos  móveis  como  smartphones  e  tablets  foi 
+consideravelmente  influenciada  pela  possibilidade  da  criação  de  novas  aplicações  nas 
+mais diversas áreas, assim como pelo aumento da capacidade desses aparelhos, tanto em 
+melhoras computacionais, quanto em sensores e comunicação (KAUR, 2014). 
+
+3.1.1 
+
+Smartphones 
+
+Smartphone é um celular com funcionalidades avançadas que podem ser estendidas 
+por  meio  de  programas  executados  por  seu  sistema  operacional.  Os  sistemas 
+operacionais  dos  smartphones  permitem  que  desenvolvedores  criem  milhares  de 
+programas adicionais, com diversas utilidades, tais programas adicionais são chamadas 
+de aplicativos e podem ser encontrados em diversos sites especializados.  Desta forma, 
+os  usuários  têm  liberdade  para  instalar  e  utilizar  aplicações  que  suprem  suas 
+necessidades e interesses (VERKASALO, 2009). 
+
+Figura 8 Smartphones lançados entre os anos de 2013 e 2014 (a) Sony Xperia Z1 (b) Samsung Galaxy S5 (c) Apple 
+
+Iphone 6 
+
+A  Tabela  1  apresenta  as  características  de  alguns  smartphones  mais  capazes 
+lançados  entre  2013  e  2014,  apontando  as  características  mínimas  do  hardware  e 
+software. Sendo as principais a capacidade de conexão com redes de dados para acesso 
+
+ 
+
+ 
+
+ 
+
+30 
+
+ 
+
+à internet sem fio, tela sensível ao toque, câmeras digitais compactas, GPS, entre outros 
+recursos (TOLEDO, 2012).  
+
+Tabela 1 Configuração dos Smartphones da Figura 8, ordenados da esquerda para a direita.  
+Fonte: Wikipédia 
+
+ 
+
+Sony Xperia Z1 
+
+Samsung Galaxy S5 
+
+Apple Iphone 6 
+
+Data de 
+lançamento 
+
+15 de Setembro de 2013 
+
+11 de Abril de 2014 
+
+19  de  Setembro 
+de 2014 
+
+Memória RAM 
+
+2 GB 
+
+2 GB 
+
+1 GB 
+
+Armazenamento 
+Interno 
+
+16 GB (32 GB para o L39t, 
+SOL23, SO-01F e variantes 
+
+16 GB, 32 GB 
+
+16  GB,  64  GB  ou 
+128 GB 
+
+Armazenamento 
+removível 
+
+do Z1) 
+
+Até 64 GB 
+
+Até 128 GB 
+
+- 
+
+CPU 
+
+2.2 GHz quad-core Krait 
+
+1.9 GHz quad-core 
+
+(2.2 GHz Qualcomm 
+MSM8974 Quad Core) 
+
+Cortex-A15 and 1.3 GHz 
+
+quad-core Cortex-A7 
+
+1.4  GHz  dual-core 
+ARMv8-A 
+
+SOC 
+
+Qualcomm Snapdragon 
+
+Samsung Exynos 5 Octa 
+
+Apple A8 
+
+MSM8974 800 
+
+5422 
+
+LTE: Qualcomm 
+Snapdragon 801 
+
+LTE-A: Qualcomm 
+Snapdragon 805 
+
+Tamanho da 
+tela 
+
+5 polegadas (1920x1080 
+
+px) 
+
+5.1 polegadas 
+(1920x1080 px) 
+
+polegadas 
+
+4.7 
+(1334x750 px) 
+
+Câmera frontal 
+
+2 MP (filma em1080p) 
+
+2.1 MP (filma em1080p)  1.2-MP  (filma  em 
+
+Câmera de trás  20.7 MP com sensor de luz 
+
+16 MP (5312×2988 
+
+e flash 
+
+px) 
+
+7 
+
+com 
+
+MP 
+
+8 
+estabilizador 
+digital e flash 
+
+Sistema 
+operacional 
+
+Android 4.2.2 Jelly Bean 
+
+Android 4.4.2 KitKat 
+
+iOS 8 
+
+(inicial) 
+
+Android 4.4.4 KitKat (atual) 
+
+ 
+
+3.1.2 
+
+Tablets 
+
+É  um  dispositivo  pessoal  em  formato  de  prancheta  (Figura  9)  que  pode  ser  usado 
+para  acesso  à  internet,  organização  pessoal,  visualização  de  fotos,  vídeos,  leitura  de 
+livros, jornais e revistas e para entretenimento com jogos. Apresenta uma tela sensível 
+ao toque que é o dispositivo de entrada principal.  
+
+ 
+
+ 
+
+ 
+
+31 
+
+ 
+
+Figura 9 Tablets lançados entre os anos de 2012 e 2013 (a) Samsung Galaxy 3 (b) Google Nexus 7 (c) Google Nexus 
+
+10 
+
+Pode  ser  utilizada  a  ponta  dos  dedos  ou  uma  caneta  para  acionar  suas 
+funcionalidades.  Um  tablet  é  alimentado  por  bateria,  de  modo  a  ser  um  dispositivo 
+prático e de fácil transporte (WIKIPEDIA, 2014). 
+
+O  hardware  dos  tablets  (Tabela  2)  atuais  tem  características  muito  semelhantes  às 
+
+encontradas nos smartphones (Tabela 1). 
+
+Tabela 2 Tablets lançados entre os anos de 2012 e 2013 (Figura 9).  
+Fonte: Wikipédia 
+
+Samsung Galaxy Tab 3 
+
+Google Nexus 7 
+
+Google Nexus 10 
+
+Data de lançamento 
+
+7 de Julho de 2013 
+
+26 de Julho de 
+
+13 de Novembro de 
+
+Memória RAM 
+
+1.5 GB 
+
+2013 
+
+2 GB 
+
+2012 
+
+2 GB 
+
+Armazenamento 
+Interno 
+
+8 GB, 16 GB, 32 GB 
+
+16 GB, 32 GB 
+
+16 GB, 32 GB 
+
+CPU 
+
+1.2GHz quad-core 
+
+1.5GHz quad-core 
+
+1.4GHz dual-core 
+
+Nvidia Tegra 3 
+
+Qualcomm 
+
+Apple A6X 
+
+Snapdragon S4 Pro 
+
+GPU  Mali T400MP4 (quad-
+
+ULP GeFOrce (12-
+
+Mali-T604 (quad-
+
+core) 
+
+core) 
+
+core) 
+
+Sistema Operacional 
+
+Android 4.2.2 
+
+Android 4.3 
+
+Android 4.2.2 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+32 
+
+ 
+
+3.2  Sensores 
+
+Os smartphones e tablets atuais contam com os mais diversos tipos de sensores. Tais 
+sensores adicionam incontáveis possibilidades a esses dispositivos. Novos sensores são 
+constantemente  adicionados  a  dispositivos  mais  recentes.  Porém,  é  possível  identificar 
+alguns sensores convencionais, como câmera e GPS. 
+
+3.2.1 
+
+Câmera 
+
+A maioria dos  dispositivos móveis é embarcada com  câmeras mais simples do que 
+as câmeras digitais convencionais. Suas lentes de foco fixo e sensores menores limitam 
+o seu desempenho em condições de iluminação fraca. Na falta de um obturador físico, a 
+maioria tem um longo atraso do obturador. Flash, quando presente, é geralmente fraco.  
+
+O  primeiro  telefone  com  câmera  foi  vendido  em  2000  no  Japão,  um  modelo  J-
+Phone, cerca de uma década após a primeira câmera digital ter sido vendida, também no 
+Japão, em dezembro de 1989. 
+
+As principais vantagens dos dispositivos móveis com câmera são de custo e tamanho 
+compacto; smartphones e tablets com  câmera podem  executar aplicativos móveis para 
+adicionar recursos como geotagging. 
+
+3.2.2 
+
+Sensores utilizados para localização 
+
+Muito  utilizados  para  serviços  baseados  em 
+
+localização,  os  sensores  que 
+possibilitam  as  aplicações  de  obterem  a  localização  do  usuário  utilizam  métodos 
+diferentes  para  a  obtenção  dessa  informação,  assim  como  consomem  quantidades  de 
+energia diferentes (OSHIN, 2012). 
+
+3.2.2.1 GPS 
+
+O  sistema  de  posicionamento  global  é  um  sistema  de  navegação  por  satélite  que 
+fornece  a  um  aparelho  receptor  móvel  a  sua  posição,  assim  como  informação  horária, 
+sob todas as condições atmosféricas, a qualquer momento e em qualquer lugar na Terra, 
+desde  que  o  receptor  se  encontre  no  campo  de  visão  de  quatro  satélites  GPS 
+(BERNARDI, 2002).  
+
+Os satélites orbitam o planeta em uma órbita geoestacionária, a 20.2 km de altitude, 
+formando  uma  constelação  de  satélites,  projetada  de  maneira  que  pelo  menos  4  deles 
+sejam visíveis a partir de qualquer ponto do planeta. Inicialmente a rede contava com 24 
+satélites, mas novos satélites entram em orbita com o passar do tempo, em Setembro de 
+2008 já havia 32 satélites em orbita. 
+
+Os satélites transmitem um sinal de alta frequência, contendo pacotes de informação 
+com indicações precisas da hora em que cada um foi transmitido. Os receptores em terra 
+captam o sinal e usam um sistema de trilateração para calcular a posição, comparando a 
+diferença de tempo entre a transmissão e a recepção de cada pacote, calculando assim a 
+distância de cada satélite. Conforme você se desloca, a distância em relação aos satélites 
+muda, gerando uma pequena diferença no tempo do percurso, que é usada para atualizar 
+a localização. 
+
+Os  primeiros  receptores  de  GPS  eram  muito  mais  simples  que  os  atuais;  eles 
+forneciam  apenas  a  latitude  e  a  longitude,  o  resto  era  por  conta  do  utilizador,  que 
+precisava  calcular  a  localização  no  mapa.  A  geração  seguinte  trouxe  mapas 
+simplificados,  exibidos  em 
+telas  monocromáticas,  mas  com  a  evolução  dos 
+
+ 
+
+ 
+
+33 
+
+ 
+
+controladores  e  a  queda  de  preços  nas  telas  coloridas,  memória  flash  e  outros 
+componentes,  eles  evoluíram  rapidamente,  até  chegar  aos  modelos  que  temos  hoje 
+(MORIMOTO, 2009). 
+
+Os problemas urbanos gerados nas grandes cidades motivou o uso de equipamentos 
+GPS  por  parte  da  população  em  geral.  Essa  necessidade,  aliado  a  miniaturização  dos 
+componentes,  tornou  possível  a  inserção  de  receptores  GPS  em  smartphones  e  outros 
+aparelhos de uso pessoal, os receptores utilizam a tela, o processador, memória e demais 
+componentes do dispositivo (ZUCATO, 2009). 
+
+3.2.2.2 Rede 
+
+O  sensor  WI-FI  encontrado  nos  dispositivos  móveis  permite  que  a  localização  do 
+aparelho seja feita através do método Wi-FI positioning system, em português, Sistema 
+de localização por WI-FI. Esse modo de obtenção de localização utiliza menos energia 
+do que o sensor GPS. 
+
+O sensor GSM também é capaz de informar a localização do dispositivo. Conhecido 
+como  GSMPS,  sigla  para  Sistema  de  Posicionamento  pelo  Sistema  Global  para 
+Comunicações  Móveis,  é  a  metodologia  com  o  menor  consumo  de  energia,  como 
+exibido na Figura 10. 
+
+Figura 10 Diferença no consumo de energia entre os sensores em um dispositivo Nókia N95:  
+
+(a) Consumo do GPS (b) Consumo do WI-FI (c) Consumo do GSM. 
+
+Fonte: EnLoc: Energy-Efficient Localization for Mobile Phones 
+
+ 
+
+Embora  o  GPS  seja  o  sensor  de  maior  precisão  (OSHIN,  2012),  ele  também  é 
+responsável  pelo  maior  consumo  de  energia  se  comparado  aos  demais  sensores.  Os 
+sensores  de  rede  têm  um  menor  tempo  de  resposta  a  uma  requisição  de  localização, 
+além de utilizarem menos energia (ANDROID, 2014). 
+
+3.3  Software e Recursos 
+
+Nessa seção estão listados softwares e recursos provenientes de tecnologias móveis 
+
+e também aqueles que podem ser utilizados em conjunto com essas tecnologias. 
+
+3.3.1 
+
+Web 2.0 
+
+O  termo  ―Web  2.0‖  surgiu  em  2004.  Ele  foi  utilizado  pela  primeira  vez,  por 
+O’Reilly e Dougherty, para designar uma nova geração de recursos Web. (O’REILLY, 
+2005). 
+
+A comunicação e o acesso à informação tiveram grandes avanços com o surgimento 
+da  primeira  geração  da  Web,  no  fim  da  década  de  1980.  Porém,  diferente  da  Web  na 
+qual  navegamos  atualmente,  a  primeira  geração  não  disponibilizava  a  interação  com  a 
+
+ 
+
+ 
+
+34 
+
+ 
+
+qual  estamos  acostumados.  O  conteúdo  disponibilizado  na  rede  era  oferecido  por 
+empresas ou pessoas com conhecimento técnico na área. 
+
+Com  a  evolução  da  Web  para  a  Web  2.0,  surgiram  oportunidades  para  que  os 
+
+usuários sem conhecimento técnico pudessem gerar conteúdo na rede. 
+
+A  Web  2.0  é  a  evolução  para  uma  Web  social  e  interativa,  que  dá  a  todos  uma 
+oportunidade  para  criar  conteúdo,  compartilhar  interesses  e  interagir  com  os  demais 
+usuários  da  internet.  Sendo  assim,  não  somente  uma  tecnologia,  mas  sim  uma  nova 
+atitude de seus usuários (KROSKI, 2007). 
+
+Para Tapscott (2010, p. 29), ―a velha rede era algo em que você navegava em busca 
+de conteúdo A nova rede é um meio de comunicação que permite que as pessoas criem 
+seu próprio conteúdo, colaborem entre si e construam comunidades.‖.  
+
+Dessa forma, a Web 2.0 representa uma nova geração de ferramentas na internet que 
+
+possibilitam as mais diversas formas de comunicação e participação na rede.  
+
+Entre  as  novas  ferramentas  disponibilizadas  pela  Web  2.0,  pode-se  citar:  software 
+livre;  ferramentas  wikis;  Really  Simple  Syndication  (RSS);  QR  Code;  blogs  e  as 
+ferramentas de redes sociais (AGUIAR, 2012). 
+
+3.3.2 
+
+Geotagging 
+
+O  geotagging  é  uma  forma  de  criar  uma  tag  para  sua  foto,  que  informa  as 
+coordenadas  (latitude  e  longitude)  do  local  onde  ela  foi  tirada.  Esta  funcionalidade 
+permite,  por  exemplo,  que  você  faça  um  acompanhamento  dos  lugares  pelos  quais 
+passou e pode seguir as pessoas, também, sabendo por onde elas andam.  
+
+Figura 11 Geotagging no Google Maps 
+
+ 
+
+Alguns  álbuns  virtuais  já  possuem  essa  função,  como  o  Picasa  e  o  Flickr,  assim 
+
+como o Google Maps (Figura 11). 
+
+ 
+
+ 
+
+35 
+
+ 
+
+3.3.3 
+
+Serviços Baseados em Localização 
+
+Os  Serviços  Baseados  em  Localização  (SBL)  passaram  por  diversas  modificações 
+no  decorrer  dos  últimos  anos,  por  ser  uma  tecnologia  que  teve  sua  concepção 
+relacionada a implantação do GPS, pelo Departamento de Defesa dos Estados Unidos, 
+estimasse  que  a  mesma  exista,  pelo  menos,  desde  a  década  de  70.  Esse  conceito  pode 
+ser  definido  como  serviços  que  integram  a  localização  de  um  dispositivo  móvel  com 
+outros  tipos  de  informações  para  prover  uma  funcionalidade  de  maior  valor  agregado 
+baseada nestes dados (CORREIA, 2004). 
+
+Esses serviços tiveram uma grande evolução devido à legislação americana que, em 
+1996,  tornou  obrigatório  a  disponibilidade  de  informações  para  a  localização  de 
+chamadas  de  emergência  efetuadas  a  partir  de  dispositivos  de  comunicação.  A  fim  de 
+tornar  possível  a  realização  desta  tarefa,  as  operadoras  de  comunicação  realizaram 
+maiores investimentos em infraestrutura (KLIEMANN, 2006). 
+
+Os  SBL  visam  disponibilizar  um  serviço  de  informação  baseado  em  localizações, 
+utilizando uma ferramenta de mapas. As informações de localização podem ser geradas 
+através da latitude e longitude do usuário, obtidas através da comunicação do aparelho 
+com  a  rede,  ou  com  o  GPS.  Há  diversas  aplicações  na  área  de  SBL,  direcionadas  as 
+mais diversas áreas (KUMAR, 2009). 
+
+Os serviços baseados  em  localização  respondem  a três perguntas: Onde? O que há 
+em volta? Como chegar lá? Eles determinam a localização do usuário, em seguida usam 
+o local e outras informações para fornecer aplicações e serviços personalizados. Como 
+exemplo, um serviço de emergência sem fio 911 que determina a localização de quem 
+efetuou  a  chamada  automaticamente.  Outros  serviços  podem  combinar  o  local  onde  o 
+dispositivo  se  encontra  com 
+informações  sobre  alojamento  e  entretenimento 
+(MAHMOUD, 2004). 
+
+Há  diversos  tipos  de  abordagens  para  classificar  as  aplicações  que  fazem  uso  dos 
+SBL. Uma importante distinção, utilizada por estudiosos da área, é o método no qual as 
+informações chegam ao dispositivo. Há duas vertentes distintas de serviços: os serviços 
+denominados  Push e Pull. Serviços  Push implicam  que o usuário  recebe a informação 
+(baseada na sua localização), sem ter requisitado a mesma. Um exemplo desse tipo de 
+serviço seria o recebimento de uma sugestão de restaurante situado nas proximidades da 
+localização  do  usuário.  Já  nos  serviços  Pull,  a  informação  só  será  enviada  caso  o 
+usuário a requisite explicitamente (CORREIA, 2004). 
+
+Pode  se  dividir  os  SBL  em  diversas  categorias,  a  seguir  serão  resumidamente 
+
+especificadas algumas dessas categorias. 
+
+3.3.3.1 Serviços de Informação 
+
+Os  serviços  desta  categoria  fornecem  instruções  de  como  se  chegar  a  um  destino 
+desejado, indicam onde encontrar um determinado serviço ou pessoa nas redondezas, ou 
+localizam um usuário perdido em um mapa.  
+
+Um  serviço  de  ―Páginas  Amarelas‖.  Por  exemplo,  pode  informar  ao  usuário  onde 
+fica o estabelecimento mais próximo à sua posição atual que oferece determinado tipo 
+de serviço desejado (CORREIA, 2004).  O aplicativo Posto  de Gasolina, disponível no 
+Google  Play,  é  um  prático  exemplo  desse  tipo  de  serviço.  Neste  caso,  um  motorista 
+pode  procurar  pelos  postos  que  estão  oferecendo  o  combustível  pelo  valor  mais 
+vantajoso, ou os postos mais próximos da sua localização.  
+
+ 
+
+Uma característica marcante desta categoria de serviços é a sua natureza Pull, pois é 
+
+sempre o usuário quem solicita o recebimento de alguma informação.  
+
+ 
+
+ 
+
+36 
+
+Figura 12 Aplicativo Posto de Gasolina 
+
+Fonte: Google Play. 
+
+ 
+
+Normalmente a informação de localização é enviada ao servidor apenas no momento 
+da  requisição  e  não  há  a  necessidade  de  um  monitoramento  contínuo  da  posição  dos 
+usuários (CORREIA, 2004). 
+
+3.3.3.2 Serviços de Emergência 
+
+Serviços  Baseados  em  Localização  trazem  uma  nova  e  decisiva  dimensão  às 
+soluções  e  sistemas  de  gerenciamento  de  crises.  Em  situações  de  emergências,  o  fator 
+tempo normalmente é determinante para se evitar consequências mais graves. O uso de 
+tecnologias de localização possibilita um menor tempo de resposta, desde o instante em 
+que ocorre o fato em questão até o momento em que chega o auxílio (CORREIA, 2004). 
+
+Figura 13 Aplicativo S.O.S. Emergências 
+
+Fonte: Google Play 
+
+ 
+
+A  aplicação  S.O.S  Emergências  (Figura  13)  é  um  exemplo  deste  tipo  de  serviço. 
+Utilizada  exclusivamente  na  Espanha,  a  aplicação  pode  ajudar  a  salvar  vidas  que  se 
+encontram em situação de emergência enviando a localização e efetuando uma ligação.  
+
+3.3.3.3 Serviços de Rastreamento 
+
+Nesta  categoria,  a  troca  de  informação  de  localização  é  feita  de  forma  constante  e 
+contínua,  não  dependendo  de  eventos  externos  para  dispará-la.  Em  função  desta 
+característica,  esta  categoria  engloba  aplicações  em  que  não  é  necessário,  ou  mesmo 
+desejado, preservar a privacidade do usuário (CORREIA, 2004). 
+
+ 
+
+ 
+
+37 
+
+ 
+
+Essa categoria engloba um grande leque de possibilidades, desde o rastreamento de 
+veículos,  transporte  público,  e  até  mesmo  o  de  membros  da  família.  Neste  caso,  há  o 
+aplicativo  Family  Mobile  Tracker  (Figura  14),  por  exemplo.  Disponível  no  Google 
+Play, essa aplicação possibilita que seja visualizada a informação de todos os membros 
+da família que estão cadastrados na aplicação. 
+
+Figura 14 Aplicativo Family Mobile Tracker 
+
+Fonte: Google Play 
+
+ 
+
+Nessa  aplicação,  em  particular,  é  possível  encontrar  funcionalidades  Push  e  Pull. 
+Quando o responsável decide visualizar a localização dos demais membros da família, 
+ele estará efetuando uma atividade Pull. Porém, a aplicação permite, por exemplo, que o 
+responsável  seja  notificado  quando  o  seu  filho  chega  à  escola.  Neste  caso,  está  sendo 
+efetuada uma atividade Push. 
+
+3.4  Trabalhos Relacionados 
+
+Com  a  disponibilidade  de  GPS  em  smartphones  e  tablets,  diversas  aplicações 
+passaram a ser criadas ou adaptadas para utilizar os benefícios desta tecnologia. Desde 
+aplicativos para que um atleta possa visualizar o caminho percorrido até aplicativos para 
+encontrar gasolina pelo menor preço, como mostrado anteriormente. O GPS possibilita 
+a criação dos mais diversos aplicativos.  
+
+Porém,  na  busca  por  aplicações  que  utilizam  o  GPS  para  reportar  problemas 
+relacionados  exclusivamente  ao  meio  ambiente,  não  foi  possível  encontrar  nenhuma 
+aplicação. Mas, foi possível encontrar aplicações que de certa forma, realizam esse tipo 
+de serviço. 
+
+3.4.1 
+
+ Urbotip 
+
+O  Urbotip  (www.urbotip.com)  é  um  aplicativo  que  possibilita  o  compartilhamento 
+de  problemas  urbanos,  para  que  assim,  seja  possível  mostrar  tais  problemas  para  as 
+autoridades  responsáveis.  Todos  os  problemas  estão  georreferenciados,  facilitando  a 
+localização do problema por parte das autoridades. 
+
+ 
+
+ 
+
+ 
+
+38 
+
+Figura 15 Urbotip 
+Fonte: Google Play 
+
+Segundo os criadores da aplicação, o conceito é muito simples: O usuário identifica 
+o problema, cria uma causa no aplicativo explicando do que se trata e a sua localização, 
+essas  informações,  aliadas  a  um  ambiente  social,  faz  com  que  mais  pessoas  fiquem 
+cientes desse problema e possam juntar-se a causa. 
+
+Os  problemas  estão  divididos  em  categorias,  como:  Infraestrutura,  Transporte 
+
+Público, Trânsito, Meio Ambiente e Segurança. 
+
+3.4.2 
+
+Colab 
+
+Eleito o melhor aplicativo urbano do mundo em 2013, pela New Cities Foundation, 
+o  Colab  (www.colab.re)  é  uma  rede  social  voltada  para  a  cidadania,  pois  faz  a  ponte 
+entre cidadãos e cidades, conectando pessoas a prefeituras e órgãos públicos. 
+
+Segundo  seus  criadores,  o  aplicativo  se  compromete  a  enviar  todas  as  publicações 
+para as prefeituras, além de encaminhar as respostas recebidas de volta aos cidadãos. A 
+contribuição de cidadãos com a cidade beneficia a todos e colabora para a construção de 
+um ambiente melhor para toda a população, interagindo com amigos e outros cidadãos 
+numa plataforma social e transparente (COLAB, 2014). 
+
+Figura 16 Colab 
+
+Fonte: Google Play 
+
+Com o Colab, é possível fazer três tipos de publicação: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+39 
+
+ 
+
+-  Fiscalize:  indicar  problemas  e  irregularidades  de  uma  cidade,  como  buracos  em 
+
+vias, iluminação pública queimada, calçadas irregulares e etc. 
+
+-  Proponha:  elaborar  soluções  e  projetos  para  melhorar  determinada  cidade,  é 
+
+possível discutir com amigos e outros participantes da rede. 
+
+- Avalie: Os usuários dão nota às diversas entidades e instituições públicas. 
+
+3.4.3 
+
+De olho na cidade 
+
+O  De  Olho  na  Cidade  (www.deolhonacidade.org)  é  um  aplicativo  que  permite 
+aproximar  os  cidadãos  da  administração  pública,  propiciando  a  governança 
+participativa. Através dele você poderá postar causas (problemas, sugestões de projetos, 
+algo que deve mudar na sua cidade), comentar, apoiar, compartilhar, etc.  
+
+Figura 17 De Olho na Cidade 
+
+Fonte: Google Play 
+
+ 
+
+Quando a causa tiver um nível de importância elevada (muitos apoiadores, comentários, 
+compartilhamentos)  a  administração  dará  maior  importância  para  resolvê-la.  Esta  é  a 
+ideia central da aplicação. 
+
+3.4.4 
+
+Redes sociais e serviços de conversação 
+
+A criação de grupos com um fim específico em redes sociais de grande utilização, 
+por  exemplo,  é  uma  alternativa.  Assim  como  a  publicação  de  fotos  geolocalizadas  em 
+aplicações de conversação. Porém, é importante salientar que esse tipo de metodologia é 
+altamente dependente de recursos não administráveis e fortemente genéricos. A criação 
+de um  grupo para  a postagem  de incidentes  ambientais no Whatsapp ou no Facebook, 
+por  exemplo,  é  uma  maneira  possível  de  contribuição.  Porém,  a  falta  de  ferramentas 
+organizacionais  e  que  permitam  a  filtragem  de  incidentes,  os  torna  inutilizáveis  para 
+grandes grupos de usuários. 
+
+Ao buscar alternativas para o reporte de incidentes ambientais, é possível encontrar 
+iniciativas como a do Instituto Biota de Conservação, que utiliza perfis em redes sociais 
+e  grupos  específicos  em  aplicativos  de  conversação  para  receber  da  população, 
+informações  relacionadas  a  animais  marinhos.  As  imagens  e  textos  são  enviados  por 
+smartphone  e  podem  salvar  os  animais  encontrados  vivos  encalhados  na  praia. 
+Utilizando  as  informações  geradas  pela  população,  o  Instituto  remove  ninhos  de 
+tartaruga  encontrados  em  locais  de  risco,  com  muita  movimentação  de  banhistas,  e  os 
+transfere para áreas de proteção ambiental. 
+
+ 
+
+ 
+
+40 
+
+ 
+
+3.5  Tipos de aplicativos 
+
+No  cenário  de  aplicações  para  dispositivos  móveis,  é  possível  apontar  para  duas 
+direções:  aplicações  nativas  e  aplicações  web.  Embora  aplicativos  de  software  web 
+atinjam  um  maior  número  de  usuários,  dada  a  independência  de  sistema  operacional, 
+software  nativos  podem  proporcionar  maiores  funcionalidades.  Visto  que,  podem 
+oferecer diversas funcionalidades sem que o dispositivo esteja conectado à internet. 
+
+3.5.1 
+
+Aplicação nativa 
+
+A  aplicação  nativa,  também  conhecida  como  aplicação  embarcada,  é  um  produto 
+desenvolvido para executar em uma determinada plataforma. Os arquivos resultantes da 
+compilação do aplicativo devem ser instalados diretamente no sistema operacional, tais 
+como apresentação, processamento e armazenamento de dados. 
+
+Esse  tipo  de  aplicação  possibilita  a  manipulação  de  dados  offline,  ou  seja, 
+armazenados em um banco de dados local, no próprio dispositivo, o que torna possível a 
+utilização  da  ferramenta  mesmo  em  localidades  onde  não  há  acesso  a  internet.  Uma 
+grande  vantagem  a  ser  observada  nesse  tipo  de  aplicação,  é  a  melhor  utilização  do 
+hardware  presente  no  dispositivo,  como  o  telefone,  câmera,  GPS,  bluetooth  e 
+acelerômetro.  Outro  ponto  positivo  é  a  melhor  experiência  com  o  usuário,  o 
+desenvolvimento  de  aplicações  nativas  podem  explorar  recursos  mais  avançados  do 
+sistema operacional, tornando possível o acesso aos dados presentes no aparelho, como 
+por exemplo: a agenda telefônica, câmera e outros aplicativos,  facilitando a integração 
+entre as aplicações existentes no aparelho. 
+
+Desenvolver  software  nativo  requer  linguagem  de  programação  específica  como 
+Java  no  sistema  operacional  Android  (www.android.com)  do  Google,  Objective-C  na 
+plataforma  iOS  (www.apple.com/ios)  da  Apple,  ou  C#  na  plataforma  Windows  Phone 
+(www.microsoft.com/windowsphone) da Microsoft (TOLEDO, 2012).  
+
+3.5.2 
+
+Aplicação web 
+
+Acessado  geralmente  pela  internet  e  desenvolvido  com  linguagens  suportadas  por 
+navegadores, tais como, HTML, CSS, JavaScript, este tipo de aplicação é denominado 
+aplicativo web. 
+
+No processo de produção desses aplicativos web, voltados para smartphones, deve-
+se levar em consideração sua alta popularidade, que permite uma proliferação maior de 
+usuários  em  comparação  com  os  aplicativos  nativos.  Isso  por  que  não  é  necessária  a 
+instalação  adicional  de  aplicativo,  o  que  facilita  a  atualização  e  manutenção  dessa 
+aplicação. 
+
+Para  que  sejam  executados  de  maneira  satisfatória,  os  aplicativos  web  necessitam 
+que  o  aparelho  sempre  esteja  conectado  à  internet,  de  preferência  deve-se  ter  uma 
+velocidade  de  conexão  satisfatória  para  permitir  a  rápida  troca  de  dados  com  os 
+servidores de páginas para não prejudicar a experiência do usuário. 
+
+Apesar dos aplicativos web serem executados em navegadores, há alguns pontos que 
+exigem  a  atenção  dos  desenvolvedores,  como  por  exemplo,  os  diferentes  tamanhos  de 
+telas  encontradas  nos  dispositivos  móveis  disponíveis  no  mercado,  exigindo  testes  e 
+adequações  para  o  bom  funcionamento.  Outro  fator  que  deve  ser  observado  é  a 
+compatibilidade  da  aplicação  com  os  navegadores  disponíveis  no  aparelho.  Visto  que, 
+dependendo  da  estrutura  e  das  ferramentas  da  aplicação,  os  navegadores  podem 
+
+ 
+
+ 
+
+41 
+
+ 
+
+apresentar  aspectos  indesejáveis  devido  ao  difícil  controle  quanto  as  suas  diferenças  e 
+também quanto as suas respectivas versões (TOLEDO, 2012). 
+
+3.5.3 
+
+Aplicação híbrida 
+
+O  desenvolvimento  de  uma  aplicação  híbrida,  ou  aplicação  multi-plataforma,  pode 
+ser  realizado  de  maneiras  diferentes.  Uma  delas  é  a  técnica  conhecida  como  cross-
+compilation, onde são realizadas diversas compilações de um mesmo código para criar 
+aplicações focadas no ambiente de destino, nesse caso, um sistema operacional móvel. 
+Para  isso,  é  utilizado  um  framework  com  uma  API  independente  de  plataforma  e 
+baseado em linguagens largamente utilizadas, como JavaScript, Ruby ou Java. A API é 
+utilizada para criar a aplicação móvel, incluindo a sua interface, persistência de dados e 
+lógica  de  negócio.  A  partir  disso,  o  código  é  processado  por  um  compilador  multi-
+plataforma  que  o  transforma  em  uma  aplicação  nativa  do  sistema  operacional  de 
+destino.  A  aplicação  gerada  poderá  ser  instalada  e  executada  nativamente  no 
+dispositivo.  As  vantagens  dessa  técnica  são:  aceitação,  ao  executar  a  aplicação 
+nativamente no dispositivo, a aplicação irá se comportar como uma aplicação comum ao 
+usuário;  e  terá  acesso  total  às  funções  e  capacidades  nativas  do  dispositivo,  como 
+câmera  e  sensores.  A  maior  desvantagem  é  a  complexidade.  Visto  que,  compiladores 
+que realizam essa técnica são difíceis de serem escritos e precisam ser consistentes aos 
+sistemas operacionais disponíveis. 
+
+Há  também  uma  variação  desta  técnica,  na  qual  é  utilizada  uma  Máquina  Virtual 
+para abstrair os detalhes  do sistema operacional  destino do código  em  execução. Uma 
+máquina  virtual  é  um  software  projetado  para  ser  uma  máquina  (neste  caso,  um 
+dispositivo móvel) que executa as aplicações como uma máquina real. Neste cenário, o 
+framework  não  somente  provêm  uma  API,  mas  também  um  ambiente  de  tempo  de 
+execução  no  qual  a  aplicação  será  executada.  A  utilização  desse  método  compartilha 
+algumas  vantagens  com  a  técnica  cross-compilation.  Embora  as  aplicações  costumem 
+serem  um  pouco  mais  lentas  em  sua  execução.  A  máquina  virtual  precisa  traduzir  as 
+instruções gerando uma  latência de interpretação. A maior vantagem  dessa abordagem 
+está  relacionada  ao  fato  de  que,  máquinas  virtuais  são  mais  flexíveis  e  práticas  de 
+modificar ao ser necessário adicionar novas funcionalidades a API. 
+
+Outra  opção,  cada  vez  mais  popular,  envolve  a  criação  de  uma  aplicação  nativa 
+como se fosse uma aplicação web que abrirá no navegador do dispositivo. Essa técnica 
+envolve  a  utilização  de  tecnologias  web  como  HTML5,  CSS3  e  JavaScript  para  criar 
+aplicações que irão se parecer e se comportar como aplicativos nativos. 
+
+Para certos tipos de aplicações, essa metodologia pode ser bem aproveitada, devido 
+ao  seu  baixo  custo  e  potencial  para  cobrir  a  maioria  dos  sistemas  operacionais  com 
+poucas alterações no código. Isso inclui aplicações comuns de negócios, como leitores 
+de  notícias,  e-books,  sites  bancários,  redes  sociais  e  e-mail.  Porém,  não  é  uma 
+metodologia recomendável para aplicações de alto consumo energético, como jogos ou 
+aplicações de vídeo conferência. 
+
+A aplicação web é executada em um navegador móvel ou em um navegador inserido 
+em um aplicativo nativo, conhecido como Modelo Híbrido. Neste modelo, o aplicativo 
+web  é  empacotado  e  executado  em  uma  aplicação  nativa  que  irá  fornecer  uma  ponte 
+entre  os  serviços  e  o  sistema  operacional.  A  aplicação  web  é  armazenada  localmente 
+durante  a  sua  instalação  no  dispositivo.  A  comunicação  entre  o  aplicativo  web  e  o 
+
+ 
+
+ 
+
+42 
+
+ 
+
+aplicativo nativo normalmente ocorre utilizando uma API baseada em JavaScript, como 
+mostra a Figura 18. 
+
+Essa  técnica  trás  o  melhor  de  ambas  as  tecnologias,  web  e  nativa,  em  uma  única 
+solução  integrada:  a  flexibilidade  das  aplicações  web  e  a  velocidade  e  riqueza  de 
+recursos  das  aplicações  nativas.  Quando  corretamente  utilizada,  essa  metodologia 
+costuma obter bons resultados (HARDMANN, 2011). 
+
+Figura 18 Estrutura de uma aplicação hibrida 
+
+ 
+
+Nessa seção estão listados três frameworks que possibilitam a criação de aplicações 
+
+híbridas. 
+
+3.5.3.1 Phonegap 
+
+Phonegap  é  um  framework  multi-plataforma  e  de  utilização  gratuita,  para  o 
+desenvolvimento  de  aplicações  móveis.  Phonegap  permite  que  desenvolvedores 
+utilizem  técnicas  de  desenvolvimento  web  -  HTML,  CSS  e  JavaScript  -  para 
+desenvolver aplicações nativas em sistemas operacionais móveis, como Android, iOS e 
+Windows Phone (LUNNY, 2011). 
+
+Figura 19 Estrutura de uma aplicação criada do Phonegap 
+
+ 
+
+A arquitetura de uma aplicação criada no Phonegap está representada na Figura 19. 
+A interface com o usuário é realizada através de tecnologias web, como HTML, CSS e 
+JavaScript. Podem ser utilizado em conjunto com o Phonegap bibliotecas, como jQuery 
+e  Bootstrap,  para  facilitar  a  criação  de  interfaces  responsivas.  A  lógica  da  aplicação  é 
+baseada  em  JavaScript,  linguagem  na  qual  o  framework  é  baseado.  Na  camada  do 
+
+ 
+
+ 
+
+43 
+
+ 
+
+framework  estão  os  seus  plugins  padrão.  Esses  plugins  se  comunicam  com  o  sistema 
+operacional,  realizando  requisições  para  suas  ferramentas  e  também  para  os  sensores 
+dos dispositivos. 
+
+3.5.3.2 Appcelerator Titanium 
+
+Appcelerator Titanium é uma plataforma de desenvolvimento que permite a criação 
+de  aplicações  para  diversas  sistemas  operacionais  móveis  utilizando  a  simplicidade  da 
+linguagem  JavaScript.  Os  aplicativos  desenvolvidos  através  do  Appcelerator  Titanium 
+podem  ser  executados  como  aplicativos  nativos  em  plataforma  iOS,  Android, 
+BlackBerry, entre outras (COSTA, 2012). 
+
+3.5.3.3 Sencha Touch 
+
+Desde  o  seu  lançamento,  Sencha  Touch  se  tornou  uma  plataforma  muito  utilizada 
+para  o  desenvolvimento  de  aplicações  baseadas  em  HTML5.  O  framework  Sencha 
+Touch permite que aplicações HTML5 e JavaScript se assemelhem muito a aplicações 
+nativas,  tanto  em  dispositivos  com  o  sistema  operacional  iOS,  quanto  Andrid  e 
+Windows Phone. O framework permite ao desenvolvedor criar aplicações para diversas 
+plataformas  sem  que  seja  necessário  o  aprendizado  da  linguagem  nativa  desta 
+plataforma (CLARK, 2013). 
+
+3.6  Tecnologias para desenvolvimento web 
+
+Ao desenvolver aplicações híbridas, faz-se uso de tecnologias  web, como HTML5, 
+
+CSS3 e JavaScript. Nessa seção serão descritas essas tecnologias. 
+
+3.6.1 
+
+HTML 
+
+O  HTML  (abreviação  para  a  expressão  inglesa  HyperText  Markup  Language,  que 
+significa  Linguagem  de  Marcação  de  Hipertexto)  é  uma  linguagem  de  marcação 
+utilizada  para  produzir  páginas  na  web.  Documentos  HTML  podem  ser  interpretados 
+por navegadores. Assim como  as demais linguagens de marcação, o HTML é baseado 
+na linguagem SGML (Standard Generalized Markup Language), criada em 1986. Essa 
+linguagem permite a composição e apresentação de documentos na web. 
+
+A criação do HTML se deu devido à complexidade da SGML. O HTML foi criado 
+especificamente para a estruturação de textos correntes e a apresentação de documentos 
+em navegadores web (MAGRI, 2013). 
+
+3.6.1.1 HTML5 
+
+O  HTML5  começou  a  ser  desenvolvido  em  2006  pelo  World  Wide  Consortium 
+(W3C)  em  conjunto  com  a  Web  Hypertext  Application  Technology  Working  Group 
+(WHAT-WG).  Esta nova versão traz consigo importantes mudanças quanto ao papel do 
+HTML  no  mundo  da  Web,  através  de  novas  funcionalidades  como  semântica  e 
+acessibilidade.  Possibilita  o  uso  de  novos  recursos  antes  possíveis  apenas  com  a 
+aplicação  de  outras  tecnologias  disponibilizadas  por  empresas  terceiras.  Sua  essência 
+tem  sido  melhorar  a  linguagem  com  o  suporte  para  as  mais  recentes  multimídias  de 
+modo  fácil  para  o  desenvolvedor  e  que  seja  transparente  para  o  usuário  final 
+(VARASCHIN, 2013). 
+
+ 
+
+ 
+
+44 
+
+ 
+
+3.6.2 
+
+CSS 
+
+Cascading Style Sheets (ou simplesmente CSS) é uma linguagem de folhas de estilo 
+utilizada  para  definir  a  apresentação  de  documentos  escritos  em  uma  linguagem  de 
+marcação, como HTML ou XML. Seu principal benefício é prover a  separação entre o 
+formato e o conteúdo de um documento. 
+
+O  uso  de  CSS  permite  a  criação  de  páginas  visualmente  mais  atrativas  e  de  fácil 
+manutenção.  Visto  que,  é  possível  concentrar  toda  a  estilização  do  site  em  um  único 
+arquivo CSS (GAVAZONI, 2013). 
+
+3.6.3 
+
+JavaScript 
+
+JavaScript  é  uma  linguagem  de  programação  interpretada.  Foi  originalmente 
+implementada  como  parte  dos  navegadores  web  para  que  scripts  pudessem  ser 
+executados  do  lado  do  cliente  e  interagissem  com  o  usuário  sem  a  necessidade  deste 
+script  passar  pelo  servidor,  controlando  o  navegador,  realizando  comunicação 
+assíncrona e alterando o conteúdo do documento exibido. 
+
+A  linguagem  JavaScript  é  dinâmica,  fracamente  tipada,  multi-paradigma  e  que 
+suporta  metodologias  de  programação  orientado  a  objetos,  imperativos  e  funcionais 
+(FERNANDES, 2012). 
+
+3.6.3.1 jQuery 
+
+jQuery  é uma biblioteca JavaScript  cross-browser desenvolvida para simplificar os 
+scripts client side que interagem com o HTML. Criada por John Resig e disponibilizada 
+como software livre. 
+
+A  sintaxe  do  jQuery  foi  desenvolvida  para  tornar  mais  simples  a  navegação  do 
+documento HTML, a seleção de elementos DOM, criar animações, manipular eventos e 
+desenvolver aplicações AJAX. A biblioteca também oferece a possibilidade de criação 
+de plugins sobre ela. 
+
+No prefácio do livro jQuery in Action, John Resig diz o seguinte: 
+
+―O foco principal da biblioteca jQuery é a simplicidade. Por que submeter os 
+desenvolvedores  ao  martírio  de  escrever  longos  e  complexos  códigos  para 
+criar simples efeitos?‖. 
+
+Esse  trecho  define  muito  bem  a  essência  do  jQuery,  simplicidade.  Diminuir  as 
+diversas  linhas  de  código  JavaScript  que  necessitam  ser  escritas  para  obter  um  efeito 
+simples, em algumas poucas linhas que irão efetuar exatamente a mesma ação. 
+
+3.6.4 
+
+DOM 
+
+O  Modelo  de  Objeto  de  Documento  é  uma  convenção  multi-plataforma  e 
+independente de linguagem para representação e interação com objetos em documentos 
+HTML, XHTML e XML. Os nós de cada documento são organizados em uma estrutura 
+de árvore, chamada de árvore DOM, como exibido na Figura 20. Os objetos na árvore 
+DOM podem ser endereçados e manipulados pelo uso de métodos sobre os objetos. A 
+interface  pública  de  um  DOM  é  especificada  em  sua  interface  de  programação  de 
+aplicações (API). 
+
+ 
+
+ 
+
+ 
+
+45 
+
+Figura 20 Hierarquia dos objetos de um arquivo HTML 
+
+ 
+
+3.7  Serviços de mapas pela Internet 
+
+O  Serviço  de  mapas  pela  internet  (WMS)  é  a  especificação  de  um  formato,  com  o 
+objetivo  de  disponibilizar  um  mapa  na  rede.  Existem  diversos  tipos  de  WMS,  alguns 
+gratuitos e outros pagos. 
+
+No cenário mundial, o Google Maps é o WMS de maior destaque, contendo as mais 
+
+diversas ferramentas e funcionalidades. 
+
+3.7.1 
+
+Google Maps 
+
+Google  Maps  é  um  serviço  de  pesquisa  e  visualização  de  mapas  e  imagens  de 
+
+satélite da Terra gratuito na web fornecido e desenvolvido pela Google. 
+
+Atualmente, o serviço disponibiliza mapas e rotas para qualquer ponto nos Estados 
+Unidos,  Canadá,  na  União  Europeia,  Austrália  e  Brasil,  entre  outros.  Disponibiliza 
+também imagens de satélite do mundo todo, com possibilidade de um zoom nas grandes 
+cidades, como Nova Iorque, Paris, São Paulo, Rio de Janeiro, Brasília, entre outras. 
+
+Google Maps é uma ferramenta extremamente poderosa e pode ser utilizada para os 
+mais diversos  tipos de aplicações. Para utilizar o Google Maps em  um  aplicativo para 
+dispositivos móveis é necessário fazer uso da sua biblioteca. 
+
+Relativamente simples, a biblioteca do Google Maps permite a utilização de diversas 
+ferramentas, com ela é possível utilizar o GPS do aparelho, assim como outros recursos 
+do dispositivo (WIKIPÉDIA, 2014). 
+
+ 
+
+ 
+
+ 
+
+46 
+
+Figura 21: Google Maps 
+
+ 
+
+3.7.2 
+
+Here Maps 
+
+Here, anteriormente  conhecido  como Ovi Maps  (2007-2011)  e Nokia Maps (2011-
+2012),  é  uma  ferramenta  disponibilizada  pela  empresa  Nokia  que  une  recursos  de 
+mapeamento e de localização em um só local. O Here Maps é baseado em computação 
+na  nuvem,  no  qual  informações  de  locais  e  serviços  são  armazenados  em  servidores 
+remotos. 
+
+É possível desenvolver aplicações que fazem uso do Here Maps utilizando a sua API 
+
+(WIKIPÉDIA, 2014). 
+
+Figura 22 Here Maps 
+
+ 
+
+3.7.3 
+
+OpenStreetMap 
+
+OpenStreetMap é um projeto colaborativo para criar um mapa do mundo gratuito e 
+editável. Inspirado no sucesso do Wikipédia, a ferramenta foi criada em 2004. O OSM 
+conta com uma API editável, utilizada para a inserção e leitura de informações do banco 
+de dados. Essas informações são geradas e inseridas pelos usuários através de aparelhos 
+GPS, fotos aéreas e outras fontes.  
+
+ 
+
+O  site  é  mantido  pela  OpenStreetMap  Foundation,  uma  organização  sem  fins 
+
+lucrativos. 
+
+ 
+
+ 
+
+47 
+
+Figura 23 OpenStreetMap 
+
+ 
+
+3.8  Sistemas Operacionais 
+
+O mercado de dispositivos móveis é dividido em alguns sistemas operacionais, tal 
+divisão,  é  frequentemente  analisada  pela  IDC,  uma  empresa  americana,  focada  em 
+pesquisas  de  mercado  de  Tecnologia  da  Informação,  Telecomunicações  e  Tecnologias 
+de Consumo, que realiza periodicamente pesquisas relacionadas ao mercado de sistemas 
+operacionais. 
+
+Figura 24 Mercado de dispositivos móveis por trimestre, a partir de 2011 
+
+Fonte: IDC 
+
+ 
+
+Na  Figura  24,  é  possível  visualizar  os  principais  sistemas  operacionais  para 
+dispositivos móveis, e as suas respectivas fatias de mercado, que variam com o passar 
+do tempo, cada linha representa o primeiro trimestre de cada ano.  
+
+ 
+
+ 
+
+ 
+
+48 
+
+ 
+
+Figura 25 Mercado de dispositivos móveis, durante o primeiro trimestre de cada ano, em detalhes 
+
+Fonte: IDC 
+
+Com  base  na  Figura  25,  é  possível  visualizar  os  sistemas  operacionais  de  maior 
+destaque no mercado atual, ressaltando o grande crescimento do Android, líder absoluto 
+com  uma  grande  fatia  do  mercado.  Dadas  essas  informações,  essa  seção  visa  trazer 
+informações  dos  três  sistemas  operacionais  de  maior  destaque  no  mercado  atual  e  que 
+tornam  possível  a  criação  da  aplicação  proposta  no  projeto:  Android,  iOS  e  Windows 
+Phone.  
+
+3.8.1 
+
+Android 
+
+O  sistema  Android  está  presente  em  diversos  modelos  de  smartphones  e  tablets. 
+Alguns  atributos  do  sistema  são:  browser  rápido,  sincronização  em  nuvem,  sistema 
+multitarefa, facilidades para conectar e compartilhar, milhares de aplicativos disponíveis 
+para download, entre outros (LECHETA, 2010). 
+
+3.8.1.1 História 
+
+Em  agosto  de  2005  a  empresa  Google  adquiriu  a  Android  Inc,  uma  pequena 
+empresa  em  Palo  Alto  (California  -  USA)  que  desenvolvia  uma  plataforma  para 
+celulares baseado em Linux, com o objetivo de ser uma plataforma flexível, aberta e de 
+fácil  migração  para  os  fabricantes.  Em  2007,  Google  anunciou  o  sistema  operacional 
+Android  e  a  criação  da  Open  Handset  Alliance  (OHA),  um  conselho  com  mais  de  33 
+empresas  parceiras  que  se  uniram  para  inovar  e  acelerar  o  desenvolvimento  de 
+aplicações  e  serviços  para  dispositivos  móveis,  trazendo  aos  consumidores  uma 
+experiência  mais  rica  em  termos  de  recursos  e  menos  onerosa  financeiramente  para  o 
+mercado.  Pode-se  dizer  que  a  plataforma  Google  Android  é  a  primeira  plataforma 
+completa,  aberta  e  livre  para  dispositivos  móveis.  O  Android  SDK  é  o  kit  de 
+desenvolvimento que disponibiliza as ferramentas e APIs necessárias para desenvolver 
+aplicações para a plataforma Google Android, utilizando a linguagem Java. 
+
+3.8.1.2 Versões 
+
+Novas  versões  do  sistema  são  lançadas  a  cada  ano,  cada  versão  trás  novas 
+funcionalidades para o sistema. Na tabela 3 é possível visualizar as versões lançadas até 
+o momento, juntamente com suas respectivas APIs. 
+Tabela 3 Versões do sistema Android e suas respectivas APIs. 
+Fonte: Wikipédia. 
+
+Versão 
+Android 1.5 
+Android 1.6 
+Android 2.1 
+
+Codinome 
+Cupcake 
+Donut 
+Eclair 
+
+APIs 
+3 
+4 
+5, 6 e 7 
+
+ 
+
+ 
+
+49 
+
+ 
+
+Android 2.2 
+Android 2.3 
+Android 3.2 
+Android 4.0 
+Android 4.3 
+Android 4.4 
+
+Froyo 
+Gingerbread 
+Honeycomb 
+Ice Cream Sandwich 
+Jelly Bean 
+KitKat 
+
+8 
+9 e 10 
+11, 12 e 13 
+14 e 15 
+16, 17 e 18 
+19 
+
+3.8.1.3 Requisitos para o desenvolvimento 
+
+Para desenvolver aplicativos para Android você precisa de um computador rodando 
+o  sistema  operacional  Windows,  Linux  ou  Mac  OS  X.  Por  ser  multi-plataforma,  o 
+desenvolvimento  para  Android  pode  ser  realizado  utilizando  os  principais  sistemas 
+operacionais da atualidade. 
+
+Os seguintes softwares são necessários para desenvolver aplicativos para  o sistema 
+
+operacional Android: 
+
+- Java SE Software Development Kit; 
+
+- Eclipse para Java Developers; 
+
+- Android SDK; 
+
+O  Android  Development  Kit  (SDK)  fornece  as  ferramentas  que  você  precisa  para 
+desenvolver,  testar  e  depurar  aplicativos  Android.  Já  o  Android  Development  Tools 
+Plugin  (ADT)  para  o  Eclipse  permite  que  você  use  as  ferramentas  Android  SDK  para 
+desenvolver aplicações Android no IDE Eclipse. 
+
+3.8.2 
+
+iOS 
+
+iOS (antes chamado de iPhone OS) é um sistema operacional móvel da Apple Inc. 
+desenvolvido  originalmente  para  o  iPhone,  também  é  usado  em  iPod  touch,  iPad  e 
+Apple TV. A Apple não permite que o iOS seja executado em hardware de terceiros. 
+
+3.8.2.1 Versões 
+
+Novas versões foram adicionando diversas funcionalidades e recursos ao iOS. Como 
+por exemplo, na versão iPhone OS 2, um dos principais destaques foi a  Apple Store, a 
+App Store deu aos usuários acesso a milhares de aplicativo desenvolvidos por terceiros. 
+Compatível  com  o  iTunes  e  um  ecossistema  cuidadosamente  trabalhado,  a  App  Store 
+empurrou o iPhone anos à frente da  concorrência, ao oferecer  inúmeras  possibilidades 
+para o iPhone.  
+
+Já o iOS 3 trouxe a possibilidade de, finalmente, cortar, copiar e colar. A precisão do 
+GPS  também  foi  aprimorada,  e  a  Apple  adicionou  uma  bússola  magnética  para  o 
+aplicativo iPhone Maps. A gravação de vídeo não tinha suporte no iOS até o lançamento 
+do  iOS  3.  Porém,  o  iPhone  3GS  foi  o  único  dispositivo  iOS  que  marcou  o  inicio  da 
+disponibilidade desse recurso. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+50 
+
+ 
+
+Tabela 4 Versões do sistema operacional iOS. 
+Fonte: Wikipédia. 
+
+Versão 
+
+iPhone OS 1.x 
+
+iPhone OS 2.x 
+
+iPhone OS 3.x 
+
+iOS 4.x 
+
+iOS 5.x 
+
+iOS 6.x 
+
+iOS 7.x 
+
+iOS 8.x 
+
+Ano de Lançamento 
+
+2007 
+
+2008 
+
+2009 
+
+2010 
+
+2011 
+
+2012 
+
+2013 
+
+2014 
+
+3.8.2.2 Requisitos para o desenvolvimento 
+
+Para fazer uso das ferramentas da Apple para desenvolvimento, é necessário ter um 
+computador Mac. A partir disso, é possível ter acesso à ferramenta de desenvolvimento, 
+documentação,  exemplos  de  código,  e  fórum  de  discussão  da  Apple  através  de  um 
+cadastro no  iPhone Developer Program, que  em um  primeiro momento  pode ser feito 
+gratuitamente, mas com o tempo sentirá necessidade do cadastro pago, que dará direito 
+de testar o aplicativo desenvolvido em um aparelho real, e principalmente para publicar 
+o mesmo na iTunes App Store. 
+
+Depois  de  cadastrado  como  desenvolvedor  Apple,  o  usuário  terá  o  direito  ao 
+download  gratuito  do  iOS  SDK,  que  nada  mais  é  que  um  pacote  com  os  softwares 
+necessários para trabalhar com iOS, e fazem parte dele: 
+
+- XCode: Ambiente de desenvolvimento; 
+
+- Interface Builder: Para criação das interfaces do iPhone ou iPad; 
+
+- Instruments: Ferramenta de análise de consumo de memória, desempenho, etc.  
+
+- iPhone Simulator: Ferramenta elaborada para ―simular‖ como o aplicativo vai  ser 
+executado  nos  dispositivos  iPhone  ou  iPad.  Mas,  é  de  extrema  importância  que  a 
+aplicação  também  seja  testado  em  um  aparelho  real,  pois  o  simulador  o  utiliza  o 
+processamento  e  memória  da  máquina.  Desta  forma,  dificilmente  será  possível 
+visualizar problemas de consumo de memória ou de lentidão na abertura do aplicativo, 
+problemas facilmente percebidos quando a aplicação é executada em um aparelho real. 
+
+3.8.3 
+
+Windows Phone 
+
+Windows  Phone  é  um  sistema  operacional  móvel,  desenvolvido  pela  Microsoft, 
+atualmente  na  sua  versão  8  (a  versão  8.1  de  testes  está  disponível  apenas  para 
+desenvolvedores),  sucessor  da  plataforma  Windows  Mobile,  (apesar  de  totalmente 
+incompatível  com  esta)  que,  ao  contrário  do  predecessor,  é  focado  no  mercado 
+consumidor, em vez do mercado empresarial. 
+
+ 
+
+ 
+
+51 
+
+ 
+
+3.8.3.1 História 
+
+Foi  lançado  na  Europa,  Austrália  e  Singapura  no  dia  21  de  outubro  de  2010,  nos 
+EUA e Canadá no dia 8 de novembro, no México no dia 24 do mesmo mês e, no início 
+de 2011, na Ásia. 
+
+O principal  problema do Windows Phone era a falta de aplicações. Porém, hoje as 
+principais  aplicações  do  mercado  já  estão  disponíveis  na  loja  de  aplicativos,  antiga 
+Marketplace.  Mas,  ainda  assim,  alguns  usuários  se  desencorajam  a  comprar  um 
+aparelho  com  o  sistema  por  não  ter  tantos  aplicativos  quanto  seus  principais 
+concorrentes; Android e iOS (WIKIPÉDIA, 2014). 
+
+3.8.3.2 Versões 
+
+O  trabalho  para  uma  grande  atualização  do  sistema  operacional  Windows  Mobile 
+começou ainda em 2004, sob o nome de projeto "Photon", mas o seu desenvolvimento 
+era  lento,  tendo  sido  cancelado.  Em  2008,  a  Microsoft  reorganizou  a  equipe  de 
+desenvolvimento  e  começou  a  trabalhar  num  novo  sistema  operacional.  Este  novo 
+produto  era  para  ser  lançado  em  2009  como  "Windows  Phone",  mas  diversos  atrasos 
+obrigaram  a  Microsoft  a  desenvolver  o  Windows  Mobile  6.5  como  um  lançamento 
+intermédio. 
+
+Windows Phone foi desenvolvido rapidamente. Uma das consequências de tal foi a 
+não  possibilidade  de  executar  os  programas  do  antigo  Windows  Mobile  no  novo 
+sistema. 
+
+Tabela 5 Versões do sistema operacional Windows Phone. 
+Fonte: Wikipédia. 
+
+Versão 
+
+Windows Phone 7.5 
+
+Windows Phone 8.0 
+
+Windows Phone 8.1 
+
+Ano de Lançamento 
+
+2011 
+
+2012 
+
+2014 
+
+3.9  Considerações Finais do Capítulo 
+
+Nesse capítulo foram apresentadas as principais tecnologias utilizadas nesse projeto. 
+Também foram apresentadas aplicações que fazem uso dessas tecnologias para os mais 
+diversos  fins.  Além  disso,  foram  apresentadas  diferentes  formas  de  desenvolver 
+aplicações para dispositivos móveis. 
+
+ 
+
+ 
+
+ 
+
+52 
+
+4  ARQUITETURA PROPOSTA 
+
+O projeto desenvolvido e descrito nesse trabalho, tem como propósito, oferecer um 
+meio para que qualquer  cidadão possa  reportar incidentes ambientais. Como  citado no 
+capítulo  3,  utilizando  recursos  da  web  2.0,  é  possível  identificar  diversas  alternativas 
+viáveis para que seja realizada essa tarefa. 
+
+Iniciativas  como  a  do  Instituto  Biota,  mesmo  que  sem  pesquisas  acadêmicas 
+comprovando a sua eficácia, ajudam  a preservar o meio ambiente e comprovam  que a 
+população é um grande aliado e monitor em potencial. A partir disso, criar um modelo 
+de  aplicação  contributiva  na  qual  a  população  agirá  como  monitor  e  fiscalizador, 
+contribuindo  com  órgãos  governamentais,  institutos  e  ONGs  pode  ser  uma  alternativa 
+efetiva e de baixo custo. Visto que, ao utilizar produtos de consumo, como smartphones 
+e tablets, a aplicação poderá ser apoiada pela população sem gerar custos. 
+
+Nesse  capítulo  estão  listadas  as  decisões  de  projeto  e  seus  requisitos.  Também 
+estão  listados  os  diagramas  de  caso  de  uso  e  sequência  referentes  à  modelagem  do 
+sistema. 
+
+4.1  Decisões de projeto 
+
+Nessa  seção  estarão  dispostas  as  decisões  que  foram  tomadas  no  período  que 
+precede o desenvolvimento do projeto, assim  como  as que foram  tomadas no decorrer 
+do seu desenvolvimento. 
+
+4.1.1 
+
+Sistema operacional 
+
+A efetividade da aplicação está diretamente relacionada ao número de usuários da 
+mesma. Sendo assim, é importante que o sistema operacional da aplicação móvel esteja 
+sendo  executado  pela  maior  quantidade  de  dispositivos  possível.  Baseado  nisso,  o 
+sistema operacional inicial da aplicação é o Android. Como foi possível ver no capítulo 
+3,  o  sistema  operacional  da  Google  é,  atualmente,  a  plataforma  que  retém  o  maior 
+número de usuários. 
+
+4.1.2 
+
+Tipo de aplicação 
+
+Como  visto no capítulo  3, há outros sistemas operacionais  com uma  grande fatia 
+no mercado atual. Para que os usuários desses sistemas operacionais também possam se 
+tornar  usuários  da  aplicação,  o  modelo  de  desenvolvimento  proposto  é  o  de  uma 
+aplicação hibrida. 
+
+Desta  forma,  tornando  a  aplicação  rapidamente  adaptável  para  outros  sistemas 
+operacionais  em  evidencia.  O  framework  utilizado  pelo  projeto  é  o  Phonegap.  O 
+
+ 
+
+ 
+
+53 
+
+ 
+
+Phonegap  possui  diversos  plug-ins  na  internet.  Esses  plug-ins  podem  ser  baixados  e 
+adicionados ao projeto, agilizando o desenvolvimento da aplicação proposta. 
+
+4.1.3 
+
+Serviço de mapas 
+
+O  WMS  escolhido  para  o  projeto  é  o  Google  Maps,  serviço  de  mapas  online  da 
+Google,  como  já  citado  anteriormente  no  capítulo  3,  é  o  serviço  de  mapas  mais 
+completo  da  atualidade.  O  serviço  conta  com  uma  vasta  documentação  e  pode  ser 
+facilmente agregado ao Phonegap. 
+
+4.1.4 
+
+Arquitetura cliente-servidor 
+
+Ao  ser  necessário  o  armazenamento  de  informações  em  um  banco  de  dados,  foi 
+necessário determinar uma maneira de inserir e obter essas informações. A partir disso, 
+a  aplicação  seguirá  uma  arquitetura  cliente-servidor,  arquitetura  caracterizada 
+justamente por esse tipo funcionamento. 
+
+Nessa arquitetura, a aplicação cliente realiza requisições ao servidor através da rede, 
+
+como mostra a Figura 26.  
+
+Figura 26 Arquitetura cliente-servidor 
+
+Fonte: Wikipédia 
+
+ 
+
+As  requisições  da  aplicação  cliente  e  respostas  do  servidor  estarão  formatadas  em 
+um  protocolo  de  comunicação.  Esse  protocolo  deverá  ser  interpretado  por  ambas  às 
+partes envolvidas na iteração. 
+
+4.2  Modelagem do sistema 
+
+Na especificação do sistema foram empregados conceitos da orientação a objetos e 
+também da Unified Modeling Language (UML) para a criação do diagrama de casos de 
+uso e de sequência. 
+
+4.2.1 
+
+Diagrama de casos de uso 
+
+O  aplicativo  possui  seis  cenários  de  caso  de  uso,  esses  cenários  são  ilustrados  na 
+
+Figura 27. 
+
+ 
+
+ 
+
+ 
+
+54 
+
+Figura 27 Diagrama de casos de uso. 
+
+ 
+
+4.2.1.1 Relatar Incidente 
+
+O quadro a seguir apresenta o detalhamento do caso de uso Relatar Incidente. Esse 
+caso  de  uso  representa  a  inserção  de  um  novo  incidente  no  banco  de  dados  do 
+aplicativo. 
+
+Atores 
+
+Pré-Condições 
+
+Pós-Condições 
+
+Descrição 
+
+Caso de uso – Relatar Incidente 
+
+Usuário 
+
+Nenhuma 
+
+Inserir no banco de dados o incidente relatado pelo usuário. 
+
+Esse caso de uso permite que o usuário publique um incidente 
+ambiental através do aplicativo, utilizando dados de 
+localização gerados através do dispositivo móvel. 
+
+Sequência de Eventos 
+
+Usuário 
+
+1: O caso de uso inicial 
+
+quando o usuário escolhe a 
+
+opção Relatar Incidente. 
+
+Aplicativo 
+
+ 
+
+ 
+
+2: Solicita ao dispositivo a 
+permissão para acessar a sua 
+
+3: Usuário informa os dados 
+
+do problema (título, 
+
+descrição, tipo de problema, 
+
+mídia) 
+
+ 
+
+localização. 
+
+ 
+
+4: Aplicativo recebe as 
+
+Servidor 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+55 
+
+informações passadas pelo 
+usuário e as insere em um 
+arquivo XML. Após isso, o 
+
+arquivo é codificado em base64 
+
+e enviado ao servidor. 
+
+ 
+
+6: A aplicação exibe uma 
+mensagem de sucesso ao 
+
+usuário. 
+
+5: Servidor recebe o arquivo 
+codificado, descodifica-o e 
+insere no banco de dados as 
+
+informações contidas no 
+
+XML , retornando a 
+
+confirmação de postagem. 
+
+ 
+
+ 
+
+4.2.1.2 Visualizar incidentes 
+
+Na sequência é apresentado o detalhamento do caso de uso Visualizar incidentes. 
+
+Atores 
+
+Pré-Condições 
+
+Pós-Condições 
+
+Descrição 
+
+Caso de uso – Visualizar incidentes 
+
+Usuário 
+
+Nenhuma 
+
+Visualização dos incidentes que correspondam à localização 
+geográfica do usuário ou que estão situados nas imediações da 
+requisição que o usuário está efetuando. 
+
+Esse caso de uso permite que o usuário visualize os incidentes 
+próximos a localização do seu dispositivo móvel. Ele também 
+possibilita que o usuário visualize incidentes em outras 
+localidades, para isso, o usuário precisa navegar no mapa do 
+aplicativo. 
+
+Sequência de Eventos 
+
+Usuário 
+
+1: O caso de uso inicial 
+quando o usuário inicia o 
+aplicativo, ou quando o 
+usuário escolhe a opção 
+
+Explorar Mapa. 
+
+Aplicativo 
+
+ 
+
+ 
+
+ 
+
+2: Solicita ao dispositivo a 
+permissão para acessar a sua 
+
+localização. O aplicativo insere 
+as informações de localização 
+em um arquivo XML. Após 
+
+isso, o arquivo é codificado em 
+base64 e enviado ao servidor. 
+
+ 
+
+Servidor 
+
+ 
+
+ 
+
+3: Servidor recebe o arquivo 
+codificado, descodifica-o e 
+busca no banco de dados 
+
+ 
+
+ 
+
+56 
+
+incidentes próximos a 
+localização contida no 
+
+arquivo. A lista de 
+
+incidentes é inserida em um 
+arquivo XML. O arquivo é 
+codificado para base64 e 
+enviado ao dispositivo. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+4: O dispositivo recebe o 
+
+arquivo XML, descodifica-o e 
+exibe os incidentes ao usuário. 
+
+4.2.1.3 Apoiar Incidente  
+
+O  caso  de  uso  Apoiar  Incidente  é  uma  extensão  do  caso  de  uso  Visualizar 
+Incidentes. Em UML, um caso de uso é considerado uma extensão quando  depende de 
+outro caso de uso para ser processado. Desta forma, um usuário deverá primeiramente, 
+visualizar o incidente, para depois apoiá-lo. 
+
+Atores 
+
+Pré-Condições 
+
+Pós-Condições 
+
+Descrição 
+
+Caso de uso – Apoiar incidente 
+
+Usuário 
+
+Visualizar o incidente 
+
+Apoiar determinado incidente dará maior visibilidade para o 
+incidente. 
+
+Esse caso de uso permite que o usuário apoie o incidente. O 
+apoio funciona como uma ferramenta de visibilidade ao 
+incidente, quanto maior a quantidade de apoiadores, maior 
+será a visibilidade deste incidente. 
+
+Sequência de Eventos 
+
+Usuário 
+
+1: O caso de uso inicial 
+
+quando o usuário visualiza 
+um incidente e escolhe a 
+opção Apoiar incidente. 
+
+Aplicativo 
+
+ 
+
+ 
+
+ 
+
+2: A aplicação se conecta ao 
+servidor e envia um arquivo 
+XML codificado em base 64 
+
+contendo os dados 
+
+(identificador do usuário, 
+identificador do incidente) 
+
+necessários. 
+
+ 
+
+Servidor 
+
+ 
+
+ 
+
+3: O servidor recebe o 
+
+arquivo codificado, 
+
+descodifica-o e realiza a 
+
+inserção no banco de dados, 
+
+utilizando os dados do 
+
+arquivo, registrando o apoio 
+do usuário ao incidente. O 
+
+ 
+
+ 
+
+57 
+
+servidor retorna a 
+
+confirmação de apoio. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+4: A aplicação recebe a 
+mensagem de retorno do 
+
+servidor e exibe a confirmação 
+
+de apoio ao usuário. 
+
+4.2.1.4 Comentar Incidente 
+
+O caso de uso Comentar incidente, assim como o Apoiar incidente, é uma extensão 
+
+do caso de uso Visualizar incidentes. 
+
+Atores 
+
+Pré-Condições 
+
+Pós-Condições 
+
+Descrição 
+
+Caso de uso – Comentar incidente 
+
+Usuário 
+
+Visualizar o incidente 
+
+Comentar determinado incidente agrega informação ao 
+incidente reportado. 
+
+Esse caso de uso permite que o usuário adicione um 
+comentário ao incidente. Comentários podem adicionar 
+maiores detalhes ao incidente e possibilitam, também, a troca 
+de informação entre os usuários. 
+
+Sequência de Eventos 
+
+Usuário 
+
+1: O caso de uso inicial 
+
+quando o usuário visualiza 
+um incidente e escolhe a 
+opção Comentar incidente. 
+
+Aplicativo 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2: A aplicação se conecta ao 
+servidor e envia um arquivo 
+XML codificado em base 64 
+
+contendo os dados 
+
+(identificador do usuário, 
+identificador do incidente, 
+comentário) necessários. 
+
+ 
+
+4: A aplicação recebe a 
+mensagem de retorno do 
+
+servidor e exibe a confirmação 
+
+Servidor 
+
+ 
+
+ 
+
+3: O servidor recebe o 
+
+arquivo codificado, 
+
+descodifica-o e realiza a 
+
+inserção no banco de dados, 
+
+utilizando os dados do 
+arquivo, registrando o 
+
+comentário do usuário. O 
+
+servidor retorna a 
+confirmação de 
+
+recebimento. 
+
+ 
+
+ 
+
+ 
+
+58 
+
+ 
+
+ 
+
+de que o comentário foi 
+
+inserido. 
+
+4.2.1.5 Resolver Incidente 
+
+Por  fim,  a  resolução  de  um  incidente  também  é  uma  extensão  do  caso  de  uso 
+
+Visualizar incidente. 
+
+Atores 
+
+Pré-Condições 
+
+Pós-Condições 
+
+Descrição 
+
+Caso de uso – Resolver incidente 
+
+Usuário 
+
+Visualizar o incidente 
+
+Resolver determinado incidente, removendo-o dos incidentes 
+ativos na aplicação. 
+
+Esse caso de uso permite que o usuário marque determinado 
+incidente como resolvido. A resolução do incidente pode 
+contar com informações adicionais. 
+
+Sequência de Eventos 
+
+Usuário 
+
+1: O caso de uso inicial 
+
+quando o usuário visualiza 
+
+um incidente e o marca como 
+
+resolvido. 
+
+Aplicativo 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2: A aplicação se conecta ao 
+servidor e envia um arquivo 
+XML codificado em base 64 
+
+contendo as informações 
+(identificador do usuário, 
+identificador do incidente, 
+
+informações adicionais) 
+
+necessárias. 
+
+ 
+
+4: A aplicação recebe a 
+mensagem de retorno do 
+
+servidor e exibe a confirmação 
+de que o incidente está marcado 
+
+como resolvido. 
+
+Servidor 
+
+ 
+
+ 
+
+3: O servidor recebe o 
+
+arquivo codificado, 
+
+descodifica-o e realiza a 
+
+inserção no banco de dados, 
+
+utilizando os dados do 
+arquivo, registrando as 
+
+informações postadas pelo 
+usuário. O servidor retorna 
+
+a confirmação de 
+
+recebimento da resolução. 
+
+ 
+
+ 
+
+4.2.1.6 Editar Dados 
+
+A edição de dados permite que o usuário altere seus dados pessoais na aplicação. 
+
+ 
+
+ 
+
+59 
+
+Atores 
+
+Pré-Condições 
+
+Pós-Condições 
+
+Descrição 
+
+Sequência de Eventos 
+
+Usuário 
+
+1: O caso de uso inicial 
+
+quando o usuário escolhe a 
+
+opção Editar dados. 
+
+ 
+
+ 
+
+ 
+
+Caso de uso – Editar dados 
+
+Usuário 
+
+Nenhuma 
+
+Altera as informações do usuário. 
+
+Esse caso de uso permite que o usuário altere suas 
+informações pessoais, como nome e e-mail. 
+
+Aplicativo 
+
+ 
+
+2: A aplicação se conecta ao 
+servidor e envia um arquivo 
+XML codificado em base 64 
+contendo as informações do 
+
+usuário. 
+
+ 
+
+4: A aplicação recebe a 
+mensagem de retorno do 
+
+servidor e exibe a confirmação 
+de que o incidente está marcado 
+
+como resolvido. 
+
+Servidor 
+
+ 
+
+ 
+
+3: O servidor recebe o 
+
+arquivo codificado, 
+
+descodifica-o e realiza a 
+
+inserção no banco de dados, 
+
+utilizando os dados do 
+arquivo, registrando as 
+
+informações postadas pelo 
+usuário. O servidor retorna 
+
+a confirmação de 
+
+recebimento da resolução. 
+
+ 
+
+ 
+
+4.2.2 
+
+Diagramas de Sequência 
+
+Os diagramas de sequência são utilizados para representar a sequência de processos 
+(mais  especificamente,  de  mensagens  passadas  entre  objetos),  num  programa  de 
+computador. 
+
+Nessa seção estão listados os diagramas de sequência dos componentes da aplicação. 
+
+4.2.2.1 Relatar Incidente 
+
+A Figura 28 apresenta o diagrama de sequência do caso de uso Relatar Incidente. 
+
+ 
+
+ 
+
+ 
+
+60 
+
+ 
+
+Figura 28 Diagrama de Sequência Relatar Incidente 
+
+4.2.2.2 Visualizar Incidente 
+
+Na  Figura  29  encontra-se  o  diagrama  de  sequência  do  caso  de  uso  Visualizar 
+
+Incidente. 
+
+Figura 29 Diagrama de Sequência Visualizar Incidente 
+
+ 
+
+ 
+
+ 
+
+61 
+
+ 
+
+4.2.2.3 Apoiar Incidente 
+
+A  Figura  30  representa  o  diagrama  de  sequência  do  caso  de  uso  Apoiar  Incidente, 
+
+extensão do caso de uso Visualizar Incidente. 
+
+ 
+
+Figura 30 Diagrama de Sequência Apoiar Incidente 
+
+ 
+
+4.2.2.4 Comentar Incidente 
+
+A Figura 31 representa o diagrama de sequência do caso de uso Comentar Incidente, 
+
+extensão do caso de uso Visualizar Incidente. 
+
+ 
+
+ 
+
+ 
+
+62 
+
+Figura 31 Diagrama de Sequência Comentar Incidente 
+
+ 
+
+4.2.2.5 Resolver Incidente 
+
+Por  fim,  a  Figura  32  representa  o  diagrama  de  sequência  do  caso  de  uso  Resolver 
+
+Incidente, extensão do caso de uso Visualizar Incidente. 
+
+ 
+
+Figura 32 Diagrama de Sequência Resolver Incidente 
+
+ 
+
+ 
+
+ 
+
+63 
+
+ 
+
+4.2.3 
+
+Modelo entidade-relacionamento 
+
+O  Modelo  Entidade  Relacionamento  é  um  modelo  conceitual  utilizado  na 
+Engenharia  de  Software  para  descrever  os  objetos  (entidades)  envolvidos  em  um 
+domínio  de  negócios,  com  suas  características  (atributos)  e  como  elas  se  relacionam 
+entre si (relacionamentos). 
+
+A Figura 33 representa o diagrama ER da aplicação. 
+
+Figura 33 Modelo ER do banco de dados 
+
+ 
+
+4.2.3.1 Usuário 
+
+A  tabela  Usuário,  assim  como  a  tabela  Incidente,  está  relacionada  com  diversas 
+outras  tabelas,  como  exibido  na  Figura  34.  Ela  é  responsável  por  armazenar  as 
+informações básicas do usuário, como nome, e-mail e identificar do dispositivo móvel. 
+
+ 
+
+ 
+
+ 
+
+64 
+
+Figura 34 Tabela Usuário 
+
+ 
+
+4.2.3.2 Incidente 
+
+A  tabela  Incidente  armazena  as  principais  informações  referentes  aos  incidentes 
+registrados no aplicativo. Dados como, título, descrição, latitude, longitude e a data de 
+inserção  do  incidente  fazem  parte  desta  tabela,  na  Figura  35  é  possível  visualizar 
+também o tipo de cada dado. 
+
+Figura 35 Tabela Incidente 
+
+ 
+
+4.2.3.3 Mídia 
+
+A tabela Mídia tem uma relação de dependência com a tabela Incidente. Visto que, 
+ela armazena o conteúdo de mídia que foi submetido com o incidente. Para isso, a tabela 
+armazena  o  nome  do  arquivo  no  campo  url.  Como  exibido  na  Figura  36,  o  campo  url 
+aceita um valor de até 128 caracteres. Esse valor é gerado aleatoriamente pela aplicação 
+cliente,  que  previamente  verifica  se  há  algum  outro  arquivo  com  o  mesmo  nome,  isso 
+impossibilita  que  sejam  armazenadas  mais  de  uma  mídia  com  o  mesmo  valor  de 
+referência no campo url. 
+
+Figura 36 Tabela Mídia 
+
+ 
+
+4.2.3.4 Categoria 
+
+A  tabela  Categoria  é  de  extrema  importância  para  a  organização  da  aplicação,  a 
+partir dela é possível filtrar os incidentes registrados no aplicativo. A tabela conta com o 
+campo  título,  responsável  pela  identificação  da  categoria  para  o  usuário  o  campo  id, 
+chave primária e utilizava em buscas no banco de dados. Por fim, o campo ícone, esse 
+atributo armazena o endereço de acesso para a imagem representativa da categoria.  
+
+ 
+
+ 
+
+ 
+
+65 
+
+Figura 37 Tabela Categoria 
+
+ 
+
+4.2.3.5 Apoiar 
+
+A tabela Apoiar armazena cada apoio de um usuário em um determinado incidente. 
+Com  ela,  é  possível  filtrar  os  incidentes,  de  modo  a  visualizar  os  incidentes  de  maior 
+relevância  dada  à  quantidade  de  apoio,  por  parte  dos  usuários  da  aplicação,  que  esse 
+incidente  recebeu.  A  tabela  está  relacionada  com  as  tabelas  Incidente  e  Usuário,  essa 
+relação  é  necessária  para  que  seja  possível  identificar  o  incidente  e  o  usuário  que  o 
+apoiou. Como é possível ver na Figura 38, a tabela armazena a data em que o registro 
+ocorreu. 
+
+Figura 38 Tabela Apoiar 
+
+ 
+
+4.2.3.6 Resolver 
+
+A tabela Resolver registra as resoluções dos incidentes armazenados na aplicação. A 
+tabela está relacionada com as tabelas Incidente e Usuário, para que assim seja possível 
+identificar o incidente e o usuário que está inserindo a sua resolução. Como exibido na 
+Figura  39,  a  tabela  conta  com  o  campo  descrição,  esse  campo  registra  informações 
+adicionais ao registro de resolução. O campo data registra a data em que o incidente foi 
+dado como resolvido na aplicação. 
+
+Figura 39 Tabela Resolver 
+
+ 
+
+4.2.3.7 Comentário 
+
+Na tabela Comentário estão registrados os comentários que os usuários da aplicação 
+realizam  em  cada  incidente.  Ela  se  relaciona  com  as  tabelas  Usuário  e  Incidente.  Os 
+comentários  têm  o  objetivo  de  agregar  informação  ao  incidente  e  proporcionar  a 
+aprendizagem  e  a troca  de informação entre os usuários  do aplicativo. Como  mostra a 
+Figura 40, cada comentário é composto por um identificador único, o texto e a data em 
+que foi inserido. 
+
+ 
+
+ 
+
+ 
+
+66 
+
+Figura 40 Tabela Comentário 
+
+ 
+
+4.3  Considerações Finais do Capítulo 
+
+Nesse  capítulo  foi  abordado  o  modelo  de  aplicação  desenvolvido,  justificando  sua 
+arquitetura  e  apresentando  as  decisões  de  projeto.  Também  foi  apresentada  a 
+modelagem do sistema utilizando os diagramas de Casos de Uso e Sequência, da UML. 
+Por  fim,  foi  apresentado  o  modelo  de  entidade-relacionamento  contendo  a  estrutura 
+geral e das tabelas utilizadas na aplicação. 
+
+ 
+
+ 
+
+67 
+
+ 
+
+5  DESENVOLVIMENTO 
+
+5.1  Comunicação 
+
+A conexão entre o cliente e o servidor é efetuada via  socket. Os parâmetros para a 
+
+conexão são o IP do servidor e a porta de conexão, como exibido na Figura 41. 
+
+Figura 41 Função para a conexão entre o cliente e o servidor 
+
+ 
+
+Na linha 11 da Figura 41 inicia-se a função connect, que utiliza o plugin de socket 
+para efetuar uma conexão entre o cliente e o servidor. Na linha 12 está a chamada para a 
+função  do  plugin,  ela  conta  com  quatro  parâmetros.  O  primeiro  é  a  função  que  será 
+chamada caso a conexão seja estabelecida com sucesso. O segundo representa a função 
+que deverá ser chamada  caso haja algum  erro durante a conexão. O  terceiro é o  IP do 
+servidor. Por fim, o quarto é a porta de conexão, neste caso, a porta 52000. 
+
+5.1.1 
+
+Protocolo 
+
+Ao optar pelo desenvolvimento de uma aplicação híbrida, foi necessário identificar 
+uma  maneira  de  comunicação  entre  o  cliente  e  o  servidor  que  fosse  efetiva  e 
+independente  de  plataforma.  Desta  forma,  foi  criado  um  protocolo  de  comunicação 
+baseado em base64 e XML. 
+
+5.1.1.1 Base64 
+
+Base64  é  um  método  frequentemente  utilizado  quando  existe  a  necessidade  de 
+transferir e armazenar dados binários para um dispositivo designado para trabalhar com 
+dados textuais (HATAE, 2012). Sendo assim, utilizar base64 é a forma mais prática de 
+realizar a transferência de arquivos de modo independente, ou seja, sem utilizar recursos 
+da linguagem nativa do dispositivo. 
+
+5.1.1.2 XML 
+
+O  XML  é  um  formato  para  representação  de  documentos  em  computador  criado 
+pelo  W3C.  Seu  princípio  é  muito  simples,  qualquer  um  pode  inventar  marcações  que, 
+por  sua  vez,  adicionam  semântica  a  um  texto  (ALMEIDA,  2002).  A  linguagem  XML 
+
+ 
+
+ 
+
+68 
+
+ 
+
+consolidou-se  rapidamente  como  um  padrão  universal  para  troca  de  informações  na 
+web, sendo amplamente utilizado em conjunto com o base64. 
+
+5.1.1.3 Funcionamento 
+
+Tanto  o cliente, quanto o servidor se comunicam  de forma semelhante. O cliente é 
+capaz  de  formatar  arquivos  XML  e  codificá-los  em  base64  e  também  de  receber 
+arquivos  codificados  e  lê-los,  assim  como  o  servidor.  Sendo  assim,  quando  o  cliente 
+deseja realizar uma requisição ao servidor, a aplicação irá formatar a requisição em um 
+arquivo XML, posteriormente codificá-la em base64 e enviar ao servidor, como mostra 
+a Figura 42.  
+
+Figura 42 Comunicação cliente-servidor 
+
+ 
+
+O servidor, por sua vez, recebe o arquivo codificado, descodifica-o e realiza a leitura 
+
+do XML, verificando qual ação deve ser realizada. 
+
+5.1.1.4 Cliente 
+
+No  cliente  a  função  Realizar  Requisição  é  a  responsável  por  formatar  o  arquivo 
+XML que deverá ser  enviado ao servidor. Como  exibido na linha 123 da Figura 43,  a 
+função recebe três parâmetros. O primeiro é o objeto com os valores a serem enviados 
+ao  servidor,  o  segundo  é  a  tabela  que  receberá  a  consulta  e  o  terceiro  é  o  tipo  de 
+consulta  que  deverá  ser  realizada,  ou  seja,  nos  padrões  SQL,  os  subconjuntos  DML  e 
+DQL, respectivamente Linguagem de Manipulação de Dados e Linguagem de Consulta 
+de Dados, esses subconjuntos englobam os comandos de seleção, inserção, alteração  e 
+remoção de dados do banco. 
+
+Ainda na Figura 43, o XML é  formatado  entre  as linhas 124 e 135. Sendo que, há 
+uma  estrutura  de  repetição  entre  as  linhas  129  e  131,  essa  estrutura  é  responsável  por 
+inserir no XML os dados que serão enviados ao servidor. 
+
+ 
+
+ 
+
+ 
+
+69 
+
+ 
+
+Figura 43 Realizar Requisição, função javascript que cria o arquivo XML e o envia em base 64 para o servidor 
+
+O  arquivo  formatado  pela  função  Realizar  Requisição  ficará  estruturado  de  forma 
+semelhante ao arquivo exibido na Figura 44. Podemos ver na linha 2 que o arquivo em 
+questão  é  uma  inserção.  Já  na  linha  3  se  encontra  a  tabela  que  irá  receber  a  consulta, 
+neste caso, a tabela  Incidente. Entre as linhas 5 e 13 estão os valores do incidente que 
+está sendo inserido na tabela. 
+
+Figura 44 Arquivo XML após receber os dados na função Realizar Requisição 
+
+Por fim, o arquivo exibido na Figura 44 será criptografado (linha 136 da Figura 44) 
+
+e enviado ao servidor (linha 137 da Figura 44). 
+
+ 
+
+5.1.1.5 Servidor 
+
+No servidor, primeiramente é utilizada uma estrutura que define o protocolo (linha 4 
+da  Figura  45)  utilizado  na  troca  de  informações  com  o  cliente.  A  estrutura  contém 
+variáveis  relativas  aos  dados  que  fazem  parte  do  incidente  (entre  as  linhas  7  e  20  da 
+Figura). 
+
+ 
+
+ 
+
+ 
+
+70 
+
+Figura 45 Estrutura que define o protocolo utilizado na troca de informação de incidentes 
+
+ 
+
+A  função  xmlencode  (Figura  46)  é  responsável  por  converter  dados  recebidos 
+anteriormente do banco de dados e estruturados pelo tipo ―packet‖ (definido na  Figura 
+anterior), em um arquivo XML.  
+
+Esta função recebe como parâmetros, uma estrutura contendo os dados do incidente 
+e um valor inteiro que informa a quantidade de dados que foram recebidos. Inicialmente 
+a  função  irá  estruturar  o  XML  definindo  o  elemento  raiz  e  elementos  ―pai‖  e  seus 
+respectivos  ―filhos‖.  Posteriormente,  um  laço  de  repetição  começa  a  extrair  as 
+informações da estrutura (entre as linhas 35 e 59 da Figura 46), referentes ao primeiro 
+parâmetro,  e  as  organiza  como  foram  definidos  no  laço.  Após  toda  a  informação  ser 
+anexada ao arquivo, a função salva o XML em disco para um acesso posterior e retorna 
+0 para informar o sucesso da operação. 
+
+Figura 46 Função de conversão de dados 
+
+ 
+
+ 
+
+ 
+
+71 
+
+ 
+
+A  função  xmldecode  (linha  67  da  Figura)  é  responsável  por  extrair  informações 
+
+recebidas de um arquivo XML e organiza-las em uma estrutura. 
+
+Esta  função  recebe  como  parâmetro  um  ponteiro  que  aponta  para  o  arquivo  XML 
+que se deseja obter os dados. Inicialmente a função realiza a leitura do arquivo recebido 
+e  analisa  o  elemento  raiz  para  verificar  o  que  é  desejado  (entre  as  linhas  92  e  95  da 
+Figura 47).  
+
+Figura 47 Função responsável pela extração de informações do arquivo XML 
+
+ 
+
+A  partir  da  linha  178  da  Figura,  um  laço  de  repetição  atribui  às  informações 
+extraídas de cada tag do arquivo XML em suas respectivas posições na estrutura (Figura 
+48). 
+
+Figura 48 Laço para receber as informações extraídas de cada tag do arquivo XML 
+
+Ao final da leitura a função retorna uma estrutura com todos elementos encontrados 
+
+no arquivo XML (Figura 49). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+72 
+
+ 
+
+Figura 49 Retorno com atribuições realizadas na função 
+
+5.2  Funcionalidades 
+
+Nessa  seção  estão  os  códigos  fonte  das  principais  funcionalidades  da  aplicação 
+cliente.  Os  trechos  de  códigos  são  explicados  utilizando  como  base  a  numeração  das 
+linhas de código. 
+
+5.2.1 
+
+Solicitação de incidentes ao servidor 
+
+Como  previamente  descrito,  a  solicitação  de  incidentes  ao  servidor  ocorre  de  duas 
+formas:  quando  o  usuário  inicializa  a  aplicação  e  durante  a  navegação  do  caso  de  uso 
+Explorar mapa. A requisição de incidentes é baseada na localização  do dispositivo, no 
+caso da inicialização da aplicação, ou no centro do mapa, no caso da navegação no caso 
+de uso Explorar mapa. 
+
+Ao  receber  a  solicitação  de  incidentes,  o  servidor  realiza  uma  busca  no  banco  de 
+dados utilizando como parâmetros de seleção as coordenadas recebidas no XML (linhas 
+52 e 53 da Figura 50). 
+
+Figura 50 Função JavaScript que realiza a requisição de incidentes 
+
+ 
+
+5.2.2 
+
+Relatar incidente 
+
+Descrito  anteriormente  no  caso  de  uso  Relatar  Incidente,  o  relato  de  incidentes  é 
+representado  pela  função  inserir  Incidente  da  Figura.  A  função  insere  os  valores 
+fornecidos  pelo  usuário  em  um  objeto  (entre  as  linhas  145  e  151).  Logo  após,  é 
+verificado  se  o  usuário  adicionou  alguma  imagem  ao  incidente  (entre  as  linhas  152  e 
+154). Por fim, os dados são validados (entre as linhas 155 e 157) e enviados ao servidor, 
+
+ 
+
+se houver algum erro nas informações fornecidas pelo usuário, como a falta de título, a 
+aplicação irá notificar o usuário (entre as linhas 157 e 159 da Figura 51). 
+
+ 
+
+ 
+
+73 
+
+Figura 51 Função JavaScript para relatar incidentes 
+
+ 
+
+5.3  Considerações Finais do Capítulo 
+
+Nesse  capítulo  foi  apresentado  o  protocolo  de  comunicação  e  as  tecnologias  que  o 
+compõem.  Foram  apresentados  também  os  principais  trechos  de  código  que  criam  e 
+interpretam  este  protocolo.  Por  fim,  foi  apresentado  trechos  de  código  das  principais 
+funcionalidades da aplicação. 
+
+ 
+
+ 
+
+74 
+
+ 
+
+6  RESULTADOS 
+
+Neste  capítulo  será  abordado  a  interface  das  funcionalidades  descritas  no  capítulo 
+
+anterior, assim como os resultados obtidos ao utilizá-las.  
+
+6.1  Interface 
+
+A  estrutura  da  aplicação  consiste  em  quatro  componentes  básicos.  A  navegação 
+entre  esses  componentes  é  realizada  através  de  um  menu  (Figura  52),  localizados  na 
+parte inferior de todos os componentes da aplicação. 
+
+Figura 52 Componentes da interface cliente, da esquerda para a direita: Inicial, Explorar Incidentes, Inserir 
+
+Incidente, Meus Dados. O botão em verde representa o componente ativo na tela do usuário. 
+
+A seguir são disponibilizadas informações referentes aos componentes da aplicação 
+
+ 
+
+cliente. 
+
+6.1.1 
+
+Visualizar incidentes 
+
+A  aplicação  permite  que  os  incidentes  sejam  visualizados  em  duas  formas:  através 
+de uma listagem  e através do mapa. Sendo que,  a visualização  de incidentes no modo 
+listagem,  interface  inicial  da  aplicação,  facilita  a  visualização  de  todas  as  informações 
+disponibilizadas pelo usuário que inseriu o incidente. Por outro lado, a visualização no 
+mapa exibe, inicialmente, somente o marcador de categoria do incidente, sendo possível 
+visualizar maiores informações do incidente ao pressionar seu respectivo marcador. 
+
+ 
+
+ 
+
+ 
+
+75 
+
+ 
+
+Figura 53 Interfaces para visualização de incidentes (a) Interface inicial da aplicação (b) Interface Explorar 
+
+Mapa 
+
+Ao  acessar  as  interfaces  de  visualização  de  incidentes,  o  usuário  poderá  iniciar  os 
+casos  de  uso  que  são  extensões  de  Visualizar  Incidente.  A  seguir  serão  listadas  as 
+interfaces referentes a esses casos de uso. 
+
+6.1.1.1 Resolver Incidente 
+
+Ao pressionar a opção Resolver Incidente, uma pequena janela é aberta no centro da 
+tela  do  usuário.  Como  mostra  a  Figura  54,  a  tela  contém  um  título  e  um  campo  de 
+entrada  de  texto.  Nesse  campo  são  solicitadas  informações  adicionais  referentes  à 
+resolução do incidente. 
+
+Figura 54 Interface de resolução de incidente 
+
+ 
+
+ 
+
+ 
+
+76 
+
+ 
+
+6.1.1.2 Apoiar Incidente 
+
+A interface Apoiar Incidente é representada por uma pequena janela que se abrirá no 
+centro  da  tela  toda  vez  que  o  usuário  apoiar  determinado  incidente.  Para  apoiar  um 
+incidente o usuário deve pressionar o botão representado por um coração, localizado na 
+parte inferior do incidente. Como é possível ver na Figura 55, é exibida ao usuário uma 
+mensagem de confirmação. 
+
+Figura 55 Interface Apoiar Incidente 
+
+ 
+
+6.1.1.3 Comentar incidente 
+
+A interface de comentários é ativada ao ser pressionado o texto Ver comentários na 
+interface  Visualizar Incidentes. Os comentários são realizados por qualquer usuário  da 
+aplicação e são listados na parte inferior do incidente, como mostra a Figura 56. 
+
+Figura 56 Interface de comentários 
+
+ 
+
+ 
+
+ 
+
+77 
+
+ 
+
+6.1.2 
+
+Relatar incidente 
+
+Para  relatar  um  incidente,  o  usuário  deverá  preencher  os  campos  de  texto 
+disponibilizados na interface (Figura 57). O usuário poderá verificar a sua posição mapa 
+disponível na tela. Caso a posição indicada pelo dispositivo não esteja correta, o usuário 
+poderá  mudar  a  posição  do  marcador,  indicando  o  local  do  incidente.  Ao  pressionar  o 
+botão  Foto  do  Incidente,  a  câmera  do  dispositivo  será  solicitada  e  o  usuário  poderá 
+enviar uma imagem do incidente. 
+
+Figura 57 Interface para inserir incidente 
+
+ 
+
+Ao preencher todas as informações solicitadas, o usuário deverá pressionar o botão 
+
+Enviar. 
+
+Figura 58 Interface para inserir incidente após a submissão do incidente. (a) Interface de envio de incidente. 
+
+(b) Interface de confirmação do envio de incidente. 
+
+Após  o  envio  do  incidente,  por  parte  da  aplicação  (Figura  58(a)),  o  servidor  irá 
+
+receber os dados e retornar uma mensagem de confirmação (Figura 58 (b)). 
+
+ 
+
+ 
+
+ 
+
+78 
+
+ 
+
+6.1.3 
+
+Meus dados 
+
+Ao  instalar  a  aplicação,  o  usuário  automaticamente  terá  seu  identificador  único 
+baseado  no  identificador  do  seu  dispositivo.  Embora  não  haja  obrigatoriedade  em 
+informar  dados  pessoais,  é  possível  preencher  os  campos  na  interface  Meus  Dados, 
+como mostra a Figura 59, a aplicação solicita somente informações básicas ao usuário.  
+
+Figura 59 Interface Meus dados, a tela apresenta campos de preenchimento facultativo ao usuário 
+
+ 
+
+6.2  Comunicação cliente servidor 
+
+A comunicação cliente-servidor é realizada em diferentes processos da aplicação. A 
+quantidade de informação transferida em cada um desses processos apresenta diferentes 
+tamanhos. O número de conexões necessárias para a execução desses processos também 
+apresenta diferentes valores, de acordo com a sua complexidade. 
+
+6.2.1 
+
+Conexões necessárias por ação 
+
+Por  não  ser  necessária  conexão  constante  entre  a  aplicação  e  o  servidor,  somente 
+será  solicitada  a  conexão  entre  os  dispositivos  quando  houver  a  necessidade  de  envio, 
+ou recebimento de informação por parte do cliente. Nessa seção é possível visualizar a 
+quantidade de conexões necessárias para as principais ações da aplicação. 
+
+6.2.1.1 Visualizar incidente 
+
+Na  visualização  de  incidente,  a  conexão  é  encerrada  logo  após  o  servidor  enviar  o 
+
+incidente solicitado cliente. 
+
+Tabela 6 Conexões necessárias ao visualizar incidente 
+
+Quantidade de conexões 
+
+Cliente 
+
+Servidor 
+
+1 
+
+Solicita  as  informações  do 
+incidente ao servidor. 
+
+ 
+
+ 
+
+ 
+
+Servidor  retorna  o  incidente 
+
+ 
+
+ 
+
+79 
+
+ 
+
+Total: 1 conexão. 
+
+solicitado. 
+
+6.2.1.2 Apoiar incidente 
+
+No  apoio  a  incidente,  a  conexão  é  encerrada  no  momento  em  que  o  servidor 
+
+confirma ao cliente o recebimento de sua solicitação. 
+
+Tabela 7 Conexões necessárias ao apoiar incidente 
+
+Quantidade de conexões 
+
+Cliente 
+
+Servidor 
+
+1 
+
+Envia  uma  solicitação  de 
+apoio ao servidor. 
+
+ 
+
+ 
+
+ 
+
+Servidor confirma o apoio do 
+usuário ao incidente. 
+
+6.2.1.3 Resolver incidente 
+
+Total: 1 conexão. 
+
+No processo de resolução de incidente, a conexão é encerrada no momento em que o 
+servidor envia ao cliente a confirmação da inserção da resolução do incidente no banco 
+de dados. 
+
+Tabela 8 Conexões necessárias para resolver incidente 
+
+Quantidade de conexões 
+
+Cliente 
+
+Servidor 
+
+1 
+
+ao 
+Envia 
+informações 
+resolução do incidente. 
+
+usuário 
+referentes 
+
+ 
+
+as 
+à 
+
+ 
+
+ 
+
+Servidor 
+recebimento da resolução. 
+
+confirma 
+
+o 
+
+Total: 1 conexão. 
+
+6.2.1.4 Comentar incidente 
+
+Tabela 9 Conexões necessárias para comentar incidente 
+
+Quantidade de conexões 
+
+Cliente 
+
+Servidor 
+
+1 
+
+Envia os dados do comentário 
+ao servidor. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Servidor 
+recebimento do comentário. 
+
+confirma 
+
+o 
+
+Total: 1 conexão. 
+
+6.2.1.5 Reportar incidente 
+
+Tabela 10 Conexões necessárias para reportar incidentes 
+
+Quantidade de conexões 
+
+Cliente 
+
+Servidor 
+
+1 
+
+Envia 
+
+as 
+
+informações 
+
+ 
+
+ 
+
+ 
+
+80 
+
+referentes  ao  incidente  a  ser 
+reportado na aplicação. 
+
+ 
+
+Total: 1 conexão. 
+
+confirma 
+
+o 
+Servidor 
+recebimento  do 
+incidente, 
+exibindo  uma  mensagem  ao 
+usuário. 
+
+ 
+
+ 
+
+ 
+
+6.2.1.6 Meus dados 
+
+Tabela 11 Conexões necessárias para inserir/alterar dados pessoais 
+
+Quantidade de conexões 
+
+Cliente 
+
+Servidor 
+
+1 
+
+Envia  os  dados  pessoais  ao 
+servidor. 
+
+ 
+
+ 
+
+ 
+
+Servidor  recebe  os  dados  do 
+usuário e os atualiza no banco 
+de dados. 
+
+ 
+
+Total: 1 conexão. 
+
+6.3  Considerações Finais do Capítulo 
+
+Nesse  capítulo  foi  apresentada  a  interface  da  aplicação  cliente,  com  imagens  e 
+descrição  de  cada  funcionalidade  presente  no  aplicativo.  Foi  mostrado  também  o 
+número de conexões necessárias para efetuar cada ação dentro do aplicativo. 
+
+ 
+
+ 
+
+81 
+
+ 
+
+7  CONCLUSÕES 
+
+O presente trabalho apresentou uma revisão bibliográfica a respeito de diversos tipos 
+de 
+incidentes  ambientais.  Também  foram  apresentadas  as 
+tecnologias  móveis 
+disponíveis  atualmente,  métodos  de  desenvolvimento  e  trabalhos  que  incentivam  a 
+participação da população em prol do meio ambiente. Entretanto, neste trabalho optou-
+se  pela  criação  de  uma  ferramenta  independente  e  com  foco  definido  em  incidentes 
+ambientais, algo inexistente no mercado atual de aplicações móveis, a qual irá fornecer 
+um meio para que qualquer cidadão possa relatar incidentes  ambientais que ocorram  a 
+sua volta. 
+
+Embora a aplicação ainda não tenha sido disponibilizada no Google Play, serviço de 
+hospedagem  de aplicativos da Google,  ela é  capaz de fornecer os serviços para a qual 
+foi projetada. O servidor está armazenado na FURG e disponível para acesso externo. A 
+aplicação cliente pode ser instalada em dispositivos com o sistema operacional Android 
+e  é  capaz  de  inserir  e  visualizar  incidentes  ambientais,  satisfazendo  assim,  o  objetivo 
+geral dessa dissertação. 
+
+Somente após um breve  período de utilização posterior ao seu lançamento poderão 
+ser  realizados  estudos  quanto  à  efetividade  da  aplicação.  Porém,  tendo  como  base  as 
+aplicações citadas no capítulo 3, é possível assumir que a aplicação poderá contar com o 
+apoio popular e contribuir para o reporte de incidentes ambientais. 
+
+7.1  Dificuldades Encontradas 
+
+As  principais  dificuldades  encontradas  no  projeto  estão  relacionadas  à  volatilidade 
+
+das tecnologias envolvidas e também a pobre documentação da rede 3G. 
+
+7.1.1 
+
+Volatilidade da área de dispositivos móveis 
+
+A  área  de  dispositivos  móveis  é  extremamente  volátil.  No  primeiro  semestre  de 
+2013,  período  no  qual  o  projeto  estava  sendo  idealizado,  pouco  se  falava  em 
+frameworks  para  aplicações  híbridas.  A  partir  disso,  a  aplicação  seria  nativa  para  o 
+sistema  operacional  Android.  Porém,  muitas  inovações  surgiram  ao  passar  destes  três 
+semestres,  o  estado  da  arte  mudou  e  novas  ferramentas  tornaram  possível  o 
+desenvolvimento  de  uma  aplicação  híbrida  com  funcionamento  e  estrutura  de  uma 
+aplicação nativa. 
+
+Para  que  o  projeto  estivesse  o  mais  próximo  do  estado  da  arte  possível  ao  ser 
+finalizada  a  dissertação,  foi  descartado  o  projeto  desenvolvido  em  Java,  linguagem 
+nativa do Android, e foi iniciado um novo projeto utilizando o framework Phonegap. 
+
+ 
+
+ 
+
+82 
+
+ 
+
+7.1.2 
+
+Rede 3G 
+
+A falta de documentação relacionada ao bloqueio de portas para a utilização da rede 
+3G foi um fator que gerou complicações na fase de desenvolvimento da aplicação. Por 
+estar  localizado  dentro  de  uma  universidade,  o  servidor  estava  utilizando  a  rede  da 
+universidade  e  limitado a  acesso  interno.  Visto  que,  a  universidade  utiliza  um  proxy  e 
+impõe limites ao acesso externo. Desta forma, só foi detectado que havia bloqueios em 
+relação ao uso de socket na rede 3G na fase de ajustes da aplicação. 
+
+Sendo  necessária  a  troca  de  tecnologia  em  uma  fase  na  qual  o  desenvolvimento  já 
+
+estava avançado. 
+
+7.2  Perspectiva de Continuidade 
+
+Após  a  finalização  da  dissertação,  o  projeto  estará  em  contínuo  progresso,  com 
+novas  atualizações  e  funcionalidades.  Desta  maneira,  passando  a  agregar  mais 
+possibilidades. 
+
+7.2.1 
+
+Substituição do Socket 
+
+Substituir a utilização de socket por outra tecnologia para efetuar a comunicação. No 
+Brasil, assim como em outros países, há bloqueios e limitações na utilização da rede 3G. 
+Desta forma, a utilização de sockets para a conexão entre cliente e servidor fica limitado 
+a rede WiFi. 
+
+7.2.1.1 WebSocket 
+
+O  WebSocket  possibilita  a  comunicação  constante  entre  o  cliente  e  o  servidor, 
+funcionando  de  maneira  semelhante  ao  Socket.  Websocket  foi  desenvolvido  para  ser 
+utilizado  em  navegadores  web  e  servidores  web,  mas  pode  ser  usado  por  qualquer 
+cliente  ou  aplicação  servidor.  O  protocolo  Websocket  é  um  protocolo  independente 
+baseado em TCP. 
+
+WebSocket  é  compatível  com  dispositivos  móveis  e    Phonegap.  Desta  forma,  pode 
+ser utilizado para contornar a impossibilidade de uso do Socket na rede 3G. Já que, por 
+ter  sido  desenvolvido  para  a  web,  o  WebSocket  não  tem  limitações  para  o  seu  uso  na 
+rede 3G. 
+
+A substituição do Socket por WebSocket está sendo realizada e estará concluída em 
+
+data posterior a defesa dessa dissertação. 
+
+7.2.2 
+
+Aplicação cliente em outros sistemas operacionais  
+
+Por  ter  sido  desenvolvido  utilizando  o  framework  Phonegap,  a  aplicação  cliente 
+pode  ser  rapidamente  adaptada  para  outros  sistemas  operacionais,  como  Windows 
+Phone. 
+
+7.2.3 
+
+Aperfeiçoamento da aplicação servidor 
+
+A aplicação servidor realiza alterações e buscas no banco de dados baseado em um 
+protocolo. Sendo assim, é possível alterá-la para que ele trabalhe como um web service. 
+Fornecendo  incidentes  para  outras  aplicações  que  operem  de  acordo  com  o  protocolo. 
+Isso  permitirá  que  órgãos  ambientais,  agências  reguladoras  e  outras  entidades 
+
+ 
+
+ 
+
+83 
+
+ 
+
+interessadas  possam  utilizar  informações  geradas  diretamente  do  banco  de  dados 
+hospedado no servidor. 
+
+7.2.4 
+
+Adição de filtros e funções administrativas 
+
+Adicionar  filtros  de  interesse  aliados  a  funções  exclusivas  para  órgãos  e  agências 
+reguladoras  oferecerá  a  essas  entidades  melhor  controle  para  o  conteúdo  inserido  na 
+aplicação. 
+
+7.3  Publicações Realizadas 
+
+O 
+
+artigo  AMBCARE 
+
+–  MONITORAMENTO, 
+
+INFORMAÇÃO  E 
+CONSCIENTIZAÇÃO  AMBIENTAL  A  NÍVEL  SOCIAL 
+foi  aprovado  no 
+NAVCOMP  -  II  Simpósio  em  Computação  e  Automação  para  Indústria  Naval  e 
+Offshore realizado no Centro Integrado de Desenvolvimento do Ecossistema Costeiro e 
+Oceânico - CIDEC-SUL durante a Feira do Polo Naval RS que ocorreu em Rio Grande 
+– 11 a 13 de março de 2014. 
+
+7.3.1 
+
+Submissões Previstas 
+
+Serão  realizadas  submissões  nas  áreas  de  tecnologia  da  informação,  engenharia  de 
+software  e  meio  ambiente.  Com  a  versão  inicial  da  aplicação  publicada,  será  possível 
+submeter  artigos  com  grande  conteúdo  técnico  a  respeito  do  desenvolvimento  da 
+aplicação.
+
+ 
+
+ 
+
+ 
+
+REFERÊNCIAS 
+
+ALENCAR,  Ane  et  al  (2004).  Desmatamento  na  Amazônia:  indo  além  da" 
+
+emergência crônica". 
+
+AMARAL,  Ântonia.  Conservação  da  biodiversidade  marinha  e  costeira  no  Brasil. 
+em 
+
+Disponível 
+<http://www.conservation.org.br/publicacoes/megadiversidade/08_Amaral_Jablonski.p
+df>. Acesso em 11/09/2014. 
+
+ALMEIDA, Maurício.  Uma introdução ao XML, sua utilização na Internet e alguns 
+conceitos complementares. Disponível em: <http://www.scielo.br/pdf/ci/v31n2/12903>. 
+Acesso em: 25/02/2015. 
+
+AGUIAR,  Giseli.  Uso  das  Ferramentas  de  Redes  Sociais  em  Bibliotecas 
+em:  < 
+
+Universitárias:  Um  Estudo  Exploratório  na  UNESP.  Disponível 
+http://www.teses.usp.br/teses/disponiveis/27/27151/tde-03122012-160409/pt-br.php>. 
+Acesso em: 31/07/2014. 
+
+BERNARDI, J.V.E. & LANDIM, P.M.B. Aplicação do Sistema de Posicionamento 
+IGCE,  UNESP/Rio  Claro,  Lab. 
+em 
+
+Global 
+Geomatemática, 
+<http://www.rc.unesp.br/igce/aplicada/textodi.html>. Acesso em: 10/02/2014. 
+
+(GPS)  na  coleta  de  dados.  DGA, 
+31 
+
+2002.  Disponível 
+
+Texto  Didático 
+
+10, 
+
+pp. 
+
+BING  MAPS. 
+
+em: 
+<http://pt.wikipedia.org/w/index.php?title=Bing_Maps&oldid=39224914>.  Acesso  em: 
+11/02/2014. 
+
+livre.  Disponível 
+
+In:  Wikipédia: 
+
+enciclopédia 
+
+a 
+
+BRILHANTE, Marcelo Medeiros.  Incêndios florestais no Parque Nacional da Serra 
+da  Canastra:  desafios  para  a  conservação  da  biodiversidade.  Disponível  em: 
+<http://www.redalyc.org/articulo.oa?id=53414215>. Acesso em: 03/09/2014. 
+
+CLARK,  John.  Sencha  Touch  2  Mobile  JavaScript  Framework.  Disponível  em: 
+
+<https://books.google.com.br/books?id=LoQtAgAAQBAJ&dq=Sencha+Touch&lr=&s
+ource=gbs_navlinks_s>. Acesso em: 15/01/2015. 2013. 
+
+COMPARISON  OF  WEB  MAP  SERVICES.  In:  Wikipédia:  a  enciclopédia  livre. 
+em:  <http://en.wikipedia.org/wiki/Comparison_of_web_map_services>. 
+
+Disponível 
+Acesso em: 11/09/2014. 
+
+COLAB. In: Colab. Disponível em: < http://colab.re/>. Acesso em: 11/02/2014. 
+
+CONSTANDACHE,  Ionut.  EnLoc:  Energy-Efficient  Localization  for  Mobile 
+em 
+em: 
+
+Phones. 
+<http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5062218>.  Acesso 
+12/09/2014. 
+
+Disponível 
+
+ 
+
+CORREA, Adolfo. Aplicações e Serviços Baseados em Localização. Disponível em: 
+
+<http://www-di.inf.puc-rio.br/~endler/courses/Mobile/Monografias/04/AdolfoCorreia-
+Mono.pdf>. Acesso em: 06/08/2014. 
+
+ 
+
+ 
+
+COSTA, Carlos. Desenvolvimento de aplicativo móvel do serviço web patrool.com 
+em: 
+
+utilizando 
+<http://repositorio.roca.utfpr.edu.br/jspui/bitstream/1/876/1/CT_JAVA_VII_2012_02.P
+DF>. Acesso em: 15/01/2015. 
+
+appcelerator 
+
+Disponível 
+
+tecnologia 
+
+titanium. 
+
+a 
+
+EMERGÊNCIA 
+
+AMBIENTAL. 
+
+In: 
+
+Fepam. 
+
+Disponível 
+
+em: 
+
+<http://www.fepam.rs.gov.br/emergencia/emergencia.asp>. Acesso em: 09/08/2014. 
+
+FAGUNDES, Leonardo. Técnicas de Localização de Dispositivos Móveis em Redes 
+WiFi 
+em 
+<http://www.lume.ufrgs.br/bitstream/handle/10183/15975/000695266.pdf?sequence=1> 
+Acesso em: 12/09/2014. 
+
+Disponível 
+
+TDOA. 
+
+- 
+
+FALE 
+
+em: 
+<http://www.iap.pr.gov.br/modules/conteudo/conteudo.php?conteudo=1085>.  Acesso 
+em: 09/08/2014. 
+
+CONOSCO. 
+
+Disponível 
+
+IAP. 
+
+In: 
+
+FREITAS, Carlos. Acidentes Químicos ampliados: um desafio para a saúde pública 
+
+Disponível em <http://www.scielo.br/pdf/rsp/v29n6/12.pdf>. Acesso em 11 set 2014. 
+
+FERREIRA,  Carlos.  Acidentes  Químicos  ampliados:  um  desafio  para  a  saúde 
+<http://www.scielo.br/scielo.php?pid=S0102-
+
+pública. 
+88392003000200008&script=sci_arttext&tlng=es>. Acesso em 11/09/2014. 
+
+Disponível 
+
+em 
+
+FEARNSIDE,  Philip.  Desmatamento  na  Amazônia  brasileira:  história,  índices  e 
+consequencias. 
+em 
+<http://www.mstemdados.org/sites/default/files/Desmatamento%20na%20Amazonia%2
+0brasileira,%20historia,%20indices%20e%20consequencias%20-
+%20Philip%20Fearnside%20-%202005.pdf>. Acesso em 10 set 2014. 
+
+Disponível 
+
+FERNANDES,  Ana.  Estudo  comparativo  entre  Interfaces  de  Programação  de 
+Aplicações de mapas. Disponível em <http://run.unl.pt/handle/10362/8475>. Acesso em 
+26/02/2015. 
+
+FIGUEIREDO,  C.  Computação  Móvel:  Novas  oportunidades  e  novos  desafios, 
+<http://profjefer.files.wordpress.com/2013/02/ed02_04-
+
+em: 
+
+2005.  Disponível 
+copy.pdf>. Acesso em: 03/01/2014. 
+
+GAVAZONI,  Vinicius.    Benefícios  e  dificuldades  do  uso  de  CSS  para  criação  de 
+websites. 
+em 
+<http://ainfo.cnptia.embrapa.br/digital/bitstream/item/99002/1/beneficios.pdf>.  Acesso 
+em 26/02/2015. 
+
+Disponível 
+
+GOOGLE  MAPS. 
+
+livre.  Disponível  em: 
+<http://pt.wikipedia.org/w/index.php?title=Google_Maps&oldid=39656445>.  Acesso 
+em: 06/08/2014. 
+
+In:  Wikipédia:  a  enciclopédia 
+
+HARTMANN,  Gustavo.    Cross-platform  mobile  development.  Disponível  em: 
+
+<https://wss.apan.org/jko/mole/Shared%20Documents/Cross-
+Platform%20Mobile%20Development.pdf>. Acesso em: 16/02/2015. 
+
+HATAE,  Ricardo.    Repositório  de  Arquivos  Online  utilizando  Web  Services. 
+em: 
+
+Disponível 
+
+ 
+
+ 
+
+ 
+
+<http://dflpsistemas.googlecode.com/svn/trunk/Documentos/materiais_tcc/TCC_1Seme
+stre/001%20-%20TCC%20Corrigido%20Ricardo%20Hatae.pdf>. 
+08/02/2015. 
+
+Acesso 
+
+em: 
+
+HISTORY  OF  IOS.  In:  Wikipédia:  a  enciclopédia 
+
+livre.  Disponível  em: 
+
+<http://en.wikipedia.org/w/index.php?title=History_of_iOS&oldid=619846426>. 
+Acesso em: 09/08/2014. 
+
+IOS. 
+
+In:  Wikipédia: 
+
+a 
+
+enciclopédia 
+
+livre. 
+
+<http://pt.wikipedia.org/w/index.php?title=IOS&oldid=39739886>. 
+09/08/2014. 
+
+Disponível 
+Acesso 
+
+em: 
+em: 
+
+ISO 
+
+14000. 
+
+In:  Wikipédia: 
+
+a 
+
+enciclopédia 
+
+livre.  Disponível 
+
+em: 
+Acesso 
+
+<http://en.wikipedia.org/w/index.php?title=ISO_14000&oldid=618475275>. 
+em: 09/09/2014. 
+
+ITOPF.  2011.  Oil  Tanker  Spill  Statistcs.  International  Tanker  Owners  Pollution 
+
+Federation Limited, London, UK. 12 p. 
+
+JACOBI,  Pedro.  Educação  ambiental,  cidadania  e  sustentabilidade.  Disponível  em 
+
+<http://www.scielo.br/pdf/cp/n118/16834.pdf>. Acesso em: 10/09/2014. 
+
+JEAN-PAUL,  Lanly.  Deforestation  and  forest  degradation  factors.  Disponível  em: 
+
+<http://www.fao.org/docrep/article/wfc/xii/ms12a-e.htm>. Acesso em: 09/09/2014. 
+
+KAUR,  Parmjit  &  SHARMA,  Sumit.  Google  Android  a  Mobile  Platform:  A 
+Review. 
+em 
+<http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6799598>. Acesso em: 
+03/07/2014. 
+
+Disponível 
+
+KLIEMANN, Jose. Modelagem de uma API para serviços baseados em localização 
+integrada  com  APIs  de  localização,  o  middleware  EXEHDA  e  GIS.  Disponível  em 
+<http://saloon.inf.ufrgs.br/twiki/viewfile/Docs/OnlineDoc20060817225008?rev=1;filen
+ame=Monografia_Jos%E9_Marcelo_Kliemann.pdf>. Acesso em: 12/09/2014. 
+
+KROSKI,  E.  The  social  tools  of  Web  2.0:  opportunities  for  academic  libraries. 
+
+Choice, v. 44, n. 12, p. 2011-2021, 08/2007. 
+
+KRUMM, J. (2009). Ubiquitous Computing Fundamentals. Chapman & Hall/CRC, 
+
+1st ed. 
+
+KUMAR, Sandeep. Location Based  Services using Android (SBLOID).  Disponível 
+em: <http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=5439442>. Acesso 
+em: 31/07/2014. 
+
+LECHETA,  R.  R.  Google  Android:  aprenda  a  criar  aplicações  para  dispositivos 
+
+móveis com o Android SDK. 2. Ed. São Paulo: Novatec, 2010. 
+
+LOUREIRO, Antonio Alfredo Ferreira. Introdução à computação móvel. Disponível 
+em  <http://homepages.dcc.ufmg.br/~loureiro/cm/docs/cm_livro_1e.pdf>.  Acesso  em: 
+24/03/2014 
+
+LOCATION 
+
+STRATEGIES. 
+
+In: 
+
+Android. 
+
+Disponível 
+
+em: 
+
+http://developer.android.com/guide/topics/location/strategies.html>. 
+12/09/2014. 
+
+Acesso 
+
+< 
+em: 
+
+ 
+
+ 
+
+ 
+
+LUNNY,  Andrew. 
+
+em: 
+<http://books.google.com.br/books?id=ZIiyePSgxW4C&printsec=frontcover#v=onepag
+e&q&f=false>. Acesso em: 15/01/2015. 
+
+Beginner's  Guide.  Disponível 
+
+PhoneGap 
+
+MAGRI,  João  Alexandre.    Criando  e  Usando  Web  Service.  Disponível  em 
+<http://www.fics.edu.br/index.php/augusto_guzzo/article/view/160/232>.  Acesso  em 
+26/02/2015. 
+
+MAHMOUD,  Qusay  H.  J2ME  and  location-based  services.  Disponível  em: 
+em: 
+
+<http://www.oracle.com/technetwork/systems/location-156846.html>.  Acesso 
+19/07/2014. 
+
+MANCHAS ÓRFÃS. In: CETESB: Companhia Ambiental do Estado de São Paulo. 
+Disponível 
+<http://www.cetesb.sp.gov.br/gerenciamento-de-
+riscos/Vazamento%20de%20Oleo/211-Manchas%20%C3%93rf%C3%A3s>.  Acesso 
+em: 04/09/2014. 
+
+em: 
+
+MARGULIS, Sergio.  Causas do Desmatamento da Amazônia Brasileira. Disponível 
+<http://siteresources.worldbank.org/BRAZILINPOREXTN/Resources/3817166-
+
+em: 
+1185895645304/4044168-
+1185895685298/010CausasDesmatamentoAmazoniaBrasileira.pdf> 
+03/09/2014. 
+
+Acesso 
+
+em: 
+
+MARTINHO,  Vivian. 
+
+content/files_mf/1298315558Monografia_Vivian_ELISA1.pdf>. 
+05/09/2014. 
+
+.  Disponível  em  <http://www.prh27.log.furg.br/site/wp-
+em: 
+
+Acesso 
+
+MOUTINHO,  Paulo.  Desmatamento  na  Amazônia:  desafios  para  reduzir  as 
+em 
+
+emissões 
+<http://www.fbds.org.br/IMG/pdf/doc-411.pdf>. Acesso em: 04/09/2014. 
+
+no  Brasil.  Disponível 
+
+estufa 
+
+gases 
+
+de 
+
+de 
+
+efeito 
+
+MORIMOTO,  E.  C.  Uma 
+
+Introdução 
+
+ao  GPS.  Disponível 
+
+em 
+
+<http://www.hardware.com.br/artigos/gps/>. Acesso em: 11/02/2014. 
+
+O’REILLY, T. What  is  Web 2.0:  design patterns and business  models for the next 
+generation  of  software.  Sebastopol,  CA:  O’Reilly  Media,  2005.  Disponível  em: 
+<http://oreilly.com/web2/archive/what-is-web-20.html>. Acesso em: 13/12/2013. 
+
+OSHIN,  Thomas.  A  Method  to  Evaluate  the  Energy-Efficiency  of  Wide-Area 
+Location  Determination  Techniques  Used  by  Smartphones.  Disponível  em 
+<http://www.eecs.qmul.ac.uk/~athen/Site/Publications_files/06417311.pdf>. 
+Acesso 
+em: 12/09/2014. 
+
+O QUE É. In: Fatma. Disponível em: <http://www.fatma.sc.gov.br/conteudo/o-que-
+
+e>. Acesso em: 09/08/2014. 
+
+RESOLUÇÃO CONAMA Nº306. In: Ministério do Meio Ambiente. Disponível em: 
+em: 
+
+<http://www.mma.gov.br/port/conama/legiabre.cfm?codlegi=306>. 
+09/09/2014. 
+
+Acesso 
+
+SANTANCHÈ,  André. 
+
+  Desenvolvimento  Independente  de  Plataforma  para 
+usando 
+em: 
+
+Tecnologia  Web. 
+
+Disponível 
+
+Dispositivos  Móveis 
+<https://archive.org/stream/desenvolvimento-dispositivos-moveis-
+web/desenvolvimento-dispositivos-moveis-web_jai2013_djvu.txt>. 
+14/09/2014. 
+
+Acesso 
+
+em: 
+
+ 
+
+ 
+
+ 
+
+SMARTPHONE. 
+
+em: 
+<http://pt.wikipedia.org/w/index.php?title=Smartphone&oldid=39677423>. Acesso  em: 
+11/02/2014. 
+
+livre.  Disponível 
+
+In:  Wikipédia: 
+
+enciclopédia 
+
+a 
+
+SILVA,  Thiago.    Uma  Fotografia  do  Instagram:  Caracterização  e  Aplicação. 
+Disponível  em:  <  http://ce-resd.facom.ufms.br/sbrc/2013/artigo-32.pdf  >.  Acesso  em: 
+08/09/2014. 
+
+SILVA, Maurício. JQuery, A Biblioteca do Programador JavaScript. Disponível em 
+em 
+
+<http://186.202.25.177/livros/jquery3ed/capitulo9788575223871.pdf>.  Acesso 
+26/02/2015. 
+
+TANGERINO,  EF;  Siqueira  de  Carvalho  M.  O  tráfico  de  animais  silvestres  no 
+Estado  do  Paraná.  Acta  Scientiarum.  Human  and  Social  Sciences  200628257-266. 
+Disponível  em:  http://www.redalyc.org/articulo.oa?id=307324782008.  Acesso  em: 
+12/09/2014 
+
+TABLET. 
+
+livre.  Disponível 
+<http://pt.wikipedia.org/w/index.php?title=Tablet&oldid=38421836>.  Acesso 
+11/02/2014. 
+
+In:  Wikipédia: 
+
+enciclopédia 
+
+a 
+
+em: 
+em: 
+
+TAPSCOTT, D. A hora da geração digital: como os jovens que cresceram usando a 
+internet  estão  mudando  tudo,  das  empresas  aos  governos.  Rio  de  Janeiro:  Agir 
+Negócios, 2010. 
+
+TOLEDO,  Jan.  Desenvolvimento  em  Smartphones  –  Aplicativos  Nativos  e  Web. 
+Disponível 
+em 
+<http://www.cpgls.ucg.br/7mostra/Artigos/AGRARIAS%20EXATAS%20E%20DA%2
+0TERRA/Desenvolvimento%20em%20Smartphones%20-
+%20Aplicativos%20Nativos%20e%20Web.pdf>. Acesso em: 14/09/2014. 
+
+VARASCHIN, Alexandre.  HTML5 e o Futuro das Ferramentas para Internet Rica. 
+<http://revista-
+
+Disponível 
+fatecjd.com.br/retc/index.php/RETC/article/view/138/pdf>. Acesso em 26/02/2015. 
+
+em 
+
+VERKASALO, Hannu. Analysis of users and non-users of smartphone applications. 
+em 
+Disponível 
+<http://www.sciencedirect.com/science/article/pii/S0736585309000793>.  Acesso  em: 
+12/09/2014. 
+
+ZUCATO,  Fabio.  Rede  ZigBee  gerenciada  por  sistema  de  monitoramento  remoto 
+em 
+
+utilizando 
+<http://www.teses.usp.br/teses/disponiveis/18/18155/tde-03022010-095135/en.php>. 
+Acesso em: 11/02/2014. 
+
+Disponível 
+
+TCP/IP 
+
+e 
+
+GPRS. 
+
+WEB  MAP  SERVICE.  In:  Wikipédia:  a  enciclopédia  livre.  Disponível  em: 
+
+<http://pt.wikipedia.org/w/index.php?title=Web_Map_Service&oldid=36079028>. 
+Acesso em 06/08/2014. 
+
+WILLIAMS,  Michael.  Dark  ages  and  dark  areas:  global  deforestation  in  the  deep 
+past.  Disponível  em:  <http://geography.fullerton.edu/taylor/enst595t/darkages.pdf>. 
+Acesso em: 09/09/2014. 
+
+WINDOWS  PHONE.  In:  Wikipédia:  a  enciclopédia 
+
+livre.  Disponível  em: 
+
+<http://en.wikipedia.org/w/index.php?title=Windows_Phone_8.1&oldid=620489647>. 
+Acesso em: 09/08/2014. 
+
+ 
+
+ 
+
+ 
+
+WINDOWS  PHONE  8.1.  In:  Wikipédia:  a  enciclopédia  livre.  Disponível  em: 
+
+<http://en.wikipedia.org/w/index.php?title=Windows_Phone_8.1&oldid=620489647>. 
+Acesso em: 09/08/2014. 
+
+WARGO,  John.  PhoneGap  Essentials:  Building  Cross-Platform  Mobile  Apps. 
+Disponível 
+em: 
+<http://books.google.com.br/books?id=ZIiyePSgxW4C&printsec=frontcover#v=onepag
+e&q&f=false>. Acesso em: 15/01/2015. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+A tabela a seguir trás todos os órgãos estaduais encontrados no site do Ministério do 
+
+Meio Ambiente. 
+
+APÊNDICE A 
+
+ 
+
+ 
+
+Estado 
+
+Acre 
+
+Alagoas 
+
+Amapá 
+
+Amazonas 
+
+Bahia 
+
+Ceará 
+
+Distrito Federal 
+
+Espírito Santo 
+
+Goiás 
+
+Maranhão 
+
+Mato Grosso 
+
+Mato Grosso do Sul 
+
+Minas Gerais 
+
+Pará 
+
+Paraiba 
+
+Paraná 
+
+Pernambuco 
+
+Piauí 
+
+Órgãos 
+
+Instituto  de  Meio  Ambiente  do  Acre 
+(Imac) 
+
+Instituto do Meio Ambiente (Ima) 
+
+Secretaria  de  Estado  do  Meio  Ambiente 
+(Sema) 
+
+Instituto  de  Proteção  Ambiental  do 
+Amazonas (Ipaam)  
+
+Instituto do Meio Ambiente e Recursos 
+Hídricos (Inema) 
+Superintendência Estadual do Meio 
+Ambiente (Semace) 
+
+Instituto Brasília Ambiental (Ibram) 
+
+Secretaria de Estado de Meio Ambiente e 
+de Recursos Hídricos (Seama) 
+
+Instituto  Estadual  de  Meio  Ambiente 
+(Iema) 
+
+Agência Goiana do Meio Ambiente 
+(Agma) 
+Governo do Estado do Maranhão 
+
+Secretaria  de  Estado  do  Meio  Ambiente 
+(Sema)  
+
+Secretaria de Estado de Meio Ambiente e 
+Recursos Hídricos (Sema) 
+
+Fundação  Estadual  do  Meio  Ambiente 
+(Feam)  
+
+Secretaria Executiva de Ciência, 
+Tecnologia e Meio Ambiente (Sectam) 
+Superintendência do Meio Ambiente 
+(Sudema) 
+Instituto Ambiental do Paraná (Iap) 
+
+Agência  Estadual  de  Meio  Ambiente  e 
+Recursos Hídricos (CPRH) 
+
+Secretaria  do  Meio  Ambiente  e  Recursos 
+Hídricos (Semar) 
+
+Rio de Janeiro 
+
+Instituto Estadual do Ambiente (Inea)  
+
+Rio Grande do Norte 
+
+Instituto  de  Desenvolvimento  Econômico 
+
+ 
+
+Rio Grande do Sul 
+
+Rondônia 
+
+Roraima 
+
+Santa Catarina 
+
+São Paulo 
+
+Sergipe 
+
+Tocantins 
+
+ 
+
+ 
+
+ 
+
+e Meio Ambiente do RN (Idema)  
+
+Fundação Estadual de Proteção Ambiental 
+Henrique Luis Roessler (Fepam) 
+
+Secretaria  de  Estado  do  Desenvolvimento 
+Ambiental (Sedam) 
+
+Fundação  Estadual  de  Meio  Ambiente 
+Ciência e Tecnologia (Femact)  
+
+Fundação do Meio Ambiente (Fatma)  
+
+Secretaria  de  Estado  de  Meio  Ambiente 
+(Sema)  
+
+Companhia de Tecnologia de Saneamento 
+Ambiental (Cetesb) 
+
+Departamento 
+Impacto Ambiental (Daia) 
+
+de 
+
+Avaliação 
+
+de 
+
+Administração 
+Ambiente (Adema) 
+
+Estadual do 
+
+Meio 
+
+Instituto Natureza do Estado do Tocantins 
+(Naturatins)  
+
+
