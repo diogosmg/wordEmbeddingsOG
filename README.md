@@ -1,7 +1,7 @@
 # wordEmbeddingsOG
 Portuguese Word Embeddings for the specific domain of Oil and Gas
 
-O artigo que descreve esse trabalho foi publicado na Conferência da Rio Oil and Gas 2018, e está disponível em: https://stt.ibp.org.br/eventos/2018/riooil2018/pdfs/rev/Riooil2018_1401_wordembeddingsparaoeg_artigo_c.pdf
+O artigo que descreve esse trabalho foi publicado no Congresso da Rio Oil and Gas 2018, e está disponível em: https://stt.ibp.org.br/eventos/2018/riooil2018/pdfs/rev/Riooil2018_1401_wordembeddingsparaoeg_artigo_c.pdf
 
 GOMES, D., CORDEIRO, F., EVSUKOFF, A. Word Embeddings em português para o domínio específico de óleo e gás. Rio Oil&Gas 2018.
 
